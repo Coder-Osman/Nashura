@@ -24,3 +24,21 @@ active adapter、learning、model、policy、search及迁移入口。保留父�
 公开工具测试：`python -m pytest -q _spec_work/versions/fair-final-active-migration-v1/test_active_payload.py _spec_work/versions/fair-final-active-migration-v1/test_active_resume.py`。
 原生启动入口为start_native.py，输入校验过的私有父attempt目录；默认有界6小时。
 collect_native.py仅在进程终止后归档，归档成功不等于独立内容验收通过。
+
+独立验收入口为verify_active.py；调用方须提供launch和下载回执的外部SHA，
+以及唯一一轮完整整局数据目录。验收器重新核对上传包、冻结部署、四阶段退出和
+不同进程身份、报告与六个实际checkpoint的模型/AdamW/RNG/采样/选优内容。
+实现身份绑定六个active文件及消费管线；数据和划分从整局重新生成，不只比较
+报告中的成功字段。冻结encoder须保持、解冻须改变，恢复结果须与连续分支精确一致。
+默认严格要求352行、batch256、microbatch1和96行尾批；小fixture只能显式关闭
+原生日程检查，输出native_schedule_verified=false，不作为原生恢复证明。
+
+```sh
+python verify_active.py ATTEMPT --launch-sha LAUNCH_SHA --receipt-sha RECEIPT_SHA \
+  --data-roots COMPLETE_DATA_ROOT --output VERIFICATION_JSON
+```
+
+验收会拒收失败记录、缺失报告/checkpoint回执、重封装后的错误游标/配置和非有限
+指标。它检查归档内容与执行身份，不重跑CUDA张量比较或原生对局来源探针；输出
+明确保留native_game_provenance_reverified=false及各正式门false。三局数据原生
+来源的独立验收仍以原始数据证据为准。

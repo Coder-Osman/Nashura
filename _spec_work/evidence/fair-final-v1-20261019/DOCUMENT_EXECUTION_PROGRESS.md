@@ -870,3 +870,25 @@ fair-final-migration-cache-v1/native-data-reverified-1792632965594305000.json。
 当前训练快照1792633057：PID45618活跃、源码匹配，完整验证160/358行、累计
 497.382秒；尚未生成checkpoint。恢复worker仍等待父正常完成。搜索快照1792632925
 已提交49组/98根/12544有效模拟，tick2018玩家0搜索中，尚无完整终局。
+
+## 2026-10-22 同步最新主线及新增active恢复验收工具
+
+重新fetch全部远端分支，Nashura本地HEAD与origin/main均为
+da8ca6c12653add5cc4a8667f4809db9625a0ac7，审计分支8195a5a已包含。
+公开快照2000项源SHA与源工作区一致，继续基于已修复解冻KL数值回归的主线，
+旧失败证据与运行中的冻结部署保持原样。
+
+独立active-migration-v1六对真实CUDA损失/梯度/AdamW对照已通过；
+新增verify_active.py重验归档、数据、六个checkpoint及冻结/解冻跨进程状态，
+默认强制真实352/256/96日程。21项专项通过60.40秒，包含小模型恢复和篡改拒收，
+仅证明验收工具行为，原生执行完成后还须运行此验收器。
+后续联合31项通过98.27秒，包含这21项，不累加；源码与报告SHA见该版本
+verifier-evidence-20261022.json。
+
+快照1792678182：新版原生reference完成首个256行冻结更新、继续验证；
+两个恢复阶段尚未运行。原Full128同一局仍提交93组/186根/23808有效模拟，
+tick3558玩家1搜索中，未终局。快照1792678259旧batch-v1前四阶段exit0、
+terminal选优仍在运行；不将旧实现结果转记为当前active通过。
+
+G0/G1仍开放、限定子项34/43不增加；G2–G8未运行，正式迁移及五机放量未启动。
+详见active-migration-v1/CONTRACT.md、EVIDENCE.md及tests-verifier.xml。

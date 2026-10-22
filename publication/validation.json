@@ -1,16 +1,16 @@
 {
   "schema": "hashura.publication-validation.v1",
   "date": "2026-10-22",
-  "source_manifest_sha256": "9d7c46eee1a23a1bdfdb6e4d4a548868f1be7ade90bc2165d06b2655077c544c",
-  "source_files_verified": 2000,
+  "source_manifest_sha256": "49bb236632da70b54dfeab518e042050866dd17a499fdc778573322240dc9914",
+  "source_files_verified": 2005,
   "public_tests": {
     "failures": 0,
     "errors": 0,
     "skipped": 0,
     "passed": 220,
-    "seconds": 50.251,
+    "seconds": 64.898,
     "report": "checks-public.xml",
-    "sha256": "bd10337b6534ebab8d486207642ef65c1b91df03ebeb6c63008249fa357fff53"
+    "sha256": "f72e6eb71e44365ba50c872ed23fa70cffc48d8aee42c7a68756244c6fa004cb"
   },
   "secret_scan": {
     "tool": "gitleaks",
@@ -60,7 +60,7 @@
   },
   "active_cpu_tests": {
     "passed": 211,
-    "seconds": 36.39,
+    "seconds": 41.41,
     "command": "python tools/run_main_engine_checks.py",
     "scope": "CPU_UNIT_ONLY"
   },
@@ -87,6 +87,26 @@
     "sha256": "d4d37d1429da511d912bdb9aaaf867f87a291074514805c7dc65da9c1cb3d9ab",
     "comparisons_passed": 6,
     "resume": "running_pending_independent_verification",
+    "formal_g2_pass": false
+  },
+  "active_migration_verifier_tests": {
+    "passed": 21,
+    "seconds": 60.398,
+    "report": "_spec_work/versions/fair-final-active-migration-v1/tests-verifier.xml",
+    "sha256": "2c4f4ccb8c8e075cbcbee724258f393518be56c9794a15e3e2ae90138131a1ae",
+    "scope": "CPU_VERIFIER_FIXTURE_ONLY"
+  },
+  "active_migration_combined_tests": {
+    "passed": 31,
+    "seconds": 98.271,
+    "report": "_spec_work/versions/fair-final-active-migration-v1/tests-combined.xml",
+    "sha256": "dfd638883b99c04688b39c0d3f3747df73550c8024f3d27960fbcc57d1b09e29",
+    "scope": "CPU_PAYLOAD_RESUME_VERIFIER_FIXTURE_ONLY_INCLUDES_21_VERIFIER_TESTS"
+  },
+  "active_migration_verifier_evidence": {
+    "report": "_spec_work/versions/fair-final-active-migration-v1/verifier-evidence-20261022.json",
+    "sha256": "0acb900f15b5de03ec22cf0444d34081a01ae46f4640c950ca2ba5d8c27117bb",
+    "native_resume": "pending_independent_verification",
     "formal_g2_pass": false
   }
 }

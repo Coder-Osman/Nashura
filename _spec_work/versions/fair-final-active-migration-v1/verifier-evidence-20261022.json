@@ -1,0 +1,108 @@
+{
+  "schema": "FairFinalActiveVerifierEvidence/v1",
+  "date": "2026-10-22",
+  "baseline": {
+    "main_sha": "da8ca6c12653add5cc4a8667f4809db9625a0ac7",
+    "audit_branch_sha": "8195a5a07b8bf7d9533fc7a3bfbe83b0c5083a99",
+    "audit_contained_in_main": true,
+    "previous_manifest_source_files_verified": 2000
+  },
+  "implementation": [
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/verify_active.py",
+      "sha256": "9ac3a5e8e33fef8ab52eba065113013afa22aa5c882476d3482e7c3dd95ff629",
+      "bytes": 13468
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/test_active_verifier.py",
+      "sha256": "fd5841ffdf4031eeec83b1bb71fb22b102af7918272f5c705096c7fb5e865301",
+      "bytes": 10223
+    }
+  ],
+  "tests": [
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/tests-verifier.xml",
+      "sha256": "2c4f4ccb8c8e075cbcbee724258f393518be56c9794a15e3e2ae90138131a1ae",
+      "bytes": 4242,
+      "scope": "independent_verifier_cpu_fixture_only",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 60.398
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/tests-combined.xml",
+      "sha256": "dfd638883b99c04688b39c0d3f3747df73550c8024f3d27960fbcc57d1b09e29",
+      "bytes": 6056,
+      "scope": "payload_resume_verifier_cpu_fixture_only",
+      "tests": 31,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 98.271
+    }
+  ],
+  "test_count_note": "The 31-test combined run includes the 21 verifier tests; these counts are not additive.",
+  "native_snapshots": {
+    "active": {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/native-active-migration-1792676550169895000/status-1792678683241000000.json",
+      "sha256": "6d2ed97d612769ebb8bba7dc8fe29ebeb89145cc75c114ddf194fb29dcc31c6e",
+      "bytes": 4869,
+      "timestamp": 1792678687.3295572,
+      "phase": "reference",
+      "completed_updates": 2,
+      "rows_per_completed_update": [
+        256,
+        96
+      ],
+      "benchmark_exit_code": 0,
+      "resume": "pending",
+      "frozen_deployment_matches": true
+    },
+    "full128": {
+      "path": "_spec_work/versions/fair-final-search-continuation-v1/native-search-segment-1792669735174739000/status-1792678683224209000.json",
+      "sha256": "f0f4005213a45ded8cf9152e79ca383cf5b9184e9727320066b01541c6dbc476",
+      "bytes": 11623,
+      "timestamp": 1792678687.3397667,
+      "committed_groups": 94,
+      "committed_roots": 188,
+      "valid_simulations": 24064,
+      "committed_tick": 3558,
+      "terminal": false,
+      "free_disk_gib": 137.4535675048828
+    },
+    "legacy_batch": {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/native-batched-migration-1792664800317034000/status-1792678683255362000.json",
+      "sha256": "76ce773adaf83e4c515f8b682aed9e37f8a3fc8c6c3cc53bc4a2359d8f825aa0",
+      "bytes": 13573,
+      "timestamp": 1792678687.3338494,
+      "phase": "selection",
+      "completed_phase_exits": {
+        "benchmark": 0,
+        "training": 0,
+        "reference": 0,
+        "resumed": 0
+      },
+      "terminal": false
+    }
+  },
+  "scope": {
+    "tool_validation": "passed",
+    "active_native_resume": "pending_independent_verification",
+    "native_full128_terminal": "pending",
+    "g0_g1": "open",
+    "limited_subitems": "34/43",
+    "g2_g8": "not_run",
+    "training_admissible": false,
+    "formal_g2_pass": false,
+    "gates_closed": false,
+    "native_game_provenance_reverified": false
+  },
+  "limitations": [
+    "Small-model CPU fixtures validate verifier behavior only.",
+    "Private raw snapshots, checkpoint weights and native archives are not part of the public snapshot.",
+    "The legacy batch implementation does not prove the active implementation.",
+    "The center disk remains below the formal 200 GiB requirement."
+  ]
+}
