@@ -1,0 +1,46 @@
+{
+  "schema": "FairFinalActiveSelectionExecutionEvidence/v1",
+  "date": "2026-10-22",
+  "baseline_main_sha": "8f68763803207890351f574ab7191a5a613cb505",
+  "previous_manifest_source_files_verified": 2010,
+  "implementation": [
+    {"path": "_spec_work/versions/fair-final-active-migration-v1/run_selection.py", "sha256": "d96545b77ab52f8a5da1e695bf30db03d984bb5506fc96760ca1896666c5419b", "bytes": 12946},
+    {"path": "_spec_work/versions/fair-final-active-migration-v1/verify_selection_execution.py", "sha256": "772bac7b3b6514aedae6a74a30838e5d9d851969aacc478bb6f4d4c90897751a", "bytes": 9751},
+    {"path": "_spec_work/versions/fair-final-active-migration-v1/test_selection_execution.py", "sha256": "f54af74f092f773926ec1ba6f8608d6c540654ec3eab9c70515d913671ac248f", "bytes": 15185}
+  ],
+  "tests": [
+    {"path": "_spec_work/versions/fair-final-active-migration-v1/tests-selection-execution-joint.xml", "sha256": "66dfc646e2e8358a77ec7ba90051b01bf23b3b741bf6772f32a5888389858e03", "bytes": 12050, "tests": 64, "failures": 0, "errors": 0, "skipped": 0, "seconds": 184.305}
+  ],
+  "test_count_note": "64 combines 26 execution tests, 17 handoff tests and 21 parent verifier tests; not additive to previous reports.",
+  "test_scope": {
+    "real_subprocess_execution": "explicit_fake_training_entrypoint_only",
+    "real_small_model_terminal": ["EARLY_STOP", "MAX_EPOCHS"],
+    "native_schedule_for_small_model": false,
+    "negative_checks": ["modified_inputs", "ineligible_parent", "unsafe_archive", "wrong_source_or_config", "nonzero_exit", "timeout", "orphan_group_cleanup", "resealed_terminal_corruption"],
+    "initial_test_attempt": "24 passed, 2 fixture/assertion failures; corrected before final joint run"
+  },
+  "scope": {
+    "tool_validation": "passed_cpu_subprocess_and_small_model_scope",
+    "native_handoff": "not_run",
+    "native_selection_execution": "not_run",
+    "active_native_resume": "pending_independent_verification",
+    "native_full128_terminal": "pending",
+    "g0_g1": "open",
+    "limited_subitems": "34/43",
+    "g2_g8": "not_run",
+    "training_admissible": false,
+    "formal_g2_pass": false,
+    "gates_closed": false
+  },
+  "latest_native_snapshots": {
+    "active": {"timestamp": 1792681789, "completed_updates": 4, "completed_epochs": 2, "phase": "reference", "deployment_matches": true},
+    "full128": {"timestamp": 1792681423, "committed_groups": 96, "committed_roots": 192, "valid_simulations": 24576, "committed_tick": 3644, "terminal": false}
+  },
+  "limitations": [
+    "Native parent recovery must independently pass before real handoff or execution.",
+    "SSH dispatch, collection and GPU/resource exclusivity checks remain separate work.",
+    "Terminal archive verification does not replay CUDA updates or recompute live validation metrics.",
+    "Private evidence, model weights and native archives remain outside the public snapshot.",
+    "The center disk remains below the formal 200 GiB requirement."
+  ]
+}

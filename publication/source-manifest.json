@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "efe90a3f1ea70557ace7d1341c1b0d378622a6e7115e7bfed62af7d691879d40",
-      "bytes": 73335,
-      "source_sha256": "efe90a3f1ea70557ace7d1341c1b0d378622a6e7115e7bfed62af7d691879d40",
+      "sha256": "951a8a68f525a8ee106cef5f2d1a497096a9195c0c066fe25d267d42b4a26ad6",
+      "bytes": 74160,
+      "source_sha256": "951a8a68f525a8ee106cef5f2d1a497096a9195c0c066fe25d267d42b4a26ad6",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "804298a7158aedee215c2f93762e084878859e846aed70fb51bbc22e1e8d2706",
-      "bytes": 33969,
-      "source_sha256": "804298a7158aedee215c2f93762e084878859e846aed70fb51bbc22e1e8d2706",
+      "sha256": "44a2527d0d75e0217a1cbe5f70fcc9fdbcc1fbe4c6845467e6f2f17d6faf9751",
+      "bytes": 34564,
+      "source_sha256": "44a2527d0d75e0217a1cbe5f70fcc9fdbcc1fbe4c6845467e6f2f17d6faf9751",
       "transformations": []
     },
     {
@@ -1886,9 +1886,9 @@
     },
     {
       "path": "_spec_work/versions/fair-final-active-migration-v1/CONTRACT.md",
-      "sha256": "8486bae697894c34a4cdb695bec874bbca0a4ac15c88f73e20c435a0837b4720",
-      "bytes": 4905,
-      "source_sha256": "8486bae697894c34a4cdb695bec874bbca0a4ac15c88f73e20c435a0837b4720",
+      "sha256": "6ef3d58f402f0923a0f3596919b146de1b70d1154542c4b051d548d5c7621010",
+      "bytes": 7240,
+      "source_sha256": "6ef3d58f402f0923a0f3596919b146de1b70d1154542c4b051d548d5c7621010",
       "transformations": []
     },
     {
@@ -1934,6 +1934,20 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/run_selection.py",
+      "sha256": "d96545b77ab52f8a5da1e695bf30db03d984bb5506fc96760ca1896666c5419b",
+      "bytes": 12946,
+      "source_sha256": "d96545b77ab52f8a5da1e695bf30db03d984bb5506fc96760ca1896666c5419b",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/selection-execution-evidence-20261022.json",
+      "sha256": "75d5d8b12fe3d04b0d624c4ceb505efc70ba39e8a7d03d66fd7a17f1a2825e39",
+      "bytes": 2963,
+      "source_sha256": "75d5d8b12fe3d04b0d624c4ceb505efc70ba39e8a7d03d66fd7a17f1a2825e39",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-active-migration-v1/selection-handoff-evidence-20261022.json",
       "sha256": "c28f90ae739205a3271b0beb4fde667d5f26213fa866b652378a4e39cdd16d4a",
       "bytes": 2695,
@@ -1969,6 +1983,13 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/test_selection_execution.py",
+      "sha256": "f54af74f092f773926ec1ba6f8608d6c540654ec3eab9c70515d913671ac248f",
+      "bytes": 15185,
+      "source_sha256": "f54af74f092f773926ec1ba6f8608d6c540654ec3eab9c70515d913671ac248f",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-active-migration-v1/test_selection_handoff.py",
       "sha256": "a8f11a85aa0e467e2346c09e40d3d83b0a7eb9ddde2410d8626e6456ea3fee73",
       "bytes": 7899,
@@ -1980,6 +2001,13 @@
       "sha256": "dfd638883b99c04688b39c0d3f3747df73550c8024f3d27960fbcc57d1b09e29",
       "bytes": 6056,
       "source_sha256": "dfd638883b99c04688b39c0d3f3747df73550c8024f3d27960fbcc57d1b09e29",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/tests-selection-execution-joint.xml",
+      "sha256": "66dfc646e2e8358a77ec7ba90051b01bf23b3b741bf6772f32a5888389858e03",
+      "bytes": 12050,
+      "source_sha256": "66dfc646e2e8358a77ec7ba90051b01bf23b3b741bf6772f32a5888389858e03",
       "transformations": []
     },
     {
@@ -2022,6 +2050,13 @@
       "sha256": "9ac3a5e8e33fef8ab52eba065113013afa22aa5c882476d3482e7c3dd95ff629",
       "bytes": 13468,
       "source_sha256": "9ac3a5e8e33fef8ab52eba065113013afa22aa5c882476d3482e7c3dd95ff629",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/verify_selection_execution.py",
+      "sha256": "772bac7b3b6514aedae6a74a30838e5d9d851969aacc478bb6f4d4c90897751a",
+      "bytes": 9751,
+      "source_sha256": "772bac7b3b6514aedae6a74a30838e5d9d851969aacc478bb6f4d4c90897751a",
       "transformations": []
     },
     {
@@ -14076,8 +14111,8 @@
       "transformations": []
     }
   ],
-  "file_count": 2010,
-  "source_bytes": 30452585,
+  "file_count": 2015,
+  "source_bytes": 30509235,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

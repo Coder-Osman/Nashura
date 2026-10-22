@@ -67,3 +67,42 @@ checkpoint身份均复核，文件SHA及交接整体摘要写入记录。该工�
 旧native-batched-migration-1792664800317034000在selection阶段耗尽四小时总预算，
 退出124；前四阶段exit0不能替代全链路通过。失败现场及最后第7步checkpoint
 独立保留，不跨实现交给本active流程，也不将其作为terminal父启动round2。
+
+## 独立选优执行与终止内容验收
+
+`run_selection.py`接受外部固定文件SHA的上述交接目录，重新核对父证明、全部
+输入字节和安全载荷路径，再复制到全新独立输出目录。训练命令只引用交接中的
+冻结部署，保留完整第7步checkpoint、原seed/batch/microbatch及确定性环境，
+使用`--resume-sha`恢复；不加`--max-updates`，不重建优化器或选优历史。
+
+```sh
+python run_selection.py HANDOFF --handoff-file-sha HANDOFF_FILE_SHA \
+  --source SOURCE_A --data-root COMPLETE_DATA_ROOT --output NEW_PRIVATE_OUTPUT \
+  --device cuda:0 --timeout-seconds 28800
+```
+
+本工具提供独立1800–28800秒预算和独立进程组。超时先TERM、后KILL；即使
+进程组首进程已经退出，也清理其遗留后代。中断或非零退出写failure.json并隔离，
+不发布completion。退出0仍要求匹配的terminal报告、checkpoint SHA和冻结部署
+字节，成功状态仅为`completed_pending_independent_content_verification`。
+
+`verify_selection_execution.py`独立固定execution及completion文件SHA，重验
+部署/命令/环境、Linux PID启动身份、完整整局数据身份和第7步父状态，核对实际
+终止checkpoint与报告、父历史前缀、latest/best采样游标和RNG、教师及损失身份。
+若best仍来自父历史，须逐语义保留其完整模型/AdamW/RNG状态。第12轮结束不再
+洗牌，采样器验证只重放12次洗牌；含Tensor状态通过语义摘要比较。
+
+```sh
+python verify_selection_execution.py PRIVATE_ARCHIVE --execution-sha EXECUTION_SHA \
+  --completion-sha COMPLETION_SHA --data-roots COMPLETE_DATA_ROOT --output VERIFICATION_JSON
+```
+
+验收器不重跑CUDA更新或重新计算验证集模型指标，不重新证明原生对局来源。
+CPU小模型仅显式通过helper关闭原生日程验证，CLI始终要求原生日程，Mac执行
+fixture的空start_ticks不具备原生执行身份。真实SSH派发/回收及启动前资源/GPU
+独占检查仍须单独完成；原生父未通过独立验收前，不启动本续跑。代码与测试通过
+不代表真实交接、terminal选优、G2或任何模型强度通过，三个正式准入标志保持false。
+
+```sh
+python -m pytest -q test_selection_execution.py test_selection_handoff.py test_active_verifier.py
+```

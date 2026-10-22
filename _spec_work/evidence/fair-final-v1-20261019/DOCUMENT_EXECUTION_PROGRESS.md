@@ -6,6 +6,17 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+本轮已fetch全部远端分支并fast-forward核对，最新main为
+8f68763803207890351f574ab7191a5a613cb505，本地HEAD与origin/main一致。
+在此基础上补齐独立预算选优worker和终止内容验收器，保留完整第7步状态与
+原字节冻结部署，不截短日程。新增真实子进程超时/后代清理及真实小模型EARLY_STOP/
+MAX_EPOCHS内容测试；结果与身份见active-migration-v1下selection-execution证据。
+真实原生父尚未完成，未执行真实交接或选优，34/43和整体门保持。
+快照1792681789：active完成4次冻结更新、2个epoch，reference继续运行，部署
+匹配；Full128快照1792681423已提交96组/192根/24576模拟至tick3644，未终局。
+
+以下为此前记录，旧链路selection预算耗尽失败已在闭合清单单独登记。
+
 已重新核对GitHub全部远端分支，main最新af498d1；在其基础上新增独立active
 原生验证载荷，277文件、六个active源码逐字节绑定，旧scalar参考独立保留。
 新增10项工具/恢复CPU测试最近重跑通过32.96秒。首次CUDA尝试183.464秒失败：
