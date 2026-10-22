@@ -1,6 +1,7 @@
 from copy import deepcopy
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 
 import pytest
 
@@ -9,6 +10,7 @@ sys.path[:0] = [str(ROOT), str(ROOT.parent / "fair-final-migration-selection-v1"
     str(ROOT.parent / "fair-final-migration-series-v1"), str(ROOT.parents[2] / "firstlight_CR")]
 
 from collect_selected import prepare_selected_task
+import collect_selected
 from test_round_selection import CONFIG, create, finish
 from test_series_training import WEIGHTS, new_trainer, series
 from round_selection import MigrationRound
@@ -116,3 +118,56 @@ def test_second_supplementary_round_requires_complete_parent_history(series, tmp
     assert semantic_digest(student.state_dict()) == semantic_digest(run.best["payload"]["network"])
     with pytest.raises(ValueError, match="complete parent history"):
         prepare(registered, roots=series["roots"][-1:])
+
+
+@pytest.mark.parametrize("valid_registration", [True, False])
+def test_preflight_never_creates_store_or_connects_native(registered, tmp_path, monkeypatch, capsys, valid_registration):
+    plan = registered["plan"]
+    match = next(iter(plan["rounds"][-1]["manifest"]["matches"]))
+    options = SimpleNamespace(attempt_id=1, port=29731, wall_seconds=1200.,
+        private_plan=tmp_path / "plan.json", plan_sha=semantic_digest(plan),
+        seed_registration=tmp_path / "registration.json", seed_registration_sha="0" * 64,
+        excluded_seed_inventories=[], seed_source_map=tmp_path / "sources.json", seed_source_artifacts=[],
+        match_id=match, engine_sha="0" * 64, source=tmp_path / "teacher.pt", device="cpu",
+        parent_data_roots=registered["series"]["roots"][:1], selected=registered["path"],
+        selected_sha=registered["digest"], loss_weights=tmp_path / "weights.json",
+        selection_config=tmp_path / "config.json", preflight_only=True, output=tmp_path / "unused-output")
+    import json
+
+    for path, value in ((options.private_plan, plan), (options.seed_registration, {}),
+            (options.loss_weights, WEIGHTS.__dict__), (options.selection_config, CONFIG.__dict__)):
+        path.write_text(json.dumps(value))
+    monkeypatch.setattr(collect_selected, "argument_parser", lambda: SimpleNamespace(parse_args=lambda: options))
+
+    def registration(*unused, **kwargs):
+        if not valid_registration:
+            raise ValueError("registration rejected")
+        return {}
+
+    calls = []
+
+    def forbidden(*unused, **kwargs):
+        raise AssertionError("preflight touched store, private archive or native transport")
+
+    def load(*unused, **kwargs):
+        calls.append("model")
+        return registered["series"]["teacher"], None, None
+
+    monkeypatch.setattr(collect_selected, "validate_registration", registration)
+    monkeypatch.setattr(collect_selected, "collection_protocols", lambda unused: {})
+    monkeypatch.setattr(collect_selected, "load_checkpoint", load)
+    monkeypatch.setattr(collect_selected, "prepare_selected_task", lambda *unused, **kwargs: prepare(registered))
+    for name in ("MigrationStore", "archive_registration", "create_search_native"):
+        monkeypatch.setattr(collect_selected, name, forbidden)
+    if valid_registration:
+        collect_selected.main()
+        report = json.loads(capsys.readouterr().out)
+        assert report["status"] == "passed_preflight_only"
+        assert report["selected_checkpoint_sha"] == registered["digest"]
+        assert report["selected_network_sha"] == semantic_digest(registered["run"].best["payload"]["network"])
+        assert calls == ["model"]
+    else:
+        with pytest.raises(ValueError, match="registration rejected"):
+            collect_selected.main()
+        assert calls == []
+    assert not options.output.exists()

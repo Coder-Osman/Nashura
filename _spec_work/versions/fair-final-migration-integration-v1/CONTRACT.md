@@ -242,6 +242,31 @@ native-selected-round0-1792629813912401000，复用既有三局已验收工程�
 单步完成仍不是terminal选优父轮；须按身份恢复到合法轮次终止后才允许补充采集。
 本attempt沿用既有数据事后登记，不宣称旧seed获得了事前预注册证据。
 
+## 2026-10-22 后续采集的有界引擎生命周期
+
+新增selected_collection_worker.py，运行前固定请求、部署清单及所有源码SHA。
+先执行collect_selected.py --preflight-only，完成种子/完整父历史/terminal选优
+模型和规则校验后，才启动本次独占引擎；预检不创建数据store、私有审计或连接
+原生引擎。实际采集重新执行同样校验，保留严格身份门禁。
+
+worker固定launcher/service/probe身份，核验运行中的PID/start_ticks和ready
+attestation；预检、启动、采集均有独立有界预算。正常、错误、超时或中断后仅
+清理自己的launcher及匹配启动身份的原生子进程，核对端口释放和干净退出。
+缺报告或清理失败不写成功；completion仅为collected_requires_independent_verification，
+不替代整局内容与来源独立验收。occupied端口不终止其他进程。
+
+最终三个文件联合tests-bounded-collection-final.xml：43项通过、60.57秒，
+范围包含此前41项worker/载荷/采集及后来新增的预检用例，重叠不相加。
+子进程/socket夹具覆盖正常、预检/采集失败、各阶段超时、身份损坏、占用端口、
+SIGINT和清理失败；这些不是原生完整局证据。
+
+新独立采集包278源码SHA复核、273父文件保持，仅更新采集、登记、来源、worker
+及launcher五文件。payload SHA为
+d8f59a0d9a3333dac3207b911951a41afb92b3f95c751c9d5222d0013a647dfe。
+见bounded-collection-payload-evidence-20261022.json及
+bounded-collection-verification-20261022.json。尚未部署或采集，缺terminal父时
+不构造虚假父凭据。运行中的冻结训练/搜索保持原样，所有准入标记仍为false。
+
 ## 2026-10-22 合批父包的确定性来源交接
 
 新合批训练包包含deterministic_runtime及训练入口配置，但launch没有旧版

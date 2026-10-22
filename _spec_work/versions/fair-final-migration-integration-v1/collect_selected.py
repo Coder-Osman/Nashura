@@ -2,6 +2,7 @@ import argparse
 from copy import deepcopy
 import hashlib
 import json
+import math
 from pathlib import Path
 import sys
 
@@ -60,7 +61,7 @@ def prepare_selected_task(plan, parent_roots, *, expected_plan_sha, teacher, sel
     return student, deepcopy(manifest), private
 
 
-def main():
+def argument_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--engineering-acceptance", action="store_true", required=True)
     parser.add_argument("--port", type=int, required=True)
@@ -83,10 +84,17 @@ def main():
     parser.add_argument("--attempt-id", type=int, default=1)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--wall-seconds", type=float, default=1200.)
-    args = parser.parse_args()
+    parser.add_argument("--preflight-only", action="store_true")
+    return parser
+
+
+def main():
+    args = argument_parser().parse_args()
     integer(args.attempt_id, 1, "collection attempt")
     if args.attempt_id > 3:
         raise ValueError("supplementary collection attempt budget exceeded")
+    if not 1 <= args.port <= 65535 or not math.isfinite(args.wall_seconds) or args.wall_seconds <= 0:
+        raise ValueError("valid port and finite positive collection deadline required")
     torch.set_num_threads(1)
     plan = json.loads(args.private_plan.read_text())
     if semantic_digest(plan) != require_sha(args.plan_sha):
@@ -108,6 +116,14 @@ def main():
         selected_sha=args.selected_sha, weights=MigrationLossWeights(**json.loads(args.loss_weights.read_text())),
         config=SelectionConfig(**json.loads(args.selection_config.read_text())),
         match_id=args.match_id, device=args.device)
+    if args.preflight_only:
+        print(json.dumps(dict(schema="FairFinalSelectedCollectionPreflight/v1",
+            status="passed_preflight_only", match_id=args.match_id,
+            selected_checkpoint_sha=args.selected_sha,
+            selected_network_sha=private["student_network_sha"],
+            plan_sha=args.plan_sha, **seed_evidence,
+            training_admissible=False, formal_g2_pass=False)), flush=True)
+        return
     store = MigrationStore(args.output, manifest=manifest)
     audit = store.root / "audit" / args.match_id / str(args.attempt_id)
     audit.mkdir(parents=True, exist_ok=False)

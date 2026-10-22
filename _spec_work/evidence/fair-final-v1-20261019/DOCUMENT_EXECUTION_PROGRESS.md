@@ -6,6 +6,26 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+严格确定性原生FP32 batch256跨新进程恢复已通过独立验收：三局1044行，
+累计3次真实更新；连续执行与恢复后的模型、AdamW、RNG、采样游标/下一批及
+选优历史严格一致。父/恢复launch与归档回执由外部SHA固定，冻结部署与原生
+来源重新复核通过。见migration-cache-v1下
+native-deterministic-resume-verified-20261022.json及CONTRACT.md。
+该证据仅闭合此工程恢复范围，不证明terminal选优、原生round2或正式G2；
+G0/G1仍进行中、限定登记34/43保持，G2–G8未运行、training_admissible=false。
+
+新增后续采集预检及有界独占引擎worker，最终43项联合测试通过60.57秒。
+预检在引擎启动前完成，覆盖超时/中断/身份与所属清理；独立包278源码SHA、
+273父文件保持。只到工程夹具及本地包准备，尚未原生部署/采集，不新增门PASS。
+见integration-v1/CONTRACT.md及bounded-collection-verification-20261022.json。
+
+快照1792668454：同一Full128局已提交85组/170根/21760次有效模拟至tick3278，
+tick3282玩家0搜索中；worker及所属双引擎存活、未终局。新合批五阶段流水线
+处于reference，初始358行及后续一次358行验证已完成，midpoint已生成；
+尚无该流水线恢复/terminal选优完成凭据。.35盘137.884GiB，中心200GiB门保持。
+
+以下为此前快照与增量，旧“恢复待验”描述不覆盖上述新独立验收结果。
+
 补齐合批迁移包到后续采集的确定性身份交接：对缺声明的包仍默认拒收，
 仅在显式固定祖先launch SHA、完整载荷/部署/运行时及训练配置均通过时接受。
 实际独立采集包276个源码SHA复核、273个父文件保持；联合24项通过98.76秒。

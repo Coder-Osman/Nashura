@@ -33,7 +33,8 @@ def test_collection_preserves_training_identity_and_integrates_current_preflight
     assert report["deterministic"] is True
     assert report["training_admissible"] is report["formal_g2_pass"] is False
     expected_changes = {INTEGRATION + name for name in
-        ("collect_selected.py", "seed_registration.py", "seed_sources.py")}
+        ("collect_selected.py", "seed_registration.py", "seed_sources.py", "selected_collection_worker.py")}
+    expected_changes.add("phase_snapshot_launcher.py")
     assert set(report["changes"]) == expected_changes
     for name, data in parent_files.items():
         if name != "deployment.json" and name not in expected_changes:
@@ -54,6 +55,11 @@ def test_collection_preserves_training_identity_and_integrates_current_preflight
     assert result.returncode == 0, result.stderr
     assert "--seed-source-artifacts" in result.stdout
     assert "--engineering-acceptance" in result.stdout
+    assert "--preflight-only" in result.stdout
+    worker = subprocess.run([sys.executable, "-B", str(tmp_path / INTEGRATION / "selected_collection_worker.py"), "--help"],
+        capture_output=True, text=True, timeout=30)
+    assert worker.returncode == 0, worker.stderr
+    assert "--deployment-sha" in worker.stdout
 
 
 @pytest.mark.parametrize("damage", ["launch", "payload", "scope", "runtime", "manifest"])

@@ -1,16 +1,16 @@
 {
   "schema": "hashura.publication-validation.v1",
   "date": "2026-10-22",
-  "source_manifest_sha256": "aa2320bcac382ec4d468aa918acf043cd665a1be865eeb43013b82e882bf2e78",
-  "source_files_verified": 1974,
+  "source_manifest_sha256": "b6a6334a582a7b223e6fc2c6ba87a8394e5da1d75e6a0b311ce467fa53ca873f",
+  "source_files_verified": 1983,
   "public_tests": {
     "passed": 220,
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "seconds": 74.973,
+    "seconds": 35.079,
     "report": "checks-public.xml",
-    "sha256": "889ef4bf6f128d9245525dee50a637bbafa6490b7c0b35fe3157635d57d1205b"
+    "sha256": "3641697e7575538ca71682df98b82a570e3203d7498a5c8257637c5cf67e882a"
   },
   "secret_scan": {
     "tool": "gitleaks",

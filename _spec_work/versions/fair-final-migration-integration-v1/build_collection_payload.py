@@ -85,8 +85,10 @@ def build_collection(parent, *, expected_launch_sha, runtime_parent=None,
             "            (ROOT.parent / 'fair-final-migration-series-v1/deterministic_runtime.py').read_bytes()).hexdigest())\n"
             + anchor, 1)
     updates = {INTEGRATION + "collect_selected.py": collector.encode()}
-    for name in ("seed_registration.py", "seed_sources.py"):
+    for name in ("seed_registration.py", "seed_sources.py", "selected_collection_worker.py"):
         updates[INTEGRATION + name] = (ROOT / name).read_bytes()
+    launcher = ROOT.parents[1] / "evidence/fair-final-v1-20261019/phase_snapshot_launcher.py"
+    updates["phase_snapshot_launcher.py"] = launcher.read_bytes()
     changes = {name: dict(before=original_identity.get(name), after=sha(data))
         for name, data in updates.items() if files.get(name) != data}
     files.update(updates)

@@ -1,0 +1,53 @@
+{
+  "schema": "FairFinalBoundedCollectionVerification/v1",
+  "status": "passed_fixture_scope",
+  "native_collection_executed": false,
+  "training_admissible": false,
+  "formal_g2_pass": false,
+  "gates_closed": false,
+  "tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "43",
+    "time": "60.572",
+    "timestamp": "2026-10-22T19:27:39.310253+08:00",
+    "hostname": "gujigadeMacBook-Pro-3.local"
+  },
+  "files": {
+    "selected_collection_worker.py": {
+      "sha256": "2f6ad232f9cc2ade96244303b0c0a87921f21a7bd8cf7511d48607ec39ae753b",
+      "bytes": 12462
+    },
+    "collect_selected.py": {
+      "sha256": "5c07cb7413b431ac2e6d5af41e04081287f3320b5f043173d058a8854dc10c77",
+      "bytes": 10289
+    },
+    "build_collection_payload.py": {
+      "sha256": "487b48b405e0605f19965b05cc951fe449c88951bed214f8599675c09fe1c292",
+      "bytes": 7368
+    },
+    "test_selected_collection_worker.py": {
+      "sha256": "d045f3e64c39c61a35bdf8692e08773cbc8e8cefdf0f20eaaafd493702535716",
+      "bytes": 11982
+    },
+    "test_selected_collection.py": {
+      "sha256": "5f27a749b800df174168546a7b94c87bb2e28552efd27a6f2100264658daad8d",
+      "bytes": 8893
+    },
+    "test_collection_payload.py": {
+      "sha256": "8abd8977675ad9c769c5e0166aaa611e0a7d5ec229223a9109a1e927c3f9aef3",
+      "bytes": 8372
+    },
+    "tests-bounded-collection-final.xml": {
+      "sha256": "518a9d4a045265f95ca87b065ac096a68fd8576bda541fa33f23cf00e0ff8b99",
+      "bytes": 8787
+    },
+    "bounded-collection-payload-evidence-20261022.json": {
+      "sha256": "f8081f868b3817339820cafc73a7926c762c4734a757ecaef6f98160496d247f",
+      "bytes": 1776
+    }
+  },
+  "scope": "Preflight and bounded owned-engine lifecycle; real subprocess/socket fixtures, not native supplementary-game acceptance"
+}

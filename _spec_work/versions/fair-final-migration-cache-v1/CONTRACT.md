@@ -1,5 +1,26 @@
 # 迁移整局解码校验缓存：独立候选
 
+## 2026-10-22 严格确定性原生跨进程恢复独立通过
+
+native-deterministic-round0-1792647014623244000及配套
+native-cached-resume-1792647047730238000已终止并完成逐文件归档。
+独立verify_execution.py用外部固定的父/恢复launch与下载回执SHA，重新核验
+冻结部署、原生三局来源、划分行序列、父checkpoint及复制件、不同进程启动身份，
+再从checkpoint内容重算连续执行和新进程恢复后的状态。
+
+结果文件native-deterministic-resume-verified-20261022.json的status为
+passed_execution_archive_and_checkpoint_scope；frozen_deployment_verified与
+native_game_provenance_reverified均为true。累计3次更新，模型、AdamW、RNG、
+采样游标/下一批行、选优历史及指标严格一致。三局仍为train352、validation358、
+test334行；test不参与更新或选优。reference与resumed不同进程均退出0，
+分别9204.308秒及5691.986秒，完整对照总耗时20394.015秒。
+
+本次只证明该冻结设备/软件栈、FP32 batch256与三局工程数据上的真实梯度恢复。
+不证明terminal选优、后续原生round2、正式1280局迁移或模型强度，不据此关闭
+G1/G2；training_admissible、formal_g2_pass及gates_closed仍为false。
+归档器的native_resume_verified=false表示“仅归档不自证”，独立验收结果另存，
+不覆写归档回执。此前超时及非确定性失败证据保持原样。
+
 ## 2026-10-22 确定性探针超时与独立有界重跑
 
 native-deterministic-round0-1792641532086311000遵守原5400秒上限退出124，
