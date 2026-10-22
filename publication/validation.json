@@ -1,16 +1,16 @@
 {
   "schema": "hashura.publication-validation.v1",
   "date": "2026-10-22",
-  "source_manifest_sha256": "9e1803cf6cd92aece6b22b0a8d7c3e0b892d05bd55b6a77395231fd8b953867d",
-  "source_files_verified": 1990,
+  "source_manifest_sha256": "9d7c46eee1a23a1bdfdb6e4d4a548868f1be7ade90bc2165d06b2655077c544c",
+  "source_files_verified": 2000,
   "public_tests": {
     "failures": 0,
     "errors": 0,
     "skipped": 0,
     "passed": 220,
-    "seconds": 38.993,
+    "seconds": 50.251,
     "report": "checks-public.xml",
-    "sha256": "7328367567fb3c1b13fe4c28b1d034c6d69d4bf02e12c2a05fd04a09048acccb"
+    "sha256": "bd10337b6534ebab8d486207642ef65c1b91df03ebeb6c63008249fa357fff53"
   },
   "secret_scan": {
     "tool": "gitleaks",
@@ -60,7 +60,7 @@
   },
   "active_cpu_tests": {
     "passed": 211,
-    "seconds": 24.12,
+    "seconds": 36.39,
     "command": "python tools/run_main_engine_checks.py",
     "scope": "CPU_UNIT_ONLY"
   },
@@ -74,5 +74,19 @@
     "report": "publication/checks-integration-latest.xml",
     "sha256": "5077139fb1441f0eb5bf28e4fe22252d45441f56014cdc34cf2513dd058cb3dc"
   },
-  "latest_integration_evidence": "agent-handoff/INTEGRATION_2026-10-22.json"
+  "latest_integration_evidence": "agent-handoff/INTEGRATION_2026-10-22.json",
+  "active_migration_tool_tests": {
+    "passed": 10,
+    "seconds": 32.962,
+    "report": "_spec_work/versions/fair-final-active-migration-v1/tests.xml",
+    "sha256": "07c6305c7da0e42a56072443e3a3ff4b9a83ff6b41848148921e5a0e9dcaf459",
+    "scope": "CPU_TOOL_AND_SMALL_MODEL_RESUME_ONLY"
+  },
+  "active_migration_cuda_evidence": {
+    "report": "_spec_work/versions/fair-final-active-migration-v1/cuda-comparison-evidence-20261022.json",
+    "sha256": "d4d37d1429da511d912bdb9aaaf867f87a291074514805c7dc65da9c1cb3d9ab",
+    "comparisons_passed": 6,
+    "resume": "running_pending_independent_verification",
+    "formal_g2_pass": false
+  }
 }

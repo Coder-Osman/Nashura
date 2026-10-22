@@ -48,16 +48,18 @@ def conditional_teacher_kl(teacher, student, *, cell_chunk=64):
         cell_kl, cells = conditional((1, card))
         total = total + modes[1] * cards[card] * cell_kl
         legal_cells = torch.where(teacher.prefix_mask((1, card)))[0].tolist()
+        if not getattr(student.logits, "batch_delay_enabled", False):
+            for cell in legal_cells:
+                delay_kl, _ = conditional((1, card, cell))
+                total = total + modes[1] * cards[card] * cells[cell] * delay_kl
+            continue
         for offset in range(0, len(legal_cells), cell_chunk):
             batch = legal_cells[offset:offset + cell_chunk]
-            # Compute teacher FiLM/delay logits once per chunk. Always preserve the
-            # original per-cell KL accumulation order for strict AdamW comparison.
             teacher_delay = teacher.delay_conditionals_batch(card, torch.tensor(batch, dtype=torch.long)).detach()
-            student_batch = (student.delay_conditionals_batch(card,
+            student_batch = student.delay_conditionals_batch(card,
                 torch.tensor(batch, dtype=torch.long), raw=True)
-                if getattr(student.logits, "batch_delay_enabled", False) else None)
             for index, cell in enumerate(batch):
-                student_log = student_batch[index] if student_batch is not None else student.conditionals((1, card, cell), raw=True)
+                student_log = student_batch[index]
                 teacher_log = teacher_delay[index].to(student_log.device)
                 mask = teacher.legality.plays[card, cell].to(student_log.device)
                 delay_kl = (teacher_log.exp()[mask] * (teacher_log[mask] - student_log[mask])).sum()

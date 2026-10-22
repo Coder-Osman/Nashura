@@ -45,9 +45,9 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "a74238c34ec8bd6b3ac620aeebce422045c7bab161796483c700c9dd519bede1",
-      "bytes": 68856,
-      "source_sha256": "a74238c34ec8bd6b3ac620aeebce422045c7bab161796483c700c9dd519bede1",
+      "sha256": "0394cbe6c8005c992bf9b0dfd7d4fe33b15a4ca72dfb9a65342bd068ace9af05",
+      "bytes": 69941,
+      "source_sha256": "0394cbe6c8005c992bf9b0dfd7d4fe33b15a4ca72dfb9a65342bd068ace9af05",
       "transformations": []
     },
     {
@@ -1882,6 +1882,76 @@
       "sha256": "bb43efb260b4224cf0c1934119d873586145f88da30f0013ff1bffd596ad843c",
       "bytes": 12845,
       "source_sha256": "bb43efb260b4224cf0c1934119d873586145f88da30f0013ff1bffd596ad843c",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/CONTRACT.md",
+      "sha256": "d3ddd0085a2a8b2ae8c627e7f1558a17be6781bc5ab91199be5f77dbb9422f40",
+      "bytes": 2093,
+      "source_sha256": "d3ddd0085a2a8b2ae8c627e7f1558a17be6781bc5ab91199be5f77dbb9422f40",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/EVIDENCE.md",
+      "sha256": "2a09b13b90fb2c48e774da372b7991666c8002b713b93bd7c7493276bed3a969",
+      "bytes": 3142,
+      "source_sha256": "2a09b13b90fb2c48e774da372b7991666c8002b713b93bd7c7493276bed3a969",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/build_payload.py",
+      "sha256": "2845fe6167a16ede8e0bf8a5bc788ec2e86da66a9dfac4a1da87e88afb0c4eee",
+      "bytes": 4481,
+      "source_sha256": "2845fe6167a16ede8e0bf8a5bc788ec2e86da66a9dfac4a1da87e88afb0c4eee",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/collect_native.py",
+      "sha256": "5c2f1e34f3a0591de57940e28bb22098fbf709d603553498465789eabcaa669d",
+      "bytes": 995,
+      "source_sha256": "5c2f1e34f3a0591de57940e28bb22098fbf709d603553498465789eabcaa669d",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/cuda-comparison-evidence-20261022.json",
+      "sha256": "d4d37d1429da511d912bdb9aaaf867f87a291074514805c7dc65da9c1cb3d9ab",
+      "bytes": 13909,
+      "source_sha256": "d4d37d1429da511d912bdb9aaaf867f87a291074514805c7dc65da9c1cb3d9ab",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/probe_active_resume.py",
+      "sha256": "acf0a8465cf688e1227a9f8529255fcbd951ef06e59d4a69644b5804b1f3fd2d",
+      "bytes": 7461,
+      "source_sha256": "acf0a8465cf688e1227a9f8529255fcbd951ef06e59d4a69644b5804b1f3fd2d",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/start_native.py",
+      "sha256": "a281b2aab9b84418f6fd758c0423743679e1fa4f521d9a0548f2a0d1f47b18b4",
+      "bytes": 6708,
+      "source_sha256": "a281b2aab9b84418f6fd758c0423743679e1fa4f521d9a0548f2a0d1f47b18b4",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/test_active_payload.py",
+      "sha256": "3b387d9916bfa85ff81f37bf45a786b6f1843cfba9b9739ee1273823e6194b53",
+      "bytes": 5235,
+      "source_sha256": "3b387d9916bfa85ff81f37bf45a786b6f1843cfba9b9739ee1273823e6194b53",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/test_active_resume.py",
+      "sha256": "b1dd021dd8b06b27215990148cf60b4af8fdede5a74548d14df72adc22d3ed1d",
+      "bytes": 2407,
+      "source_sha256": "b1dd021dd8b06b27215990148cf60b4af8fdede5a74548d14df72adc22d3ed1d",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/tests.xml",
+      "sha256": "07c6305c7da0e42a56072443e3a3ff4b9a83ff6b41848148921e5a0e9dcaf459",
+      "bytes": 2059,
+      "source_sha256": "07c6305c7da0e42a56072443e3a3ff4b9a83ff6b41848148921e5a0e9dcaf459",
       "transformations": []
     },
     {
@@ -10246,9 +10316,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/tests/test_fair_final_learning.py",
-      "sha256": "4f504a65769cff81c0738a8df5fd169594283f495722d2810c7614759ba4145d",
-      "bytes": 11766,
-      "source_sha256": "4f504a65769cff81c0738a8df5fd169594283f495722d2810c7614759ba4145d",
+      "sha256": "988e7465fd018a95cd7affd70d660740a961ef703cc6ddc077653a6baeeccf14",
+      "bytes": 12452,
+      "source_sha256": "988e7465fd018a95cd7affd70d660740a961ef703cc6ddc077653a6baeeccf14",
       "transformations": []
     },
     {
@@ -11548,9 +11618,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/learning.py",
-      "sha256": "26d41cef8066dd1c848691c2796338bfc3aadd999921cd85625138be7bc1dc7d",
-      "bytes": 3830,
-      "source_sha256": "26d41cef8066dd1c848691c2796338bfc3aadd999921cd85625138be7bc1dc7d",
+      "sha256": "f7e005c482e176f9e3b9e92014de17c1aca30972ecd4e7c3b953995b15979898",
+      "bytes": 3763,
+      "source_sha256": "f7e005c482e176f9e3b9e92014de17c1aca30972ecd4e7c3b953995b15979898",
       "transformations": []
     },
     {
@@ -13936,8 +14006,8 @@
       "transformations": []
     }
   ],
-  "file_count": 1990,
-  "source_bytes": 30327522,
+  "file_count": 2000,
+  "source_bytes": 30377716,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

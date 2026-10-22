@@ -6,6 +6,20 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+已重新核对GitHub全部远端分支，main最新af498d1；在其基础上新增独立active
+原生验证载荷，277文件、六个active源码逐字节绑定，旧scalar参考独立保留。
+新增10项工具/恢复CPU测试最近重跑通过32.96秒。首次CUDA尝试183.464秒失败：
+解冻阶段近零梯度差异被AdamW放大，权重更新超既定容差；失败归档287文件保留。
+现已修复解冻时教师侧仍合批的问题，教师/学生均保留逐位置路径；11项learning、
+26项migration通过。修复后GPU1独立任务六对CUDA损失/梯度/AdamW比较通过，
+解冻三对最大梯度差0；快照1792676859已进入reference。随后验证冻结/解冻
+两个新进程恢复，最终归档独立核验待完成，不继承旧实现PASS。
+Full128同局快照1792676578已提交92组/184根/23552模拟，tick3510搜索中，
+旧合批链路仍在selection；保留原冻结部署。详见active-migration-v1/EVIDENCE.md。
+G0/G1仍开放、34/43保持，G2–G8未运行、training_admissible=false。
+
+以下保留此前证据及快照。
+
 新增归档后续采集独立内容验收器，联合47项通过65.794秒：外部SHA固定输入，
 只读本地映射，重验terminal选优父、多轮数据身份、整局/终局/生命周期、种子
 原始来源与所属引擎清理；确定性运行时仅核对源码及声明，不重跑CUDA。

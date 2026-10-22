@@ -182,7 +182,7 @@ def test_source_adapter_batch_delays_match_scalar_61_to_30_head():
     torch.testing.assert_close(actual, expected, atol=1e-6, rtol=1e-6)
 
 @pytest.mark.parametrize("freeze_encoder", [True, False])
-def test_real_source_joint_kl_matches_sparse_full_joint_reference(freeze_encoder):
+def test_real_source_joint_kl_matches_sparse_full_joint_reference(freeze_encoder, monkeypatch):
     from native_runner.tests.test_training_v4_model import _batch
     from native_runner.training.fair_final.adapter import source_policy
     from native_runner.training.fair_final.learning import conditional_teacher_kl
@@ -200,7 +200,21 @@ def test_real_source_joint_kl_matches_sparse_full_joint_reference(freeze_encoder
     frame = _batch(1)
     teacher, _ = source_policy(source, frame, legality)
     policy = student(frame, [legality])[0][0]
+    batch_calls = {"teacher": 0, "student": 0}
+
+    def track_batch(name, implementation):
+        def evaluate(*args, **kwargs):
+            assert freeze_encoder, "trainable encoder must retain scalar teacher and student paths"
+            batch_calls[name] += 1
+            return implementation(*args, **kwargs)
+        return evaluate
+
+    for name, instance in (("teacher", teacher), ("student", policy)):
+        monkeypatch.setattr(instance, "delay_conditionals_batch",
+            track_batch(name, instance.delay_conditionals_batch))
     actual = conditional_teacher_kl(teacher, policy, cell_chunk=2)
+    expected_calls = 4 if freeze_encoder else 0
+    assert batch_calls == {"teacher": expected_calls, "student": expected_calls}
     actions = [FullAction(), *[FullAction(legality.card_ids[c], cell, delay)
         for c, cell, delay in torch.nonzero(legality.plays).tolist()]]
     reference = sum(teacher.log_prob(action).detach().exp()
