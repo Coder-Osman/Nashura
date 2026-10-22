@@ -1,0 +1,55 @@
+{
+  "schema": "FairFinalActiveSelectionHandoffEvidence/v1",
+  "date": "2026-10-22",
+  "baseline_main_sha": "f9e0958e8fe671eaa22e42319dcfc599e89c2a89",
+  "previous_manifest_source_files_verified": 2005,
+  "implementation": [
+    {"path": "_spec_work/versions/fair-final-active-migration-v1/prepare_selection.py", "sha256": "f8acc3351d0620ee643dfa7337ce4b427818c41d9f108b8d72a8b58250e8f4de", "bytes": 5650},
+    {"path": "_spec_work/versions/fair-final-active-migration-v1/test_selection_handoff.py", "sha256": "a8f11a85aa0e467e2346c09e40d3d83b0a7eb9ddde2410d8626e6456ea3fee73", "bytes": 7899}
+  ],
+  "tests": [
+    {"path": "_spec_work/versions/fair-final-active-migration-v1/tests-selection-handoff.xml", "sha256": "72bb68cfc334664d6426bc8e149609f28b32c4209aedd8a4c54c436580ac3e62", "bytes": 3361, "tests": 17, "failures": 0, "errors": 0, "skipped": 0, "seconds": 50.616},
+    {"path": "_spec_work/versions/fair-final-active-migration-v1/tests-selection-handoff-joint.xml", "sha256": "aec0c255fb929daba8dc84d09dd1942b34cdc18c9ac16b04b128f8c7fd9daa90", "bytes": 7359, "tests": 38, "failures": 0, "errors": 0, "skipped": 0, "seconds": 109.805}
+  ],
+  "test_count_note": "The combined 38-test run includes the 17 handoff tests; these counts are not additive.",
+  "scope": {
+    "tool_validation": "passed_cpu_small_model_and_mock_gate_scope",
+    "native_handoff": "not_run",
+    "selection_execution": "not_implemented_by_this_tool",
+    "active_native_resume": "pending_independent_verification",
+    "native_full128_terminal": "pending",
+    "g0_g1": "open",
+    "limited_subitems": "34/43",
+    "g2_g8": "not_run",
+    "training_admissible": false,
+    "formal_g2_pass": false,
+    "gates_closed": false
+  },
+  "latest_native_snapshot": {
+    "timestamp": 1792680294,
+    "active_completed_updates": 3,
+    "active_validation_rows": 160,
+    "active_validation_total": 358,
+    "active_deployment_matches": true,
+    "full128_committed_groups": 95,
+    "full128_committed_roots": 190,
+    "full128_valid_simulations": 24320,
+    "full128_committed_tick": 3592,
+    "full128_terminal": false
+  },
+  "legacy_batch_failure": {
+    "selection_exit_code": 124,
+    "total_budget_seconds": 14400.468,
+    "last_persisted_step": 7,
+    "last_persisted_completed_epochs": 3,
+    "terminal_report_present": false,
+    "archive": "downloading",
+    "qualifies_as_parent": false
+  },
+  "limitations": [
+    "Real native parent recovery must pass before preparing a handoff.",
+    "This tool neither deploys nor runs selection training.",
+    "Private raw evidence, weights and native archives remain outside the public snapshot.",
+    "The center disk remains below the formal 200 GiB requirement."
+  ]
+}

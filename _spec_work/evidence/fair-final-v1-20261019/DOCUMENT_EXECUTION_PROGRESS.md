@@ -892,3 +892,31 @@ terminal选优仍在运行；不将旧实现结果转记为当前active通过。
 
 G0/G1仍开放、限定子项34/43不增加；G2–G8未运行，正式迁移及五机放量未启动。
 详见active-migration-v1/CONTRACT.md、EVIDENCE.md及tests-verifier.xml。
+
+## 2026-10-22 基于最新主线继续交接准备
+
+重新核对远端main为f9e0958e8fe671eaa22e42319dcfc599e89c2a89，审计分支已包含，
+本机独立仓库干净，源清单2005项通过。本轮在此基础上继续，不覆盖冻结运行部署。
+
+旧native-batched-migration-1792664800317034000的benchmark/training/reference/
+resumed均exit0，selection耗尽14400.468秒总预算后exit124。最后保存selected.pt
+为第7步、3个完整epoch，第8步未持久化，无terminal报告；归档仍在下载，未登记
+整链通过，不把旧实现checkpoint接到新active实现，也不据此启动round2。
+
+新增prepare_selection.py，强制先运行新版verify_archive并要求真实352/256/96
+日程、四阶段成功及六checkpoint恢复一致。仅准备独立交接目录，原字节保留
+冻结包与完整第7步trainable-reference checkpoint、优化器/RNG/游标/选优历史，
+绑定外部父launch/回执、源码和数据身份。配置与日程不变，不启动训练；fixture
+和失败父拒收，父归档不写入。17项专项通过50.62秒，只验证工具及小模型交接。
+
+快照1792679905：active reference完成3次冻结更新，第4次更新边界的358行验证
+已到96行，进程/部署一致；跨新进程恢复仍待完成。Full128快照1792679578仍提交
+94组/188根/24064有效模拟，tick3592玩家1搜索中，尚无原生终局。
+G0/G1及34/43保持，G2–G8未运行，正式训练未启动。中心200GiB门槛不降低。
+
+后续交接/验收联合38项通过109.81秒，包含上述17项，不累加；冻结参考220项
+通过78.06秒，当前主工程211项通过51.41秒。均属工具/CPU工程测试。
+快照1792680294：active仍为3次冻结更新，完整验证160/358行，部署一致；
+Full128提交95组/190根/24320有效模拟至tick3592，tick3644玩家0搜索中。
+真实交接未运行，旧失败归档仍在下载。证据见active-migration-v1下
+selection-handoff-evidence-20261022.json。

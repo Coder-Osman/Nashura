@@ -42,3 +42,28 @@ python verify_active.py ATTEMPT --launch-sha LAUNCH_SHA --receipt-sha RECEIPT_SH
 指标。它检查归档内容与执行身份，不重跑CUDA张量比较或原生对局来源探针；输出
 明确保留native_game_provenance_reverified=false及各正式门false。三局数据原生
 来源的独立验收仍以原始数据证据为准。
+
+## 选优续跑的独立交接准备
+
+`prepare_selection.py`只在父active归档全部通过上述原生日程独立验收后准备交接。
+必须提供外部固定的launch及下载回执SHA，并重新核验完整数据；fixture日程、
+失败/未完成父及旧batch链路均不具备交接资格。
+
+```sh
+python prepare_selection.py PARENT --launch-sha LAUNCH_SHA --receipt-sha RECEIPT_SHA \
+  --data-roots COMPLETE_DATA_ROOT --output INDEPENDENT_PRIVATE_DIRECTORY
+```
+
+输出包含原字节冻结载荷、完整第7步trainable-reference checkpoint、重算验收报告
+及最后发布的selection-handoff.json。完整checkpoint保留模型、AdamW、RNG、
+数据游标和选优历史；不只导出模型权重，不重建优化器。配置、损失和实现身份
+沿用父包，max_updates为空，后续终止选优仍按原早停和epoch日程执行。
+
+输出目录必须独立于父归档，已存在目录拒绝覆盖。载荷路径、重复成员、源码与
+checkpoint身份均复核，文件SHA及交接整体摘要写入记录。该工具不连接GPU机、
+不启动训练、不宣布terminal选优通过，状态明确为prepared_only_not_executed；
+原生父恢复验收未完成时仍应等待。私有交接目录含权重与计划，不纳入公开仓库。
+
+旧native-batched-migration-1792664800317034000在selection阶段耗尽四小时总预算，
+退出124；前四阶段exit0不能替代全链路通过。失败现场及最后第7步checkpoint
+独立保留，不跨实现交给本active流程，也不将其作为terminal父启动round2。
