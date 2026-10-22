@@ -84,4 +84,14 @@ def source_policy(source, frame, legality):
         cell = torch.tensor([prefix[2]], device=device)
         return policy.delay_logits(context, card_row, cell)[0, :31]
 
+    def batch_delays(card_index, cell_indices):
+        if cell_indices.ndim != 1 or cell_indices.dtype != torch.long or cell_indices.numel() == 0:
+            raise ValueError("batched source delays require nonempty int64 cell indices")
+        row = torch.tensor([rows[card_index]], device=device)
+        keys, _, shared = policy._cell_conditioning(context, row)
+        cells = cell_indices.to(device)
+        locations = policy._selected_cell_memory(keys.expand(cells.numel(), -1, -1, -1), cells)
+        return policy.delay_head(torch.cat((shared.expand(cells.numel(), -1), locations), dim=-1))[:, :31]
+
+    logits.batch_delays = batch_delays
     return JointPolicy(logits, legality), source.wdl_head(context.value_context)

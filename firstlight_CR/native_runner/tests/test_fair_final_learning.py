@@ -144,3 +144,39 @@ def test_payment_mask_uses_integer_native_rates_before_command_application():
     assert not bool(mask[0]) and not bool(mask[1]) and bool(mask[2])
     exact = native_payment_mask(tick=168, elixir_raw=39904, cost_raw=40000, timeline=timeline)
     assert bool(exact[1])
+
+def test_batched_delay_conditionals_match_scalar_logits_and_gradients():
+    torch.manual_seed(20261022)
+    heads = ConditionalHeads(card_width=8, spatial_width=4)
+    shared = torch.randn(512, requires_grad=True)
+    cards = torch.randn(2, 8, requires_grad=True)
+    spatial = torch.randn(4, 2, 3, requires_grad=True)
+    legal = torch.zeros(2, 6, 31, dtype=torch.bool)
+    legal[0, :4, 1:11] = True
+    legal[1, 2:6, 12:31] = True
+    policy = JointPolicy(heads.logits_for(shared, cards, spatial), LegalPrefixes([11, 22], legal))
+    for card in range(2):
+        indices = torch.where(policy.legality.cells[card])[0]
+        batch = policy.delay_conditionals_batch(card, indices, raw=True)
+        reference = torch.stack([policy.conditionals((1, card, int(i)), raw=True)
+            for i in indices.tolist()])
+        torch.testing.assert_close(batch, reference, atol=2e-6, rtol=2e-6)
+    loss = policy.delay_conditionals_batch(1, torch.tensor([2, 3]), raw=True)[:, 12:].square().mean()
+    loss.backward()
+    assert all(x.grad is not None and bool(x.grad.abs().sum() > 0)
+        for x in (shared, cards, spatial))
+
+
+def test_source_adapter_batch_delays_match_scalar_61_to_30_head():
+    from native_runner.tests.test_training_v4_model import _batch
+    from native_runner.training.fair_final.adapter import source_policy
+    teacher, bundle = fixture_source()
+    frame = _batch(1)
+    mask = torch.zeros(8, 576, 31, dtype=torch.bool)
+    mask[0, :5, 1:12] = True
+    legality = LegalPrefixes(tuple(bundle.card_catalog.raw_card_ids), mask)
+    policy, _ = source_policy(teacher, frame, legality)
+    cells = torch.arange(5, dtype=torch.long)
+    actual = policy.delay_conditionals_batch(0, cells, raw=True)
+    expected = torch.stack([policy.conditionals((1, 0, int(c)), raw=True) for c in cells.tolist()])
+    torch.testing.assert_close(actual, expected, atol=1e-6, rtol=1e-6)

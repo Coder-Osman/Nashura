@@ -88,6 +88,28 @@ class JointPolicy:
     def prefix_mask(self, prefix=()):
         return self.legality.mask(tuple(prefix)).clone()
 
+    def delay_conditionals_batch(self, card, cells, *, raw=False):
+        """[cell,delay] distribution identical to scalar conditional paths, with gradient."""
+        if type(card) is not int or not 0 <= card < len(self.legality.card_ids):
+            raise ValueError("batched delay card index differs")
+        if (not isinstance(cells, torch.Tensor) or cells.dtype != torch.long
+                or cells.ndim != 1 or cells.numel() < 1):
+            raise ValueError("batched delay cells require nonempty int64 vector")
+        indices = cells.to(self.legality.plays.device)
+        if (bool((indices < 0).any()) or bool((indices >= self.legality.plays.shape[1]).any())
+                or not bool(self.legality.cells[card, indices].all())):
+            raise ValueError("batched delay cells have no legal completion")
+        batching = getattr(self.logits, "batch_delays", None)
+        if batching is None:
+            return torch.stack([self.conditionals((1, card, int(cell)), raw=raw)
+                for cell in indices.tolist()])
+        logits = batching(card, indices)
+        mask = self.legality.plays[card, indices].to(logits.device)
+        if logits.shape != mask.shape or not bool(torch.isfinite(logits[mask]).all()):
+            raise ValueError("batched delay logits differ from legal delay prefixes")
+        temperature = 1. if raw else self.temperatures[3]
+        return (logits / temperature).masked_fill(~mask, -torch.inf).log_softmax(-1)
+
     def topk_conditionals(self, prefix, count):
         if type(count) is not int or count < 1:
             raise ValueError("positive top-k required")

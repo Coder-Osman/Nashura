@@ -160,7 +160,7 @@ def test_progressive_opening_keeps_priors_and_card_coverage():
 
 
 def test_act_only_root_noise_keeps_wait_mass():
-    search, info, arguments = search_fixture(limits=SearchLimits(root_noise=.25))
+    search, info, arguments = search_fixture(limits=SearchLimits(root_noise=.25, root_noise_mode="training"))
     outcome = search.run(info, **arguments)
     wait = next(entry for entry in outcome.result["candidates"] if entry["action_id"] == 0)
     assert wait["prior_projected"] == wait["prior_search"]
@@ -398,3 +398,36 @@ def test_runtime_truncation_fails_instead_of_becoming_draw(rollout):
                 hard_tick=200, maximum_decisions=6, check_deadline=lambda: None)
     finally:
         world.close()
+
+def test_first_visit_prior_vs_legacy_lexical_are_independently_versioned():
+    policy, _ = toy_policy()
+    prior = SearchLimits(first_visit_rule="highest_prior")
+    legacy = SearchLimits(first_visit_rule="legacy_lexical")
+    assert prior.sha256 != legacy.sha256
+    node = SearchNode(policy, torch.zeros(3), limits=prior, seed=42)
+    actions = node.order[:node.minimum_width]
+    expected = min(actions, key=lambda entry: (-node.priors[entry.action.key],
+        entry.action.key)).action
+    assert node.select(prior) == expected
+    old = min(actions, key=lambda entry: entry.action.key).action
+    assert node.select(legacy) == old
+
+
+def test_root_noise_modes_fail_closed_and_keep_separate_protocol_hashes():
+    clean = SearchLimits(root_noise_mode="evaluation", root_noise=0.)
+    training = SearchLimits(root_noise_mode="training", root_noise=.25)
+    no_noise_ablation = SearchLimits(root_noise_mode="ablation_no_noise", root_noise=0.)
+    assert len({x.sha256 for x in (clean, training, no_noise_ablation)}) == 3
+    for mode, amount in (("training", 0.), ("evaluation", .25),
+            ("ablation_no_noise", .25), ("unknown", 0.)):
+        with pytest.raises(ValueError, match="noise|exploration"):
+            SearchLimits(root_noise_mode=mode, root_noise=amount)
+    search, info, arguments = search_fixture(limits=clean)
+    result = search.run(info, **arguments)
+    assert result.result["noise_fraction"] == 0.
+    assert all(entry["prior_projected"] == entry["prior_search"]
+        for entry in result.result["candidates"])
+    train_search, info, arguments = search_fixture(limits=training)
+    train_result = train_search.run(info, **arguments)
+    assert train_result.result["noise_fraction"] == .25
+    assert train_result.result["search_protocol_sha"] != result.result["search_protocol_sha"]

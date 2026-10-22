@@ -21,6 +21,8 @@ class SearchLimits:
     extension_ticks: int = 60
     maximum_invalid_attempts: int = 32
     root_noise: float = 0.
+    root_noise_mode: str = "evaluation"
+    first_visit_rule: str = "highest_prior"
 
     def __post_init__(self):
         for name in ("maximum_candidates", "initial_candidates", "soft_decisions", "soft_ticks",
@@ -31,6 +33,13 @@ class SearchLimits:
                 or not math.isfinite(self.cpuct) or self.cpuct <= 0
                 or not math.isfinite(self.root_noise) or not 0 <= self.root_noise <= 1):
             raise ValueError("invalid search exploration or candidate limits")
+        if self.root_noise_mode not in ("training", "evaluation", "ablation_no_noise"):
+            raise ValueError("explicit training/evaluation root-noise protocol required")
+        if (self.root_noise_mode == "training" and self.root_noise == 0
+                or self.root_noise_mode != "training" and self.root_noise != 0):
+            raise ValueError("training requires noise; evaluation/ablation requires zero noise")
+        if self.first_visit_rule not in ("highest_prior", "legacy_lexical"):
+            raise ValueError("invalid first visit ablation rule")
 
     @property
     def sha256(self):
@@ -89,6 +98,9 @@ class SearchNode:
     def select(self, limits):
         count = sum(self.visits.values())
         width = min(len(self.order), max(self.minimum_width, math.ceil(4 * math.sqrt(count + 1))))
+        if count == 0 and limits.first_visit_rule == "highest_prior":
+            return min(self.order[:width], key=lambda entry: (-self.priors[entry.action.key],
+                entry.action.key)).action
 
         def score(entry):
             visits = self.visits[entry.action.key]
