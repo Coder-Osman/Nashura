@@ -1,16 +1,16 @@
 {
   "schema": "hashura.publication-validation.v1",
   "date": "2026-10-22",
-  "source_manifest_sha256": "69654fa5bbeb07669528a3d20d14074d2ff95210299e9a3245b8f6e6830bef4f",
-  "source_files_verified": 1941,
+  "source_manifest_sha256": "aa2320bcac382ec4d468aa918acf043cd665a1be865eeb43013b82e882bf2e78",
+  "source_files_verified": 1974,
   "public_tests": {
     "passed": 220,
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "seconds": 57.6,
-    "report": "public-tests-20261022.xml",
-    "sha256": "b2b8d920a543c4f4fb7216e650c6e24cbece15badc56248826ce1bc6d73dfab6"
+    "seconds": 74.973,
+    "report": "checks-public.xml",
+    "sha256": "889ef4bf6f128d9245525dee50a637bbafa6490b7c0b35fe3157635d57d1205b"
   },
   "secret_scan": {
     "tool": "gitleaks",
@@ -41,7 +41,7 @@
     "formal migration",
     "new search strength improvement"
   ],
-  "staged_files": 1960,
+  "initial_publication_staged_files": 1960,
   "staged_secret_scan": {
     "tool": "gitleaks 8.30.1",
     "findings": 0

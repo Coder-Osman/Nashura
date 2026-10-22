@@ -6,6 +6,30 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+补齐合批迁移包到后续采集的确定性身份交接：对缺声明的包仍默认拒收，
+仅在显式固定祖先launch SHA、完整载荷/部署/运行时及训练配置均通过时接受。
+实际独立采集包276个源码SHA复核、273个父文件保持；联合24项通过98.76秒。
+见integration-v1/collection-runtime-lineage-evidence-20261022.json。
+未修改运行部署，未启动采集，terminal父/原生round2及完整恢复仍待验。
+
+本批嵌套历史评测补验完成：16份原始来源只读回收，3200条换边结果新增1600个
+评测排除seed。总排除7160个：训练1136、价值训练4096、评测1928，三类交叉
+重叠为空，训练/价值清单原字节保持，全部产物独立重算字节一致。5条旧结果
+仅为draw_or_unexposed_tiebreak，不认定真实平局，不进入WDL训练。新专项54项、
+联合190项通过4.33秒，范围重叠不相加；来源/实现/产物身份见integration-v1下
+NESTED_SEED_EVIDENCE.md与nested-seed-history-evidence-20261022.json。
+更早实验及未执行计划仍待盘点；未创建正式G2登记，不新增门PASS。
+
+快照1792666915：同一Full128局提交83组/166根/21248次有效模拟至tick3190，
+tick3246玩家0完成128访问、玩家1搜索中。worker与双引擎在线，未终局。
+旧严格确定性恢复仍处于resumed，PID48460启动身份及冻结部署匹配；新KL五阶段
+链路training正常退出，完成1次FP32更新，当前reference初始验证224/358行，
+PID49673身份及冻结部署匹配。单步报告terminal=null、仅初始验证，不判断更新效果。
+尚无两项恢复/选优完成凭据；.35盘138.192GiB，中心200GiB门槛保持。
+G0/G1进行中，G2–G8未运行，34/43限定子项保持，training_admissible=false。
+
+### 以下为此前快照
+
 最新增量1792665057：迁移KL数值修复的原生六对对照通过，已进入有界五阶段
 链路的training阶段。编码器冻结时学生延迟头合批，解冻时保留原学生反向图，
 教师条件化缓存全程保留；未放宽损失/梯度/AdamW阈值。三帧ACT/WAIT对照的

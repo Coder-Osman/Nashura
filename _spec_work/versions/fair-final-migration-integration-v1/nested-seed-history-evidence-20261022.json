@@ -1,0 +1,284 @@
+{
+  "added_evaluation_seeds": 1600,
+  "ambiguous_outcome_rows": 5,
+  "artifacts": [
+    {
+      "bytes": 381041,
+      "path": "_spec_work/evidence/clean-student-loop-20261013/manifest.json",
+      "sha256": "014ff456f49fc06a65d3559aea44dbc241c9888e7e7b38c1152819860e41b5b7"
+    },
+    {
+      "bytes": 229402,
+      "path": "_spec_work/evidence/continuous-training-20261014/round-000001-manifest.json",
+      "sha256": "92bd4c574cb71300d49a682f6701f80ed397f71981d58542bd45f800d91cc0a6"
+    },
+    {
+      "bytes": 72153,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-inventory-nested-20261022/audit.json",
+      "sha256": "cd7030fcc1d1c4e1643f1eb54082d8c6d7875f2d43e1b7c76f7f7e5c10f37ad0"
+    },
+    {
+      "bytes": 18513,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-inventory-nested-20261022/evaluation.json",
+      "sha256": "e657c86bfbd8cd0ce8c1aff450cea962d5cb363f17e0844e3873e603449402f4"
+    },
+    {
+      "bytes": 182692,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-inventory-nested-20261022/source-map.json",
+      "sha256": "f8f35076a96478908a09112fa0608c8b5c6e074f5ee5cb7da139b0de416485a3"
+    },
+    {
+      "bytes": 12310,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-inventory-nested-20261022/training.json",
+      "sha256": "547a6ca358830e149faf948c8f3de388330e56c9fb5dce815b7ea0b3c111ae11"
+    },
+    {
+      "bytes": 37027,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-inventory-nested-20261022/value_training.json",
+      "sha256": "c63334f5d41a7fa7ecfc243dba9be878bfa7b6328786c6699aea2d3196bfd53e"
+    },
+    {
+      "bytes": 15893,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-inventory-policy-screen-20261022/audit.json",
+      "sha256": "037e16df864c36315263b5f390d0b25150c2ba84dfbdd64f3eb72cf5b4ffb775"
+    },
+    {
+      "bytes": 3245,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-inventory-policy-screen-20261022/evaluation.json",
+      "sha256": "32e870dbebef9ed24a15c0ed5e75bc5ef5f46c401670ab743413cbc50773cabc"
+    },
+    {
+      "bytes": 117700,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-inventory-policy-screen-20261022/source-map.json",
+      "sha256": "772386d630146c3b2ee6af3efb8e479c8494253a2a8142829befd500f5180dc0"
+    },
+    {
+      "bytes": 12310,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-inventory-policy-screen-20261022/training.json",
+      "sha256": "547a6ca358830e149faf948c8f3de388330e56c9fb5dce815b7ea0b3c111ae11"
+    },
+    {
+      "bytes": 37027,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-inventory-policy-screen-20261022/value_training.json",
+      "sha256": "c63334f5d41a7fa7ecfc243dba9be878bfa7b6328786c6699aea2d3196bfd53e"
+    },
+    {
+      "bytes": 239,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/clean-confirmation-done.json",
+      "sha256": "0f9bc3e0e2b29665432c0f9ec00dcfa23876399935b4921a273b0c5c427c8d1d"
+    },
+    {
+      "bytes": 9104,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/clean-confirmation-evaluate_policy.py",
+      "sha256": "1720c9a11124c1b80cff8e9062792b697bc82bb1a53f44b86df5aacbc70c37dc"
+    },
+    {
+      "bytes": 136009,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/clean-confirmation-manifest.json",
+      "sha256": "467ae926b736f5fc2206486d6a328982c64d0c9e230ec2e54d99863fbbce3e96"
+    },
+    {
+      "bytes": 1878666,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/clean-confirmation-results.json",
+      "sha256": "2caf3cfefc15a5dacc8c5d5f9e9f3ddf7d39f35b5608961cfce8227628b3d5a9"
+    },
+    {
+      "bytes": 226,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/clean-screen-done.json",
+      "sha256": "f48525c8c13b6457af123e25013443ff561906b3f4e81757ee38cf26f6e71b21"
+    },
+    {
+      "bytes": 9104,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/clean-screen-evaluate_policy.py",
+      "sha256": "1720c9a11124c1b80cff8e9062792b697bc82bb1a53f44b86df5aacbc70c37dc"
+    },
+    {
+      "bytes": 27208,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/clean-screen-manifest.json",
+      "sha256": "467d2a9f8a330a441a8b31c11f35581324e1ebf6f71cf8203205733be32e8bd3"
+    },
+    {
+      "bytes": 375591,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/clean-screen-results.json",
+      "sha256": "3c0e3136f04f9c5fed3f451416e69157dc1e9e7d369e8c69d41a1ecd338b7e3c"
+    },
+    {
+      "bytes": 3842,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/receipt.json",
+      "sha256": "991b735e51174390df5f77804862d750ae8a36d07a2c69970873d2ca1f785737"
+    },
+    {
+      "bytes": 225,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/round1-screen-done.json",
+      "sha256": "f0e7671a6b1c813031891bfc9f9fb0a308c45e80c82fc7727e95850cdb4dc55a"
+    },
+    {
+      "bytes": 9104,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/round1-screen-evaluate_policy.py",
+      "sha256": "1720c9a11124c1b80cff8e9062792b697bc82bb1a53f44b86df5aacbc70c37dc"
+    },
+    {
+      "bytes": 27210,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/round1-screen-manifest.json",
+      "sha256": "f363bb138ae47fb3f39a7d023c9fd6958c1017dca6bedcfee4f8fdb65ccb4509"
+    },
+    {
+      "bytes": 377102,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/round1-screen-results.json",
+      "sha256": "104fa03df4b8b8250109c72e2fe1cab18de9f520b747485d7f7a9935a6c1f8cf"
+    },
+    {
+      "bytes": 225,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/round2-screen-done.json",
+      "sha256": "6eabe9e8da337894dad32bc9aa305c6c149cdf7277c947e3467e392893a7df7a"
+    },
+    {
+      "bytes": 9104,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/round2-screen-evaluate_policy.py",
+      "sha256": "1720c9a11124c1b80cff8e9062792b697bc82bb1a53f44b86df5aacbc70c37dc"
+    },
+    {
+      "bytes": 27209,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/round2-screen-manifest.json",
+      "sha256": "1d45d06cdc7ed7cef770b8dc62361daf3bb4291b479a40bf44b31fe55b5af5e2"
+    },
+    {
+      "bytes": 376269,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-nested-readback-20261022/round2-screen-results.json",
+      "sha256": "447a90dff2631d7e922ba6c0f355f53497e2d47ba76331a903399a3bbbc8890a"
+    },
+    {
+      "bytes": 229524,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-remote-rounds-20261022/round-000002-manifest.json",
+      "sha256": "c9375d61a41a1d69a7abf3460fc166dbed334706750d306de288c0dacfb8a86e"
+    },
+    {
+      "bytes": 229401,
+      "path": "_spec_work/evidence/fair-final-v1-20261019/historical-seed-remote-rounds-20261022/round-000003-manifest.json",
+      "sha256": "945d5d0c4456660967e3e22626db8a01985ce0c727ac594209bef65616e57bcc"
+    },
+    {
+      "bytes": 403165,
+      "path": "_spec_work/evidence/new-value-policy-screen-20261013/status-latest.json",
+      "sha256": "c2a54edb12079d9f31ea4cab43962f371143a12909d54d2fe0e183c364280b47"
+    },
+    {
+      "bytes": 72454,
+      "path": "_spec_work/evidence/new-value-teacher-20261012/manifest.json",
+      "sha256": "3129a471bfb066794ec76f7d9af6381f4a13efae75dc17c4db63ac4a338a81fd"
+    },
+    {
+      "bytes": 302769,
+      "path": "_spec_work/evidence/teacher-continuation-20261013/manifest.json",
+      "sha256": "40955f52c103204dc36489f189c50d3e22c419060a91da3b07436f9bdbed0517"
+    },
+    {
+      "bytes": 18621,
+      "path": "_spec_work/evidence/teacher-r0-vs-m0-20261014/manifest.json",
+      "sha256": "9f65221cebdd5084ad05bbf0bcb95857a7962a9d3d5d5b146783c23943a028ac"
+    },
+    {
+      "bytes": 741504,
+      "path": "_spec_work/evidence/teacher-sampling-eval-20261013/status-latest.json",
+      "sha256": "9c9757d9ccf6e1787c3ff98bee23ecd9cc8b15982105d99620b8516b9b7c64f9"
+    },
+    {
+      "bytes": 276790,
+      "path": "_spec_work/evidence/value-direct-20261012/manifest.json",
+      "sha256": "5119800318322125157b21796f963ec78c533843aacf022bb4add40b6471635e"
+    },
+    {
+      "bytes": 13202,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/audit_nested_seed_history.py",
+      "sha256": "90037f5a3a001bc8355d8844c0ce327535ad06f71657d43a18835f914877d446"
+    },
+    {
+      "bytes": 6162,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/audit_remote_seed_history.py",
+      "sha256": "10df8363ed1688bd3f8b5b06eccab202ea62c9a89b1c405021bc74d6403fe846"
+    },
+    {
+      "bytes": 4007,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/collect_nested_seed_history.py",
+      "sha256": "2d0706e5fa5b33d2d9745d35f17289e8f2f288b5264f8d4e80466c38370b3d87"
+    },
+    {
+      "bytes": 7742,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/seed_registration.py",
+      "sha256": "577256189c865997f5281d6aee9d6bd24aacdbe96a7c78d86fdf1cc73c522046"
+    },
+    {
+      "bytes": 4144,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/seed_sources.py",
+      "sha256": "6a6d3aa647ab1888813ac1b7f9ef7f0b6b3c1de622747df2aca7172a584c7515"
+    },
+    {
+      "bytes": 10278,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/test_nested_seed_history.py",
+      "sha256": "025aa1fcd26173eb01daa367f7e461da4a7a4454f16e118b957a7a528da83d2d"
+    },
+    {
+      "bytes": 10197,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/tests-nested-seed-history.xml",
+      "sha256": "9758f589154281c5aabb2af91cb2acaaafded74ac9387f671b89ef74fd500032"
+    },
+    {
+      "bytes": 35307,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/tests-seed-history-with-nested.xml",
+      "sha256": "191529d7afce77810897765eb4429eed17e753a82d56ef3f34ff4c9bce4aa6c4"
+    }
+  ],
+  "collection_registration_created": false,
+  "confidence_interval_recomputed": false,
+  "cross_scope_overlaps": {
+    "evaluation:training": [],
+    "evaluation:value_training": [],
+    "training:value_training": []
+  },
+  "execution_code_record_matches": true,
+  "execution_code_sha256": "1720c9a11124c1b80cff8e9062792b697bc82bb1a53f44b86df5aacbc70c37dc",
+  "formal_g2_pass": false,
+  "historical_census_complete": false,
+  "historical_preregistration_proven": false,
+  "known_gaps": [
+    "Other legacy experiments and unexecuted nested schedules remain unverified.",
+    "Matching stored execution-code records do not reverify historical processes or raw native terminals.",
+    "Legacy draw_or_unexposed_tiebreak rows are excluded as used seeds, not accepted as true draw labels.",
+    "Readback time does not establish historical preregistration; no new-rules strength result is created."
+  ],
+  "native_terminal_reverified": false,
+  "public_attachment_scope": "Summary, source and XML only; raw historical results and seed inventories remain external.",
+  "receipt_sha256": "991b735e51174390df5f77804862d750ae8a36d07a2c69970873d2ca1f785737",
+  "result_rows": 3200,
+  "schema": "FairFinalNestedSeedHistoryBatchEvidence/v1",
+  "source_readback_files": 16,
+  "source_scope": "historical_explicit_seed_exclusion_only",
+  "status": "verified_partial_inventory",
+  "stored_inventory_recomputed_byte_identical": true,
+  "tests": {
+    "joint": {
+      "errors": 0,
+      "failures": 0,
+      "seconds": 4.332,
+      "skipped": 0,
+      "tests": 190
+    },
+    "overlapping_counts_not_additive": true,
+    "specialized": {
+      "errors": 0,
+      "failures": 0,
+      "seconds": 3.079,
+      "skipped": 0,
+      "tests": 54
+    }
+  },
+  "training_admissible": false,
+  "training_and_value_inventories_byte_identical": true,
+  "unique_excluded_seeds": 7160,
+  "unique_seeds_by_scope": {
+    "evaluation": 1928,
+    "training": 1136,
+    "value_training": 4096
+  },
+  "wdl_training_admissible": false
+}

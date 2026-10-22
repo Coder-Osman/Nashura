@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "4eaf0af02d1ea8ee34ecea3b6901b9a49655b50cd8fba2ed63cbf27d409c3250",
-      "bytes": 64541,
-      "source_sha256": "4eaf0af02d1ea8ee34ecea3b6901b9a49655b50cd8fba2ed63cbf27d409c3250",
+      "sha256": "a731416f7f2b51f1a73356189fd1bde3f9ef25e8cba8d10c6d561a0576a4927a",
+      "bytes": 66365,
+      "source_sha256": "a731416f7f2b51f1a73356189fd1bde3f9ef25e8cba8d10c6d561a0576a4927a",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "7e3cbee2a591b621922684c2db7fb97360c07f63a44dae6c57f52b2ed95b3009",
-      "bytes": 29383,
-      "source_sha256": "7e3cbee2a591b621922684c2db7fb97360c07f63a44dae6c57f52b2ed95b3009",
+      "sha256": "d59988c3c72d972a970f55419c27a2650735d19cefda00cf14b6f53c107cb724",
+      "bytes": 30720,
+      "source_sha256": "d59988c3c72d972a970f55419c27a2650735d19cefda00cf14b6f53c107cb724",
       "transformations": []
     },
     {
@@ -6543,9 +6543,16 @@
     },
     {
       "path": "_spec_work/versions/fair-final-migration-integration-v1/CONTRACT.md",
-      "sha256": "270e29771b84fef7fc04beaccd0911543e1cd7480bd9150291a08eadedb5e250",
-      "bytes": 18700,
-      "source_sha256": "270e29771b84fef7fc04beaccd0911543e1cd7480bd9150291a08eadedb5e250",
+      "sha256": "d21502212a749287a98d7edce3a86edfdd523072b3c1dd27d783fc46423ac134",
+      "bytes": 20850,
+      "source_sha256": "d21502212a749287a98d7edce3a86edfdd523072b3c1dd27d783fc46423ac134",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/NESTED_SEED_EVIDENCE.md",
+      "sha256": "50549ed889d6390730415d73a70bad69b38b16c05dec41312b4dfc1b0abb5a1d",
+      "bytes": 2071,
+      "source_sha256": "50549ed889d6390730415d73a70bad69b38b16c05dec41312b4dfc1b0abb5a1d",
       "transformations": []
     },
     {
@@ -6553,6 +6560,13 @@
       "sha256": "de57ef77804ae597969ed09d7630619fbd0417bcb8d0784114b3355b9b0d9978",
       "bytes": 6220,
       "source_sha256": "de57ef77804ae597969ed09d7630619fbd0417bcb8d0784114b3355b9b0d9978",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/audit_nested_seed_history.py",
+      "sha256": "90037f5a3a001bc8355d8844c0ce327535ad06f71657d43a18835f914877d446",
+      "bytes": 13202,
+      "source_sha256": "90037f5a3a001bc8355d8844c0ce327535ad06f71657d43a18835f914877d446",
       "transformations": []
     },
     {
@@ -6578,9 +6592,9 @@
     },
     {
       "path": "_spec_work/versions/fair-final-migration-integration-v1/build_collection_payload.py",
-      "sha256": "6c34316bfaa16f7dfeff0c3894ddecfefd5eeb2cc9c174f40a34f27fdb3c2aab",
-      "bytes": 5524,
-      "source_sha256": "6c34316bfaa16f7dfeff0c3894ddecfefd5eeb2cc9c174f40a34f27fdb3c2aab",
+      "sha256": "d84ce80917bdb0a02f56ed47a73850ce06f9d72437d11c0179d73cf9ff8ec3ba",
+      "bytes": 7175,
+      "source_sha256": "d84ce80917bdb0a02f56ed47a73850ce06f9d72437d11c0179d73cf9ff8ec3ba",
       "transformations": []
     },
     {
@@ -6591,6 +6605,13 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/collect_nested_seed_history.py",
+      "sha256": "2d0706e5fa5b33d2d9745d35f17289e8f2f288b5264f8d4e80466c38370b3d87",
+      "bytes": 4007,
+      "source_sha256": "2d0706e5fa5b33d2d9745d35f17289e8f2f288b5264f8d4e80466c38370b3d87",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-migration-integration-v1/collect_selected.py",
       "sha256": "aed5430e919dd982e25051574ba71cd1e63977c1f1c1301bc02d7aa22a0af5ce",
       "bytes": 9529,
@@ -6598,10 +6619,24 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/collection-runtime-lineage-evidence-20261022.json",
+      "sha256": "4b620aa4ea7105b5dbbcd864939c31f0c45b976f71f8d0bcf049179d4f6a20ed",
+      "bytes": 2385,
+      "source_sha256": "4b620aa4ea7105b5dbbcd864939c31f0c45b976f71f8d0bcf049179d4f6a20ed",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-migration-integration-v1/inspect_native.py",
       "sha256": "70b36f07fbe750516ecbad8f3061be00b796af060d218a79cf04790f1b14153b",
       "bytes": 3289,
       "source_sha256": "70b36f07fbe750516ecbad8f3061be00b796af060d218a79cf04790f1b14153b",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/nested-seed-history-evidence-20261022.json",
+      "sha256": "16cb1838b4b2c1b066533e3f86ab9d01493570ce54bd367bf6baf07fd09613e3",
+      "bytes": 12513,
+      "source_sha256": "16cb1838b4b2c1b066533e3f86ab9d01493570ce54bd367bf6baf07fd09613e3",
       "transformations": []
     },
     {
@@ -6655,9 +6690,9 @@
     },
     {
       "path": "_spec_work/versions/fair-final-migration-integration-v1/test_collection_payload.py",
-      "sha256": "b766066bbb6b86025628332c0df26725d8e1b4e4d1601e87fb833b3bc6f13407",
-      "bytes": 4003,
-      "source_sha256": "b766066bbb6b86025628332c0df26725d8e1b4e4d1601e87fb833b3bc6f13407",
+      "sha256": "c003bd432cf204f40d38b62389f62387f098d4f3e5e8a8ff65ff3754eadc0515",
+      "bytes": 7964,
+      "source_sha256": "c003bd432cf204f40d38b62389f62387f098d4f3e5e8a8ff65ff3754eadc0515",
       "transformations": []
     },
     {
@@ -6679,6 +6714,13 @@
       "sha256": "b50a5e839040847047a96fe7a1f88f30ec8687920d5c30f7cfe640a1dcf7b541",
       "bytes": 2450,
       "source_sha256": "b50a5e839040847047a96fe7a1f88f30ec8687920d5c30f7cfe640a1dcf7b541",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/test_nested_seed_history.py",
+      "sha256": "025aa1fcd26173eb01daa367f7e461da4a7a4454f16e118b957a7a528da83d2d",
+      "bytes": 10278,
+      "source_sha256": "025aa1fcd26173eb01daa367f7e461da4a7a4454f16e118b957a7a528da83d2d",
       "transformations": []
     },
     {
@@ -6738,6 +6780,13 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/tests-collection-runtime-lineage.xml",
+      "sha256": "1c9c4c76b357e30093c0d50ff999e0a2e7a25a912d8520fa19a44f6316fb9700",
+      "bytes": 4989,
+      "source_sha256": "1c9c4c76b357e30093c0d50ff999e0a2e7a25a912d8520fa19a44f6316fb9700",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-migration-integration-v1/tests-historical-seed-audit.xml",
       "sha256": "2c621d55793dd8007b5ded61a464e67aa2fdc1abc0078674df4311c48794f465",
       "bytes": 25354,
@@ -6780,6 +6829,13 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/tests-nested-seed-history.xml",
+      "sha256": "9758f589154281c5aabb2af91cb2acaaafded74ac9387f671b89ef74fd500032",
+      "bytes": 10197,
+      "source_sha256": "9758f589154281c5aabb2af91cb2acaaafded74ac9387f671b89ef74fd500032",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-migration-integration-v1/tests-policy-seed-history.xml",
       "sha256": "07b721bb86339d95ccc496045ec76530564f0abde68524894d63e657a8976465",
       "bytes": 4580,
@@ -6812,6 +6868,13 @@
       "sha256": "907330dacaa3f86ed0890f82ad86dea5139b2633e1cd1fbf984898928f446314",
       "bytes": 3536,
       "source_sha256": "907330dacaa3f86ed0890f82ad86dea5139b2633e1cd1fbf984898928f446314",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/tests-seed-history-with-nested.xml",
+      "sha256": "191529d7afce77810897765eb4429eed17e753a82d56ef3f34ff4c9bce4aa6c4",
+      "bytes": 35307,
+      "source_sha256": "191529d7afce77810897765eb4429eed17e753a82d56ef3f34ff4c9bce4aa6c4",
       "transformations": []
     },
     {
@@ -13761,8 +13824,8 @@
       "transformations": []
     }
   ],
-  "file_count": 1965,
-  "source_bytes": 30072959,
+  "file_count": 1974,
+  "source_bytes": 30178831,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

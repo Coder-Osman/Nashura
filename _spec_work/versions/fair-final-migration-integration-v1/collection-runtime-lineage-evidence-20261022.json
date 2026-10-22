@@ -1,0 +1,55 @@
+{
+  "artifacts": [
+    {
+      "bytes": 7175,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/build_collection_payload.py",
+      "sha256": "d84ce80917bdb0a02f56ed47a73850ce06f9d72437d11c0179d73cf9ff8ec3ba"
+    },
+    {
+      "bytes": 7964,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/test_collection_payload.py",
+      "sha256": "c003bd432cf204f40d38b62389f62387f098d4f3e5e8a8ff65ff3754eadc0515"
+    },
+    {
+      "bytes": 4989,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/tests-collection-runtime-lineage.xml",
+      "sha256": "1c9c4c76b357e30093c0d50ff999e0a2e7a25a912d8520fa19a44f6316fb9700"
+    },
+    {
+      "bytes": 37938,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/collection-payload-batched-20261022/collection-payload.json",
+      "sha256": "f70c326b258d5afaf84867077b9d2f40ec6563206c8b9e03725c2a669f1c508d"
+    },
+    {
+      "bytes": 2236219,
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/collection-payload-batched-20261022/payload.tar.gz",
+      "sha256": "670179f80d93ccd35eccb9d8994229977ad86359d78395e1a28f8675471ada5d"
+    }
+  ],
+  "formal_g2_pass": false,
+  "gates_closed": false,
+  "inherited_runtime_evidence": {
+    "parent_launch_sha256": "5cdf92449bb6130e8130c7b199f8ac7d5bb90303a084ba6a3af19ce9a29dfc88",
+    "parent_payload_sha256": "01199167f855c355b14f0e8355bd3bd69c84ecc50758db727460537b5bb7c923",
+    "runtime_sha256": "a8500b5879769ad1f1c2f7e2aa3ae26e12fad80439c1dae47bb9bc5f329c7549"
+  },
+  "native_collection_executed": false,
+  "parent_launch_sha256": "26a50d1ac16f62a02b587aefd8daa61943b0a43462b8864df6c3fa6bae035bf1",
+  "parent_payload_sha256": "cd4e952ddaced44aa415f86353ce55cdafafacb98ac9349c09cf184c4e88109a",
+  "payload_sha256": "670179f80d93ccd35eccb9d8994229977ad86359d78395e1a28f8675471ada5d",
+  "preserved_parent_files": 273,
+  "public_attachment_scope": "Source, XML and summary only; deployment archives and private inputs remain external.",
+  "running_deployments_modified": false,
+  "schema": "FairFinalCollectionRuntimeLineageEvidence/v1",
+  "source_entries": 276,
+  "status": "passed_local_payload_scope",
+  "terminal_selected_parent_verified": false,
+  "tests": {
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "24",
+    "time": "98.758"
+  },
+  "training_admissible": false
+}

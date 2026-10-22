@@ -15,18 +15,20 @@
 | 完整搜索局分段续跑与前缀验收 | fair-final-search-continuation-v1/CONTRACT.md | 同一局前缀保存与恢复，不是完整终局 PASS |
 | 原生命令与队列静态审计 | fair-final-native-{command,queue}-audit-v1 | 联合 42 项通过；静态 CFG 不证明运行时分支或合法掩码等价 |
 | 延迟补牌离线诊断修正 | fair-final-delayed-prior-audit-v1 | 三局 1,044 帧零排除、原生轨迹牌区对照；不证明总体先验校准 |
+| 嵌套历史评测种子审计 | fair-final-migration-integration-v1/NESTED_SEED_EVIDENCE.md | 四组3,200条记录新增1,600个排除seed；联合190项通过，5条结局不明确记录不作WDL标签，原始附件外置 |
+| 合批父包到采集包的确定性身份交接 | fair-final-migration-integration-v1/collection-runtime-lineage-evidence-20261022.json | 24项通过；实际276源码SHA复核、273父文件保持；仅本地准备，原生round2仍待验 |
 
 以上版本目录均位于 `_spec_work/versions/`。测试集合存在重叠，表格数字不相加。
 
 ## 当前运行任务的最后已知快照
 
-快照时间戳 1792664969–1792665057：
+快照时间戳 1792666915：
 
-- Full128 搜索局已提交 81 组、162 根、20,736 次有效模拟至tick3186；后续根仍在计算，尚未原生终局。
+- Full128 搜索局已提交 83 组、166 根、21,248 次有效模拟至tick3190；tick3246玩家0完成128访问、玩家1搜索中，尚未原生终局。
 - 确定性父训练探针已结束，执行1次FP32更新；尚无该更新后的验证选优结论。
 - 旧恢复reference正常结束，resumed完成358行初始验证后继续更新；尚无恢复完成凭据。
-- 新迁移KL探针通过六对对照，已进入training，随后自动执行reference、resumed及terminal selection。六对单帧加速比中位数1.376，不代表整轮吞吐。
-- .35 中心盘约 138.28GiB，正式中心 200GiB 门保持；备用 .39 仅完成工程样本传输核验。
+- 新迁移KL探针通过六对对照，training正常退出、完成1次FP32更新；reference初始验证224/358行，后续resumed及terminal selection待完成。单步报告只有初始验证，不判断更新效果；六对单帧加速比中位数1.376，不代表整轮吞吐。
+- .35 中心盘约 138.192GiB，正式中心 200GiB 门保持；备用 .39 仅完成工程样本传输核验。
 
 这些数字只表示当时进度。当前阶段不报告 G0/G1 闭合、正式训练启动或搜索提高实力。
 

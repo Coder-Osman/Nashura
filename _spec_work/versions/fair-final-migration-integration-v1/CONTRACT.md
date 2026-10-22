@@ -171,6 +171,21 @@ source_shas所指历史产物的全部来源链。登记文件本身不证明可
 历史采集事前性；新采集启动时须冻结登记SHA及实际启动凭据。尚未为正式G2
 生成登记、启动正式采集或在原生round2运行新入口，不新增整体门PASS。
 
+## 2026-10-22 嵌套历史评测补验
+
+四组旧评测16份来源只读回收，回读前后SHA一致；审计完整核对3200条换边结果、
+模型/执行代码记录和显式seed。新增1600个评测排除seed，当前共7160个：
+training 1136、value_training 4096、evaluation 1928，三类交叉重叠为空。
+训练/价值清单原字节及不可变重入保持，独立重算全部产物逐字节一致。
+
+5条draw_or_unexposed_tiebreak只记录不明确结果，不升级真实平局；本批不接收
+任何WDL标签。专项54项、种子登记与历史核验联合190项通过（4.33秒），范围
+重叠不相加。源码、XML、来源/产物SHA清单及范围见NESTED_SEED_EVIDENCE.md和
+nested-seed-history-evidence-20261022.json。
+
+存储代码身份匹配不证明旧进程或原生终局已重验，不重新计算强度区间。
+历史全项目普查、未执行嵌套计划及正式G2事前登记仍未完成，不新增门PASS。
+
 ## 原有接口与历史证据
 
 依据TRAINING_SPEC §4.3–4.4，衔接现有migration-selection与原生supplement collector。
@@ -227,7 +242,23 @@ native-selected-round0-1792629813912401000，复用既有三局已验收工程�
 单步完成仍不是terminal选优父轮；须按身份恢复到合法轮次终止后才允许补充采集。
 本attempt沿用既有数据事后登记，不宣称旧seed获得了事前预注册证据。
 
-## 原生连续更新与新进程恢复对照
+## 2026-10-22 合批父包的确定性来源交接
+
+新合批训练包包含deterministic_runtime及训练入口配置，但launch没有旧版
+deterministic字段；旧采集builder严格拒收training runtime identity differs，
+保持该默认拒收行为。新增显式runtime-parent及其外部固定launch SHA，逐项
+核验祖先launch/payload/部署、确定性声明、直接父引用、运行时原字节与训练
+入口配置。声明冲突、错误祖先、缺SHA或运行时变化仍拒收，不根据文件存在推定。
+
+仅在独立采集包接入确定性配置与私有审计，未修改运行中的launch或源码。
+真实包collection-payload-batched-20261022共276个源码条目SHA独立复核，
+273个父文件原字节保持；解包后的采集CLI可加载。载荷SHA为
+670179f80d93ccd35eccb9d8994229977ad86359d78395e1a28f8675471ada5d。
+联合24项通过98.76秒，覆盖真实父/祖先、可复现打包、旧入口兼容与损坏拒收。
+见tests-collection-runtime-lineage.xml及collection-runtime-lineage-evidence-20261022.json。
+仍仅本地准备，未部署、登记或原生采集；不把在跑单步父当作terminal选优父。
+
+## 原生连续更新与新进程恢复对照（历史）
 
 probe_native_resume.py复用冻结selection/series/训练器，在同设备加载父单步checkpoint。
 reference进程再做两次真实更新：中间保存midpoint，随后不退出继续更新；resumed

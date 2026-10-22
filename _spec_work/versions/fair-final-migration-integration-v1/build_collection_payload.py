@@ -17,7 +17,7 @@ def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def build_collection(parent, *, expected_launch_sha):
+def read_parent(parent, *, expected_launch_sha):
     parent = Path(parent)
     launch_bytes = (parent / "launch.json").read_bytes()
     if sha(launch_bytes) != expected_launch_sha:
@@ -41,8 +41,30 @@ def build_collection(parent, *, expected_launch_sha):
             or set(files) != set(original_identity) | {"deployment.json"}
             or any(sha(files[name]) != expected for name, expected in original_identity.items())):
         raise ValueError("training deployment manifest differs")
+    return launch, files, original_identity
+
+
+def build_collection(parent, *, expected_launch_sha, runtime_parent=None,
+        expected_runtime_launch_sha=None):
+    launch, files, original_identity = read_parent(parent, expected_launch_sha=expected_launch_sha)
+    if (runtime_parent is None) != (expected_runtime_launch_sha is None):
+        raise ValueError("runtime parent and pinned launch SHA required together")
     runtime = SERIES + "deterministic_runtime.py"
     deterministic = launch.get("deterministic", False)
+    runtime_evidence = None
+    if runtime_parent is not None:
+        ancestor, ancestor_files, _ = read_parent(runtime_parent,
+            expected_launch_sha=expected_runtime_launch_sha)
+        if ("deterministic" in launch or runtime not in files
+                or ancestor.get("deterministic") is not True
+                or launch.get("parent_launch_sha256") != expected_runtime_launch_sha
+                or ancestor_files.get(runtime) != files[runtime]
+                or b"from deterministic_runtime import configure\n" not in files[SELECTION + "train_round.py"]
+                or b"print(json.dumps(configure()), flush=True)" not in files[SELECTION + "train_round.py"]):
+            raise ValueError("explicit inherited runtime identity differs")
+        deterministic = True
+        runtime_evidence = dict(parent_launch_sha256=expected_runtime_launch_sha,
+            parent_payload_sha256=ancestor["payload_sha256"], runtime_sha256=sha(files[runtime]))
     if type(deterministic) is not bool or deterministic != (runtime in files):
         raise ValueError("training runtime identity differs")
     collector = (ROOT / "collect_selected.py").read_text()
@@ -86,6 +108,7 @@ def build_collection(parent, *, expected_launch_sha):
         parent_payload_sha256=launch["payload_sha256"], payload_sha256=sha(package),
         builder_sha256=sha(Path(__file__).read_bytes()),
         source_sha256=identity, changes=changes, deterministic=deterministic,
+        inherited_runtime_evidence=runtime_evidence,
         training_sources_preserved=True,
         requires_terminal_selected_parent=True, requires_registered_tasks=True,
         native_collection_executed=False,
@@ -97,9 +120,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("parent", type=Path)
     parser.add_argument("--parent-launch-sha", required=True)
+    parser.add_argument("--runtime-parent", type=Path)
+    parser.add_argument("--runtime-parent-launch-sha")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    package, report = build_collection(args.parent, expected_launch_sha=args.parent_launch_sha)
+    package, report = build_collection(args.parent, expected_launch_sha=args.parent_launch_sha,
+        runtime_parent=args.runtime_parent, expected_runtime_launch_sha=args.runtime_parent_launch_sha)
     args.output.mkdir(exist_ok=False)
     (args.output / "payload.tar.gz").write_bytes(package)
     (args.output / "collection-payload.json").write_text(json.dumps(report, indent=2, sort_keys=True))
