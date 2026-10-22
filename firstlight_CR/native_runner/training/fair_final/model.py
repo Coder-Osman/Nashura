@@ -87,18 +87,25 @@ class ConditionalPolicyValue(nn.Module):
 
         if not mapping or not isinstance(mapping, dict):
             raise ValueError("inheritance report needs an explicit source-to-target mapping")
-        source_parameters = dict(source.named_parameters())
-        target_parameters = dict(self.named_parameters())
-        source_buffers = dict(source.named_buffers())
-        target_buffers = dict(self.named_buffers())
+        # Preserve alias names in shared encoder modules, then count each
+        # physical parameter/buffer once. state_dict() contains alias paths.
+        source_parameters = dict(source.named_parameters(remove_duplicate=False))
+        target_parameters = dict(self.named_parameters(remove_duplicate=False))
+        source_buffers = dict(source.named_buffers(remove_duplicate=False))
+        target_buffers = dict(self.named_buffers(remove_duplicate=False))
         copied_parameters = copied_buffers = 0
+        seen_parameters, seen_buffers = set(), set()
         for target_name, source_name in mapping.items():
             if target_name in target_parameters and source_name in source_parameters:
                 target, origin = target_parameters[target_name], source_parameters[source_name]
-                copied_parameters += target.numel()
+                if id(target) not in seen_parameters:
+                    copied_parameters += target.numel()
+                    seen_parameters.add(id(target))
             elif target_name in target_buffers and source_name in source_buffers:
                 target, origin = target_buffers[target_name], source_buffers[source_name]
-                copied_buffers += target.numel()
+                if id(target) not in seen_buffers:
+                    copied_buffers += target.numel()
+                    seen_buffers.add(id(target))
             else:
                 raise ValueError("inheritance mapping identifies no source parameter/buffer: " + target_name)
             if (target.shape != origin.shape or target.dtype != origin.dtype
