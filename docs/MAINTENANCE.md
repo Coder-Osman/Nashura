@@ -6,7 +6,7 @@
 2. 从源工作区导出必要文件：
 
 ```sh
-python tools/export_public_snapshot.py --workspace /path/to/CR --destination /path/to/Hashura
+python tools/export_public_snapshot.py --workspace /path/to/CR --destination /path/to/Nashura
 ```
 
 3. 检查新增、修改及失效文件；导出器只新增/覆盖，不自行删除旧文件。新成果若在嵌套目录，先扩充显式选择规则。除已登记的旧密码默认值移除外，发现真实凭据立即停止发布并修正副本。
