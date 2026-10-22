@@ -1,0 +1,7 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Reviewed SHA-256 evidence identities and fixed source identifiers; no credential patterns are suppressed"
+regexTarget = "secret"
+regexes = ['''^[a-f0-9]{64}$''', '''^delay_head\.0\.weight$''', '''^valid_utf8_bytes$''']

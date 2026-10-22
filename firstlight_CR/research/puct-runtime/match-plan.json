@@ -1,0 +1,134 @@
+{
+  "schema": "hog-tree-search-match-plan.v1",
+  "start_iteration": 1755,
+  "start_checkpoint_sha256": "e9f7c84a3e5f84a4d625c3f9a68e332a318a2aedc06e196da55bdb00a66bd1f0",
+  "learner_deck_id": "hog",
+  "learner_deck": [
+    26000021,
+    26000038,
+    26000014,
+    26000010,
+    26000030,
+    27000000,
+    28000000,
+    28000011
+  ],
+  "learner_deck_identity": {
+    "deck_id": "hog",
+    "card_ids": [
+      26000021,
+      26000038,
+      26000014,
+      26000010,
+      26000030,
+      27000000,
+      28000000,
+      28000011
+    ],
+    "tower_troop": "princess",
+    "form_mask": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "form_availability": [
+      0,
+      2,
+      3,
+      1,
+      1,
+      1,
+      0,
+      0
+    ],
+    "average_elixir": 2.625,
+    "card_specs_sha256": "7c18d94eac62883ead96f52b362d93da6e2abdf82f64614a2d26f80d6fcb885a",
+    "card_support_sha256": "841124995d484a4304a7953437284bee87abfe59b603c97ae4afcd7c81e4f566",
+    "sha256": "79c3137ea0cb187f31a1eec3474857324e3c4166c0570571277dd0a815203aa7"
+  },
+  "cycles": 10,
+  "teacher_games_per_cycle": 216,
+  "ppo_updates_per_cycle": 20,
+  "round_games": {
+    "self_play": 72,
+    "fixed_1250": 12,
+    "recent": 24
+  },
+  "fleet": {
+    "34": 24,
+    "35": 24,
+    "37": 24,
+    "39": 18,
+    "41": 18
+  },
+  "tree_search": {
+    "state_version": "tree-search-state.v1",
+    "prototype_simulations": 32,
+    "teacher_simulations": 128,
+    "high_uncertainty_simulations": 256,
+    "max_decision_points": 6,
+    "max_native_seconds": 10.0,
+    "cpuct": 1.5,
+    "dirichlet_alpha": 0.25,
+    "dirichlet_epsilon": 0.25,
+    "opponent_top_k": 4,
+    "opponent_temperature": 0.5,
+    "state_mode": "deterministic_full_state"
+  },
+  "distillation": {
+    "policy_start": 0.5,
+    "value_start": 0.1,
+    "policy_end": 0.25,
+    "value_end": 0.05,
+    "decay_start_update": 100,
+    "total_updates": 200
+  },
+  "evaluation": {
+    "games": 6000,
+    "tree_search": false,
+    "games_per_opponent": 1200
+  },
+  "start_checkpoint_present": true,
+  "start_checkpoint_sha256_verified": true,
+  "source_training_state": {
+    "iterations": 1755,
+    "optimizer_steps": 1755,
+    "optimizer_type": "AdamW",
+    "optimizer_state_entries": 359,
+    "reward_config": {
+      "version": "elixir-overflow-tower.v6",
+      "penalty_per_elixir": 0.003,
+      "penalty_cap": null,
+      "start": "first-policy-decision",
+      "scope": "whole-match",
+      "metering": "native-integer.v1",
+      "terminal_interval": "skip-if-end-tick-unknown",
+      "credit": "previous-effective-decision.v1",
+      "tower_potential": {
+        "version": "visible-tower-hp.v1",
+        "coefficient": 0.15,
+        "gamma": 0.999,
+        "normalization": 5.0,
+        "king_weight": 3.0,
+        "princess_weight": 1.0,
+        "terminal": "zero",
+        "credit": "effective-decision-endpoints.v1"
+      }
+    },
+    "gae": {
+      "gamma": 0.999,
+      "lambda": 0.95,
+      "type": "scalar"
+    },
+    "reference_kl": {
+      "version": "reference-disabled.v1",
+      "enabled": false
+    },
+    "kl_coefficient": 0.0
+  }
+}

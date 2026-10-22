@@ -1,0 +1,41 @@
+{
+  "schema": "fair-final-general-history-engineering-evidence.v1",
+  "status": "fixture_and_related_regression_passed",
+  "base_version": "fair-final-history-v2",
+  "base_manifest_sha256": "1f552d1cbcd3384006967242eba80ede42a3d7720edd852f9e33a0f25c02e981",
+  "base_files_verified": 564,
+  "base_changed_files": [],
+  "files": {
+    "CONTRACT.md": "61d4d9e63f068f6a5e4b88daba94d12589faef1e85ac01ef29b0c97eed79abcb",
+    "general_provider.py": "90d58731b4a15b88b0b73b5e59971ce8f805daf5b26132c10fbe749188d89fdd",
+    "test_general_provider.py": "7abf97f68a73123ebfbe9c748153ff7c8d73241013e49a9d5115026e63d7c3e3",
+    "tests-final.xml": "d9a2a09440952e26d65715f92d473ff0ed05a58a885e5e734d58dcdfd848f066",
+    "tests-initial.xml": "e8956aab3085cb5912a33d882f8c2d696d0d0788b4ec8042fe1340495557e459",
+    "tests-integration.xml": "c76e9a43b2a8f35af28ea12ef74362c66682eace30e34d02eb868907a1b24814"
+  },
+  "final_tests": {
+    "tests": 73,
+    "passed": 73,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 6.196
+  },
+  "test_counts_overlap": true,
+  "fixture_pending_full128": {
+    "players": [0, 1],
+    "repetitions_per_player": 2,
+    "roots": 4,
+    "effective_simulations": 512,
+    "native_reachability_proven": false
+  },
+  "deployed": false,
+  "gates_closed": false,
+  "training_admissible": false,
+  "formal_g2_pass": false,
+  "remaining_gaps": [
+    "native-general-pending-reachability-and-full128",
+    "complete-native-search-game-and-independent-recovery",
+    "overall-belief-proposal-calibration"
+  ]
+}

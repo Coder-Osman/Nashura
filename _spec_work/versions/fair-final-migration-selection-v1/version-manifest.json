@@ -1,0 +1,16 @@
+{
+  "schema": "FairFinalMigrationSelectionEngineeringEvidence/v1",
+  "training_admissible": false,
+  "formal_g2_pass": false,
+  "scope": "fixture-validation-selection-handoff-resume-and-cli",
+  "files": {
+    "round_selection.py": "c3798709b2c6dd78c85d34a80004a8449cd7970957d1d059795c8140689f20b9",
+    "train_round.py": "3e08aecfc65cd45652e88b725e3110d0299f960829ac0803695576cba4293d7f",
+    "test_round_selection.py": "edebba4f92c6b567db41db1bcb061523049e75957d5fa17b85dd47aec92f7e5f",
+    "CONTRACT.md": "5cdcb353fbbfed5be024aa51d026ff9e04dc4288cc3a99c783c9086a133165ba",
+    "tests-final.xml": "6ad272309a511689437434416edb3a8aedd77a66733d101ae78a1c4dfc1082c0"
+  },
+  "tests": {"passed": 106, "failed": 0, "skipped": 0, "seconds": 241.698},
+  "frozen_production_source_files": 244,
+  "frozen_production_source_changes": 0
+}

@@ -1,0 +1,170 @@
+{
+  "report": {
+    "completed_at": 1789633970.507898,
+    "plan": {
+      "deck": "golem-beatdown",
+      "final_checkpoint": "/home/gujiga/firstlight_CR/runs/event-mirror-v2-20260917T065146Z/weights/ae33b21b8cb21da1efe4b626d2b9bb3a4f5d4798c53d4de61bb1bc8f49ae5074.pt",
+      "final_sha256": "ae33b21b8cb21da1efe4b626d2b9bb3a4f5d4798c53d4de61bb1bc8f49ae5074",
+      "games_per_opponent": 432,
+      "level": 11,
+      "margin_beta": 0,
+      "opponents": {
+        "IL": "82e9910662979f681ee1478f286fa947b21c4372a5d48c5027f62fcfa129da26",
+        "RL-05": "050683ff18ee049d04cd7e3defcccb66d32a6dc0075e45f2bc6d4a1745e45702",
+        "RL-10": "34ec0ecd6462d2df0592105c81184f5d016a4caa22bf544c357892df800c6d35",
+        "RL-15": "e807f7f419ba62732602e8f570476b12246ee92446e237b05bfdf8a5dd1f335c"
+      },
+      "pairs_per_opponent": 216,
+      "schema": "event-strength-evaluation.v1",
+      "scope": "frozen checkpoints, stochastic native battles, no training updates",
+      "seed_base": 927000000,
+      "side_swapped": true,
+      "temperatures": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "results": {
+      "IL": {
+        "by_rl_owner": {
+          "0": {
+            "draws": 0,
+            "games": 216,
+            "losses": 8,
+            "score_rate": 0.9629629629629629,
+            "win_rate": 0.9629629629629629,
+            "wins": 208
+          },
+          "1": {
+            "draws": 0,
+            "games": 216,
+            "losses": 7,
+            "score_rate": 0.9675925925925926,
+            "win_rate": 0.9675925925925926,
+            "wins": 209
+          }
+        },
+        "ci_method": "paired percentile bootstrap, 5000 samples, seed 9172026",
+        "draws": 0,
+        "games": 432,
+        "interpretation": "RL advantage",
+        "losses": 15,
+        "pairs": 216,
+        "score_rate": 0.9652777777777778,
+        "score_rate_95_ci": [
+          0.9490740740740741,
+          0.9814814814814815
+        ],
+        "win_rate": 0.9652777777777778,
+        "wins": 417
+      },
+      "RL-05": {
+        "by_rl_owner": {
+          "0": {
+            "draws": 0,
+            "games": 216,
+            "losses": 40,
+            "score_rate": 0.8148148148148148,
+            "win_rate": 0.8148148148148148,
+            "wins": 176
+          },
+          "1": {
+            "draws": 0,
+            "games": 216,
+            "losses": 22,
+            "score_rate": 0.8981481481481481,
+            "win_rate": 0.8981481481481481,
+            "wins": 194
+          }
+        },
+        "ci_method": "paired percentile bootstrap, 5000 samples, seed 9172026",
+        "draws": 0,
+        "games": 432,
+        "interpretation": "RL advantage",
+        "losses": 62,
+        "pairs": 216,
+        "score_rate": 0.8564814814814815,
+        "score_rate_95_ci": [
+          0.8263888888888888,
+          0.8865740740740741
+        ],
+        "win_rate": 0.8564814814814815,
+        "wins": 370
+      },
+      "RL-10": {
+        "by_rl_owner": {
+          "0": {
+            "draws": 0,
+            "games": 216,
+            "losses": 70,
+            "score_rate": 0.6759259259259259,
+            "win_rate": 0.6759259259259259,
+            "wins": 146
+          },
+          "1": {
+            "draws": 0,
+            "games": 216,
+            "losses": 62,
+            "score_rate": 0.7129629629629629,
+            "win_rate": 0.7129629629629629,
+            "wins": 154
+          }
+        },
+        "ci_method": "paired percentile bootstrap, 5000 samples, seed 9172026",
+        "draws": 0,
+        "games": 432,
+        "interpretation": "RL advantage",
+        "losses": 132,
+        "pairs": 216,
+        "score_rate": 0.6944444444444444,
+        "score_rate_95_ci": [
+          0.6550925925925926,
+          0.7314814814814815
+        ],
+        "win_rate": 0.6944444444444444,
+        "wins": 300
+      },
+      "RL-15": {
+        "by_rl_owner": {
+          "0": {
+            "draws": 0,
+            "games": 216,
+            "losses": 95,
+            "score_rate": 0.5601851851851852,
+            "win_rate": 0.5601851851851852,
+            "wins": 121
+          },
+          "1": {
+            "draws": 0,
+            "games": 216,
+            "losses": 85,
+            "score_rate": 0.6064814814814815,
+            "win_rate": 0.6064814814814815,
+            "wins": 131
+          }
+        },
+        "ci_method": "paired percentile bootstrap, 5000 samples, seed 9172026",
+        "draws": 0,
+        "games": 432,
+        "interpretation": "RL advantage",
+        "losses": 180,
+        "pairs": 216,
+        "score_rate": 0.5833333333333334,
+        "score_rate_95_ci": [
+          0.5416666666666666,
+          0.625
+        ],
+        "win_rate": 0.5833333333333334,
+        "wins": 252
+      }
+    }
+  },
+  "training": {
+    "event": "completed",
+    "time": 1789632893.4101634,
+    "iterations": 20,
+    "checkpoint": "/home/gujiga/firstlight_CR/runs/event-mirror-v2-20260917T065146Z/weights/ae33b21b8cb21da1efe4b626d2b9bb3a4f5d4798c53d4de61bb1bc8f49ae5074.pt"
+  }
+}

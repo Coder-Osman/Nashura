@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="37" time="144.705" timestamp="2026-10-21T15:46:15.286062+08:00" hostname="gujigadeMacBook-Pro-3.local"><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_validation_is_read_only_rng_and_module_mode_preserving_and_never_reads_test" time="6.714" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_validation_weights_games_equally_even_with_unequal_lengths" time="0.358" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_early_stop_runs_frozen_epochs_and_retains_best_optimizer_instead_of_latest" time="2.607" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_exact_resume_restores_selection_model_optimizer_rng_and_next_batch[0]" time="1.923" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_exact_resume_restores_selection_model_optimizer_rng_and_next_batch[1]" time="2.854" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_exact_resume_restores_selection_model_optimizer_rng_and_next_batch[2]" time="2.931" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_exact_resume_restores_selection_model_optimizer_rng_and_next_batch[4]" time="3.729" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_exact_resume_restores_selection_model_optimizer_rng_and_next_batch[5]" time="5.320" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_exact_resume_restores_selection_model_optimizer_rng_and_next_batch[6]" time="4.765" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_selected_parent_supports_two_supplement_rounds_and_uses_best_moments" time="21.789" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[config]" time="3.567" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[implementation]" time="3.892" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[validation_identity]" time="4.654" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[best_index]" time="4.232" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[terminal]" time="4.676" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[missing_epoch]" time="4.474" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[steps]" time="4.733" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[network_sha]" time="4.494" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[game_rows]" time="4.545" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[game_id]" time="4.056" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[whole_game_weight]" time="4.937" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[loss_weights]" time="4.724" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[nonfinite]" time="4.165" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[best_network]" time="4.292" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[best_optimizer]" time="5.078" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[best_run_seed]" time="4.240" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_validation_failure_restores_modes_and_rng_and_quarantines_round" time="0.962" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_export_preserves_selected_probabilities_and_caller_rng" time="5.013" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_invalid_early_stop_configuration_rejected[0-0.0]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_invalid_early_stop_configuration_rejected[True-0.0]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_invalid_early_stop_configuration_rejected[1--1.0]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_invalid_early_stop_configuration_rejected[1-inf]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_invalid_early_stop_configuration_rejected[1-nan]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_parent_handoff_rejects_incomplete_or_mismatched_history[unfinished]" time="3.455" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_parent_handoff_rejects_incomplete_or_mismatched_history[prefix]" time="4.618" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_parent_handoff_rejects_incomplete_or_mismatched_history[receipt]" time="4.392" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_engineering_entrypoint_updates_and_resumes_without_old_stream_logs" time="1.387"><failure message="FileExistsError: [Errno 17] File exists: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-475/test_engineering_entrypoint_up0/.fair-qtu9ivpj' -&gt; '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-475/test_engineering_entrypoint_up0/round.pt'">series = {'bundle': namespace(card_catalog=CardCatalogV1(raw_card_ids=(1002, 2001, 3003, 5005, 6006, 7007, 8008, 9004), static_...osixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-475/series-training0'), ...}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-475/test_engineering_entrypoint_up0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x1014e7020&gt;
+capsys = &lt;_pytest.capture.CaptureFixture object at 0x1015e5a90&gt;
+
+    def test_engineering_entrypoint_updates_and_resumes_without_old_stream_logs(series, tmp_path, monkeypatch, capsys):
+        import train_round
+    
+        plan = dict(series["plan"], rounds=series["plan"]["rounds"][:1])
+        files = {"plan": plan, "config": vars(CONFIG), "weights": vars(WEIGHTS)}
+        for name, value in files.items():
+            (tmp_path / (name + ".json")).write_text(json.dumps(value))
+        output = tmp_path / "round.pt"
+        argv = ["train_round.py", "--engineering", "--source", str(tmp_path / "source.pt"),
+            "--private-plan", str(tmp_path / "plan.json"), "--data-roots", str(series["roots"][0]),
+            "--selection-config", str(tmp_path / "config.json"),
+            "--loss-weights", str(tmp_path / "weights.json"), "--output", str(output),
+            "--seed", "822", "--batch-size", "3", "--max-updates", "1"]
+    
+        def source(path, *, device, expected_sha256):
+            assert expected_sha256 == plan["rounds"][0]["manifest"]["identity"]["source_a_sha"]
+            return series["teacher"], None, None
+    
+        monkeypatch.setattr(train_round, "load_checkpoint", source)
+        monkeypatch.setattr(train_round, "ConditionalPolicyValue", lambda **kwargs:
+            ConditionalPolicyValue(bundle=series["bundle"], **kwargs))
+        original_resume = train_round.resume_round
+        monkeypatch.setattr(train_round, "resume_round", lambda *args, **kwargs:
+            original_resume(*args, bundle=series["bundle"], **kwargs))
+        monkeypatch.setattr(sys, "argv", argv)
+&gt;       train_round.main()
+
+_spec_work/versions/fair-final-migration-selection-v1/test_round_selection.py:345: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-selection-v1/train_round.py:80: in main
+    digest = run.save(args.output)
+_spec_work/versions/fair-final-migration-selection-v1/round_selection.py:184: in save
+    durable_write(path, data)
+firstlight_CR/native_runner/training/fair_final/storage.py:18: in durable_write
+    atomic_write(path, data)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-475/test_engineering_entrypoint_up0/round.pt')
+data = b'PK\x03\x04\x00\x00\x08\x08\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x10\x00\x12\x00ar...x00%{2\x05\x00\x00\x00\x00\x01\x00\x00\x00PK\x05\x06\x00\x00\x00\x00\xe2\x03\xe2\x03m\xf0\x00\x00\xb8\x8a1\x05\x00\x00'
+
+    def atomic_write(path, data, *, replace=False):
+        destination = Path(path)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile(dir=destination.parent, prefix=".fair-", delete=False) as stream:
+                temporary = stream.name
+                stream.write(data)
+                stream.flush()
+                os.fsync(stream.fileno())
+            if replace:
+                os.replace(temporary, destination)
+            else:
+&gt;               os.link(temporary, destination)
+E               FileExistsError: [Errno 17] File exists: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-475/test_engineering_entrypoint_up0/.fair-qtu9ivpj' -&gt; '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-475/test_engineering_entrypoint_up0/round.pt'
+
+firstlight_CR/native_runner/training/fair_search/storage.py:27: FileExistsError</failure></testcase></testsuite></testsuites>

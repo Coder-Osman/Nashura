@@ -1,0 +1,71 @@
+{
+  "schema": "hog-tree-search-training.v1",
+  "task_id": "hog-tree-search-1755-200r-20260929",
+  "start_iteration": 1755,
+  "start_checkpoint": "/tmp/firstlight-v2/1755.pt",
+  "start_checkpoint_sha256": "e9f7c84a3e5f84a4d625c3f9a68e332a318a2aedc06e196da55bdb00a66bd1f0",
+  "baseline_iteration": 1553,
+  "learner_deck_id": "hog",
+  "round_games": {
+    "self_play": 72,
+    "fixed_1250": 12,
+    "recent": 24
+  },
+  "opponent_checkpoints": {
+    "fixed_1250": {
+      "iteration": 1250,
+      "sha256": "855fd95cfd0e2ae1905089712db01850827d4bdcd745f28e84ce1b9f0c10b4de"
+    },
+    "recent": {
+      "iteration": 1753,
+      "sha256": "d576ad087a0c1efd6e3e2203ae21a717f46ed5b493e863d3794a9fec742d1c27"
+    }
+  },
+  "fleet": {
+    "34": 24,
+    "35": 24,
+    "37": 24,
+    "39": 18,
+    "41": 18
+  },
+  "tree_search": {
+    "state_version": "tree-search-state.v1",
+    "prototype_simulations": 32,
+    "teacher_simulations": 128,
+    "high_uncertainty_simulations": 256,
+    "max_decision_points": 6,
+    "max_native_seconds": 10.0,
+    "cpuct": 1.5,
+    "dirichlet_alpha": 0.25,
+    "dirichlet_epsilon": 0.25,
+    "opponent_top_k": 4,
+    "opponent_temperature": 0.5,
+    "state_mode": "deterministic_full_state"
+  },
+  "reward": {
+    "q_expected_weight": 0.7,
+    "q_robust_weight": 0.3
+  },
+  "distillation": {
+    "policy_start": 0.5,
+    "value_start": 0.1,
+    "policy_end": 0.25,
+    "value_end": 0.05,
+    "decay_start_update": 100,
+    "total_updates": 200
+  },
+  "cycles": 10,
+  "teacher_games_per_cycle": 216,
+  "evaluation": {
+    "games": 6000,
+    "tree_search": false,
+    "games_per_opponent": 1200
+  },
+  "optimizer": {
+    "ppo_updates": 200,
+    "updates_per_cycle": 20,
+    "ppo_epochs_per_update": 1,
+    "gamma": 0.999,
+    "gae_lambda": 0.95
+  }
+}

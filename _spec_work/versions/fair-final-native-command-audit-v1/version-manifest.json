@@ -1,0 +1,18 @@
+{
+  "files": {
+    "CONTRACT.md": "8396c9f61a87b6976a703a744bace881ed34f0834ad9317053d605fb350d7af0",
+    "EVIDENCE.md": "bee39f93b1e63297f8c7a5e27a42bb4b213aae89efd6d602a4bb52440fa5b678",
+    "audit-report.json": "f5dda710b2bd9698242d06cf6c844f5745dce77fc626b6ee37fb1d2f4cdf687d",
+    "audit_ct86.py": "e70ce714bd8d6a266c8a0990ad5ebe63e8a40edb5e0a957e4d3c4292c6c84fe5",
+    "test_audit_ct86.py": "7d7ff4c37337498416ea96de29f06f3ca140d266cbce090256c1df4684f0c229",
+    "tests-final.xml": "5b1eba1dd8466f170a3e89f50e6d902b9d43a0a36ff90334a3cab84c42752a37"
+  },
+  "frozen_engine": {
+    "bytes": 27554368,
+    "path": "_spec_work/versions/fair-final-history-v2/project/artifacts/standalone-engine-20260926/app-libs/libg.so",
+    "sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783"
+  },
+  "schema": "fair-final-native-command-audit-manifest.v1",
+  "status": "passed_limited_scope",
+  "training_admissible": false
+}

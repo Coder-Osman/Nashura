@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="8" time="15.347" timestamp="2026-10-22T09:24:40.334857+08:00" hostname="gujigadeMacBook-Pro-3.local"><testcase classname="_spec_work.versions.fair-final-migration-cache-v1.test_verified_store" name="test_cache_preserves_full_content_and_protects_against_caller_mutation" time="6.325" /><testcase classname="_spec_work.versions.fair-final-migration-cache-v1.test_verified_store" name="test_cache_hit_still_rejects_changed_evidence[file]" time="0.028" /><testcase classname="_spec_work.versions.fair-final-migration-cache-v1.test_verified_store" name="test_cache_hit_still_rejects_changed_evidence[receipt]" time="0.028" /><testcase classname="_spec_work.versions.fair-final-migration-cache-v1.test_verified_store" name="test_cache_hit_still_rejects_changed_evidence[quarantine]" time="0.029" /><testcase classname="_spec_work.versions.fair-final-migration-cache-v1.test_verified_store" name="test_cache_hit_still_rejects_changed_evidence[manifest]" time="0.028" /><testcase classname="_spec_work.versions.fair-final-migration-cache-v1.test_verified_store" name="test_cache_retains_only_last_episode_and_revalidates_evicted_entry" time="0.071" /><testcase classname="_spec_work.versions.fair-final-migration-cache-v1.test_verified_store" name="test_selected_rows_preserve_order_and_do_not_copy_whole_episode" time="0.034" /><testcase classname="_spec_work.versions.fair-final-migration-cache-v1.test_cached_training" name="test_cached_dataset_updates_validation_and_resume_match_reference" time="8.096"><failure message="ValueError: new round and explicit selection configuration required">series = {'bundle': namespace(card_catalog=CardCatalogV1(raw_card_ids=(1002, 2001, 3003, 5005, 6006, 7007, 8008, 9004), static_...osixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-509/series-training1'), ...}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-509/test_cached_dataset_updates_va0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x105727240&gt;
+
+    def test_cached_dataset_updates_validation_and_resume_match_reference(series, tmp_path, monkeypatch):
+        parent = ROOT.parent / "fair-final-migration-integration-v1/native-selected-round0-1792629813912401000"
+        package, identity, changed = build(parent)
+        assert set(changed) == {SERIES + "verified_store.py", SERIES + "series_training.py",
+            SELECTION + "train_round.py", SELECTION + "round_selection.py"}
+        with tarfile.open(fileobj=io.BytesIO(package), mode="r:gz") as archive:
+            archive.extractall(tmp_path, filter="data")
+        cached_series = load_module("cached_series_training", tmp_path / SERIES / "series_training.py")
+        with monkeypatch.context() as context:
+            context.setitem(sys.modules, "series_training", cached_series)
+            selection = load_module("cached_round_selection", tmp_path / SELECTION / "round_selection.py")
+        cached = cached_series.SeriesMigrationDataset(series["initial"].plan,
+            [store.root for store in series["initial"].stores], teacher=series["teacher"])
+        assert cached.identity == series["initial"].identity
+        assert cached.splits == series["initial"].splits
+        for split, rows in cached.splits.items():
+            actual, actual_legal = cached.batch(rows, split=split)
+            expected, expected_legal = series["initial"].batch(rows, split=split)
+            assert semantic_digest(actual) == semantic_digest(expected)
+            assert semantic_digest([item.plays for item in actual_legal]) == semantic_digest([item.plays for item in expected_legal])
+        reference = MigrationRound(initial_trainer(series), series["initial"], config=CONFIG)
+&gt;       optimized = selection.MigrationRound(initial_trainer(series), cached, config=CONFIG)
+
+_spec_work/versions/fair-final-migration-cache-v1/test_cached_training.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;cached_round_selection.MigrationRound object at 0x16a842ba0&gt;
+trainer = &lt;native_runner.training.fair_migration_trainer.MigrationTrainer object at 0x32d37f230&gt;
+dataset = &lt;cached_series_training.SeriesMigrationDataset object at 0x105825a90&gt;
+
+    def __init__(self, trainer, dataset, *, config):
+        if trainer.optimizer_steps != getattr(trainer, "lineage", {}).get("parent_optimizer_steps", 0):
+            raise ValueError("new round must start at its initial optimizer cursor")
+        if not isinstance(config, SelectionConfig) or trainer.completed_epochs or trainer.offset:
+&gt;           raise ValueError("new round and explicit selection configuration required")
+E           ValueError: new round and explicit selection configuration required
+
+/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-509/test_cached_dataset_updates_va0/_spec_work/versions/fair-final-migration-selection-v1/round_selection.py:161: ValueError</failure></testcase></testsuite></testsuites>

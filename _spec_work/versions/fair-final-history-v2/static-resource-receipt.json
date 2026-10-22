@@ -1,0 +1,10 @@
+{
+  "schema": "fair-final-static-resource-install.v1",
+  "remote": "/home/zhichun/firstlight_CR/artifacts/standalone-engine-20260926/app-libs/libg.so",
+  "local": "/Users/gujiga/Documents/ChatGPT/CR/_spec_work/versions/fair-final-history-v2/project/artifacts/standalone-engine-20260926/app-libs/libg.so",
+  "sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "bytes": 27554368,
+  "timestamp": 1792564864.657231,
+  "source_files_changed": false,
+  "training_admissible": false
+}

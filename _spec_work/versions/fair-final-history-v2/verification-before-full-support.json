@@ -1,0 +1,58 @@
+{
+  "schema": "fair-final-history-verification.v1",
+  "status": "engineering_checks_passed_with_explicit_native_exclusions",
+  "version_manifest_sha256": "4dc62b3e464e9212cbd82b65163f796fd0b25c89dd0acf176959470008f77dcf",
+  "tests": [
+    {
+      "path": "rejection-tests.xml",
+      "sha256": "f632abb88a5f78e8aaa0a6e7b4d32f5d7548541ccb3988c93e0c9331c9824221",
+      "tests": 21,
+      "passed": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": []
+    },
+    {
+      "path": "regression-tests-complete.xml",
+      "sha256": "156387723b688315ebb7fe80aaaa98ed9659891aa2c188f7310455c36e5b40f6",
+      "tests": 635,
+      "passed": 633,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [
+        {
+          "name": "test_target_type_static_evidence_is_bound_to_frozen_library",
+          "reason": "fixed native artifact not installed"
+        },
+        {
+          "name": "test_frozen_native_inventory_anchors_and_call_counts",
+          "reason": "fixed native artifact not installed"
+        }
+      ]
+    }
+  ],
+  "imports": {
+    "history": "/Users/gujiga/Documents/ChatGPT/CR/_spec_work/versions/fair-final-history-v2/project/native_runner/training/fair_final/history.py",
+    "history_belief": "/Users/gujiga/Documents/ChatGPT/CR/_spec_work/versions/fair-final-history-v2/project/native_runner/training/fair_final/history_belief.py",
+    "native": "/Users/gujiga/Documents/ChatGPT/CR/_spec_work/versions/fair-final-history-v2/project/native_runner/training/fair_final/native.py",
+    "prior_history": "/Users/gujiga/Documents/ChatGPT/CR/_spec_work/versions/fair-final-history-v2/project/native_runner/training/fair_final/prior_history.py"
+  },
+  "running_attempt": {
+    "launch_sha256": "d9a08c1629eaa4c5bfff7c87ad842d490d37bee162479186c2844dc75481ca05",
+    "frozen_files": 244,
+    "changed_files": 0
+  },
+  "native": false,
+  "native_reachability_proven": false,
+  "general_pending_closed": false,
+  "training_admissible": false,
+  "deployed": false,
+  "remaining_gaps": [
+    "opponent-private-rejection-cold-rebuild-support",
+    "legal-native-rejection-reachability",
+    "native-v2-replay-full128-and-recovery",
+    "complete-search-episode-and-independent-final-verification"
+  ],
+  "test_counts_overlap": true,
+  "initial_regression_failure": "missing copied C++ fixture; retained in regression-tests.xml"
+}

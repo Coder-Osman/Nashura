@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="33" time="128.602" timestamp="2026-10-21T15:33:12.020743+08:00" hostname="gujigadeMacBook-Pro-3.local"><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_validation_is_read_only_rng_and_module_mode_preserving_and_never_reads_test" time="6.749" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_validation_weights_games_equally_even_with_unequal_lengths" time="0.384" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_early_stop_runs_frozen_epochs_and_retains_best_optimizer_instead_of_latest" time="2.570" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_exact_resume_restores_selection_model_optimizer_rng_and_next_batch[0]" time="1.894" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_exact_resume_restores_selection_model_optimizer_rng_and_next_batch[1]" time="3.000" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_exact_resume_restores_selection_model_optimizer_rng_and_next_batch[2]" time="2.981" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_exact_resume_restores_selection_model_optimizer_rng_and_next_batch[4]" time="3.746" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_exact_resume_restores_selection_model_optimizer_rng_and_next_batch[5]" time="5.125" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_exact_resume_restores_selection_model_optimizer_rng_and_next_batch[6]" time="4.256" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_selected_parent_supports_two_supplement_rounds_and_uses_best_moments" time="21.009" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[config]" time="3.806" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[implementation]" time="3.466" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[validation_identity]" time="4.223" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[best_index]" time="4.291" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[terminal]" time="4.383" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[missing_epoch]" time="4.415" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[steps]" time="4.995" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[network_sha]" time="4.330" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[game_rows]" time="4.501" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[game_id]" time="4.087" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[whole_game_weight]" time="5.240" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[loss_weights]" time="4.431" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[nonfinite]" time="4.299"><failure message="ValueError: Out of range float values are not JSON compliant: nan">series = {'bundle': namespace(card_catalog=CardCatalogV1(raw_card_ids=(1002, 2001, 3003, 5005, 6006, 7007, 8008, 9004), static_...osixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-474/series-training0'), ...}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-474/test_resealed_corruption_is_re12')
+bad = 'nonfinite'
+
+    @pytest.mark.parametrize("bad", ["config", "implementation", "validation_identity", "best_index", "terminal",
+        "missing_epoch", "steps", "network_sha", "game_rows", "game_id", "whole_game_weight",
+        "loss_weights", "nonfinite", "best_network", "best_optimizer", "best_run_seed"])
+    def test_resealed_corruption_is_rejected_and_rng_restored(series, tmp_path, bad):
+        run = create(series)
+        finish(run, series["initial"])
+        path = tmp_path / "round.pt"
+        run.save(path)
+        envelope = torch.load(path, weights_only=True)
+        payload = envelope["payload"]
+        if bad == "config":
+            payload["config"]["patience"] += 1
+        elif bad == "implementation":
+            payload["implementation_sha"] = "f" * 64
+        elif bad == "validation_identity":
+            payload["validation_sha"] = "f" * 64
+        elif bad == "best_index":
+            payload["best_index"] = 1
+        elif bad == "terminal":
+            payload["terminal"] = None
+        elif bad == "missing_epoch":
+            payload["history"].pop()
+        elif bad == "steps":
+            payload["history"][1]["optimizer_steps"] += 1
+        elif bad == "network_sha":
+            payload["history"][-1]["network_sha"] = "f" * 64
+        elif bad in ("game_rows", "game_id", "whole_game_weight", "loss_weights", "nonfinite"):
+            metrics = payload["history"][0]["validation"]
+            if bad == "game_rows":
+                metrics["games"][0]["rows"] += 1
+            elif bad == "game_id":
+                metrics["games"][0]["match_id"] = "f" * 64
+            elif bad == "whole_game_weight":
+                metrics["loss"] += .1
+            elif bad == "loss_weights":
+                metrics["games"][0]["loss"] += .1
+            else:
+                metrics["games"][0]["greedy_nll"] = float("nan")
+        else:
+            inner = payload["best"]
+            if bad == "best_network":
+                next(iter(inner["payload"]["network"].values())).add_(1.)
+            elif bad == "best_optimizer":
+                inner["payload"]["optimizer"]["param_groups"][0]["lr"] = .01
+            else:
+                inner["payload"]["cursor"]["seed"] += 1
+            inner["sha256"] = semantic_digest(inner["payload"])
+&gt;       envelope["sha256"] = semantic_digest(payload)
+
+_spec_work/versions/fair-final-migration-selection-v1/test_round_selection.py:228: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+firstlight_CR/native_runner/training/fair_search/contracts.py:92: in semantic_digest
+    visit(value)
+firstlight_CR/native_runner/training/fair_search/contracts.py:83: in visit
+    visit(item[key])
+firstlight_CR/native_runner/training/fair_search/contracts.py:87: in visit
+    visit(member)
+firstlight_CR/native_runner/training/fair_search/contracts.py:83: in visit
+    visit(item[key])
+firstlight_CR/native_runner/training/fair_search/contracts.py:83: in visit
+    visit(item[key])
+firstlight_CR/native_runner/training/fair_search/contracts.py:87: in visit
+    visit(member)
+firstlight_CR/native_runner/training/fair_search/contracts.py:83: in visit
+    visit(item[key])
+firstlight_CR/native_runner/training/fair_search/contracts.py:89: in visit
+    digest.update(json.dumps(item, allow_nan=False).encode())
+/opt/anaconda3/lib/python3.13/json/__init__.py:238: in dumps
+    **kw).encode(obj)
+/opt/anaconda3/lib/python3.13/json/encoder.py:200: in encode
+    chunks = self.iterencode(o, _one_shot=True)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;json.encoder.JSONEncoder object at 0x1695f52e0&gt;, o = nan
+_one_shot = True
+
+    def iterencode(self, o, _one_shot=False):
+        """Encode the given object and yield each string
+        representation as available.
+    
+        For example::
+    
+            for chunk in JSONEncoder().iterencode(bigobject):
+                mysocket.write(chunk)
+    
+        """
+        if self.check_circular:
+            markers = {}
+        else:
+            markers = None
+        if self.ensure_ascii:
+            _encoder = encode_basestring_ascii
+        else:
+            _encoder = encode_basestring
+    
+        def floatstr(o, allow_nan=self.allow_nan,
+                _repr=float.__repr__, _inf=INFINITY, _neginf=-INFINITY):
+            # Check for specials.  Note that this type of test is processor
+            # and/or platform-specific, so do tests which don't depend on the
+            # internals.
+    
+            if o != o:
+                text = 'NaN'
+            elif o == _inf:
+                text = 'Infinity'
+            elif o == _neginf:
+                text = '-Infinity'
+            else:
+                return _repr(o)
+    
+            if not allow_nan:
+                raise ValueError(
+                    "Out of range float values are not JSON compliant: " +
+                    repr(o))
+    
+            return text
+    
+    
+        if self.indent is None or isinstance(self.indent, str):
+            indent = self.indent
+        else:
+            indent = ' ' * self.indent
+        if _one_shot and c_make_encoder is not None:
+            _iterencode = c_make_encoder(
+                markers, self.default, _encoder, indent,
+                self.key_separator, self.item_separator, self.sort_keys,
+                self.skipkeys, self.allow_nan)
+        else:
+            _iterencode = _make_iterencode(
+                markers, self.default, _encoder, indent, floatstr,
+                self.key_separator, self.item_separator, self.sort_keys,
+                self.skipkeys, _one_shot)
+&gt;       return _iterencode(o, 0)
+E       ValueError: Out of range float values are not JSON compliant: nan
+
+/opt/anaconda3/lib/python3.13/json/encoder.py:261: ValueError</failure></testcase><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[best_network]" time="4.293" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[best_optimizer]" time="5.024" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_resealed_corruption_is_rejected_and_rng_restored[best_run_seed]" time="4.312" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_validation_failure_restores_modes_and_rng_and_quarantines_round" time="0.945" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_export_preserves_selected_probabilities_and_caller_rng" time="5.079" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_invalid_early_stop_configuration_rejected[0-0.0]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_invalid_early_stop_configuration_rejected[True-0.0]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_invalid_early_stop_configuration_rejected[1--1.0]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_invalid_early_stop_configuration_rejected[1-inf]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-migration-selection-v1.test_round_selection" name="test_invalid_early_stop_configuration_rejected[1-nan]" time="0.006" /></testsuite></testsuites>

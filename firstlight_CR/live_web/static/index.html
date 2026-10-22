@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f7">
+  <title>CR 工作台 · 私服对战</title>
+  <link rel="stylesheet" href="static/style.css">
+  <script src="static/vendor/lucide.min.js" defer></script>
+  <script src="static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="workbench-header"><a class="brand" href="/"><span class="brand-mark"><i data-lucide="swords"></i></span><span>CR 工作台</span></a><nav class="workbench-nav" aria-label="工作台"><a href="/">对局视频</a><a href="/play">人机对战</a><a href="/live/?mode=standard">私服对战</a></nav></div>
+    <div class="connection"><span id="device-dot" class="dot"></span><span id="device-state">连接设备中</span><span class="device-name">firstlight-live</span></div>
+  </header>
+  <div class="navigation">
+    <nav aria-label="对战视图"><button class="tab active" data-tab="live" aria-selected="true">实时对战</button><button class="tab" data-tab="history" aria-selected="false">对局记录 <span id="history-count">0</span></button></nav>
+    <span class="experimental">实验接入 · 观测未完整</span>
+  </div>
+  <main id="live-view" class="workspace">
+    <aside class="setup">
+      <div class="section-heading"><h1>新对局</h1><span class="tag">原生客户端</span></div>
+      <form id="start-form">
+        <div class="field-title"><label for="checkpoint">模型权重</label><div class="icon-group"><button type="button" class="icon-button" id="refresh" title="刷新权重" aria-label="刷新权重"><i data-lucide="refresh-cw"></i></button><button type="button" class="icon-button" id="add-weight" title="添加本机权重" aria-label="添加本机权重"><i data-lucide="folder-plus"></i></button></div></div>
+        <input id="weight-search" type="search" aria-label="搜索权重" placeholder="搜索轮次或训练批次" autocomplete="off">
+        <select id="checkpoint" required aria-label="模型权重"><option value="">正在读取权重</option></select>
+        <p id="weight-name" class="filename"> </p>
+        <dl class="weight-details"><div><dt>模型契约</dt><dd id="weight-version">-</dd></div><div><dt>残差层</dt><dd id="weight-residual">-</dd></div><div><dt>权重大小</dt><dd id="weight-size">-</dd></div><div><dt>来源</dt><dd id="weight-source">-</dd></div></dl>
+        <p id="weight-run" class="filename"></p>
+        <div id="catalog-note" class="subtle"></div>
+        <div id="remote-status" class="subtle" role="status"></div>
+        <div class="setup-divider"></div>
+        <dl class="match-details"><div><dt>服务器</dt><dd>Null's Royale</dd></div><div><dt>卡组</dt><dd>游戏当前卡组</dd></div></dl>
+        <div class="field-title"><label for="match-mode">对战模式</label></div>
+        <select id="match-mode"><option value="friendly">人机友谊战 · 原生操控</option><option value="standard">AI 普通匹配</option></select>
+        <p id="friendly-help" class="subtle">先准备 AI，等状态显示“等待友谊战”后，在 Nashura 的 Social → Friendly Battle → 1v1 发起挑战；在 HumanPilot 的同一部落聊天里接受，直接在 HumanPilot 模拟器点选或拖动卡牌。网页画面用于查看 AI。</p>
+        <button class="primary command" id="start" type="submit" disabled><i data-lucide="play"></i><span>准备 AI，等待友谊战</span></button>
+        <button class="secondary command" id="stop" type="button" disabled><i data-lucide="square"></i><span>停止接管</span></button>
+      </form>
+      <div id="notice" role="alert" hidden></div>
+      <div class="session-info"><i data-lucide="monitor-smartphone"></i><div><span>AI：Nashura · firstlight-live</span><code>emulator-5570</code><span>人类：HumanPilot · firstlight-human</span><code>emulator-5572</code></div></div>
+    </aside>
+    <section class="game-view" aria-label="游戏实时画面">
+      <div class="game-toolbar"><div><span id="live-dot" class="dot"></span><span id="scene">游戏画面</span></div><button class="icon-button" id="fullscreen" title="全屏画面" aria-label="全屏画面"><i data-lucide="maximize"></i></button></div>
+      <div class="screen-stage" id="screen-stage"><img id="screen" alt="Null's Royale 当前游戏画面"><div id="screen-message" class="screen-message"><i data-lucide="monitor"></i><span>正在连接游戏画面</span></div></div>
+      <div class="game-bottom"><span><i data-lucide="radio"></i><span id="preview-state">正在连接</span></span><span>1080 × 1920</span></div>
+    </section>
+    <aside class="activity">
+      <div class="section-heading"><h2>本局状态</h2><span id="state-badge" class="state-badge">待开始</span></div>
+      <p id="run-message" class="run-message" role="status">等待开始对局</p>
+      <div id="download-status" hidden><progress id="download-progress" max="100" value="0" aria-label="权重下载进度"></progress><span id="download-bytes" class="subtle"></span></div>
+      <div class="metrics"><div><span>已确认出牌</span><strong id="confirmed">0</strong></div><div><span>决策次数</span><strong id="decisions">0</strong></div><div><span>对局时间</span><strong id="battle-time">00:00</strong></div><div><span>推理耗时</span><strong id="latency">-<small> ms</small></strong></div></div>
+      <div class="elixir-section"><div><span>己方圣水</span><strong id="elixir-value">-</strong></div><progress id="elixir" max="10" value="0" aria-label="己方圣水"></progress></div>
+      <div class="hand-section"><h3>当前手牌</h3><div id="hand" class="hand"><span>-</span><span>-</span><span>-</span><span>-</span></div></div>
+      <div id="warning" class="warning" role="status" hidden></div>
+      <div class="log-heading"><h3>对局动态</h3><a id="download-log" class="icon-button" title="下载 AI 决策记录" aria-label="下载 AI 决策记录" hidden><i data-lucide="download"></i></a></div>
+      <ol id="events" class="events"><li class="empty-log">暂无出牌记录</li></ol>
+    </aside>
+  </main>
+  <main id="history-view" class="history-view" hidden>
+    <div class="section-heading"><h1>对局记录</h1><button class="icon-button" id="refresh-history" title="刷新记录" aria-label="刷新记录"><i data-lucide="refresh-cw"></i></button></div>
+    <div id="history-list"></div>
+  </main>
+  <dialog id="weight-dialog"><form id="weight-form"><div class="section-heading"><h2>添加本机权重</h2><button class="icon-button" id="close-dialog" type="button" title="关闭" aria-label="关闭"><i data-lucide="x"></i></button></div><label for="weight-path">权重文件路径</label><input id="weight-path" name="path" required placeholder="/Users/…/checkpoint.pt" autocomplete="off"><div id="weight-error" role="alert"></div><button id="import-weight" class="primary command" type="submit"><i data-lucide="file-check"></i><span>校验并添加</span></button></form></dialog>
+</body>
+</html>

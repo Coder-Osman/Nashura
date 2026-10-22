@@ -1,0 +1,60 @@
+{
+  "schema": "fair-final-history-verification.v2",
+  "status": "engineering_checks_passed_with_explicit_native_exclusions",
+  "version_manifest_sha256": "1f552d1cbcd3384006967242eba80ede42a3d7720edd852f9e33a0f25c02e981",
+  "tests": [
+    {
+      "path": "proposal-tests.xml",
+      "sha256": "ce886d2186cf91ec0d80fb5becbd76a7ad71ff1c62cff499068277707d8b9c2b",
+      "tests": 88,
+      "passed": 88,
+      "failures": 0,
+      "errors": 0,
+      "skipped": []
+    },
+    {
+      "path": "regression-full-support.xml",
+      "sha256": "3ec57d143618468dd3116f1a60b5ee6fea3e567b20acf110cc274d4ec8f6a668",
+      "tests": 649,
+      "passed": 647,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [
+        {
+          "name": "test_target_type_static_evidence_is_bound_to_frozen_library",
+          "reason": "fixed native artifact not installed"
+        },
+        {
+          "name": "test_frozen_native_inventory_anchors_and_call_counts",
+          "reason": "fixed native artifact not installed"
+        }
+      ]
+    }
+  ],
+  "imports": {
+    "history": "/Users/gujiga/Documents/ChatGPT/CR/_spec_work/versions/fair-final-history-v2/project/native_runner/training/fair_final/history.py",
+    "history_belief": "/Users/gujiga/Documents/ChatGPT/CR/_spec_work/versions/fair-final-history-v2/project/native_runner/training/fair_final/history_belief.py",
+    "native": "/Users/gujiga/Documents/ChatGPT/CR/_spec_work/versions/fair-final-history-v2/project/native_runner/training/fair_final/native.py",
+    "prior_history": "/Users/gujiga/Documents/ChatGPT/CR/_spec_work/versions/fair-final-history-v2/project/native_runner/training/fair_final/prior_history.py",
+    "conditioned_plan": "/Users/gujiga/Documents/ChatGPT/CR/_spec_work/versions/fair-final-history-v2/project/native_runner/training/fair_final/conditioned_plan.py",
+    "refill_belief": "/Users/gujiga/Documents/ChatGPT/CR/_spec_work/versions/fair-final-history-v2/project/native_runner/training/fair_final/refill_belief.py"
+  },
+  "running_attempt": {
+    "launch_sha256": "d9a08c1629eaa4c5bfff7c87ad842d490d37bee162479186c2844dc75481ca05",
+    "frozen_files": 244,
+    "changed_files": 0
+  },
+  "native": false,
+  "native_reachability_proven": false,
+  "general_pending_closed": false,
+  "training_admissible": false,
+  "deployed": false,
+  "opponent_private_rejection_cold_support": "fixture_verified_approximate_full_policy_mixture",
+  "remaining_gaps": [
+    "legal-native-rejection-reachability",
+    "native-v2-replay-full128-and-recovery",
+    "complete-search-episode-and-independent-final-verification"
+  ],
+  "test_counts_overlap": true,
+  "initial_regression_failure": "missing copied C++ fixture; retained in regression-tests.xml"
+}

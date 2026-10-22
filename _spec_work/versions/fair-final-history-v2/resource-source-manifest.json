@@ -1,0 +1,17 @@
+{
+  "source": "/Users/gujiga/Documents/ChatGPT/CR/firstlight_CR/native_runner/data",
+  "files": {
+    "competitive/.gitattributes": "5c0ccd4346d40a9a257042b8a485544d843749688aee93ed1bcf52679a9a2441",
+    "competitive/README.md": "6d314d6d9084e2c11db9cfa180323b2f5249d26988af6a7a40f69294616ce60a",
+    "competitive/card_logic.json.gz": "fe916d22d9ce3813a85d9706d5de558ee5036934a545d262d08366c19ad29152",
+    "competitive/card_specs.json.gz": "7c18d94eac62883ead96f52b362d93da6e2abdf82f64614a2d26f80d6fcb885a",
+    "competitive/card_support.json": "841124995d484a4304a7953437284bee87abfe59b603c97ae4afcd7c81e4f566",
+    "competitive/effects.json.gz": "851383cb01625fb25c26c3ecce036f72fea63404cab55f9fa22d11c49caed192",
+    "competitive/form_evidence.json": "ff00aa9985c29d5c67c94e1c4c142779c51a4871ea80e9cfb02ba33755dd9559",
+    "competitive/manifest.json": "699c0c77cc5d2ec9a475ec0d10875f9e38710af9fc5472cc3431276384c89b78",
+    "competitive/model_catalogs.json.gz": "5b4c7806686093a8c0764bf2e21e1c75cfae7e64def400e92672ab13d3bbb0c6",
+    "competitive/projectiles.json.gz": "36bcd77e112edb46cfaeb2a713d598997866f01c5dea5ef9523dea44fa50de74",
+    "competitive/runtime.json": "2b290cc5c25ce3e2a44cd3e931351b1241078e05084271a27659fab5d5b08fb4",
+    "native_match.json": "75913c9364b8d1f4c69baf90abb6467bd32983e1e3d87245954d2e7dc3ee54b9"
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "schema": "cr-live-snapshot.v1",
+  "event": "snapshot",
+  "sequence": 30,
+  "battle_epoch": 1,
+  "tick": 153,
+  "captured_unix_ms": 1789899156129,
+  "own_side": 1,
+  "ended": false,
+  "winner": null,
+  "own": {
+    "deck": [
+      {
+        "deck_slot": 0,
+        "card_id": 26000009,
+        "form_code": 0,
+        "cost": 8
+      },
+      {
+        "deck_slot": 1,
+        "card_id": 28000007,
+        "form_code": 0,
+        "cost": 6
+      },
+      {
+        "deck_slot": 2,
+        "card_id": 26000048,
+        "form_code": 0,
+        "cost": 4
+      },
+      {
+        "deck_slot": 3,
+        "card_id": 26000015,
+        "form_code": 0,
+        "cost": 4
+      },
+      {
+        "deck_slot": 4,
+        "card_id": 27000009,
+        "form_code": 0,
+        "cost": 3
+      },
+      {
+        "deck_slot": 5,
+        "card_id": 28000011,
+        "form_code": 0,
+        "cost": 2
+      },
+      {
+        "deck_slot": 6,
+        "card_id": 26000043,
+        "form_code": 0,
+        "cost": 6
+      },
+      {
+        "deck_slot": 7,
+        "card_id": 26000039,
+        "form_code": 0,
+        "cost": 3
+      }
+    ],
+    "hand": [
+      {
+        "slot": 0,
+        "card": {
+          "deck_slot": 7,
+          "card_id": 26000039,
+          "form_code": 0,
+          "cost": 3
+        }
+      },
+      {
+        "slot": 1,
+        "card": {
+          "deck_slot": 0,
+          "card_id": 26000009,
+          "form_code": 0,
+          "cost": 8
+        }
+      },
+      {
+        "slot": 2,
+        "card": {
+          "deck_slot": 1,
+          "card_id": 28000007,
+          "form_code": 0,
+          "cost": 6
+        }
+      },
+      {
+        "slot": 3,
+        "card": {
+          "deck_slot": 5,
+          "card_id": 28000011,
+          "form_code": 0,
+          "cost": 2
+        }
+      }
+    ],
+    "next_card": {
+      "deck_slot": 6,
+      "card_id": 26000043,
+      "form_code": 0,
+      "cost": 6
+    },
+    "elixir_raw": 87234
+  },
+  "consistency": "same-tick-best-effort",
+  "entities": [
+    {
+      "id": 5000000,
+      "owner": 0,
+      "kind": 12,
+      "card_id": -1,
+      "native_data_id": 1471932914,
+      "native_data_name": "ChefTowerKing",
+      "x": 9000,
+      "y": 3000,
+      "hp": 7728,
+      "max_hp": 7728,
+      "visibility": "visible",
+      "level_index": null
+    },
+    {
+      "id": 5000001,
+      "owner": 0,
+      "kind": 13,
+      "card_id": -1,
+      "native_data_id": 3191249505,
+      "native_data_name": "ChefTower",
+      "x": 3500,
+      "y": 6500,
+      "hp": 4302,
+      "max_hp": 4302,
+      "visibility": "visible",
+      "level_index": null
+    },
+    {
+      "id": 5000002,
+      "owner": 0,
+      "kind": 13,
+      "card_id": -1,
+      "native_data_id": 3191249505,
+      "native_data_name": "ChefTower",
+      "x": 14500,
+      "y": 6500,
+      "hp": 4302,
+      "max_hp": 4302,
+      "visibility": "visible",
+      "level_index": null
+    },
+    {
+      "id": 5000003,
+      "owner": 1,
+      "kind": 12,
+      "card_id": -1,
+      "native_data_id": 35000000,
+      "native_data_name": "KingTower",
+      "x": 9000,
+      "y": 29000,
+      "hp": 7728,
+      "max_hp": 7728,
+      "visibility": "visible",
+      "level_index": null
+    },
+    {
+      "id": 5000004,
+      "owner": 1,
+      "kind": 13,
+      "card_id": -1,
+      "native_data_id": 35000001,
+      "native_data_name": "PrincessTower",
+      "x": 3500,
+      "y": 25500,
+      "hp": 4858,
+      "max_hp": 4858,
+      "visibility": "visible",
+      "level_index": null
+    },
+    {
+      "id": 5000005,
+      "owner": 1,
+      "kind": 13,
+      "card_id": -1,
+      "native_data_id": 35000001,
+      "native_data_name": "PrincessTower",
+      "x": 14500,
+      "y": 25500,
+      "hp": 4858,
+      "max_hp": 4858,
+      "visibility": "visible",
+      "level_index": null
+    }
+  ],
+  "omitted": {
+    "unsupported": 0,
+    "dead": 0,
+    "visibility": 0
+  },
+  "coverage": {
+    "base_entities": true,
+    "combat_phases": false,
+    "spells": false,
+    "equipped_forms": false,
+    "model_ready": false
+  },
+  "received_monotonic_ns": 33141728615958
+}

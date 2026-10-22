@@ -1,0 +1,23 @@
+{
+  "dependency": {
+    "path": "_spec_work/versions/fair-final-native-command-audit-v1/audit_ct86.py",
+    "sha256": "e70ce714bd8d6a266c8a0990ad5ebe63e8a40edb5e0a957e4d3c4292c6c84fe5"
+  },
+  "files": {
+    "CONTRACT.md": "96e96eed8999eec517f23b0c8bad50c5acef512970696d51f70dbe0c103adae0",
+    "EVIDENCE.md": "d4fb2d4b59c94a5a708fec75997d0b0bbd6948261fe141f5b9c1a220dcaff41f",
+    "audit-report.json": "bde1466530e0b5452e138b7b0db496f1bd1252b83215739d2693bb88f0db9b5a",
+    "audit_queue.py": "9aa8ce29e0b222dda505d96262c03e8f1892dc8e7346e7bf181c2e0b9a751d95",
+    "test_audit_queue.py": "1bab00b6f489cadc96d5eb12f88e8c00bd819b998dd9d8f05bc7bc9768cf9f41",
+    "tests-final.xml": "73769b4ef92da8c50cef24dfb4a6dc5875637da1b5c40e9a1739b0bd59d0aee7"
+  },
+  "frozen_engine": {
+    "bytes": 27554368,
+    "path": "_spec_work/versions/fair-final-history-v2/project/artifacts/standalone-engine-20260926/app-libs/libg.so",
+    "sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783"
+  },
+  "gates_closed": false,
+  "schema": "fair-final-native-queue-audit-manifest.v1",
+  "status": "passed_limited_scope",
+  "training_admissible": false
+}

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CR 工作台 · 对局视频</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="shell">
+  <header>
+    <div class="workbench-header"><a class="brand" href="/" aria-label="工作台首页"><span class="crest">CR</span><span>CR 工作台</span></a><nav class="workbench-nav" aria-label="工作台"><a href="/" aria-current="page">对局视频</a><a href="/play">人机对战</a><a href="/live/?mode=standard">私服对战</a></nav></div>
+    <span class="local-badge"><i></i> 本机</span>
+  </header>
+  <main>
+    <aside class="panel composer">
+      <div class="section-head"><h2>生成对局</h2><button type="button" id="refresh" class="text-button">↻ 刷新权重</button></div>
+      <form id="create-form">
+        <fieldset class="segmented">
+          <legend class="sr-only">对战模式</legend>
+          <label><input type="radio" name="mode" value="selfplay" checked><span>同一权重</span></label>
+          <label><input type="radio" name="mode" value="versus"><span>两个权重对战</span></label>
+        </fieldset>
+        <label class="field"><span id="top-label">对战权重</span><select id="top" required aria-label="上方权重"></select></label>
+        <label class="field" id="bottom-field" hidden>下方权重<select id="bottom" required aria-label="下方权重" disabled></select></label>
+        <div id="catalog-status" class="subtle" role="status">正在读取权重…</div>
+        <div class="deck-selection">
+          <div class="deck-heading"><span>卡组 · 基础形态 · 11 级</span><button type="button" id="swap" class="swap" aria-label="交换双方" title="交换双方权重与卡组">⇅</button></div>
+          <label class="field">上方卡组<select id="deck-top" required aria-label="上方卡组" aria-describedby="deck-top-cards"></select></label>
+          <p id="deck-top-cards" class="deck-cards"></p>
+          <label class="field">下方卡组<select id="deck-bottom" required aria-label="下方卡组" aria-describedby="deck-bottom-cards"></select></label>
+          <p id="deck-bottom-cards" class="deck-cards"></p>
+        </div>
+        <details class="seed-options">
+          <summary>指定种子<span>默认随机</span></summary>
+          <label class="field">对局种子<input id="seed" type="number" min="0" max="4294967295" step="1" placeholder="留空随机，输入整数可复现"></label>
+        </details>
+        <div id="compatibility" class="form-message" role="status"></div>
+        <button id="generate" class="primary" type="submit" disabled>生成对局视频</button>
+        <p class="footnote">关闭网页后，任务仍会继续。</p>
+      </form>
+    </aside>
+    <div class="workspace">
+      <section class="panel activity">
+        <div class="section-head"><h2>当前任务</h2><span id="queue-count" class="count">0 个任务</span></div>
+        <div id="jobs"><div class="empty compact">暂无进行中的任务</div></div>
+      </section>
+      <section class="panel player-panel" id="preview-panel" hidden>
+        <div class="section-head"><h2 id="preview-title">对局回放</h2><button id="close-preview" class="text-button">收起 ×</button></div>
+        <div class="preview-layout"><video id="video" controls playsinline preload="metadata"></video><div id="video-details"></div></div>
+      </section>
+      <section class="library">
+        <div class="section-head"><h2>视频历史</h2><span id="history-count" class="count">0 场对局</span></div>
+        <div id="history" class="history-grid"></div>
+        <details id="past-tasks" class="past-tasks" hidden>
+          <summary>未完成的任务 <span id="past-count"></span></summary>
+          <div id="past-jobs"></div>
+        </details>
+      </section>
+    </div>
+  </main>
+  <footer><span>视频保留至手动删除</span><span id="disk"></span></footer>
+</div>
+<div id="toast" role="alert" aria-live="polite" hidden></div>
+<script src="/static/app.js" defer></script>
+</body>
+</html>

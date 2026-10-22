@@ -1,0 +1,2412 @@
+{
+  "lightning_id": 28000007,
+  "checked_through_iteration": 46,
+  "rounds": [
+    {
+      "iteration": 1,
+      "games": 108,
+      "rows": 2449,
+      "lightning_legal_rows": 1552,
+      "lightning_legal_and_act": 777,
+      "act": 1081,
+      "lightning_selected": 31,
+      "lightning_owner_episodes": 31,
+      "card_selected": {
+        "26000039": 166,
+        "26000009": 126,
+        "26000048": 150,
+        "26000015": 169,
+        "26000043": 185,
+        "28000011": 99,
+        "28000007": 31,
+        "27000009": 155
+      },
+      "card_legal_rows": {
+        "26000009": 929,
+        "26000039": 991,
+        "28000007": 1552,
+        "28000011": 1318,
+        "27000009": 1020,
+        "26000048": 1148,
+        "26000015": 1033,
+        "26000043": 870
+      },
+      "examples": [
+        {
+          "match_id": "82e9910662979f681ee1478f286fa947b21c4372a5d48c5027f62fcfa129da26-261051000",
+          "owner": 0,
+          "tick": 3832,
+          "cell": 420,
+          "delay_bin": 60,
+          "p_card_given_act": 0.1463235923530698,
+          "terminal_reward": 1.0685353540293292
+        },
+        {
+          "match_id": "82e9910662979f681ee1478f286fa947b21c4372a5d48c5027f62fcfa129da26-261051001",
+          "owner": 0,
+          "tick": 2506,
+          "cell": 432,
+          "delay_bin": 6,
+          "p_card_given_act": 0.09792545100809248,
+          "terminal_reward": -1.3767857142857143
+        }
+      ]
+    },
+    {
+      "iteration": 2,
+      "games": 108,
+      "rows": 2403,
+      "lightning_legal_rows": 1380,
+      "lightning_legal_and_act": 814,
+      "act": 1209,
+      "lightning_selected": 49,
+      "lightning_owner_episodes": 46,
+      "card_selected": {
+        "28000011": 114,
+        "26000009": 153,
+        "27000009": 172,
+        "28000007": 49,
+        "26000048": 170,
+        "26000043": 193,
+        "26000039": 175,
+        "26000015": 183
+      },
+      "card_legal_rows": {
+        "26000009": 778,
+        "26000043": 899,
+        "26000048": 1054,
+        "28000011": 1388,
+        "27000009": 954,
+        "26000015": 952,
+        "28000007": 1380,
+        "26000039": 1069
+      },
+      "examples": [
+        {
+          "match_id": "82e9910662979f681ee1478f286fa947b21c4372a5d48c5027f62fcfa129da26-ppo-261151000",
+          "owner": 0,
+          "tick": 905,
+          "cell": 332,
+          "delay_bin": 50,
+          "p_card_given_act": 0.039766962110975905,
+          "terminal_reward": -1.1063721366952917
+        },
+        {
+          "match_id": "82e9910662979f681ee1478f286fa947b21c4372a5d48c5027f62fcfa129da26-ppo-261151002",
+          "owner": 0,
+          "tick": 1685,
+          "cell": 391,
+          "delay_bin": 56,
+          "p_card_given_act": 0.03868501802431968,
+          "terminal_reward": 1.3937090432503276
+        }
+      ]
+    },
+    {
+      "iteration": 3,
+      "games": 108,
+      "rows": 2404,
+      "lightning_legal_rows": 1316,
+      "lightning_legal_and_act": 797,
+      "act": 1252,
+      "lightning_selected": 48,
+      "lightning_owner_episodes": 45,
+      "card_selected": {
+        "26000039": 187,
+        "26000009": 166,
+        "26000048": 175,
+        "26000015": 193,
+        "26000043": 201,
+        "28000007": 48,
+        "27000009": 164,
+        "28000011": 118
+      },
+      "card_legal_rows": {
+        "26000009": 777,
+        "26000039": 961,
+        "26000048": 1047,
+        "28000007": 1316,
+        "26000043": 878,
+        "26000015": 1006,
+        "28000011": 1331,
+        "27000009": 966
+      },
+      "examples": [
+        {
+          "match_id": "3f57263998a76c8ca2e35c0d6eb91aa410973893c4010a5db53fbdc4f3b13d7b-ppo-261251000",
+          "owner": 0,
+          "tick": 2909,
+          "cell": 136,
+          "delay_bin": 34,
+          "p_card_given_act": 0.15829053403184715,
+          "terminal_reward": 1.1086913890573347
+        },
+        {
+          "match_id": "3f57263998a76c8ca2e35c0d6eb91aa410973893c4010a5db53fbdc4f3b13d7b-ppo-261251008",
+          "owner": 1,
+          "tick": 1004,
+          "cell": 209,
+          "delay_bin": 58,
+          "p_card_given_act": 0.058317383948772304,
+          "terminal_reward": 1.3505733944954128
+        }
+      ]
+    },
+    {
+      "iteration": 4,
+      "games": 108,
+      "rows": 2323,
+      "lightning_legal_rows": 1357,
+      "lightning_legal_and_act": 825,
+      "act": 1246,
+      "lightning_selected": 30,
+      "lightning_owner_episodes": 29,
+      "card_selected": {
+        "26000009": 164,
+        "26000039": 183,
+        "26000048": 174,
+        "26000043": 215,
+        "26000015": 195,
+        "28000011": 117,
+        "27000009": 168,
+        "28000007": 30
+      },
+      "card_legal_rows": {
+        "26000009": 764,
+        "26000039": 989,
+        "26000048": 1036,
+        "28000011": 1298,
+        "26000043": 739,
+        "28000007": 1357,
+        "27000009": 876,
+        "26000015": 901
+      },
+      "examples": [
+        {
+          "match_id": "f61d2a2cec7429ea80029d7f6ef14d16648a3abb74979168a95c7e178984b25f-ppo-261351001",
+          "owner": 1,
+          "tick": 2075,
+          "cell": 428,
+          "delay_bin": 45,
+          "p_card_given_act": 0.18881349966573352,
+          "terminal_reward": 1.2982470511140236
+        },
+        {
+          "match_id": "f61d2a2cec7429ea80029d7f6ef14d16648a3abb74979168a95c7e178984b25f-ppo-261351004",
+          "owner": 1,
+          "tick": 1183,
+          "cell": 491,
+          "delay_bin": 46,
+          "p_card_given_act": 0.09412547782864998,
+          "terminal_reward": 1.4
+        }
+      ]
+    },
+    {
+      "iteration": 5,
+      "games": 108,
+      "rows": 2505,
+      "lightning_legal_rows": 1377,
+      "lightning_legal_and_act": 926,
+      "act": 1428,
+      "lightning_selected": 62,
+      "lightning_owner_episodes": 57,
+      "card_selected": {
+        "26000009": 194,
+        "26000048": 205,
+        "26000015": 207,
+        "26000039": 213,
+        "26000043": 235,
+        "27000009": 177,
+        "28000011": 135,
+        "28000007": 62
+      },
+      "card_legal_rows": {
+        "26000009": 797,
+        "26000039": 1037,
+        "26000048": 1052,
+        "28000007": 1377,
+        "28000011": 1461,
+        "26000015": 984,
+        "27000009": 994,
+        "26000043": 749
+      },
+      "examples": [
+        {
+          "match_id": "6fb9c6c8dac28f9eb5b00b47cc468eac76ef5dc51d3b53518de007a8b37490fd-ppo-261451003",
+          "owner": 1,
+          "tick": 1590,
+          "cell": 474,
+          "delay_bin": 22,
+          "p_card_given_act": 0.09450126436499222,
+          "terminal_reward": -1.1162531868834074
+        },
+        {
+          "match_id": "6fb9c6c8dac28f9eb5b00b47cc468eac76ef5dc51d3b53518de007a8b37490fd-ppo-261451004",
+          "owner": 0,
+          "tick": 2591,
+          "cell": 402,
+          "delay_bin": 48,
+          "p_card_given_act": 0.5129397248026594,
+          "terminal_reward": 1.2856815203145477
+        }
+      ]
+    },
+    {
+      "iteration": 6,
+      "games": 108,
+      "rows": 2564,
+      "lightning_legal_rows": 1312,
+      "lightning_legal_and_act": 927,
+      "act": 1532,
+      "lightning_selected": 58,
+      "lightning_owner_episodes": 49,
+      "card_selected": {
+        "28000011": 145,
+        "26000009": 185,
+        "26000048": 222,
+        "26000015": 243,
+        "26000043": 259,
+        "26000039": 215,
+        "28000007": 58,
+        "27000009": 205
+      },
+      "card_legal_rows": {
+        "26000009": 788,
+        "26000043": 789,
+        "26000048": 1052,
+        "28000011": 1487,
+        "27000009": 1001,
+        "26000015": 1027,
+        "26000039": 986,
+        "28000007": 1312
+      },
+      "examples": [
+        {
+          "match_id": "015b8ac050b8e98f77bc9728798ab254fd643867cab55ee855b634f146b45855-ppo-261551001",
+          "owner": 1,
+          "tick": 1329,
+          "cell": 362,
+          "delay_bin": 56,
+          "p_card_given_act": 0.06757374680285973,
+          "terminal_reward": 1.3738695937090433
+        },
+        {
+          "match_id": "015b8ac050b8e98f77bc9728798ab254fd643867cab55ee855b634f146b45855-ppo-261551002",
+          "owner": 0,
+          "tick": 603,
+          "cell": 104,
+          "delay_bin": 54,
+          "p_card_given_act": 0.09643987924178327,
+          "terminal_reward": -1.1323354149957943
+        }
+      ]
+    },
+    {
+      "iteration": 7,
+      "games": 108,
+      "rows": 2645,
+      "lightning_legal_rows": 1373,
+      "lightning_legal_and_act": 1011,
+      "act": 1635,
+      "lightning_selected": 46,
+      "lightning_owner_episodes": 45,
+      "card_selected": {
+        "26000009": 195,
+        "26000048": 244,
+        "28000011": 155,
+        "27000009": 211,
+        "26000015": 259,
+        "26000043": 271,
+        "26000039": 254,
+        "28000007": 46
+      },
+      "card_legal_rows": {
+        "26000009": 746,
+        "26000039": 973,
+        "26000043": 748,
+        "26000048": 1067,
+        "27000009": 1035,
+        "28000011": 1527,
+        "28000007": 1373,
+        "26000015": 988
+      },
+      "examples": [
+        {
+          "match_id": "050683ff18ee049d04cd7e3defcccb66d32a6dc0075e45f2bc6d4a1745e45702-ppo-261651002",
+          "owner": 0,
+          "tick": 2457,
+          "cell": 566,
+          "delay_bin": 30,
+          "p_card_given_act": 0.05782237502744769,
+          "terminal_reward": 1.3110747051114024
+        },
+        {
+          "match_id": "050683ff18ee049d04cd7e3defcccb66d32a6dc0075e45f2bc6d4a1745e45702-ppo-261651005",
+          "owner": 0,
+          "tick": 469,
+          "cell": 194,
+          "delay_bin": 45,
+          "p_card_given_act": 0.06771894844628651,
+          "terminal_reward": 1.0575080038862046
+        }
+      ]
+    },
+    {
+      "iteration": 8,
+      "games": 108,
+      "rows": 2562,
+      "lightning_legal_rows": 1345,
+      "lightning_legal_and_act": 995,
+      "act": 1595,
+      "lightning_selected": 42,
+      "lightning_owner_episodes": 38,
+      "card_selected": {
+        "26000015": 251,
+        "26000048": 234,
+        "26000039": 236,
+        "26000009": 199,
+        "26000043": 263,
+        "27000009": 221,
+        "28000007": 42,
+        "28000011": 149
+      },
+      "card_legal_rows": {
+        "26000009": 700,
+        "26000015": 915,
+        "26000039": 965,
+        "26000048": 1019,
+        "28000007": 1345,
+        "28000011": 1479,
+        "26000043": 687,
+        "27000009": 1024
+      },
+      "examples": [
+        {
+          "match_id": "86d70397ee9ecc3b63204cb1dbb29b6e596499cc2a28f42de81dec994879db17-ppo-261751000",
+          "owner": 0,
+          "tick": 3326,
+          "cell": 212,
+          "delay_bin": 33,
+          "p_card_given_act": 0.0840121168053412,
+          "terminal_reward": -1.117707008861329
+        },
+        {
+          "match_id": "86d70397ee9ecc3b63204cb1dbb29b6e596499cc2a28f42de81dec994879db17-ppo-261751001",
+          "owner": 1,
+          "tick": 1010,
+          "cell": 417,
+          "delay_bin": 33,
+          "p_card_given_act": 0.08370130601452704,
+          "terminal_reward": -1.328473132372215
+        }
+      ]
+    },
+    {
+      "iteration": 9,
+      "games": 108,
+      "rows": 2923,
+      "lightning_legal_rows": 1553,
+      "lightning_legal_and_act": 1200,
+      "act": 1910,
+      "lightning_selected": 51,
+      "lightning_owner_episodes": 47,
+      "card_selected": {
+        "26000009": 231,
+        "26000043": 313,
+        "26000048": 290,
+        "28000007": 51,
+        "27000009": 258,
+        "26000039": 277,
+        "28000011": 183,
+        "26000015": 307
+      },
+      "card_legal_rows": {
+        "26000009": 717,
+        "26000015": 1067,
+        "26000039": 1067,
+        "27000009": 1220,
+        "26000043": 784,
+        "28000011": 1739,
+        "28000007": 1553,
+        "26000048": 1008
+      },
+      "examples": [
+        {
+          "match_id": "6fd94cc0ba6425f7bc074271fc23189bda1d65245d7fa97a23b9c10ee6cd5784-ppo-261851000",
+          "owner": 1,
+          "tick": 1195,
+          "cell": 494,
+          "delay_bin": 22,
+          "p_card_given_act": 0.07299221016776011,
+          "terminal_reward": 1.35
+        },
+        {
+          "match_id": "6fd94cc0ba6425f7bc074271fc23189bda1d65245d7fa97a23b9c10ee6cd5784-ppo-261851006",
+          "owner": 1,
+          "tick": 2564,
+          "cell": 284,
+          "delay_bin": 20,
+          "p_card_given_act": 0.02021658861739315,
+          "terminal_reward": -1.1931836965239335
+        }
+      ]
+    },
+    {
+      "iteration": 10,
+      "games": 108,
+      "rows": 2923,
+      "lightning_legal_rows": 1451,
+      "lightning_legal_and_act": 1149,
+      "act": 1932,
+      "lightning_selected": 52,
+      "lightning_owner_episodes": 49,
+      "card_selected": {
+        "27000009": 259,
+        "26000039": 290,
+        "26000048": 284,
+        "26000043": 321,
+        "28000011": 195,
+        "26000015": 307,
+        "28000007": 52,
+        "26000009": 224
+      },
+      "card_legal_rows": {
+        "26000043": 733,
+        "26000048": 1108,
+        "27000009": 1228,
+        "28000011": 1693,
+        "26000039": 1111,
+        "26000015": 1005,
+        "26000009": 733,
+        "28000007": 1451
+      },
+      "examples": [
+        {
+          "match_id": "5ed95f119d9e8e27627db62758ece84fef67412e98eeac12f7ac8dcb56c8041b-ppo-261951001",
+          "owner": 0,
+          "tick": 844,
+          "cell": 256,
+          "delay_bin": 26,
+          "p_card_given_act": 0.03900339711460788,
+          "terminal_reward": -1.2889908256880733
+        },
+        {
+          "match_id": "5ed95f119d9e8e27627db62758ece84fef67412e98eeac12f7ac8dcb56c8041b-ppo-261951001",
+          "owner": 1,
+          "tick": 2811,
+          "cell": 444,
+          "delay_bin": 0,
+          "p_card_given_act": 0.05222460135223932,
+          "terminal_reward": 1.2889908256880733
+        }
+      ]
+    },
+    {
+      "iteration": 11,
+      "games": 108,
+      "rows": 3187,
+      "lightning_legal_rows": 1658,
+      "lightning_legal_and_act": 1373,
+      "act": 2154,
+      "lightning_selected": 57,
+      "lightning_owner_episodes": 54,
+      "card_selected": {
+        "27000009": 288,
+        "26000009": 255,
+        "26000048": 307,
+        "26000039": 340,
+        "26000043": 347,
+        "26000015": 337,
+        "28000007": 57,
+        "28000011": 223
+      },
+      "card_legal_rows": {
+        "26000039": 1140,
+        "26000048": 1174,
+        "27000009": 1270,
+        "28000007": 1658,
+        "26000009": 840,
+        "28000011": 1773,
+        "26000015": 1036,
+        "26000043": 787
+      },
+      "examples": [
+        {
+          "match_id": "4d79c9acd3688819201b4029fa8799ac6379acdd924c71ec04f923d6c60819a6-ppo-262051000",
+          "owner": 1,
+          "tick": 833,
+          "cell": 426,
+          "delay_bin": 52,
+          "p_card_given_act": 0.11562964188450275,
+          "terminal_reward": -1.336435124508519
+        },
+        {
+          "match_id": "4d79c9acd3688819201b4029fa8799ac6379acdd924c71ec04f923d6c60819a6-ppo-262051005",
+          "owner": 1,
+          "tick": 2219,
+          "cell": 264,
+          "delay_bin": 38,
+          "p_card_given_act": 0.02372230145735138,
+          "terminal_reward": 1.3503604193971166
+        }
+      ]
+    },
+    {
+      "iteration": 12,
+      "games": 108,
+      "rows": 3095,
+      "lightning_legal_rows": 1573,
+      "lightning_legal_and_act": 1308,
+      "act": 2125,
+      "lightning_selected": 49,
+      "lightning_owner_episodes": 47,
+      "card_selected": {
+        "26000039": 317,
+        "26000015": 327,
+        "26000043": 321,
+        "26000009": 252,
+        "26000048": 329,
+        "27000009": 295,
+        "28000011": 235,
+        "28000007": 49
+      },
+      "card_legal_rows": {
+        "26000039": 1137,
+        "26000048": 1108,
+        "28000007": 1573,
+        "28000011": 1648,
+        "26000015": 1006,
+        "26000043": 739,
+        "26000009": 766,
+        "27000009": 1249
+      },
+      "examples": [
+        {
+          "match_id": "34ec0ecd6462d2df0592105c81184f5d016a4caa22bf544c357892df800c6d35-ppo-262151002",
+          "owner": 0,
+          "tick": 3015,
+          "cell": 464,
+          "delay_bin": 60,
+          "p_card_given_act": 0.28208810395920614,
+          "terminal_reward": 1.2805970149253731
+        },
+        {
+          "match_id": "34ec0ecd6462d2df0592105c81184f5d016a4caa22bf544c357892df800c6d35-ppo-262151002",
+          "owner": 1,
+          "tick": 1993,
+          "cell": 157,
+          "delay_bin": 12,
+          "p_card_given_act": 0.11123708956789044,
+          "terminal_reward": -1.2805970149253731
+        }
+      ]
+    },
+    {
+      "iteration": 13,
+      "games": 108,
+      "rows": 2853,
+      "lightning_legal_rows": 1376,
+      "lightning_legal_and_act": 1155,
+      "act": 1926,
+      "lightning_selected": 40,
+      "lightning_owner_episodes": 38,
+      "card_selected": {
+        "26000009": 251,
+        "28000011": 214,
+        "26000043": 321,
+        "26000015": 291,
+        "27000009": 247,
+        "26000039": 275,
+        "26000048": 287,
+        "28000007": 40
+      },
+      "card_legal_rows": {
+        "26000009": 664,
+        "27000009": 1150,
+        "28000007": 1376,
+        "28000011": 1502,
+        "26000043": 719,
+        "26000015": 921,
+        "26000048": 1031,
+        "26000039": 1077
+      },
+      "examples": [
+        {
+          "match_id": "af81310da9af2980698a321de14431cc40b5be0f3db10d5ec58f3ebbbf6dd2d0-ppo-262251002",
+          "owner": 1,
+          "tick": 828,
+          "cell": 401,
+          "delay_bin": 52,
+          "p_card_given_act": 0.07304879085785619,
+          "terminal_reward": 1.0517723880597014
+        },
+        {
+          "match_id": "af81310da9af2980698a321de14431cc40b5be0f3db10d5ec58f3ebbbf6dd2d0-ppo-262251002",
+          "owner": 1,
+          "tick": 3477,
+          "cell": 409,
+          "delay_bin": 6,
+          "p_card_given_act": 0.12851509166344152,
+          "terminal_reward": 1.0517723880597014
+        }
+      ]
+    },
+    {
+      "iteration": 14,
+      "games": 108,
+      "rows": 3085,
+      "lightning_legal_rows": 1453,
+      "lightning_legal_and_act": 1261,
+      "act": 2179,
+      "lightning_selected": 54,
+      "lightning_owner_episodes": 47,
+      "card_selected": {
+        "26000009": 234,
+        "26000043": 340,
+        "27000009": 303,
+        "26000015": 346,
+        "26000048": 332,
+        "26000039": 338,
+        "28000011": 232,
+        "28000007": 54
+      },
+      "card_legal_rows": {
+        "26000009": 702,
+        "26000043": 761,
+        "27000009": 1147,
+        "28000007": 1453,
+        "28000011": 1666,
+        "26000015": 991,
+        "26000048": 1080,
+        "26000039": 1079
+      },
+      "examples": [
+        {
+          "match_id": "99ad9ff15916100d835abe2158fb71d244e9fb9d883529002b5f304e81587e4f-ppo-262351003",
+          "owner": 0,
+          "tick": 455,
+          "cell": 345,
+          "delay_bin": 56,
+          "p_card_given_act": 0.13861963601877442,
+          "terminal_reward": -1.1423319591426875
+        },
+        {
+          "match_id": "99ad9ff15916100d835abe2158fb71d244e9fb9d883529002b5f304e81587e4f-ppo-262351003",
+          "owner": 1,
+          "tick": 3421,
+          "cell": 420,
+          "delay_bin": 56,
+          "p_card_given_act": 0.0327894313423937,
+          "terminal_reward": 1.1423319591426875
+        }
+      ]
+    },
+    {
+      "iteration": 15,
+      "games": 108,
+      "rows": 2750,
+      "lightning_legal_rows": 1232,
+      "lightning_legal_and_act": 1064,
+      "act": 1927,
+      "lightning_selected": 37,
+      "lightning_owner_episodes": 36,
+      "card_selected": {
+        "27000009": 252,
+        "28000011": 208,
+        "26000048": 292,
+        "26000009": 215,
+        "26000015": 305,
+        "26000043": 310,
+        "26000039": 308,
+        "28000007": 37
+      },
+      "card_legal_rows": {
+        "26000039": 933,
+        "26000043": 661,
+        "27000009": 1028,
+        "28000011": 1482,
+        "28000007": 1232,
+        "26000048": 869,
+        "26000009": 668,
+        "26000015": 925
+      },
+      "examples": [
+        {
+          "match_id": "77cf30966500b6a5adf4866998706ffde870e04a952aa28597636bd22ab7b36b-ppo-262451000",
+          "owner": 0,
+          "tick": 2890,
+          "cell": 445,
+          "delay_bin": 32,
+          "p_card_given_act": 0.032366243487733905,
+          "terminal_reward": -1.1198179319653372
+        },
+        {
+          "match_id": "77cf30966500b6a5adf4866998706ffde870e04a952aa28597636bd22ab7b36b-ppo-262451003",
+          "owner": 1,
+          "tick": 470,
+          "cell": 407,
+          "delay_bin": 56,
+          "p_card_given_act": 0.4195841018502794,
+          "terminal_reward": -1.3848460026212321
+        }
+      ]
+    },
+    {
+      "iteration": 16,
+      "games": 108,
+      "rows": 2873,
+      "lightning_legal_rows": 1325,
+      "lightning_legal_and_act": 1169,
+      "act": 2040,
+      "lightning_selected": 39,
+      "lightning_owner_episodes": 38,
+      "card_selected": {
+        "26000009": 228,
+        "27000009": 271,
+        "28000011": 236,
+        "26000048": 317,
+        "26000039": 314,
+        "26000043": 319,
+        "26000015": 316,
+        "28000007": 39
+      },
+      "card_legal_rows": {
+        "26000009": 613,
+        "26000015": 919,
+        "26000043": 712,
+        "27000009": 1147,
+        "28000011": 1513,
+        "26000039": 986,
+        "26000048": 934,
+        "28000007": 1325
+      },
+      "examples": [
+        {
+          "match_id": "041262a44701578a87df359cd87dbb7319e6c72bdb13dadab2969de33351c311-ppo-262551004",
+          "owner": 1,
+          "tick": 2584,
+          "cell": 438,
+          "delay_bin": 40,
+          "p_card_given_act": 0.03007803425506683,
+          "terminal_reward": 1.1917910447761195
+        },
+        {
+          "match_id": "041262a44701578a87df359cd87dbb7319e6c72bdb13dadab2969de33351c311-ppo-262551007",
+          "owner": 0,
+          "tick": 2186,
+          "cell": 116,
+          "delay_bin": 12,
+          "p_card_given_act": 0.01563791701384829,
+          "terminal_reward": -1.2273561745662254
+        }
+      ]
+    },
+    {
+      "iteration": 17,
+      "games": 108,
+      "rows": 3067,
+      "lightning_legal_rows": 1392,
+      "lightning_legal_and_act": 1232,
+      "act": 2192,
+      "lightning_selected": 41,
+      "lightning_owner_episodes": 40,
+      "card_selected": {
+        "26000009": 235,
+        "26000048": 343,
+        "26000043": 331,
+        "27000009": 311,
+        "26000015": 342,
+        "26000039": 338,
+        "28000011": 251,
+        "28000007": 41
+      },
+      "card_legal_rows": {
+        "26000009": 698,
+        "26000043": 736,
+        "26000048": 1015,
+        "28000011": 1560,
+        "27000009": 1161,
+        "26000015": 971,
+        "28000007": 1392,
+        "26000039": 1011
+      },
+      "examples": [
+        {
+          "match_id": "e807f7f419ba62732602e8f570476b12246ee92446e237b05bfdf8a5dd1f335c-ppo-262651000",
+          "owner": 0,
+          "tick": 2950,
+          "cell": 285,
+          "delay_bin": 54,
+          "p_card_given_act": 0.1638867817271345,
+          "terminal_reward": 1.0742910203243285
+        },
+        {
+          "match_id": "e807f7f419ba62732602e8f570476b12246ee92446e237b05bfdf8a5dd1f335c-ppo-262651000",
+          "owner": 1,
+          "tick": 1978,
+          "cell": 425,
+          "delay_bin": 58,
+          "p_card_given_act": 0.03997147383540498,
+          "terminal_reward": -1.0742910203243285
+        }
+      ]
+    },
+    {
+      "iteration": 18,
+      "games": 108,
+      "rows": 3191,
+      "lightning_legal_rows": 1469,
+      "lightning_legal_and_act": 1330,
+      "act": 2323,
+      "lightning_selected": 38,
+      "lightning_owner_episodes": 38,
+      "card_selected": {
+        "26000043": 372,
+        "26000039": 364,
+        "26000015": 349,
+        "27000009": 322,
+        "26000048": 362,
+        "28000011": 264,
+        "26000009": 252,
+        "28000007": 38
+      },
+      "card_legal_rows": {
+        "26000009": 674,
+        "26000039": 1052,
+        "26000043": 737,
+        "27000009": 1228,
+        "28000011": 1601,
+        "26000015": 1018,
+        "28000007": 1469,
+        "26000048": 995
+      },
+      "examples": [
+        {
+          "match_id": "8e99d30b0523150fcab6e03a2dfba6e9a919196c4e6325694c44585d8b2cd9d5-ppo-262751001",
+          "owner": 0,
+          "tick": 852,
+          "cell": 367,
+          "delay_bin": 58,
+          "p_card_given_act": 0.013773479132678394,
+          "terminal_reward": -1.108115671641791
+        },
+        {
+          "match_id": "8e99d30b0523150fcab6e03a2dfba6e9a919196c4e6325694c44585d8b2cd9d5-ppo-262751004",
+          "owner": 1,
+          "tick": 3414,
+          "cell": 400,
+          "delay_bin": 58,
+          "p_card_given_act": 0.13298790926388232,
+          "terminal_reward": 1.076695487177481
+        }
+      ]
+    },
+    {
+      "iteration": 19,
+      "games": 108,
+      "rows": 3034,
+      "lightning_legal_rows": 1369,
+      "lightning_legal_and_act": 1246,
+      "act": 2225,
+      "lightning_selected": 27,
+      "lightning_owner_episodes": 26,
+      "card_selected": {
+        "26000039": 360,
+        "26000015": 350,
+        "26000048": 342,
+        "28000011": 260,
+        "26000043": 356,
+        "26000009": 239,
+        "27000009": 291,
+        "28000007": 27
+      },
+      "card_legal_rows": {
+        "26000015": 894,
+        "26000039": 984,
+        "27000009": 1151,
+        "28000011": 1522,
+        "28000007": 1369,
+        "26000048": 965,
+        "26000043": 700,
+        "26000009": 684
+      },
+      "examples": [
+        {
+          "match_id": "aa95b5b932c45c9121d94eaffa9fed06bc0ad3ba8ae04bfb43380860778d053b-ppo-262851004",
+          "owner": 0,
+          "tick": 839,
+          "cell": 345,
+          "delay_bin": 50,
+          "p_card_given_act": 0.0845949001452664,
+          "terminal_reward": -1.3444954128440367
+        },
+        {
+          "match_id": "aa95b5b932c45c9121d94eaffa9fed06bc0ad3ba8ae04bfb43380860778d053b-ppo-262851007",
+          "owner": 0,
+          "tick": 1089,
+          "cell": 219,
+          "delay_bin": 47,
+          "p_card_given_act": 0.10080631932929607,
+          "terminal_reward": -1.2522935779816513
+        }
+      ]
+    },
+    {
+      "iteration": 20,
+      "games": 108,
+      "rows": 2824,
+      "lightning_legal_rows": 1233,
+      "lightning_legal_and_act": 1123,
+      "act": 2077,
+      "lightning_selected": 20,
+      "lightning_owner_episodes": 17,
+      "card_selected": {
+        "26000039": 320,
+        "27000009": 283,
+        "26000009": 232,
+        "26000015": 325,
+        "26000043": 317,
+        "28000011": 240,
+        "26000048": 340,
+        "28000007": 20
+      },
+      "card_legal_rows": {
+        "26000009": 587,
+        "26000039": 918,
+        "27000009": 1063,
+        "28000007": 1233,
+        "26000015": 868,
+        "28000011": 1435,
+        "26000043": 655,
+        "26000048": 894
+      },
+      "examples": [
+        {
+          "match_id": "8601e831dc8ae17d19cc65c90df76533bfd0d53883ff87909852a710195aaba9-ppo-262951001",
+          "owner": 0,
+          "tick": 2006,
+          "cell": 386,
+          "delay_bin": 52,
+          "p_card_given_act": 0.013743071427388119,
+          "terminal_reward": 1.2199213630406291
+        },
+        {
+          "match_id": "8601e831dc8ae17d19cc65c90df76533bfd0d53883ff87909852a710195aaba9-ppo-262951003",
+          "owner": 1,
+          "tick": 817,
+          "cell": 183,
+          "delay_bin": 30,
+          "p_card_given_act": 0.0085152564872571,
+          "terminal_reward": 1.285615989515072
+        }
+      ]
+    },
+    {
+      "iteration": 21,
+      "games": 108,
+      "rows": 3201,
+      "lightning_legal_rows": 1375,
+      "lightning_legal_and_act": 1291,
+      "act": 2413,
+      "lightning_selected": 35,
+      "lightning_owner_episodes": 35,
+      "card_selected": {
+        "26000009": 227,
+        "26000048": 392,
+        "26000015": 377,
+        "26000039": 383,
+        "26000043": 348,
+        "27000009": 341,
+        "28000011": 310,
+        "28000007": 35
+      },
+      "card_legal_rows": {
+        "26000009": 636,
+        "26000015": 984,
+        "26000039": 1011,
+        "27000009": 1146,
+        "26000048": 998,
+        "28000007": 1375,
+        "28000011": 1534,
+        "26000043": 698
+      },
+      "examples": [
+        {
+          "match_id": "b8b5e12a1ee2a23e14a83e3bb0765c406b07d64ad51033f3294bfbb48fecee5d-ppo-1063051000",
+          "owner": 1,
+          "tick": 858,
+          "cell": 237,
+          "delay_bin": 58,
+          "p_card_given_act": 0.3789349678336842,
+          "terminal_reward": -1.2139351571109067
+        },
+        {
+          "match_id": "b8b5e12a1ee2a23e14a83e3bb0765c406b07d64ad51033f3294bfbb48fecee5d-ppo-1063051001",
+          "owner": 0,
+          "tick": 886,
+          "cell": 309,
+          "delay_bin": 41,
+          "p_card_given_act": 0.08290284987042305,
+          "terminal_reward": 1.042148855982212
+        }
+      ]
+    },
+    {
+      "iteration": 22,
+      "games": 108,
+      "rows": 2814,
+      "lightning_legal_rows": 1178,
+      "lightning_legal_and_act": 1094,
+      "act": 2090,
+      "lightning_selected": 24,
+      "lightning_owner_episodes": 24,
+      "card_selected": {
+        "26000048": 328,
+        "26000009": 219,
+        "27000009": 285,
+        "26000039": 337,
+        "26000043": 317,
+        "26000015": 324,
+        "28000011": 256,
+        "28000007": 24
+      },
+      "card_legal_rows": {
+        "26000009": 590,
+        "26000015": 843,
+        "26000048": 848,
+        "28000007": 1178,
+        "26000039": 879,
+        "27000009": 1040,
+        "28000011": 1409,
+        "26000043": 603
+      },
+      "examples": [
+        {
+          "match_id": "ae33b21b8cb21da1efe4b626d2b9bb3a4f5d4798c53d4de61bb1bc8f49ae5074-ppo-1063151000",
+          "owner": 1,
+          "tick": 952,
+          "cell": 218,
+          "delay_bin": 60,
+          "p_card_given_act": 0.08521950913512664,
+          "terminal_reward": -1.2114321902936172
+        },
+        {
+          "match_id": "ae33b21b8cb21da1efe4b626d2b9bb3a4f5d4798c53d4de61bb1bc8f49ae5074-ppo-1063151004",
+          "owner": 1,
+          "tick": 3085,
+          "cell": 248,
+          "delay_bin": 44,
+          "p_card_given_act": 0.525248828987772,
+          "terminal_reward": -1.1922023238982022
+        }
+      ]
+    },
+    {
+      "iteration": 23,
+      "games": 108,
+      "rows": 3053,
+      "lightning_legal_rows": 1239,
+      "lightning_legal_and_act": 1162,
+      "act": 2290,
+      "lightning_selected": 29,
+      "lightning_owner_episodes": 28,
+      "card_selected": {
+        "26000043": 345,
+        "27000009": 317,
+        "26000039": 369,
+        "26000009": 216,
+        "26000048": 374,
+        "28000011": 301,
+        "26000015": 339,
+        "28000007": 29
+      },
+      "card_legal_rows": {
+        "26000039": 996,
+        "26000043": 639,
+        "27000009": 1064,
+        "28000007": 1239,
+        "26000015": 947,
+        "26000009": 623,
+        "26000048": 916,
+        "28000011": 1367
+      },
+      "examples": [
+        {
+          "match_id": "4225eb7e332f514fc1941364d54d709dda7c555755e88bdf2d43ec08c5e93eaa-ppo-1063251001",
+          "owner": 0,
+          "tick": 1353,
+          "cell": 165,
+          "delay_bin": 4,
+          "p_card_given_act": 0.08040232886595239,
+          "terminal_reward": -1.319724770642202
+        },
+        {
+          "match_id": "4225eb7e332f514fc1941364d54d709dda7c555755e88bdf2d43ec08c5e93eaa-ppo-1063251003",
+          "owner": 0,
+          "tick": 2380,
+          "cell": 489,
+          "delay_bin": 36,
+          "p_card_given_act": 0.032426629016605736,
+          "terminal_reward": -1.1499830467583445
+        }
+      ]
+    },
+    {
+      "iteration": 24,
+      "games": 108,
+      "rows": 3400,
+      "lightning_legal_rows": 1438,
+      "lightning_legal_and_act": 1368,
+      "act": 2612,
+      "lightning_selected": 30,
+      "lightning_owner_episodes": 26,
+      "card_selected": {
+        "26000043": 373,
+        "26000015": 413,
+        "28000011": 356,
+        "26000009": 220,
+        "26000048": 424,
+        "26000039": 421,
+        "27000009": 375,
+        "28000007": 30
+      },
+      "card_legal_rows": {
+        "26000009": 710,
+        "26000015": 978,
+        "26000043": 719,
+        "28000011": 1527,
+        "28000007": 1438,
+        "26000039": 1008,
+        "26000048": 1004,
+        "27000009": 1179
+      },
+      "examples": [
+        {
+          "match_id": "8d10d5df03302dafa5fdf3be477d9958bbc929a30a99731109a0ebadffa9a8b6-ppo-1063351006",
+          "owner": 1,
+          "tick": 3139,
+          "cell": 248,
+          "delay_bin": 14,
+          "p_card_given_act": 0.08203990080985459,
+          "terminal_reward": -1.1327700455781382
+        },
+        {
+          "match_id": "8d10d5df03302dafa5fdf3be477d9958bbc929a30a99731109a0ebadffa9a8b6-ppo-1063351009",
+          "owner": 1,
+          "tick": 457,
+          "cell": 246,
+          "delay_bin": 26,
+          "p_card_given_act": 0.019194542377363222,
+          "terminal_reward": -1.2303625222511296
+        }
+      ]
+    },
+    {
+      "iteration": 25,
+      "games": 108,
+      "rows": 3495,
+      "lightning_legal_rows": 1451,
+      "lightning_legal_and_act": 1376,
+      "act": 2684,
+      "lightning_selected": 29,
+      "lightning_owner_episodes": 28,
+      "card_selected": {
+        "27000009": 395,
+        "26000009": 227,
+        "26000048": 435,
+        "26000039": 421,
+        "28000011": 365,
+        "26000015": 430,
+        "26000043": 382,
+        "28000007": 29
+      },
+      "card_legal_rows": {
+        "26000009": 689,
+        "26000043": 773,
+        "27000009": 1161,
+        "28000007": 1451,
+        "26000048": 1046,
+        "26000039": 1104,
+        "28000011": 1545,
+        "26000015": 1004
+      },
+      "examples": [
+        {
+          "match_id": "b659737333a867f2b1cee15a117494a16db21dd7dd2250c9775eed0061caca62-ppo-1063451002",
+          "owner": 1,
+          "tick": 508,
+          "cell": 381,
+          "delay_bin": 52,
+          "p_card_given_act": 0.5272521410473151,
+          "terminal_reward": 1.3420871559633027
+        },
+        {
+          "match_id": "b659737333a867f2b1cee15a117494a16db21dd7dd2250c9775eed0061caca62-ppo-1063451012",
+          "owner": 1,
+          "tick": 3248,
+          "cell": 302,
+          "delay_bin": 53,
+          "p_card_given_act": 0.04065744546831562,
+          "terminal_reward": 1.305981234065583
+        }
+      ]
+    },
+    {
+      "iteration": 26,
+      "games": 108,
+      "rows": 3418,
+      "lightning_legal_rows": 1438,
+      "lightning_legal_and_act": 1375,
+      "act": 2673,
+      "lightning_selected": 29,
+      "lightning_owner_episodes": 25,
+      "card_selected": {
+        "26000043": 366,
+        "26000015": 433,
+        "26000009": 205,
+        "26000048": 453,
+        "26000039": 438,
+        "28000011": 360,
+        "27000009": 389,
+        "28000007": 29
+      },
+      "card_legal_rows": {
+        "26000015": 1007,
+        "26000043": 725,
+        "26000048": 972,
+        "28000011": 1490,
+        "26000009": 708,
+        "28000007": 1438,
+        "26000039": 1014,
+        "27000009": 1180
+      },
+      "examples": [
+        {
+          "match_id": "23a5880f47a3fcfb76f31b4562c402debcb96d3210dfb2e57c9c6bbdd6f4f72c-ppo-1063551011",
+          "owner": 1,
+          "tick": 1201,
+          "cell": 409,
+          "delay_bin": 26,
+          "p_card_given_act": 0.01578208997087608,
+          "terminal_reward": 1.0901119402985076
+        },
+        {
+          "match_id": "23a5880f47a3fcfb76f31b4562c402debcb96d3210dfb2e57c9c6bbdd6f4f72c-ppo-1063551012",
+          "owner": 1,
+          "tick": 991,
+          "cell": 431,
+          "delay_bin": 54,
+          "p_card_given_act": 0.0016328536173864684,
+          "terminal_reward": 1.3190530799475755
+        }
+      ]
+    },
+    {
+      "iteration": 27,
+      "games": 108,
+      "rows": 3250,
+      "lightning_legal_rows": 1323,
+      "lightning_legal_and_act": 1262,
+      "act": 2510,
+      "lightning_selected": 25,
+      "lightning_owner_episodes": 23,
+      "card_selected": {
+        "26000009": 196,
+        "27000009": 361,
+        "28000011": 342,
+        "26000043": 364,
+        "26000048": 412,
+        "26000039": 414,
+        "28000007": 25,
+        "26000015": 396
+      },
+      "card_legal_rows": {
+        "26000009": 626,
+        "26000039": 955,
+        "26000048": 887,
+        "28000007": 1323,
+        "27000009": 1089,
+        "28000011": 1456,
+        "26000043": 725,
+        "26000015": 962
+      },
+      "examples": [
+        {
+          "match_id": "9919ea3dd97150c1bf9a9c65a2a7ab85e89072f53c90fe3c979e33b7ef2487d2-ppo-1063651000",
+          "owner": 0,
+          "tick": 1535,
+          "cell": 148,
+          "delay_bin": 60,
+          "p_card_given_act": 0.017359297899236646,
+          "terminal_reward": -1.3800950196592399
+        },
+        {
+          "match_id": "9919ea3dd97150c1bf9a9c65a2a7ab85e89072f53c90fe3c979e33b7ef2487d2-ppo-1063651002",
+          "owner": 0,
+          "tick": 390,
+          "cell": 566,
+          "delay_bin": 23,
+          "p_card_given_act": 0.00393758543891418,
+          "terminal_reward": -1.3320773263433814
+        }
+      ]
+    },
+    {
+      "iteration": 28,
+      "games": 108,
+      "rows": 3549,
+      "lightning_legal_rows": 1405,
+      "lightning_legal_and_act": 1363,
+      "act": 2791,
+      "lightning_selected": 26,
+      "lightning_owner_episodes": 26,
+      "card_selected": {
+        "26000015": 454,
+        "26000048": 454,
+        "27000009": 392,
+        "26000039": 454,
+        "28000011": 402,
+        "26000043": 391,
+        "26000009": 218,
+        "28000007": 26
+      },
+      "card_legal_rows": {
+        "26000009": 698,
+        "26000015": 984,
+        "26000039": 1070,
+        "26000048": 1007,
+        "28000007": 1405,
+        "27000009": 1243,
+        "28000011": 1437,
+        "26000043": 785
+      },
+      "examples": [
+        {
+          "match_id": "1ff17750dd89f0daa6bdd36fa7652a6b2dacf55f5d818efa5c6b5e23dc4775e3-ppo-1063751004",
+          "owner": 1,
+          "tick": 2894,
+          "cell": 514,
+          "delay_bin": 53,
+          "p_card_given_act": 0.19419940976966388,
+          "terminal_reward": 1.3395150720838795
+        },
+        {
+          "match_id": "1ff17750dd89f0daa6bdd36fa7652a6b2dacf55f5d818efa5c6b5e23dc4775e3-ppo-1063751007",
+          "owner": 0,
+          "tick": 4842,
+          "cell": 407,
+          "delay_bin": 49,
+          "p_card_given_act": 0.07220122383358897,
+          "terminal_reward": 0.9893245926331644
+        }
+      ]
+    },
+    {
+      "iteration": 29,
+      "games": 108,
+      "rows": 3564,
+      "lightning_legal_rows": 1369,
+      "lightning_legal_and_act": 1325,
+      "act": 2801,
+      "lightning_selected": 34,
+      "lightning_owner_episodes": 32,
+      "card_selected": {
+        "26000048": 456,
+        "26000043": 405,
+        "28000011": 409,
+        "26000015": 455,
+        "27000009": 399,
+        "26000039": 456,
+        "28000007": 34,
+        "26000009": 187
+      },
+      "card_legal_rows": {
+        "26000039": 1075,
+        "26000048": 963,
+        "27000009": 1272,
+        "28000011": 1423,
+        "26000043": 710,
+        "26000015": 1008,
+        "26000009": 661,
+        "28000007": 1369
+      },
+      "examples": [
+        {
+          "match_id": "8f43c2abc184b724cab9362ec3c8a1aa0dba005b0f162d9da49eee5fbd32ce1b-ppo-1063851000",
+          "owner": 1,
+          "tick": 2183,
+          "cell": 567,
+          "delay_bin": 3,
+          "p_card_given_act": 0.05223848641423932,
+          "terminal_reward": -1.319512243826738
+        },
+        {
+          "match_id": "8f43c2abc184b724cab9362ec3c8a1aa0dba005b0f162d9da49eee5fbd32ce1b-ppo-1063851001",
+          "owner": 1,
+          "tick": 2828,
+          "cell": 345,
+          "delay_bin": 59,
+          "p_card_given_act": 0.25659631487131057,
+          "terminal_reward": 1.0787902720995286
+        }
+      ]
+    },
+    {
+      "iteration": 30,
+      "games": 108,
+      "rows": 3240,
+      "lightning_legal_rows": 1255,
+      "lightning_legal_and_act": 1221,
+      "act": 2533,
+      "lightning_selected": 28,
+      "lightning_owner_episodes": 27,
+      "card_selected": {
+        "26000039": 415,
+        "26000048": 424,
+        "28000011": 374,
+        "26000015": 402,
+        "26000009": 181,
+        "27000009": 340,
+        "26000043": 369,
+        "28000007": 28
+      },
+      "card_legal_rows": {
+        "26000039": 936,
+        "26000048": 888,
+        "27000009": 1136,
+        "28000007": 1255,
+        "26000043": 687,
+        "28000011": 1303,
+        "26000015": 932,
+        "26000009": 649
+      },
+      "examples": [
+        {
+          "match_id": "e636b5c993ed720867b924e2f25452ae69c186aa68190760192ba5cfbce363a3-ppo-1063951006",
+          "owner": 0,
+          "tick": 1922,
+          "cell": 319,
+          "delay_bin": 56,
+          "p_card_given_act": 0.009129022160716958,
+          "terminal_reward": 1.2926114023591089
+        },
+        {
+          "match_id": "e636b5c993ed720867b924e2f25452ae69c186aa68190760192ba5cfbce363a3-ppo-1063951008",
+          "owner": 0,
+          "tick": 548,
+          "cell": 374,
+          "delay_bin": 41,
+          "p_card_given_act": 0.12094416562771772,
+          "terminal_reward": -1.2051522368498269
+        }
+      ]
+    },
+    {
+      "iteration": 31,
+      "games": 108,
+      "rows": 3632,
+      "lightning_legal_rows": 1363,
+      "lightning_legal_and_act": 1321,
+      "act": 2880,
+      "lightning_selected": 21,
+      "lightning_owner_episodes": 21,
+      "card_selected": {
+        "26000043": 375,
+        "26000015": 483,
+        "28000011": 422,
+        "26000039": 483,
+        "26000048": 478,
+        "26000009": 199,
+        "27000009": 419,
+        "28000007": 21
+      },
+      "card_legal_rows": {
+        "26000009": 680,
+        "26000015": 1037,
+        "26000043": 666,
+        "28000011": 1447,
+        "26000048": 989,
+        "26000039": 1041,
+        "28000007": 1363,
+        "27000009": 1254
+      },
+      "examples": [
+        {
+          "match_id": "57f6f589882b4f7ff555f8c70a0ad17b2e929a875153e168ac563b2baca53ea8-ppo-1064051004",
+          "owner": 1,
+          "tick": 2529,
+          "cell": 204,
+          "delay_bin": 56,
+          "p_card_given_act": 0.030494967608555835,
+          "terminal_reward": 0.9969345604872101
+        },
+        {
+          "match_id": "57f6f589882b4f7ff555f8c70a0ad17b2e929a875153e168ac563b2baca53ea8-ppo-1064051005",
+          "owner": 0,
+          "tick": 2967,
+          "cell": 426,
+          "delay_bin": 60,
+          "p_card_given_act": 0.07739748938914916,
+          "terminal_reward": 1.1629785215469182
+        }
+      ]
+    },
+    {
+      "iteration": 32,
+      "games": 108,
+      "rows": 3578,
+      "lightning_legal_rows": 1397,
+      "lightning_legal_and_act": 1365,
+      "act": 2831,
+      "lightning_selected": 19,
+      "lightning_owner_episodes": 19,
+      "card_selected": {
+        "26000043": 401,
+        "26000048": 477,
+        "27000009": 407,
+        "26000039": 466,
+        "28000011": 431,
+        "26000015": 459,
+        "26000009": 171,
+        "28000007": 19
+      },
+      "card_legal_rows": {
+        "26000043": 702,
+        "26000048": 885,
+        "27000009": 1229,
+        "28000007": 1397,
+        "26000039": 1030,
+        "26000009": 704,
+        "26000015": 981,
+        "28000011": 1407
+      },
+      "examples": [
+        {
+          "match_id": "20cd743f471b485dff51a41c43ee464ec6a41597504f868c4d2861976f51952c-ppo-1064151004",
+          "owner": 0,
+          "tick": 1273,
+          "cell": 185,
+          "delay_bin": 1,
+          "p_card_given_act": 0.019212366322031126,
+          "terminal_reward": -1.2135518752893462
+        },
+        {
+          "match_id": "20cd743f471b485dff51a41c43ee464ec6a41597504f868c4d2861976f51952c-ppo-1064151006",
+          "owner": 1,
+          "tick": 2307,
+          "cell": 417,
+          "delay_bin": 58,
+          "p_card_given_act": 0.018174526672030376,
+          "terminal_reward": 1.164113614431121
+        }
+      ]
+    },
+    {
+      "iteration": 33,
+      "games": 108,
+      "rows": 3711,
+      "lightning_legal_rows": 1387,
+      "lightning_legal_and_act": 1353,
+      "act": 2969,
+      "lightning_selected": 31,
+      "lightning_owner_episodes": 28,
+      "card_selected": {
+        "26000009": 185,
+        "26000048": 495,
+        "27000009": 435,
+        "26000015": 506,
+        "26000039": 496,
+        "28000011": 438,
+        "26000043": 383,
+        "28000007": 31
+      },
+      "card_legal_rows": {
+        "26000009": 740,
+        "26000015": 1007,
+        "26000048": 1008,
+        "28000007": 1387,
+        "26000043": 730,
+        "27000009": 1230,
+        "28000011": 1479,
+        "26000039": 1019
+      },
+      "examples": [
+        {
+          "match_id": "22f608d99a6499d0580e02cc2a0efd620230d13c238c40655f8899314eb08844-ppo-1064251005",
+          "owner": 1,
+          "tick": 2697,
+          "cell": 475,
+          "delay_bin": 14,
+          "p_card_given_act": 0.03547473870618608,
+          "terminal_reward": 1.3296854521625163
+        },
+        {
+          "match_id": "22f608d99a6499d0580e02cc2a0efd620230d13c238c40655f8899314eb08844-ppo-1064251006",
+          "owner": 1,
+          "tick": 1247,
+          "cell": 151,
+          "delay_bin": 34,
+          "p_card_given_act": 0.053457808000773335,
+          "terminal_reward": -1.1111940298507463
+        }
+      ]
+    },
+    {
+      "iteration": 34,
+      "games": 108,
+      "rows": 3422,
+      "lightning_legal_rows": 1298,
+      "lightning_legal_and_act": 1276,
+      "act": 2707,
+      "lightning_selected": 19,
+      "lightning_owner_episodes": 19,
+      "card_selected": {
+        "26000015": 437,
+        "28000007": 19,
+        "27000009": 398,
+        "28000011": 408,
+        "26000043": 363,
+        "26000009": 174,
+        "26000048": 453,
+        "26000039": 455
+      },
+      "card_legal_rows": {
+        "26000015": 923,
+        "26000048": 901,
+        "27000009": 1154,
+        "28000007": 1298,
+        "26000039": 958,
+        "28000011": 1298,
+        "26000043": 709,
+        "26000009": 681
+      },
+      "examples": [
+        {
+          "match_id": "2f19b9610bd52660a96a0e247790547534f4cea7ce2b0b8bd19c45fb85a9368a-ppo-1064351000",
+          "owner": 0,
+          "tick": 451,
+          "cell": 420,
+          "delay_bin": 29,
+          "p_card_given_act": 0.01180093367283761,
+          "terminal_reward": 1.0935608653977817
+        },
+        {
+          "match_id": "2f19b9610bd52660a96a0e247790547534f4cea7ce2b0b8bd19c45fb85a9368a-ppo-1064351006",
+          "owner": 1,
+          "tick": 4359,
+          "cell": 406,
+          "delay_bin": 51,
+          "p_card_given_act": 0.0497009655310439,
+          "terminal_reward": 1.098992504711045
+        }
+      ]
+    },
+    {
+      "iteration": 35,
+      "games": 108,
+      "rows": 3542,
+      "lightning_legal_rows": 1306,
+      "lightning_legal_and_act": 1282,
+      "act": 2823,
+      "lightning_selected": 27,
+      "lightning_owner_episodes": 23,
+      "card_selected": {
+        "26000015": 459,
+        "26000009": 156,
+        "26000043": 384,
+        "26000039": 472,
+        "28000011": 439,
+        "26000048": 476,
+        "27000009": 410,
+        "28000007": 27
+      },
+      "card_legal_rows": {
+        "26000009": 675,
+        "26000015": 941,
+        "28000007": 1306,
+        "28000011": 1314,
+        "26000048": 928,
+        "26000043": 696,
+        "26000039": 987,
+        "27000009": 1173
+      },
+      "examples": [
+        {
+          "match_id": "eeb4f67d3d62416c1b414197a589aef5434134f66286470fd6784d4ef7b6a502-ppo-1064451007",
+          "owner": 0,
+          "tick": 982,
+          "cell": 434,
+          "delay_bin": 2,
+          "p_card_given_act": 0.050855370842004574,
+          "terminal_reward": -1.1753731343283582
+        },
+        {
+          "match_id": "eeb4f67d3d62416c1b414197a589aef5434134f66286470fd6784d4ef7b6a502-ppo-1064451009",
+          "owner": 0,
+          "tick": 464,
+          "cell": 265,
+          "delay_bin": 32,
+          "p_card_given_act": 0.4392812087889484,
+          "terminal_reward": -1.2027959400246475
+        }
+      ]
+    },
+    {
+      "iteration": 36,
+      "games": 108,
+      "rows": 3471,
+      "lightning_legal_rows": 1348,
+      "lightning_legal_and_act": 1321,
+      "act": 2728,
+      "lightning_selected": 24,
+      "lightning_owner_episodes": 24,
+      "card_selected": {
+        "27000009": 394,
+        "28000011": 401,
+        "26000043": 396,
+        "26000048": 462,
+        "26000009": 157,
+        "26000015": 441,
+        "26000039": 453,
+        "28000007": 24
+      },
+      "card_legal_rows": {
+        "26000043": 697,
+        "27000009": 1141,
+        "28000007": 1348,
+        "28000011": 1351,
+        "26000015": 949,
+        "26000009": 694,
+        "26000039": 982,
+        "26000048": 942
+      },
+      "examples": [
+        {
+          "match_id": "2f32a75c8825f9065139cb01cb1105c526094344abf7b931cca7bcfd72727777-ppo-1064551014",
+          "owner": 0,
+          "tick": 1260,
+          "cell": 132,
+          "delay_bin": 7,
+          "p_card_given_act": 0.05475089376200779,
+          "terminal_reward": -1.35
+        },
+        {
+          "match_id": "2f32a75c8825f9065139cb01cb1105c526094344abf7b931cca7bcfd72727777-ppo-1064551023",
+          "owner": 0,
+          "tick": 1003,
+          "cell": 255,
+          "delay_bin": 59,
+          "p_card_given_act": 0.17069399577366615,
+          "terminal_reward": 1.1363184079601991
+        }
+      ]
+    },
+    {
+      "iteration": 37,
+      "games": 108,
+      "rows": 3614,
+      "lightning_legal_rows": 1374,
+      "lightning_legal_and_act": 1357,
+      "act": 2890,
+      "lightning_selected": 19,
+      "lightning_owner_episodes": 18,
+      "card_selected": {
+        "26000009": 150,
+        "27000009": 415,
+        "28000011": 458,
+        "26000043": 399,
+        "28000007": 19,
+        "26000048": 491,
+        "26000039": 482,
+        "26000015": 476
+      },
+      "card_legal_rows": {
+        "26000009": 692,
+        "26000015": 966,
+        "28000007": 1374,
+        "28000011": 1295,
+        "27000009": 1192,
+        "26000043": 754,
+        "26000048": 914,
+        "26000039": 969
+      },
+      "examples": [
+        {
+          "match_id": "ea76edf2a8fd65a2e28afefd1edab2337cb35bf48f2582751c75171e332f0893-ppo-1064651000",
+          "owner": 0,
+          "tick": 1311,
+          "cell": 165,
+          "delay_bin": 54,
+          "p_card_given_act": 0.002772048194012844,
+          "terminal_reward": 1.1345977354381436
+        },
+        {
+          "match_id": "ea76edf2a8fd65a2e28afefd1edab2337cb35bf48f2582751c75171e332f0893-ppo-1064651007",
+          "owner": 1,
+          "tick": 500,
+          "cell": 265,
+          "delay_bin": 37,
+          "p_card_given_act": 0.08178991654135688,
+          "terminal_reward": 1.2598843919328653
+        }
+      ]
+    },
+    {
+      "iteration": 38,
+      "games": 108,
+      "rows": 3438,
+      "lightning_legal_rows": 1308,
+      "lightning_legal_and_act": 1282,
+      "act": 2731,
+      "lightning_selected": 14,
+      "lightning_owner_episodes": 13,
+      "card_selected": {
+        "27000009": 408,
+        "26000015": 442,
+        "26000043": 390,
+        "28000011": 410,
+        "26000039": 451,
+        "26000048": 470,
+        "26000009": 146,
+        "28000007": 14
+      },
+      "card_legal_rows": {
+        "26000009": 672,
+        "26000015": 961,
+        "27000009": 1109,
+        "28000011": 1311,
+        "26000039": 960,
+        "26000043": 675,
+        "26000048": 912,
+        "28000007": 1308
+      },
+      "examples": [
+        {
+          "match_id": "5bbc118ec45a4f03bd42f06f67245f911d6cad5da0a0a926f044f88046377223-ppo-1064751010",
+          "owner": 0,
+          "tick": 1304,
+          "cell": 551,
+          "delay_bin": 56,
+          "p_card_given_act": 0.006602779214032527,
+          "terminal_reward": 1.3196428571428571
+        },
+        {
+          "match_id": "5bbc118ec45a4f03bd42f06f67245f911d6cad5da0a0a926f044f88046377223-ppo-1064751012",
+          "owner": 0,
+          "tick": 4351,
+          "cell": 384,
+          "delay_bin": 60,
+          "p_card_given_act": 0.08295364319839513,
+          "terminal_reward": -1.114179104477612
+        }
+      ]
+    },
+    {
+      "iteration": 39,
+      "games": 108,
+      "rows": 3716,
+      "lightning_legal_rows": 1397,
+      "lightning_legal_and_act": 1380,
+      "act": 3000,
+      "lightning_selected": 18,
+      "lightning_owner_episodes": 15,
+      "card_selected": {
+        "28000007": 18,
+        "26000015": 507,
+        "26000039": 508,
+        "26000048": 509,
+        "26000043": 414,
+        "27000009": 435,
+        "28000011": 455,
+        "26000009": 154
+      },
+      "card_legal_rows": {
+        "26000009": 728,
+        "26000015": 962,
+        "27000009": 1225,
+        "28000007": 1397,
+        "26000039": 1019,
+        "28000011": 1424,
+        "26000048": 936,
+        "26000043": 744
+      },
+      "examples": [
+        {
+          "match_id": "a7c95a9c2946acef3d28b6a4175b99a52094f3b03999a0927994e2d6bf7bf8ed-ppo-1064851000",
+          "owner": 0,
+          "tick": 390,
+          "cell": 566,
+          "delay_bin": 2,
+          "p_card_given_act": 0.002060240184128205,
+          "terminal_reward": -1.1099119817035399
+        },
+        {
+          "match_id": "a7c95a9c2946acef3d28b6a4175b99a52094f3b03999a0927994e2d6bf7bf8ed-ppo-1064851000",
+          "owner": 0,
+          "tick": 1488,
+          "cell": 337,
+          "delay_bin": 60,
+          "p_card_given_act": 0.16318031373868733,
+          "terminal_reward": -1.1099119817035399
+        }
+      ]
+    },
+    {
+      "iteration": 40,
+      "games": 108,
+      "rows": 3461,
+      "lightning_legal_rows": 1268,
+      "lightning_legal_and_act": 1257,
+      "act": 2797,
+      "lightning_selected": 15,
+      "lightning_owner_episodes": 14,
+      "card_selected": {
+        "26000039": 477,
+        "26000048": 476,
+        "27000009": 412,
+        "28000011": 422,
+        "26000043": 392,
+        "26000009": 140,
+        "26000015": 463,
+        "28000007": 15
+      },
+      "card_legal_rows": {
+        "26000009": 688,
+        "26000039": 978,
+        "26000048": 865,
+        "27000009": 1127,
+        "28000007": 1268,
+        "28000011": 1243,
+        "26000015": 964,
+        "26000043": 692
+      },
+      "examples": [
+        {
+          "match_id": "01a540a0ee4aca4341974cab33995e10a1fdf5082061f4955fbde07211b103d3-ppo-1064951004",
+          "owner": 0,
+          "tick": 1022,
+          "cell": 379,
+          "delay_bin": 50,
+          "p_card_given_act": 0.014608085873824537,
+          "terminal_reward": -1.311484272608126
+        },
+        {
+          "match_id": "01a540a0ee4aca4341974cab33995e10a1fdf5082061f4955fbde07211b103d3-ppo-1064951011",
+          "owner": 0,
+          "tick": 936,
+          "cell": 405,
+          "delay_bin": 58,
+          "p_card_given_act": 0.30111909334942055,
+          "terminal_reward": 1.2125572171905872
+        }
+      ]
+    },
+    {
+      "iteration": 41,
+      "games": 108,
+      "rows": 3540,
+      "lightning_legal_rows": 1308,
+      "lightning_legal_and_act": 1296,
+      "act": 2834,
+      "lightning_selected": 23,
+      "lightning_owner_episodes": 23,
+      "card_selected": {
+        "26000039": 479,
+        "26000043": 398,
+        "27000009": 424,
+        "26000048": 479,
+        "26000015": 456,
+        "28000011": 437,
+        "26000009": 138,
+        "28000007": 23
+      },
+      "card_legal_rows": {
+        "26000009": 750,
+        "26000039": 986,
+        "26000043": 673,
+        "26000048": 879,
+        "28000007": 1308,
+        "27000009": 1137,
+        "26000015": 950,
+        "28000011": 1328
+      },
+      "examples": [
+        {
+          "match_id": "c7b2d2f9359d37646f23f1dd386971752f21923a4343cb93cb27e3e2946595c3-ppo-1065051005",
+          "owner": 1,
+          "tick": 2031,
+          "cell": 368,
+          "delay_bin": 42,
+          "p_card_given_act": 0.0039350064792325265,
+          "terminal_reward": -1.2819127657909666
+        },
+        {
+          "match_id": "c7b2d2f9359d37646f23f1dd386971752f21923a4343cb93cb27e3e2946595c3-ppo-1065051007",
+          "owner": 0,
+          "tick": 961,
+          "cell": 194,
+          "delay_bin": 3,
+          "p_card_given_act": 0.07560333472675608,
+          "terminal_reward": -1.1044776119402986
+        }
+      ]
+    },
+    {
+      "iteration": 42,
+      "games": 108,
+      "rows": 3450,
+      "lightning_legal_rows": 1320,
+      "lightning_legal_and_act": 1303,
+      "act": 2786,
+      "lightning_selected": 22,
+      "lightning_owner_episodes": 20,
+      "card_selected": {
+        "26000043": 395,
+        "26000039": 475,
+        "27000009": 412,
+        "28000011": 424,
+        "26000048": 493,
+        "26000015": 455,
+        "26000009": 110,
+        "28000007": 22
+      },
+      "card_legal_rows": {
+        "26000009": 710,
+        "26000015": 892,
+        "26000043": 678,
+        "28000007": 1320,
+        "26000039": 975,
+        "27000009": 1125,
+        "28000011": 1272,
+        "26000048": 848
+      },
+      "examples": [
+        {
+          "match_id": "b47be17112119310ae56779327796ae71156d0948df36b9c70c04463b4740699-ppo-1065151002",
+          "owner": 0,
+          "tick": 841,
+          "cell": 292,
+          "delay_bin": 59,
+          "p_card_given_act": 0.10207226736108582,
+          "terminal_reward": -1.35
+        },
+        {
+          "match_id": "b47be17112119310ae56779327796ae71156d0948df36b9c70c04463b4740699-ppo-1065151012",
+          "owner": 0,
+          "tick": 843,
+          "cell": 273,
+          "delay_bin": 37,
+          "p_card_given_act": 0.0033243789746819933,
+          "terminal_reward": 1.2784076015727392
+        }
+      ]
+    },
+    {
+      "iteration": 43,
+      "games": 108,
+      "rows": 3532,
+      "lightning_legal_rows": 1320,
+      "lightning_legal_and_act": 1309,
+      "act": 2846,
+      "lightning_selected": 20,
+      "lightning_owner_episodes": 20,
+      "card_selected": {
+        "26000048": 493,
+        "26000043": 392,
+        "26000015": 470,
+        "27000009": 434,
+        "26000039": 481,
+        "26000009": 124,
+        "28000011": 432,
+        "28000007": 20
+      },
+      "card_legal_rows": {
+        "26000009": 728,
+        "26000048": 848,
+        "27000009": 1210,
+        "28000007": 1320,
+        "26000043": 672,
+        "26000015": 925,
+        "26000039": 1005,
+        "28000011": 1285
+      },
+      "examples": [
+        {
+          "match_id": "84c25aea8b7ca0fa78f3b1ab620fd38b4f169f95927347b9d3cc4fe553bee88b-ppo-1065251007",
+          "owner": 0,
+          "tick": 2871,
+          "cell": 282,
+          "delay_bin": 56,
+          "p_card_given_act": 0.08270172251366634,
+          "terminal_reward": 1.3466251638269986
+        },
+        {
+          "match_id": "84c25aea8b7ca0fa78f3b1ab620fd38b4f169f95927347b9d3cc4fe553bee88b-ppo-1065251017",
+          "owner": 1,
+          "tick": 2557,
+          "cell": 246,
+          "delay_bin": 22,
+          "p_card_given_act": 0.014544412469930488,
+          "terminal_reward": -1.3541775884665794
+        }
+      ]
+    },
+    {
+      "iteration": 44,
+      "games": 108,
+      "rows": 3493,
+      "lightning_legal_rows": 1315,
+      "lightning_legal_and_act": 1293,
+      "act": 2803,
+      "lightning_selected": 18,
+      "lightning_owner_episodes": 18,
+      "card_selected": {
+        "26000015": 477,
+        "26000043": 408,
+        "26000048": 470,
+        "26000009": 97,
+        "26000039": 474,
+        "27000009": 415,
+        "28000011": 444,
+        "28000007": 18
+      },
+      "card_legal_rows": {
+        "26000009": 743,
+        "26000015": 933,
+        "26000043": 676,
+        "28000007": 1315,
+        "28000011": 1276,
+        "26000048": 871,
+        "26000039": 916,
+        "27000009": 1069
+      },
+      "examples": [
+        {
+          "match_id": "ffe7d85f4134165cc104a4aca69709565302d4fb009482a0e77d49f545aacb3a-ppo-1065351010",
+          "owner": 0,
+          "tick": 3416,
+          "cell": 426,
+          "delay_bin": 56,
+          "p_card_given_act": 0.40536833017569684,
+          "terminal_reward": 1.208547531021172
+        },
+        {
+          "match_id": "ffe7d85f4134165cc104a4aca69709565302d4fb009482a0e77d49f545aacb3a-ppo-1065351020",
+          "owner": 0,
+          "tick": 2502,
+          "cell": 158,
+          "delay_bin": 38,
+          "p_card_given_act": 0.019833048306614462,
+          "terminal_reward": 1.0973733478739982
+        }
+      ]
+    },
+    {
+      "iteration": 45,
+      "games": 108,
+      "rows": 3673,
+      "lightning_legal_rows": 1361,
+      "lightning_legal_and_act": 1350,
+      "act": 2996,
+      "lightning_selected": 28,
+      "lightning_owner_episodes": 25,
+      "card_selected": {
+        "27000009": 449,
+        "28000011": 461,
+        "26000039": 511,
+        "26000043": 416,
+        "26000015": 527,
+        "26000048": 511,
+        "26000009": 93,
+        "28000007": 28
+      },
+      "card_legal_rows": {
+        "26000043": 707,
+        "27000009": 1175,
+        "28000007": 1361,
+        "28000011": 1358,
+        "26000039": 988,
+        "26000048": 895,
+        "26000015": 958,
+        "26000009": 703
+      },
+      "examples": [
+        {
+          "match_id": "e859afde267fc31b0be5fedf3e7921dd2707784d625a45734ebb442506846656-ppo-1065451003",
+          "owner": 1,
+          "tick": 2028,
+          "cell": 97,
+          "delay_bin": 22,
+          "p_card_given_act": 0.0482743027488776,
+          "terminal_reward": -1.1875462138847048
+        },
+        {
+          "match_id": "e859afde267fc31b0be5fedf3e7921dd2707784d625a45734ebb442506846656-ppo-1065451005",
+          "owner": 0,
+          "tick": 4997,
+          "cell": 381,
+          "delay_bin": 58,
+          "p_card_given_act": 0.20626886801854383,
+          "terminal_reward": 1.1200196592398428
+        }
+      ]
+    },
+    {
+      "iteration": 46,
+      "games": 108,
+      "rows": 3594,
+      "lightning_legal_rows": 1362,
+      "lightning_legal_and_act": 1354,
+      "act": 2940,
+      "lightning_selected": 8,
+      "lightning_owner_episodes": 7,
+      "card_selected": {
+        "26000043": 417,
+        "26000048": 526,
+        "28000011": 445,
+        "26000039": 507,
+        "26000015": 489,
+        "26000009": 101,
+        "27000009": 447,
+        "28000007": 8
+      },
+      "card_legal_rows": {
+        "26000009": 731,
+        "26000043": 685,
+        "28000007": 1362,
+        "28000011": 1300,
+        "26000048": 888,
+        "26000015": 945,
+        "26000039": 987,
+        "27000009": 1164
+      },
+      "examples": [
+        {
+          "match_id": "fcf8e863c6f9fd13837e277487d41df5a1fc2def083d8e424541f714ba608a05-ppo-1065551014",
+          "owner": 1,
+          "tick": 2727,
+          "cell": 456,
+          "delay_bin": 57,
+          "p_card_given_act": 0.0779081557800534,
+          "terminal_reward": 1.146608414350267
+        },
+        {
+          "match_id": "fcf8e863c6f9fd13837e277487d41df5a1fc2def083d8e424541f714ba608a05-ppo-1065551015",
+          "owner": 0,
+          "tick": 4822,
+          "cell": 318,
+          "delay_bin": 55,
+          "p_card_given_act": 0.04337898422881666,
+          "terminal_reward": 0.9922979711534072
+        }
+      ]
+    }
+  ],
+  "probability_comparison": {
+    "IL": {
+      "sha256": "82e9910662979f681ee1478f286fa947b21c4372a5d48c5027f62fcfa129da26",
+      "states": 128,
+      "p_lightning_given_act": {
+        "mean": 0.06173824875804712,
+        "min": 0.004088524729013443,
+        "median": 0.029412100091576576,
+        "p90": 0.14010668843984603,
+        "max": 0.7143315672874451,
+        "below_1e-4": 0,
+        "below_1e-3": 0
+      },
+      "p_act": {
+        "mean": 0.5236695992061868,
+        "min": 0.020051859319210052,
+        "median": 0.48859527707099915,
+        "p90": 0.9090212166309356,
+        "max": 0.9944497346878052,
+        "below_1e-4": 0,
+        "below_1e-3": 0
+      },
+      "joint_p_act_lightning": {
+        "mean": 0.03146334347425466,
+        "min": 0.0023101027884263603,
+        "median": 0.01489302904207257,
+        "p90": 0.061844284709062065,
+        "max": 0.38802810700937584,
+        "below_1e-4": 0,
+        "below_1e-3": 0
+      },
+      "lightning_card_argmax_count": 2,
+      "lightning_cell_entropy_mean": 5.045534051954746,
+      "lightning_legal_cells_mean": 576.0
+    },
+    "RL20": {
+      "sha256": "ae33b21b8cb21da1efe4b626d2b9bb3a4f5d4798c53d4de61bb1bc8f49ae5074",
+      "states": 128,
+      "p_lightning_given_act": {
+        "mean": 0.025891721036714443,
+        "min": 0.001299761701375246,
+        "median": 0.009240393526852131,
+        "p90": 0.06171747930347919,
+        "max": 0.43118804693222046,
+        "below_1e-4": 0,
+        "below_1e-3": 0
+      },
+      "p_act": {
+        "mean": 0.9233279766049236,
+        "min": 0.3685300350189209,
+        "median": 0.9708560705184937,
+        "p90": 0.995012629032135,
+        "max": 0.999637246131897,
+        "below_1e-4": 0,
+        "below_1e-3": 0
+      },
+      "joint_p_act_lightning": {
+        "mean": 0.02210600333732771,
+        "min": 0.0012405213136857385,
+        "median": 0.008492827258863356,
+        "p90": 0.05593160620971999,
+        "max": 0.4107774050286892,
+        "below_1e-4": 0,
+        "below_1e-3": 0
+      },
+      "lightning_card_argmax_count": 1,
+      "lightning_cell_entropy_mean": 4.690355686470866,
+      "lightning_legal_cells_mean": 576.0
+    },
+    "RL46": {
+      "sha256": "71259a4b849625b90c66dcc17e0acfbcaa6b7a547022134261376b8a6ccb8410",
+      "states": 128,
+      "p_lightning_given_act": {
+        "mean": 0.015200446020116942,
+        "min": 0.0008571490179747343,
+        "median": 0.0041718571446835995,
+        "p90": 0.03489699065685272,
+        "max": 0.3516747057437897,
+        "below_1e-4": 0,
+        "below_1e-3": 9
+      },
+      "p_act": {
+        "mean": 0.9909623777493834,
+        "min": 0.8183038830757141,
+        "median": 0.9961989521980286,
+        "p90": 0.9992696881294251,
+        "max": 0.9999071359634399,
+        "below_1e-4": 0,
+        "below_1e-3": 0
+      },
+      "joint_p_act_lightning": {
+        "mean": 0.01479986639757753,
+        "min": 0.0008403189073757922,
+        "median": 0.004114620056325541,
+        "p90": 0.03473036279266806,
+        "max": 0.3497195687992072,
+        "below_1e-4": 0,
+        "below_1e-3": 9
+      },
+      "lightning_card_argmax_count": 0,
+      "lightning_cell_entropy_mean": 4.61954578384757,
+      "lightning_legal_cells_mean": 576.0
+    }
+  },
+  "sample_note": "128 reservoir-sampled lightning-legal decision states from rounds 42-46; same states/masks at temperature 1 for all checkpoints; selected actions are plans, not execution receipts",
+  "available_recent_lightning_legal_states": 6678
+}

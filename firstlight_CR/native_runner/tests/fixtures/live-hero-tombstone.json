@@ -1,0 +1,2190 @@
+{
+  "source_capture": "artifacts/live-hp-audit-20260920/capture-fixed-02.jsonl",
+  "original_job": "20260920T121625-e33e9a81",
+  "opening": {
+    "schema": "cr-live-snapshot.v1",
+    "event": "snapshot",
+    "sequence": 1,
+    "battle_epoch": 1,
+    "tick": 1,
+    "captured_unix_ms": 1789911939133,
+    "own_side": 0,
+    "ended": false,
+    "winner": null,
+    "own": {
+      "deck": [
+        {
+          "deck_slot": 0,
+          "card_id": 26000009,
+          "form_code": 0,
+          "cost": 8
+        },
+        {
+          "deck_slot": 1,
+          "card_id": 28000007,
+          "form_code": 0,
+          "cost": 6
+        },
+        {
+          "deck_slot": 2,
+          "card_id": 26000048,
+          "form_code": 0,
+          "cost": 4
+        },
+        {
+          "deck_slot": 3,
+          "card_id": 26000015,
+          "form_code": 0,
+          "cost": 4
+        },
+        {
+          "deck_slot": 4,
+          "card_id": 27000009,
+          "form_code": 0,
+          "cost": 3
+        },
+        {
+          "deck_slot": 5,
+          "card_id": 28000011,
+          "form_code": 0,
+          "cost": 2
+        },
+        {
+          "deck_slot": 6,
+          "card_id": 26000043,
+          "form_code": 0,
+          "cost": 6
+        },
+        {
+          "deck_slot": 7,
+          "card_id": 26000039,
+          "form_code": 0,
+          "cost": 3
+        }
+      ],
+      "hand": [
+        {
+          "slot": 0,
+          "card": {
+            "deck_slot": 6,
+            "card_id": 26000043,
+            "form_code": 0,
+            "cost": 6
+          }
+        },
+        {
+          "slot": 1,
+          "card": {
+            "deck_slot": 3,
+            "card_id": 26000015,
+            "form_code": 0,
+            "cost": 4
+          }
+        },
+        {
+          "slot": 2,
+          "card": {
+            "deck_slot": 5,
+            "card_id": 28000011,
+            "form_code": 0,
+            "cost": 2
+          }
+        },
+        {
+          "slot": 3,
+          "card": {
+            "deck_slot": 1,
+            "card_id": 28000007,
+            "form_code": 0,
+            "cost": 6
+          }
+        }
+      ],
+      "next_card": {
+        "deck_slot": 4,
+        "card_id": 27000009,
+        "form_code": 0,
+        "cost": 3
+      },
+      "elixir_raw": 60178
+    },
+    "consistency": "same-tick-best-effort",
+    "entities": [
+      {
+        "id": 5000000,
+        "owner": 0,
+        "kind": 13,
+        "card_id": -1,
+        "native_data_id": 35000000,
+        "native_data_name": "KingTower",
+        "x": 9000,
+        "y": 3000,
+        "hp": 7728,
+        "max_hp": 7728,
+        "visibility": "visible",
+        "level_index": null,
+        "phase": {
+          "attack_timeline_ms": 0,
+          "load_remaining_ms": 0,
+          "attack_sequence_stage": 0,
+          "deploy_remaining_ms": 0,
+          "deploy_previous_ms": 0,
+          "configured_deploy_time_ms": 0,
+          "hit_speed_ms": 1000,
+          "attack_dash_time_ms": 0,
+          "movement_validated": false,
+          "hooks_attested": true,
+          "events": [],
+          "target_id": 5000005,
+          "target_validated": true
+        }
+      },
+      {
+        "id": 5000001,
+        "owner": 0,
+        "kind": 13,
+        "card_id": -1,
+        "native_data_id": 35000001,
+        "native_data_name": "PrincessTower",
+        "x": 3500,
+        "y": 6500,
+        "hp": 4858,
+        "max_hp": 4858,
+        "visibility": "visible",
+        "level_index": null,
+        "phase": {
+          "attack_timeline_ms": 0,
+          "load_remaining_ms": 0,
+          "attack_sequence_stage": 0,
+          "deploy_remaining_ms": 0,
+          "deploy_previous_ms": 0,
+          "configured_deploy_time_ms": 0,
+          "hit_speed_ms": 800,
+          "attack_dash_time_ms": 0,
+          "movement_validated": false,
+          "hooks_attested": true,
+          "events": [],
+          "target_id": 5000004,
+          "target_validated": true
+        }
+      },
+      {
+        "id": 5000002,
+        "owner": 0,
+        "kind": 13,
+        "card_id": -1,
+        "native_data_id": 35000001,
+        "native_data_name": "PrincessTower",
+        "x": 14500,
+        "y": 6500,
+        "hp": 4858,
+        "max_hp": 4858,
+        "visibility": "visible",
+        "level_index": null,
+        "phase": {
+          "attack_timeline_ms": 0,
+          "load_remaining_ms": 0,
+          "attack_sequence_stage": 0,
+          "deploy_remaining_ms": 0,
+          "deploy_previous_ms": 0,
+          "configured_deploy_time_ms": 0,
+          "hit_speed_ms": 800,
+          "attack_dash_time_ms": 0,
+          "movement_validated": false,
+          "hooks_attested": true,
+          "events": [],
+          "target_id": 5000005,
+          "target_validated": true
+        }
+      },
+      {
+        "id": 5000003,
+        "owner": 1,
+        "kind": 13,
+        "card_id": -1,
+        "native_data_id": 35000000,
+        "native_data_name": "KingTower",
+        "x": 9000,
+        "y": 29000,
+        "hp": 7728,
+        "max_hp": 7728,
+        "visibility": "visible",
+        "level_index": null,
+        "phase": {
+          "attack_timeline_ms": 0,
+          "load_remaining_ms": 0,
+          "attack_sequence_stage": 0,
+          "deploy_remaining_ms": 0,
+          "deploy_previous_ms": 0,
+          "configured_deploy_time_ms": 0,
+          "hit_speed_ms": 1000,
+          "attack_dash_time_ms": 0,
+          "movement_validated": false,
+          "hooks_attested": true,
+          "events": [],
+          "target_id": 5000002,
+          "target_validated": true
+        }
+      },
+      {
+        "id": 5000004,
+        "owner": 1,
+        "kind": 13,
+        "card_id": -1,
+        "native_data_id": 35000001,
+        "native_data_name": "PrincessTower",
+        "x": 3500,
+        "y": 25500,
+        "hp": 4858,
+        "max_hp": 4858,
+        "visibility": "visible",
+        "level_index": null,
+        "phase": {
+          "attack_timeline_ms": 0,
+          "load_remaining_ms": 0,
+          "attack_sequence_stage": 0,
+          "deploy_remaining_ms": 0,
+          "deploy_previous_ms": 0,
+          "configured_deploy_time_ms": 0,
+          "hit_speed_ms": 800,
+          "attack_dash_time_ms": 0,
+          "movement_validated": false,
+          "hooks_attested": true,
+          "events": [],
+          "target_id": 5000001,
+          "target_validated": true
+        }
+      },
+      {
+        "id": 5000005,
+        "owner": 1,
+        "kind": 13,
+        "card_id": -1,
+        "native_data_id": 35000001,
+        "native_data_name": "PrincessTower",
+        "x": 14500,
+        "y": 25500,
+        "hp": 4858,
+        "max_hp": 4858,
+        "visibility": "visible",
+        "level_index": null,
+        "phase": {
+          "attack_timeline_ms": 0,
+          "load_remaining_ms": 0,
+          "attack_sequence_stage": 0,
+          "deploy_remaining_ms": 0,
+          "deploy_previous_ms": 0,
+          "configured_deploy_time_ms": 0,
+          "hit_speed_ms": 800,
+          "attack_dash_time_ms": 0,
+          "movement_validated": false,
+          "hooks_attested": true,
+          "events": [],
+          "target_id": 5000002,
+          "target_validated": true
+        }
+      }
+    ],
+    "omitted": {
+      "unsupported": 0,
+      "dead": 0,
+      "visibility": 0
+    },
+    "public_events": {
+      "schema": "cr-live-public-events.v1",
+      "started_tick": 1,
+      "first_sequence": 1,
+      "next_sequence": 1,
+      "complete": true,
+      "events": []
+    },
+    "coverage": {
+      "base_entities": true,
+      "combat_phases": false,
+      "spells": false,
+      "public_card_plays": true,
+      "attack_timers": true,
+      "equipped_forms": false,
+      "model_ready": false
+    },
+    "received_monotonic_ns": 45924731126625
+  },
+  "frames": [
+    {
+      "schema": "cr-live-snapshot.v1",
+      "event": "snapshot",
+      "sequence": 719,
+      "battle_epoch": 1,
+      "tick": 1455,
+      "captured_unix_ms": 1789912011855,
+      "own_side": 0,
+      "ended": false,
+      "winner": null,
+      "own": {
+        "deck": [
+          {
+            "deck_slot": 0,
+            "card_id": 26000009,
+            "form_code": 0,
+            "cost": 8
+          },
+          {
+            "deck_slot": 1,
+            "card_id": 28000007,
+            "form_code": 0,
+            "cost": 6
+          },
+          {
+            "deck_slot": 2,
+            "card_id": 26000048,
+            "form_code": 0,
+            "cost": 4
+          },
+          {
+            "deck_slot": 3,
+            "card_id": 26000015,
+            "form_code": 0,
+            "cost": 4
+          },
+          {
+            "deck_slot": 4,
+            "card_id": 27000009,
+            "form_code": 0,
+            "cost": 3
+          },
+          {
+            "deck_slot": 5,
+            "card_id": 28000011,
+            "form_code": 0,
+            "cost": 2
+          },
+          {
+            "deck_slot": 6,
+            "card_id": 26000043,
+            "form_code": 0,
+            "cost": 6
+          },
+          {
+            "deck_slot": 7,
+            "card_id": 26000039,
+            "form_code": 0,
+            "cost": 3
+          }
+        ],
+        "hand": [
+          {
+            "slot": 0,
+            "card": {
+              "deck_slot": 6,
+              "card_id": 26000043,
+              "form_code": 0,
+              "cost": 6
+            }
+          },
+          {
+            "slot": 1,
+            "card": {
+              "deck_slot": 0,
+              "card_id": 26000009,
+              "form_code": 0,
+              "cost": 8
+            }
+          },
+          {
+            "slot": 2,
+            "card": {
+              "deck_slot": 2,
+              "card_id": 26000048,
+              "form_code": 0,
+              "cost": 4
+            }
+          },
+          {
+            "slot": 3,
+            "card": {
+              "deck_slot": 5,
+              "card_id": 28000011,
+              "form_code": 0,
+              "cost": 2
+            }
+          }
+        ],
+        "next_card": {
+          "deck_slot": 7,
+          "card_id": 26000039,
+          "form_code": 0,
+          "cost": 3
+        },
+        "elixir_raw": 55412
+      },
+      "consistency": "same-tick-best-effort",
+      "entities": [
+        {
+          "id": 5000000,
+          "owner": 0,
+          "kind": 12,
+          "card_id": -1,
+          "native_data_id": 35000000,
+          "native_data_name": "KingTower",
+          "x": 9000,
+          "y": 3000,
+          "hp": 7728,
+          "max_hp": 7728,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 0,
+            "hit_speed_ms": 1000,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [],
+            "target_id": 5000005,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000001,
+          "owner": 0,
+          "kind": 13,
+          "card_id": -1,
+          "native_data_id": 35000001,
+          "native_data_name": "PrincessTower",
+          "x": 3500,
+          "y": 6500,
+          "hp": 1270,
+          "max_hp": 4858,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 0,
+            "hit_speed_ms": 800,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [
+              {
+                "sequence": 2825,
+                "tick": 1265,
+                "kind": "attack_scale",
+                "hook_offset": 16102572,
+                "input_step": 50,
+                "output_step": 50
+              },
+              {
+                "sequence": 2830,
+                "tick": 1266,
+                "kind": "target_reset",
+                "hook_offset": 16107668,
+                "timeline_before": 14950,
+                "timeline_after": 0
+              }
+            ],
+            "target_id": 5000004,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000002,
+          "owner": 0,
+          "kind": 13,
+          "card_id": -1,
+          "native_data_id": 35000001,
+          "native_data_name": "PrincessTower",
+          "x": 14500,
+          "y": 6500,
+          "hp": 4552,
+          "max_hp": 4858,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 0,
+            "hit_speed_ms": 800,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [
+              {
+                "sequence": 1632,
+                "tick": 994,
+                "kind": "attack_scale",
+                "hook_offset": 16102572,
+                "input_step": 50,
+                "output_step": 50
+              },
+              {
+                "sequence": 1635,
+                "tick": 995,
+                "kind": "target_reset",
+                "hook_offset": 16107668,
+                "timeline_before": 2100,
+                "timeline_after": 0
+              }
+            ],
+            "target_id": 5000005,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000003,
+          "owner": 1,
+          "kind": 12,
+          "card_id": -1,
+          "native_data_id": 35000000,
+          "native_data_name": "KingTower",
+          "x": 9000,
+          "y": 29000,
+          "hp": 7728,
+          "max_hp": 7728,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 0,
+            "hit_speed_ms": 1000,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [],
+            "target_id": 5000002,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000004,
+          "owner": 1,
+          "kind": 13,
+          "card_id": -1,
+          "native_data_id": 35000001,
+          "native_data_name": "PrincessTower",
+          "x": 3500,
+          "y": 25500,
+          "hp": 3513,
+          "max_hp": 4858,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 0,
+            "hit_speed_ms": 800,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [
+              {
+                "sequence": 3040,
+                "tick": 1431,
+                "kind": "attack_scale",
+                "hook_offset": 16102572,
+                "input_step": 50,
+                "output_step": 50
+              },
+              {
+                "sequence": 3041,
+                "tick": 1432,
+                "kind": "target_reset",
+                "hook_offset": 16107668,
+                "timeline_before": 2100,
+                "timeline_after": 0
+              }
+            ],
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000005,
+          "owner": 1,
+          "kind": 13,
+          "card_id": -1,
+          "native_data_id": 35000001,
+          "native_data_name": "PrincessTower",
+          "x": 14500,
+          "y": 25500,
+          "hp": 3015,
+          "max_hp": 4858,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 0,
+            "hit_speed_ms": 800,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [
+              {
+                "sequence": 2926,
+                "tick": 1312,
+                "kind": "attack_scale",
+                "hook_offset": 16102572,
+                "input_step": 50,
+                "output_step": 50
+              },
+              {
+                "sequence": 2929,
+                "tick": 1313,
+                "kind": "target_reset",
+                "hook_offset": 16107668,
+                "timeline_before": 9200,
+                "timeline_after": 0
+              }
+            ],
+            "target_id": 5000002,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000051,
+          "owner": 0,
+          "kind": 13,
+          "card_id": 27000009,
+          "native_data_id": 35000011,
+          "native_data_name": "Tombstone",
+          "x": 2500,
+          "y": 13500,
+          "hp": 467,
+          "max_hp": 846,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 10000,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [],
+            "target_id": 5000004,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000058,
+          "owner": 0,
+          "kind": 15,
+          "card_id": 27000009,
+          "native_data_id": 34000008,
+          "native_data_name": "Skeleton",
+          "x": 2476,
+          "y": 15360,
+          "hp": 130,
+          "max_hp": 130,
+          "visibility": "visible",
+          "level_index": 15,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1100,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1455,
+              "value": 90
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 0,
+            "target_id": 5000004,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000059,
+          "owner": 0,
+          "kind": 15,
+          "card_id": 27000009,
+          "native_data_id": 34000008,
+          "native_data_name": "Skeleton",
+          "x": 1639,
+          "y": 14811,
+          "hp": 130,
+          "max_hp": 130,
+          "visibility": "visible",
+          "level_index": 15,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1100,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1455,
+              "value": 90
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 0,
+            "target_id": 5000004,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000060,
+          "owner": 1,
+          "kind": 12,
+          "card_id": 203000088,
+          "native_data_id": 2573438603,
+          "native_data_name": "TombstoneHero_visual_dummy",
+          "x": 2500,
+          "y": 28500,
+          "hp": 2559997,
+          "max_hp": 2559997,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 900,
+            "deploy_previous_ms": 950,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 9999999,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [],
+            "target_id": null,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000061,
+          "owner": 1,
+          "kind": 12,
+          "card_id": 203000088,
+          "native_data_id": 3368983219,
+          "native_data_name": "TombstoneHero",
+          "x": 2500,
+          "y": 28500,
+          "hp": 529,
+          "max_hp": 529,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 900,
+            "deploy_previous_ms": 950,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 10000,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [],
+            "target_id": null,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000062,
+          "owner": 1,
+          "kind": 12,
+          "card_id": 203000088,
+          "native_data_id": 2709822912,
+          "native_data_name": "TombstoneHero_Monster_Passive",
+          "x": 2500,
+          "y": 28500,
+          "hp": 529,
+          "max_hp": 529,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 900,
+            "deploy_previous_ms": 950,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 31000,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [
+              {
+                "sequence": 3042,
+                "tick": 1453,
+                "kind": "effect_apply",
+                "hook_offset": 16098004,
+                "buff_global_id": 2318134927,
+                "buff_remaining_ms": 999999,
+                "speed_multiplier": -100,
+                "hit_speed_multiplier": 0
+              }
+            ],
+            "target_id": null,
+            "target_validated": true
+          }
+        }
+      ],
+      "omitted": {
+        "unsupported": 0,
+        "dead": 0,
+        "visibility": 0
+      },
+      "public_events": {
+        "schema": "cr-live-public-events.v1",
+        "started_tick": 1,
+        "first_sequence": 1,
+        "next_sequence": 14,
+        "complete": true,
+        "events": [
+          {
+            "sequence": 1,
+            "tick": 266,
+            "owner": 1,
+            "card_id": 26000047,
+            "cost": 7,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 2,
+            "tick": 289,
+            "owner": 1,
+            "card_id": 26000012,
+            "cost": 3,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 3,
+            "tick": 301,
+            "owner": 0,
+            "card_id": 26000015,
+            "cost": 4,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 4,
+            "tick": 358,
+            "owner": 0,
+            "card_id": 27000009,
+            "cost": 3,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 5,
+            "tick": 417,
+            "owner": 0,
+            "card_id": 28000011,
+            "cost": 2,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 6,
+            "tick": 461,
+            "owner": 0,
+            "card_id": 26000039,
+            "cost": 3,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 7,
+            "tick": 798,
+            "owner": 1,
+            "card_id": 26000028,
+            "cost": 9,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 8,
+            "tick": 868,
+            "owner": 1,
+            "card_id": 26000010,
+            "cost": 1,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 9,
+            "tick": 912,
+            "owner": 0,
+            "card_id": 28000007,
+            "cost": 6,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 10,
+            "tick": 1005,
+            "owner": 0,
+            "card_id": 26000015,
+            "cost": 4,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 11,
+            "tick": 1022,
+            "owner": 1,
+            "card_id": 26000041,
+            "cost": 3,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 12,
+            "tick": 1166,
+            "owner": 0,
+            "card_id": 27000009,
+            "cost": 3,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 13,
+            "tick": 1453,
+            "owner": 1,
+            "card_id": 27000009,
+            "cost": 3,
+            "form_code": 2,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          }
+        ]
+      },
+      "coverage": {
+        "base_entities": true,
+        "combat_phases": false,
+        "spells": false,
+        "public_card_plays": true,
+        "attack_timers": true,
+        "equipped_forms": false,
+        "model_ready": false
+      },
+      "received_monotonic_ns": 45997453991500
+    },
+    {
+      "schema": "cr-live-snapshot.v1",
+      "event": "snapshot",
+      "sequence": 944,
+      "battle_epoch": 1,
+      "tick": 1909,
+      "captured_unix_ms": 1789912034559,
+      "own_side": 0,
+      "ended": false,
+      "winner": null,
+      "own": {
+        "deck": [
+          {
+            "deck_slot": 0,
+            "card_id": 26000009,
+            "form_code": 0,
+            "cost": 8
+          },
+          {
+            "deck_slot": 1,
+            "card_id": 28000007,
+            "form_code": 0,
+            "cost": 6
+          },
+          {
+            "deck_slot": 2,
+            "card_id": 26000048,
+            "form_code": 0,
+            "cost": 4
+          },
+          {
+            "deck_slot": 3,
+            "card_id": 26000015,
+            "form_code": 0,
+            "cost": 4
+          },
+          {
+            "deck_slot": 4,
+            "card_id": 27000009,
+            "form_code": 0,
+            "cost": 3
+          },
+          {
+            "deck_slot": 5,
+            "card_id": 28000011,
+            "form_code": 0,
+            "cost": 2
+          },
+          {
+            "deck_slot": 6,
+            "card_id": 26000043,
+            "form_code": 0,
+            "cost": 6
+          },
+          {
+            "deck_slot": 7,
+            "card_id": 26000039,
+            "form_code": 0,
+            "cost": 3
+          }
+        ],
+        "hand": [
+          {
+            "slot": 0,
+            "card": {
+              "deck_slot": 6,
+              "card_id": 26000043,
+              "form_code": 0,
+              "cost": 6
+            }
+          },
+          {
+            "slot": 1,
+            "card": {
+              "deck_slot": 0,
+              "card_id": 26000009,
+              "form_code": 0,
+              "cost": 8
+            }
+          },
+          {
+            "slot": 2,
+            "card": {
+              "deck_slot": 2,
+              "card_id": 26000048,
+              "form_code": 0,
+              "cost": 4
+            }
+          },
+          {
+            "slot": 3,
+            "card": {
+              "deck_slot": 5,
+              "card_id": 28000011,
+              "form_code": 0,
+              "cost": 2
+            }
+          }
+        ],
+        "next_card": {
+          "deck_slot": 7,
+          "card_id": 26000039,
+          "form_code": 0,
+          "cost": 3
+        },
+        "elixir_raw": 100000
+      },
+      "consistency": "same-tick-best-effort",
+      "entities": [
+        {
+          "id": 5000000,
+          "owner": 0,
+          "kind": 12,
+          "card_id": -1,
+          "native_data_id": 35000000,
+          "native_data_name": "KingTower",
+          "x": 9000,
+          "y": 3000,
+          "hp": 7728,
+          "max_hp": 7728,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 0,
+            "hit_speed_ms": 1000,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [],
+            "target_id": 5000005,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000001,
+          "owner": 0,
+          "kind": 13,
+          "card_id": -1,
+          "native_data_id": 35000001,
+          "native_data_name": "PrincessTower",
+          "x": 3500,
+          "y": 6500,
+          "hp": 686,
+          "max_hp": 4858,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 9750,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 0,
+            "hit_speed_ms": 800,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [
+              {
+                "sequence": 2830,
+                "tick": 1266,
+                "kind": "target_reset",
+                "hook_offset": 16107668,
+                "timeline_before": 14950,
+                "timeline_after": 0
+              },
+              {
+                "sequence": 3918,
+                "tick": 1908,
+                "kind": "attack_scale",
+                "hook_offset": 16102572,
+                "input_step": 50,
+                "output_step": 50
+              }
+            ],
+            "target_id": null,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000002,
+          "owner": 0,
+          "kind": 13,
+          "card_id": -1,
+          "native_data_id": 35000001,
+          "native_data_name": "PrincessTower",
+          "x": 14500,
+          "y": 6500,
+          "hp": 4552,
+          "max_hp": 4858,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 4250,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 0,
+            "hit_speed_ms": 800,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [
+              {
+                "sequence": 1635,
+                "tick": 995,
+                "kind": "target_reset",
+                "hook_offset": 16107668,
+                "timeline_before": 2100,
+                "timeline_after": 0
+              },
+              {
+                "sequence": 3919,
+                "tick": 1908,
+                "kind": "attack_scale",
+                "hook_offset": 16102572,
+                "input_step": 50,
+                "output_step": 50
+              }
+            ],
+            "target_id": 5000101,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000003,
+          "owner": 1,
+          "kind": 12,
+          "card_id": -1,
+          "native_data_id": 35000000,
+          "native_data_name": "KingTower",
+          "x": 9000,
+          "y": 29000,
+          "hp": 7728,
+          "max_hp": 7728,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 0,
+            "hit_speed_ms": 1000,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [],
+            "target_id": 5000002,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000004,
+          "owner": 1,
+          "kind": 13,
+          "card_id": -1,
+          "native_data_id": 35000001,
+          "native_data_name": "PrincessTower",
+          "x": 3500,
+          "y": 25500,
+          "hp": 3513,
+          "max_hp": 4858,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 0,
+            "hit_speed_ms": 800,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [
+              {
+                "sequence": 3278,
+                "tick": 1683,
+                "kind": "attack_scale",
+                "hook_offset": 16102572,
+                "input_step": 50,
+                "output_step": 50
+              },
+              {
+                "sequence": 3280,
+                "tick": 1684,
+                "kind": "target_reset",
+                "hook_offset": 16107668,
+                "timeline_before": 2250,
+                "timeline_after": 0
+              }
+            ],
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000005,
+          "owner": 1,
+          "kind": 13,
+          "card_id": -1,
+          "native_data_id": 35000001,
+          "native_data_name": "PrincessTower",
+          "x": 14500,
+          "y": 25500,
+          "hp": 3015,
+          "max_hp": 4858,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 0,
+            "hit_speed_ms": 800,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [
+              {
+                "sequence": 2926,
+                "tick": 1312,
+                "kind": "attack_scale",
+                "hook_offset": 16102572,
+                "input_step": 50,
+                "output_step": 50
+              },
+              {
+                "sequence": 2929,
+                "tick": 1313,
+                "kind": "target_reset",
+                "hook_offset": 16107668,
+                "timeline_before": 9200,
+                "timeline_after": 0
+              }
+            ],
+            "target_id": 5000002,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000060,
+          "owner": 1,
+          "kind": 13,
+          "card_id": 203000088,
+          "native_data_id": 2573438603,
+          "native_data_name": "TombstoneHero_visual_dummy",
+          "x": 2500,
+          "y": 28500,
+          "hp": 2559997,
+          "max_hp": 2559997,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 9999999,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [],
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000061,
+          "owner": 1,
+          "kind": 13,
+          "card_id": 203000088,
+          "native_data_id": 3368983219,
+          "native_data_name": "TombstoneHero",
+          "x": 2500,
+          "y": 28500,
+          "hp": 146,
+          "max_hp": 529,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 10000,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [],
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000062,
+          "owner": 1,
+          "kind": 13,
+          "card_id": 203000088,
+          "native_data_id": 2709822912,
+          "native_data_name": "TombstoneHero_Monster_Passive",
+          "x": 2500,
+          "y": 28500,
+          "hp": 250,
+          "max_hp": 529,
+          "visibility": "visible",
+          "level_index": null,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 31000,
+            "attack_dash_time_ms": 0,
+            "movement_validated": false,
+            "hooks_attested": true,
+            "events": [
+              {
+                "sequence": 3042,
+                "tick": 1453,
+                "kind": "effect_apply",
+                "hook_offset": 16098004,
+                "buff_global_id": 2318134927,
+                "buff_remaining_ms": 999999,
+                "speed_multiplier": -100,
+                "hit_speed_multiplier": 0
+              }
+            ],
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000090,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 203000088,
+          "native_data_id": 1545925260,
+          "native_data_name": "TombstoneHeroSkeleton",
+          "x": 4286,
+          "y": 10220,
+          "hp": 81,
+          "max_hp": 81,
+          "visibility": "visible",
+          "level_index": 10,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1100,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 90
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 0,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000091,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 203000088,
+          "native_data_id": 1545925260,
+          "native_data_name": "TombstoneHeroSkeleton",
+          "x": 4005,
+          "y": 11167,
+          "hp": 81,
+          "max_hp": 81,
+          "visibility": "visible",
+          "level_index": 10,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1100,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 90
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 0,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000096,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 13000047,
+          "native_data_id": 139000047,
+          "native_data_name": "Recruit_EV1",
+          "x": 3203,
+          "y": 10587,
+          "hp": 725,
+          "max_hp": 725,
+          "visibility": "visible",
+          "level_index": 13,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1300,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 60
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 200,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000097,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 13000047,
+          "native_data_id": 139000047,
+          "native_data_name": "Recruit_EV1",
+          "x": 3248,
+          "y": 9528,
+          "hp": 725,
+          "max_hp": 725,
+          "visibility": "visible",
+          "level_index": 13,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1300,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 60
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 200,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000098,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 13000047,
+          "native_data_id": 139000047,
+          "native_data_name": "Recruit_EV1",
+          "x": 4472,
+          "y": 9385,
+          "hp": 725,
+          "max_hp": 725,
+          "visibility": "visible",
+          "level_index": 13,
+          "phase": {
+            "attack_timeline_ms": 850,
+            "load_remaining_ms": 800,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1300,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [
+              {
+                "sequence": 3921,
+                "tick": 1908,
+                "kind": "attack_scale",
+                "hook_offset": 16102572,
+                "input_step": 50,
+                "output_step": 50
+              }
+            ],
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 200,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000099,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 13000047,
+          "native_data_id": 139000047,
+          "native_data_name": "Recruit_EV1",
+          "x": 4263,
+          "y": 12629,
+          "hp": 725,
+          "max_hp": 725,
+          "visibility": "visible",
+          "level_index": 13,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1300,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 60
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 200,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000100,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 13000047,
+          "native_data_id": 139000047,
+          "native_data_name": "Recruit_EV1",
+          "x": 14222,
+          "y": 12252,
+          "hp": 725,
+          "max_hp": 725,
+          "visibility": "visible",
+          "level_index": 13,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1300,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 60
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 200,
+            "target_id": 5000002,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000101,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 13000047,
+          "native_data_id": 139000047,
+          "native_data_name": "Recruit_EV1",
+          "x": 14231,
+          "y": 10411,
+          "hp": 379,
+          "max_hp": 725,
+          "visibility": "visible",
+          "level_index": 13,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1300,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [
+              {
+                "sequence": 3759,
+                "tick": 1866,
+                "kind": "effect_apply",
+                "hook_offset": 16098004,
+                "buff_global_id": 143000004,
+                "buff_remaining_ms": 999999,
+                "speed_multiplier": 0,
+                "hit_speed_multiplier": 0
+              }
+            ],
+            "classic_charge_progress": 10080,
+            "charge_speed_multiplier": 200,
+            "target_id": 5000002,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000102,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 203000088,
+          "native_data_id": 1545925260,
+          "native_data_name": "TombstoneHeroSkeleton",
+          "x": 3207,
+          "y": 17094,
+          "hp": 81,
+          "max_hp": 81,
+          "visibility": "visible",
+          "level_index": 10,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1100,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 90
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 0,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000103,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 203000088,
+          "native_data_id": 1545925260,
+          "native_data_name": "TombstoneHeroSkeleton",
+          "x": 3150,
+          "y": 18222,
+          "hp": 81,
+          "max_hp": 81,
+          "visibility": "visible",
+          "level_index": 10,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1100,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 90
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 0,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000104,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 26000010,
+          "native_data_id": 34000008,
+          "native_data_name": "Skeleton",
+          "x": 2599,
+          "y": 11279,
+          "hp": 119,
+          "max_hp": 119,
+          "visibility": "visible",
+          "level_index": 14,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1100,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 90
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 0,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000105,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 26000010,
+          "native_data_id": 34000008,
+          "native_data_name": "Skeleton",
+          "x": 3209,
+          "y": 12928,
+          "hp": 119,
+          "max_hp": 119,
+          "visibility": "visible",
+          "level_index": 14,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1100,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 90
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 0,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000106,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 26000010,
+          "native_data_id": 34000008,
+          "native_data_name": "Skeleton",
+          "x": 3322,
+          "y": 11857,
+          "hp": 119,
+          "max_hp": 119,
+          "visibility": "visible",
+          "level_index": 14,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1100,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 90
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 0,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000107,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 203000088,
+          "native_data_id": 1545925260,
+          "native_data_name": "TombstoneHeroSkeleton",
+          "x": 2268,
+          "y": 24134,
+          "hp": 81,
+          "max_hp": 81,
+          "visibility": "visible",
+          "level_index": 10,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1100,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 90
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 0,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        },
+        {
+          "id": 5000108,
+          "owner": 1,
+          "kind": 15,
+          "card_id": 203000088,
+          "native_data_id": 1545925260,
+          "native_data_name": "TombstoneHeroSkeleton",
+          "x": 2049,
+          "y": 25109,
+          "hp": 81,
+          "max_hp": 81,
+          "visibility": "visible",
+          "level_index": 10,
+          "phase": {
+            "attack_timeline_ms": 0,
+            "load_remaining_ms": 0,
+            "attack_sequence_stage": 0,
+            "deploy_remaining_ms": 0,
+            "deploy_previous_ms": 0,
+            "configured_deploy_time_ms": 1000,
+            "hit_speed_ms": 1100,
+            "attack_dash_time_ms": 0,
+            "movement_validated": true,
+            "hooks_attested": true,
+            "events": [],
+            "effective_speed": {
+              "tick": 1909,
+              "value": 90
+            },
+            "classic_charge_progress": -1,
+            "charge_speed_multiplier": 0,
+            "target_id": 5000001,
+            "target_validated": true
+          }
+        }
+      ],
+      "omitted": {
+        "unsupported": 1,
+        "dead": 0,
+        "visibility": 0
+      },
+      "public_events": {
+        "schema": "cr-live-public-events.v1",
+        "started_tick": 1,
+        "first_sequence": 1,
+        "next_sequence": 17,
+        "complete": true,
+        "events": [
+          {
+            "sequence": 1,
+            "tick": 266,
+            "owner": 1,
+            "card_id": 26000047,
+            "cost": 7,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 2,
+            "tick": 289,
+            "owner": 1,
+            "card_id": 26000012,
+            "cost": 3,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 3,
+            "tick": 301,
+            "owner": 0,
+            "card_id": 26000015,
+            "cost": 4,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 4,
+            "tick": 358,
+            "owner": 0,
+            "card_id": 27000009,
+            "cost": 3,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 5,
+            "tick": 417,
+            "owner": 0,
+            "card_id": 28000011,
+            "cost": 2,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 6,
+            "tick": 461,
+            "owner": 0,
+            "card_id": 26000039,
+            "cost": 3,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 7,
+            "tick": 798,
+            "owner": 1,
+            "card_id": 26000028,
+            "cost": 9,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 8,
+            "tick": 868,
+            "owner": 1,
+            "card_id": 26000010,
+            "cost": 1,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 9,
+            "tick": 912,
+            "owner": 0,
+            "card_id": 28000007,
+            "cost": 6,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 10,
+            "tick": 1005,
+            "owner": 0,
+            "card_id": 26000015,
+            "cost": 4,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 11,
+            "tick": 1022,
+            "owner": 1,
+            "card_id": 26000041,
+            "cost": 3,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 12,
+            "tick": 1166,
+            "owner": 0,
+            "card_id": 27000009,
+            "cost": 3,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "own-deck"
+          },
+          {
+            "sequence": 13,
+            "tick": 1453,
+            "owner": 1,
+            "card_id": 27000009,
+            "cost": 3,
+            "form_code": 2,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 14,
+            "tick": 1670,
+            "owner": 1,
+            "card_id": 26000012,
+            "cost": 3,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 15,
+            "tick": 1754,
+            "owner": 1,
+            "card_id": 26000047,
+            "cost": 7,
+            "form_code": 1,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          },
+          {
+            "sequence": 16,
+            "tick": 1815,
+            "owner": 1,
+            "card_id": 26000010,
+            "cost": 1,
+            "form_code": 0,
+            "source": "native-consume-card.v1",
+            "card_identity": "consumed-descriptor"
+          }
+        ]
+      },
+      "coverage": {
+        "base_entities": true,
+        "combat_phases": false,
+        "spells": false,
+        "public_card_plays": true,
+        "attack_timers": true,
+        "equipped_forms": false,
+        "model_ready": false
+      },
+      "received_monotonic_ns": 46020160529958
+    }
+  ]
+}

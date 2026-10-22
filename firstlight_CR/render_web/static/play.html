@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CR 工作台 · 人机对战</title>
+  <link rel="stylesheet" href="/static/play.css">
+</head>
+<body>
+<div class="play-shell">
+  <header class="play-header">
+    <a class="brand" href="/" aria-label="工作台首页"><span class="crest">CR</span><span>CR 工作台</span></a>
+    <nav aria-label="工作台"><a href="/">对局视频</a><a class="active" href="/play">人机对战</a><a href="/live/">私服对战</a></nav>
+    <span class="local"><i></i>本机</span>
+  </header>
+
+  <main>
+    <section class="panel setup" aria-labelledby="setup-title">
+      <div class="section-title"><h1 id="setup-title">人机对战</h1><span class="badge">真实引擎</span></div>
+      <p class="roles"><strong>上方 · AI</strong><span>VS</span><strong>下方 · 人类</strong></p>
+      <label class="field">AI checkpoint<select id="checkpoint" required></select></label>
+      <div id="checkpoint-status" class="muted">正在读取权重…</div>
+      <label class="field">对局种子<input id="seed" type="number" min="0" max="4294967295" step="1" placeholder="留空随机"></label>
+      <button id="start" class="primary" type="button">开始对局</button>
+      <button id="stop" class="secondary" type="button" disabled>停止对局</button>
+      <p class="hint">石头人卡组 · 11 级 · 正常速度。关闭页面不会自动结束对局。</p>
+    </section>
+
+    <section class="panel battle" aria-labelledby="battle-title">
+      <div class="section-title"><h2 id="battle-title">对局画面</h2><span id="phase" class="phase">尚未开始</span></div>
+      <div class="battle-layout">
+        <div id="screen-wrap" class="screen-wrap">
+          <img id="screen" alt="实时对局画面" draggable="false">
+          <button id="arena" class="arena-click" type="button" aria-label="选择竞技场落点"></button>
+          <div id="screen-message" class="screen-message">选择 checkpoint 后开始一局</div>
+        </div>
+        <div class="controls">
+          <div class="stat-grid">
+            <div><span>游戏时间</span><b id="tick">—</b></div>
+            <div><span>AI 圣水</span><b id="top-elixir">—</b></div>
+            <div><span>我的圣水</span><b id="bottom-elixir">—</b></div>
+            <div><span>结果</span><b id="result">—</b></div>
+          </div>
+          <p id="action-hint" class="action-hint">先点击下方手牌，再点击竞技场部署。</p>
+          <div class="hand-title"><span>我的手牌</span><span class="muted">下方</span></div>
+          <div id="hand" class="hand" role="group" aria-label="下方手牌"></div>
+          <div id="error" class="error" role="alert"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="/static/play.js" defer></script>
+</body>
+</html>
