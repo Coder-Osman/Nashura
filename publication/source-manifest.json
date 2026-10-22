@@ -10196,10 +10196,17 @@
       "transformations": []
     },
     {
+      "path": "firstlight_CR/native_runner/tests/test_fair_final_inheritance.py",
+      "sha256": "6116de742779cc4ee36b8275028cf639848b85492999634e8e04a0a366f03c20",
+      "bytes": 1259,
+      "source_sha256": "6116de742779cc4ee36b8275028cf639848b85492999634e8e04a0a366f03c20",
+      "transformations": []
+    },
+    {
       "path": "firstlight_CR/native_runner/tests/test_fair_final_learning.py",
-      "sha256": "01d451809caebe770a1dfbc59250630bd26027b59751bed23ca9deeed2cdb9f3",
-      "bytes": 8087,
-      "source_sha256": "01d451809caebe770a1dfbc59250630bd26027b59751bed23ca9deeed2cdb9f3",
+      "sha256": "4f504a65769cff81c0738a8df5fd169594283f495722d2810c7614759ba4145d",
+      "bytes": 11766,
+      "source_sha256": "4f504a65769cff81c0738a8df5fd169594283f495722d2810c7614759ba4145d",
       "transformations": []
     },
     {
@@ -10330,9 +10337,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/tests/test_fair_final_search.py",
-      "sha256": "32efba98611b148e7bb7e119b8f410cf3af24be13962e939a2f15b9efb156f5f",
-      "bytes": 16761,
-      "source_sha256": "32efba98611b148e7bb7e119b8f410cf3af24be13962e939a2f15b9efb156f5f",
+      "sha256": "128070d9f1c62c85b8043f1c5c68825f1d4d8542ce85c7a837fc2f1159cb09c5",
+      "bytes": 19013,
+      "source_sha256": "128070d9f1c62c85b8043f1c5c68825f1d4d8542ce85c7a837fc2f1159cb09c5",
       "transformations": []
     },
     {
@@ -11415,9 +11422,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/adapter.py",
-      "sha256": "32419d1f11170ba0c5f40f70aecc7a8269ea9e0cae195d8da404f021e088dd06",
-      "bytes": 4471,
-      "source_sha256": "32419d1f11170ba0c5f40f70aecc7a8269ea9e0cae195d8da404f021e088dd06",
+      "sha256": "ccb46872b98f9509b4ca420898e1a6168ecafed1f51abce731917cd70d21f58e",
+      "bytes": 5120,
+      "source_sha256": "ccb46872b98f9509b4ca420898e1a6168ecafed1f51abce731917cd70d21f58e",
       "transformations": []
     },
     {
@@ -11499,9 +11506,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/learning.py",
-      "sha256": "179e80034a89c27742713cf69ae64cd266852958cea9c508835dc6ce12843c2b",
-      "bytes": 2957,
-      "source_sha256": "179e80034a89c27742713cf69ae64cd266852958cea9c508835dc6ce12843c2b",
+      "sha256": "26d41cef8066dd1c848691c2796338bfc3aadd999921cd85625138be7bc1dc7d",
+      "bytes": 3830,
+      "source_sha256": "26d41cef8066dd1c848691c2796338bfc3aadd999921cd85625138be7bc1dc7d",
       "transformations": []
     },
     {
@@ -11513,9 +11520,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/model.py",
-      "sha256": "857420a41b122ae6140e7be8644271e5810ceeb8e1d902b3cdb5f1d88924e9ed",
-      "bytes": 5124,
-      "source_sha256": "857420a41b122ae6140e7be8644271e5810ceeb8e1d902b3cdb5f1d88924e9ed",
+      "sha256": "9877f24d75c900a7d1b8f2f08e2d02b54d073cb343dcd6f01ea116b30387b4a3",
+      "bytes": 8732,
+      "source_sha256": "9877f24d75c900a7d1b8f2f08e2d02b54d073cb343dcd6f01ea116b30387b4a3",
       "transformations": []
     },
     {
@@ -11534,9 +11541,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/policy.py",
-      "sha256": "821e48ee09fe2b927d28729493c5e6b4dcbef6ebcf728025e08f948d9f36ab91",
-      "bytes": 5691,
-      "source_sha256": "821e48ee09fe2b927d28729493c5e6b4dcbef6ebcf728025e08f948d9f36ab91",
+      "sha256": "ca31fe0cce3c4a17d7b613ee7466afb1035d2aabb8edabf71078bdda985286bd",
+      "bytes": 7159,
+      "source_sha256": "ca31fe0cce3c4a17d7b613ee7466afb1035d2aabb8edabf71078bdda985286bd",
       "transformations": []
     },
     {
@@ -11590,9 +11597,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/search.py",
-      "sha256": "907f240f380f417be2a5eb8251abfd88af47aa15603ed59aa3808323fecda388",
-      "bytes": 13556,
-      "source_sha256": "907f240f380f417be2a5eb8251abfd88af47aa15603ed59aa3808323fecda388",
+      "sha256": "e1e9fbefe71375786bd59491fe839a80fed94bffc40fed6ee57a35c8b572b65b",
+      "bytes": 14417,
+      "source_sha256": "e1e9fbefe71375786bd59491fe839a80fed94bffc40fed6ee57a35c8b572b65b",
       "transformations": []
     },
     {
@@ -13887,8 +13894,8 @@
       "transformations": []
     }
   ],
-  "file_count": 1983,
-  "source_bytes": 30252132,
+  "file_count": 1984,
+  "source_bytes": 30266781,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

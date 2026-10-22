@@ -431,3 +431,10 @@ def test_root_noise_modes_fail_closed_and_keep_separate_protocol_hashes():
     train_result = train_search.run(info, **arguments)
     assert train_result.result["noise_fraction"] == .25
     assert train_result.result["search_protocol_sha"] != result.result["search_protocol_sha"]
+
+@pytest.mark.parametrize("rule", ["highest_prior", "legacy_lexical"])
+def test_same_128_effective_budget_for_first_visit_ablation(rule):
+    search, info, arguments = search_fixture(limits=SearchLimits(first_visit_rule=rule))
+    result = search.run(info, **arguments)
+    assert result.result["valid_simulations"] == 128
+    assert sum(entry["visits"] for entry in result.result["candidates"]) == 128

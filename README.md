@@ -20,6 +20,7 @@
 ## 目录与入口
 
 - [`firstlight_CR/`](firstlight_CR/)：主工程，包含原生适配、策略模型、旧 PPO 基线、FAIR 搜索及测试。
+- [`agent-handoff/`](agent-handoff/)：ChatGPT ↔ Codex 专用文字交接：迁移步骤、代码审查、验收证据与回复模板；不属于运行代码。
 - [`_spec_work/versions/`](_spec_work/versions/)：隔离的增量实现、回归与证据，包括历史信念、一般退化路径、迁移消费、恢复、CUDA 推理和原生队列审计。
 - [`冻结规范`](_spec_work/evidence/fair-final-v1-20261019/spec/clash_royale_fair_final_v1/README.md)：训练语义、数据契约、验收门及实验矩阵。
 - [`整体进度`](_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md)与[`闭合清单`](_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md)：完整历史记录。
@@ -36,6 +37,7 @@ python -m venv .venv
 .venv/bin/python -m pip install -r requirements-test.txt
 .venv/bin/python tools/check_public_snapshot.py
 .venv/bin/python tools/run_public_checks.py
+python tools/run_main_engine_checks.py    # 另测当前 firstlight_CR；不替代冻结历史版本
 ```
 
 原生对局、完整训练及静态二进制审计需要自行准备匹配的游戏引擎、资源及模型。仓库附有适配源码、构建输入源码和身份摘要，第三方引擎二进制、提取资源、私有对局及模型权重单独保留。详见复现说明。

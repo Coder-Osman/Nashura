@@ -180,3 +180,35 @@ def test_source_adapter_batch_delays_match_scalar_61_to_30_head():
     actual = policy.delay_conditionals_batch(0, cells, raw=True)
     expected = torch.stack([policy.conditionals((1, 0, int(c)), raw=True) for c in cells.tolist()])
     torch.testing.assert_close(actual, expected, atol=1e-6, rtol=1e-6)
+
+@pytest.mark.parametrize("freeze_encoder", [True, False])
+def test_real_source_joint_kl_matches_sparse_full_joint_reference(freeze_encoder):
+    from native_runner.tests.test_training_v4_model import _batch
+    from native_runner.training.fair_final.adapter import source_policy
+    from native_runner.training.fair_final.learning import conditional_teacher_kl
+    from native_runner.training.fair_final.model import ConditionalPolicyValue
+
+    source, bundle = fixture_source()
+    source.requires_grad_(False)
+    student = ConditionalPolicyValue(bundle=bundle, encoder_config=source.policy.backbone.config)
+    student.copy_encoder(source)
+    student.encoder.requires_grad_(not freeze_encoder)
+    mask = torch.zeros(8, 576, 31, dtype=torch.bool)
+    mask[0, :3, 1:3] = True
+    mask[1, 4:7, 2:5] = True
+    legality = LegalPrefixes(tuple(bundle.card_catalog.raw_card_ids), mask)
+    frame = _batch(1)
+    teacher, _ = source_policy(source, frame, legality)
+    policy = student(frame, [legality])[0][0]
+    actual = conditional_teacher_kl(teacher, policy, cell_chunk=2)
+    actions = [FullAction(), *[FullAction(legality.card_ids[c], cell, delay)
+        for c, cell, delay in torch.nonzero(legality.plays).tolist()]]
+    reference = sum(teacher.log_prob(action).detach().exp()
+        * (teacher.log_prob(action).detach() - policy.log_prob(action)) for action in actions)
+    torch.testing.assert_close(actual, reference, atol=2e-6, rtol=2e-5)
+    actual.backward()
+    assert any(p.grad is not None and bool(p.grad.abs().sum()) for p in student.policy_head.parameters())
+    if freeze_encoder:
+        assert all(p.grad is None for p in student.encoder.parameters())
+    else:
+        assert any(p.grad is not None and bool(p.grad.abs().sum()) for p in student.encoder.parameters())

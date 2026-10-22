@@ -21,6 +21,14 @@
 
 以上版本目录均位于 `_spec_work/versions/`。测试集合存在重叠，表格数字不相加。
 
+## 2026-10-22 主工程修复分支（未合并、未验收）
+
+- 分支 `audit/ci-kl-puct-inheritance-20261022`：为当前 `firstlight_CR` 新增独立单测入口/CI；不改变原冻结历史版本公开检查。
+- 原生迁移批量KL在主工程加入独立批量Delay条件计算与校验。**源独立版本 `fair-final-migration-batch-v1` 的真实CUDA数值与原生恢复证据仍是权威参考**，不可用本分支单测取代；编码器解冻时保留逐位置学生反向图与逐位置KL加法顺序。
+- PUCT新增先验首访、旧字典序首访基线；根噪声显式区分 `training/evaluation/ablation_no_noise`，协议SHA随配置变化。
+- 权重继承新增基于逐Tensor一致性的覆盖率报告，当前能被证明直接继承的是语义Encoder，新Policy/WDL Head继续蒸馏，不凭相同形状虚报。
+- 以上是**待CI与原生验收的候选变更**，不增加G0/G1 PASS，不启动G2或正式训练。交接与精确验收命令见 `agent-handoff/`。
+
 ## 当前运行任务的最后已知快照
 
 快照时间戳 1792668454，以及本批独立恢复验收：
