@@ -1,0 +1,54 @@
+{
+  "schema": "FairFinalBatchedBenchmarkAccounting/v1",
+  "status": "passed_limited_scope",
+  "launch_sha256": "26a50d1ac16f62a02b587aefd8daa61943b0a43462b8864df6c3fa6bae035bf1",
+  "payload_sha256": "cd4e952ddaced44aa415f86353ce55cdafafacb98ac9349c09cf184c4e88109a",
+  "deployment_sha256": "de4d4afe3c813082803c6bb804cbddc34dba354f30a8b5e91c191c4121df1779",
+  "snapshot_sha256": "25c1df880c95f4f4ef39bbef9c06acb86b4fd5657cefa2c0acef28fc1df2b835",
+  "snapshot_timestamp": 1792665057.835597,
+  "benchmark_sha256": "8d0607623c0d5caab9a72b27996545f1895cfac045a7e858052f17dc199e5894",
+  "deployment_files_verified": 274,
+  "dataset_identity": {
+    "source_a_sha": "e908f642bf1fda7bf0dca79a8d20d73ec2f56788a57f5d53739f13e2ae58d015",
+    "migration_adapter_sha": "0bda9d3e5938b1eb7b9329169cd2c729969f4992e2d9b78f26dd22c38317eea9",
+    "dataset_sha": "1d909bbd63a4eccb6ab0b913bd1f63bdcb87cb0141656407fb13e4847bab5255"
+  },
+  "split_rows": {
+    "train": 352,
+    "validation": 358,
+    "test": 334
+  },
+  "accounting": {
+    "medians": {
+      "sequential": 12.3164041084965,
+      "batched": 2.3304576235095738
+    },
+    "paired_median_speedup": 1.376316713698821,
+    "scope": "archived six-pair accounting; CUDA tensor comparisons belong to the frozen probe"
+  },
+  "strata": {
+    "frozen_encoder": {
+      "paired_median_speedup": 5.441497592671063,
+      "paired_speedups": [
+        5.441497592671063,
+        5.484950128373675,
+        0.9908844618415859
+      ],
+      "maximum_gradient_delta": 7.152557373046875e-07
+    },
+    "trainable_encoder": {
+      "paired_median_speedup": 1.3643824002599603,
+      "paired_speedups": [
+        1.3643824002599603,
+        1.3882510271376818,
+        0.9916834404007568
+      ],
+      "maximum_gradient_delta": 0.0
+    }
+  },
+  "scope": "Local payload and whole-game identity plus six-pair report accounting. CUDA tensor checks were executed by the frozen remote probe; whole pipeline and full-training throughput remain pending.",
+  "training_admissible": false,
+  "formal_g2_pass": false,
+  "gates_closed": false,
+  "pipeline_complete": false
+}

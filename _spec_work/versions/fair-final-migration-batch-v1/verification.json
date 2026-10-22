@@ -1,0 +1,75 @@
+{
+  "schema": "FairFinalBatchedMigrationEvidence/v1",
+  "status": "passed_limited_scope_pipeline_pending",
+  "files": {
+    "EVIDENCE.md": {
+      "sha256": "1bdd2c303d6ec1f8168df8287ac4ab27069d1384d17ed2865e499a0e3e3edfa8",
+      "bytes": 2466
+    },
+    "batched_migration.py": {
+      "sha256": "86998fcf24565af6628e0b11ca12df52dac79709e8d7b31132d21e4f9bdb0cb2",
+      "bytes": 6837
+    },
+    "benchmark-accounting-20261022.json": {
+      "sha256": "7a7886839668f54461a2e8d310eab9d7839ccac6c6e5890800041b0b4d43c39e",
+      "bytes": 2092
+    },
+    "build_payload.py": {
+      "sha256": "b2f4eb40c1879cb73c4806b857dcfae450933dd11d37fae880951e9a22db4162",
+      "bytes": 3444
+    },
+    "collect_native.py": {
+      "sha256": "b46211a00b9d8725ccb23c89fc981e6fd02d7dbf743c0c43a6c80cf24100b703",
+      "bytes": 558
+    },
+    "probe_native_batch.py": {
+      "sha256": "040005ca64d5cf2b8223f843cfcbf038297f18abc2422bfe6cc8aee178fd264e",
+      "bytes": 9465
+    },
+    "start_native.py": {
+      "sha256": "166122b46142b52cdb44f1d57dcac3822c7a932ea04615cfc3f266a12bd7e264",
+      "bytes": 8403
+    },
+    "test_batched_migration.py": {
+      "sha256": "ec29c63b098bc0768618b435f1205e52bb293cd9fc8ddde037e6b6e9385b1749",
+      "bytes": 17241
+    },
+    "test_batched_resume.py": {
+      "sha256": "611ae60635db675fb5e652c48225676623d37bcbfd628183a209a9374ad2f1c9",
+      "bytes": 3407
+    },
+    "test_pipeline_verifier.py": {
+      "sha256": "de22e758999c9fcbd84b5bfc7b555eb8469f72f10a79e52ccd21f4c4e1b2b919",
+      "bytes": 10573
+    },
+    "tests-dispatch-resume-pipeline.xml": {
+      "sha256": "8fc9371e62695eae85700a0b3760d3976c3f9fe3f7590c5f2d638a1c96e7386d",
+      "bytes": 3037
+    },
+    "tests-student-dispatch.xml": {
+      "sha256": "4e7d58f6d5792b4599710828413b16ecf1708cb47481dbc03ad94d0b8b13f9a1",
+      "bytes": 5854
+    },
+    "verify_pipeline.py": {
+      "sha256": "dfcfa35d73c7859071221a581a48111288a11ee64e7fd951afc8597357e01f92",
+      "bytes": 13351
+    }
+  },
+  "tests": [
+    {
+      "path": "tests-student-dispatch.xml",
+      "tests": 31,
+      "seconds": 11.622
+    },
+    {
+      "path": "tests-dispatch-resume-pipeline.xml",
+      "tests": 16,
+      "seconds": 128.604
+    }
+  ],
+  "native_benchmark_accounting": "benchmark-accounting-20261022.json",
+  "pipeline_complete": false,
+  "training_admissible": false,
+  "formal_g2_pass": false,
+  "gates_closed": false
+}

@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "274fc5acb6d6e08b73af3e5bf6b121280af4f24a2e4f0fe16dd5db8d175579e4",
-      "bytes": 62942,
-      "source_sha256": "274fc5acb6d6e08b73af3e5bf6b121280af4f24a2e4f0fe16dd5db8d175579e4",
+      "sha256": "4eaf0af02d1ea8ee34ecea3b6901b9a49655b50cd8fba2ed63cbf27d409c3250",
+      "bytes": 64541,
+      "source_sha256": "4eaf0af02d1ea8ee34ecea3b6901b9a49655b50cd8fba2ed63cbf27d409c3250",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "8af507de02c60effaf1343734206c46b6c054f6c32750162b1d7ab3fd681ed63",
-      "bytes": 28542,
-      "source_sha256": "8af507de02c60effaf1343734206c46b6c054f6c32750162b1d7ab3fd681ed63",
+      "sha256": "7e3cbee2a591b621922684c2db7fb97360c07f63a44dae6c57f52b2ed95b3009",
+      "bytes": 29383,
+      "source_sha256": "7e3cbee2a591b621922684c2db7fb97360c07f63a44dae6c57f52b2ed95b3009",
       "transformations": []
     },
     {
@@ -6196,6 +6196,174 @@
       "sha256": "1aaffe1cd7412755ef2077cdb92a10988704170a2085ef12f00e00856612b324",
       "bytes": 3614,
       "source_sha256": "1aaffe1cd7412755ef2077cdb92a10988704170a2085ef12f00e00856612b324",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/CONTRACT.md",
+      "sha256": "6e9b607c0def9fc5fae0343af43af2652c4e6a8d860eae17715ce80796afd2cb",
+      "bytes": 1848,
+      "source_sha256": "6e9b607c0def9fc5fae0343af43af2652c4e6a8d860eae17715ce80796afd2cb",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/EVIDENCE.md",
+      "sha256": "1bdd2c303d6ec1f8168df8287ac4ab27069d1384d17ed2865e499a0e3e3edfa8",
+      "bytes": 2466,
+      "source_sha256": "1bdd2c303d6ec1f8168df8287ac4ab27069d1384d17ed2865e499a0e3e3edfa8",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/batched_migration.py",
+      "sha256": "86998fcf24565af6628e0b11ca12df52dac79709e8d7b31132d21e4f9bdb0cb2",
+      "bytes": 6837,
+      "source_sha256": "86998fcf24565af6628e0b11ca12df52dac79709e8d7b31132d21e4f9bdb0cb2",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/benchmark-accounting-20261022.json",
+      "sha256": "7a7886839668f54461a2e8d310eab9d7839ccac6c6e5890800041b0b4d43c39e",
+      "bytes": 2092,
+      "source_sha256": "7a7886839668f54461a2e8d310eab9d7839ccac6c6e5890800041b0b4d43c39e",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/build_payload.py",
+      "sha256": "b2f4eb40c1879cb73c4806b857dcfae450933dd11d37fae880951e9a22db4162",
+      "bytes": 3444,
+      "source_sha256": "b2f4eb40c1879cb73c4806b857dcfae450933dd11d37fae880951e9a22db4162",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/collect_native.py",
+      "sha256": "b46211a00b9d8725ccb23c89fc981e6fd02d7dbf743c0c43a6c80cf24100b703",
+      "bytes": 558,
+      "source_sha256": "b46211a00b9d8725ccb23c89fc981e6fd02d7dbf743c0c43a6c80cf24100b703",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/probe_native_batch.py",
+      "sha256": "040005ca64d5cf2b8223f843cfcbf038297f18abc2422bfe6cc8aee178fd264e",
+      "bytes": 9465,
+      "source_sha256": "040005ca64d5cf2b8223f843cfcbf038297f18abc2422bfe6cc8aee178fd264e",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/start_native.py",
+      "sha256": "166122b46142b52cdb44f1d57dcac3822c7a932ea04615cfc3f266a12bd7e264",
+      "bytes": 8403,
+      "source_sha256": "166122b46142b52cdb44f1d57dcac3822c7a932ea04615cfc3f266a12bd7e264",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/test_batched_migration.py",
+      "sha256": "ec29c63b098bc0768618b435f1205e52bb293cd9fc8ddde037e6b6e9385b1749",
+      "bytes": 17241,
+      "source_sha256": "ec29c63b098bc0768618b435f1205e52bb293cd9fc8ddde037e6b6e9385b1749",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/test_batched_resume.py",
+      "sha256": "611ae60635db675fb5e652c48225676623d37bcbfd628183a209a9374ad2f1c9",
+      "bytes": 3407,
+      "source_sha256": "611ae60635db675fb5e652c48225676623d37bcbfd628183a209a9374ad2f1c9",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/test_pipeline_verifier.py",
+      "sha256": "de22e758999c9fcbd84b5bfc7b555eb8469f72f10a79e52ccd21f4c4e1b2b919",
+      "bytes": 10573,
+      "source_sha256": "de22e758999c9fcbd84b5bfc7b555eb8469f72f10a79e52ccd21f4c4e1b2b919",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/tests-batch-pipeline.xml",
+      "sha256": "bbc5f10b49a61d52272bece56267c0fd42476e178eaa2bd331e67691065d2b28",
+      "bytes": 7587,
+      "source_sha256": "bbc5f10b49a61d52272bece56267c0fd42476e178eaa2bd331e67691065d2b28",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/tests-batched-corrected.xml",
+      "sha256": "6a259502dc7ba8c7fe41087d25019ff44edee76097b352c8df74f5154582d594",
+      "bytes": 5444,
+      "source_sha256": "6a259502dc7ba8c7fe41087d25019ff44edee76097b352c8df74f5154582d594",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/tests-batched-final.xml",
+      "sha256": "fc442655a222a4e9c5cf20f7ddacae7ebe796cdae5a75320af8e630ac5d99677",
+      "bytes": 4378,
+      "source_sha256": "fc442655a222a4e9c5cf20f7ddacae7ebe796cdae5a75320af8e630ac5d99677",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/tests-batched-native-final.xml",
+      "sha256": "40758461c2d85d646531784d17a30b285aacc6a2651e85faab6f06aa399546b3",
+      "bytes": 5257,
+      "source_sha256": "40758461c2d85d646531784d17a30b285aacc6a2651e85faab6f06aa399546b3",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/tests-batched-native.xml",
+      "sha256": "9c190e1590ca6f95cf0da2777d30d8ddd1b91ad4e607c1f121306d1d62533f40",
+      "bytes": 5257,
+      "source_sha256": "9c190e1590ca6f95cf0da2777d30d8ddd1b91ad4e607c1f121306d1d62533f40",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/tests-batched-reduction.xml",
+      "sha256": "3ef82da50cfb4490105e4333ea1fd703c640934bfc271134092e17e04fadc642",
+      "bytes": 4946,
+      "source_sha256": "3ef82da50cfb4490105e4333ea1fd703c640934bfc271134092e17e04fadc642",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/tests-batched-resume.xml",
+      "sha256": "06ff62ea25450054f910904d4989cca89321ccd24d24d695c13ae171db2cd8b1",
+      "bytes": 5068,
+      "source_sha256": "06ff62ea25450054f910904d4989cca89321ccd24d24d695c13ae171db2cd8b1",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/tests-batched.xml",
+      "sha256": "0a9343bfc92c49fe4ea738c2a02e25c7fb132dfdbc06d8d78895891967856a0f",
+      "bytes": 11767,
+      "source_sha256": "0a9343bfc92c49fe4ea738c2a02e25c7fb132dfdbc06d8d78895891967856a0f",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/tests-dispatch-resume-pipeline.xml",
+      "sha256": "8fc9371e62695eae85700a0b3760d3976c3f9fe3f7590c5f2d638a1c96e7386d",
+      "bytes": 3037,
+      "source_sha256": "8fc9371e62695eae85700a0b3760d3976c3f9fe3f7590c5f2d638a1c96e7386d",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/tests-pipeline.xml",
+      "sha256": "3f7b285a3be1addeec31b1523fa3fe10035f8e0b17941e4ff61b4d2cce934252",
+      "bytes": 2345,
+      "source_sha256": "3f7b285a3be1addeec31b1523fa3fe10035f8e0b17941e4ff61b4d2cce934252",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/tests-student-dispatch.xml",
+      "sha256": "4e7d58f6d5792b4599710828413b16ecf1708cb47481dbc03ad94d0b8b13f9a1",
+      "bytes": 5854,
+      "source_sha256": "4e7d58f6d5792b4599710828413b16ecf1708cb47481dbc03ad94d0b8b13f9a1",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/verification.json",
+      "sha256": "1baab1a4fa57899d6497dc007a8397b886135842df5dd861a04b940a38e378ac",
+      "bytes": 2395,
+      "source_sha256": "1baab1a4fa57899d6497dc007a8397b886135842df5dd861a04b940a38e378ac",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/verify_pipeline.py",
+      "sha256": "dfcfa35d73c7859071221a581a48111288a11ee64e7fd951afc8597357e01f92",
+      "bytes": 13351,
+      "source_sha256": "dfcfa35d73c7859071221a581a48111288a11ee64e7fd951afc8597357e01f92",
       "transformations": []
     },
     {
@@ -13593,8 +13761,8 @@
       "transformations": []
     }
   ],
-  "file_count": 1941,
-  "source_bytes": 29927499,
+  "file_count": 1965,
+  "source_bytes": 30072959,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
