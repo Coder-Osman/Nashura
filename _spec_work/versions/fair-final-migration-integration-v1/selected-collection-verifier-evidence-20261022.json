@@ -1,0 +1,45 @@
+{
+  "schema": "FairFinalSelectedCollectionVerifierEngineeringEvidence/v1",
+  "date": "2026-10-22",
+  "scope": "offline_archived_collection_content_consistency_with_terminal_selected_parent",
+  "tests": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "47",
+      "time": "65.794",
+      "timestamp": "2026-10-22T19:54:22.472829+08:00",
+      "hostname": "gujigadeMacBook-Pro-3.local"
+    }
+  ],
+  "artifacts": {
+    "_spec_work/versions/fair-final-migration-integration-v1/verify_selected_collection.py": {
+      "sha256": "0e1d98935ad05c08e70bb9e428a5cb37c13e3e3c906e925cb7dd8aa6ad03bc0f",
+      "bytes": 15147
+    },
+    "_spec_work/versions/fair-final-migration-integration-v1/test_selected_collection_verifier.py": {
+      "sha256": "27e5c1a7a2f2a37c811c45da1c71662ec93a738742ecd20f63a08a5636fc2a4b",
+      "bytes": 16732
+    },
+    "_spec_work/versions/fair-final-migration-integration-v1/tests-selected-verifier-final-20261022.xml": {
+      "sha256": "91c23e8304c4cce5a28ad4aca7ce010de5dd963e375c63d2520ae7d86a9a6c4c",
+      "bytes": 9149
+    },
+    "_spec_work/versions/fair-final-migration-batch-v1/verify_pipeline.py": {
+      "sha256": "6b3d9fecb2abd01cca2539b6a061c29aeb975039dfbeb9c42794fcc321f9d510",
+      "bytes": 13789
+    },
+    "_spec_work/versions/fair-final-migration-batch-v1/test_pipeline_verifier.py": {
+      "sha256": "de22e758999c9fcbd84b5bfc7b555eb8469f72f10a79e52ccd21f4c4e1b2b919",
+      "bytes": 10573
+    }
+  },
+  "native_collection_performed": false,
+  "teacher_targets_recomputed": false,
+  "cuda_runtime_behavior_reexecuted": false,
+  "training_admissible": false,
+  "formal_g2_pass": false,
+  "gates_closed": false
+}

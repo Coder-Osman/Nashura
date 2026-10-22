@@ -267,6 +267,25 @@ d8f59a0d9a3333dac3207b911951a41afb92b3f95c751c9d5222d0013a647dfe。
 bounded-collection-verification-20261022.json。尚未部署或采集，缺terminal父时
 不构造虚假父凭据。运行中的冻结训练/搜索保持原样，所有准入标记仍为false。
 
+## 2026-10-22 归档后续采集独立内容验收
+
+verify_selected_collection.py只读取显式映射的本地归档，不访问request内远端路径。
+外部固定request、deployment、completion、plan与selected SHA；重新核验冻结
+源码、规范路径与symlink、完整父数据和terminal选优、逐局FAIR/动作/生命周期/
+终局标签、receipt/attempt、原始terminal及报告、私有输入和种子来源JSON Pointer。
+预检及采集必须正常退出；所属launcher/child的PID/start_ticks、引擎attestation、
+ready、清理与端口释放一致，失败及清理失败归档拒收。
+
+运行时声明必须绑定部署内deterministic_runtime.py的SHA，并逐字段核对类型、
+确定性/TF32/CUBLAS设置和torch/CUDA版本字段；此项核验归档声明，不重跑CUDA。
+多轮父数据只读重验支持1–3轮，保持真实dataset/series身份与继承optimizer步偏移。
+本次联合47项通过65.794秒，覆盖重新封装后的内容/身份/路径/运行时破坏拒收；
+小模型及采集记录属于fixture，不代替原生完整采集。
+
+证据见selected-collection-verifier-evidence-20261022.json和
+tests-selected-verifier-final-20261022.xml。通过范围仅归档内容一致性；不重新计算
+教师标签、不宣称原生采集/正式G2/门闭合，所有训练准入标记仍为false。
+
 ## 2026-10-22 合批父包的确定性来源交接
 
 新合批训练包包含deterministic_runtime及训练入口配置，但launch没有旧版

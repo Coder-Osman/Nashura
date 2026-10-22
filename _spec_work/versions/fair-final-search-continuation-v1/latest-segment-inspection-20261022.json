@@ -1,0 +1,96 @@
+{
+  "available_gib": 239.67400360107422,
+  "files": {
+    "episode/prepare-report.json": {
+      "committed_groups": 3,
+      "status": "checkpointed",
+      "tick": 212,
+      "training_admissible": false
+    },
+    "episode/recovery-search-report.json": {
+      "committed_groups": 3,
+      "full128_roots": 2,
+      "status": "passed",
+      "tick": 212,
+      "training_admissible": false
+    },
+    "episode/restart-receipt.json": {
+      "manifest_sha": "f23ccb271eef950c5aed747977ed18149e572215df7256fb3b4c7865cdf375bd",
+      "record_sha": "e1610cdf395d8645056643b6790785788a745b79be98b7f69b70a94a0a2470cd",
+      "records": 7
+    },
+    "episode/segment-report.json": {
+      "committed_groups": 86,
+      "gates_closed": false,
+      "head": {
+        "manifest_sha": "f23ccb271eef950c5aed747977ed18149e572215df7256fb3b4c7865cdf375bd",
+        "record_sha": "2974b83e6595cbb9170e006502f89948fc3175e662eaf1cbc1d993112c714023",
+        "records": 176
+      },
+      "proof": {
+        "clock_sha": "ed12a1f3620d34e43d7be0ad9dc9aa98c914ef03e27ebd2ebcef828d858f85f8",
+        "ended": false,
+        "evidence_count": 172,
+        "evidence_sha": "f1129b22e2019d353dfdbdff48daef2b2df575a9d234d5fa451abf7467a34051",
+        "fair": {
+          "0": "9ca0ef4bbed95210c94cf205dfa15e8ad30bb2105583a7023a4b6b812a476afc",
+          "1": "384b962fce9b720219ae07060a8931b89494c10e9655790aa209ca0493b03f07"
+        },
+        "native_digest": "84acad4178d1e90a39930462ecf325127c043407d3a0edae61785d51e325c800",
+        "tick": 3342
+      },
+      "seconds": 20248.148263637995,
+      "status": "checkpointed",
+      "training_admissible": false
+    },
+    "worker.log": ""
+  },
+  "free_gib": 137.64490127563477,
+  "ports": {
+    "29761": true,
+    "29762": false
+  },
+  "processes": [
+    {
+      "command": "/home/zhichun/firstlight_CR/.venv/bin/python -u /home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000/project/continuation_worker.py /home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000 ",
+      "cpu_seconds": 8.53,
+      "pid": 50298,
+      "rss_gib": 0.4096336364746094,
+      "state": "S"
+    },
+    {
+      "command": "/home/zhichun/firstlight_CR/.venv/bin/python /home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000/project/phase_snapshot_launcher.py --project /home/zhichun/fair-teacher-r0-vs-m0-20261014/project --port 29762 --instance /home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000/engine-29762 --probe /home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000/libcrprobe.so --engine-sha256 49098dbf5abe6a3e01dab5042f4f8c903337ef9a76e4cefa7808c4df013095ba ",
+      "cpu_seconds": 6.55,
+      "pid": 50378,
+      "rss_gib": 0.0199737548828125,
+      "state": "S"
+    },
+    {
+      "command": "/home/zhichun/fair-teacher-r0-vs-m0-20261014/project/research/standalone-engine-20260926/qemu/usr/bin/qemu-aarch64-static -L /home/zhichun/fair-teacher-r0-vs-m0-20261014/project/research/standalone-engine-20260926/sysroot -E LD_LIBRARY_PATH=/home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000:/home/zhichun/fair-teacher-r0-vs-m0-20261014/project/research/standalone-resident-p18-stepatomic:/home/zhichun/fair-teacher-r0-vs-m0-20261014/project/research/standalone-engine-20260926/app-libs:/home/zhichun/fair-teacher-r0-vs-m0-20261014/project/research/standalone-engine-20260926/sysroot/apex/com.android.art/lib64:/home/zhichun/fair-teacher-r0-vs-m0-20261",
+      "cpu_seconds": 9.93,
+      "pid": 50381,
+      "rss_gib": 0.2324066162109375,
+      "state": "R"
+    },
+    {
+      "command": "/home/zhichun/firstlight_CR/.venv/bin/python /home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000/project/phase_snapshot_launcher.py --project /home/zhichun/fair-teacher-r0-vs-m0-20261014/project --port 29761 --instance /home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000/engine-29761 --probe /home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000/libcrprobe.so --engine-sha256 49098dbf5abe6a3e01dab5042f4f8c903337ef9a76e4cefa7808c4df013095ba ",
+      "cpu_seconds": 6.58,
+      "pid": 50363,
+      "rss_gib": 0.020481109619140625,
+      "state": "S"
+    },
+    {
+      "command": "/home/zhichun/fair-teacher-r0-vs-m0-20261014/project/research/standalone-engine-20260926/qemu/usr/bin/qemu-aarch64-static -L /home/zhichun/fair-teacher-r0-vs-m0-20261014/project/research/standalone-engine-20260926/sysroot -E LD_LIBRARY_PATH=/home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000:/home/zhichun/fair-teacher-r0-vs-m0-20261014/project/research/standalone-resident-p18-stepatomic:/home/zhichun/fair-teacher-r0-vs-m0-20261014/project/research/standalone-engine-20260926/app-libs:/home/zhichun/fair-teacher-r0-vs-m0-20261014/project/research/standalone-engine-20260926/sysroot/apex/com.android.art/lib64:/home/zhichun/fair-teacher-r0-vs-m0-20261",
+      "cpu_seconds": 36.16,
+      "pid": 50364,
+      "rss_gib": 0.3276557922363281,
+      "state": "S"
+    }
+  ],
+  "remote": "/home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000",
+  "timestamp": 1792669812.1445653,
+  "worker_alive": true,
+  "worker_command": "/home/zhichun/firstlight_CR/.venv/bin/python -u /home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000/project/continuation_worker.py /home/zhichun/fair-final-v1-20261019-search-continuation/native-search-segment-1792669735174739000 ",
+  "worker_pid": 50298,
+  "worker_pid_reused": false
+}

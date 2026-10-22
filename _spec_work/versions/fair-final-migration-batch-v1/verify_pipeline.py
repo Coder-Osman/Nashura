@@ -93,6 +93,7 @@ def verify_selection(path, report, *, dataset, implementation_sha, config, weigh
     cursor = trainer["cursor"]
     history_trainer = SimpleNamespace(completed_epochs=cursor["completed_epochs"],
         splits=splits, batch_size=cursor["batch_size"], offset=cursor["offset"],
+        lineage=trainer.get("lineage", {}),
         weights=SimpleNamespace(**weights), student=SimpleNamespace(state_dict=lambda: trainer["network"]))
     run = SimpleNamespace(trainer=history_trainer, history=payload["history"], terminal=payload["terminal"])
     _validate_history(run, dataset)
@@ -108,25 +109,29 @@ def verify_selection(path, report, *, dataset, implementation_sha, config, weigh
 
 
 def verified_dataset(plan, data_roots):
-    if len(plan["rounds"]) != 1 or len(data_roots) != 1:
-        raise ValueError("initial-round engineering pipeline requires one whole-game round")
     audit = audit_completed_series(plan, data_roots)
-    entry = plan["rounds"][0]
-    store = ReadOnlyMigrationStore(data_roots[0], manifest=entry["manifest"])
     splits = {name: [] for name in ("train", "validation", "test")}
     receipts, index = {}, {}
-    for match, task in sorted(store.manifest["matches"].items()):
-        episode, record = store.load(match)
-        receipts[match] = semantic_digest(record)
-        for offset, row in enumerate(episode["rows"]):
-            row_id = row["row_id"]
-            if row_id in index:
-                raise ValueError("duplicate migration row")
-            splits[task["split"]].append(row_id)
-            index[row_id] = (0, match, offset, task["split"])
-    source = entry["manifest"]["identity"]
+    stores = []
+    for number, (entry, root) in enumerate(zip(plan["rounds"], data_roots)):
+        store = ReadOnlyMigrationStore(root, manifest=entry["manifest"])
+        stores.append(store)
+        for match, task in sorted(store.manifest["matches"].items()):
+            episode, record = store.load(match)
+            receipts[match] = semantic_digest(record)
+            for offset, row in enumerate(episode["rows"]):
+                row_id = row["row_id"]
+                if row_id in index:
+                    raise ValueError("duplicate migration row")
+                splits[task["split"]].append(row_id)
+                index[row_id] = (number, match, offset, task["split"])
+    source = plan["rounds"][0]["manifest"]["identity"]
+    dataset_sha = (semantic_digest(dict(manifest_sha=stores[0].dataset_sha, receipts=receipts))
+        if len(stores) == 1 else semantic_digest(dict(series_sha=audit["series_sha"], receipts=receipts)))
     identity = dict(source_a_sha=source["source_a_sha"], migration_adapter_sha=source["migration_adapter_sha"],
-        dataset_sha=semantic_digest(dict(manifest_sha=store.dataset_sha, receipts=receipts)))
+        dataset_sha=dataset_sha)
+    if any(not rows for rows in splits.values()):
+        raise ValueError("complete historical train, validation and test games required")
     return SimpleNamespace(identity=identity, splits=splits, index=index), audit, source
 
 
@@ -144,6 +149,8 @@ def verify_pipeline(attempt, *, launch_sha, receipt_sha, data_roots):
             or completion["formal_g2_pass"] is not False):
         raise ValueError("pipeline did not complete five distinct successful phases")
     dataset, audit, source = verified_dataset(read(evidence / "private-plan.json"), data_roots)
+    if len(data_roots) != 1:
+        raise ValueError("initial-round engineering pipeline requires one whole-game round")
     implementation = implementation_identity(evidence)
     config, weights = read(evidence / "selection-config.json"), read(evidence / "loss-weights.json")
     SelectionConfig(**config)

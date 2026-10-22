@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "6d1f0b521b4146beb38db08765fc8ab5dbaf965f2e403180755cf0542feb5406",
-      "bytes": 67839,
-      "source_sha256": "6d1f0b521b4146beb38db08765fc8ab5dbaf965f2e403180755cf0542feb5406",
+      "sha256": "a74238c34ec8bd6b3ac620aeebce422045c7bab161796483c700c9dd519bede1",
+      "bytes": 68856,
+      "source_sha256": "a74238c34ec8bd6b3ac620aeebce422045c7bab161796483c700c9dd519bede1",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "d953610537d48ccaa2aee6d5fbd7637b46ef823dacca1700ba1635058c9d778f",
-      "bytes": 31752,
-      "source_sha256": "d953610537d48ccaa2aee6d5fbd7637b46ef823dacca1700ba1635058c9d778f",
+      "sha256": "c42e280d37d5968153de3525e17dabb95bc24d729e82e53576dfa6e46e4005eb",
+      "bytes": 32427,
+      "source_sha256": "c42e280d37d5968153de3525e17dabb95bc24d729e82e53576dfa6e46e4005eb",
       "transformations": []
     },
     {
@@ -6200,9 +6200,9 @@
     },
     {
       "path": "_spec_work/versions/fair-final-migration-batch-v1/CONTRACT.md",
-      "sha256": "6e9b607c0def9fc5fae0343af43af2652c4e6a8d860eae17715ce80796afd2cb",
-      "bytes": 1848,
-      "source_sha256": "6e9b607c0def9fc5fae0343af43af2652c4e6a8d860eae17715ce80796afd2cb",
+      "sha256": "a71ccb99289ef0dca89bfa2dfda42528e0f9fd20ea42f37a514d2ff1b76fdb38",
+      "bytes": 2452,
+      "source_sha256": "a71ccb99289ef0dca89bfa2dfda42528e0f9fd20ea42f37a514d2ff1b76fdb38",
       "transformations": []
     },
     {
@@ -6361,9 +6361,9 @@
     },
     {
       "path": "_spec_work/versions/fair-final-migration-batch-v1/verify_pipeline.py",
-      "sha256": "dfcfa35d73c7859071221a581a48111288a11ee64e7fd951afc8597357e01f92",
-      "bytes": 13351,
-      "source_sha256": "dfcfa35d73c7859071221a581a48111288a11ee64e7fd951afc8597357e01f92",
+      "sha256": "6b3d9fecb2abd01cca2539b6a061c29aeb975039dfbeb9c42794fcc321f9d510",
+      "bytes": 13789,
+      "source_sha256": "6b3d9fecb2abd01cca2539b6a061c29aeb975039dfbeb9c42794fcc321f9d510",
       "transformations": []
     },
     {
@@ -6550,9 +6550,9 @@
     },
     {
       "path": "_spec_work/versions/fair-final-migration-integration-v1/CONTRACT.md",
-      "sha256": "8e681bba8279946419338e1115c65078df20b5766c758e529c752719c57947e0",
-      "bytes": 22577,
-      "source_sha256": "8e681bba8279946419338e1115c65078df20b5766c758e529c752719c57947e0",
+      "sha256": "b3c81d85a019dd8d72acefcfea0c34a539e07daec23c5782db8878d87eeccfa2",
+      "bytes": 23940,
+      "source_sha256": "b3c81d85a019dd8d72acefcfea0c34a539e07daec23c5782db8878d87eeccfa2",
       "transformations": []
     },
     {
@@ -6696,6 +6696,13 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/selected-collection-verifier-evidence-20261022.json",
+      "sha256": "e5fbd8833de4087f031456008f3fa0a4813731b5ef2b31c547fa540741954e13",
+      "bytes": 1716,
+      "source_sha256": "e5fbd8833de4087f031456008f3fa0a4813731b5ef2b31c547fa540741954e13",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-migration-integration-v1/selected_collection_worker.py",
       "sha256": "2f6ad232f9cc2ade96244303b0c0a87921f21a7bd8cf7511d48607ec39ae753b",
       "bytes": 12462,
@@ -6791,6 +6798,13 @@
       "sha256": "5f27a749b800df174168546a7b94c87bb2e28552efd27a6f2100264658daad8d",
       "bytes": 8893,
       "source_sha256": "5f27a749b800df174168546a7b94c87bb2e28552efd27a6f2100264658daad8d",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/test_selected_collection_verifier.py",
+      "sha256": "27e5c1a7a2f2a37c811c45da1c71662ec93a738742ecd20f63a08a5636fc2a4b",
+      "bytes": 16732,
+      "source_sha256": "27e5c1a7a2f2a37c811c45da1c71662ec93a738742ecd20f63a08a5636fc2a4b",
       "transformations": []
     },
     {
@@ -6969,6 +6983,20 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/tests-selected-verifier-20261022.xml",
+      "sha256": "f25c64a9ad6074b7f73e53e86fd6ee72378adf00ec429798dc935a0ed3f93430",
+      "bytes": 7555,
+      "source_sha256": "f25c64a9ad6074b7f73e53e86fd6ee72378adf00ec429798dc935a0ed3f93430",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/tests-selected-verifier-final-20261022.xml",
+      "sha256": "91c23e8304c4cce5a28ad4aca7ce010de5dd963e375c63d2520ae7d86a9a6c4c",
+      "bytes": 9149,
+      "source_sha256": "91c23e8304c4cce5a28ad4aca7ce010de5dd963e375c63d2520ae7d86a9a6c4c",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-migration-integration-v1/tests-selected-worker-final.xml",
       "sha256": "9e566532b809190aa4e1a39d494f184a15be0e88c101585e52dae8bfcfacb96c",
       "bytes": 8416,
@@ -6987,6 +7015,13 @@
       "sha256": "2281f5f8be7251c4acba5515203ecbb71d7293764f1a4b35a9ed45e8d67a9073",
       "bytes": 6053,
       "source_sha256": "2281f5f8be7251c4acba5515203ecbb71d7293764f1a4b35a9ed45e8d67a9073",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-integration-v1/verify_selected_collection.py",
+      "sha256": "0e1d98935ad05c08e70bb9e428a5cb37c13e3e3c906e925cb7dd8aa6ad03bc0f",
+      "bytes": 15147,
+      "source_sha256": "0e1d98935ad05c08e70bb9e428a5cb37c13e3e3c906e925cb7dd8aa6ad03bc0f",
       "transformations": []
     },
     {
@@ -7386,6 +7421,13 @@
       "sha256": "d8c5f369c303c8642da50f8206c3046af36d75a1210f9f83bc624ce13a05610a",
       "bytes": 2028,
       "source_sha256": "d8c5f369c303c8642da50f8206c3046af36d75a1210f9f83bc624ce13a05610a",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-search-continuation-v1/latest-segment-inspection-20261022.json",
+      "sha256": "325a301ea069a024e60b58d4271d33687b439d9e7df031f2e9ab61d565393943",
+      "bytes": 5839,
+      "source_sha256": "325a301ea069a024e60b58d4271d33687b439d9e7df031f2e9ab61d565393943",
       "transformations": []
     },
     {
@@ -13894,8 +13936,8 @@
       "transformations": []
     }
   ],
-  "file_count": 1984,
-  "source_bytes": 30267287,
+  "file_count": 1990,
+  "source_bytes": 30327522,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

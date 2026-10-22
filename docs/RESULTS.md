@@ -18,26 +18,28 @@
 | 嵌套历史评测种子审计 | fair-final-migration-integration-v1/NESTED_SEED_EVIDENCE.md | 四组3,200条记录新增1,600个排除seed；联合190项通过，5条结局不明确记录不作WDL标签，原始附件外置 |
 | 合批父包到采集包的确定性身份交接 | fair-final-migration-integration-v1/collection-runtime-lineage-evidence-20261022.json | 24项通过；实际276源码SHA复核、273父文件保持；仅本地准备，原生round2仍待验 |
 | 后续采集预检与有界引擎worker | fair-final-migration-integration-v1/bounded-collection-verification-20261022.json | 43项联合测试通过；278源码采集包、273父文件保持；夹具不替代原生采集与独立整局验收 |
+| 后续采集归档独立验收与多轮父身份 | fair-final-migration-integration-v1/selected-collection-verifier-evidence-20261022.json | 47项联合测试通过；重验终止选优父、整局与原始终局、种子来源和所属清理；仅归档内容及fixture范围 |
 
 以上版本目录均位于 `_spec_work/versions/`。测试集合存在重叠，表格数字不相加。
 
-## 2026-10-22 主工程修复分支（未合并、未验收）
+## 2026-10-22 主工程修复分支（已整合、CPU验证通过）
 
-- 分支 `audit/ci-kl-puct-inheritance-20261022`：为当前 `firstlight_CR` 新增独立单测入口/CI；不改变原冻结历史版本公开检查。
+- 已通过fast-forward整合分支 `audit/ci-kl-puct-inheritance-20261022` 最新提交 `8195a5a07b8bf7d9533fc7a3bfbe83b0c5083a99`，保留本机未发布成果，8个新增或修改源码同步回工作区。为当前 `firstlight_CR` 新增独立单测入口/CI；原冻结历史版本公开检查保留。
 - 原生迁移批量KL在主工程加入独立批量Delay条件计算与校验。**源独立版本 `fair-final-migration-batch-v1` 的真实CUDA数值与原生恢复证据仍是权威参考**，不可用本分支单测取代；编码器解冻时保留逐位置学生反向图与逐位置KL加法顺序。
 - PUCT新增先验首访、旧字典序首访基线；根噪声显式区分 `training/evaluation/ablation_no_noise`，协议SHA随配置变化。
 - 权重继承新增基于逐Tensor一致性的覆盖率报告，当前能被证明直接继承的是语义Encoder，新Policy/WDL Head继续蒸馏，不凭相同形状虚报。
-- 以上是**待CI与原生验收的候选变更**，不增加G0/G1 PASS，不启动G2或正式训练。交接与精确验收命令见 `agent-handoff/`。
+- 本机当前主工程211项通过24.12秒，冻结参考版220项通过39.00秒，分别属于CPU工程测试。所拉取提交的两套GitHub CI亦通过：[当前工程](https://github.com/Coder-Osman/Nashura/actions/runs/39779254288)、[冻结参考](https://github.com/Coder-Osman/Nashura/actions/runs/39779254266)。新实现CUDA与batch256原生恢复仍待验，不增加G0/G1 PASS，不启动G2或正式训练。交接与回执见 `agent-handoff/`。
+- 归档验收器、五阶段归档核验及旧batch-v1在最新active源码下的兼容性检查75项通过69.40秒，3项因缺少私有冻结部署附件跳过。此项与上面的测试集合存在重叠，不累加；详细身份见 `agent-handoff/INTEGRATION_2026-10-22.json`。
 
 ## 当前运行任务的最后已知快照
 
-快照时间戳 1792668454，以及本批独立恢复验收：
+快照时间戳 1792673315，以及此前独立恢复验收：
 
-- Full128 搜索局已提交 85 组、170 根、21,760 次有效模拟至tick3278；tick3282玩家0搜索中，尚未原生终局。
+- Full128 搜索局旧段已提交86组后归档；新段恢复后已提交89组、178根、22,784次有效模拟，tick3412玩家1搜索中，尚未原生终局。该任务继续使用原冻结部署。
 - 确定性父训练探针已结束，执行1次FP32更新；尚无该更新后的验证选优结论。
 - 严格确定性恢复reference与resumed均正常结束，完成归档及独立内容/执行链验收；模型、AdamW、RNG、采样游标/下一批及选优历史严格一致。证据见migration-cache-v1/native-deterministic-resume-verified-20261022.json；仅三局工程范围，不证明终止选优或正式G2。
-- 新迁移KL探针通过六对对照，training正常退出、完成1次FP32更新；reference完成初始358行及后续一次358行验证、已保存midpoint，后续resumed及terminal selection待完成。单步报告只有初始验证，不判断更新效果；六对单帧加速比中位数1.376，不代表整轮吞吐。
-- .35 中心盘约 137.884GiB，正式中心 200GiB 门保持；备用 .39 仅完成工程样本传输核验。
+- 新迁移KL链路benchmark/training/reference/resumed均exit0；reference2061.943秒、resumed1100.468秒，selection进程存活且冻结部署匹配。terminal选优及本链路独立验收待完成；六对单帧加速比中位数1.376，不代表整轮吞吐。
+- .35 中心盘约137.644GiB，正式中心200GiB门保持；备用 .39 仅完成工程样本传输核验。
 
 这些数字只表示当时进度。当前阶段不报告 G0/G1 闭合、正式训练启动或搜索提高实力。
 

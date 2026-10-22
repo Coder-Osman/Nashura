@@ -6,6 +6,20 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+新增归档后续采集独立内容验收器，联合47项通过65.794秒：外部SHA固定输入，
+只读本地映射，重验terminal选优父、多轮数据身份、整局/终局/生命周期、种子
+原始来源与所属引擎清理；确定性运行时仅核对源码及声明，不重跑CUDA。
+小模型/采集fixture不作原生完整局证据；见integration-v1下
+selected-collection-verifier-evidence-20261022.json。G0/G1仍进行中，34/43保持。
+
+快照1792670262：同一Full128局旧段已在86组/172根/22016有效模拟后保存并
+完成归档，新段恢复重演通过、tick3342玩家0搜索中，worker与双引擎在线，
+尚未终局。合批五阶段benchmark/training/reference/resumed均exit0，selection
+进程存活、冻结部署匹配；终止选优及该链路独立验收待完成。.35盘137.644GiB，
+正式中心200GiB门保持，G2–G8未运行、training_admissible=false。
+
+以下为此前快照；当前新增验收器不覆盖后续原生采集的实际执行。
+
 严格确定性原生FP32 batch256跨新进程恢复已通过独立验收：三局1044行，
 累计3次真实更新；连续执行与恢复后的模型、AdamW、RNG、采样游标/下一批及
 选优历史严格一致。父/恢复launch与归档回执由外部SHA固定，冻结部署与原生

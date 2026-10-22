@@ -1,0 +1,101 @@
+{
+  "schema": "NashuraLatestIntegrationEvidence/v1",
+  "date": "2026-10-22",
+  "integrated_commit": "8195a5a07b8bf7d9533fc7a3bfbe83b0c5083a99",
+  "previous_main": "5956468eabae167a71e317d7842543980d54a9eb",
+  "integrated_branch": "audit/ci-kl-puct-inheritance-20261022",
+  "source_sync": [
+    {
+      "path": "firstlight_CR/native_runner/tests/test_fair_final_inheritance.py",
+      "public_sha256": "6116de742779cc4ee36b8275028cf639848b85492999634e8e04a0a366f03c20",
+      "source_sha256": "6116de742779cc4ee36b8275028cf639848b85492999634e8e04a0a366f03c20"
+    },
+    {
+      "path": "firstlight_CR/native_runner/tests/test_fair_final_learning.py",
+      "public_sha256": "4f504a65769cff81c0738a8df5fd169594283f495722d2810c7614759ba4145d",
+      "source_sha256": "4f504a65769cff81c0738a8df5fd169594283f495722d2810c7614759ba4145d"
+    },
+    {
+      "path": "firstlight_CR/native_runner/tests/test_fair_final_search.py",
+      "public_sha256": "128070d9f1c62c85b8043f1c5c68825f1d4d8542ce85c7a837fc2f1159cb09c5",
+      "source_sha256": "128070d9f1c62c85b8043f1c5c68825f1d4d8542ce85c7a837fc2f1159cb09c5"
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/fair_final/adapter.py",
+      "public_sha256": "ccb46872b98f9509b4ca420898e1a6168ecafed1f51abce731917cd70d21f58e",
+      "source_sha256": "ccb46872b98f9509b4ca420898e1a6168ecafed1f51abce731917cd70d21f58e"
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/fair_final/learning.py",
+      "public_sha256": "26d41cef8066dd1c848691c2796338bfc3aadd999921cd85625138be7bc1dc7d",
+      "source_sha256": "26d41cef8066dd1c848691c2796338bfc3aadd999921cd85625138be7bc1dc7d"
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/fair_final/model.py",
+      "public_sha256": "f34998567f37e83be535ab668289d921e2befdee2857f875fc8cd77e426adc17",
+      "source_sha256": "f34998567f37e83be535ab668289d921e2befdee2857f875fc8cd77e426adc17"
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/fair_final/policy.py",
+      "public_sha256": "ca31fe0cce3c4a17d7b613ee7466afb1035d2aabb8edabf71078bdda985286bd",
+      "source_sha256": "ca31fe0cce3c4a17d7b613ee7466afb1035d2aabb8edabf71078bdda985286bd"
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/fair_final/search.py",
+      "public_sha256": "e1e9fbefe71375786bd59491fe839a80fed94bffc40fed6ee57a35c8b572b65b",
+      "source_sha256": "e1e9fbefe71375786bd59491fe839a80fed94bffc40fed6ee57a35c8b572b65b"
+    }
+  ],
+  "active_cpu_tests": {
+    "passed": 211,
+    "seconds": 24.12,
+    "command": "python tools/run_main_engine_checks.py",
+    "scope": "CPU_UNIT_ONLY"
+  },
+  "xml_reports": [
+    {
+      "tests": 220,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 220,
+      "seconds": 38.993,
+      "report": "publication/checks-public.xml",
+      "sha256": "7328367567fb3c1b13fe4c28b1d034c6d69d4bf02e12c2a05fd04a09048acccb"
+    },
+    {
+      "tests": 78,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 3,
+      "passed": 75,
+      "seconds": 69.402,
+      "report": "publication/checks-integration-latest.xml",
+      "sha256": "5077139fb1441f0eb5bf28e4fe22252d45441f56014cdc34cf2513dd058cb3dc"
+    }
+  ],
+  "prior_evidence": [
+    {
+      "path": "_spec_work/versions/fair-final-migration-batch-v1/benchmark-accounting-20261022.json",
+      "sha256": "7a7886839668f54461a2e8d310eab9d7839ccac6c6e5890800041b0b4d43c39e",
+      "scope": "OLD_IMPLEMENTATION_ONLY"
+    },
+    {
+      "path": "_spec_work/versions/fair-final-migration-cache-v1/native-deterministic-resume-verified-20261022.json",
+      "sha256": "88a3e0950acce5a644f6d1ada862058f4153d38c84a069dd5c2944b52217d387",
+      "scope": "OLD_IMPLEMENTATION_ONLY"
+    }
+  ],
+  "new_native_cuda": "NOT_RUN_ON_NEW_IMPLEMENTATION",
+  "new_batch256_cross_process_resume": "NOT_RUN_ON_NEW_IMPLEMENTATION",
+  "native_puct_paired_evaluation": "NOT_RUN",
+  "actual_source_a_inheritance_accounting": "NOT_RUN",
+  "formal_actor_training_root_noise": "NOT_VERIFIED",
+  "running_frozen_deployments_modified": false,
+  "gates": {
+    "g0_g1": "open",
+    "limited_subitems": "34/43",
+    "g2_g8": "not_run"
+  },
+  "formal_training_started": false
+}

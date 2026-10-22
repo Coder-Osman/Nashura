@@ -28,3 +28,12 @@ build_payload.py只接收具有完整launch/payload/deployment SHA身份的父�
 新实验从独立初始化开始，不导入旧优化器或旧选择进度。
 原生CUDA对照尚待实际运行；本地fixture、条件头吞吐和原生完整训练分别报告。
 该优化不关闭G0/G1，不代表G2拟合或实战强度通过。
+
+## 2026-10-22 只读多轮身份与继承步数验收
+
+verify_pipeline.verified_dataset逐局只读重验1–3轮完整数据，生成与训练器相同的
+split/index/receipt及series身份；单轮身份保持不变。verify_selection保留父轮
+lineage中的optimizer步数，避免将补充轮继承步误判为本轮额外更新。
+与独立采集归档验收器联合47项通过65.794秒，包含真实小模型补充轮选优及多轮
+dataset身份对照；fixture不证明原生round2。五阶段原生流水线本身仍限制单轮
+工程范围，完整正式迁移与实战门保持开放。
