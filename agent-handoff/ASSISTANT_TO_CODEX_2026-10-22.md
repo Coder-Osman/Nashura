@@ -52,3 +52,9 @@
 6. 明确G0/G1、G2–G8仍未闭合的项目，不准升级任何Gate状态。
 
 详见 [G2_MIGRATION_RUNBOOK.md](G2_MIGRATION_RUNBOOK.md)。
+
+## 本分支CI最新证据（2026-10-22）
+
+- branch code commit `968b143029b27bbfbbf0450d48f31c7f38f2d769`: [active firstlight_CR CI](https://github.com/Coder-Osman/Nashura/actions/runs/39778686608) 实测 **211 passed**，公开source-manifest **1984 files_verified**。
+- 新增继承率测试首次发现共享Parameter alias去重缺口（210 passed/1 failed），修复于该commit；保留历史失败，不把首次失败抹除。
+- 根噪声与PUCT预算为单元/fixture验收；原生新实现的batch256恢复、真实CUDA对照及搜索同算力对局仍按上述列表属于**独立待验收**。
