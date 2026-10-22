@@ -47,15 +47,19 @@ def conditional_teacher_kl(teacher, student, *, cell_chunk=64):
     for card in torch.where(teacher.prefix_mask((1,)))[0].tolist():
         cell_kl, cells = conditional((1, card))
         total = total + modes[1] * cards[card] * cell_kl
-        legal_cells = torch.where(teacher.prefix_mask((1, card)))[0]
-        for batch in legal_cells.split(cell_chunk):
-            teacher_delay = teacher.delay_conditionals_batch(card, batch).detach()
-            student_delay = student.delay_conditionals_batch(card, batch, raw=True)
-            teacher_delay = teacher_delay.to(student_delay.device)
-            mask = teacher.legality.plays[card, batch.to(teacher.legality.plays.device)].to(student_delay.device)
-            # Exclude illegal -inf logits before multiplication; never evaluate 0 * -inf.
-            by_cell = torch.where(mask, teacher_delay.exp() * (teacher_delay - student_delay),
-                torch.zeros_like(student_delay)).sum(-1)
-            weight = cells[batch.to(cells.device)].to(by_cell.device)
-            total = total + modes[1] * cards[card] * (weight * by_cell).sum()
+        legal_cells = torch.where(teacher.prefix_mask((1, card)))[0].tolist()
+        for offset in range(0, len(legal_cells), cell_chunk):
+            batch = legal_cells[offset:offset + cell_chunk]
+            # Compute teacher FiLM/delay logits once per chunk. Always preserve the
+            # original per-cell KL accumulation order for strict AdamW comparison.
+            teacher_delay = teacher.delay_conditionals_batch(card, torch.tensor(batch, dtype=torch.long)).detach()
+            student_batch = (student.delay_conditionals_batch(card,
+                torch.tensor(batch, dtype=torch.long), raw=True)
+                if getattr(student.logits, "batch_delay_enabled", False) else None)
+            for index, cell in enumerate(batch):
+                student_log = student_batch[index] if student_batch is not None else student.conditionals((1, card, cell), raw=True)
+                teacher_log = teacher_delay[index].to(student_log.device)
+                mask = teacher.legality.plays[card, cell].to(student_log.device)
+                delay_kl = (teacher_log.exp()[mask] * (teacher_log[mask] - student_log[mask])).sum()
+                total = total + modes[1] * cards[card] * cells[cell] * delay_kl
     return total

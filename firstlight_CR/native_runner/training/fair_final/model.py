@@ -136,11 +136,14 @@ class ConditionalPolicyValue(nn.Module):
         if len(legalities) != shared.shape[0]:
             raise ValueError("one legal information state per batch row required")
         policies = []
+        encoder_frozen = not any(parameter.requires_grad for parameter in self.encoder.parameters())
         for index, legality in enumerate(legalities):
             rows = list(stable_card_rows(frame, self.encoder.catalog, legality.card_ids, index=index))
-            policies.append(JointPolicy(self.policy_head.logits_for(shared[index],
-                encoded.own_card_memory[index, rows], encoded.spatial_memory[index]), legality,
-                temperatures=temperatures))
+            logits = self.policy_head.logits_for(shared[index],
+                encoded.own_card_memory[index, rows], encoded.spatial_memory[index])
+            # Tested migration protocol: do not reorder trainable-encoder backward graphs.
+            logits.batch_delay_enabled = encoder_frozen
+            policies.append(JointPolicy(logits, legality, temperatures=temperatures))
         return policies, self.wdl_head(shared)
 
     def value_only(self, frame):
