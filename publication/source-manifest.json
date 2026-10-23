@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "85d14e8c9d61a0a8cc377e811e113e9d74ea6f74ee8ff1188e9bb8e2139b72bd",
-      "bytes": 78045,
-      "source_sha256": "85d14e8c9d61a0a8cc377e811e113e9d74ea6f74ee8ff1188e9bb8e2139b72bd",
+      "sha256": "abef63b883c62e6498ce89997cdf3c4e24014f8484123789d58966d8c22f3f98",
+      "bytes": 79303,
+      "source_sha256": "abef63b883c62e6498ce89997cdf3c4e24014f8484123789d58966d8c22f3f98",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "ba9bea140c4bd0c242caf2d403dc57be59f054ebadadfecd2d5b07b20226745f",
-      "bytes": 37067,
-      "source_sha256": "ba9bea140c4bd0c242caf2d403dc57be59f054ebadadfecd2d5b07b20226745f",
+      "sha256": "88a385153f45133a4ed90a1b9d194930c03026b3fdbef9831e7e1db512b5aff5",
+      "bytes": 37947,
+      "source_sha256": "88a385153f45133a4ed90a1b9d194930c03026b3fdbef9831e7e1db512b5aff5",
       "transformations": []
     },
     {
@@ -2201,9 +2201,9 @@
     },
     {
       "path": "_spec_work/versions/fair-final-general-fallback-v1/EVIDENCE.md",
-      "sha256": "f9fc50dacdfa76ae61332c837980bade86f6d31642e9aadf7881e297c0872a58",
-      "bytes": 1311,
-      "source_sha256": "f9fc50dacdfa76ae61332c837980bade86f6d31642e9aadf7881e297c0872a58",
+      "sha256": "8617bcfe2dda5f7feb318e16090b72ba754edb95f2d25a28827ab3eb49802399",
+      "bytes": 2395,
+      "source_sha256": "8617bcfe2dda5f7feb318e16090b72ba754edb95f2d25a28827ab3eb49802399",
       "transformations": []
     },
     {
@@ -2218,6 +2218,13 @@
       "sha256": "90d58731b4a15b88b0b73b5e59971ce8f805daf5b26132c10fbe749188d89fdd",
       "bytes": 6961,
       "source_sha256": "90d58731b4a15b88b0b73b5e59971ce8f805daf5b26132c10fbe749188d89fdd",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-general-fallback-v1/native-local-evidence-summary.json",
+      "sha256": "8a22cab4ee65585d5ee61814f0182b6545e10c0dfb109f251e2316ab13f8ecf4",
+      "bytes": 1952,
+      "source_sha256": "8a22cab4ee65585d5ee61814f0182b6545e10c0dfb109f251e2316ab13f8ecf4",
       "transformations": []
     },
     {
@@ -7491,6 +7498,41 @@
       "sha256": "a621fcb78c8b9d04300f9b12bcc3de3a72c6cff5c8d48a24503c96bc3e287672",
       "bytes": 937,
       "source_sha256": "a621fcb78c8b9d04300f9b12bcc3de3a72c6cff5c8d48a24503c96bc3e287672",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-execution-flags-v1/CONTRACT.md",
+      "sha256": "1bb429ffe1191bab442f964712bcf1373eee6902cc6da39e2c4108c72053eac8",
+      "bytes": 2092,
+      "source_sha256": "1bb429ffe1191bab442f964712bcf1373eee6902cc6da39e2c4108c72053eac8",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-execution-flags-v1/audit_flags.py",
+      "sha256": "0baaec4830a4aba5e78b2d38771ad4bc920acbba576825e72c63a8d14afddade",
+      "bytes": 6438,
+      "source_sha256": "0baaec4830a4aba5e78b2d38771ad4bc920acbba576825e72c63a8d14afddade",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-execution-flags-v1/static-report.json",
+      "sha256": "0eaafa613709b2e2063774d5eda8463acfe7b624de3fae25a8d2f5f430b651d7",
+      "bytes": 5735,
+      "source_sha256": "0eaafa613709b2e2063774d5eda8463acfe7b624de3fae25a8d2f5f430b651d7",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-execution-flags-v1/test_flags.py",
+      "sha256": "96dfa177f165e7cacbc7068acf9ba26e584bff4177b88ae1e146efbc6e5c9e8f",
+      "bytes": 5165,
+      "source_sha256": "96dfa177f165e7cacbc7068acf9ba26e584bff4177b88ae1e146efbc6e5c9e8f",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-execution-flags-v1/tests-flags.xml",
+      "sha256": "dd5935151eed0e87018c18fe13fe18edc895f2546e53ab98c4aa7f39d62a8eae",
+      "bytes": 2582,
+      "source_sha256": "dd5935151eed0e87018c18fe13fe18edc895f2546e53ab98c4aa7f39d62a8eae",
       "transformations": []
     },
     {
@@ -14279,8 +14321,8 @@
       "transformations": []
     }
   ],
-  "file_count": 2039,
-  "source_bytes": 30725438,
+  "file_count": 2045,
+  "source_bytes": 30752624,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

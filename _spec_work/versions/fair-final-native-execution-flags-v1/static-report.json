@@ -1,0 +1,234 @@
+{
+  "bit0_set_exact_tick_precondition": [
+    {
+      "address": "0xd2f5b8",
+      "instruction": "mov x0, x27"
+    },
+    {
+      "address": "0xd2f5bc",
+      "instruction": "bl #0xd2bbb4"
+    },
+    {
+      "address": "0xd2f5c0",
+      "instruction": "cmp w0, w20"
+    },
+    {
+      "address": "0xd2f5c4",
+      "instruction": "b.ne #0xd2f608"
+    }
+  ],
+  "conclusions": {
+    "explicit_bit1_choices_match": true,
+    "legal_mask_equivalence_proven": false,
+    "native_rejection_reachability_proven": false,
+    "w2_2_vs_3_equal_observed_bits": true,
+    "whole_executor_equivalence_proven": false
+  },
+  "dependency_sha256": "9aa8ce29e0b222dda505d96262c03e8f1892dc8e7346e7bf181c2e0b9a751d95",
+  "deployment_result_branch": [
+    {
+      "address": "0xd30dd8",
+      "instruction": "movi v0.2d, #0xffffffffffffffff"
+    },
+    {
+      "address": "0xd30ddc",
+      "instruction": "mov x0, x22"
+    },
+    {
+      "address": "0xd30de0",
+      "instruction": "stur d0, [x29, #-8]"
+    },
+    {
+      "address": "0xd30de4",
+      "instruction": "bl #0xf2d2a4"
+    },
+    {
+      "address": "0xd30de8",
+      "instruction": "ldr w3, [sp, #0x10]"
+    },
+    {
+      "address": "0xd30dec",
+      "instruction": "mov w7, w0"
+    },
+    {
+      "address": "0xd30df0",
+      "instruction": "sub x4, x29, #8"
+    },
+    {
+      "address": "0xd30df4",
+      "instruction": "mov x0, x22"
+    },
+    {
+      "address": "0xd30df8",
+      "instruction": "mov x1, x26"
+    },
+    {
+      "address": "0xd30dfc",
+      "instruction": "mov w2, w25"
+    },
+    {
+      "address": "0xd30e00",
+      "instruction": "mov x5, x20"
+    },
+    {
+      "address": "0xd30e04",
+      "instruction": "mov w6, wzr"
+    },
+    {
+      "address": "0xd30e08",
+      "instruction": "strb wzr, [sp]"
+    },
+    {
+      "address": "0xd30e0c",
+      "instruction": "bl #0xf3816c"
+    },
+    {
+      "address": "0xd30e10",
+      "instruction": "tbz w0, #0, #0xd30edc"
+    }
+  ],
+  "executor": "0xd30a00",
+  "flag_lifetime": {
+    "bit0_used": false,
+    "capture": {
+      "address": "0xd30a2c",
+      "mnemonic": "mov",
+      "op_str": "w23, w2"
+    },
+    "helper_assumption": "AAPCS64 callees preserve x23",
+    "live_instruction_count": 267,
+    "observed_bit_indices": [
+      1
+    ],
+    "reads": [
+      {
+        "address": "0xd30c68",
+        "mnemonic": "tbnz",
+        "op_str": "w23, #1, #0xd30c78"
+      },
+      {
+        "address": "0xd30d98",
+        "mnemonic": "tbnz",
+        "op_str": "w23, #1, #0xd30dd8"
+      }
+    ],
+    "retirements": [
+      {
+        "address": "0xd30ab0",
+        "mnemonic": "ldp",
+        "op_str": "x24, x23, [sp, #0x60]"
+      },
+      {
+        "address": "0xd30e14",
+        "mnemonic": "ldp",
+        "op_str": "w21, w23, [x29, #-8]"
+      }
+    ]
+  },
+  "gates_closed": false,
+  "library": {
+    "architecture": "AArch64",
+    "path": "_spec_work/versions/fair-final-history-v2/project/artifacts/standalone-engine-20260926/app-libs/libg.so",
+    "sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "size_bytes": 27554368
+  },
+  "limitations": [
+    "Only explicit reads of the saved w2 argument are covered by the lifetime analysis.",
+    "Queue timing and preceding side effects differ; whole queue paths are not equivalent.",
+    "Calls are opaque and assumed to obey AAPCS64 callee-saved register rules.",
+    "Original w2 or aliases may reach opaque helpers; full argument noninterference is unproved.",
+    "Nonzero validation results and deployment failure remain possible syntactically.",
+    "No semantic error names, native rejection witness or global unreachability proof."
+  ],
+  "queue_paths": {
+    "age20_invokes_executor": {
+      "bit1": 1,
+      "sequence": [
+        {
+          "address": "0xd2fac0",
+          "instruction": "ldr x8, [x26]"
+        },
+        {
+          "address": "0xd2fac4",
+          "instruction": "strb wzr, [x26, #8]"
+        },
+        {
+          "address": "0xd2fac8",
+          "instruction": "mov x0, x26"
+        },
+        {
+          "address": "0xd2facc",
+          "instruction": "ldr x1, [x19, #0x20]"
+        },
+        {
+          "address": "0xd2fad0",
+          "instruction": "mov w2, #2"
+        },
+        {
+          "address": "0xd2fad4",
+          "instruction": "mov w3, wzr"
+        },
+        {
+          "address": "0xd2fad8",
+          "instruction": "ldr x8, [x8, #0x18]"
+        },
+        {
+          "address": "0xd2fadc",
+          "instruction": "blr x8"
+        },
+        {
+          "address": "0xd2fae0",
+          "instruction": "cbz w0, #0xd2faec"
+        },
+        {
+          "address": "0xd2fae4",
+          "instruction": "strb w21, [x26, #8]"
+        },
+        {
+          "address": "0xd2fae8",
+          "instruction": "b #0xd2fb20"
+        }
+      ],
+      "w2": 2,
+      "w3": 0
+    },
+    "other_branch_executor_flags": {
+      "bit1": 1,
+      "sequence": [
+        {
+          "address": "0xd2f820",
+          "instruction": "ldr x8, [x28]"
+        },
+        {
+          "address": "0xd2f824",
+          "instruction": "ldr x1, [x19, #0x20]"
+        },
+        {
+          "address": "0xd2f828",
+          "instruction": "mov x0, x28"
+        },
+        {
+          "address": "0xd2f82c",
+          "instruction": "mov w2, #3"
+        },
+        {
+          "address": "0xd2f830",
+          "instruction": "mov w3, wzr"
+        },
+        {
+          "address": "0xd2f834",
+          "instruction": "ldr x8, [x8, #0x18]"
+        },
+        {
+          "address": "0xd2f838",
+          "instruction": "blr x8"
+        }
+      ],
+      "w2": 3,
+      "w3": 0
+    }
+  },
+  "schema": "fair-final-native-execution-flags.v1",
+  "status": "passed_limited_scope",
+  "training_admissible": false
+}

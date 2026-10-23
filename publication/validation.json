@@ -1,16 +1,17 @@
 {
   "schema": "hashura.publication-validation.v1",
   "date": "2026-10-23",
-  "source_manifest_sha256": "51df53f89d194dd880647c816bfb921e8dc5adff1f83a51fa75aa4b687be23a0",
-  "source_files_verified": 2039,
+  "source_manifest_sha256": "5acab51cec2928f810de818fb3487312646df06019c4e86059fbe76ee0083622",
+  "source_files_verified": 2045,
   "public_tests": {
     "failures": 0,
     "errors": 0,
-    "skipped": 0,
-    "passed": 268,
-    "seconds": 34.871,
-    "report": "checks-public.xml",
-    "sha256": "bd706226f0302712a98a91b386add965ca516d13510da3f0f3d2a556b45d16ea"
+    "skipped": 1,
+    "passed": 282,
+    "seconds": 35.800,
+    "skip_reason": "private frozen native library absent from public snapshot",
+    "report": "public-tests-20261023-g01-local.xml",
+    "sha256": "5812bcad812e2098a085099a95bcbb9bfecee9fd742f2c5071cc0dc55a826208"
   },
   "secret_scan": {
     "tool": "gitleaks",
@@ -60,7 +61,7 @@
   },
   "active_cpu_tests": {
     "passed": 211,
-    "seconds": 21.86,
+    "seconds": 20.43,
     "command": "python tools/run_main_engine_checks.py",
     "scope": "CPU_UNIT_ONLY"
   },
@@ -129,9 +130,9 @@
     "wall_seconds": 86400,
     "reserve_seconds": 1800,
     "native_replay_status": "passed_replay_only",
-    "latest_status_timestamp": 1792717681.2334347,
-    "committed_groups": 104,
-    "search_tick": 3982,
+    "latest_status_timestamp": 1792718966.425026,
+    "committed_groups": 105,
+    "search_tick": 4036,
     "complete_native_game_verified": false,
     "gates_closed": false
   },
@@ -143,7 +144,15 @@
     "attempt": "native-general-local-1792716408200694000",
     "first_root_valid_simulations": 128,
     "first_root_seconds": 561.9997667060234,
-    "paired_roots_verification": "running_pending_independent_verification",
+    "paired_roots_verification": "passed_limited_scope",
+    "native_evidence": "_spec_work/versions/fair-final-general-fallback-v1/native-local-evidence-summary.json",
+    "native_evidence_sha256": "8a22cab4ee65585d5ee61814f0182b6545e10c0dfb109f251e2316ab13f8ecf4",
+    "verified_roots": 4,
+    "valid_simulations": 512,
+    "hidden_pairs": 2,
+    "unfinished_edge_backups": 0,
+    "engine_cleanup_passed": true,
+    "complete_game_verified": false,
     "native_pending_verified": false,
     "native_fallback_verified": false,
     "gates_closed": false
@@ -160,6 +169,19 @@
     "observed_queue_branch": "bit0-set",
     "stages": 4,
     "engine_cleanup_passed": true,
+    "legal_rejection_reachability_proven": false,
+    "gates_closed": false
+  },
+  "native_execution_flags": {
+    "tests_passed": 15,
+    "test_seconds": 0.242,
+    "report": "_spec_work/versions/fair-final-native-execution-flags-v1/tests-flags.xml",
+    "sha256": "dd5935151eed0e87018c18fe13fe18edc895f2546e53ab98c4aa7f39d62a8eae",
+    "static_evidence": "_spec_work/versions/fair-final-native-execution-flags-v1/static-report.json",
+    "static_evidence_sha256": "0eaafa613709b2e2063774d5eda8463acfe7b624de3fae25a8d2f5f430b651d7",
+    "scope": "SAVED_ARGUMENT_LOCAL_CONTROL_FLOW_ONLY",
+    "explicit_bit1_choices_match": true,
+    "whole_executor_equivalence_proven": false,
     "legal_rejection_reachability_proven": false,
     "gates_closed": false
   },
