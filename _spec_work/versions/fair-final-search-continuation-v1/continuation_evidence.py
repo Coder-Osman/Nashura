@@ -9,7 +9,8 @@ import tarfile
 
 WORKSPACE = Path(__file__).resolve().parents[3]
 EVIDENCE = WORKSPACE / "_spec_work/evidence/fair-final-v1-20261019"
-sys.path[:0] = [str(EVIDENCE), str(WORKSPACE / "firstlight_CR")]
+sys.path.append(str(WORKSPACE / "firstlight_CR"))
+sys.path.insert(0, str(EVIDENCE))
 
 from verify_search_episode import SOURCE, SOURCE_SHA, read, sha
 from native_runner.training.fair_final.episode import atomic_json

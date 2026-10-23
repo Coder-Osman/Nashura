@@ -1,0 +1,46 @@
+{
+  "schema": "FairFinalActiveRemoteSelectionEvidence/v1",
+  "source_commit": "5c54e0478747d30be2472f855c06a871d8866406",
+  "scope": "remote-selection-dispatch-and-collection-engineering",
+  "special_tests": {
+    "count": 29,
+    "status": "passed",
+    "duration_seconds": 0.033,
+    "junit": "tests-selection-remote-joint.xml"
+  },
+  "joint_regression": {
+    "count": 93,
+    "status": "passed",
+    "duration_seconds": 98.774,
+    "includes": [
+      "selection_remote",
+      "selection_handoff",
+      "selection_execution",
+      "active_verifier"
+    ],
+    "overlap_is_not_additive": true
+  },
+  "implemented_checks": [
+    "exact_remote_upload_tree",
+    "deployment_manifest_and_input_sha_verification",
+    "remote_metadata_cross_verification",
+    "atomic_sftp_upload",
+    "gpu_resource_preflight_and_file_lease",
+    "pid_start_identity",
+    "duplicate_collection_reverification",
+    "simulated_ssh_launch_orchestration"
+  ],
+  "real_execution": {
+    "ssh_host_contacted": false,
+    "gpu_host_started": false,
+    "frozen_deployment_modified": false,
+    "native_parent_recovery_verified": false,
+    "terminal_selection_verified": false
+  },
+  "gates": {
+    "training_admissible": false,
+    "formal_g2_pass": false,
+    "formal_g3_pass": false,
+    "gates_closed": false
+  }
+}

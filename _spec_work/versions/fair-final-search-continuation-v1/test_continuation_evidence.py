@@ -332,6 +332,47 @@ def test_complete_continuation_requires_terminal_and_preserves_parent_failure(co
     assert report["training_admissible"] is False and report["gates_closed"] is False
 
 
+def test_24_hour_continuation_retains_full_episode_validation(completed_continuation):
+    attempt, source = completed_continuation
+    launch = read(attempt / "launch.json")
+    launch["settings"]["wall_seconds"] = 86400
+    write(attempt / "evidence/settings.json", launch["settings"])
+    launch["payload_sha256"]["settings.json"] = sha(attempt / "evidence/settings.json")
+    write(attempt / "launch.json", launch)
+    report = validate_continuation(attempt, source=source)
+    assert report["roots"] == 10
+    assert report["valid_simulations"] == 1280
+    assert report["gates_closed"] is False
+    (attempt / "evidence/episode/complete-report.json").unlink()
+    with pytest.raises(FileNotFoundError):
+        validate_continuation(attempt, source=source)
+
+
+@pytest.mark.parametrize("seconds", [21600, 86400])
+def test_worker_accepts_approved_phase_bounds(seconds):
+    from continuation_worker import validate_phase_bound
+    validate_phase_bound(dict(wall_seconds=seconds, segment_reserve_seconds=1800))
+
+
+@pytest.mark.parametrize("seconds,reserve", [(86401, 1800), (43200, 1800),
+    (86400., 1800), (86400, 0), (True, 1800)])
+def test_worker_rejects_unapproved_phase_bounds(seconds, reserve):
+    from continuation_worker import validate_phase_bound
+    with pytest.raises(ValueError, match="approved"):
+        validate_phase_bound(dict(wall_seconds=seconds, segment_reserve_seconds=reserve))
+
+
+def test_explicit_frozen_source_still_rejects_modified_file(failed_prefix, tmp_path):
+    attempt, source = failed_prefix
+    frozen = tmp_path / "frozen-source"
+    shutil.copytree(source, frozen)
+    assert audit_failed_prefix(attempt, source=frozen)["roots"] == 8
+    manifest = read(attempt / "launch.json")["source_sha256"]
+    (frozen / next(iter(manifest))).write_bytes(b"changed")
+    with pytest.raises(ValueError, match="frozen source differs"):
+        audit_failed_prefix(attempt, source=frozen)
+
+
 def test_checkpoint_prefix_validates_search_actions_and_origin_failure(completed_continuation):
     attempt, source = completed_continuation
     checkpoint_attempt(attempt)

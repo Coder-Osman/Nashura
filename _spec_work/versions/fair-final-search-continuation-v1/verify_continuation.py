@@ -1,12 +1,12 @@
 import argparse
 from pathlib import Path
+import sys
 
-from continuation_evidence import audit_checkpoint_prefix, audit_failed_prefix, read, sha
-from verify_search_episode import SOURCE, validate_episode
-from native_runner.training.fair_final.episode import atomic_json
-
-
-def validate_continuation(attempt, *, source=SOURCE):
+def validate_continuation(attempt, *, source=None):
+    from continuation_evidence import audit_checkpoint_prefix, audit_failed_prefix, read, sha
+    from verify_search_episode import SOURCE, validate_episode
+    if source is None:
+        source = SOURCE
     attempt = Path(attempt)
     launch = read(attempt / "launch.json")
     parent = Path(launch["parent"])
@@ -23,7 +23,8 @@ def validate_continuation(attempt, *, source=SOURCE):
     for relative, expected in launch["payload_sha256"].items():
         if sha(directory / relative) != expected:
             raise ValueError("continuation payload differs: " + relative)
-    if (launch["settings"]["wall_seconds"] != 21600
+    if (type(launch["settings"]["wall_seconds"]) is not int
+            or launch["settings"]["wall_seconds"] not in (21600, 86400)
             or launch["settings"]["segment_reserve_seconds"] != 1800
             or launch["settings"]["training_admissible"] is not False
             or launch["source_sha256"] != receipt["source_sha256"]):
@@ -59,8 +60,12 @@ def validate_continuation(attempt, *, source=SOURCE):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("attempt", type=Path)
+    parser.add_argument("--source-root", type=Path,
+        default=Path(__file__).resolve().parents[3] / "firstlight_CR")
     args = parser.parse_args()
-    report = validate_continuation(args.attempt)
+    sys.path.insert(0, str(args.source_root.resolve()))
+    from native_runner.training.fair_final.episode import atomic_json
+    report = validate_continuation(args.attempt, source=args.source_root)
     atomic_json(args.attempt / "verification.json", report)
     print(report)
 

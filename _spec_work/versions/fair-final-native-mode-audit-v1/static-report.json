@@ -1,0 +1,147 @@
+{
+  "schema": "fair-final-native-mode-static.v1",
+  "status": "passed_limited_scope",
+  "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "instructions": [
+    {
+      "address": "0x1062f6c",
+      "mnemonic": "ldr",
+      "op_str": "x8, [x0, #0xa8]"
+    },
+    {
+      "address": "0x1062f70",
+      "mnemonic": "cbz",
+      "op_str": "x8, #0x1062fa0"
+    },
+    {
+      "address": "0x1062f74",
+      "mnemonic": "ldr",
+      "op_str": "w9, [x8, #0x18]"
+    },
+    {
+      "address": "0x1062f78",
+      "mnemonic": "cmp",
+      "op_str": "w9, #3"
+    },
+    {
+      "address": "0x1062f7c",
+      "mnemonic": "b.eq",
+      "op_str": "#0x1062fc8"
+    },
+    {
+      "address": "0x1062f80",
+      "mnemonic": "cmp",
+      "op_str": "w9, #1"
+    },
+    {
+      "address": "0x1062f84",
+      "mnemonic": "b.ne",
+      "op_str": "#0x1062fd0"
+    },
+    {
+      "address": "0x1062f88",
+      "mnemonic": "ldr",
+      "op_str": "x8, [x8, #0x1b0]"
+    },
+    {
+      "address": "0x1062f8c",
+      "mnemonic": "ldr",
+      "op_str": "w8, [x8, #8]"
+    },
+    {
+      "address": "0x1062f90",
+      "mnemonic": "cmp",
+      "op_str": "w8, #0xf"
+    },
+    {
+      "address": "0x1062f94",
+      "mnemonic": "ccmp",
+      "op_str": "w8, #6, #4, ne"
+    },
+    {
+      "address": "0x1062f98",
+      "mnemonic": "cset",
+      "op_str": "w0, eq"
+    },
+    {
+      "address": "0x1062f9c",
+      "mnemonic": "ret",
+      "op_str": ""
+    },
+    {
+      "address": "0x1062fa0",
+      "mnemonic": "ldr",
+      "op_str": "x0, [x0, #0x218]"
+    },
+    {
+      "address": "0x1062fa4",
+      "mnemonic": "cbz",
+      "op_str": "x0, #0x1062fc8"
+    },
+    {
+      "address": "0x1062fa8",
+      "mnemonic": "stp",
+      "op_str": "x29, x30, [sp, #-0x10]!"
+    },
+    {
+      "address": "0x1062fac",
+      "mnemonic": "mov",
+      "op_str": "x29, sp"
+    },
+    {
+      "address": "0x1062fb0",
+      "mnemonic": "bl",
+      "op_str": "#0x107c8a4"
+    },
+    {
+      "address": "0x1062fb4",
+      "mnemonic": "ldr",
+      "op_str": "w8, [x0, #0x68]"
+    },
+    {
+      "address": "0x1062fb8",
+      "mnemonic": "cmp",
+      "op_str": "w8, #0"
+    },
+    {
+      "address": "0x1062fbc",
+      "mnemonic": "cset",
+      "op_str": "w0, ne"
+    },
+    {
+      "address": "0x1062fc0",
+      "mnemonic": "ldp",
+      "op_str": "x29, x30, [sp], #0x10"
+    },
+    {
+      "address": "0x1062fc4",
+      "mnemonic": "ret",
+      "op_str": ""
+    },
+    {
+      "address": "0x1062fc8",
+      "mnemonic": "mov",
+      "op_str": "w0, #1"
+    },
+    {
+      "address": "0x1062fcc",
+      "mnemonic": "ret",
+      "op_str": ""
+    },
+    {
+      "address": "0x1062fd0",
+      "mnemonic": "mov",
+      "op_str": "w0, wzr"
+    },
+    {
+      "address": "0x1062fd4",
+      "mnemonic": "ret",
+      "op_str": ""
+    }
+  ],
+  "predicate_scope": "active-manager-world-only",
+  "native_observation_verified": false,
+  "legal_rejection_reachability_proven": false,
+  "training_admissible": false,
+  "gates_closed": false
+}

@@ -106,3 +106,25 @@ fixture的空start_ticks不具备原生执行身份。真实SSH派发/回收及�
 ```sh
 python -m pytest -q test_selection_execution.py test_selection_handoff.py test_active_verifier.py
 ```
+
+
+## SSH 派发与回收工程原型
+
+`selection_ssh.py`仅接受已独立验收的私有handoff，使用拒绝未知主机密钥策略；
+先检查目标机内存、磁盘、指定GPU UUID/占用与CUDA，再把固定输入、worker和运行时
+以原子SFTP上传至唯一attempt目录。远端启动器再次核对配置SHA、完整上传树、源码、
+handoff及GPU独占锁。私有attempt日志和权重归档必须保存在公开仓库之外。
+
+```sh
+python selection_ssh.py launch HANDOFF --handoff-sha HANDOFF_SHA --host HOST \
+  --username USER --private-root PRIVATE_ROOT --remote-base REMOTE_BASE \
+  --remote-python REMOTE_PYTHON --remote-source SOURCE_A \
+  --remote-data-root COMPLETE_DATA_ROOT --gpu-index 1 --timeout-seconds 28800
+python selection_ssh.py collect PRIVATE_ATTEMPT --launch-sha LAUNCH_SHA
+```
+
+回收仅在所属worker/子进程及GPU lease均不活跃时读取结果；下载前逐项重核输入、
+部署、配置和进程元数据，核对SHA与字节数并原子落盘。后续仍须运行独立
+`verify_selection_execution.py`，归档接收不能替代内容验收。全模拟launch与回收
+联合测试93项通过；尚未连接真实主机或执行真实父交接。本原型不闭合G0/G1，不构成
+terminal选优、正式G2/G3或模型强度证据，所有准入门仍为false。

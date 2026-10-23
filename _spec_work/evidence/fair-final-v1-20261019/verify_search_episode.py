@@ -10,7 +10,7 @@ import tarfile
 
 ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT.parents[2] / "firstlight_CR"
-sys.path.insert(0, str(SOURCE))
+sys.path.append(str(SOURCE))
 
 from native_runner.contracts import TerminalV1
 from native_runner.training.fair_final.episode import atomic_json, terminal_result

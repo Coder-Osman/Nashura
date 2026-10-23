@@ -11,6 +11,13 @@ import time
 from native_runner.training.fair_search.evaluate_policy import wait_for_engine
 
 
+def validate_phase_bound(settings):
+    if (type(settings["wall_seconds"]) is not int or settings["wall_seconds"] not in (21600, 86400)
+            or type(settings["segment_reserve_seconds"]) is not int
+            or settings["segment_reserve_seconds"] != 1800):
+        raise ValueError("continuation requires an approved six-hour or 24-hour bound and 30-minute reserve")
+
+
 def main():
     root = Path(sys.argv[1])
     settings = json.loads((root / "settings.json").read_text())
@@ -18,8 +25,7 @@ def main():
     for relative, expected in settings["driver_sha256"].items():
         if hashlib.sha256((root / relative).read_bytes()).hexdigest() != expected:
             raise ValueError("continuation driver or receipt identity differs")
-    if settings["wall_seconds"] != 21600 or settings["segment_reserve_seconds"] != 1800:
-        raise ValueError("continuation phase must retain its six-hour bound")
+    validate_phase_bound(settings)
     engine_path = root / "libcrprobe.so"
     if hashlib.sha256(engine_path.read_bytes()).hexdigest() != settings["engine_sha256"]:
         raise ValueError("complete search engine identity differs")

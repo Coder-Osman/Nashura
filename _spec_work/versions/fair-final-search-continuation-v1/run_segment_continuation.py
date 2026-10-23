@@ -3,16 +3,13 @@ import hashlib
 import json
 from pathlib import Path
 import shlex
+import sys
 import time
 
 import paramiko
 
-from continuation_evidence import WORKSPACE, audit_checkpoint_prefix, read, sha
-from native_runner.training.fair_final.episode import atomic_json
-from run_native_probe import PYTHON
-
-
 def execute(client, code, *, timeout=60):
+    from run_native_probe import PYTHON
     _, stdout, stderr = client.exec_command(shlex.join([PYTHON, "-c", code]), timeout=timeout)
     output, errors = stdout.read().decode(), stderr.read().decode()
     if stdout.channel.recv_exit_status():
@@ -23,8 +20,15 @@ def execute(client, code, *, timeout=60):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("parent", type=Path)
+    parser.add_argument("--source-root", type=Path,
+        default=Path(__file__).resolve().parents[3] / "firstlight_CR")
+    parser.add_argument("--wall-seconds", type=int, choices=(21600, 86400), default=21600)
     args = parser.parse_args()
-    prefix = audit_checkpoint_prefix(args.parent)
+    sys.path.insert(0, str(args.source_root.resolve()))
+    from continuation_evidence import WORKSPACE, audit_checkpoint_prefix, read, sha
+    from native_runner.training.fair_final.episode import atomic_json
+    from run_native_probe import PYTHON
+    prefix = audit_checkpoint_prefix(args.parent, source=args.source_root)
     parent_launch = read(args.parent / "launch.json")
     version = Path(__file__).resolve().parent
     attempt = "native-search-segment-" + str(time.time_ns())
@@ -36,7 +40,8 @@ def main():
         or name.startswith("episode/search-boundaries/")
         or name in ("episode/prepare-report.json", "episode/restart-receipt.json",
             "episode/recovery-search-report.json", "episode/segment-report.json")}
-    settings = dict(parent_launch["settings"], ports=[29761, 29762], segment_reserve_seconds=1800)
+    settings = dict(parent_launch["settings"], ports=[29761, 29762], segment_reserve_seconds=1800,
+        wall_seconds=args.wall_seconds)
     driver_names = ("continuation-input.json", "project/tools/probe_search_continuation.py",
         "project/continuation_worker.py")
     uploads = {"continuation-input.json": json.dumps(prefix, sort_keys=True).encode(),
@@ -108,7 +113,9 @@ print(json.dumps(dict(pid=p.pid,start_ticks=stat[19],remote=str(root))),flush=Tr
         launch = dict(attempt=attempt, remote=remote, parent=str(args.parent.resolve()),
             parent_launch_sha256=sha(args.parent / "launch.json"), source_sha256=prefix["source_sha256"],
             payload_sha256=upload_sha, settings=settings, process=process, resources=resources,
-            input_sha256=upload_sha["continuation-input.json"], training_admissible=False, gates_closed=False)
+            input_sha256=upload_sha["continuation-input.json"],
+            verification_source_root=str(args.source_root.resolve()),
+            training_admissible=False, gates_closed=False)
         atomic_json(output / "launch.json", launch)
         atomic_json(output / "continuation-input.json", prefix)
         print(json.dumps(dict(local=str(output), **process, resume_tick=prefix["proof"]["tick"],

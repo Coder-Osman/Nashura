@@ -127,7 +127,7 @@ def main():
     parser.add_argument("--wall-seconds", type=int, default=21600)
     args = parser.parse_args()
     if (args.port == args.belief_port or args.recovery_groups < 1
-            or not 0 <= args.segment_reserve_seconds < args.wall_seconds <= 21600):
+            or not 0 <= args.segment_reserve_seconds < args.wall_seconds <= 86400):
         raise ValueError("independent engines and bounded validation required")
     args.output.mkdir(parents=True, exist_ok=True)
     torch.set_num_threads(1)

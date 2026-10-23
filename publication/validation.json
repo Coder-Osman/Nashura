@@ -1,16 +1,16 @@
 {
   "schema": "hashura.publication-validation.v1",
-  "date": "2026-10-22",
-  "source_manifest_sha256": "49bb236632da70b54dfeab518e042050866dd17a499fdc778573322240dc9914",
-  "source_files_verified": 2005,
+  "date": "2026-10-23",
+  "source_manifest_sha256": "51df53f89d194dd880647c816bfb921e8dc5adff1f83a51fa75aa4b687be23a0",
+  "source_files_verified": 2039,
   "public_tests": {
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "passed": 220,
-    "seconds": 64.898,
+    "passed": 268,
+    "seconds": 34.871,
     "report": "checks-public.xml",
-    "sha256": "f72e6eb71e44365ba50c872ed23fa70cffc48d8aee42c7a68756244c6fa004cb"
+    "sha256": "bd706226f0302712a98a91b386add965ca516d13510da3f0f3d2a556b45d16ea"
   },
   "secret_scan": {
     "tool": "gitleaks",
@@ -60,7 +60,7 @@
   },
   "active_cpu_tests": {
     "passed": 211,
-    "seconds": 41.41,
+    "seconds": 21.86,
     "command": "python tools/run_main_engine_checks.py",
     "scope": "CPU_UNIT_ONLY"
   },
@@ -107,6 +107,77 @@
     "report": "_spec_work/versions/fair-final-active-migration-v1/verifier-evidence-20261022.json",
     "sha256": "0acb900f15b5de03ec22cf0444d34081a01ae46f4640c950ca2ba5d8c27117bb",
     "native_resume": "pending_independent_verification",
+    "formal_g2_pass": false
+  },
+  "remote_selection_engineering": {
+    "special_cases_passed": 29,
+    "joint_tests_passed": 93,
+    "joint_seconds": 98.774,
+    "report": "_spec_work/versions/fair-final-active-migration-v1/tests-selection-remote-joint.xml",
+    "sha256": "95668fa23250a6c65fe374bbb6cea32f6c9a6e7be985789d490e7d1e20d75910",
+    "scope": "SIMULATED_SSH_AND_ARCHIVE_FIXTURES_ONLY",
+    "real_host_contacted": false,
+    "formal_g2_pass": false,
+    "gates_closed": false
+  },
+  "continuation_24hour": {
+    "tests_passed": 81,
+    "test_seconds": 16.606,
+    "report": "publication/checks-continuation-24hour.xml",
+    "sha256": "af69a8d8f762359f548009444edfdaf733f8eba49e3ea19f092cd09e8d8dc962",
+    "source": "archived_244_file_frozen_parent",
+    "wall_seconds": 86400,
+    "reserve_seconds": 1800,
+    "native_replay_status": "passed_replay_only",
+    "latest_status_timestamp": 1792717681.2334347,
+    "committed_groups": 104,
+    "search_tick": 3982,
+    "complete_native_game_verified": false,
+    "gates_closed": false
+  },
+  "general_native_local_probe": {
+    "tests_passed": 54,
+    "test_seconds": 3.328,
+    "report": "_spec_work/versions/fair-final-general-fallback-v1/tests-native-general.xml",
+    "sha256": "8e8fd3e9b43ede9f7021a57d523ac0ce518d4b341283f51f40d4e38f6fc05ccc",
+    "attempt": "native-general-local-1792716408200694000",
+    "first_root_valid_simulations": 128,
+    "first_root_seconds": 561.9997667060234,
+    "paired_roots_verification": "running_pending_independent_verification",
+    "native_pending_verified": false,
+    "native_fallback_verified": false,
+    "gates_closed": false
+  },
+  "native_queue_mode": {
+    "tests_passed": 32,
+    "test_seconds": 0.021,
+    "report": "_spec_work/versions/fair-final-native-mode-audit-v1/tests-mode.xml",
+    "sha256": "ea4e751a158ed1ae1f36031ffd0bfa8f308160cfb9d5ff99574c54c5c2fbb377",
+    "native_evidence": "_spec_work/versions/fair-final-native-mode-audit-v1/native-evidence-summary.json",
+    "native_evidence_sha256": "4bdbbf63019380bcb9769b5ccbee8b7a13879bf53a611397bb12a0ffa380b376",
+    "native_status": "passed_limited_scope",
+    "behavior": "legal-WAIT-only",
+    "observed_queue_branch": "bit0-set",
+    "stages": 4,
+    "engine_cleanup_passed": true,
+    "legal_rejection_reachability_proven": false,
+    "gates_closed": false
+  },
+  "latest_storage_snapshot": {
+    "timestamp": 1792717067.8162131,
+    "free_bytes": 222190682112,
+    "free_gib": 206.9311981201172,
+    "instant_200gib_floor_met": true,
+    "two_generation_capacity_verified": false,
+    "formal_storage_gate_passed": false,
+    "historical_data_deleted_by_this_run": false
+  },
+  "current_active_migration_status": {
+    "attempt": "native-active-migration-1792676550169895000",
+    "benchmark_reference_frozen_exit_codes": [0, 0, 0],
+    "trainable_exit_code": 124,
+    "failed_attempt_archived": true,
+    "cross_process_resume_verified": false,
     "formal_g2_pass": false
   }
 }

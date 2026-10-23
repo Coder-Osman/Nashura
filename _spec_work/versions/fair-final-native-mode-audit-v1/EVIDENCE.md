@@ -1,0 +1,24 @@
+# 队列模式原生证据
+
+2026-10-23，独立attempt native-mode-1792717331670235000，.35专属端口29773。
+冻结history-v2运行时复用于general原生诊断，但不修改其目录或正在运行的
+Full128部署。只新增自有probe/worker及只读审计器。
+
+固定libg SHA为110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783；
+phase probe SHA为49098dbf5abe6a3e01dab5042f4f8c903337ef9a76e4cefa7808c4df013095ba。
+静态predicate完整27条指令指纹通过，static-report.json保留原始指令字段，
+SHA b95ef1757659e79fe8589ae56f8edbb8a2b31b9334cbb359a36f879411797d7b。
+
+合法WAIT轨迹的tick90/1200/3600/5400均为world_type=3、rules_mode=null、
+predicate_bit0=1、queue_branch=bit0-set。不是旧queue审计的bit0-clear/age20分支。
+原生内存只读检查前后digest不变；generation/epoch/tick过期身份均拒收；
+每阶段两次快照续演一致、根恢复一致、快照句柄释放。所属引擎清理已独立通过。
+
+外部固定launch SHA：88b994c362b408b7d03b2941df335d06976a3342554fd352a02f8452d5507863。
+下载回执SHA：5291b607a159b38fc5b78f292180d4aa33988aa8bac4f8106b92246f31fac2fd。
+独立验收结果passed_limited_scope；原生证据与私有运行路径独立保存，不上传引擎。
+32项静态谓词及验收篡改测试通过，零跳过；与其它测试集合不累加。
+
+限定：只采样合法WAIT轨迹，不代表全部策略实战；不证明mask等价、合法拒绝/
+pending可达或隐藏随机机制全覆盖。后续应优先审查bit0-set的ct86调用条件，
+而不是将age20路径当作该轨迹执行路径。training_admissible=false、gates_closed=false。

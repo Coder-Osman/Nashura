@@ -10,20 +10,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "evidence/fair-fina
 
 import paramiko
 
-from run_native_probe import PYTHON, WORKSPACE
-from verify_search_episode import atomic_json, read, sha, validate_episode
-from native_runner.training.fair_final.storage import durable_write, json_bytes
-from verify_continuation import validate_continuation
-
-
 ARCHIVE_LOGS = ("worker.log", "prepare.log", "resume.log", "continue.log")
 
 
 def publish_download_receipt(attempt, *, remote, files):
+    from native_runner.training.fair_final.storage import durable_write, json_bytes
     path = Path(attempt) / "download-receipt.json"
     identity = dict(remote=remote, files=files, training_admissible=False)
     if path.exists():
-        previous = read(path)
+        previous = json.loads(path.read_bytes())
         if (set(previous) != {"timestamp", *identity}
                 or previous["training_admissible"] is not False
                 or any(previous[key] != value for key, value in identity.items())):
@@ -37,7 +32,14 @@ def publish_download_receipt(attempt, *, remote, files):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("attempt", type=Path)
+    parser.add_argument("--source-root", type=Path,
+        default=Path(__file__).resolve().parents[3] / "firstlight_CR")
     args = parser.parse_args()
+    sys.path.insert(0, str(args.source_root.resolve()))
+    from run_native_probe import PYTHON, WORKSPACE
+    from verify_search_episode import atomic_json, read, sha
+    from native_runner.training.fair_final.storage import durable_write
+    from verify_continuation import validate_continuation
     launch = read(args.attempt / "launch.json")
     fields = [part.strip() for part in next(line for line in
         (WORKSPACE / "MACHINES.md").read_text().splitlines()
@@ -97,7 +99,7 @@ else:
             print(json.dumps({key: value for key, value in report.items() if key != "completion"}), flush=True)
             return
         try:
-            report = validate_continuation(args.attempt)
+            report = validate_continuation(args.attempt, source=args.source_root)
         except Exception as error:
             atomic_json(args.attempt / "verification-failure.json", dict(status="failed", error=repr(error),
                 training_admissible=False))

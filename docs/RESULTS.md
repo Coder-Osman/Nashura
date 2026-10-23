@@ -1,8 +1,56 @@
 # 阶段成果与证据索引
 
-核对日期：2026-10-22。本文是公开快照说明；完整历史见工程进度与冻结验收清单。
+## 2026-10-23 原生队列mode限定验收
 
-## 已实现及验证的工程范围
+fair-final-native-mode-audit-v1独立绑定固定libg的27条predicate指令，
+原生合法WAIT轨迹在tick90/1200/3600/5400均读得world_type=3、
+predicate_bit0=1，对应bit0-set分支；不是旧queue审计中的bit0-clear/age20路径。
+过期身份拒收、只读digest不变、快照重复续演和所属引擎清理独立通过。
+32项工程/篡改测试通过；不证明所有实战分支、mask等价或合法pending可达。
+下一项应针对bit0-set的ct86调用条件取证，不用有限轨迹声称全局不可达。
+中心/home持久盘最新只读可用206.931198GiB，越过200GiB瞬时底线，
+两代正式容量与正式中心链路仍待验；未清历史数据或调整原门槛。
+
+## 2026-10-23 一般provider原生local路径验收启动
+
+Full128后台继续；另用独立29771/29772双引擎部署general-fallback组合provider，
+复用冻结history-v2真实轨迹，注册tick110与后继根、原始与隐藏牌序扰动配对，
+每根128有效模拟。新增独立验收器校验外层组合及底层独立构造身份、抽牌链、
+访问数、边界回传、恢复和清理；工程fixture不作为原生通过证据。
+attempt为native-general-local-1792716408200694000，首根128模拟完成561.9998秒，
+隐藏配对根计算中，四根结果待验。54项工程/验收测试通过。
+此探针只验证local分支，原生pending/fallback、总体先验及G0/G1整体仍开放。
+
+## 2026-10-23 Full128同局24小时续跑
+
+旧段在tick3922完整边界保存并清理。用其SHA固定归档恢复244项源码，显式
+加载冻结搜索协议，103组/206根/26368有效模拟和递归父链核验通过。新段
+native-search-segment-1792715657103653000在.35启动，1 actor、2专属引擎。
+用户指定86400秒上限，1800秒完整边界保存余量；历史21600秒记录继续可验。
+启动器、worker、探针、收取及终局验收保持相同时限与源码身份语义。
+51项专项通过9.16秒，见fair-final-search-continuation-v1/tests-24hour-20261023.xml；
+工程测试不代替完整原生终局。新进程已重演211条日志至tick3922并开始新根，
+恢复报告passed_replay_only；完整终局及最终独立验收仍待完成。
+active父benchmark/reference/frozen成功，trainable总时限耗尽exit124，跨进程
+恢复整体验收尚未通过；整体门与正式中心200GiB门保持，未启动正式训练。
+
+## 2026-10-23 远程选优派发/回收原型
+
+最新主线为`5c54e0478747d30be2472f855c06a871d8866406`。新增
+`selection_remote_runtime.py` 与 `selection_ssh.py`：绑定目标GPU UUID及资源预检、
+GPU独占lease、拒绝未知SSH主机密钥、原子SFTP上传，要求远端上传树与配置清单完全
+一致；回收时交叉校验远端配置/进程/失败元数据的SHA、字节数和JSON内容，下载产物
+后仍须通过既有独立选优验收器。
+
+新专项29个测试案例通过；与handoff、execution和active verifier联合93项通过98.774秒，
+重叠测试不累加，详见`fair-final-active-migration-v1/remote-selection-evidence-20261023.json`
+及`tests-selection-remote-joint.xml`。SSH及远端文件系统均为模拟：没有真实主机连接、
+GPU启动、父恢复或terminal选优；因此不新增G0/G1门PASS，不代表正式G2/G3或模型强度。
+运行准入字段保持false，冻结部署保持原样。
+
+核对日期：2026-10-23。本文是公开快照说明；完整历史见工程进度与冻结验收清单。
+
+## 2026-10-22 既有成果与此前基线
 
 最新基线为`8f68763803207890351f574ab7191a5a613cb505`，fetch全部远端分支、
 本地HEAD/origin/main逐项核对一致，更新前2010项公开源SHA通过。新增独立预算

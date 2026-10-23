@@ -1,5 +1,23 @@
 # 最新实现独立原生验证：发现数值回归，修复后重新验证
 
+## 2026-10-23 远程选优派发与回收工程验收
+
+基于 Nashura 主线 `5c54e0478747d30be2472f855c06a871d8866406`，新增
+`selection_remote_runtime.py` 与 `selection_ssh.py`。运行时要求远端上传树与
+`remote-config.json` 清单精确相等，上传文件均为普通文件并逐字节匹配；归档时重核
+输入、部署、worker和运行时副本，回收前重读远端配置/进程/失败记录并交叉校验
+SHA、字节数、JSON内容及本地固定副本。重复回收也重新验证元数据。
+
+新增 `test_selection_remote.py` 覆盖GPU/内存/磁盘预检、GPU文件锁、进程启动身份、
+原子SFTP、精确上传树、部署清单、元数据/worker篡改拒收、活动进程不下载，以及全模拟
+SSH launch编排。专项 **29个测试案例通过**；与既有selection handoff/execution/
+active verifier联合 **93项通过，98.774秒**，集合重叠不相加。完整结果见
+`tests-selection-remote-joint.xml`。该回归全程模拟SSH及远端文件系统，未连接GPU主机，
+不代表真实父恢复、派发、terminal选优或G2/G3通过。
+
+不触碰冻结部署；`training_admissible=false`、`formal_g2_pass=false`、
+`gates_closed=false`；G0/G1仍开放，中心200 GiB资源门槛与原生Full128/父恢复待验状态不变。
+
 代码基线为已整合审计分支的Nashura主线 `af498d14371a2ddb91b5b5794fa1a32b4064629a`。
 2026-10-22重新fetch并核对全部远端分支，该提交仍为最新main。
 
