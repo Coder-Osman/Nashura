@@ -1,0 +1,340 @@
+{
+  "constructor_registration_proven": true,
+  "constructor_slot": "0x18e5370",
+  "consumer_scope": "three bound code paths pass the global address to MT generation; runtime usage not established",
+  "fixed_hog_usage_proven": false,
+  "gates_closed": false,
+  "global_offset": "0x19fc368",
+  "hidden_random_coverage_closed": false,
+  "initializer_tags": {
+    "TAG.INIT_ARRAY": 26099160,
+    "TAG.INIT_ARRAYSZ": 6024
+  },
+  "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "regions": {
+    "clear": {
+      "instructions": [
+        [
+          "mov",
+          "w1, wzr"
+        ],
+        [
+          "mov",
+          "w2, #0x9c8"
+        ],
+        [
+          "b",
+          "#0x17e4cc0"
+        ]
+      ],
+      "sha256": "7869390d5e6edcef03e4a4f73a89596d9de46ad3d1cc3dd9de0253014a968cc8",
+      "size": 12,
+      "start": "0x121b17c"
+    },
+    "constructor": {
+      "instructions": [
+        [
+          "stp",
+          "x29, x30, [sp, #-0x10]!"
+        ],
+        [
+          "bl",
+          "#0x1a1cb0c"
+        ]
+      ],
+      "sha256": "551a04adfa221ffdd710e3bab1d63703b76072feb987852d9a3a5c771b7ab906",
+      "size": 8,
+      "start": "0x1335848"
+    },
+    "consumer_one_address": {
+      "instructions": [
+        [
+          "adrp",
+          "x20, #0x19fc000"
+        ],
+        [
+          "add",
+          "x20, x20, #0x368"
+        ],
+        [
+          "b",
+          "#0x7f55c8"
+        ]
+      ],
+      "sha256": "938d351c62bca3349c5feccd01fe5f783c914a828b131f67618f5a626b75042f",
+      "size": 12,
+      "start": "0x133527c"
+    },
+    "consumer_one_call": {
+      "instructions": [
+        [
+          "mov",
+          "x0, x20"
+        ],
+        [
+          "mov",
+          "w1, #0x7fffffff"
+        ],
+        [
+          "bl",
+          "#0x121b188"
+        ]
+      ],
+      "sha256": "78c6ee069b31c2a4b464a73846fafdef4e8223e933df1fa81aadcf36a171b766",
+      "size": 12,
+      "start": "0x133530c"
+    },
+    "consumer_three_address": {
+      "instructions": [
+        [
+          "adrp",
+          "x21, #0x19fc000"
+        ],
+        [
+          "add",
+          "x21, x21, #0x368"
+        ],
+        [
+          "mov",
+          "w23, #0x100"
+        ],
+        [
+          "mov",
+          "w24, #4"
+        ],
+        [
+          "b",
+          "#0x13880f8"
+        ]
+      ],
+      "sha256": "f5ca9fc121b679b1da30228a0d6ef1b92cd32c8d04a438081f2ece612850009c",
+      "size": 20,
+      "start": "0x1a1a7dc"
+    },
+    "consumer_three_arg": {
+      "instructions": [
+        [
+          "mov",
+          "x0, x21"
+        ],
+        [
+          "mov",
+          "w1, #0x7fffffff"
+        ],
+        [
+          "b",
+          "#0x7f88b4"
+        ]
+      ],
+      "sha256": "801134c33258c44276a7148660631a52318292e1224423e520e1fe47667642c2",
+      "size": 12,
+      "start": "0x13351ec"
+    },
+    "consumer_three_call": {
+      "instructions": [
+        [
+          "bl",
+          "#0x121b188"
+        ]
+      ],
+      "sha256": "7d48c9174a600c99237e45b5c18bde0cef756548fbd8dc1c8e2d0d2eba14331a",
+      "size": 4,
+      "start": "0x7f88b4"
+    },
+    "consumer_two": {
+      "instructions": [
+        [
+          "adrp",
+          "x24, #0x19fc000"
+        ],
+        [
+          "add",
+          "x24, x24, #0x368"
+        ],
+        [
+          "mov",
+          "w28, #4"
+        ],
+        [
+          "sub",
+          "x27, x9, x8"
+        ],
+        [
+          "mov",
+          "x0, x24"
+        ],
+        [
+          "mov",
+          "w1, #0x7fffffff"
+        ],
+        [
+          "bl",
+          "#0x121b188"
+        ]
+      ],
+      "sha256": "cd12412ab7379e93cb29c5ad65bd57ba3b1b5f28e5cc0221701fd758b4a3886b",
+      "size": 28,
+      "start": "0x133572c"
+    },
+    "fallthrough": {
+      "instructions": [
+        [
+          "ldp",
+          "x29, x30, [sp], #0x10"
+        ],
+        [
+          "stp",
+          "x29, x30, [sp, #-0x10]!"
+        ],
+        [
+          "mov",
+          "x29, sp"
+        ],
+        [
+          "mov",
+          "x0, xzr"
+        ],
+        [
+          "bl",
+          "#0x17e5260"
+        ],
+        [
+          "mov",
+          "x1, x0"
+        ],
+        [
+          "adrp",
+          "x0, #0x19fc000"
+        ],
+        [
+          "add",
+          "x0, x0, #0x368"
+        ],
+        [
+          "ldp",
+          "x29, x30, [sp], #0x10"
+        ],
+        [
+          "b",
+          "#0x7f5434"
+        ]
+      ],
+      "sha256": "6a66e74fd9eccf18267bfbe09b288eef145184d95ba1215dd8d4167c89ab39cc",
+      "size": 40,
+      "start": "0x1a1cb0c"
+    },
+    "initialize": {
+      "instructions": [
+        [
+          "stp",
+          "x29, x30, [sp, #-0x30]!"
+        ],
+        [
+          "str",
+          "x21, [sp, #0x10]"
+        ],
+        [
+          "stp",
+          "x20, x19, [sp, #0x20]"
+        ],
+        [
+          "mov",
+          "x29, sp"
+        ],
+        [
+          "mov",
+          "w20, w1"
+        ],
+        [
+          "mov",
+          "x19, x0"
+        ],
+        [
+          "mov",
+          "w21, #0x8965"
+        ],
+        [
+          "add",
+          "x0, x0, #4"
+        ],
+        [
+          "mov",
+          "w1, wzr"
+        ],
+        [
+          "mov",
+          "w2, #0x9c0"
+        ],
+        [
+          "movk",
+          "w21, #0x6c07, lsl #16"
+        ],
+        [
+          "bl",
+          "#0x17e4cc0"
+        ],
+        [
+          "mov",
+          "w8, #4"
+        ],
+        [
+          "str",
+          "w20, [x19]"
+        ],
+        [
+          "str",
+          "wzr, [x19, #0x9c4]"
+        ],
+        [
+          "eor",
+          "w9, w20, w20, asr #30"
+        ],
+        [
+          "madd",
+          "w20, w9, w21, w21"
+        ],
+        [
+          "str",
+          "w20, [x19, x8]"
+        ],
+        [
+          "add",
+          "x8, x8, #4"
+        ],
+        [
+          "cmp",
+          "x8, #0x9c0"
+        ],
+        [
+          "b.ne",
+          "#0x121b154"
+        ],
+        [
+          "ldp",
+          "x20, x19, [sp, #0x20]"
+        ],
+        [
+          "ldr",
+          "x21, [sp, #0x10]"
+        ],
+        [
+          "ldp",
+          "x29, x30, [sp], #0x30"
+        ],
+        [
+          "ret",
+          ""
+        ]
+      ],
+      "sha256": "9da4994dffa4ec8f5075ec4cbefa05c64f63a4b106dc0e1af4f0c2577d69951d",
+      "size": 100,
+      "start": "0x121b118"
+    }
+  },
+  "schema": "fair-final-native-global-rng-static.v1",
+  "semantics": "registered load initializer restores caller LR then falls through to time-seeded MT initialization",
+  "snapshot_coverage_proven": false,
+  "state_size": 2504,
+  "status": "passed_static_limited_scope",
+  "training_admissible": false
+}

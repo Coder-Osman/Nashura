@@ -6,6 +6,18 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+2026-10-23最新原生诊断：global-rng-audit-v1通过INIT_ARRAY补齐全局MT的加载
+入口登记，并绑定三段消费者代码。两个独立新引擎、tick90/1200/3600/5400共
+8次受控首字节扰动均在快照恢复后保留，state-digest均未感知该变化；CAS修复、
+过期身份拒收、句柄释放及所属引擎清理通过。18份归档独立内容验收，状态为
+verified_diagnostic_only，不是随机覆盖门通过。WAIT轨迹中该对象保持不变，
+固定速猪实际使用和战斗影响仍待证，不将快照缺口等同已证实的实际搜索偏差。
+新增33项，与alias/shuffle/seed联合138项通过6.06秒、零跳过；证据见
+fair-final-native-global-rng-audit-v1/EVIDENCE.md及公开摘要，原始hex不公开。
+Full128快照1792733078提交118组/236根/30208模拟至tick4302，tick4322继续搜索；
+开局369/1024，terminal选优仍运行。冻结部署未改，G0/G1及34/43保持开放，
+G2–G8、正式迁移和五机放量均未启动。下列早期“入口/覆盖待验”以本段限定结果为准。
+
 2026-10-23最新补查：独立rng-alias-audit-v1核对18处MT直接引用及19条跳转
 闭包边，发现额外time(NULL) seed路径初始化全局对象0x19fc368。绑定三段固定
 字节及PLT/JUMP_SLOT；不把EH范围当作真实入口。路径实际可达性、固定速猪用途
