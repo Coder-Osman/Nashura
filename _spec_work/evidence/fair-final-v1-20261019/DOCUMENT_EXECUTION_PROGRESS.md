@@ -6,6 +6,17 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+2026-10-23最新独立修复：global-rng-snapshot-v1在单比赛执行通道保存并恢复
+2504字节全局MT，绑定库SHA/进程/base/manager/generation，恢复前校验资格，
+拒绝多slot和render；保留nativeSha256，新摘要显式覆盖native payload及该对象。
+双新进程8个边界全部字节恢复、重复restore、各两条10步WAIT续演一致，摘要
+全部感知受控扰动；19份归档独立验收，status=verified_limited_scope。
+新47项，与随机诊断联合185项通过、11.37秒；不替代固定速猪实际消费者、
+有战斗续演、全部随机机制或完整搜索终局。旧冻结部署未改，G0/G1及34/43不变。
+Full128快照1792734434提交119组/238根/30464模拟至tick4322，tick4342玩家1
+搜索中；开局采样545/1024，terminal选优仍运行，均未最终验收。
+证据见fair-final-global-rng-snapshot-v1/EVIDENCE.md。下段缺口是旧引擎历史结果。
+
 2026-10-23最新原生诊断：global-rng-audit-v1通过INIT_ARRAY补齐全局MT的加载
 入口登记，并绑定三段消费者代码。两个独立新引擎、tick90/1200/3600/5400共
 8次受控首字节扰动均在快照恢复后保留，state-digest均未感知该变化；CAS修复、

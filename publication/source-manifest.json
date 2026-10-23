@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "38c9b0df2162ec349364521c86c9810b090830fe7ec5164ecd58f29c718b6332",
-      "bytes": 85967,
-      "source_sha256": "38c9b0df2162ec349364521c86c9810b090830fe7ec5164ecd58f29c718b6332",
+      "sha256": "e3b744f371d998fe1507566c4ddaac08763affae78077f9786b275fae1da5ee3",
+      "bytes": 86904,
+      "source_sha256": "e3b744f371d998fe1507566c4ddaac08763affae78077f9786b275fae1da5ee3",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "6d7e750902f37204884a352d9dd4c5c926e06432809fa2e6b068805cf2676f21",
-      "bytes": 43825,
-      "source_sha256": "6d7e750902f37204884a352d9dd4c5c926e06432809fa2e6b068805cf2676f21",
+      "sha256": "56bba7ef194c64bf47727d4784c140c7b68b144969769efd80b80f6eb66e8fda",
+      "bytes": 44641,
+      "source_sha256": "56bba7ef194c64bf47727d4784c140c7b68b144969769efd80b80f6eb66e8fda",
       "transformations": []
     },
     {
@@ -2386,6 +2386,90 @@
       "sha256": "0cf60711dcdfad5686b1efcc659fd059c3a8c7cdbc497af14a2d1decb547ac26",
       "bytes": 17482,
       "source_sha256": "0cf60711dcdfad5686b1efcc659fd059c3a8c7cdbc497af14a2d1decb547ac26",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-global-rng-snapshot-v1/CONTRACT.md",
+      "sha256": "93bb4e1cd66583782a730ceebebbad26eef8b1e5ca12a665b88abb6ff64d7871",
+      "bytes": 1503,
+      "source_sha256": "93bb4e1cd66583782a730ceebebbad26eef8b1e5ca12a665b88abb6ff64d7871",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-global-rng-snapshot-v1/EVIDENCE.md",
+      "sha256": "106957fb1474602a297976d1296c1179a2683c6d29636f9867012ef41090b1b5",
+      "bytes": 1884,
+      "source_sha256": "106957fb1474602a297976d1296c1179a2683c6d29636f9867012ef41090b1b5",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-global-rng-snapshot-v1/build_engine.py",
+      "sha256": "6fe0a13530c6eb72cc87a380703a11501c04b44e4dbe6ca4973ef95ec19ad55e",
+      "bytes": 8217,
+      "source_sha256": "6fe0a13530c6eb72cc87a380703a11501c04b44e4dbe6ca4973ef95ec19ad55e",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-global-rng-snapshot-v1/evidence-summary.json",
+      "sha256": "2bb2372acee5889eaa287c8675bfb3c1f4615521a1a7c15bd3984b4465e9d872",
+      "bytes": 1410,
+      "source_sha256": "2bb2372acee5889eaa287c8675bfb3c1f4615521a1a7c15bd3984b4465e9d872",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-global-rng-snapshot-v1/global_snapshot.inc",
+      "sha256": "e3e1a506464712c61aac07eb05ec30b0503f0cfc661268e2fad408342d646d17",
+      "bytes": 3942,
+      "source_sha256": "e3e1a506464712c61aac07eb05ec30b0503f0cfc661268e2fad408342d646d17",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-global-rng-snapshot-v1/probe_snapshot.py",
+      "sha256": "f961e5acef39c7b8d857d736c38e8675217f94e158e456f4b6976cb3b715049e",
+      "bytes": 7772,
+      "source_sha256": "f961e5acef39c7b8d857d736c38e8675217f94e158e456f4b6976cb3b715049e",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-global-rng-snapshot-v1/run_snapshot.py",
+      "sha256": "927d2b215c0a103198fd88dcab0345cf5e2cac7011fc299a1f2973d0c23f28bb",
+      "bytes": 7579,
+      "source_sha256": "927d2b215c0a103198fd88dcab0345cf5e2cac7011fc299a1f2973d0c23f28bb",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-global-rng-snapshot-v1/test_snapshot.py",
+      "sha256": "53f2290286943ded2ab54e65e37db1fb6bbafe3fe6dff8100ed3f9c4f7454cae",
+      "bytes": 16935,
+      "source_sha256": "53f2290286943ded2ab54e65e37db1fb6bbafe3fe6dff8100ed3f9c4f7454cae",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-global-rng-snapshot-v1/tests-combined.xml",
+      "sha256": "bfc95e41039ca4493cff2af8566b1ce8892212c9c90734abd29f8ef67c4d9cf0",
+      "bytes": 35662,
+      "source_sha256": "bfc95e41039ca4493cff2af8566b1ce8892212c9c90734abd29f8ef67c4d9cf0",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-global-rng-snapshot-v1/tests-final.xml",
+      "sha256": "046c33e6e12f3913d8349e619bc0911b6515cedb8dbeae06b2bb034c1eb40f23",
+      "bytes": 8061,
+      "source_sha256": "046c33e6e12f3913d8349e619bc0911b6515cedb8dbeae06b2bb034c1eb40f23",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-global-rng-snapshot-v1/tests-initial.xml",
+      "sha256": "2f2d421e7747a60b5de214e53b914514e0edc0e9170eae30957e48c97fe800f6",
+      "bytes": 1447,
+      "source_sha256": "2f2d421e7747a60b5de214e53b914514e0edc0e9170eae30957e48c97fe800f6",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-global-rng-snapshot-v1/verify_snapshot.py",
+      "sha256": "3035c445e72b826ee944ac7d46ed9dd62eeb63e3de6256126e4a5f5aadae7d6b",
+      "bytes": 9139,
+      "source_sha256": "3035c445e72b826ee944ac7d46ed9dd62eeb63e3de6256126e4a5f5aadae7d6b",
       "transformations": []
     },
     {
@@ -14748,8 +14832,8 @@
       "transformations": []
     }
   ],
-  "file_count": 2106,
-  "source_bytes": 31238076,
+  "file_count": 2118,
+  "source_bytes": 31343380,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

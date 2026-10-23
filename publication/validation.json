@@ -1,5 +1,23 @@
 {
   "schema": "hashura.publication-validation.v1",
+  "latest_global_mt_snapshot_publication": {
+    "source_files_verified": 2118,
+    "source_manifest_sha256": "9fbe0917feeb6b6f2b016fd88fffa20dd006507f2543b6aa0a966fc0f7007f73",
+    "public_tests": {
+      "passed": 518,
+      "skipped": 16,
+      "seconds": 62.13,
+      "report": "publication/checks-public.xml",
+      "sha256": "84f16db52b87166f8b8cb45405790683edd096c72084ae41aa2352a8b13d0752",
+      "skip_reason": "private native library absent from public snapshot"
+    },
+    "main_engine_tests": {"passed": 211, "seconds": 36.07},
+    "secret_scan_findings": 0,
+    "native_status": "verified_limited_scope",
+    "training_admissible": false,
+    "gates_closed": false,
+    "historical_entries_below_preserved": true
+  },
   "date": "2026-10-23",
   "source_manifest_sha256": "42814e4875c5e31e3aec4ca7254f36b4fc35f1627dfa9bef2e8d807cbb96a5a4",
   "source_files_verified": 2056,

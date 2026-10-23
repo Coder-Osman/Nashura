@@ -1,0 +1,25 @@
+# 全局MT快照修复的限定验收
+
+2026-10-23，独立新版构建通过，并完成两个新原生进程、各tick90/1200/3600/5400
+共8个边界的受控扰动/恢复。每个边界全部2504字节恢复，重复restore通过；
+两条各10步WAIT续演逐步摘要一致，句柄释放及所属进程/端口清理通过。
+新scope摘要8/8感知仅全局状态变化，nativeSha256保持不变。
+
+引擎SHA256：fbd97f8f02621d37adc41b9782440950d9e0346ad2cffcb68601c01fb237141e。
+构建清单SHA256：eab0a9eba26f4739faa77bfb5520d6b9f51515694c0797410289c2d6072befac。
+launch SHA256：e0edd59a2f1d353513393ccf28a26858045d41102ac3ca906ffc89674ae13a3a。
+download SHA256：81a365987f351d08d46c50e1d2c3d486b17d8a97494bea6331d55304cd6e468a。
+19份归档由verify_snapshot.py独立校验；原始hex及引擎二进制私有保留。
+公开摘要用于记录限定结果，缺少私有归档时不宣称可重验完整原生执行。
+
+新增47项工程测试，与global/alias/shuffle/seed联合185项通过、11.37秒，零跳过。
+包括真实C++模块的全字节恢复、跨pid/base/manager/generation拒绝、损坏内容和
+SHA拒绝且不写入，摘要与Python SHA256参考一致，以及实际single-lane函数的
+多slot/render拒绝。整包篡改即使重算下载回执仍被拒收。
+早期测试的PYTHONPATH缺失和重复锚点fixture拼写错误已修正；初始失败XML保留。
+
+本版仅覆盖已绑定库和单比赛执行通道的这一个全局MT对象。合法WAIT轨迹未证明
+固定速猪实际调用该对象；完整有战斗轨迹、其它全局状态和一般随机机制仍待验。
+摘要只覆盖native payload与该对象，不覆盖全部phase sidecar或整个进程。
+旧引擎、Full128、开局采样和terminal选优冻结部署保持原样。
+status为verified_limited_scope；G0/G1及34/43登记保持开放，训练准入false。
