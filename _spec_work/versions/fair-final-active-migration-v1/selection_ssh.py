@@ -14,7 +14,15 @@ import paramiko
 
 
 ROOT = Path(__file__).resolve().parent
-PUBLIC_REPOSITORY = ROOT.parents[3]
+
+
+def public_repository_root(version_root):
+    workspace = Path(version_root).resolve().parents[2]
+    publication = workspace / "Nashura"
+    return publication.resolve() if (publication / ".git").exists() else workspace
+
+
+PUBLIC_REPOSITORY = public_repository_root(ROOT)
 RUNTIME = ROOT / "selection_remote_runtime.py"
 WORKER = ROOT / "run_selection.py"
 INPUT_NAMES = ("payload.tar.gz", "parent-checkpoint.pt", "parent-verification.json",

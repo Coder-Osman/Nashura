@@ -1,5 +1,26 @@
 # 最新实现独立原生验证：发现数值回归，修复后重新验证
 
+## 2026-10-23 原生恢复重试独立通过，真实选优启动
+
+native-active-retry-1792720054258999000完成，exit0、9430.322秒；归档298文件。
+verify_active_retry.py独立核验失败父与成功子，状态为
+passed_active_retry_chain_and_two_stage_checkpoint_scope。第5→7步网络、AdamW、
+RNG、采样游标及选优状态与reference相同，冻结阶段与解冻阶段checkpoint范围
+分别核验。父仍是failed_trainable_timeout_preserved；此验收明确
+native_game_provenance_reverified=false，不把恢复一致性当作对局来源重验或G2。
+固定launch、回执、验收SHA见retry-completion-evidence-20261023.json。
+
+prepare_selection.py实际重验后生成独立交接。内部semantic handoff_sha与
+selection-handoff.json文件SHA不同；SSH入口使用后者，未降低身份校验。
+本地selection_ssh.py旧PUBLIC_REPOSITORY误指ChatGPT上级目录，现区分CR源布局
+中的Nashura与导出公开布局，并兼容.git文件；原29项加3项路径回归共32项通过
+0.158秒，见tests-selection-layout.xml。未改任何运行中冻结包。
+
+真实selection-1792730822491650000已在.35 GPU1启动，PID55429/start32100285，
+独立28800秒；预检Tesla V100 32GB，可用内存239.802GiB、盘205.905GiB。
+最新回收为running，尚无terminal选优或round2原生结论。正式G2、训练准入及
+gates_closed均保持false。早先semantic SHA误用及远端目录缺失均在启动前拒收。
+
 ## 2026-10-23 远程选优派发与回收工程验收
 
 基于 Nashura 主线 `5c54e0478747d30be2472f855c06a871d8866406`，新增

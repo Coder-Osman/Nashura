@@ -1,0 +1,26 @@
+{
+  "schema": "fair-final-active-retry-public-summary.v1",
+  "status": "passed_active_retry_chain_and_two_stage_checkpoint_scope",
+  "parent_status": "failed_trainable_timeout_preserved",
+  "parent_launch_sha256": "8c6092ed95822c467f2b8abd0a18cb17c5bbb52964dfe78cf2e906a620bdc97b",
+  "parent_receipt_sha256": "43bc43aa08a748917e2af898e28b5e80dff79239c6bdda8ba80769dc7f9481f2",
+  "parent_failure_sha256": "f5591a2a5375be733a4507da8c4c5c07e4f2f00375388a1b17823c5be08e1d0d",
+  "retry_launch_sha256": "6038ba21c860515146d92d689995526f8ab37a442f80a744e539b3739a5e6508",
+  "retry_receipt_sha256": "cc60b1ef6837fdfdbc2ee623c1fca263ea530ae3f52bd8024b012902db8104dd",
+  "retry_verification_sha256": "d8e4fcb788614dc5a2ddff964075b33c1473c6bab99f0cb3a191e26a94cd5e3f",
+  "verifier_sha256": "a8c9e1d55559e37fdaeac190efee09c8a89a137e730c015d86170ee3eeec7ab5",
+  "frozen_deployment_verified": true,
+  "native_game_provenance_reverified": false,
+  "terminal_selection": {
+    "status": "running",
+    "attempt_id": "selection-1792730822491650000",
+    "launch_sha256": "089fcec88dc04d02c326981ca35cfd7a055e87188581214ca173b8cc63007834",
+    "handoff_semantic_sha256": "e8615a881c9a702efa7e380b6af36ebc270c43f103f15626c1d5074d04990c4d",
+    "handoff_file_sha256": "041d3cf2de3d15a173ecf5bd31178e8d9a441e91e73d7863e9e74911200252cb",
+    "timeout_seconds": 28800
+  },
+  "training_admissible": false,
+  "formal_g2_pass": false,
+  "gates_closed": false,
+  "public_archive_scope": "Identity summary only; raw checkpoints and private archive retained separately."
+}

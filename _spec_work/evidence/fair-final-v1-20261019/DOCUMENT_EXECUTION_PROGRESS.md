@@ -6,6 +6,26 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+2026-10-23最新增量：active独立retry完成并通过双归档内容验收，状态为
+passed_active_retry_chain_and_two_stage_checkpoint_scope。父trainable超时仍保留失败；
+子只恢复第5→7步，核对网络、AdamW、RNG、采样游标、选优状态及冻结部署。
+该验收未重新验证原始对局来源（native_game_provenance_reverified=false），
+不作G2或正式训练准入。详见active-migration-v1/retry-completion-evidence-20261023.json。
+修复SSH控制器将ChatGPT上级目录误识别为公开库的路径边界，专项32项通过；
+真实选优selection-1792730822491650000已在.35 GPU1启动，独立28800秒，
+只消费该恢复结果，terminal和原生round2仍待验。运行中的冻结部署未改变。
+
+另启动独立开局先验诊断：预注册1024个seed，第二新进程复测前64个；
+固定21个检验及Bonferroni阈值，34项工程/篡改测试通过，原生采样仍运行中。
+首attempt因远端无SciPy在引擎启动前失败，保留证据；将统计依赖惰性导入后
+启动新attempt，不改seed或检验。有限开局分布不代替条件后验或全部随机机制覆盖。
+延迟补牌已有delayed-prior-audit-v1的1044帧限定证据，沿用而不重复采集。
+
+快照1792731064：Full128已提交116组/232根/29696有效模拟至tick4266；
+tick4294玩家0完成128访问，玩家1搜索中，worker及双引擎在线，无失败、未终局。
+中心可用205.514GiB仅为瞬时读数，两代容量仍待验。G0/G1与34/43登记保持开放；
+G2–G8、正式训练及五机放量未启动。以下保留历史记录，旧“未启动/待完成”以本段为准。
+
 2026-10-23新增独立shuffle-audit-v1静态补证：14段字节摘要、18处MT初始化
 直接引用的唯一EH函数归属，以及手牌临时生成器的seed来源、同对象generate/clear
 和225指令/状态组合正常返回清理检查通过。另将tick-seeded路径独立绑定到

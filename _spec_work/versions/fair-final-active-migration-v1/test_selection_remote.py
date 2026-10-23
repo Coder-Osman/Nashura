@@ -290,6 +290,36 @@ def test_private_attempt_root_excludes_public_repository_and_symlinks(tmp_path):
         ssh.local_private_root(link)
 
 
+@pytest.mark.parametrize("git_entry_is_directory", [True, False])
+def test_publication_root_in_source_workspace(tmp_path, monkeypatch, git_entry_is_directory):
+    workspace = tmp_path / "CR"
+    publication = workspace / "Nashura"
+    publication.mkdir(parents=True)
+    git_entry = publication / ".git"
+    if git_entry_is_directory:
+        git_entry.mkdir()
+    else:
+        git_entry.write_text("gitdir: /fixture/worktree\n")
+    version_root = workspace / "_spec_work/versions/active"
+    public = ssh.public_repository_root(version_root)
+    assert public == publication
+    monkeypatch.setattr(ssh, "PUBLIC_REPOSITORY", public)
+    private = workspace / "_spec_work/private-attempts"
+    assert ssh.local_private_root(private) == private
+    with pytest.raises(ValueError, match="outside"):
+        ssh.local_private_root(public / "private-attempts")
+
+
+def test_publication_root_in_exported_repository(tmp_path, monkeypatch):
+    publication = tmp_path / "Nashura"
+    version_root = publication / "_spec_work/versions/active"
+    public = ssh.public_repository_root(version_root)
+    assert public == publication
+    monkeypatch.setattr(ssh, "PUBLIC_REPOSITORY", public)
+    with pytest.raises(ValueError, match="outside"):
+        ssh.local_private_root(version_root / "private-attempts")
+
+
 def test_sftp_upload_is_atomic_and_restricts_permissions(tmp_path):
     source = tmp_path / "source"
     source.write_bytes(b"payload")
