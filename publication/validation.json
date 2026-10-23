@@ -1,5 +1,30 @@
 {
   "schema": "hashura.publication-validation.v1",
+  "latest_random_execution_publication": {
+    "source_files_verified": 2162,
+    "source_manifest_sha256": "f861fd35bfa7379c35976491abb2e08b32744d096ce08ed1b98673ef2d437a0c",
+    "public_tests": {
+      "passed": 663,
+      "skipped": 17,
+      "seconds": 47.74,
+      "report": "publication/checks-public.xml",
+      "sha256": "e1e35c433fe7b0163a15b3c13b85e0649f4967c52dfeed3520261078f6a4a1d7",
+      "skip_reason": "private native library and failed native trace archive excluded from public snapshot"
+    },
+    "main_engine_tests": {"passed": 211, "seconds": 23.99},
+    "specialist_tests": {"passed": 61, "seconds": 1.08},
+    "combined_snapshot_trace_tests": {"passed": 163, "seconds": 8.43},
+    "secret_scan_findings": 0,
+    "failed_native_attempts_preserved": 4,
+    "native_complete_trace_verified": false,
+    "latest_native_failure": "SIGALRM during traced startup; empty execution log",
+    "fixture_success_scope": "explicit engineering fixture only",
+    "real_failed_native_archive_rejected": true,
+    "hidden_random_coverage_closed": false,
+    "training_admissible": false,
+    "gates_closed": false,
+    "historical_entries_below_preserved": true
+  },
   "latest_selected_collection_bridge_publication": {
     "source_files_verified": 2143,
     "source_manifest_sha256": "44374913a11bab56e48672615c5d66ebbd381b88183821bc64f18d4f52c8a6ac",

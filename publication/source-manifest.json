@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "0213179666558672d22b8b47da68a8fedbd9fffc9fd146c24b0f7c6c26e6bb2f",
-      "bytes": 90134,
-      "source_sha256": "0213179666558672d22b8b47da68a8fedbd9fffc9fd146c24b0f7c6c26e6bb2f",
+      "sha256": "4776c0c70cc640837e2d0c7ab61b67b604f88a1bfe5396ea8424b1c9477b384b",
+      "bytes": 90899,
+      "source_sha256": "4776c0c70cc640837e2d0c7ab61b67b604f88a1bfe5396ea8424b1c9477b384b",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "684ad029ea26a2d36cd08612baf90af6398f7a56a5348628cec5ea9221ff049d",
-      "bytes": 47452,
-      "source_sha256": "684ad029ea26a2d36cd08612baf90af6398f7a56a5348628cec5ea9221ff049d",
+      "sha256": "e2b2a0fd31b2e06597e2c6f9c202ab3888c50cb4d49ae7fa270bb4ed01fd9f9c",
+      "bytes": 48421,
+      "source_sha256": "e2b2a0fd31b2e06597e2c6f9c202ab3888c50cb4d49ae7fa270bb4ed01fd9f9c",
       "transformations": []
     },
     {
@@ -8446,6 +8446,139 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/CONTRACT.md",
+      "sha256": "5f1258ff3b091a7abacdc599b8a649658abe72c049bb98f90d6069c2f1a4f350",
+      "bytes": 3161,
+      "source_sha256": "5f1258ff3b091a7abacdc599b8a649658abe72c049bb98f90d6069c2f1a4f350",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/EVIDENCE.md",
+      "sha256": "ff20c3f32a16f7737784cc5d6200b7fb682ff079527675c4e38d64991418abb5",
+      "bytes": 3665,
+      "source_sha256": "ff20c3f32a16f7737784cc5d6200b7fb682ff079527675c4e38d64991418abb5",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/failure-summary.json",
+      "sha256": "50ecb2d5f2b18963c0112583777960f12fef5efa88b288aab6ab8281861ccede",
+      "bytes": 2609,
+      "source_sha256": "50ecb2d5f2b18963c0112583777960f12fef5efa88b288aab6ab8281861ccede",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/probe_trace.py",
+      "sha256": "48da34872253b9b856fccaf0eb4bcc5d78f53d7a66e08708e8aa1efaaf7679b3",
+      "bytes": 7593,
+      "source_sha256": "48da34872253b9b856fccaf0eb4bcc5d78f53d7a66e08708e8aa1efaaf7679b3",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/run_trace.py",
+      "sha256": "d80fcd77c8fa87f3bf785969dc00df971090003c562d75fd23e629d88baaf6f0",
+      "bytes": 10907,
+      "source_sha256": "d80fcd77c8fa87f3bf785969dc00df971090003c562d75fd23e629d88baaf6f0",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/test_trace.py",
+      "sha256": "66923909dbd07ae2040db8ce321a7ec3360cef85a0947876e09a0dbb5a92c6fd",
+      "bytes": 9381,
+      "source_sha256": "66923909dbd07ae2040db8ce321a7ec3360cef85a0947876e09a0dbb5a92c6fd",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/test_trace_verification.py",
+      "sha256": "4c1d18b7316199e075a957b82061817f008d693a7f40a2ffe783f36602c690c4",
+      "bytes": 10345,
+      "source_sha256": "4c1d18b7316199e075a957b82061817f008d693a7f40a2ffe783f36602c690c4",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/tests-filter-ranges.xml",
+      "sha256": "9cfb550082c9a5a38ae14a2b9656d5f87fe92fd44217ada915122a635da0ea4b",
+      "bytes": 6390,
+      "source_sha256": "9cfb550082c9a5a38ae14a2b9656d5f87fe92fd44217ada915122a635da0ea4b",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/tests-final.xml",
+      "sha256": "69e9b5dd2f46ae172f0394b1f8e633142db25d563e5a02ca159be8593d59db45",
+      "bytes": 10514,
+      "source_sha256": "69e9b5dd2f46ae172f0394b1f8e633142db25d563e5a02ca159be8593d59db45",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/tests-initial.xml",
+      "sha256": "9f94ce35b562b1ff63e31eb399e240c849182f4311d71e8322391487a707c336",
+      "bytes": 5361,
+      "source_sha256": "9f94ce35b562b1ff63e31eb399e240c849182f4311d71e8322391487a707c336",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/tests-joint.xml",
+      "sha256": "84459371a259fe8688657f9fed1bef2f2101c7a3274dea435831ab52adca4ef4",
+      "bytes": 27726,
+      "source_sha256": "84459371a259fe8688657f9fed1bef2f2101c7a3274dea435831ab52adca4ef4",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/tests-parser.xml",
+      "sha256": "a8106f8ab9ea1b29f75e9fdce60e1c2516545fd5456fe4b151bd9ab9fbd3aadc",
+      "bytes": 3884,
+      "source_sha256": "a8106f8ab9ea1b29f75e9fdce60e1c2516545fd5456fe4b151bd9ab9fbd3aadc",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/tests-probe-binding.xml",
+      "sha256": "a6e195b3ddefd4f0cb93bd557919890ada125fea438babe39595d79e6095735d",
+      "bytes": 4034,
+      "source_sha256": "a6e195b3ddefd4f0cb93bd557919890ada125fea438babe39595d79e6095735d",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/tests-startup-deadline.xml",
+      "sha256": "7531eb4e3a6ee94ab3cb1e3365feacbd33fe37cb282305b3d62d3c40dbd8e0a6",
+      "bytes": 7533,
+      "source_sha256": "7531eb4e3a6ee94ab3cb1e3365feacbd33fe37cb282305b3d62d3c40dbd8e0a6",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/tests-verification.xml",
+      "sha256": "4aa4cecbe5ceefb9fbb25061d7a24ee1fc9f95c4426a9dbdecbb4ec1483fa25b",
+      "bytes": 6390,
+      "source_sha256": "4aa4cecbe5ceefb9fbb25061d7a24ee1fc9f95c4426a9dbdecbb4ec1483fa25b",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/trace_launcher.py",
+      "sha256": "afc465f4596992c318319c2cf3c7d3d08e91093672995f1ad316cfa8d780a70f",
+      "bytes": 3979,
+      "source_sha256": "afc465f4596992c318319c2cf3c7d3d08e91093672995f1ad316cfa8d780a70f",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/trace_protocol.py",
+      "sha256": "f9b4fd638a21c9a090727635a5b9ec047714e9d531026d40c6fdb088a77a83cd",
+      "bytes": 4846,
+      "source_sha256": "f9b4fd638a21c9a090727635a5b9ec047714e9d531026d40c6fdb088a77a83cd",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/trace_worker.py",
+      "sha256": "f6dace3bc555d50ba74a8d2a65cdb19115ca0b8d7d31e7fd059e656836f9acd6",
+      "bytes": 6076,
+      "source_sha256": "f6dace3bc555d50ba74a8d2a65cdb19115ca0b8d7d31e7fd059e656836f9acd6",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-random-execution-v1/verify_trace.py",
+      "sha256": "fd0b17195ecd7caae3b44817071d57d3a43ceb0de3956c5dcc5dc2ddbf5466bb",
+      "bytes": 18705,
+      "source_sha256": "fd0b17195ecd7caae3b44817071d57d3a43ceb0de3956c5dcc5dc2ddbf5466bb",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-search-continuation-v1/CONTRACT.md",
       "sha256": "ab71594fd7288344b7fe0b7e1b8b8904c4b9180ce6d617f38c8c45dc8469314e",
       "bytes": 8031,
@@ -15007,8 +15140,8 @@
       "transformations": []
     }
   ],
-  "file_count": 2143,
-  "source_bytes": 31600096,
+  "file_count": 2162,
+  "source_bytes": 31754929,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

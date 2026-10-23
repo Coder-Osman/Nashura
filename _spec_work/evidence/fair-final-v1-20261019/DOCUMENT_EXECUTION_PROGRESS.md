@@ -6,6 +6,15 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+2026-10-23新增random-execution-v1独立追踪与内容验收工程，61项专项通过；
+校验完整合法轨迹、预约结算时钟、执行头/寄存器PC及正向对照，拒收未执行TB。
+四次原生尝试均保留失败：首次CR_PROBE绑定缺失已修；两次追踪启动超时；
+独立启动等待延至600秒后，子进程仍在232.595秒以SIGALRM退出，日志0字节。
+未取得完整执行证据，不能证明入口未调用。详见版本EVIDENCE.md/failure-summary.json。
+Full128快照1792744059：127组/254根/32512模拟已提交，tick4604玩家0搜索中，
+worker及双引擎在线、未终局；terminal快照1792743342仍运行。冻结部署不变，
+G0/G1和34/43不变，G2–G8、正式训练与五机放量未启动。
+
 2026-10-23补齐terminal选优到补充采集包的独立入口：强制执行父内容验收，
 继承冻结训练源码/配置/运行时，记录执行、完成及checkpoint身份；验收后篡改
 拒收，旧launch接口保留，完整种子登记和原生collector预检仍必需。35项专项、

@@ -1,0 +1,61 @@
+{
+  "schema": "FairFinalRandomExecutionFailures/v1",
+  "attempts": [
+    {
+      "attempt": "native-execution-1792742528392975000",
+      "launch_sha256": "7565ff40408d6148f360a19e90f3ff1de166c69473e4a43d22e47102e4834b53",
+      "receipt_sha256": "285fe3e90d3758d911c7d602dea95a2a57e875f23a5cab435dd1bc441cdcb830",
+      "archived_files": 22,
+      "seconds": 56.948763858003076,
+      "reason": "ruleset manifest did not bind CR_PROBE; calibration reset rejected",
+      "calibration_engine_clean": true,
+      "ports_released": true,
+      "execution_evidence_accepted": false
+    },
+    {
+      "attempt": "native-execution-1792742735807630000",
+      "launch_sha256": "bcb3983086ba15a483194305f4dfe591d38e11d16026dc78a6ff5e88715a5e33",
+      "receipt_sha256": "0694c65d6e3084fb07d6ff682b0634a0fce8e6e3f50c27abb0d2eca17837428b",
+      "archived_files": 28,
+      "seconds": 214.85428275400773,
+      "reason": "traced engine not ready before original supervisor 140-second startup deadline",
+      "calibration_engine_clean": true,
+      "trace_clean_success": false,
+      "ports_released": true,
+      "trace_bytes": 0,
+      "execution_evidence_accepted": false
+    },
+    {
+      "attempt": "native-execution-1792743181710335000",
+      "launch_sha256": "a9e9607d3c921bff83d814dc691864af2bcbdbafbf2c0a49b341856a45431c65",
+      "receipt_sha256": "d3605d45e7b11f5bde9d854de4f3de56efd89405fb26abf8b0925eb8c690f1f3",
+      "archived_files": 28,
+      "seconds": 214.40752384799998,
+      "reason": "128 compact filter ranges still exceeded original 140-second startup deadline",
+      "calibration_engine_clean": true,
+      "trace_clean_success": false,
+      "ports_released": true,
+      "trace_bytes": 0,
+      "execution_evidence_accepted": false
+    },
+    {
+      "attempt": "native-execution-1792743535284451000",
+      "launch_sha256": "4e4c1997dad559042c4fedf6c2a9a66d7687c2b19a234e664153c7969f9b5c71",
+      "receipt_sha256": "b383bb4b1da497fe8f0deb70ff983bd49f2c05a75e5522452f3e2ecb48e47672",
+      "archived_files": 28,
+      "seconds": 300.41176866501337,
+      "reason": "traced child terminated with SIGALRM during startup, before extended supervisor deadline",
+      "trace_child_returncode": -14,
+      "trace_child_elapsed_seconds": 232.5954749584198,
+      "supervisor_startup_deadline_seconds": 600,
+      "calibration_engine_clean": true,
+      "trace_clean_success": false,
+      "ports_released": true,
+      "trace_bytes": 0,
+      "execution_evidence_accepted": false
+    }
+  ],
+  "private_raw_archives_included": false,
+  "training_admissible": false,
+  "gates_closed": false
+}
