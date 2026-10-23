@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "4262546fc6313bcaed778a45eae83b4e313a177cfc78c3d608452cba36ab00d1",
-      "bytes": 89432,
-      "source_sha256": "4262546fc6313bcaed778a45eae83b4e313a177cfc78c3d608452cba36ab00d1",
+      "sha256": "0213179666558672d22b8b47da68a8fedbd9fffc9fd146c24b0f7c6c26e6bb2f",
+      "bytes": 90134,
+      "source_sha256": "0213179666558672d22b8b47da68a8fedbd9fffc9fd146c24b0f7c6c26e6bb2f",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "830e3143edf6af1f41e253f8248d1aa49ff5e427ff49f2158f3836e4612b7f31",
-      "bytes": 46826,
-      "source_sha256": "830e3143edf6af1f41e253f8248d1aa49ff5e427ff49f2158f3836e4612b7f31",
+      "sha256": "684ad029ea26a2d36cd08612baf90af6398f7a56a5348628cec5ea9221ff049d",
+      "bytes": 47452,
+      "source_sha256": "684ad029ea26a2d36cd08612baf90af6398f7a56a5348628cec5ea9221ff049d",
       "transformations": []
     },
     {
@@ -2046,6 +2046,13 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/test_selected_payload_bridge.py",
+      "sha256": "3718c940d1dc0a007ac339a88c7b70f69d12d6e7b47eb7d5c8e9470ecaebef95",
+      "bytes": 4952,
+      "source_sha256": "3718c940d1dc0a007ac339a88c7b70f69d12d6e7b47eb7d5c8e9470ecaebef95",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-active-migration-v1/test_selection_execution.py",
       "sha256": "f54af74f092f773926ec1ba6f8608d6c540654ec3eab9c70515d913671ac248f",
       "bytes": 15185,
@@ -2106,6 +2113,20 @@
       "sha256": "6548982f8b951e57cc9f0a08d926e76c1eb7b2b3dcbb7e6618eace245503fed6",
       "bytes": 28979,
       "source_sha256": "6548982f8b951e57cc9f0a08d926e76c1eb7b2b3dcbb7e6618eace245503fed6",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/tests-selected-payload-bridge-combined.xml",
+      "sha256": "3fb8234d2fb360e6ecd01c137d4179a8e1873376f2e1e2347024e65afb82fdd0",
+      "bytes": 15335,
+      "source_sha256": "3fb8234d2fb360e6ecd01c137d4179a8e1873376f2e1e2347024e65afb82fdd0",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-active-migration-v1/tests-selected-payload-bridge-initial.xml",
+      "sha256": "4804d509326fc3766c91cc126b9f5c5d41b3abf7deeff6001460e75f80fa7cbb",
+      "bytes": 7214,
+      "source_sha256": "4804d509326fc3766c91cc126b9f5c5d41b3abf7deeff6001460e75f80fa7cbb",
       "transformations": []
     },
     {
@@ -7131,9 +7152,9 @@
     },
     {
       "path": "_spec_work/versions/fair-final-migration-integration-v1/CONTRACT.md",
-      "sha256": "b3c81d85a019dd8d72acefcfea0c34a539e07daec23c5782db8878d87eeccfa2",
-      "bytes": 23940,
-      "source_sha256": "b3c81d85a019dd8d72acefcfea0c34a539e07daec23c5782db8878d87eeccfa2",
+      "sha256": "6a6497f933be925d1873f1456ebcda2b5920422b3299a5bc0ad09352d3b4b556",
+      "bytes": 25375,
+      "source_sha256": "6a6497f933be925d1873f1456ebcda2b5920422b3299a5bc0ad09352d3b4b556",
       "transformations": []
     },
     {
@@ -7194,9 +7215,9 @@
     },
     {
       "path": "_spec_work/versions/fair-final-migration-integration-v1/build_collection_payload.py",
-      "sha256": "487b48b405e0605f19965b05cc951fe449c88951bed214f8599675c09fe1c292",
-      "bytes": 7368,
-      "source_sha256": "487b48b405e0605f19965b05cc951fe449c88951bed214f8599675c09fe1c292",
+      "sha256": "8ddebfda90a4e72708e8b6d4c998e426db2e01b50c15e5854d61e6d02c2f14cf",
+      "bytes": 11126,
+      "source_sha256": "8ddebfda90a4e72708e8b6d4c998e426db2e01b50c15e5854d61e6d02c2f14cf",
       "transformations": []
     },
     {
@@ -14986,8 +15007,8 @@
       "transformations": []
     }
   ],
-  "file_count": 2140,
-  "source_bytes": 31566074,
+  "file_count": 2143,
+  "source_bytes": 31600096,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

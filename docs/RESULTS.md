@@ -1,5 +1,19 @@
 # 阶段成果与证据索引
 
+## 2026-10-23 terminal选优到补充采集包交接
+
+migration-integration-v1/build_collection_payload.py新增selection模式，显式固定
+execution/completion SHA和父数据根；实际执行独立内容验收后继承原训练字节。
+复核checkpoint及父证据未在验收后改变，handoff/payload通过原校验器重新读取。
+35项专项8.82秒、联合78项58.28秒通过；成功交接使用mock验收器隔离测试，
+真实不合格归档经实际验收器拒收，不宣称真实terminal已通过。
+完整seed登记和collector预检仍必须；此入口只构建部署包，不启动原生对局。
+真实terminal快照1792741007仍运行；Full128快照1792740718已提交124组/248根/
+31744有效模拟，tick4482玩家1搜索中、未终局。G0/G1及34/43不变，G2–G8未运行。
+后续快照1792741500：125组/250根/32000有效模拟提交，tick4516玩家1搜索中。
+发布复核：2143项源码清单通过；公开回归603通过/16项缺私有库跳过（48.29秒），
+主工程211通过（22.40秒），凭据扫描零发现；集合不相加。
+
 ## 2026-10-23 原生开局先验诊断完成
 
 native-prior-sampling-v1/EVIDENCE.md与native-evidence-summary.json记录1024个

@@ -4,6 +4,7 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import sys
 import tarfile
 
 
@@ -47,6 +48,52 @@ def read_parent(parent, *, expected_launch_sha):
 def build_collection(parent, *, expected_launch_sha, runtime_parent=None,
         expected_runtime_launch_sha=None):
     launch, files, original_identity = read_parent(parent, expected_launch_sha=expected_launch_sha)
+    return build_from_parent(launch, files, original_identity,
+        expected_launch_sha=expected_launch_sha, runtime_parent=runtime_parent,
+        expected_runtime_launch_sha=expected_runtime_launch_sha)
+
+
+def build_selected_collection(parent, *, execution_sha, completion_sha, data_roots):
+    active = ROOT.parent / "fair-final-active-migration-v1"
+    for directory in (ROOT, active, ROOT.parent / "fair-final-migration-selection-v1",
+            ROOT.parent / "fair-final-migration-series-v1", ROOT.parents[2] / "firstlight_CR"):
+        if str(directory) not in sys.path:
+            sys.path.insert(0, str(directory))
+    from verify_selection_execution import verify
+    from run_selection import checked_handoff, payload_files
+
+    parent = Path(parent)
+    proof = verify(parent, execution_sha=execution_sha, completion_sha=completion_sha,
+        data_roots=data_roots)
+    if (proof["status"] != "passed_independent_terminal_selection_content_scope"
+            or proof["frozen_deployment_verified"] is not True
+            or proof["execution_sha256"] != execution_sha
+            or proof["completion_sha256"] != completion_sha
+            or any(proof[name] is not False for name in
+                ("training_admissible", "formal_g2_pass", "gates_closed"))):
+        raise ValueError("independently verified engineering terminal selection required")
+    execution_bytes = (parent / "execution.json").read_bytes()
+    completion_bytes = (parent / "completion.json").read_bytes()
+    if sha(execution_bytes) != execution_sha or sha(completion_bytes) != completion_sha:
+        raise ValueError("selection evidence changed during collection handoff")
+    execution, completion = json.loads(execution_bytes), json.loads(completion_bytes)
+    checkpoint_sha = sha((parent / "selected.pt").read_bytes())
+    if checkpoint_sha != completion["artifacts"]["selected.pt"]["sha256"]:
+        raise ValueError("selected checkpoint changed during collection handoff")
+    request = checked_handoff(parent / "inputs", execution["handoff_file_sha256"])
+    files, identity = payload_files(parent / "inputs", request)
+    launch = dict(payload_sha256=request["files"]["payload.tar.gz"]["sha256"], deterministic=True)
+    package, report = build_from_parent(launch, files, identity,
+        expected_launch_sha=request["parent_launch_sha256"])
+    report.update(schema="FairFinalSelectedCollectionPayload/v1",
+        selection_parent=dict(execution_sha256=execution_sha, completion_sha256=completion_sha,
+            checkpoint_sha256=checkpoint_sha,
+            verification=proof), native_collection_executed=False)
+    return package, report
+
+
+def build_from_parent(launch, files, original_identity, *, expected_launch_sha,
+        runtime_parent=None, expected_runtime_launch_sha=None):
     if (runtime_parent is None) != (expected_runtime_launch_sha is None):
         raise ValueError("runtime parent and pinned launch SHA required together")
     runtime = SERIES + "deterministic_runtime.py"
@@ -121,13 +168,27 @@ def build_collection(parent, *, expected_launch_sha, runtime_parent=None,
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("parent", type=Path)
-    parser.add_argument("--parent-launch-sha", required=True)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--parent-launch-sha")
+    mode.add_argument("--selection-execution-sha")
+    parser.add_argument("--selection-completion-sha")
+    parser.add_argument("--selection-data-roots", type=Path, nargs="+")
     parser.add_argument("--runtime-parent", type=Path)
     parser.add_argument("--runtime-parent-launch-sha")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    package, report = build_collection(args.parent, expected_launch_sha=args.parent_launch_sha,
-        runtime_parent=args.runtime_parent, expected_runtime_launch_sha=args.runtime_parent_launch_sha)
+    if args.selection_execution_sha:
+        if (not args.selection_completion_sha or not args.selection_data_roots
+                or args.runtime_parent is not None or args.runtime_parent_launch_sha is not None):
+            parser.error("selection requires completion SHA and data roots, without runtime overrides")
+        package, report = build_selected_collection(args.parent,
+            execution_sha=args.selection_execution_sha, completion_sha=args.selection_completion_sha,
+            data_roots=args.selection_data_roots)
+    else:
+        if args.selection_completion_sha is not None or args.selection_data_roots is not None:
+            parser.error("selection evidence requires selection execution mode")
+        package, report = build_collection(args.parent, expected_launch_sha=args.parent_launch_sha,
+            runtime_parent=args.runtime_parent, expected_runtime_launch_sha=args.runtime_parent_launch_sha)
     args.output.mkdir(exist_ok=False)
     (args.output / "payload.tar.gz").write_bytes(package)
     (args.output / "collection-payload.json").write_text(json.dumps(report, indent=2, sort_keys=True))

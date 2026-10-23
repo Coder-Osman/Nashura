@@ -1,5 +1,24 @@
 # 验证选优checkpoint到补充采集的独立接口
 
+## 2026-10-23 terminal选优到采集包交接
+
+build_collection_payload.py新增独立selection模式，要求execution、completion外部SHA
+及完整父数据路径；先执行verify_selection_execution的真实内容验收，再读取已核验
+handoff和冻结payload。输出继承训练源码、确定性运行时及配置原始字节，仅沿用
+已有采集侧更新范围。旧launch模式保持原接口；两种父身份互斥，缺参数或runtime
+覆盖在创建输出前拒收。完成验收后再次核对执行/完成文件与selected.pt身份，
+handoff和payload仍通过原校验器重读，过程中的修改拒收。
+
+新report使用FairFinalSelectedCollectionPayload/v1，包含父execution、completion、
+checkpoint SHA及独立验收内容；training_admissible、formal_g2_pass、gates_closed
+均为false，requires_registered_tasks仍为true。本入口只构建采集部署包，后续
+仍须完整种子登记、真实collector预检、原生完整局及独立验收，不自动启动引擎。
+
+35项交接与旧构建回归通过（8.82秒）；联合选优执行/内容、构建、worker测试
+78项通过（58.28秒），集合不相加。成功交接单元用显式mock隔离验收器，真实
+不合格终端归档通过实际验收器拒收；不将mock成功称为原生父结果通过。
+后台真实terminal选优仍运行，真实交接及round2原生尚未执行；Full128冻结部署保持。
+
 ## 2026-10-22 旧策略screen显式种子补验
 
 audit_policy_seed_history.py只读固定SHA的旧400局策略评测status/export，核验

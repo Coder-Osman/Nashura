@@ -1,5 +1,28 @@
 {
   "schema": "hashura.publication-validation.v1",
+  "latest_selected_collection_bridge_publication": {
+    "source_files_verified": 2143,
+    "source_manifest_sha256": "44374913a11bab56e48672615c5d66ebbd381b88183821bc64f18d4f52c8a6ac",
+    "public_tests": {
+      "passed": 603,
+      "skipped": 16,
+      "seconds": 48.29,
+      "report": "publication/checks-public.xml",
+      "sha256": "44c30642b7f959fda2cff23f5a53861cdb0425c35e99e7c061f7f8260a0f2aa9",
+      "skip_reason": "private native library absent from public snapshot"
+    },
+    "main_engine_tests": {"passed": 211, "seconds": 22.40},
+    "secret_scan_findings": 0,
+    "bridge_and_legacy_tests": {"passed": 35, "seconds": 8.82},
+    "combined_selection_payload_worker_tests": {"passed": 78, "seconds": 58.28},
+    "successful_bridge_test_verifier": "explicit_mock_engineering_scope_only",
+    "real_ineligible_parent_rejected_by_actual_verifier": true,
+    "real_terminal_selection_complete": false,
+    "native_round2_executed": false,
+    "training_admissible": false,
+    "gates_closed": false,
+    "historical_entries_below_preserved": true
+  },
   "latest_boundary_and_opening_publication": {
     "source_files_verified": 2140,
     "source_manifest_sha256": "954550690c34c9d4373e09643c87bed0e804c60a039526016c5fe6dcf6b857c0",
