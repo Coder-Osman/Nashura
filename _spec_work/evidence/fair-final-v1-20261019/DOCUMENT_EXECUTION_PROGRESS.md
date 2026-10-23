@@ -6,6 +6,17 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+2026-10-23新增独立shuffle-audit-v1静态补证：14段字节摘要、18处MT初始化
+直接引用的唯一EH函数归属，以及手牌临时生成器的seed来源、同对象generate/clear
+和225指令/状态组合正常返回清理检查通过。另将tick-seeded路径独立绑定到
+ct1548/subtype55的factory、subtype与vtable；不宣称固定速猪不可达。
+新24项与旧seed50项联合74项通过、零跳过，3.79秒，详见版本EVIDENCE.md。
+这不是新增原生轨迹；其余16处引用、间接分派、排列分布/先验校准及全部随机
+机制的FAIR非干扰仍待证。冻结部署未变，G0/G1与34/43登记保持开放。
+快照1792728322：Full128提交114组/228根/29184有效模拟至tick4170，
+tick4230玩家0搜索中，无失败、未终局；active重试已完成第6步且仍运行，
+terminal选优未启动。G2–G8、正式训练与五机放量均未运行。
+
 2026-10-23后台继续期间，新增seed-audit-v1原生限定证据：两个独立引擎均在
 tick90/1200/3600/5400完成只读、过期身份拒收与快照重复续演；同进程重复reset
 及跨进程同seed的初始/四阶段digest与manager RNG一致，17份归档独立验收通过，

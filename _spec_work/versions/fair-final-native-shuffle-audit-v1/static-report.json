@@ -1,0 +1,279 @@
+{
+  "schema": "fair-final-native-shuffle-audit.v1",
+  "status": "passed_static_limited_scope",
+  "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "regions": {
+    "hand_wrapper": {
+      "start": "0xf37828",
+      "size": 204,
+      "sha256": "0a799a5e7f1bb4762bfe35af32d3128cc04390417caca0ff95f08f4447ffb045"
+    },
+    "hand_initialize": {
+      "start": "0xf3ea70",
+      "size": 1012,
+      "sha256": "46fc8e235bedbb14ab677011f8a31c94f9ef961287043e70aa1090801833778b"
+    },
+    "hand_shuffle": {
+      "start": "0xf3f0ac",
+      "size": 1908,
+      "sha256": "19624ca221e0cce53010de747edb5e46e90c2318741c50cffb5a377c2dc6cd83"
+    },
+    "identity_accessor": {
+      "start": "0xcdf824",
+      "size": 8,
+      "sha256": "f1ed6ea80801eed17e4eb58f5f48a8a87c1517ac4ec3159dfe225107cd155900"
+    },
+    "identity_low": {
+      "start": "0x121aa90",
+      "size": 8,
+      "sha256": "c40709113e97cec9c72bfbb7a6f1892a5b54d7906ca60d6c400c2e268577b883"
+    },
+    "world_random": {
+      "start": "0xceeca0",
+      "size": 8,
+      "sha256": "0741c0c9762b0e17673225592aa32cbf4b1ac58b1c258941a34122441bc5b2e2"
+    },
+    "manager_random": {
+      "start": "0x1062a1c",
+      "size": 8,
+      "sha256": "75b933f4596c3493d76bdc490a731a9efbf363b93930977af8fa7b78e905d5a3"
+    },
+    "mt_initialize": {
+      "start": "0x121b118",
+      "size": 100,
+      "sha256": "9da4994dffa4ec8f5075ec4cbefa05c64f63a4b106dc0e1af4f0c2577d69951d"
+    },
+    "mt_clear": {
+      "start": "0x121b17c",
+      "size": 12,
+      "sha256": "7869390d5e6edcef03e4a4f73a89596d9de46ad3d1cc3dd9de0253014a968cc8"
+    },
+    "debug_constructor": {
+      "start": "0xd32fd4",
+      "size": 68,
+      "sha256": "db8b2c5b6190e00c9a4301a56ec2fcd02fef3681290a94e16fe9faab9334fae7"
+    },
+    "debug_executor": {
+      "start": "0xd33018",
+      "size": 33888,
+      "sha256": "95bf9ca1a7e69990a1fb4e8db410d8581d247fb0718773ebd0577e52347a70e6"
+    },
+    "debug_type": {
+      "start": "0xd3e8a0",
+      "size": 8,
+      "sha256": "a45f1ba91c8156add7836fbd94083adac0c4ab2dfe0289114535374c39c54a04"
+    },
+    "factory_prefix": {
+      "start": "0xd2c138",
+      "size": 136,
+      "sha256": "2fd07b837a4a9de09f6f2a2b6f62e74d070fb73208d17e129f81b07d4785a6ba"
+    },
+    "debug_factory_arm": {
+      "start": "0xd2d750",
+      "size": 40,
+      "sha256": "5b47498f39539d85953808a120b8e08d28bdbe5d4d7980b7d01781bf9f84c2c9"
+    }
+  },
+  "initializer_owners": [
+    {
+      "call": "0x7f5434",
+      "opcode": "b",
+      "owner": "0x7f540c",
+      "size": 108,
+      "sha256": "311d71514e9236dcdc190eff5e362b6cb490c341862014b54fa87caaf1678e3a",
+      "role": "unresolved"
+    },
+    {
+      "call": "0xd35f9c",
+      "opcode": "bl",
+      "owner": "0xd33018",
+      "size": 33888,
+      "sha256": "95bf9ca1a7e69990a1fb4e8db410d8581d247fb0718773ebd0577e52347a70e6",
+      "role": "debug_subtype55"
+    },
+    {
+      "call": "0xdf47e8",
+      "opcode": "bl",
+      "owner": "0xdf479c",
+      "size": 224,
+      "sha256": "b8395cde6cd2515be088ab1a6a8954fff303e19d87d543dfa1fd415b2d87dbfe",
+      "role": "unresolved"
+    },
+    {
+      "call": "0xf3f498",
+      "opcode": "bl",
+      "owner": "0xf3f0ac",
+      "size": 1908,
+      "sha256": "19624ca221e0cce53010de747edb5e46e90c2318741c50cffb5a377c2dc6cd83",
+      "role": "hand_initialization"
+    },
+    {
+      "call": "0xfaa2a4",
+      "opcode": "bl",
+      "owner": "0xfaa238",
+      "size": 344,
+      "sha256": "a2d4df93bb6e5c9143dd7dfbb962b2dcda6c468335158820546a793df07805d8",
+      "role": "unresolved"
+    },
+    {
+      "call": "0xfcdcf4",
+      "opcode": "bl",
+      "owner": "0xfcdcb4",
+      "size": 144,
+      "sha256": "dfd5b120c209b8d07bc27333fff131a39c94e2d264c297d63eccd6f2bcecf0e9",
+      "role": "unresolved"
+    },
+    {
+      "call": "0xfd0134",
+      "opcode": "bl",
+      "owner": "0xfcf850",
+      "size": 2600,
+      "sha256": "233d2714be1f27d80fdb363f5f06eb8a96bd4301a6d722af0e97653e57235e4c",
+      "role": "unresolved"
+    },
+    {
+      "call": "0xfd01b8",
+      "opcode": "bl",
+      "owner": "0xfcf850",
+      "size": 2600,
+      "sha256": "233d2714be1f27d80fdb363f5f06eb8a96bd4301a6d722af0e97653e57235e4c",
+      "role": "unresolved"
+    },
+    {
+      "call": "0xfd16ac",
+      "opcode": "bl",
+      "owner": "0xfd1440",
+      "size": 16016,
+      "sha256": "ac0408a07130c447d7646362cac743f83158a5509408c97d2d5a7e76037d94de",
+      "role": "unresolved"
+    },
+    {
+      "call": "0xfdb040",
+      "opcode": "bl",
+      "owner": "0xfdaba4",
+      "size": 2888,
+      "sha256": "f582f263a3519dc5e3dd602d9f666971857c1513f8dd4ca9df7fc0c31fee6edc",
+      "role": "unresolved"
+    },
+    {
+      "call": "0xfdeea8",
+      "opcode": "bl",
+      "owner": "0xfdec94",
+      "size": 972,
+      "sha256": "e7064fed66ee45c6bf91854f90996253fac1292a03246e178584e30bcd585344",
+      "role": "unresolved"
+    },
+    {
+      "call": "0x1174854",
+      "opcode": "bl",
+      "owner": "0x11747f0",
+      "size": 1008,
+      "sha256": "df33ce1deadc566bf0422c39ece0ea4dc92c9bc0622bd825932ccac3c469018b",
+      "role": "unresolved"
+    },
+    {
+      "call": "0x1175f44",
+      "opcode": "bl",
+      "owner": "0x1175c68",
+      "size": 2696,
+      "sha256": "46e7367ec38dae5aacef6e2e1d299355220a20aea0b24bc5dcb099acae50ee72",
+      "role": "unresolved"
+    },
+    {
+      "call": "0x1176750",
+      "opcode": "bl",
+      "owner": "0x11766f0",
+      "size": 520,
+      "sha256": "46195a0aa669de8f96afd65876536048fe0cb10535d3980db6381d0324bef72f",
+      "role": "unresolved"
+    },
+    {
+      "call": "0x1176958",
+      "opcode": "bl",
+      "owner": "0x11768f8",
+      "size": 256,
+      "sha256": "33058098094a87e7a8254fd79261ba490a748ca7e4e8b416dfe0216366a65f21",
+      "role": "unresolved"
+    },
+    {
+      "call": "0x1177e4c",
+      "opcode": "bl",
+      "owner": "0x1177758",
+      "size": 5688,
+      "sha256": "784dfbb1e2dcc1b1598e23a942725c87ac2381fa1550bb7a09cac0c37fe764dc",
+      "role": "unresolved"
+    },
+    {
+      "call": "0x1179684",
+      "opcode": "bl",
+      "owner": "0x117962c",
+      "size": 432,
+      "sha256": "386f7a5e588cf8e35e5486a91cbffe0e14e7de7c95117190e3ec4e135c87ae97",
+      "role": "unresolved"
+    },
+    {
+      "call": "0x117bb1c",
+      "opcode": "bl",
+      "owner": "0x117b530",
+      "size": 1612,
+      "sha256": "c7b3b78f0f03172eebc9fe8a613a202894c7de87a25c9ef5ec64aa1c97f685ae",
+      "role": "unresolved"
+    }
+  ],
+  "hand": {
+    "seed": "uint32(world_manager_random(0x0fffffff) + identity_low_word)",
+    "identity_low_offset": "0x24",
+    "temporary_rng": "sp+0x40",
+    "normal_cleanup": {
+      "reachable_instruction_states": 225,
+      "normal_returns": [
+        "0xf3f7f4"
+      ],
+      "clear_calls": [
+        "0xf3f7c8"
+      ],
+      "assumption": "direct calls return normally; exceptions, nonlocal exits and termination excluded"
+    },
+    "time_dependency": "MT initialization uses its seed argument; upstream world initialization audited separately",
+    "rule_caveat": "hand_initialize has a rule-dependent alternate path; no universal shuffle claim"
+  },
+  "debug": {
+    "command_type": 1548,
+    "subtype": 55,
+    "factory": {
+      "table": "0x341b38",
+      "index": 1546,
+      "entry": 1399,
+      "target": "0xd2d750"
+    },
+    "subtype_dispatch": {
+      "table": "0x34274e",
+      "index": 55,
+      "entry": 2948,
+      "target": "0xd35f2c"
+    },
+    "vtable": [
+      {
+        "slot": "0x1877bc8",
+        "target": "0xd33018"
+      },
+      {
+        "slot": "0x1877bd0",
+        "target": "0xd3e8a0"
+      }
+    ],
+    "reachable_in_fixed_deck_proven": false
+  },
+  "scope": "static direct initializer reference ownership and normal-return lifetime; not runtime coverage",
+  "unresolved": [
+    "16 remaining initializer references",
+    "indirect calls and dispatch reachability",
+    "all seed sources and other random algorithms",
+    "runtime hand-path occurrence",
+    "permutation law and prior calibration",
+    "hidden-state noninterference for all reachable mechanisms"
+  ],
+  "hidden_random_coverage_closed": false,
+  "training_admissible": false,
+  "gates_closed": false
+}
