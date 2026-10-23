@@ -1,5 +1,28 @@
 {
   "schema": "hashura.publication-validation.v1",
+  "latest_combat_snapshot_publication": {
+    "source_files_verified": 2131,
+    "source_manifest_sha256": "bafa281b57447b3d391a00f7fcb61c3db44bccafd21c264fd063cb2baed61b41",
+    "public_tests": {
+      "passed": 573,
+      "skipped": 16,
+      "seconds": 72.25,
+      "report": "publication/checks-public.xml",
+      "sha256": "ee3f62d3634daa01b282c8da6387368f59b9ebeb98cfa36f897eb5afe674994d",
+      "skip_reason": "private native library absent from public snapshot"
+    },
+    "main_engine_tests": {"passed": 211, "seconds": 36.70},
+    "secret_scan_findings": 0,
+    "native_status": "verified_limited_scope",
+    "native_processes": 2,
+    "tested_pending_combat_roots": 6,
+    "repeated_combat_ticks_per_branch": 60,
+    "native_evidence": "_spec_work/versions/fair-final-combat-snapshot-v1/evidence-summary.json",
+    "private_native_archive_included": false,
+    "training_admissible": false,
+    "gates_closed": false,
+    "historical_entries_below_preserved": true
+  },
   "latest_global_mt_snapshot_publication": {
     "source_files_verified": 2118,
     "source_manifest_sha256": "9fbe0917feeb6b6f2b016fd88fffa20dd006507f2543b6aa0a966fc0f7007f73",

@@ -1,0 +1,925 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="28" skipped="0" tests="28" time="1.550" timestamp="2026-10-23T14:11:11.851600+08:00" hostname="gujigadeMacBook-Pro-3.local"><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_choice_obeys_priority_and_delay[90-expected0]" time="0.001"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">tick = 90, expected = FullAction(card_id=26000021, cell=255, delay_slot=1)
+
+    @pytest.mark.parametrize("tick,expected", [(90, FullAction(26000021, 255, 1)),
+        (91, FullAction(26000021, 256, 30))])
+    def test_choice_obeys_priority_and_delay(tick, expected):
+&gt;       info = information(tick)
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_choice_obeys_priority_and_delay[91-expected1]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">tick = 91, expected = FullAction(card_id=26000021, cell=256, delay_slot=30)
+
+    @pytest.mark.parametrize("tick,expected", [(90, FullAction(26000021, 255, 1)),
+        (91, FullAction(26000021, 256, 30))])
+    def test_choice_obeys_priority_and_delay(tick, expected):
+&gt;       info = information(tick)
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:36: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 91
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_wait_when_no_legal_play" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">def test_wait_when_no_legal_play():
+&gt;       info = information(playable=False)
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;0]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef5bc0&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;1]" time="0.001"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef5c60&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;2]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef5d00&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;3]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef5da0&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;4]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef5e40&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;5]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef5ee0&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;6]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef5f80&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;7]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef6020&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;8]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef60c0&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;9]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef6160&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;10]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef6200&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;11]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef62a0&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_illegal_or_corrupt_selection_rejected[&lt;lambda&gt;12]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef6340&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda row: row["action"].update(cell=254),
+        lambda row: row["action"].update(delay_slot=0),
+        lambda row: row["action"].update(card_id=True),
+        lambda row: row["action"].update(cell=True),
+        lambda row: row["action"].update(delay_slot=True),
+        lambda row: row["action"].update(extra=1),
+        lambda row: row["mask"].update(shape=[2, 576, 31.0]),
+        lambda row: row["mask"].update(card_ids=[26000021, 26000021]),
+        lambda row: row["mask"].update(modes=[True, False]),
+        lambda row: row["mask"].update(modes=[1, True]),
+        lambda row: row["mask"].update(plays_sha256="0" * 64),
+        lambda row: row["mask"].update(plays_zlib_hex=row["mask"]["plays_zlib_hex"] + "00"),
+        lambda row: row["mask"].update(plays_zlib_hex=zlib.compress(bytes(2 * 576 * 31 + 1)).hex()),
+    ])
+    def test_illegal_or_corrupt_selection_rejected(change):
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_disallowed_wait_rejected" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">def test_disallowed_wait_rejected():
+&gt;       row = selection(FullAction())
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_boolean_mask_bytes_rejected_even_with_rehashed_content" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">def test_boolean_mask_bytes_rejected_even_with_rehashed_content():
+&gt;       row = selection()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_normal_preemption_retained" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">def test_normal_preemption_retained():
+&gt;       opening, steps = cancellation_trace()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:101: in cancellation_trace
+    first = dict(decision={str(owner): selection(action) for owner, action in actions.items()},
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_semantic_trajectory_corruption_rejected[&lt;lambda&gt;0]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef6700&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda steps: steps[1]["evidence"].pop(),
+        lambda steps: steps[1]["after"].update(tick=93),
+        lambda steps: steps[0]["decision"].pop("1"),
+        lambda steps: steps[0]["committed"][1].update(due_tick=91),
+        lambda steps: steps[1].update(outcomes={}),
+        lambda steps: steps[1]["after"].update(ready=[0]),
+        lambda steps: steps[1]["after"]["rng_sha"].update({"0": "7" * 64}),
+        lambda steps: steps[0]["after"].update(clock_sha="8" * 64),
+    ])
+    def test_semantic_trajectory_corruption_rejected(change):
+&gt;       opening, steps = cancellation_trace()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:101: in cancellation_trace
+    first = dict(decision={str(owner): selection(action) for owner, action in actions.items()},
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_semantic_trajectory_corruption_rejected[&lt;lambda&gt;1]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef67a0&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda steps: steps[1]["evidence"].pop(),
+        lambda steps: steps[1]["after"].update(tick=93),
+        lambda steps: steps[0]["decision"].pop("1"),
+        lambda steps: steps[0]["committed"][1].update(due_tick=91),
+        lambda steps: steps[1].update(outcomes={}),
+        lambda steps: steps[1]["after"].update(ready=[0]),
+        lambda steps: steps[1]["after"]["rng_sha"].update({"0": "7" * 64}),
+        lambda steps: steps[0]["after"].update(clock_sha="8" * 64),
+    ])
+    def test_semantic_trajectory_corruption_rejected(change):
+&gt;       opening, steps = cancellation_trace()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:101: in cancellation_trace
+    first = dict(decision={str(owner): selection(action) for owner, action in actions.items()},
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_semantic_trajectory_corruption_rejected[&lt;lambda&gt;2]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef6840&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda steps: steps[1]["evidence"].pop(),
+        lambda steps: steps[1]["after"].update(tick=93),
+        lambda steps: steps[0]["decision"].pop("1"),
+        lambda steps: steps[0]["committed"][1].update(due_tick=91),
+        lambda steps: steps[1].update(outcomes={}),
+        lambda steps: steps[1]["after"].update(ready=[0]),
+        lambda steps: steps[1]["after"]["rng_sha"].update({"0": "7" * 64}),
+        lambda steps: steps[0]["after"].update(clock_sha="8" * 64),
+    ])
+    def test_semantic_trajectory_corruption_rejected(change):
+&gt;       opening, steps = cancellation_trace()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:101: in cancellation_trace
+    first = dict(decision={str(owner): selection(action) for owner, action in actions.items()},
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_semantic_trajectory_corruption_rejected[&lt;lambda&gt;3]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef68e0&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda steps: steps[1]["evidence"].pop(),
+        lambda steps: steps[1]["after"].update(tick=93),
+        lambda steps: steps[0]["decision"].pop("1"),
+        lambda steps: steps[0]["committed"][1].update(due_tick=91),
+        lambda steps: steps[1].update(outcomes={}),
+        lambda steps: steps[1]["after"].update(ready=[0]),
+        lambda steps: steps[1]["after"]["rng_sha"].update({"0": "7" * 64}),
+        lambda steps: steps[0]["after"].update(clock_sha="8" * 64),
+    ])
+    def test_semantic_trajectory_corruption_rejected(change):
+&gt;       opening, steps = cancellation_trace()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:101: in cancellation_trace
+    first = dict(decision={str(owner): selection(action) for owner, action in actions.items()},
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_semantic_trajectory_corruption_rejected[&lt;lambda&gt;4]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef6980&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda steps: steps[1]["evidence"].pop(),
+        lambda steps: steps[1]["after"].update(tick=93),
+        lambda steps: steps[0]["decision"].pop("1"),
+        lambda steps: steps[0]["committed"][1].update(due_tick=91),
+        lambda steps: steps[1].update(outcomes={}),
+        lambda steps: steps[1]["after"].update(ready=[0]),
+        lambda steps: steps[1]["after"]["rng_sha"].update({"0": "7" * 64}),
+        lambda steps: steps[0]["after"].update(clock_sha="8" * 64),
+    ])
+    def test_semantic_trajectory_corruption_rejected(change):
+&gt;       opening, steps = cancellation_trace()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:101: in cancellation_trace
+    first = dict(decision={str(owner): selection(action) for owner, action in actions.items()},
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_semantic_trajectory_corruption_rejected[&lt;lambda&gt;5]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef6a20&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda steps: steps[1]["evidence"].pop(),
+        lambda steps: steps[1]["after"].update(tick=93),
+        lambda steps: steps[0]["decision"].pop("1"),
+        lambda steps: steps[0]["committed"][1].update(due_tick=91),
+        lambda steps: steps[1].update(outcomes={}),
+        lambda steps: steps[1]["after"].update(ready=[0]),
+        lambda steps: steps[1]["after"]["rng_sha"].update({"0": "7" * 64}),
+        lambda steps: steps[0]["after"].update(clock_sha="8" * 64),
+    ])
+    def test_semantic_trajectory_corruption_rejected(change):
+&gt;       opening, steps = cancellation_trace()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:101: in cancellation_trace
+    first = dict(decision={str(owner): selection(action) for owner, action in actions.items()},
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_semantic_trajectory_corruption_rejected[&lt;lambda&gt;6]" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef6ac0&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda steps: steps[1]["evidence"].pop(),
+        lambda steps: steps[1]["after"].update(tick=93),
+        lambda steps: steps[0]["decision"].pop("1"),
+        lambda steps: steps[0]["committed"][1].update(due_tick=91),
+        lambda steps: steps[1].update(outcomes={}),
+        lambda steps: steps[1]["after"].update(ready=[0]),
+        lambda steps: steps[1]["after"]["rng_sha"].update({"0": "7" * 64}),
+        lambda steps: steps[0]["after"].update(clock_sha="8" * 64),
+    ])
+    def test_semantic_trajectory_corruption_rejected(change):
+&gt;       opening, steps = cancellation_trace()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:101: in cancellation_trace
+    first = dict(decision={str(owner): selection(action) for owner, action in actions.items()},
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_semantic_trajectory_corruption_rejected[&lt;lambda&gt;7]" time="0.001"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">change = &lt;function &lt;lambda&gt; at 0x169ef6b60&gt;
+
+    @pytest.mark.parametrize("change", [
+        lambda steps: steps[1]["evidence"].pop(),
+        lambda steps: steps[1]["after"].update(tick=93),
+        lambda steps: steps[0]["decision"].pop("1"),
+        lambda steps: steps[0]["committed"][1].update(due_tick=91),
+        lambda steps: steps[1].update(outcomes={}),
+        lambda steps: steps[1]["after"].update(ready=[0]),
+        lambda steps: steps[1]["after"]["rng_sha"].update({"0": "7" * 64}),
+        lambda steps: steps[0]["after"].update(clock_sha="8" * 64),
+    ])
+    def test_semantic_trajectory_corruption_rejected(change):
+&gt;       opening, steps = cancellation_trace()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:101: in cancellation_trace
+    first = dict(decision={str(owner): selection(action) for owner, action in actions.items()},
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase><testcase classname="_spec_work.versions.fair-final-combat-snapshot-v1.test_combat" name="test_replayed_branch_from_pending_root" time="0.000"><failure message="TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given">def test_replayed_branch_from_pending_root():
+&gt;       opening, steps = cancellation_trace()
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:101: in cancellation_trace
+    first = dict(decision={str(owner): selection(action) for owner, action in actions.items()},
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:30: in selection
+    return dict(action=asdict(action), mask=mask_record(information()), fair_sha="1" * 64)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tick = 90
+
+    def information(tick=90, *, playable=True):
+        plays = torch.zeros((2, 576, 31), dtype=torch.bool)
+        if playable:
+            plays[0, 14 * 18 + 3, 1] = True
+            plays[0, 14 * 18 + 4, 30] = True
+            plays[1, 10 * 18 + 3, 1:31] = True
+        return SimpleNamespace(tick=tick,
+&gt;           legality=LegalPrefixes((26000021, 26000014), plays, torch.tensor([True, playable])))
+E       TypeError: LegalPrefixes.__init__() takes 3 positional arguments but 4 were given
+
+_spec_work/versions/fair-final-combat-snapshot-v1/test_combat.py:26: TypeError</failure></testcase></testsuite></testsuites>

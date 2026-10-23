@@ -6,6 +6,17 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+2026-10-23最新补证：combat-snapshot-v1双独立原生进程完成有战斗的快照续演。
+tick110/600/1200共六根均有双方未结算预约，每根两条各60tick分支逐tick一致，
+恢复后完整根及全局MT字节一致。每进程1110tick主轨迹，双方ACT执行14/13次、
+正常取消5次，实体1469帧/血损1441帧（含分支）；21份归档独立内容验收通过。
+两进程122.793/127.903秒，句柄及所属引擎清理通过；全局MT只读观察未变化，
+不证明实际消费者不可达或全部随机状态覆盖。55项专项、联合240项通过20.67秒，
+零跳过，集合不累加。证据见fair-final-combat-snapshot-v1/EVIDENCE.md。
+Full128快照1792736248：已提交121组/242根/30976模拟，tick4392玩家0搜索中，
+无失败、未终局；开局采样801/1024，terminal选优仍待验。冻结部署未改，
+G0/G1及34/43保持开放，G2–G8、正式迁移和五机放量未启动。下段为历史进度。
+
 2026-10-23最新独立修复：global-rng-snapshot-v1在单比赛执行通道保存并恢复
 2504字节全局MT，绑定库SHA/进程/base/manager/generation，恢复前校验资格，
 拒绝多slot和render；保留nativeSha256，新摘要显式覆盖native payload及该对象。
