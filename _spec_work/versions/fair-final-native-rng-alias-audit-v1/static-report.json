@@ -1,0 +1,227 @@
+{
+  "additional_references": [
+    {
+      "location": "0x1a1cb30",
+      "opcode": "b",
+      "target": "0x7f5434"
+    }
+  ],
+  "closure_count": 19,
+  "direct_count": 18,
+  "executable_segments": [
+    {
+      "sha256": "c1ed1e5238542ce4249b87a4b14556258919b84e7a908026bffc57ad45aa84e0",
+      "size": 25060688,
+      "start": "0x0"
+    },
+    {
+      "sha256": "0cbf04f0c29ccf145ca7bbd9029e336ea3ae08646b56b020ec025f50496a8df5",
+      "size": 178020,
+      "start": "0x1a19000"
+    }
+  ],
+  "gates_closed": false,
+  "hidden_random_coverage_closed": false,
+  "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "regions": {
+    "tail_entry": {
+      "instructions": [
+        [
+          "b",
+          "#0x121b118"
+        ]
+      ],
+      "sha256": "dc6cb71c7e04ee530f2d611939280a9975056f73708b64dae4f98391a8f13d77",
+      "size": 4,
+      "start": "0x7f5434"
+    },
+    "time_plt": {
+      "instructions": [
+        [
+          "adrp",
+          "x16, #0x18e9000"
+        ],
+        [
+          "ldr",
+          "x17, [x16, #0x6f0]"
+        ],
+        [
+          "add",
+          "x16, x16, #0x6f0"
+        ],
+        [
+          "br",
+          "x17"
+        ]
+      ],
+      "sha256": "34d00afc4dedbfcb5a1002fdaff9292848b94961a4fcbb8389b6bca009ad7f8e",
+      "size": 16,
+      "start": "0x17e5260"
+    },
+    "time_seed_path": {
+      "instructions": [
+        [
+          "stp",
+          "x29, x30, [sp, #-0x10]!"
+        ],
+        [
+          "mov",
+          "x29, sp"
+        ],
+        [
+          "mov",
+          "x0, xzr"
+        ],
+        [
+          "bl",
+          "#0x17e5260"
+        ],
+        [
+          "mov",
+          "x1, x0"
+        ],
+        [
+          "adrp",
+          "x0, #0x19fc000"
+        ],
+        [
+          "add",
+          "x0, x0, #0x368"
+        ],
+        [
+          "ldp",
+          "x29, x30, [sp], #0x10"
+        ],
+        [
+          "b",
+          "#0x7f5434"
+        ]
+      ],
+      "sha256": "f7d36d2ebfecf92c9fc428b263b23b77c6281e0559b6f8cfc2ddd328273ba0cd",
+      "size": 36,
+      "start": "0x1a1cb10"
+    }
+  },
+  "schema": "fair-final-native-rng-alias-audit.v1",
+  "scope": "direct B/BL census extended through unconditional B entry chains; not a complete call graph",
+  "status": "passed_static_limited_scope",
+  "tail_reference_closure": [
+    {
+      "location": "0x7f5434",
+      "opcode": "b",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0xd35f9c",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0xdf47e8",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0xf3f498",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0xfaa2a4",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0xfcdcf4",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0xfd0134",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0xfd01b8",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0xfd16ac",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0xfdb040",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0xfdeea8",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0x1174854",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0x1175f44",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0x1176750",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0x1176958",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0x1177e4c",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0x1179684",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0x117bb1c",
+      "opcode": "bl",
+      "target": "0x121b118"
+    },
+    {
+      "location": "0x1a1cb30",
+      "opcode": "b",
+      "target": "0x7f5434"
+    }
+  ],
+  "time_seed": {
+    "destination": "0x19fc368",
+    "fixed_hog_usage_proven": false,
+    "import_slot": "0x18e96f0",
+    "mapping": {
+      "size": 1218304,
+      "start": "0x18ee070",
+      "writable": true
+    },
+    "path_entry_reachable_proven": false,
+    "path_start": "0x1a1cb10",
+    "semantics": "time(NULL) return passed as uint32 seed to MT initializer at global address",
+    "snapshot_coverage_proven": false
+  },
+  "training_admissible": false,
+  "unresolved": [
+    "path entry and fallthrough reachability",
+    "global object consumers and lifecycle",
+    "snapshot inclusion of process global state",
+    "indirect calls and other random algorithms",
+    "remaining direct initializer semantics and fixed-deck reachability"
+  ]
+}

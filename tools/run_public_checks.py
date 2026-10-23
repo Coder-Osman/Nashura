@@ -24,6 +24,7 @@ def main():
     tests.append(str(ROOT / "_spec_work/versions/fair-final-native-execution-flags-v1/test_flags.py"))
     tests.append(str(ROOT / "_spec_work/versions/fair-final-native-seed-audit-v1/test_seed.py"))
     tests.append(str(ROOT / "_spec_work/versions/fair-final-native-shuffle-audit-v1/test_shuffle.py"))
+    tests.append(str(ROOT / "_spec_work/versions/fair-final-native-rng-alias-audit-v1/test_alias.py"))
     tests.extend(str(ROOT / "_spec_work/versions/fair-final-native-prior-sampling-v1" / name)
         for name in ("test_openings.py", "test_verification.py"))
     tests.append(str(ROOT / "_spec_work/versions/fair-final-active-migration-v1/test_selection_remote.py"))

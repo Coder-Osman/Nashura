@@ -6,6 +6,14 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+2026-10-23最新补查：独立rng-alias-audit-v1核对18处MT直接引用及19条跳转
+闭包边，发现额外time(NULL) seed路径初始化全局对象0x19fc368。绑定三段固定
+字节及PLT/JUMP_SLOT；不把EH范围当作真实入口。路径实际可达性、固定速猪用途
+及快照包含关系待验，不宣称已发现实际搜索受墙钟影响。新增31项与旧洗牌/种子
+联合105项通过、5.37秒；冻结部署未修改，整体随机机制覆盖门继续开放。
+Full128快照1792731888提交117组/234根/29952有效模拟，tick4302玩家1搜索中；
+开局采样177/1024，terminal选优运行，均尚无最终验收。G0/G1及34/43保持开放。
+
 2026-10-23最新增量：active独立retry完成并通过双归档内容验收，状态为
 passed_active_retry_chain_and_two_stage_checkpoint_scope。父trainable超时仍保留失败；
 子只恢复第5→7步，核对网络、AdamW、RNG、采样游标、选优状态及冻结部署。
