@@ -1,0 +1,40 @@
+# 原生种子生命周期验证结果
+
+2026-10-23，独立attempt `native-seed-1792725665793269000`在.35端口29775运行。
+两个全新引擎进程顺序完成，后台Full128与active恢复重试保持原冻结部署。
+
+静态证据固定四个函数区间、构造器INIT_ARRAY登记及time导入。原生检查在合法
+WAIT轨迹的tick90/1200/3600/5400完成：只读digest不变、过期身份拒收、每阶段
+两次续演一致、恢复digest一致、快照句柄释放；同进程新连接重复reset一致。
+两个进程同seed的初始和四阶段digest、manager RNG一致，所属引擎及端口清理通过。
+独立验收结果为`passed_limited_scope`，17份原始文件逐项SHA核验。
+
+两进程在第一次比赛reset前，时间缓存均已非零：base/cache分别为
+1792725682/1792725682及1792725823/1792725824，轨迹中保持稳定，seed增量均为0。
+无额外等待组和显式延迟组的首次reset实际距base约35.257秒与35.786秒，
+因为引擎准备及探针初始化已花费时间。组名immediate只表示未主动追加等待；
+本实验没有提供“15秒以内首次reset”的对照，也未原生覆盖增量1分支。
+结果支持本次启动路径早已填充缓存、后续reset不按当前墙钟重新选择seed，
+不推断所有启动方式均如此。探针段耗时分别93.943秒与94.708秒，非Full128耗时。
+
+外部固定身份：
+
+- launch：c6b62c4eee6247be22b69333c5977b5d4d669b858cc315d8819be1f5e7f856ff
+- download receipt：f0b94c4bcee200c49ee2c22a3fd2e0b5f345e62a92da28c8d9df89dc0746678e
+- verification：38781ec9c80a329321f4c9fb795c146745bc47d7e9f8405be933748406993bc9
+- static report：ca890f647e37ff8b37eb1da2d00a178dff85d9b82c2fb0e24eeab711a26ee3b4
+- tests XML：4f236fa2447201b2c22120167175f2e63e0585fe0f6313bd694a1db39e6bc9d3
+
+首个attempt `native-seed-1792725130533748000`在最后重复reset时复用了atomic
+transport，被90 tick warmup保护拒绝。四阶段记录和失败/清理归档保持，未登记PASS。
+其launch为5c8e04bf86211f08762b5400d0a4c884f33a59d42c8cb3ec6d57a045931c979d，
+receipt为18234e20c66c6b3b3e10379d316e37cb6269624cc2a2adb8b2641c4a2a958376。
+验收器明确拒收该失败归档。修复只在新探针创建新连接，不修改冻结transport。
+
+本机工程测试50项通过、1.68秒；覆盖unsigned语义、生命周期、连接失败清理及
+篡改拒收，含真实固定库静态检查。公开副本缺私有libg时该项跳过；fixture不替代
+原生证据。原始进程内存审计与引擎不发布，公开摘要绑定其SHA。
+
+尚未闭合：全局writer穷尽、其他战斗组件随机性、固定卡组全部可达机制、策略
+搜索实际覆盖、全部全局的snapshot序列化证明、完整搜索局与恢复终局。
+G0/G1与34/43登记保持，G2–G8未运行，training_admissible与gates_closed均为false。

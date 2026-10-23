@@ -22,6 +22,7 @@ def main():
     tests.append(str(ROOT / "_spec_work/versions/fair-final-general-fallback-v1/test_native_general.py"))
     tests.append(str(ROOT / "_spec_work/versions/fair-final-native-mode-audit-v1/test_mode.py"))
     tests.append(str(ROOT / "_spec_work/versions/fair-final-native-execution-flags-v1/test_flags.py"))
+    tests.append(str(ROOT / "_spec_work/versions/fair-final-native-seed-audit-v1/test_seed.py"))
     subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", *tests,
         "--junitxml=" + str(ROOT / "publication/checks-public.xml")],
         cwd=ROOT, env=environment, check=True)

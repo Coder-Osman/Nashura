@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "c395c04c0a834b443bd1e9cc982810a2b2cd0326cae2cb04e5607d4a8f9e8ddb",
-      "bytes": 80482,
-      "source_sha256": "c395c04c0a834b443bd1e9cc982810a2b2cd0326cae2cb04e5607d4a8f9e8ddb",
+      "sha256": "64dbc25f13555766664ec5b02691259a2ca151291203988a229c9128df5446de",
+      "bytes": 81615,
+      "source_sha256": "64dbc25f13555766664ec5b02691259a2ca151291203988a229c9128df5446de",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "92b3b1470684e11a21df2dfe54d529ee190d35b730df673ae2a2ff83b37b15af",
-      "bytes": 38939,
-      "source_sha256": "92b3b1470684e11a21df2dfe54d529ee190d35b730df673ae2a2ff83b37b15af",
+      "sha256": "2a41af342eb25ff8c5a462c3d5b684e8fd2956d6510b84c68395a831656b082a",
+      "bytes": 40040,
+      "source_sha256": "2a41af342eb25ff8c5a462c3d5b684e8fd2956d6510b84c68395a831656b082a",
       "transformations": []
     },
     {
@@ -7746,6 +7746,83 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-native-seed-audit-v1/CONTRACT.md",
+      "sha256": "f4973c6693949dbc20cf105fd24463367c473c6fa4065c6dc4ea9e8de918468d",
+      "bytes": 2335,
+      "source_sha256": "f4973c6693949dbc20cf105fd24463367c473c6fa4065c6dc4ea9e8de918468d",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-seed-audit-v1/EVIDENCE.md",
+      "sha256": "a887f8bb2a61c12114d80a387bf6d3ece00ab3f1576e650f203fa8ca2b8b9fe6",
+      "bytes": 2872,
+      "source_sha256": "a887f8bb2a61c12114d80a387bf6d3ece00ab3f1576e650f203fa8ca2b8b9fe6",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-seed-audit-v1/evidence-summary.json",
+      "sha256": "583b72843aa743bdd36646399215916466c35388a58c871cc90a54ed619d0078",
+      "bytes": 1865,
+      "source_sha256": "583b72843aa743bdd36646399215916466c35388a58c871cc90a54ed619d0078",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-seed-audit-v1/probe_seed.py",
+      "sha256": "e69f78f6760d33e2726f558633ee78af97b7adae5c5a71483230380122c2f5b3",
+      "bytes": 7239,
+      "source_sha256": "e69f78f6760d33e2726f558633ee78af97b7adae5c5a71483230380122c2f5b3",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-seed-audit-v1/run_seed.py",
+      "sha256": "7b3370c114c155ac0fa3d3163cd4ea33e1d440d289396c0f53dffa213ace420d",
+      "bytes": 8182,
+      "source_sha256": "7b3370c114c155ac0fa3d3163cd4ea33e1d440d289396c0f53dffa213ace420d",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-seed-audit-v1/seed_audit.py",
+      "sha256": "3da56ee9c529720b4b47cea7a8e016ad4ea44106eade53eddc312c5cc1e4ba8e",
+      "bytes": 7355,
+      "source_sha256": "3da56ee9c529720b4b47cea7a8e016ad4ea44106eade53eddc312c5cc1e4ba8e",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-seed-audit-v1/seed_worker.py",
+      "sha256": "c01a1559860e4fd04636158d10b117cb78f606b0f9cc9e17f5fa5a046c9968c6",
+      "bytes": 3838,
+      "source_sha256": "c01a1559860e4fd04636158d10b117cb78f606b0f9cc9e17f5fa5a046c9968c6",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-seed-audit-v1/static-report.json",
+      "sha256": "ca890f647e37ff8b37eb1da2d00a178dff85d9b82c2fb0e24eeab711a26ee3b4",
+      "bytes": 9026,
+      "source_sha256": "ca890f647e37ff8b37eb1da2d00a178dff85d9b82c2fb0e24eeab711a26ee3b4",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-seed-audit-v1/test_seed.py",
+      "sha256": "30993da9ee46f2dbafbde4973a1129fbcb92b2effce4b7624e5a0cb30a7e7651",
+      "bytes": 11521,
+      "source_sha256": "30993da9ee46f2dbafbde4973a1129fbcb92b2effce4b7624e5a0cb30a7e7651",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-seed-audit-v1/tests-seed.xml",
+      "sha256": "4f236fa2447201b2c22120167175f2e63e0585fe0f6313bd694a1db39e6bc9d3",
+      "bytes": 7757,
+      "source_sha256": "4f236fa2447201b2c22120167175f2e63e0585fe0f6313bd694a1db39e6bc9d3",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-seed-audit-v1/verify_seed.py",
+      "sha256": "e73fee11ac7cb38f0671dd89c301225e50f28337e10b11a0ed645554e753530d",
+      "bytes": 10773,
+      "source_sha256": "e73fee11ac7cb38f0671dd89c301225e50f28337e10b11a0ed645554e753530d",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-pocket-collision-v1/CONTRACT.md",
       "sha256": "e190e6b137e452eb921ac919f18226a65a533e53c5fa5aaca7933becd36cffb3",
       "bytes": 2657,
@@ -14398,8 +14475,8 @@
       "transformations": []
     }
   ],
-  "file_count": 2056,
-  "source_bytes": 30910372,
+  "file_count": 2067,
+  "source_bytes": 30985369,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

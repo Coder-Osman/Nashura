@@ -6,6 +6,20 @@ TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MAT
 
 ## 当前结论
 
+2026-10-23后台继续期间，新增seed-audit-v1原生限定证据：两个独立引擎均在
+tick90/1200/3600/5400完成只读、过期身份拒收与快照重复续演；同进程重复reset
+及跨进程同seed的初始/四阶段digest与manager RNG一致，17份归档独立验收通过，
+所属引擎清理完成。静态绑定四段函数、构造器INIT_ARRAY登记与time导入；
+50项本机工程测试通过1.68秒。首个探针重置连接生命周期失败保留，新attempt
+修复并重跑，不修改冻结runtime。详见该版本EVIDENCE.md及evidence-summary.json。
+
+两个进程首次reset前时间缓存已非零，base/cache差0/1秒；首次reset均实际在
+base后约35秒，seed增量0。没有覆盖15秒以内首次reset及原生增量1分支，
+不把本次稳定性扩大为全局writer或所有隐藏随机机制已闭合。
+Full128快照1792725784.9987612：112组/224根/28672有效模拟至tick4106，
+tick4166玩家0搜索中，无失败、未终局。active独立恢复重试仍运行，真正terminal
+选优未启动；G0/G1与34/43保持，G2–G8、正式训练与五机放量未运行。
+
 2026-10-23 本轮在Full128后台运行期间完成组合provider原生local限定验收：
 tick110/142各两根隐藏状态配对，共4根512有效模拟，每根128，未完成边零回传；
 配对搜索结果一致，独立构造、343项源码身份、33份归档及所属双引擎清理通过。
