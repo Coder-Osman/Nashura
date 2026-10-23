@@ -1,0 +1,113 @@
+{
+  "schema": "FairFinalActiveRetryEvidence/v1",
+  "date": "2026-10-23",
+  "baseline": "416c6167e446092ab6287c79222e23306b70f92e",
+  "status": "engineering_verified_native_retry_running",
+  "parent": {
+    "attempt": "native-active-migration-1792676550169895000",
+    "status": "failed_trainable_timeout_preserved",
+    "phase_exit_codes": [
+      0,
+      0,
+      0,
+      124
+    ],
+    "launch_sha256": "8c6092ed95822c467f2b8abd0a18cb17c5bbb52964dfe78cf2e906a620bdc97b",
+    "receipt_sha256": "43bc43aa08a748917e2af898e28b5e80dff79239c6bdda8ba80769dc7f9481f2",
+    "failure_sha256": "f5591a2a5375be733a4507da8c4c5c07e4f2f00375388a1b17823c5be08e1d0d"
+  },
+  "retry": {
+    "attempt": "native-active-retry-1792720054258999000",
+    "host_suffix": ".35",
+    "gpu": 1,
+    "timeout_seconds": 28800,
+    "supervisor": {
+      "pid": 54188,
+      "start_ticks": "31014987"
+    },
+    "trainable": {
+      "pid": 54191,
+      "start_ticks": "31015203"
+    },
+    "launch_sha256": "6038ba21c860515146d92d689995526f8ab37a442f80a744e539b3739a5e6508",
+    "input_sha256": "6bd54ae2a51655217573c37ad39d29952eca36cda539a7d6d10776dc797adfa7",
+    "preserved_input_files": 287,
+    "preserved_input_bytes": 683466574,
+    "status": "running",
+    "independently_verified": false
+  },
+  "tests": {
+    "resume_retry": {
+      "passed": 46,
+      "seconds": 54.57,
+      "scope": "CPU fixtures and rejection checks"
+    },
+    "retry_selection_joint": {
+      "passed": 141,
+      "seconds": 182.68,
+      "report": "tests-retry-selection-final.xml",
+      "scope": "CPU fixtures, real local child, simulated SSH; excludes native CUDA retry completion"
+    },
+    "historical_failures": [
+      {
+        "report": "tests-retry-selection-initial.xml",
+        "passed": 57,
+        "errors": 11,
+        "cause": "comparison fixture import omitted"
+      },
+      {
+        "report": "tests-retry-selection.xml",
+        "passed": 140,
+        "failures": 1,
+        "cause": "small fixture correctly rejected by native row-count gate; assertion corrected"
+      }
+    ],
+    "counts_overlap": true
+  },
+  "selection_handoff": {
+    "implemented": true,
+    "native_prepared": false,
+    "native_started": false,
+    "retains_failed_parent": true,
+    "full_checkpoint_resume": true
+  },
+  "full128": {
+    "timestamp": 1792720941.0022864,
+    "committed_groups": 107,
+    "roots": 214,
+    "effective_simulations": 27392,
+    "tick": 4038,
+    "worker_alive": true,
+    "owned_engines_alive": true,
+    "complete": false
+  },
+  "remaining": [
+    "native retry completion and independent six-checkpoint verification",
+    "native terminal selection and supplementary collection",
+    "complete Full128 terminal and recovery verification",
+    "native pending/fallback and random-state coverage",
+    "two-generation center capacity acceptance"
+  ],
+  "source_and_test_sha256": {
+    "retry_active.py": "6470e32bdfdc57d17daf2b1faf30734ff7f76057610e142f8e07cb41fbe78d4e",
+    "retry_runtime.py": "20de30f4c63d806403a450cd6a95e51cb0e2f6ec40e0d6a115ac9a2580623745",
+    "verify_active_retry.py": "a8c9e1d55559e37fdaeac190efee09c8a89a137e730c015d86170ee3eeec7ab5",
+    "collect_native.py": "b1d351a8a28a8f80091c3c92bcf571bcd2774a8a24c77f9a9db3b7dff6d136c1",
+    "prepare_selection.py": "e00b9738edd2ec1529ef0eed537a832da3c782b2519fa8e34fba8bc43980d347",
+    "run_selection.py": "72dadb4f150b262137bebd52d649f482f2a1a56056ddfda29529e376a8d8708c",
+    "test_active_retry.py": "a2935020f58edfbfa6f166c8cfaeecbc31c12751b993af854cb29a00bcac5d22",
+    "test_retry_selection.py": "be88fabaf6bb8f17c5a63adf5eb1104252bbbeffd07045c9225b97a9da753ec8",
+    "tests-active-retry.xml": "f49fc0c5fa03ee41eb8d227db0950e61baf9137649eb6008945b60f6fcbba900",
+    "tests-active-retry-initial.xml": "be065dc46de415794be7e62799e4c2995f8278659f179a9bddc23e2d7f3f9790",
+    "tests-retry-selection-initial.xml": "7283506bf5ebd527e8eac9ea3ec0123f846d2f397fd2646f514d4812fcdb7ccd",
+    "tests-retry-selection.xml": "6548982f8b951e57cc9f0a08d926e76c1eb7b2b3dcbb7e6618eace245503fed6",
+    "tests-retry-selection-final.xml": "32ad4da4d1b4ad0b51fb0d21ee38d33ff38cbfddc99853fb4dba7934326ebb74"
+  },
+  "training_admissible": false,
+  "formal_g2_pass": false,
+  "gates_closed": false,
+  "g0_g1": "open",
+  "limited_subitems": "34/43",
+  "g2_g8": "not_run",
+  "private_attachments_included": false
+}

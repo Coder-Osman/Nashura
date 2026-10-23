@@ -1,17 +1,17 @@
 {
   "schema": "hashura.publication-validation.v1",
   "date": "2026-10-23",
-  "source_manifest_sha256": "5acab51cec2928f810de818fb3487312646df06019c4e86059fbe76ee0083622",
-  "source_files_verified": 2045,
+  "source_manifest_sha256": "42814e4875c5e31e3aec4ca7254f36b4fc35f1627dfa9bef2e8d807cbb96a5a4",
+  "source_files_verified": 2056,
   "public_tests": {
     "failures": 0,
     "errors": 0,
     "skipped": 1,
     "passed": 282,
-    "seconds": 35.800,
+    "seconds": 57.91,
     "skip_reason": "private frozen native library absent from public snapshot",
-    "report": "public-tests-20261023-g01-local.xml",
-    "sha256": "5812bcad812e2098a085099a95bcbb9bfecee9fd742f2c5071cc0dc55a826208"
+    "report": "checks-public.xml",
+    "sha256": "2a7126f0f71c82d9d1b739e9e746b92b41f53865361f9b874888928c859e9845"
   },
   "secret_scan": {
     "tool": "gitleaks",
@@ -61,7 +61,7 @@
   },
   "active_cpu_tests": {
     "passed": 211,
-    "seconds": 20.43,
+    "seconds": 36.11,
     "command": "python tools/run_main_engine_checks.py",
     "scope": "CPU_UNIT_ONLY"
   },
@@ -193,6 +193,17 @@
     "two_generation_capacity_verified": false,
     "formal_storage_gate_passed": false,
     "historical_data_deleted_by_this_run": false
+  },
+  "active_retry_selection_tests": {
+    "passed": 141,
+    "seconds": 182.68,
+    "report": "_spec_work/versions/fair-final-active-migration-v1/tests-retry-selection-final.xml",
+    "sha256": "32ad4da4d1b4ad0b51fb0d21ee38d33ff38cbfddc99853fb4dba7934326ebb74",
+    "scope": "ENGINEERING_SUBPROCESS_AND_TAMPER_FIXTURES_ONLY",
+    "native_retry": "running_pending_independent_verification",
+    "native_terminal_selection_started": false,
+    "formal_g2_pass": false,
+    "gates_closed": false
   },
   "current_active_migration_status": {
     "attempt": "native-active-migration-1792676550169895000",

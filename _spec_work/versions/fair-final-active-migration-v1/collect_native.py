@@ -14,6 +14,7 @@ collector.ARTIFACTS += ("payload.tar.gz", "resources.json", "benchmark.log", "be
     "active-comparison/frozen-midpoint.pt", "active-comparison/frozen-reference.pt",
     "active-comparison/frozen-resumed.pt", "active-comparison/trainable-midpoint.pt",
     "active-comparison/trainable-reference.pt", "active-comparison/trainable-resumed.pt")
+collector.ARTIFACTS += ("selection.log", "retry-input.json")
 
 
 if __name__ == "__main__":

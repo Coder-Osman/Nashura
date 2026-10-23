@@ -1,5 +1,34 @@
 # 最新主工程迁移原生验证
 
+## 超时父的独立恢复与选优交接
+
+`retry_active.py` 只接受原四阶段退出码为 `[0,0,0,124]`、无完成标记且未产生
+解冻恢复结果的父归档。外部固定父 launch/回执 SHA，复制全部冻结输入到独立
+attempt；`retry_runtime.py` 只调用原冻结 trainable 恢复入口，另给有界预算，
+不重新训练参考分支、不改失败父、不继承父的剩余时限。
+
+`verify_active_retry.py` 同时绑定失败父与新重试的 launch/回执，重核原字节输入、
+新进程、命令及确定性环境，并从六个真实 checkpoint 重验冻结/解冻恢复状态。
+父状态始终为 `failed_trainable_timeout_preserved`，成功子链使用独立状态
+`passed_active_retry_chain_and_two_stage_checkpoint_scope`，不冒充原四阶段全部成功。
+
+重试独立验收成功后，选优准备入口显式接受两份来源；仍使用第7步完整连续参考
+checkpoint，继承模型/AdamW/RNG/游标/选优历史及原字节部署。交接包绑定失败父
+launch、回执、失败记录和验收器 SHA；执行端重验该链与子 launch/回执对应关系。
+缺少链、字段篡改、把父身份换成子身份或提升正式门均拒收。旧成功父入口保持原义。
+
+```sh
+python prepare_selection.py SUCCESSFUL_RETRY --launch-sha RETRY_LAUNCH_SHA \
+  --receipt-sha RETRY_RECEIPT_SHA --failed-parent FAILED_PARENT \
+  --failed-parent-launch-sha PARENT_LAUNCH_SHA \
+  --failed-parent-receipt-sha PARENT_RECEIPT_SHA \
+  --data-roots COMPLETE_DATA_ROOT --output NEW_HANDOFF
+```
+
+此接口是工程恢复交接，不代表正式迁移、G2、完整原生对局或模型强度验收；
+`training_admissible`、`formal_g2_pass`、`gates_closed` 始终为 false。
+实际原生完成与验收状态见 EVIDENCE.md；准备工具存在不等于真实交接已发生。
+
 验证已整合的主工程实现，不改变旧冻结部署，不将旧CUDA或恢复结果继承为新实现通过。
 
 从校验过launch、payload及deployment身份的确定性父载荷构建独立部署，明确替换

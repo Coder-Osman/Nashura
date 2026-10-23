@@ -72,8 +72,8 @@ def checked_handoff(directory, expected_sha):
         if path.stat().st_size != metadata["bytes"]:
             raise ValueError("selection handoff byte count differs")
     proof = read(directory / "parent-verification.json")
-    if (proof["status"] != "passed_active_archive_and_two_stage_checkpoint_scope"
-            or proof["content"]["native_schedule_verified"] is not True
+    checked_recovery(request, proof)
+    if (proof["content"]["native_schedule_verified"] is not True
             or proof["frozen_deployment_verified"] is not True
             or proof["content"]["branches"]["trainable"]["state"] != request["parent_checkpoint_state"]
             or any(proof[name] is not value for name, value in GATES.items())
@@ -83,6 +83,31 @@ def checked_handoff(directory, expected_sha):
             or request["files"]["parent-checkpoint.pt"]["sha256"] != request["parent_checkpoint_sha256"]):
         raise ValueError("selection handoff differs from verified parent")
     return request
+
+
+def checked_recovery(request, proof):
+    if proof["status"] == "passed_active_archive_and_two_stage_checkpoint_scope":
+        if "recovery_provenance" in request:
+            raise ValueError("selection recovery provenance requires a verified retry chain")
+        return
+    if proof["status"] != "passed_active_retry_chain_and_two_stage_checkpoint_scope":
+        raise ValueError("selection handoff differs from verified parent")
+    recovery = request.get("recovery_provenance")
+    fields = ("parent_status", "parent_launch_sha256", "parent_receipt_sha256",
+        "parent_failure_sha256", "verifier_sha256")
+    if (not isinstance(recovery, dict) or set(recovery) != {"schema", *fields}
+            or recovery["schema"] != "FairFinalSelectionRecoveryProvenance/v1"
+            or recovery["parent_status"] != "failed_trainable_timeout_preserved"
+            or any(recovery[name] != proof.get(name) for name in fields)
+            or proof.get("native_game_provenance_reverified") is not False
+            or recovery["verifier_sha256"] != request["verifier_sha256"]
+            or recovery["parent_launch_sha256"] == request["parent_launch_sha256"]
+            or recovery["parent_receipt_sha256"] == request["parent_receipt_sha256"]):
+        raise ValueError("selection recovery provenance differs from verified retry chain")
+    for name in fields[1:]:
+        value = recovery[name]
+        if not isinstance(value, str) or len(value) != 64 or any(char not in "0123456789abcdef" for char in value):
+            raise ValueError("selection recovery provenance has an invalid external identity")
 
 
 def payload_files(directory, request):

@@ -89,3 +89,34 @@ G0/G1仍开放，限定子项34/43保持；G2–G8未运行。新CUDA与跨进�
 Full128已提交94组/188根/24064有效模拟，tick3592搜索中、未终局；旧batch-v1
 仍在selection。三个原始快照的路径、字节数和SHA固定于上述verifier-evidence摘要，
 原始附件独立私存。中心磁盘137.454GiB，正式200GiB门槛保持。
+## 2026-10-23 独立解冻恢复重试与后续交接
+
+父 native-active-migration-1792676550169895000 的 benchmark/reference/frozen
+均 exit0，trainable 共享总预算耗尽 exit124；父仍保留为失败，未登记恢复整链通过。
+新增 retry_active.py、retry_runtime.py、verify_active_retry.py 和专项测试，外部
+固定父归档身份，独立预算只恢复 trainable 第5→7步，并核验原始冻结输入继承。
+恢复/验收联合46项工程测试通过54.57秒，见 tests-active-retry.xml；首轮导入错误
+及修复记录保留为 tests-active-retry-initial.xml，均不替代原生恢复结论。
+
+独立 native-active-retry-1792720054258999000 已在 .35 物理GPU1启动：
+supervisor54188/start31014987，恢复54191/start31015203，预算28800秒。
+复制287份冻结输入共683466574字节；原实现、数据、2轮冻结/解冻日程、batch256/
+microbatch1/尾批96、确定性环境均保持。最新回收检查仍为 running，尚无新恢复
+独立内容验收，也未启动 terminal 选优。沿用通用子进程 helper 的 status.phase
+显示 selection，但实际命令为 trainable 恢复，不把该字段当作选优已运行。
+
+同时补齐 prepare_selection.py / run_selection.py 的显式重试链交接，保留旧成功父
+要求，失败父单独进入仍拒收。新测试包括实际子进程恢复参数贯通、缺失/篡改链、
+身份复用及门升级拒收；小模型夹具不满足真实352/358/334日程，执行入口继续拒收。
+首轮测试夹具漏导入 comparison，57项通过、11项setup错误；随后补齐显式导入，
+并将夹具断言与真实日程准入分开，历史失败XML原样保留，不调低原生门槛。
+第二轮140项通过、1项因小夹具被真实日程门拒收而断言失败，保留为
+tests-retry-selection.xml。修正断言后，恢复/交接/执行/SSH原型/内容验收联合
+141项通过182.68秒，见tests-retry-selection-final.xml，集合重叠不与46项相加。
+源码、测试与原生启动身份见active-retry-evidence-20261023.json。真实重试仍待完成。
+
+Full128 保持后台运行。快照1792720941.0022864：已提交107组/214根/27392有效
+模拟至tick4038，worker及29761/29762双引擎在线、无失败、尚未完整终局。
+可用内存238.851GiB、磁盘206.292GiB；瞬时容量不替代两代正式容量验收。
+本轮未补齐随机状态全覆盖：间接分派、临时seed及未证实的组件仍待证据，不新增
+随机门PASS。G0/G1开放、限定登记34/43，G2–G8未运行，不五机放量。
