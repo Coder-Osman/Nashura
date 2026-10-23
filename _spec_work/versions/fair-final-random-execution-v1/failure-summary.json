@@ -53,6 +53,20 @@
       "ports_released": true,
       "trace_bytes": 0,
       "execution_evidence_accepted": false
+    },
+    {
+      "attempt": "native-execution-1792744646333119000",
+      "launch_sha256": "e17bb71374da18212ac8d22ab14399a48497dcb92b7731f757c078cb76dbb69d",
+      "receipt_sha256": "293fc4dcba9939fde7059d00765223a15c7cf4c48bc8696fefebf9d04ec282a2",
+      "archived_files": 28,
+      "seconds": 133.23766547901323,
+      "reason": "single contiguous filter produced startup logs and reached 256MiB hard output limit before ready",
+      "trace_child_returncode": -25,
+      "calibration_engine_clean": true,
+      "trace_clean_success": false,
+      "ports_released": true,
+      "trace_bytes": 268435456,
+      "execution_evidence_accepted": false
     }
   ],
   "private_raw_archives_included": false,

@@ -28,9 +28,8 @@ def filter_spec(center):
     last = first + (WINDOW_PAGES - 1) * PAGE
     if first <= 0:
         raise ValueError("trace address window underflows")
-    entries = [(base + min(TARGETS), base + max(TARGETS)) for base in range(first, last + PAGE, PAGE)]
     return dict(first_base=first, last_base=last,
-        expression=",".join(f"{start:#x}..{end:#x}" for start, end in entries))
+        expression=f"{first + min(TARGETS):#x}..{last + max(TARGETS):#x}")
 
 
 def check_base(center, actual):

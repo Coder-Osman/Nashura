@@ -1,0 +1,40 @@
+{
+  "schema": "FairFinalPluginInstructionDiagnostics/v1",
+  "qemu_sha256": "a7fcd2082e93b8bfd9aefef7906f4227a33d7bd230084d5fae29dbe33536a62f",
+  "old_interior_rejection": {
+    "plugin_launch_sha256": "3102ca6c266b81fa82749e1d1c25b584ff94e3c4db6a9774e69bce5f723dbac0",
+    "guest_sha256": "c0d4da89a198714e5e02e6df74b48dbf8df7c4cb35b13d9351a130ceb35f486c",
+    "trace_sha256": "7bd050f71576eb15ba34cdc083dfbefd113e184bf95ed6a77f5112b1ff47308f",
+    "trace_bytes": 105,
+    "exit_code": 92,
+    "diagnostic": "instruction_pc_or_record_limit_differs"
+  },
+  "v2_plugin_sha256": "4afa0d7aaa4af23977d17320d37c4f44de9d6eb9e35f881550bbdfaac9c643a0",
+  "v2_entry": {
+    "guest_sha256": "990b71c643c77d27d67ec0dc42fe2dded0f4351205d85e1163a1161bbc97466f",
+    "trace_sha256": "c4d10b5544ba08f67abe41bb8f46a6a94cd92afbaee55c70fa90278e22b0f703",
+    "executed_callbacks": 2,
+    "sampled_pc_differs": 0,
+    "parameters_and_return_addresses_verified": true
+  },
+  "v2_interior": {
+    "guest_sha256": "5c803ddc0a25b97cdcaf2d2fff8d1865cabd958c800d331841b83614a23d50f8",
+    "trace_sha256": "6108cbc595fb861e68bfd18b845dc1da450ee0191d3c057ecfa7c809b686dd5b",
+    "executed_callbacks": 2,
+    "sampled_pc_differs": 1,
+    "parameters_and_return_addresses_verified": true,
+    "preceding_instruction_register_write_verified": true
+  },
+  "v3_armed_interior": {
+    "plugin_sha256": "382b68874e3fa0e2a942841f931c9aade4167ead20cc559f37c86a017fbee472",
+    "guest_sha256": "5c803ddc0a25b97cdcaf2d2fff8d1865cabd958c800d331841b83614a23d50f8",
+    "trace_sha256": "505ba6ae86086f37e568062e227c983f9daa2b7f502ce83678f340627b109d37",
+    "executed_callbacks": 2,
+    "sampled_pc_differs": 1,
+    "arm_identity_and_parameters_verified": true
+  },
+  "synthetic_guest": true,
+  "native_game_evidence": false,
+  "training_admissible": false,
+  "gates_closed": false
+}

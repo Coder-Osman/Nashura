@@ -1,0 +1,56 @@
+{
+  "schema": "FairFinalPluginRuntimeBuildSummary/v1",
+  "attempts": [
+    {
+      "attempt": "build-1792746284725689000",
+      "launch_sha256": "b10ac686cb234909e908c9c3ea816d2f1413a1de39eccba7ee64e22d7856f312",
+      "receipt_sha256": "9aeacd170e8aa986ded350affacd07682699975f9b5697b1610c96a49e1fbfa3",
+      "archived_files": 18,
+      "seconds": 41.376399366010446,
+      "status": "failed",
+      "reason": "Python data filter rejected unused firmware absolute symlink; subsequent builds omit roms subtree"
+    },
+    {
+      "attempt": "build-1792746474147830000",
+      "launch_sha256": "b5ca055b79500bb06f0e74455104f7f12a1bac161d3a221b70ab9515b826533e",
+      "receipt_sha256": "341892198b6fddcf45b9f9794cf73d8e7cdafb6dcbca96a548ce7d8c5571bbed",
+      "archived_files": 19,
+      "seconds": 47.625361535989214,
+      "status": "failed",
+      "reason": "configure Python lacks ensurepip; subsequent builds use independent pinned build wheels"
+    },
+    {
+      "attempt": "build-1792746684126192000",
+      "launch_sha256": "1ad5f04d459e3869474f7466bcc32e43ded9385d09a80392d925662e8a00b3c9",
+      "receipt_sha256": "6534eca861ef6d67223fc62364f9c148d6fbbebc59d16e43a232a14cb97d91db",
+      "archived_files": 25,
+      "seconds": 69.98733870498836,
+      "status": "failed",
+      "reason": "GLib pkgconfig requires sysprof-capture and PCRE2 headers; subsequent build unpacks pinned development packages"
+    },
+    {
+      "attempt": "build-1792746865344999000",
+      "launch_sha256": "cf3893712eb9a69f5c13cb23a809af1299a83e34b24a1c90651a3e43fd256796",
+      "receipt_sha256": "550c5b321b9a9390d934714ecec4268c04a2a1f7d72bc44fe4df2478d425fed1",
+      "archived_files": 33,
+      "seconds": 198.57430510903941,
+      "status": "completed",
+      "builder_sha256": "3d3a81d6c6c317c6d00ffd0b78ce85ac471045add9a0b09cfe904bff1844fa45",
+      "qemu_sha256": "a7fcd2082e93b8bfd9aefef7906f4227a33d7bd230084d5fae29dbe33536a62f",
+      "plugin_header_sha256": "ceca12f3ba448340b38223617b1c66d7b92e0e0d78687d1e108c42287542836e",
+      "build_seconds": 104.02454391802894,
+      "configure_seconds": 24.005493137985468
+    }
+  ],
+  "synthetic_smoke": {
+    "guest_sha256": "990b71c643c77d27d67ec0dc42fe2dded0f4351205d85e1163a1161bbc97466f",
+    "trace_sha256": "5660aa0509c383844f861bd49180bec754ab26273212c15fb91d99d0e853c481",
+    "plugin_sha256": "d333e8ffa2dc4b798978f2b6ef3a430cb497142c899cca4ccd91f8c0705893a2",
+    "executed_callbacks": 2,
+    "synthetic_guest": true,
+    "native_game_evidence": false
+  },
+  "private_raw_archives_included": false,
+  "training_admissible": false,
+  "gates_closed": false
+}

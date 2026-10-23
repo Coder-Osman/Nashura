@@ -25,7 +25,8 @@ def test_filter_covers_exact_targets_for_each_registered_base():
     window = filter_spec(BASE)
     assert len(window["expression"].encode()) < 100000
     ranges = [tuple(int(value, 0) for value in item.split("..")) for item in window["expression"].split(",")]
-    assert len(ranges) == 128
+    assert len(ranges) == 1
+    assert ranges[0] == (window["first_base"] + min(TARGETS), window["last_base"] + max(TARGETS))
     for base in (window["first_base"], BASE, window["last_base"]):
         check_base(BASE, base)
         assert all(any(start <= base + target <= end for start, end in ranges) for target in TARGETS)

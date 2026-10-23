@@ -1,0 +1,57 @@
+{
+  "schema": "FairFinalPluginNativeEvidenceSummary/v1",
+  "status": "verified_limited_scope",
+  "attempt": "native-plugin-1792750885374957000",
+  "launch_sha256": "f57ea71de3911e3992c6998c5ceb7881abe203c396a1be76ce8fd8bb8e4bc3c5",
+  "receipt_sha256": "aa9275566bf5a73df0cc802fd3fc5a43258aa85017b344200fca93048ec2339f",
+  "verifier_sha256": "107ff23c364000710aee90004f04019888e1efd2913870b0d460f38da1b5dfed",
+  "archived_files": 62,
+  "total_seconds": 787.1059179620352,
+  "comparison": {
+    "variants": ["original_qemu", "new_qemu_without_plugin", "new_qemu_with_plugin"],
+    "complete_native_games": 3,
+    "steps_per_game": 5807,
+    "final_tick": 5897,
+    "decision_groups_per_game": 213,
+    "decisions_per_game": 426,
+    "executed_by_owner": {"0": 96, "1": 92},
+    "periodic_semantic_boundaries": 20,
+    "all_decisions_masks_fair_digests_outcomes_terminal_and_final_clock_equal": true,
+    "periodic_native_json_observation_digests_equal": true,
+    "cross_process_native_snapshot_bytes_equal_claimed": false
+  },
+  "phase_seconds": {
+    "baseline": 215.54556546499953,
+    "upgraded": 244.9926497770357,
+    "plugin": 326.5618070329656
+  },
+  "probe_seconds": {
+    "baseline": 167.69422581099207,
+    "upgraded": 188.48424826201517,
+    "plugin": 190.22671902400907
+  },
+  "trace_bytes": 4085,
+  "captured_entries": 44,
+  "trace_closure": "supervised_after_native_terminal",
+  "plugin_atexit_footer_present": false,
+  "phase_counts": {
+    "startup": {},
+    "reset": {"mt_clear": 2, "mt_generate": 16, "mt_initialize": 2, "xorshift_generate": 2, "xorshift_seed": 2},
+    "battle": {"xorshift_save": 20}
+  },
+  "object_classification": {
+    "reset_mt_entries": "other_object_not_global_mt_or_manager",
+    "reset_xorshift_entries": "manager",
+    "battle_xorshift_save_entries": "manager"
+  },
+  "sampled_pc_differs_in_this_native_trace": 0,
+  "all_owned_engines_stopped_and_ports_released": true,
+  "scope": "eight known entry instructions from post-ready arming through one fixed complete legal scripted trajectory",
+  "startup_before_arming_observed": false,
+  "other_algorithms_covered": false,
+  "all_seeds_or_legal_actions_covered": false,
+  "hidden_random_coverage_closed": false,
+  "private_raw_archives_included": false,
+  "training_admissible": false,
+  "gates_closed": false
+}

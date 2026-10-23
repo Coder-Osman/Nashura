@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="2.647" timestamp="2026-10-23T17:41:40.246476+08:00" hostname="gujigadeMacBook-Pro-3.local"><testcase classname="" name="_spec_work.versions.fair-final-plugin-runtime-v1.test_verification" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'test_verification' has this __file__ attribute:
+  /Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/versions/fair-final-native-prior-sampling-v1/test_verification.py
+which is not the same as the test file we want to collect:
+  /Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/versions/fair-final-plugin-runtime-v1/test_verification.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase></testsuite></testsuites>

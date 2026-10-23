@@ -236,9 +236,6 @@ def verify(attempt, launch_sha, receipt_sha, *, parent):
     proof = validate_parent(parent, launch["parent_launch_sha256"], launch["parent_receipt_sha256"])
     if proof != launch["parent_verification"]:
         raise ValueError("execution trace parent evidence differs")
-    if (sha(ROOT / "run_trace.py") != launch["runner_sha256"]
-            or sha(ROOT / "CONTRACT.md") != launch["contract_sha256"]):
-        raise ValueError("execution trace local implementation differs")
     sources = {name: hashlib.sha256(content).hexdigest() for name, content in upload_sources().items()}
     archive, files = attempt / "archive", receipt["files"]
     required = {*sources, "settings.json", "worker.log", "completion.json"}
@@ -253,6 +250,9 @@ def verify(attempt, launch_sha, receipt_sha, *, parent):
     actual = {path.relative_to(archive).as_posix() for path in archive.rglob("*") if path.is_file()}
     if not required <= set(files) <= allowed or actual != set(files):
         raise ValueError("execution trace missing evidence or archived failure")
+    if (sha(ROOT / "run_trace.py") != launch["runner_sha256"]
+            or sha(ROOT / "CONTRACT.md") != launch["contract_sha256"]):
+        raise ValueError("execution trace local implementation differs")
     for name, metadata in files.items():
         path = archive / name
         if (Path(name).is_absolute() or ".." in Path(name).parts or path.is_symlink()

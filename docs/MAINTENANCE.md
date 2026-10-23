@@ -35,3 +35,7 @@ git diff --stat
 combat-snapshot-v1/tests-initial.xml保留首次fixture构造错误的原始回溯和尾随空白；
 仅该精确路径关闭行尾空白提示，仍受源码清单SHA校验。修正后的测试与原生验收
 另行记录，不重写原始失败报告。
+
+plugin-runtime-v1/tests-audit.xml、tests-initial.xml与random-execution-v1/
+tests-contiguous-filter.xml保留首次失败回溯的尾随空白；仅这三个精确路径在
+.gitattributes登记行尾豁免，仍核对原始SHA，不豁免源码或其他报告。

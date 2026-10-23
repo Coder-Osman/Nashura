@@ -36,6 +36,8 @@ def main():
     tests.append(str(ROOT / "_spec_work/versions/fair-final-boundary-reachability-v1/test_boundaries.py"))
     tests.extend(str(ROOT / "_spec_work/versions/fair-final-random-execution-v1" / name)
         for name in ("test_trace.py", "test_trace_verification.py"))
+    tests.extend(str(ROOT / "_spec_work/versions/fair-final-plugin-runtime-v1" / name)
+        for name in ("test_plugin.py", "test_plugin_verification.py"))
     subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", *tests,
         "--junitxml=" + str(ROOT / "publication/checks-public.xml")],
         cwd=ROOT, env=environment, check=True)
