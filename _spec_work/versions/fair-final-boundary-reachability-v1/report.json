@@ -1,0 +1,66 @@
+{
+  "schema": "fair-final-boundary-reachability-audit.v1",
+  "status": "verified_conditional_runtime_matrix",
+  "counts": {
+    "cases": 1981,
+    "all_success_cases": 961,
+    "single_ready_cases": 928,
+    "synchronous_cases": 1053
+  },
+  "matrix_sha256": "ab20cda0953ddd958fb12a318470eab3d4238d21579da994dce3457b45bf4799",
+  "rejection_counterexamples": {
+    "1": {
+      "choices": [
+        0,
+        1
+      ],
+      "outcomes": {
+        "1": "rejected"
+      },
+      "elapsed_ticks": 2,
+      "ready": [
+        1
+      ],
+      "pending": {
+        "0": 160
+      },
+      "reasons": {
+        "1": "rejected"
+      }
+    },
+    "0": {
+      "choices": [
+        1,
+        0
+      ],
+      "outcomes": {
+        "0": "rejected"
+      },
+      "elapsed_ticks": 2,
+      "ready": [
+        0
+      ],
+      "pending": {
+        "1": 160
+      },
+      "reasons": {
+        "0": "rejected"
+      }
+    }
+  },
+  "source_sha256": {
+    "fair-final-boundary-reachability-v1/audit_boundaries.py": "57405520d751fad40913a1fd2a1f2171b8b8ee0987f2535c17ed7bd0d153284d",
+    "fair-final-boundary-reachability-v1/CONTRACT.md": "08baa5f5ca3ab744dc0cacc93b90b5c403acba02effc34578996b0c08e3ddbb5",
+    "fair-final-history-v2/project/native_runner/training/fair_final/native.py": "1765f360d2c13f2813079ed0d5187688ca22d36bfd289db24841356899edbb15",
+    "fair-final-history-v2/project/native_runner/training/fair_final/timing.py": "864f46397f6dfcd3c58f4803714ff6744bf209ad5afede1c03f160b9c7e17e88",
+    "fair-final-history-v2/project/native_runner/training/fair_final/policy.py": "821e48ee09fe2b927d28729493c5e6b4dcbef6ebcf728025e08f948d9f36ab91",
+    "fair-final-history-v2/project/native_runner/training/fair_final/visibility.py": "4923e4121aeec6ad663a7034be3a0adbbf2152f7072ee96b312f2b8a08c44e53"
+  },
+  "outcome_model": "synthetic-public-success-private-rejection",
+  "legal_mask_or_native_executor_tested": false,
+  "native_rejection_reachability_proven": false,
+  "native_rejection_unreachability_proven": false,
+  "native_fallback_verified": false,
+  "training_admissible": false,
+  "gates_closed": false
+}

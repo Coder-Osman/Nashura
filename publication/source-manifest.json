@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "3f3e46d27fa4c18ee9b59b96cb0444ebe71a1ac5cf039f13955887ffc02d75d1",
-      "bytes": 87883,
-      "source_sha256": "3f3e46d27fa4c18ee9b59b96cb0444ebe71a1ac5cf039f13955887ffc02d75d1",
+      "sha256": "4262546fc6313bcaed778a45eae83b4e313a177cfc78c3d608452cba36ab00d1",
+      "bytes": 89432,
+      "source_sha256": "4262546fc6313bcaed778a45eae83b4e313a177cfc78c3d608452cba36ab00d1",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "3d2afa5db7b474b02dc65f97c2d168a1094142dee1a4f8149c09ebeb62e06bd8",
-      "bytes": 45532,
-      "source_sha256": "3d2afa5db7b474b02dc65f97c2d168a1094142dee1a4f8149c09ebeb62e06bd8",
+      "sha256": "830e3143edf6af1f41e253f8248d1aa49ff5e427ff49f2158f3836e4612b7f31",
+      "bytes": 46826,
+      "source_sha256": "830e3143edf6af1f41e253f8248d1aa49ff5e427ff49f2158f3836e4612b7f31",
       "transformations": []
     },
     {
@@ -2183,6 +2183,62 @@
       "sha256": "772bac7b3b6514aedae6a74a30838e5d9d851969aacc478bb6f4d4c90897751a",
       "bytes": 9751,
       "source_sha256": "772bac7b3b6514aedae6a74a30838e5d9d851969aacc478bb6f4d4c90897751a",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-boundary-reachability-v1/CONTRACT.md",
+      "sha256": "08baa5f5ca3ab744dc0cacc93b90b5c403acba02effc34578996b0c08e3ddbb5",
+      "bytes": 2487,
+      "source_sha256": "08baa5f5ca3ab744dc0cacc93b90b5c403acba02effc34578996b0c08e3ddbb5",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-boundary-reachability-v1/EVIDENCE.md",
+      "sha256": "5188dbafeda0145b234e59d8b963e2ea6e6eae25cfdadf4a3508f3e412b8bb7a",
+      "bytes": 1639,
+      "source_sha256": "5188dbafeda0145b234e59d8b963e2ea6e6eae25cfdadf4a3508f3e412b8bb7a",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-boundary-reachability-v1/audit_boundaries.py",
+      "sha256": "57405520d751fad40913a1fd2a1f2171b8b8ee0987f2535c17ed7bd0d153284d",
+      "bytes": 6584,
+      "source_sha256": "57405520d751fad40913a1fd2a1f2171b8b8ee0987f2535c17ed7bd0d153284d",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-boundary-reachability-v1/report.json",
+      "sha256": "0c1088dc045da4e459a6418d8021d0d94348e0ef5ec9eb4f3e33cb8a9da7ea27",
+      "bytes": 2107,
+      "source_sha256": "0c1088dc045da4e459a6418d8021d0d94348e0ef5ec9eb4f3e33cb8a9da7ea27",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-boundary-reachability-v1/test_boundaries.py",
+      "sha256": "ddc842823a5a3b84692726711a22501de36f28a68ccdb5ddfe3d2c005017820d",
+      "bytes": 2706,
+      "source_sha256": "ddc842823a5a3b84692726711a22501de36f28a68ccdb5ddfe3d2c005017820d",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-boundary-reachability-v1/tests-joint-final.xml",
+      "sha256": "e5d5dc9953739a8fd75bb9deee40298d8230e13e3ff40a1629e9667a466f75ab",
+      "bytes": 9103,
+      "source_sha256": "e5d5dc9953739a8fd75bb9deee40298d8230e13e3ff40a1629e9667a466f75ab",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-boundary-reachability-v1/tests-joint.xml",
+      "sha256": "b1d39fbed79f9801092f9991dec3f7fda24ac95d83ccd7b1148b6fda1d8da3d0",
+      "bytes": 233,
+      "source_sha256": "b1d39fbed79f9801092f9991dec3f7fda24ac95d83ccd7b1148b6fda1d8da3d0",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-boundary-reachability-v1/tests.xml",
+      "sha256": "05d565af4c900d039fd0faaf9856f48bfe2d134ec78766766673ecefd264c26e",
+      "bytes": 2047,
+      "source_sha256": "05d565af4c900d039fd0faaf9856f48bfe2d134ec78766766673ecefd264c26e",
       "transformations": []
     },
     {
@@ -7978,9 +8034,16 @@
     },
     {
       "path": "_spec_work/versions/fair-final-native-prior-sampling-v1/EVIDENCE.md",
-      "sha256": "bda191372507a45360885b093a133762755bde62c5c43425a69cd831cc8f3d92",
-      "bytes": 1491,
-      "source_sha256": "bda191372507a45360885b093a133762755bde62c5c43425a69cd831cc8f3d92",
+      "sha256": "203bff3a28d0f0a7459b4549397fd1207ef51759d5c1d6f92599a8a43571c3ff",
+      "bytes": 2880,
+      "source_sha256": "203bff3a28d0f0a7459b4549397fd1207ef51759d5c1d6f92599a8a43571c3ff",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-native-prior-sampling-v1/native-evidence-summary.json",
+      "sha256": "2805815e28a1a86531215a89c1516bfa77330ff14f9d936dce6e2c828ef0d65d",
+      "bytes": 13745,
+      "source_sha256": "2805815e28a1a86531215a89c1516bfa77330ff14f9d936dce6e2c828ef0d65d",
       "transformations": []
     },
     {
@@ -14923,8 +14986,8 @@
       "transformations": []
     }
   ],
-  "file_count": 2131,
-  "source_bytes": 31521191,
+  "file_count": 2140,
+  "source_bytes": 31566074,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

@@ -1,5 +1,44 @@
 {
   "schema": "hashura.publication-validation.v1",
+  "latest_boundary_and_opening_publication": {
+    "source_files_verified": 2140,
+    "source_manifest_sha256": "954550690c34c9d4373e09643c87bed0e804c60a039526016c5fe6dcf6b857c0",
+    "public_tests": {
+      "passed": 584,
+      "skipped": 16,
+      "seconds": 49.01,
+      "report": "publication/checks-public.xml",
+      "sha256": "cdb6a7cc53c98fbfab36c2099260ef23d11a94e212649a926c0d2e2e6793a4a3",
+      "skip_reason": "private native library absent from public snapshot"
+    },
+    "main_engine_tests": {"passed": 211, "seconds": 24.21},
+    "secret_scan_findings": 0,
+    "conditional_boundary_analysis": {
+      "cases": 1981,
+      "all_success_cases": 961,
+      "single_ready_cases": 928,
+      "tests_passed": 11,
+      "joint_tests_passed": 45,
+      "scope": "REAL_RUNTIME_SYNTHETIC_OUTCOMES_ONLY",
+      "native_rejection_reachability_proven": false
+    },
+    "native_opening_diagnostic": {
+      "evidence": "_spec_work/versions/fair-final-native-prior-sampling-v1/native-evidence-summary.json",
+      "sha256": "2805815e28a1a86531215a89c1516bfa77330ff14f9d936dce6e2c828ef0d65d",
+      "status": "verified_diagnostic",
+      "samples": 1024,
+      "cross_process_repeated_seeds": 64,
+      "preregistered_tests": 21,
+      "rejected_tests": 0,
+      "engine_cleanup_passed": true,
+      "exact_uniformity_proven": false,
+      "history_conditional_calibration_verified": false,
+      "private_native_archive_included": false
+    },
+    "training_admissible": false,
+    "gates_closed": false,
+    "historical_entries_below_preserved": true
+  },
   "latest_combat_snapshot_publication": {
     "source_files_verified": 2131,
     "source_manifest_sha256": "bafa281b57447b3d391a00f7fcb61c3db44bccafd21c264fd063cb2baed61b41",
