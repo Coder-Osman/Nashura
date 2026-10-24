@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="22" time="1.307" timestamp="2026-10-24T18:29:00.906848+08:00" hostname="gujigadeMacBook-Pro-3.local"><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_stack_object_and_w_seed_alias_are_distinct_from_x_value" time="0.001"><failure message="AssertionError: assert {'kind': 'con...', 'value': 7} == {'kind': 'zer..., 'value': 7}}&#10;  &#10;  Differing items:&#10;  {'value': 7} != {'value': {'kind': 'constant', 'value': 7}}&#10;  {'kind': 'constant'} != {'kind': 'zero_extend32'}&#10;  Use -v to get more diff">def test_stack_object_and_w_seed_alias_are_distinct_from_x_value():
+        result = slice_arguments([instruction(0x100, "mov", "w19, #7", ["w19"]),
+            instruction(0x104, "add", "x0, sp, #0x40", ["x0"]),
+            instruction(0x108, "mov", "w1, w19", ["w1"]), initialize(0x10C)])
+        assert object_kind(result["object"]) == "stack_relative"
+        seed = result["seed"]["value"]["value"]["value"]["value"]
+&gt;       assert seed == {"kind": "zero_extend32", "value": {"kind": "constant", "value": 7}}
+E       AssertionError: assert {'kind': 'con...', 'value': 7} == {'kind': 'zer..., 'value': 7}}
+E         
+E         Differing items:
+E         {'value': 7} != {'value': {'kind': 'constant', 'value': 7}}
+E         {'kind': 'constant'} != {'kind': 'zero_extend32'}
+E         Use -v to get more diff
+
+_spec_work/versions/fair-final-rng-callsite-audit-v1/test_callsite.py:24: AssertionError</failure></testcase><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_call_clobbers_temporaries_and_preserves_saved_registers" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_allocation_return_is_not_a_lifetime_or_reachability_claim" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_opaque_w_write_invalidates_the_entire_x_alias" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_control_transfers_are_rejected_instead_of_assuming_fallthrough[b-#0x108]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_control_transfers_are_rejected_instead_of_assuming_fallthrough[b.eq-#0x108]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_control_transfers_are_rejected_instead_of_assuming_fallthrough[cbz-x0, #0x108]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_control_transfers_are_rejected_instead_of_assuming_fallthrough[tbz-w0, #0, #0x108]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_control_transfers_are_rejected_instead_of_assuming_fallthrough[br-x8]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_control_transfers_are_rejected_instead_of_assuming_fallthrough[blr-x8]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_control_transfers_are_rejected_instead_of_assuming_fallthrough[ret-]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_control_transfers_are_rejected_instead_of_assuming_fallthrough[svc-#0]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_empty_gapped_and_wrong_final_calls_are_rejected[instructions0]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_empty_gapped_and_wrong_final_calls_are_rejected[instructions1]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_empty_gapped_and_wrong_final_calls_are_rejected[instructions2]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_unknown_register_spellings_are_rejected[v0]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_unknown_register_spellings_are_rejected[x31]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_unknown_register_spellings_are_rejected[w32]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_unknown_register_spellings_are_rejected[fp]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_unknown_register_spellings_are_rejected[]" time="0.000" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_wrong_library_identity_fails_before_parsing" time="0.181" /><testcase classname="_spec_work.versions.fair-final-rng-callsite-audit-v1.test_callsite" name="test_fixed_native_library_census_and_argument_classification" time="1.057"><failure message="ValueError: initializer object provenance differs: 0xfdeea8">def test_fixed_native_library_census_and_argument_classification():
+        library = Path(__file__).resolve().parent.parent / (
+            "fair-final-history-v2/project/artifacts/standalone-engine-20260926/app-libs/libg.so")
+        if not library.exists():
+            pytest.skip("private fixed native library is not distributed")
+&gt;       report = build_report(library)
+
+_spec_work/versions/fair-final-rng-callsite-audit-v1/test_callsite.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+library = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/_spec_work/versions/fair-final-history-v2/project/artifacts/standalone-engine-20260926/app-libs/libg.so')
+
+    def build_report(library):
+        import capstone
+        import lief
+    
+        library = Path(library)
+        if hashlib.sha256(library.read_bytes()).hexdigest() != LIBG_SHA:
+            raise ValueError("callsite audit library identity differs")
+        parent = shuffle_report(library)
+        if set(SLICES) != set(INITIALIZERS):
+            raise ValueError("initializer slice inventory differs from verified census")
+        binary = lief.parse(str(library))
+        decoder = capstone.Cs(capstone.CS_ARCH_ARM64, capstone.CS_MODE_ARM)
+        decoder.detail = True
+        records = []
+        for location, (start, expected_kind) in sorted(SLICES.items()):
+            size = location - start + 4
+            content = bytes(binary.get_content_from_virtual_address(start, size))
+            instructions = list(decoder.disasm(content, start))
+            if len(content) != size or len(instructions) * 4 != size:
+                raise ValueError("incomplete initializer argument bytes")
+            arguments = slice_arguments(instructions)
+            actual_kind = object_kind(arguments["object"])
+            if actual_kind != expected_kind:
+&gt;               raise ValueError("initializer object provenance differs: " + hex(location))
+E               ValueError: initializer object provenance differs: 0xfdeea8
+
+_spec_work/versions/fair-final-rng-callsite-audit-v1/callsite_audit.py:148: ValueError</failure></testcase></testsuite></testsuites>

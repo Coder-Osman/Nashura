@@ -39,6 +39,7 @@ def main():
     tests.extend(str(ROOT / "_spec_work/versions/fair-final-plugin-runtime-v1" / name)
         for name in ("test_plugin.py", "test_plugin_verification.py"))
     tests.append(str(ROOT / "_spec_work/versions/fair-final-global-search-v1/test_global_search.py"))
+    tests.append(str(ROOT / "_spec_work/versions/fair-final-rng-callsite-audit-v1/test_callsite.py"))
     subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", *tests,
         "--junitxml=" + str(ROOT / "publication/checks-public.xml")],
         cwd=ROOT, env=environment, check=True)

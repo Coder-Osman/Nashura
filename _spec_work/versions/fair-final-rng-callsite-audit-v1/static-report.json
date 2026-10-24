@@ -1,0 +1,1744 @@
+{
+  "allocation_import": {
+    "name": "_Znwm",
+    "plt": "0x17e4b20",
+    "slot": "0x18e9350"
+  },
+  "counts": {
+    "allocation_return": 6,
+    "incoming": 1,
+    "stack_relative": 11
+  },
+  "direct_initializer_count": 18,
+  "gates_closed": false,
+  "hidden_random_coverage_closed": false,
+  "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "parent_schema": "fair-final-native-shuffle-audit.v1",
+  "records": [
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "at": "0x7f5434",
+          "kind": "live_in",
+          "register": "x0"
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "at": "0x7f5434",
+            "kind": "live_in",
+            "register": "x1"
+          }
+        }
+      },
+      "callsite": "0x7f5434",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0x7f5434",
+          "mnemonic": "b",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "incoming",
+      "sha256": "dc6cb71c7e04ee530f2d611939280a9975056f73708b64dae4f98391a8f13d77",
+      "size": 4,
+      "slice_start": "0x7f5434",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "argument_semantics": "not_inferred",
+          "at": "0xd35f80",
+          "kind": "call_return",
+          "target": "#0x17e4b20"
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "at": "0xd35f94",
+              "instruction": "ldr w1, [x0]",
+              "kind": "opaque_write",
+              "register": "w1"
+            }
+          }
+        }
+      },
+      "callsite": "0xd35f9c",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0xd35f78",
+          "mnemonic": "mov",
+          "operands": "x24, x0"
+        },
+        {
+          "address": "0xd35f7c",
+          "mnemonic": "mov",
+          "operands": "w0, #0x9c8"
+        },
+        {
+          "address": "0xd35f80",
+          "mnemonic": "bl",
+          "operands": "#0x17e4b20"
+        },
+        {
+          "address": "0xd35f84",
+          "mnemonic": "ldur",
+          "operands": "x20, [x29, #-0x70]"
+        },
+        {
+          "address": "0xd35f88",
+          "mnemonic": "mov",
+          "operands": "x25, x0"
+        },
+        {
+          "address": "0xd35f8c",
+          "mnemonic": "mov",
+          "operands": "x0, x20"
+        },
+        {
+          "address": "0xd35f90",
+          "mnemonic": "bl",
+          "operands": "#0x1061a08"
+        },
+        {
+          "address": "0xd35f94",
+          "mnemonic": "ldr",
+          "operands": "w1, [x0]"
+        },
+        {
+          "address": "0xd35f98",
+          "mnemonic": "mov",
+          "operands": "x0, x25"
+        },
+        {
+          "address": "0xd35f9c",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "allocation_return",
+      "sha256": "c0d93e755e7c28ad2bd615de7958fc6c32d6190cc53a1fa5066d1eb4ac3c93e1",
+      "size": 40,
+      "slice_start": "0xd35f78",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "argument_semantics": "not_inferred",
+          "at": "0xdf47c8",
+          "kind": "call_return",
+          "target": "#0x17e4b20"
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "low32",
+              "value": {
+                "argument_semantics": "not_inferred",
+                "at": "0xdf47dc",
+                "kind": "call_return",
+                "target": "#0x121b350"
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0xdf47e8",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0xdf47b8",
+          "mnemonic": "mov",
+          "operands": "w0, #0x9c8"
+        },
+        {
+          "address": "0xdf47bc",
+          "mnemonic": "mov",
+          "operands": "x19, x3"
+        },
+        {
+          "address": "0xdf47c0",
+          "mnemonic": "mov",
+          "operands": "x20, x2"
+        },
+        {
+          "address": "0xdf47c4",
+          "mnemonic": "mov",
+          "operands": "x21, x1"
+        },
+        {
+          "address": "0xdf47c8",
+          "mnemonic": "bl",
+          "operands": "#0x17e4b20"
+        },
+        {
+          "address": "0xdf47cc",
+          "mnemonic": "mov",
+          "operands": "w1, #0xc9ff"
+        },
+        {
+          "address": "0xdf47d0",
+          "mnemonic": "mov",
+          "operands": "x23, x0"
+        },
+        {
+          "address": "0xdf47d4",
+          "mnemonic": "add",
+          "operands": "x0, x19, #0x558"
+        },
+        {
+          "address": "0xdf47d8",
+          "mnemonic": "movk",
+          "operands": "w1, #0x3b9a, lsl #16"
+        },
+        {
+          "address": "0xdf47dc",
+          "mnemonic": "bl",
+          "operands": "#0x121b350"
+        },
+        {
+          "address": "0xdf47e0",
+          "mnemonic": "mov",
+          "operands": "w1, w0"
+        },
+        {
+          "address": "0xdf47e4",
+          "mnemonic": "mov",
+          "operands": "x0, x23"
+        },
+        {
+          "address": "0xdf47e8",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "allocation_return",
+      "sha256": "4fa5eedbe5b5fc3a104f23e3f3c47d06ef74272d3a8d7dc1a8d87a425a30e78f",
+      "size": 52,
+      "slice_start": "0xdf47b8",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "kind": "add",
+          "left": {
+            "at": "0xf3f470",
+            "kind": "live_in",
+            "register": "sp"
+          },
+          "right": {
+            "kind": "constant",
+            "value": 64
+          }
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "add",
+              "left": {
+                "kind": "low32",
+                "value": {
+                  "kind": "zero_extend32",
+                  "value": {
+                    "kind": "low32",
+                    "value": {
+                      "argument_semantics": "not_inferred",
+                      "at": "0xf3f488",
+                      "kind": "call_return",
+                      "target": "#0x121aa90"
+                    }
+                  }
+                }
+              },
+              "right": {
+                "kind": "low32",
+                "value": {
+                  "kind": "zero_extend32",
+                  "value": {
+                    "kind": "low32",
+                    "value": {
+                      "argument_semantics": "not_inferred",
+                      "at": "0xf3f478",
+                      "kind": "call_return",
+                      "target": "#0xceeca0"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0xf3f498",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0xf3f470",
+          "mnemonic": "ldr",
+          "operands": "x0, [sp, #0x18]"
+        },
+        {
+          "address": "0xf3f474",
+          "mnemonic": "mov",
+          "operands": "w1, #0xfffffff"
+        },
+        {
+          "address": "0xf3f478",
+          "mnemonic": "bl",
+          "operands": "#0xceeca0"
+        },
+        {
+          "address": "0xf3f47c",
+          "mnemonic": "mov",
+          "operands": "w23, w0"
+        },
+        {
+          "address": "0xf3f480",
+          "mnemonic": "ldr",
+          "operands": "x0, [sp, #8]"
+        },
+        {
+          "address": "0xf3f484",
+          "mnemonic": "bl",
+          "operands": "#0xcdf824"
+        },
+        {
+          "address": "0xf3f488",
+          "mnemonic": "bl",
+          "operands": "#0x121aa90"
+        },
+        {
+          "address": "0xf3f48c",
+          "mnemonic": "mov",
+          "operands": "w8, w0"
+        },
+        {
+          "address": "0xf3f490",
+          "mnemonic": "add",
+          "operands": "x0, sp, #0x40"
+        },
+        {
+          "address": "0xf3f494",
+          "mnemonic": "add",
+          "operands": "w1, w8, w23"
+        },
+        {
+          "address": "0xf3f498",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "stack_relative",
+      "sha256": "860df2587309eeeb0c51460b44987735b51ee9b87a08aea5555a89317a148aa8",
+      "size": 44,
+      "slice_start": "0xf3f470",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "kind": "add",
+          "left": {
+            "at": "0xfaa28c",
+            "kind": "live_in",
+            "register": "sp"
+          },
+          "right": {
+            "kind": "constant",
+            "value": 8
+          }
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "add",
+              "left": {
+                "kind": "low32",
+                "value": {
+                  "kind": "zero_extend32",
+                  "value": {
+                    "kind": "low32",
+                    "value": {
+                      "argument_semantics": "not_inferred",
+                      "at": "0xfaa294",
+                      "kind": "call_return",
+                      "target": "#0x121aa90"
+                    }
+                  }
+                }
+              },
+              "right": {
+                "kind": "low32",
+                "value": {
+                  "at": "0xfaa28c",
+                  "kind": "live_in",
+                  "register": "x19"
+                }
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0xfaa2a4",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0xfaa28c",
+          "mnemonic": "mov",
+          "operands": "x22, x0"
+        },
+        {
+          "address": "0xfaa290",
+          "mnemonic": "bl",
+          "operands": "#0xcdf824"
+        },
+        {
+          "address": "0xfaa294",
+          "mnemonic": "bl",
+          "operands": "#0x121aa90"
+        },
+        {
+          "address": "0xfaa298",
+          "mnemonic": "mov",
+          "operands": "w8, w0"
+        },
+        {
+          "address": "0xfaa29c",
+          "mnemonic": "add",
+          "operands": "x0, sp, #8"
+        },
+        {
+          "address": "0xfaa2a0",
+          "mnemonic": "add",
+          "operands": "w1, w8, w19"
+        },
+        {
+          "address": "0xfaa2a4",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "stack_relative",
+      "sha256": "7e483631c3b8de81c654783f548210994d787207443190a5eccaaa885dab6408",
+      "size": 28,
+      "slice_start": "0xfaa28c",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "kind": "add",
+          "left": {
+            "at": "0xfcdcd0",
+            "kind": "live_in",
+            "register": "sp"
+          },
+          "right": {
+            "kind": "constant",
+            "value": 24
+          }
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "low32",
+              "value": {
+                "at": "0xfcdcd0",
+                "kind": "live_in",
+                "register": "x5"
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0xfcdcf4",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0xfcdcd0",
+          "mnemonic": "mov",
+          "operands": "x23, x1"
+        },
+        {
+          "address": "0xfcdcd4",
+          "mnemonic": "mov",
+          "operands": "x24, x0"
+        },
+        {
+          "address": "0xfcdcd8",
+          "mnemonic": "add",
+          "operands": "x0, sp, #0x18"
+        },
+        {
+          "address": "0xfcdcdc",
+          "mnemonic": "mov",
+          "operands": "w1, w5"
+        },
+        {
+          "address": "0xfcdce0",
+          "mnemonic": "mov",
+          "operands": "w19, w5"
+        },
+        {
+          "address": "0xfcdce4",
+          "mnemonic": "mov",
+          "operands": "w20, w4"
+        },
+        {
+          "address": "0xfcdce8",
+          "mnemonic": "mov",
+          "operands": "x21, x3"
+        },
+        {
+          "address": "0xfcdcec",
+          "mnemonic": "mov",
+          "operands": "x22, x2"
+        },
+        {
+          "address": "0xfcdcf0",
+          "mnemonic": "add",
+          "operands": "x25, sp, #0x18"
+        },
+        {
+          "address": "0xfcdcf4",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "stack_relative",
+      "sha256": "b9c55974fc64302ef35e953fd8f30bb3652004cb83707786774ae111b623058d",
+      "size": 40,
+      "slice_start": "0xfcdcd0",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "argument_semantics": "not_inferred",
+          "at": "0xfd0114",
+          "kind": "call_return",
+          "target": "#0x17e4b20"
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "low32",
+              "value": {
+                "argument_semantics": "not_inferred",
+                "at": "0xfd0128",
+                "kind": "call_return",
+                "target": "#0x121b350"
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0xfd0134",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0xfd0110",
+          "mnemonic": "mov",
+          "operands": "w0, #0x9c8"
+        },
+        {
+          "address": "0xfd0114",
+          "mnemonic": "bl",
+          "operands": "#0x17e4b20"
+        },
+        {
+          "address": "0xfd0118",
+          "mnemonic": "mov",
+          "operands": "w1, #0x4240"
+        },
+        {
+          "address": "0xfd011c",
+          "mnemonic": "mov",
+          "operands": "x24, x0"
+        },
+        {
+          "address": "0xfd0120",
+          "mnemonic": "sub",
+          "operands": "x0, x29, #0x14"
+        },
+        {
+          "address": "0xfd0124",
+          "mnemonic": "movk",
+          "operands": "w1, #0xf, lsl #16"
+        },
+        {
+          "address": "0xfd0128",
+          "mnemonic": "bl",
+          "operands": "#0x121b350"
+        },
+        {
+          "address": "0xfd012c",
+          "mnemonic": "mov",
+          "operands": "w1, w0"
+        },
+        {
+          "address": "0xfd0130",
+          "mnemonic": "mov",
+          "operands": "x0, x24"
+        },
+        {
+          "address": "0xfd0134",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "allocation_return",
+      "sha256": "06674b3b349dc126b4a0baa5318e6dff0851257041698727b7cdfe0ea64a824d",
+      "size": 40,
+      "slice_start": "0xfd0110",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "argument_semantics": "not_inferred",
+          "at": "0xfd0198",
+          "kind": "call_return",
+          "target": "#0x17e4b20"
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "low32",
+              "value": {
+                "argument_semantics": "not_inferred",
+                "at": "0xfd01ac",
+                "kind": "call_return",
+                "target": "#0x121b350"
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0xfd01b8",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0xfd0194",
+          "mnemonic": "mov",
+          "operands": "w0, #0x9c8"
+        },
+        {
+          "address": "0xfd0198",
+          "mnemonic": "bl",
+          "operands": "#0x17e4b20"
+        },
+        {
+          "address": "0xfd019c",
+          "mnemonic": "mov",
+          "operands": "w1, #0x4240"
+        },
+        {
+          "address": "0xfd01a0",
+          "mnemonic": "mov",
+          "operands": "x22, x0"
+        },
+        {
+          "address": "0xfd01a4",
+          "mnemonic": "sub",
+          "operands": "x0, x29, #0x14"
+        },
+        {
+          "address": "0xfd01a8",
+          "mnemonic": "movk",
+          "operands": "w1, #0xf, lsl #16"
+        },
+        {
+          "address": "0xfd01ac",
+          "mnemonic": "bl",
+          "operands": "#0x121b350"
+        },
+        {
+          "address": "0xfd01b0",
+          "mnemonic": "mov",
+          "operands": "w1, w0"
+        },
+        {
+          "address": "0xfd01b4",
+          "mnemonic": "mov",
+          "operands": "x0, x22"
+        },
+        {
+          "address": "0xfd01b8",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "allocation_return",
+      "sha256": "4949b01c3e3435c3584c098c2cbfac4a840384e2201f5f463b8fbb854835e3d2",
+      "size": 40,
+      "slice_start": "0xfd0194",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "argument_semantics": "not_inferred",
+          "at": "0xfd168c",
+          "kind": "call_return",
+          "target": "#0x17e4b20"
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "low32",
+              "value": {
+                "argument_semantics": "not_inferred",
+                "at": "0xfd16a0",
+                "kind": "call_return",
+                "target": "#0x121b350"
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0xfd16ac",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0xfd1688",
+          "mnemonic": "mov",
+          "operands": "w0, #0x9c8"
+        },
+        {
+          "address": "0xfd168c",
+          "mnemonic": "bl",
+          "operands": "#0x17e4b20"
+        },
+        {
+          "address": "0xfd1690",
+          "mnemonic": "mov",
+          "operands": "w1, #0x4240"
+        },
+        {
+          "address": "0xfd1694",
+          "mnemonic": "mov",
+          "operands": "x28, x0"
+        },
+        {
+          "address": "0xfd1698",
+          "mnemonic": "sub",
+          "operands": "x0, x29, #0x34"
+        },
+        {
+          "address": "0xfd169c",
+          "mnemonic": "movk",
+          "operands": "w1, #0xf, lsl #16"
+        },
+        {
+          "address": "0xfd16a0",
+          "mnemonic": "bl",
+          "operands": "#0x121b350"
+        },
+        {
+          "address": "0xfd16a4",
+          "mnemonic": "mov",
+          "operands": "w1, w0"
+        },
+        {
+          "address": "0xfd16a8",
+          "mnemonic": "mov",
+          "operands": "x0, x28"
+        },
+        {
+          "address": "0xfd16ac",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "allocation_return",
+      "sha256": "82d20ed3d7b16dddce5b6432def4cf7548d21c539b1fc1eafa8c7e782aedbf8a",
+      "size": 40,
+      "slice_start": "0xfd1688",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "kind": "add",
+          "left": {
+            "at": "0xfdb038",
+            "kind": "live_in",
+            "register": "sp"
+          },
+          "right": {
+            "kind": "constant",
+            "value": 56
+          }
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "at": "0xfdb038",
+              "instruction": "ldr w1, [sp, #0xc]",
+              "kind": "opaque_write",
+              "register": "w1"
+            }
+          }
+        }
+      },
+      "callsite": "0xfdb040",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0xfdb038",
+          "mnemonic": "ldr",
+          "operands": "w1, [sp, #0xc]"
+        },
+        {
+          "address": "0xfdb03c",
+          "mnemonic": "add",
+          "operands": "x0, sp, #0x38"
+        },
+        {
+          "address": "0xfdb040",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "stack_relative",
+      "sha256": "bbf2b70fa043ef39651458f13837f756705ff88215e1581abde95106a5ae1807",
+      "size": 12,
+      "slice_start": "0xfdb038",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "at": "0xfdee98",
+          "kind": "live_in",
+          "register": "sp"
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "low32",
+              "value": {
+                "argument_semantics": "not_inferred",
+                "at": "0xfdee9c",
+                "kind": "call_return",
+                "target": "#0xfc90f8"
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0xfdeea8",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0xfdee98",
+          "mnemonic": "mov",
+          "operands": "x0, x19"
+        },
+        {
+          "address": "0xfdee9c",
+          "mnemonic": "bl",
+          "operands": "#0xfc90f8"
+        },
+        {
+          "address": "0xfdeea0",
+          "mnemonic": "mov",
+          "operands": "w1, w0"
+        },
+        {
+          "address": "0xfdeea4",
+          "mnemonic": "mov",
+          "operands": "x0, sp"
+        },
+        {
+          "address": "0xfdeea8",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "stack_relative",
+      "sha256": "27bf949a325b403308a06e84e7c270ade5ae5dd0397f3d2b41b47e680fcbda3a",
+      "size": 20,
+      "slice_start": "0xfdee98",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "argument_semantics": "not_inferred",
+          "at": "0x1174838",
+          "kind": "call_return",
+          "target": "#0x17e4b20"
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "low32",
+              "value": {
+                "argument_semantics": "not_inferred",
+                "at": "0x1174848",
+                "kind": "call_return",
+                "target": "#0x1062bc0"
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0x1174854",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0x1174834",
+          "mnemonic": "mov",
+          "operands": "w0, #0x9c8"
+        },
+        {
+          "address": "0x1174838",
+          "mnemonic": "bl",
+          "operands": "#0x17e4b20"
+        },
+        {
+          "address": "0x117483c",
+          "mnemonic": "ldr",
+          "operands": "x8, [x19, #0x50]"
+        },
+        {
+          "address": "0x1174840",
+          "mnemonic": "mov",
+          "operands": "x21, x0"
+        },
+        {
+          "address": "0x1174844",
+          "mnemonic": "mov",
+          "operands": "x0, x8"
+        },
+        {
+          "address": "0x1174848",
+          "mnemonic": "bl",
+          "operands": "#0x1062bc0"
+        },
+        {
+          "address": "0x117484c",
+          "mnemonic": "mov",
+          "operands": "w1, w0"
+        },
+        {
+          "address": "0x1174850",
+          "mnemonic": "mov",
+          "operands": "x0, x21"
+        },
+        {
+          "address": "0x1174854",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "allocation_return",
+      "sha256": "b3b1bcd98e0348cdf285dc39cbd1d3d41218636486963b2c441d112bb56947c6",
+      "size": 36,
+      "slice_start": "0x1174834",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "kind": "add",
+          "left": {
+            "at": "0x1175f0c",
+            "kind": "live_in",
+            "register": "sp"
+          },
+          "right": {
+            "kind": "constant",
+            "value": 48
+          }
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "add",
+              "left": {
+                "kind": "low32",
+                "value": {
+                  "at": "0x1175f0c",
+                  "kind": "live_in",
+                  "register": "x23"
+                }
+              },
+              "right": {
+                "kind": "low32",
+                "value": {
+                  "kind": "zero_extend32",
+                  "value": {
+                    "at": "0x1175f3c",
+                    "instruction": "msub w8, w8, w10, w9",
+                    "kind": "opaque_write",
+                    "register": "w8"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0x1175f44",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0x1175f0c",
+          "mnemonic": "mov",
+          "operands": "x0, x22"
+        },
+        {
+          "address": "0x1175f10",
+          "mnemonic": "bl",
+          "operands": "#0xcdf824"
+        },
+        {
+          "address": "0x1175f14",
+          "mnemonic": "mov",
+          "operands": "w8, #0xb589"
+        },
+        {
+          "address": "0x1175f18",
+          "mnemonic": "ldrsw",
+          "operands": "x9, [x0, #4]"
+        },
+        {
+          "address": "0x1175f1c",
+          "mnemonic": "add",
+          "operands": "x0, sp, #0x30"
+        },
+        {
+          "address": "0x1175f20",
+          "mnemonic": "movk",
+          "operands": "w8, #0x14f8, lsl #16"
+        },
+        {
+          "address": "0x1175f24",
+          "mnemonic": "smull",
+          "operands": "x8, w9, w8"
+        },
+        {
+          "address": "0x1175f28",
+          "mnemonic": "lsr",
+          "operands": "x10, x8, #0x3f"
+        },
+        {
+          "address": "0x1175f2c",
+          "mnemonic": "asr",
+          "operands": "x8, x8, #0x2d"
+        },
+        {
+          "address": "0x1175f30",
+          "mnemonic": "add",
+          "operands": "w8, w8, w10"
+        },
+        {
+          "address": "0x1175f34",
+          "mnemonic": "mov",
+          "operands": "w10, #0x86a0"
+        },
+        {
+          "address": "0x1175f38",
+          "mnemonic": "movk",
+          "operands": "w10, #1, lsl #16"
+        },
+        {
+          "address": "0x1175f3c",
+          "mnemonic": "msub",
+          "operands": "w8, w8, w10, w9"
+        },
+        {
+          "address": "0x1175f40",
+          "mnemonic": "add",
+          "operands": "w1, w23, w8"
+        },
+        {
+          "address": "0x1175f44",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "stack_relative",
+      "sha256": "8986e75666d5e904c9ef2228ec01255fe53760d2390f0e82dddfd6330dc3e3aa",
+      "size": 60,
+      "slice_start": "0x1175f0c",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "kind": "add",
+          "left": {
+            "at": "0x117671c",
+            "kind": "live_in",
+            "register": "sp"
+          },
+          "right": {
+            "kind": "constant",
+            "value": 24
+          }
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "add",
+              "left": {
+                "kind": "low32",
+                "value": {
+                  "kind": "zero_extend32",
+                  "value": {
+                    "at": "0x1176748",
+                    "instruction": "msub w8, w8, w10, w9",
+                    "kind": "opaque_write",
+                    "register": "w8"
+                  }
+                }
+              },
+              "right": {
+                "kind": "low32",
+                "value": {
+                  "at": "0x117671c",
+                  "kind": "live_in",
+                  "register": "x19"
+                }
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0x1176750",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0x117671c",
+          "mnemonic": "bl",
+          "operands": "#0xcdf824"
+        },
+        {
+          "address": "0x1176720",
+          "mnemonic": "mov",
+          "operands": "w8, #0xb589"
+        },
+        {
+          "address": "0x1176724",
+          "mnemonic": "ldrsw",
+          "operands": "x9, [x0, #4]"
+        },
+        {
+          "address": "0x1176728",
+          "mnemonic": "add",
+          "operands": "x0, sp, #0x18"
+        },
+        {
+          "address": "0x117672c",
+          "mnemonic": "movk",
+          "operands": "w8, #0x14f8, lsl #16"
+        },
+        {
+          "address": "0x1176730",
+          "mnemonic": "smull",
+          "operands": "x8, w9, w8"
+        },
+        {
+          "address": "0x1176734",
+          "mnemonic": "lsr",
+          "operands": "x10, x8, #0x3f"
+        },
+        {
+          "address": "0x1176738",
+          "mnemonic": "asr",
+          "operands": "x8, x8, #0x2d"
+        },
+        {
+          "address": "0x117673c",
+          "mnemonic": "add",
+          "operands": "w8, w8, w10"
+        },
+        {
+          "address": "0x1176740",
+          "mnemonic": "mov",
+          "operands": "w10, #0x86a0"
+        },
+        {
+          "address": "0x1176744",
+          "mnemonic": "movk",
+          "operands": "w10, #1, lsl #16"
+        },
+        {
+          "address": "0x1176748",
+          "mnemonic": "msub",
+          "operands": "w8, w8, w10, w9"
+        },
+        {
+          "address": "0x117674c",
+          "mnemonic": "add",
+          "operands": "w1, w8, w19"
+        },
+        {
+          "address": "0x1176750",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "stack_relative",
+      "sha256": "d70a90b3fa80f92badb27f0042dc7f1fb75b93c331205f06f5f8289c7f83baf2",
+      "size": 56,
+      "slice_start": "0x117671c",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "kind": "add",
+          "left": {
+            "at": "0x1176924",
+            "kind": "live_in",
+            "register": "sp"
+          },
+          "right": {
+            "kind": "constant",
+            "value": 8
+          }
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "add",
+              "left": {
+                "kind": "low32",
+                "value": {
+                  "kind": "zero_extend32",
+                  "value": {
+                    "at": "0x1176950",
+                    "instruction": "msub w8, w8, w10, w9",
+                    "kind": "opaque_write",
+                    "register": "w8"
+                  }
+                }
+              },
+              "right": {
+                "kind": "low32",
+                "value": {
+                  "at": "0x1176924",
+                  "kind": "live_in",
+                  "register": "x22"
+                }
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0x1176958",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0x1176924",
+          "mnemonic": "bl",
+          "operands": "#0xcdf824"
+        },
+        {
+          "address": "0x1176928",
+          "mnemonic": "mov",
+          "operands": "w8, #0xb589"
+        },
+        {
+          "address": "0x117692c",
+          "mnemonic": "ldrsw",
+          "operands": "x9, [x0, #4]"
+        },
+        {
+          "address": "0x1176930",
+          "mnemonic": "add",
+          "operands": "x0, sp, #8"
+        },
+        {
+          "address": "0x1176934",
+          "mnemonic": "movk",
+          "operands": "w8, #0x14f8, lsl #16"
+        },
+        {
+          "address": "0x1176938",
+          "mnemonic": "smull",
+          "operands": "x8, w9, w8"
+        },
+        {
+          "address": "0x117693c",
+          "mnemonic": "lsr",
+          "operands": "x10, x8, #0x3f"
+        },
+        {
+          "address": "0x1176940",
+          "mnemonic": "asr",
+          "operands": "x8, x8, #0x2d"
+        },
+        {
+          "address": "0x1176944",
+          "mnemonic": "add",
+          "operands": "w8, w8, w10"
+        },
+        {
+          "address": "0x1176948",
+          "mnemonic": "mov",
+          "operands": "w10, #0x86a0"
+        },
+        {
+          "address": "0x117694c",
+          "mnemonic": "movk",
+          "operands": "w10, #1, lsl #16"
+        },
+        {
+          "address": "0x1176950",
+          "mnemonic": "msub",
+          "operands": "w8, w8, w10, w9"
+        },
+        {
+          "address": "0x1176954",
+          "mnemonic": "add",
+          "operands": "w1, w8, w22"
+        },
+        {
+          "address": "0x1176958",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "stack_relative",
+      "sha256": "b4a4f1dd4749d1b5d7748e512382b2266367c788c7c3c62687b5ff5294e3a68f",
+      "size": 56,
+      "slice_start": "0x1176924",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "kind": "add",
+          "left": {
+            "at": "0x1177e14",
+            "kind": "live_in",
+            "register": "sp"
+          },
+          "right": {
+            "kind": "constant",
+            "value": 144
+          }
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "add",
+              "left": {
+                "kind": "low32",
+                "value": {
+                  "kind": "zero_extend32",
+                  "value": {
+                    "at": "0x1177e44",
+                    "instruction": "msub w8, w8, w10, w9",
+                    "kind": "opaque_write",
+                    "register": "w8"
+                  }
+                }
+              },
+              "right": {
+                "kind": "low32",
+                "value": {
+                  "at": "0x1177e14",
+                  "kind": "live_in",
+                  "register": "x20"
+                }
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0x1177e4c",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0x1177e14",
+          "mnemonic": "mov",
+          "operands": "x0, x21"
+        },
+        {
+          "address": "0x1177e18",
+          "mnemonic": "bl",
+          "operands": "#0xcdf824"
+        },
+        {
+          "address": "0x1177e1c",
+          "mnemonic": "mov",
+          "operands": "w8, #0xb589"
+        },
+        {
+          "address": "0x1177e20",
+          "mnemonic": "ldrsw",
+          "operands": "x9, [x0, #4]"
+        },
+        {
+          "address": "0x1177e24",
+          "mnemonic": "add",
+          "operands": "x0, sp, #0x90"
+        },
+        {
+          "address": "0x1177e28",
+          "mnemonic": "movk",
+          "operands": "w8, #0x14f8, lsl #16"
+        },
+        {
+          "address": "0x1177e2c",
+          "mnemonic": "smull",
+          "operands": "x8, w9, w8"
+        },
+        {
+          "address": "0x1177e30",
+          "mnemonic": "lsr",
+          "operands": "x10, x8, #0x3f"
+        },
+        {
+          "address": "0x1177e34",
+          "mnemonic": "asr",
+          "operands": "x8, x8, #0x2d"
+        },
+        {
+          "address": "0x1177e38",
+          "mnemonic": "add",
+          "operands": "w8, w8, w10"
+        },
+        {
+          "address": "0x1177e3c",
+          "mnemonic": "mov",
+          "operands": "w10, #0x86a0"
+        },
+        {
+          "address": "0x1177e40",
+          "mnemonic": "movk",
+          "operands": "w10, #1, lsl #16"
+        },
+        {
+          "address": "0x1177e44",
+          "mnemonic": "msub",
+          "operands": "w8, w8, w10, w9"
+        },
+        {
+          "address": "0x1177e48",
+          "mnemonic": "add",
+          "operands": "w1, w8, w20"
+        },
+        {
+          "address": "0x1177e4c",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "stack_relative",
+      "sha256": "c25c1cdedcf3eab7cdbe89df8b8555eddb2bf7c62041f6625184f6ce5e6eda7c",
+      "size": 60,
+      "slice_start": "0x1177e14",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "kind": "add",
+          "left": {
+            "at": "0x1179650",
+            "kind": "live_in",
+            "register": "sp"
+          },
+          "right": {
+            "kind": "constant",
+            "value": 8
+          }
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "add",
+              "left": {
+                "kind": "low32",
+                "value": {
+                  "kind": "zero_extend32",
+                  "value": {
+                    "at": "0x117967c",
+                    "instruction": "msub w8, w8, w10, w9",
+                    "kind": "opaque_write",
+                    "register": "w8"
+                  }
+                }
+              },
+              "right": {
+                "kind": "low32",
+                "value": {
+                  "at": "0x1179650",
+                  "kind": "live_in",
+                  "register": "x19"
+                }
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0x1179684",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0x1179650",
+          "mnemonic": "bl",
+          "operands": "#0xcdf824"
+        },
+        {
+          "address": "0x1179654",
+          "mnemonic": "mov",
+          "operands": "w8, #0xb589"
+        },
+        {
+          "address": "0x1179658",
+          "mnemonic": "ldrsw",
+          "operands": "x9, [x0, #4]"
+        },
+        {
+          "address": "0x117965c",
+          "mnemonic": "add",
+          "operands": "x0, sp, #8"
+        },
+        {
+          "address": "0x1179660",
+          "mnemonic": "movk",
+          "operands": "w8, #0x14f8, lsl #16"
+        },
+        {
+          "address": "0x1179664",
+          "mnemonic": "smull",
+          "operands": "x8, w9, w8"
+        },
+        {
+          "address": "0x1179668",
+          "mnemonic": "lsr",
+          "operands": "x10, x8, #0x3f"
+        },
+        {
+          "address": "0x117966c",
+          "mnemonic": "asr",
+          "operands": "x8, x8, #0x2d"
+        },
+        {
+          "address": "0x1179670",
+          "mnemonic": "add",
+          "operands": "w8, w8, w10"
+        },
+        {
+          "address": "0x1179674",
+          "mnemonic": "mov",
+          "operands": "w10, #0x86a0"
+        },
+        {
+          "address": "0x1179678",
+          "mnemonic": "movk",
+          "operands": "w10, #1, lsl #16"
+        },
+        {
+          "address": "0x117967c",
+          "mnemonic": "msub",
+          "operands": "w8, w8, w10, w9"
+        },
+        {
+          "address": "0x1179680",
+          "mnemonic": "add",
+          "operands": "w1, w8, w19"
+        },
+        {
+          "address": "0x1179684",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "stack_relative",
+      "sha256": "e96b5496a68987db6a3491cbd04c468fb1d73b6998b9b721f1189b7ab7cb492c",
+      "size": 56,
+      "slice_start": "0x1179650",
+      "snapshot_coverage_proven": false
+    },
+    {
+      "arguments": {
+        "assumption": "fallthrough slice entry and normally returning AAPCS64 calls; no callee-body inference",
+        "object": {
+          "kind": "add",
+          "left": {
+            "at": "0x117bb04",
+            "kind": "live_in",
+            "register": "sp"
+          },
+          "right": {
+            "kind": "constant",
+            "value": 8
+          }
+        },
+        "seed": {
+          "kind": "low32",
+          "value": {
+            "kind": "zero_extend32",
+            "value": {
+              "kind": "add",
+              "left": {
+                "kind": "low32",
+                "value": {
+                  "kind": "zero_extend32",
+                  "value": {
+                    "at": "0x117bb0c",
+                    "instruction": "ldr w9, [x23, #0xc]",
+                    "kind": "opaque_write",
+                    "register": "w9"
+                  }
+                }
+              },
+              "right": {
+                "kind": "low32",
+                "value": {
+                  "kind": "zero_extend32",
+                  "value": {
+                    "kind": "low32",
+                    "value": {
+                      "argument_semantics": "not_inferred",
+                      "at": "0x117bb08",
+                      "kind": "call_return",
+                      "target": "#0x121aa90"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "callsite": "0x117bb1c",
+      "escapes_or_callee_retention_proven": false,
+      "fixed_hog_reachable_proven": false,
+      "instructions": [
+        {
+          "address": "0x117bb04",
+          "mnemonic": "mov",
+          "operands": "x0, x19"
+        },
+        {
+          "address": "0x117bb08",
+          "mnemonic": "bl",
+          "operands": "#0x121aa90"
+        },
+        {
+          "address": "0x117bb0c",
+          "mnemonic": "ldr",
+          "operands": "w9, [x23, #0xc]"
+        },
+        {
+          "address": "0x117bb10",
+          "mnemonic": "mov",
+          "operands": "w8, w0"
+        },
+        {
+          "address": "0x117bb14",
+          "mnemonic": "add",
+          "operands": "x0, sp, #8"
+        },
+        {
+          "address": "0x117bb18",
+          "mnemonic": "add",
+          "operands": "w1, w9, w8"
+        },
+        {
+          "address": "0x117bb1c",
+          "mnemonic": "bl",
+          "operands": "#0x121b118"
+        }
+      ],
+      "object_kind": "stack_relative",
+      "sha256": "f0af21cdc35aede996da7aa3eaf0770ec1e28271024a865fd20f629b9d5ba41b",
+      "size": 28,
+      "slice_start": "0x117bb04",
+      "snapshot_coverage_proven": false
+    }
+  ],
+  "schema": "FairFinalInitializerArguments/v1",
+  "scope": "local fallthrough arguments for all 18 known direct MT initializer references",
+  "status": "verified_static_limited_scope",
+  "training_admissible": false,
+  "unresolved": [
+    "slice entry reachability and indirect transfers",
+    "live-in and opaque seed origins",
+    "callee pointer retention and object lifetime",
+    "fixed-deck runtime usage",
+    "all other random algorithms and snapshot coverage"
+  ]
+}
