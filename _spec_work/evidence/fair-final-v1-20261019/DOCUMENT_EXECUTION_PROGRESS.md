@@ -1,10 +1,17 @@
 # 冻结文档整体执行进度
 
-核对日期：2026-10-23。依据spec/clash_royale_fair_final_v1下的
+核对日期：2026-10-24。依据spec/clash_royale_fair_final_v1下的
 TRAINING_SPEC.md、IMPLEMENTATION_PLAN.md、ACCEPTANCE_GATES.md与EXPERIMENT_MATRIX.md。
 历史旧协议实验只作背景，不替代本规范验收。
 
 ## 当前结论
+
+2026-10-24新增global-search-v1独立搜索集成，逐根绑定完整native+global-MT摘要
+的创建/恢复/释放记录，核对身份和句柄生命周期。38项专项、联合139项通过
+（7.81秒）；真实父原生归档重验通过，353项载荷已准备，原生新搜索尚未执行。
+五机SSH TCP22均超时，.35进程检查提权后亦超时。当前Full128与terminal状态
+待核验，不把失联视为停止，不用下文旧存活快照作实时状态。未重启或修改冻结部署。
+G0/G1与34/43保持开放，G2–G8、正式迁移、训练和五机放量未启动。下列为历史证据。
 
 2026-10-23新增plugin-runtime-v1独立测量环境，官方QEMU10.0.13 user-only构建与
 33份构建归档内容核验通过，不全局安装或修改冻结部署。修复vCPU槽复用和块内
