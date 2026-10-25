@@ -1,0 +1,73 @@
+{
+  "call_counts": {
+    "0x1062bb8": 10904,
+    "0x138a700": 1830,
+    "0x138a810": 1830,
+    "0x72001000": 1830,
+    "0xdccc68": 9288,
+    "0xe2ad9c": 14676,
+    "0xe379ac": 7339
+  },
+  "case_result_sha256": "c3c5013addfc26cf34c9fb77d279565e66d183a0eb59c88454ee1857895c3801",
+  "cases": 14676,
+  "dependencies": {
+    "capstone": "5.0.9",
+    "lief": "0.16.4",
+    "unicorn": "2.1.4"
+  },
+  "division_certificate": {
+    "all_signed32_inputs": true,
+    "divisor": 500,
+    "exhaustive_cpu_enumeration": false,
+    "multiplier": 274877907,
+    "product_upper": 590295810478964736,
+    "quotient_max": 4294967,
+    "remainder_max": 499,
+    "residual": 28,
+    "residual_upper": 137284334669,
+    "scale": 137438953472,
+    "shift": 37
+  },
+  "full_legal_mask_sufficiency_proven": false,
+  "gates_closed": false,
+  "identity": {
+    "arithmetic_addresses": [
+      "0xcfcfb0",
+      "0xcfcfb4",
+      "0xcfcfbc",
+      "0xcfcfc4",
+      "0xcfcfc8",
+      "0xcfcfcc",
+      "0xcfcfe0",
+      "0xcfcfe8",
+      "0xcfcfec",
+      "0xcfcff0"
+    ],
+    "caller_sha256": "21c05c63e46014435dfe28e64c514d9a949ea79af21369f334f7c2e5b5201fb0",
+    "ct86_nonzero_return_offset": 14,
+    "helper_end": "0xcfd094",
+    "helper_sha256": "073d1e5e3c14064ecace6c1d1d81fdfd1d67406f11884ba7bf4de72c3601590e",
+    "helper_start": "0xcfcf50",
+    "instruction_count": 81,
+    "library_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783"
+  },
+  "instruction_coverage": 81,
+  "native_game_reachability_proven": false,
+  "return_counts": {
+    "0": 7443,
+    "1": 1616,
+    "2": 984,
+    "3": 662,
+    "4": 303,
+    "5": 3668
+  },
+  "schema": "FairFinalPositionGuardAudit/v1",
+  "seconds": 2.2454711659811437,
+  "source_sha256": {
+    "position_guards.py": "b93e088f627e1224c3c6d85d9af666f0ab9a999ba21dc3da4f74add17862dba4",
+    "run_audit.py": "9409ea59cfe061b4adfbdc4373d72db2a8bdfa62edd2ad2b40a36f0149c1d360"
+  },
+  "status": "passed_conditional_scope",
+  "terrain_helper_semantics_proven": false,
+  "training_admissible": false
+}

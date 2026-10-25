@@ -54,6 +54,10 @@ def main():
         str(ROOT / "_spec_work/versions/fair-final-retry-collection-bridge-v1/test_bridge.py"),
         "--junitxml=" + str(ROOT / "publication/checks-selection-timeout.xml")],
         cwd=ROOT, env=environment, check=True)
+    subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
+        str(ROOT / "_spec_work/versions/fair-final-position-guards-v1/test_position_guards.py"),
+        "--junitxml=" + str(ROOT / "publication/checks-position-guards.xml")],
+        cwd=ROOT, env=environment, check=True)
 
 
 if __name__ == "__main__":
