@@ -1,0 +1,961 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="32" failures="0" skipped="0" tests="32" time="2.954" timestamp="2026-10-25T16:19:31.000501+08:00" hostname="gujigadeMacBook-Pro-3.local"><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_complete_round_checks_every_task_before_prepared_marker_without_engines" time="0.005"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_complete_round_checks_eve0')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[missing]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s0')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[duplicate_task]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s1')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[duplicate_request]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s2')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[sha]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s3')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[deployment]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s4')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[source]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s5')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[selected]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s6')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[mixed_registration]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s7')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[duplicate_option]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s8')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[abbreviation]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s9')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[attempt]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s10')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[existing_root]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s11')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[shared_root]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s12')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[nested_root]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s13')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[preflight_flag]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s14')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[seed_source]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s15')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[parent_link]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s16')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_static_failures_precede_subprocess_and_completion[output_overlap]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_static_failures_precede_s17')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_dynamic_failures_keep_evidence_and_never_publish_prepared[exit]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_dynamic_failures_keep_evi0')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_dynamic_failures_keep_evidence_and_never_publish_prepared[timeout]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_dynamic_failures_keep_evi1')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_dynamic_failures_keep_evidence_and_never_publish_prepared[malformed]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_dynamic_failures_keep_evi2')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_dynamic_failures_keep_evidence_and_never_publish_prepared[scope]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_dynamic_failures_keep_evi3')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_dynamic_failures_keep_evidence_and_never_publish_prepared[network]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_dynamic_failures_keep_evi4')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_dynamic_failures_keep_evidence_and_never_publish_prepared[change_input]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_dynamic_failures_keep_evi5')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_dynamic_failures_keep_evidence_and_never_publish_prepared[new_parent_file]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_dynamic_failures_keep_evi6')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_dynamic_failures_keep_evidence_and_never_publish_prepared[created_root]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_dynamic_failures_keep_evi7')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_phase_budget_is_bounded_and_typed[0]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_phase_budget_is_bounded_a0')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_phase_budget_is_bounded_and_typed[-1]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_phase_budget_is_bounded_a1')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_phase_budget_is_bounded_and_typed[14401]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_phase_budget_is_bounded_a2')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_phase_budget_is_bounded_and_typed[True]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_phase_budget_is_bounded_a3')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-collection-coordinator-v1.test_preflight_round" name="test_phase_budget_is_bounded_and_typed[1.5]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'&quot;">tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-770/test_phase_budget_is_bounded_a4')
+
+    @pytest.fixture
+    def registration_case(tmp_path):
+&gt;       plan = fixture_plan()
+
+_spec_work/versions/fair-final-migration-integration-v1/test_seed_registration.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-migration-series-v1/test_migration_series.py:22: in fixture_plan
+    template = json.loads((INITIAL / "manifest.json").read_text())
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/Users/gujiga/Documents/ChatGPT/CR/Nashura/_spec_work/evidence/fair-final-v1-20261019/native-migration-1792548905478386000/manifest.json'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase></testsuite></testsuites>

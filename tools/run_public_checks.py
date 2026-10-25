@@ -78,6 +78,10 @@ def main():
         str(ROOT / "_spec_work/versions/fair-final-command-coordinates-v1/test_native_archive.py"),
         "--junitxml=" + str(ROOT / "publication/checks-command-coordinates.xml")],
         cwd=ROOT, env=environment, check=True)
+    subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
+        str(ROOT / "_spec_work/versions/fair-final-collection-coordinator-v1/test_preflight_round.py"),
+        "--junitxml=" + str(ROOT / "publication/checks-collection-coordinator.xml")],
+        cwd=ROOT, env=environment, check=True)
 
 
 if __name__ == "__main__":

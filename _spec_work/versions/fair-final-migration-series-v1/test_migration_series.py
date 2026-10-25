@@ -9,6 +9,8 @@ import pytest
 from migration_series import (SCHEMA, ReadOnlyMigrationStore, audit_completed_series, main,
     validate_series)
 from native_runner.training.fair_search.contracts import semantic_digest
+from native_runner.training.fair_final.adapter import ADAPTER_ID
+from native_runner.training.fair_migration_data import DATASET_SCHEMA, IDENTITY_FIELDS
 from tools.fair_migration_supplement import validate_supplement_round
 
 
@@ -19,7 +21,11 @@ DATA_ROOTS = (INITIAL / "evidence/data", SUPPLEMENT / "data")
 
 
 def fixture_plan():
-    template = json.loads((INITIAL / "manifest.json").read_text())
+    identity = {key: semantic_digest(["fixture", key]) for key in IDENTITY_FIELDS}
+    identity["migration_adapter_sha"] = semantic_digest(ADAPTER_ID)
+    template = dict(schema=DATASET_SCHEMA,
+        namespace_sha=semantic_digest("migration-series-fixture"), identity=identity,
+        card_ids=list(range(1, 9)), round=0, matches={})
     source = template["identity"]["source_a_sha"]
     rounds = []
     for number in range(3):

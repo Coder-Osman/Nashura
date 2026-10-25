@@ -30,3 +30,4 @@ MACHINES.md
 /publication/checks-*.xml
 !/publication/checks-selection-timeout.xml
 !/publication/checks-affordability.xml
+!/publication/checks-collection-coordinator.xml

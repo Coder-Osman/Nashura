@@ -38,6 +38,11 @@ git diff --stat
 
 初次发布仅包含源码与历史证据摘要。之后每次完成目标同步，不将每条进度消息转成提交，不创建重复定时任务。
 
+collection-coordinator-v1/tests-public-initial.xml保留首次公开检查因共享fixture
+读取已排除的私有manifest而发生32项初始化错误的原始回溯及尾随空白；仅该
+精确路径豁免行尾空白，仍受源码清单SHA校验。工程fixture改用显式合成manifest，
+不复制私有附件、不跳过专项，真实历史数据验收逻辑保持原样。
+
 combat-snapshot-v1/tests-initial.xml保留首次fixture构造错误的原始回溯和尾随空白；
 仅该精确路径关闭行尾空白提示，仍受源码清单SHA校验。修正后的测试与原生验收
 另行记录，不重写原始失败报告。

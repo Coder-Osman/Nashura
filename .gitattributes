@@ -8,3 +8,4 @@ _spec_work/versions/fair-final-rng-callsite-audit-v1/tests-initial.xml whitespac
 _spec_work/versions/fair-final-selection-timeout-v1/tests-initial.xml whitespace=-blank-at-eol
 _spec_work/versions/fair-final-retry-collection-bridge-v1/tests-initial.xml whitespace=-blank-at-eol
 _spec_work/versions/fair-final-command-coordinates-v1/tests-review.xml whitespace=-blank-at-eol
+_spec_work/versions/fair-final-collection-coordinator-v1/tests-public-initial.xml whitespace=-blank-at-eol
