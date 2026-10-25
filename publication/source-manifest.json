@@ -9904,9 +9904,9 @@
     },
     {
       "path": "agent-handoff/HEADLESS_ENGINE_AUDIT_2026-10-25.md",
-      "sha256": "f79fc804f9cb25378a5aca27528b5091149acaf43abdb27450bc822c25fafa13",
-      "bytes": 4867,
-      "source_sha256": "f79fc804f9cb25378a5aca27528b5091149acaf43abdb27450bc822c25fafa13",
+      "sha256": "902869ef5de11d20988955bd0697d3a1211ea1df797a84777cf51fe7a1f5b366",
+      "bytes": 6351,
+      "source_sha256": "902869ef5de11d20988955bd0697d3a1211ea1df797a84777cf51fe7a1f5b366",
       "transformations": []
     },
     {
@@ -16331,6 +16331,48 @@
       "transformations": []
     },
     {
+      "path": "publication/headless-p1-native.json",
+      "sha256": "9ab36ba63603b752aaadb5e5aaba333dce665cc440f458e6ec93a26b8cd74d0b",
+      "bytes": 2730,
+      "source_sha256": "9ab36ba63603b752aaadb5e5aaba333dce665cc440f458e6ec93a26b8cd74d0b",
+      "transformations": []
+    },
+    {
+      "path": "tools/HEADLESS_NATIVE.md",
+      "sha256": "8b2e718c86792fb9961af4a8ae56c59a7f2880192d52ff4d024a6e9dbafa7301",
+      "bytes": 3336,
+      "source_sha256": "8b2e718c86792fb9961af4a8ae56c59a7f2880192d52ff4d024a6e9dbafa7301",
+      "transformations": []
+    },
+    {
+      "path": "tools/headless_native.py",
+      "sha256": "78c2997820b271da6b9154c6c5427d57101df5cf65eb278fbb59bf80ef6b46ef",
+      "bytes": 23594,
+      "source_sha256": "78c2997820b271da6b9154c6c5427d57101df5cf65eb278fbb59bf80ef6b46ef",
+      "transformations": []
+    },
+    {
+      "path": "tools/tests/test_headless_native.py",
+      "sha256": "834a64672f504b42d1c2d3189fe912a6a4564a04c023916af8f17a664e25732b",
+      "bytes": 5873,
+      "source_sha256": "834a64672f504b42d1c2d3189fe912a6a4564a04c023916af8f17a664e25732b",
+      "transformations": []
+    },
+    {
+      "path": "tools/tests/test_headless_trace_verifier.py",
+      "sha256": "c8778703b6ef77427079d321d151d86791b5e8bafea4c49ad65e1c451e9c1c4f",
+      "bytes": 1823,
+      "source_sha256": "c8778703b6ef77427079d321d151d86791b5e8bafea4c49ad65e1c451e9c1c4f",
+      "transformations": []
+    },
+    {
+      "path": "tools/verify_headless_traces.py",
+      "sha256": "5740e7886653693051c2acb3fa00459b7bf081fa76ed272ed8f791987c06c07d",
+      "bytes": 2824,
+      "source_sha256": "5740e7886653693051c2acb3fa00459b7bf081fa76ed272ed8f791987c06c07d",
+      "transformations": []
+    },
+    {
       "path": "wire-spec.md",
       "sha256": "1089dbdcfcdfe2b5780dad886addcca72eb1d77e362be0e7fd2e6087754b5c68",
       "bytes": 47640,
@@ -16338,7 +16380,7 @@
       "transformations": []
     }
   ],
-  "file_count": 2332,
+  "file_count": 2338,
   "source_bytes": 33136316,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,

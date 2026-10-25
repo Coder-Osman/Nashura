@@ -9,6 +9,11 @@
 尚未核验；G0/G1、34/43及后续门保持原状。见
 [P0审计](agent-handoff/HEADLESS_ENGINE_AUDIT_2026-10-25.md)。
 
+P1现已实际复验：两次原版ARM64完整局、26动作回执、29边界独立比较通过，
+结论NATIVE_HEADLESS_FEASIBLE。使用QEMU user-mode与Android用户态库，
+并非零Android依赖；未开启正式训练。代码及复现见
+[独立入口](tools/HEADLESS_NATIVE.md)，吞吐基准另行验收。
+
 ## 当前状态（2026-10-25）
 
 | 阶段 | 状态 | 尚待完成 |

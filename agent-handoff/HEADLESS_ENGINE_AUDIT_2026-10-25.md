@@ -50,4 +50,16 @@ DT_NEEDED：libscid_sdk.so、liblog.so、libandroid.so、libEGL.so、libfmod.so�
 
 历史记录声称固定工程seed的0/1/28动作完整终局和31,670次Android快照对照一致；这里只标历史证据，不能代替本次复验。2026-09-08 TRAINING_ENGINE_PLAN.md 关于x86上原生路线的判断已被后续方案超越。
 
-P1从首次隔离启动起限时30分钟。先复用已存在的user-mode harness，在新进程中验证初始化、合法动作与执行回执、真实观测、逐段tick和自然终局。只在完整成功后给出NATIVE_HEADLESS_FEASIBLE；缺依赖或失败分别保留BLOCKED/INCONCLUSIVE证据，不伪造终局。当前P1为NOT_RUN，决策待本次执行。
+P1从首次隔离启动起限时30分钟。先复用已存在的user-mode harness，在新进程中验证初始化、合法动作与执行回执、真实观测、逐段tick和自然终局。
+
+## P1 决策：NATIVE_HEADLESS_FEASIBLE / NATIVE_VERIFIED
+
+时间盒内实际完成两次固定工程轨迹，双方26次合法动作均与原生消费hook的owner/card/packed参数/t2逐条匹配。两次均tick3601自然终局、winner=1、finalized=true且命令队列空。独立归档验收器逐字段比较29个边界通过，退出0。详见`publication/headless-p1-native.json`。
+
+原始观测中generation/stateEpoch及遥测sequence跨局递增，初次完整JSON摘要比较失败。实际差异调查仅发现combat/remaining/phase的epoch序号与deployment序号偏移；按各自epoch/首个部署ID精确平移，并保留相对顺序、间隔、因果引用及全部战斗字段后，29个边界完全相同。原始压缩轨迹SHA为829b64bc…与5fae6c88…，公开独立验收摘要为29d42e03…；原始capture不发布。
+
+另保留首版校验器把原生消费tick误加1的失败尝试；修正为既有t2契约，未改引擎或缩短延迟。后续两次摘要比较失败也保留，没有重写旧日志。
+
+本次复验38.03/37.65秒每局、原生进程峰值约363MiB，是含私有归档/观测的工程测量，不是训练吞吐。两次处于独立诊断活动期间，不作为稳定并发基准。正式重复基准另列。
+
+结论仅证明匹配原版战斗逻辑在QEMU user-mode及Android用户态支持下脱离完整Emulator推进完整局。未证明零Android依赖、全部规则/卡牌、当前FAIR搜索整局准入或相对Android速度倍率。本次没有重新运行Android同轨迹对照；历史快照对照仍只算历史记录。P2自写sim回退条件未触发，保留原型不改默认后端。

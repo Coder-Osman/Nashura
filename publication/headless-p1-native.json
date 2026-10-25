@@ -1,0 +1,70 @@
+{
+  "status": "NATIVE_HEADLESS_FEASIBLE",
+  "scope": "two complete real-native matches; 29 audited boundaries; exact epoch/deployment sequence rebasing only",
+  "matches": [
+    {
+      "seconds": 38.02679145196453,
+      "reset_seconds": 0.0314792999997735,
+      "ticks": 3601,
+      "winner": 1,
+      "actions": 26,
+      "trace_sha256": "a7aaa2430fcbe90a18d64f87aac58e9667fc040e49063a934799970da7390f06",
+      "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+      "boundary_count": 29,
+      "cpu_seconds": 20.28,
+      "peak_rss_kib": 371208,
+      "timings_seconds": {
+        "capture": 20.635543706594035,
+        "step": 2.897583565558307,
+        "inject": 0.04013383376877755
+      },
+      "complete": true,
+      "rejected": 0
+    },
+    {
+      "seconds": 37.64646625507157,
+      "reset_seconds": 0.05059062293730676,
+      "ticks": 3601,
+      "winner": 1,
+      "actions": 26,
+      "trace_sha256": "f6d764e681fde53a599207c50fa9e58e3584c39ab98a1c1c713ce931a03459f0",
+      "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+      "boundary_count": 29,
+      "cpu_seconds": 20.14999999999999,
+      "peak_rss_kib": 371488,
+      "timings_seconds": {
+        "capture": 20.476430958718993,
+        "step": 2.8023519571870565,
+        "inject": 0.03452047426253557
+      },
+      "complete": true,
+      "rejected": 0
+    }
+  ],
+  "semantic_trace_sha256": "d3ca7397d206235828bd41ef8737fb66499e841682da3cbde1a9868aee2dc76b",
+  "boundaries_identical": 29,
+  "training_admissible": false,
+  "android_emulator_started": false,
+  "independent_verification": {
+    "schema": "headless-trace-verification.v1",
+    "status": "passed",
+    "boundary_count": 29,
+    "terminal_tick": 3601,
+    "trace_sha256": "29d42e0391f6aa94b128b8dea1320e143e2afe9dcde64df29a1315064e383c50",
+    "input_sha256": [
+      "829b64bc58c4835cee83c170289e376da97ec1bb7e399c2573ec26fa646d61a5",
+      "5fae6c8862decf5426aa2bc4fabf9c704b70e477f3a7f59735412fddb2fdde9b"
+    ],
+    "normalization": [
+      "generation/stateEpoch identity removal",
+      "combat/remaining/phase epoch-relative event sequence and cause",
+      "deployment sequence first-id offset, preserving references"
+    ],
+    "training_admissible": false
+  },
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "probe_sha256": "0f0b8488946339c3edf7fdaa8c69fda8f52621922d74230fbf4b4927cb0a7700",
+  "fixture_sha256": "51bc65212c77803858350b38f13a23bee042d2770388c2e0f40e89158fe8b3d8",
+  "producer_sha256": "0ffe6fce47a15dfbf8b7ac82aafe9346550608b899c024e3d9906bb5d265694b",
+  "verifier_sha256": "5740e7886653693051c2acb3fa00459b7bf081fa76ed272ed8f791987c06c07d"
+}

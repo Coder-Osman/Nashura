@@ -1,5 +1,14 @@
 # 阶段成果与证据索引
 
+## 2026-10-26 Headless P1原版完整局复验
+
+NATIVE_HEADLESS_FEASIBLE：独立QEMU user-mode进程、原字节libg、真实
+Android用户态运行时，两次26动作完整局均tick3601自然终局。独立归档比较器
+29边界逐字段一致，只精确重定位跨局遥测ID，原始证据留私有区。
+20项工具专项通过；fixture工程测试与真实原生证据分别记录。
+历史Android逐tick对照不冒作本次新对照；没有相对Emulator加速结论。
+本结果不改变FAIR、训练默认后端、G0/G1与34/43。
+
 ## 2026-10-26 Headless P0审计
 
 独立任务分支基于1352bf0，main/origin/main保持0012201。当前主线确有
