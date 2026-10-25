@@ -58,6 +58,11 @@ def main():
         str(ROOT / "_spec_work/versions/fair-final-position-guards-v1/test_position_guards.py"),
         "--junitxml=" + str(ROOT / "publication/checks-position-guards.xml")],
         cwd=ROOT, env=environment, check=True)
+    subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
+        str(ROOT / "_spec_work/versions/fair-final-live-command-v1/test_live_audit.py"),
+        str(ROOT / "_spec_work/versions/fair-final-live-command-v1/test_native_archive.py"),
+        "--junitxml=" + str(ROOT / "publication/checks-live-command.xml")],
+        cwd=ROOT, env=environment, check=True)
 
 
 if __name__ == "__main__":
