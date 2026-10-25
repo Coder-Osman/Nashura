@@ -45,9 +45,9 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "e0bc381edeff76a4a58f9f6fde7fa49f06fbf93fd67a04d0a217ab72f3cd5909",
-      "bytes": 101360,
-      "source_sha256": "e0bc381edeff76a4a58f9f6fde7fa49f06fbf93fd67a04d0a217ab72f3cd5909",
+      "sha256": "4d4e528e54109a6f2c5c682c32eeaf5b8b84a480c7e3b4b215cb7b2d370b5fc3",
+      "bytes": 102948,
+      "source_sha256": "4d4e528e54109a6f2c5c682c32eeaf5b8b84a480c7e3b4b215cb7b2d370b5fc3",
       "transformations": []
     },
     {
@@ -2450,6 +2450,83 @@
       "sha256": "7e4d5429e81c0653fc35c4eaa0340b7f0154d232f2ebacfe55f58ca6654b354f",
       "bytes": 15428,
       "source_sha256": "7e4d5429e81c0653fc35c4eaa0340b7f0154d232f2ebacfe55f58ca6654b354f",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-command-coordinates-v1/CONTRACT.md",
+      "sha256": "a9acde5ff7f7481ccf75c305bc6d8579adb90924ce96b7918d0afe8ae79e8704",
+      "bytes": 1144,
+      "source_sha256": "a9acde5ff7f7481ccf75c305bc6d8579adb90924ce96b7918d0afe8ae79e8704",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-command-coordinates-v1/EVIDENCE.md",
+      "sha256": "b2f0d8efee515e0cb8a36f914e37474e3958d579ea1aa9dae611cc1f4ad8ffae",
+      "bytes": 3530,
+      "source_sha256": "b2f0d8efee515e0cb8a36f914e37474e3958d579ea1aa9dae611cc1f4ad8ffae",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-command-coordinates-v1/coordinate_audit.py",
+      "sha256": "456ddf3b532f09ca177a69dee430ca392eb9bef54408944b0197352ded786121",
+      "bytes": 5686,
+      "source_sha256": "456ddf3b532f09ca177a69dee430ca392eb9bef54408944b0197352ded786121",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-command-coordinates-v1/native-evidence-summary.json",
+      "sha256": "479c1f293cfb56077cd27df603f090f08b64fae7078847a31c133a5bfaf17c54",
+      "bytes": 2170,
+      "source_sha256": "479c1f293cfb56077cd27df603f090f08b64fae7078847a31c133a5bfaf17c54",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-command-coordinates-v1/run_coordinates.py",
+      "sha256": "024514a80fe19988fff54383187abeab9bbfaada786676b850af64a1b0f0b2b1",
+      "bytes": 6569,
+      "source_sha256": "024514a80fe19988fff54383187abeab9bbfaada786676b850af64a1b0f0b2b1",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-command-coordinates-v1/test_coordinates.py",
+      "sha256": "277e2abe26bb9987ddbebc101bd54463e5676212d09e8f4ff719efbd006cd547",
+      "bytes": 9975,
+      "source_sha256": "277e2abe26bb9987ddbebc101bd54463e5676212d09e8f4ff719efbd006cd547",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-command-coordinates-v1/test_native_archive.py",
+      "sha256": "8bd2bb9b9786d5b7554291d9b43c664446ab043f7dace9406fc9d17e84d39bb8",
+      "bytes": 1814,
+      "source_sha256": "8bd2bb9b9786d5b7554291d9b43c664446ab043f7dace9406fc9d17e84d39bb8",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-command-coordinates-v1/tests-engineering.xml",
+      "sha256": "bdb1f2e061cd1890289fbf39e31bf292fda227d0fd71d1f742dee91b862699fe",
+      "bytes": 6880,
+      "source_sha256": "bdb1f2e061cd1890289fbf39e31bf292fda227d0fd71d1f742dee91b862699fe",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-command-coordinates-v1/tests-final.xml",
+      "sha256": "985f69e7be9e53667d062eb12d380b967253250db5692ee039a007296a91b915",
+      "bytes": 7390,
+      "source_sha256": "985f69e7be9e53667d062eb12d380b967253250db5692ee039a007296a91b915",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-command-coordinates-v1/tests-isolated.xml",
+      "sha256": "3e85cd58e637b8238bfa67d9ba127ab62ea36e2e7a1355cd8a26d21ee5dd6dae",
+      "bytes": 7654,
+      "source_sha256": "3e85cd58e637b8238bfa67d9ba127ab62ea36e2e7a1355cd8a26d21ee5dd6dae",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-command-coordinates-v1/tests-review.xml",
+      "sha256": "109ff589fff98f8e41a356131ff14f32fbd51a6680aef9ca9dc4940f6a822895",
+      "bytes": 7880,
+      "source_sha256": "109ff589fff98f8e41a356131ff14f32fbd51a6680aef9ca9dc4940f6a822895",
       "transformations": []
     },
     {
@@ -16156,8 +16233,8 @@
       "transformations": []
     }
   ],
-  "file_count": 2306,
-  "source_bytes": 32847873,
+  "file_count": 2317,
+  "source_bytes": 32910153,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

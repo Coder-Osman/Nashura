@@ -73,6 +73,11 @@ def main():
         str(ROOT / "_spec_work/versions/fair-final-reservation-map-v1/test_native_archive.py"),
         "--junitxml=" + str(ROOT / "publication/checks-reservation-mapping.xml")],
         cwd=ROOT, env=environment, check=True)
+    subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
+        str(ROOT / "_spec_work/versions/fair-final-command-coordinates-v1/test_coordinates.py"),
+        str(ROOT / "_spec_work/versions/fair-final-command-coordinates-v1/test_native_archive.py"),
+        "--junitxml=" + str(ROOT / "publication/checks-command-coordinates.xml")],
+        cwd=ROOT, env=environment, check=True)
 
 
 if __name__ == "__main__":
