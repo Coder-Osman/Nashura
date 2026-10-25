@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "423d7bd1c9a73a997d3106bb0a3498b8328e31c4a33dcca5b07248e57fd86b56",
-      "bytes": 104675,
-      "source_sha256": "423d7bd1c9a73a997d3106bb0a3498b8328e31c4a33dcca5b07248e57fd86b56",
+      "sha256": "1a1daff51c7c286b5bf9bbe2ccbffdd6fc2633a5637cbca0ea2f30134a9cc2a6",
+      "bytes": 105866,
+      "source_sha256": "1a1daff51c7c286b5bf9bbe2ccbffdd6fc2633a5637cbca0ea2f30134a9cc2a6",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "f871c171d75aaf48d8f6edff883d9cd7b0b8386ebc31a93c08777e023dd95057",
-      "bytes": 57592,
-      "source_sha256": "f871c171d75aaf48d8f6edff883d9cd7b0b8386ebc31a93c08777e023dd95057",
+      "sha256": "2b7bef19f591704bb95e5e551a83895b412d9d1ca38abef3611203362bffae8e",
+      "bytes": 58543,
+      "source_sha256": "2b7bef19f591704bb95e5e551a83895b412d9d1ca38abef3611203362bffae8e",
       "transformations": []
     },
     {
@@ -2363,16 +2363,23 @@
     },
     {
       "path": "_spec_work/versions/fair-final-collection-coordinator-v1/CONTRACT.md",
-      "sha256": "568c6539fe09d03f9b87daa699d833fb0bf647db90b5bc0f5a5c36a547212523",
-      "bytes": 3559,
-      "source_sha256": "568c6539fe09d03f9b87daa699d833fb0bf647db90b5bc0f5a5c36a547212523",
+      "sha256": "5dfd05688d3b0fb7f988eeb538d2526e44c12d25f41d21ff9778b6e68a473d20",
+      "bytes": 6504,
+      "source_sha256": "5dfd05688d3b0fb7f988eeb538d2526e44c12d25f41d21ff9778b6e68a473d20",
       "transformations": []
     },
     {
       "path": "_spec_work/versions/fair-final-collection-coordinator-v1/EVIDENCE.md",
-      "sha256": "4173dcdac1bc969ab31dd86b617693f9a72ffd6cd69e93ca91bdd58d35f81fdf",
-      "bytes": 3830,
-      "source_sha256": "4173dcdac1bc969ab31dd86b617693f9a72ffd6cd69e93ca91bdd58d35f81fdf",
+      "sha256": "8e152c00d129c9cc0739da787f397ab2dbade92e9ed273225118ab0ba9ccbd35",
+      "bytes": 6065,
+      "source_sha256": "8e152c00d129c9cc0739da787f397ab2dbade92e9ed273225118ab0ba9ccbd35",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-collection-coordinator-v1/execute_round.py",
+      "sha256": "3acb70fe93b77b006b72b4298832e8d978667b43d584d27199c3e12e37152226",
+      "bytes": 16618,
+      "source_sha256": "3acb70fe93b77b006b72b4298832e8d978667b43d584d27199c3e12e37152226",
       "transformations": []
     },
     {
@@ -2383,10 +2390,31 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-collection-coordinator-v1/test_execute_round.py",
+      "sha256": "40604c3631cb4f0b2e99e5f3dbf8cb23f04187ea457c160a1f7a70146603e2b2",
+      "bytes": 13655,
+      "source_sha256": "40604c3631cb4f0b2e99e5f3dbf8cb23f04187ea457c160a1f7a70146603e2b2",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-collection-coordinator-v1/test_preflight_round.py",
       "sha256": "1770104f6b1960d3b07e419bfe52cb5d35263c0ae22e5bc933c5bbadc1bf7179",
       "bytes": 12653,
       "source_sha256": "1770104f6b1960d3b07e419bfe52cb5d35263c0ae22e5bc933c5bbadc1bf7179",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-collection-coordinator-v1/tests-execution-initial.xml",
+      "sha256": "745ac717bbab5137785500888deed7e1d5e5ce577a80630b3a316cfede656efd",
+      "bytes": 5287,
+      "source_sha256": "745ac717bbab5137785500888deed7e1d5e5ce577a80630b3a316cfede656efd",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-collection-coordinator-v1/tests-execution-integration.xml",
+      "sha256": "e2506cd943f2ca83c783be90fe4836ff1bde8dbdc3f8860dae6c4218b9c4fa2d",
+      "bytes": 22260,
+      "source_sha256": "e2506cd943f2ca83c783be90fe4836ff1bde8dbdc3f8860dae6c4218b9c4fa2d",
       "transformations": []
     },
     {
@@ -16289,8 +16317,8 @@
       "transformations": []
     }
   ],
-  "file_count": 2325,
-  "source_bytes": 33071174,
+  "file_count": 2329,
+  "source_bytes": 33136316,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

@@ -80,6 +80,7 @@ def main():
         cwd=ROOT, env=environment, check=True)
     subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
         str(ROOT / "_spec_work/versions/fair-final-collection-coordinator-v1/test_preflight_round.py"),
+        str(ROOT / "_spec_work/versions/fair-final-collection-coordinator-v1/test_execute_round.py"),
         "--junitxml=" + str(ROOT / "publication/checks-collection-coordinator.xml")],
         cwd=ROOT, env=environment, check=True)
 

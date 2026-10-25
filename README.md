@@ -15,6 +15,14 @@
 
 测试通过、限定子项通过、整体门通过和模型实战提升分别记录，测试数量存在重叠，不累加。
 
+新增整轮顺序执行与独立回收：固定准备结果和选优报告，逐局调用既有worker及
+独立归档验收器；中断后重验已完成局而不重复采集，失败保留现场。联合117项
+工程测试通过、主工程211项通过，集合不相加。尚未执行真实round2，重试调度
+及训练交接待完成；G0/G1与34/43不增。Full128最新快照提交185组/370根/
+47360模拟、tick5990继续，terminal仍运行。详见
+[_spec_work/versions/fair-final-collection-coordinator-v1/CONTRACT.md](_spec_work/versions/fair-final-collection-coordinator-v1/CONTRACT.md)。
+以下为此前阶段和时间点记录。
+
 新增整轮补充采集协调预检：任务精确覆盖、输入与外部种子来源一致、输出隔离，
 逐任务预检全部通过后才生成准备标记及现有worker命令。32项专项、128项联合
 工程回归通过，集合不相加；仅准备，不执行worker或启动引擎。真实terminal、
