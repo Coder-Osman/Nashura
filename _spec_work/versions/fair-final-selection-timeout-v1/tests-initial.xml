@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="10" failures="0" skipped="0" tests="16" time="35.492" timestamp="2026-10-25T12:30:26.564797+08:00" hostname="gujigadeMacBook-Pro-3.local"><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_timeout_cursor_and_full_state_resume_match_continuous_terminal" time="28.013" /><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_resealed_timeout_corruption_rejected[consumed]" time="1.204" /><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_resealed_timeout_corruption_rejected[order]" time="1.206" /><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_resealed_timeout_corruption_rejected[best_optimizer]" time="1.482" /><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_resealed_timeout_corruption_rejected[best_cursor]" time="1.436" /><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_resealed_timeout_corruption_rejected[teacher]" time="1.217" /><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_real_retry_child_uses_timeout_resume_preserves_parent_and_frozen_files" time="0.003"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_real_retry_child_uses_tim0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'&quot;">execution = {'files': {'_spec_work/versions/fair-final-migration-selection-v1/train_round.py': b'import hashlib\nimport json\nimpo...': 1293, 'sha256': 'f04499c8fd47897cf54cac1531c2b63edd58ed36bbfdbddf0c7b79888842d779'}}, 'formal_g2_pass': False, ...}}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_real_retry_child_uses_tim0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x15576f820&gt;
+
+    @pytest.fixture
+    def retry_fixture(execution, tmp_path, monkeypatch):
+        parent = tmp_path / "parent" / "selection"
+        parent.mkdir(parents=True)
+        inputs, deployment = parent / "inputs", parent / "deployment"
+        inputs.mkdir()
+        for source in execution["handoff"].iterdir():
+            (inputs / source.name).write_bytes(source.read_bytes())
+        for name, data in execution["files"].items():
+            destination = deployment / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(data)
+        entry = deployment / "fair-final-migration-selection-v1/train_round.py"
+&gt;       entry.write_text(ENTRY.replace('request["parent_checkpoint_sha256"]',
+            'json.loads((root / "retry-input.json").read_text())["verification"]["checkpoint_sha256"]')
+            .replace('root / "inputs/parent-checkpoint.pt"', 'root / "resume-input.pt"'))
+
+_spec_work/versions/fair-final-selection-timeout-v1/test_timeout.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:555: in write_text
+    return PathBase.write_text(self, data, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:651: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_real_retry_child_uses_tim0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_real_retry_child_uses_tim0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_retry_request_rejects_resealed_ineligible_inputs[budget]" time="0.003"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'&quot;">execution = {'files': {'_spec_work/versions/fair-final-migration-selection-v1/train_round.py': b'import hashlib\nimport json\nimpo...': 1293, 'sha256': 'f04499c8fd47897cf54cac1531c2b63edd58ed36bbfdbddf0c7b79888842d779'}}, 'formal_g2_pass': False, ...}}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x31b8d3a80&gt;
+
+    @pytest.fixture
+    def retry_fixture(execution, tmp_path, monkeypatch):
+        parent = tmp_path / "parent" / "selection"
+        parent.mkdir(parents=True)
+        inputs, deployment = parent / "inputs", parent / "deployment"
+        inputs.mkdir()
+        for source in execution["handoff"].iterdir():
+            (inputs / source.name).write_bytes(source.read_bytes())
+        for name, data in execution["files"].items():
+            destination = deployment / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(data)
+        entry = deployment / "fair-final-migration-selection-v1/train_round.py"
+&gt;       entry.write_text(ENTRY.replace('request["parent_checkpoint_sha256"]',
+            'json.loads((root / "retry-input.json").read_text())["verification"]["checkpoint_sha256"]')
+            .replace('root / "inputs/parent-checkpoint.pt"', 'root / "resume-input.pt"'))
+
+_spec_work/versions/fair-final-selection-timeout-v1/test_timeout.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:555: in write_text
+    return PathBase.write_text(self, data, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:651: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_retry_request_rejects_resealed_ineligible_inputs[gate]" time="0.003"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res1/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'&quot;">execution = {'files': {'_spec_work/versions/fair-final-migration-selection-v1/train_round.py': b'import hashlib\nimport json\nimpo...': 1293, 'sha256': 'f04499c8fd47897cf54cac1531c2b63edd58ed36bbfdbddf0c7b79888842d779'}}, 'formal_g2_pass': False, ...}}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x1524c2d50&gt;
+
+    @pytest.fixture
+    def retry_fixture(execution, tmp_path, monkeypatch):
+        parent = tmp_path / "parent" / "selection"
+        parent.mkdir(parents=True)
+        inputs, deployment = parent / "inputs", parent / "deployment"
+        inputs.mkdir()
+        for source in execution["handoff"].iterdir():
+            (inputs / source.name).write_bytes(source.read_bytes())
+        for name, data in execution["files"].items():
+            destination = deployment / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(data)
+        entry = deployment / "fair-final-migration-selection-v1/train_round.py"
+&gt;       entry.write_text(ENTRY.replace('request["parent_checkpoint_sha256"]',
+            'json.loads((root / "retry-input.json").read_text())["verification"]["checkpoint_sha256"]')
+            .replace('root / "inputs/parent-checkpoint.pt"', 'root / "resume-input.pt"'))
+
+_spec_work/versions/fair-final-selection-timeout-v1/test_timeout.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:555: in write_text
+    return PathBase.write_text(self, data, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:651: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res1/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res1/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_retry_request_rejects_resealed_ineligible_inputs[proof_gate]" time="0.003"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res2/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'&quot;">execution = {'files': {'_spec_work/versions/fair-final-migration-selection-v1/train_round.py': b'import hashlib\nimport json\nimpo...': 1293, 'sha256': 'f04499c8fd47897cf54cac1531c2b63edd58ed36bbfdbddf0c7b79888842d779'}}, 'formal_g2_pass': False, ...}}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res2')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x106ad0380&gt;
+
+    @pytest.fixture
+    def retry_fixture(execution, tmp_path, monkeypatch):
+        parent = tmp_path / "parent" / "selection"
+        parent.mkdir(parents=True)
+        inputs, deployment = parent / "inputs", parent / "deployment"
+        inputs.mkdir()
+        for source in execution["handoff"].iterdir():
+            (inputs / source.name).write_bytes(source.read_bytes())
+        for name, data in execution["files"].items():
+            destination = deployment / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(data)
+        entry = deployment / "fair-final-migration-selection-v1/train_round.py"
+&gt;       entry.write_text(ENTRY.replace('request["parent_checkpoint_sha256"]',
+            'json.loads((root / "retry-input.json").read_text())["verification"]["checkpoint_sha256"]')
+            .replace('root / "inputs/parent-checkpoint.pt"', 'root / "resume-input.pt"'))
+
+_spec_work/versions/fair-final-selection-timeout-v1/test_timeout.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:555: in write_text
+    return PathBase.write_text(self, data, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:651: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res2/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res2/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_retry_request_rejects_resealed_ineligible_inputs[traversal]" time="0.002"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res3/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'&quot;">execution = {'files': {'_spec_work/versions/fair-final-migration-selection-v1/train_round.py': b'import hashlib\nimport json\nimpo...': 1293, 'sha256': 'f04499c8fd47897cf54cac1531c2b63edd58ed36bbfdbddf0c7b79888842d779'}}, 'formal_g2_pass': False, ...}}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res3')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x106ad0e20&gt;
+
+    @pytest.fixture
+    def retry_fixture(execution, tmp_path, monkeypatch):
+        parent = tmp_path / "parent" / "selection"
+        parent.mkdir(parents=True)
+        inputs, deployment = parent / "inputs", parent / "deployment"
+        inputs.mkdir()
+        for source in execution["handoff"].iterdir():
+            (inputs / source.name).write_bytes(source.read_bytes())
+        for name, data in execution["files"].items():
+            destination = deployment / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(data)
+        entry = deployment / "fair-final-migration-selection-v1/train_round.py"
+&gt;       entry.write_text(ENTRY.replace('request["parent_checkpoint_sha256"]',
+            'json.loads((root / "retry-input.json").read_text())["verification"]["checkpoint_sha256"]')
+            .replace('root / "inputs/parent-checkpoint.pt"', 'root / "resume-input.pt"'))
+
+_spec_work/versions/fair-final-selection-timeout-v1/test_timeout.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:555: in write_text
+    return PathBase.write_text(self, data, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:651: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res3/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res3/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_retry_request_rejects_resealed_ineligible_inputs[process]" time="0.002"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res4/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'&quot;">execution = {'files': {'_spec_work/versions/fair-final-migration-selection-v1/train_round.py': b'import hashlib\nimport json\nimpo...': 1293, 'sha256': 'f04499c8fd47897cf54cac1531c2b63edd58ed36bbfdbddf0c7b79888842d779'}}, 'formal_g2_pass': False, ...}}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res4')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x31ba32250&gt;
+
+    @pytest.fixture
+    def retry_fixture(execution, tmp_path, monkeypatch):
+        parent = tmp_path / "parent" / "selection"
+        parent.mkdir(parents=True)
+        inputs, deployment = parent / "inputs", parent / "deployment"
+        inputs.mkdir()
+        for source in execution["handoff"].iterdir():
+            (inputs / source.name).write_bytes(source.read_bytes())
+        for name, data in execution["files"].items():
+            destination = deployment / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(data)
+        entry = deployment / "fair-final-migration-selection-v1/train_round.py"
+&gt;       entry.write_text(ENTRY.replace('request["parent_checkpoint_sha256"]',
+            'json.loads((root / "retry-input.json").read_text())["verification"]["checkpoint_sha256"]')
+            .replace('root / "inputs/parent-checkpoint.pt"', 'root / "resume-input.pt"'))
+
+_spec_work/versions/fair-final-selection-timeout-v1/test_timeout.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:555: in write_text
+    return PathBase.write_text(self, data, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:651: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res4/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_request_rejects_res4/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_retry_rejects_changed_parent_before_output[bytes]" time="0.002"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_rejects_changed_par0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'&quot;">execution = {'files': {'_spec_work/versions/fair-final-migration-selection-v1/train_round.py': b'import hashlib\nimport json\nimpo...': 1293, 'sha256': 'f04499c8fd47897cf54cac1531c2b63edd58ed36bbfdbddf0c7b79888842d779'}}, 'formal_g2_pass': False, ...}}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_rejects_changed_par0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x31ba31c50&gt;
+
+    @pytest.fixture
+    def retry_fixture(execution, tmp_path, monkeypatch):
+        parent = tmp_path / "parent" / "selection"
+        parent.mkdir(parents=True)
+        inputs, deployment = parent / "inputs", parent / "deployment"
+        inputs.mkdir()
+        for source in execution["handoff"].iterdir():
+            (inputs / source.name).write_bytes(source.read_bytes())
+        for name, data in execution["files"].items():
+            destination = deployment / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(data)
+        entry = deployment / "fair-final-migration-selection-v1/train_round.py"
+&gt;       entry.write_text(ENTRY.replace('request["parent_checkpoint_sha256"]',
+            'json.loads((root / "retry-input.json").read_text())["verification"]["checkpoint_sha256"]')
+            .replace('root / "inputs/parent-checkpoint.pt"', 'root / "resume-input.pt"'))
+
+_spec_work/versions/fair-final-selection-timeout-v1/test_timeout.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:555: in write_text
+    return PathBase.write_text(self, data, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:651: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_rejects_changed_par0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_rejects_changed_par0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_retry_rejects_changed_parent_before_output[symlink]" time="0.003"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_rejects_changed_par1/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'&quot;">execution = {'files': {'_spec_work/versions/fair-final-migration-selection-v1/train_round.py': b'import hashlib\nimport json\nimpo...': 1293, 'sha256': '9550b2feff1b07f353e0d54ce9f0b2cee6951f45d3c5f1ab61a627f6ea870226'}}, 'formal_g2_pass': False, ...}}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_rejects_changed_par1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x31b962d50&gt;
+
+    @pytest.fixture
+    def retry_fixture(execution, tmp_path, monkeypatch):
+        parent = tmp_path / "parent" / "selection"
+        parent.mkdir(parents=True)
+        inputs, deployment = parent / "inputs", parent / "deployment"
+        inputs.mkdir()
+        for source in execution["handoff"].iterdir():
+            (inputs / source.name).write_bytes(source.read_bytes())
+        for name, data in execution["files"].items():
+            destination = deployment / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(data)
+        entry = deployment / "fair-final-migration-selection-v1/train_round.py"
+&gt;       entry.write_text(ENTRY.replace('request["parent_checkpoint_sha256"]',
+            'json.loads((root / "retry-input.json").read_text())["verification"]["checkpoint_sha256"]')
+            .replace('root / "inputs/parent-checkpoint.pt"', 'root / "resume-input.pt"'))
+
+_spec_work/versions/fair-final-selection-timeout-v1/test_timeout.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:555: in write_text
+    return PathBase.write_text(self, data, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:651: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_rejects_changed_par1/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_rejects_changed_par1/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_retry_real_child_failure_is_quarantined" time="0.002"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_real_child_failure_0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'&quot;">execution = {'files': {'_spec_work/versions/fair-final-migration-selection-v1/train_round.py': b'import hashlib\nimport json\nimpo...': 1293, 'sha256': '9550b2feff1b07f353e0d54ce9f0b2cee6951f45d3c5f1ab61a627f6ea870226'}}, 'formal_g2_pass': False, ...}}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_real_child_failure_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x31b9633e0&gt;
+
+    @pytest.fixture
+    def retry_fixture(execution, tmp_path, monkeypatch):
+        parent = tmp_path / "parent" / "selection"
+        parent.mkdir(parents=True)
+        inputs, deployment = parent / "inputs", parent / "deployment"
+        inputs.mkdir()
+        for source in execution["handoff"].iterdir():
+            (inputs / source.name).write_bytes(source.read_bytes())
+        for name, data in execution["files"].items():
+            destination = deployment / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(data)
+        entry = deployment / "fair-final-migration-selection-v1/train_round.py"
+&gt;       entry.write_text(ENTRY.replace('request["parent_checkpoint_sha256"]',
+            'json.loads((root / "retry-input.json").read_text())["verification"]["checkpoint_sha256"]')
+            .replace('root / "inputs/parent-checkpoint.pt"', 'root / "resume-input.pt"'))
+
+_spec_work/versions/fair-final-selection-timeout-v1/test_timeout.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:555: in write_text
+    return PathBase.write_text(self, data, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:651: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_real_child_failure_0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_retry_real_child_failure_0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase><testcase classname="_spec_work.versions.fair-final-selection-timeout-v1.test_timeout" name="test_inventory_waits_for_training_child_and_gpu_lease" time="0.009"><error message="failed on setup with &quot;FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_inventory_waits_for_train0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'&quot;">execution = {'files': {'_spec_work/versions/fair-final-migration-selection-v1/train_round.py': b'import hashlib\nimport json\nimpo...': 1293, 'sha256': '9550b2feff1b07f353e0d54ce9f0b2cee6951f45d3c5f1ab61a627f6ea870226'}}, 'formal_g2_pass': False, ...}}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_inventory_waits_for_train0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x107960910&gt;
+
+    @pytest.fixture
+    def retry_fixture(execution, tmp_path, monkeypatch):
+        parent = tmp_path / "parent" / "selection"
+        parent.mkdir(parents=True)
+        inputs, deployment = parent / "inputs", parent / "deployment"
+        inputs.mkdir()
+        for source in execution["handoff"].iterdir():
+            (inputs / source.name).write_bytes(source.read_bytes())
+        for name, data in execution["files"].items():
+            destination = deployment / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(data)
+        entry = deployment / "fair-final-migration-selection-v1/train_round.py"
+&gt;       entry.write_text(ENTRY.replace('request["parent_checkpoint_sha256"]',
+            'json.loads((root / "retry-input.json").read_text())["verification"]["checkpoint_sha256"]')
+            .replace('root / "inputs/parent-checkpoint.pt"', 'root / "resume-input.pt"'))
+
+_spec_work/versions/fair-final-selection-timeout-v1/test_timeout.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:555: in write_text
+    return PathBase.write_text(self, data, encoding, errors, newline)
+/opt/anaconda3/lib/python3.13/pathlib/_abc.py:651: in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_inventory_waits_for_train0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py')
+mode = 'w', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+&gt;       return io.open(self, mode, buffering, encoding, errors, newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: '/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-691/test_inventory_waits_for_train0/parent/selection/deployment/fair-final-migration-selection-v1/train_round.py'
+
+/opt/anaconda3/lib/python3.13/pathlib/_local.py:537: FileNotFoundError</error></testcase></testsuite></testsuites>

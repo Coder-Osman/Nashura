@@ -43,6 +43,11 @@ def main():
     subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", *tests,
         "--junitxml=" + str(ROOT / "publication/checks-public.xml")],
         cwd=ROOT, env=environment, check=True)
+    subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
+        str(ROOT / "_spec_work/versions/fair-final-selection-timeout-v1/test_timeout.py"),
+        str(ROOT / "_spec_work/versions/fair-final-active-migration-v1/test_selection_execution.py"),
+        "--junitxml=" + str(ROOT / "publication/checks-selection-timeout.xml")],
+        cwd=ROOT, env=environment, check=True)
 
 
 if __name__ == "__main__":

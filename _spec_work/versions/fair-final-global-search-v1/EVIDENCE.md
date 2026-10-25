@@ -1,5 +1,16 @@
 # 全局随机快照搜索集成：工程完成，原生待验
 
+## 2026-10-25 连接恢复后已启动
+
+原生native-global-search-1792836650700032000在核查原任务后独立启动，
+worker73018/start49197529，端口29791/29792，预算5500秒；launch SHA256
+`58cecfb3cc240b686677af8a2f711944d75ea4ac5b0080e2c65bb7a28bc48fea`。
+快照1792902971为running、completed_roots=1，四根及清理尚待完成，独立内容
+验收未运行。下文prepared/SSH超时是先前状态；同一冻结准备包未重复派发。
+Full128和terminal续跑独立保留，不据首根完成关闭G0/G1或随机全覆盖门。
+
+## 原准备和失败连接记录
+
 2026-10-24，新增独立验证入口，把已修复的全局MT快照引擎接入冻结history-v2
 的general-provider local Full128搜索，不修改运行中的原Full128与选优部署。
 启动前实际重验global-rng-snapshot-v1父原生归档，通过后导出353个冻结载荷。

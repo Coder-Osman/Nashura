@@ -42,3 +42,6 @@ tests-contiguous-filter.xml保留首次失败回溯的尾随空白；仅这三�
 
 rng-callsite-audit-v1/tests-initial.xml保留首次断言与无偏移SP分类失败的原始回溯；
 仅该精确文件豁免行尾空白，最终修正结果单独保存，仍受源码清单SHA校验。
+
+selection-timeout-v1/tests-initial.xml保留首次fixture路径错误的原始回溯及尾随
+空白，仅该精确文件登记行尾豁免；另保留write-once测试构造失败，不重写证据。

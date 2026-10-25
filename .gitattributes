@@ -5,3 +5,4 @@ _spec_work/versions/fair-final-plugin-runtime-v1/tests-audit.xml whitespace=-bla
 _spec_work/versions/fair-final-plugin-runtime-v1/tests-initial.xml whitespace=-blank-at-eol
 _spec_work/versions/fair-final-random-execution-v1/tests-contiguous-filter.xml whitespace=-blank-at-eol
 _spec_work/versions/fair-final-rng-callsite-audit-v1/tests-initial.xml whitespace=-blank-at-eol
+_spec_work/versions/fair-final-selection-timeout-v1/tests-initial.xml whitespace=-blank-at-eol

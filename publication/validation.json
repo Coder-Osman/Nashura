@@ -1,5 +1,40 @@
 {
   "schema": "hashura.publication-validation.v1",
+  "latest_selection_timeout_publication": {
+    "source_files_verified": 2230,
+    "source_manifest_sha256": "17bdb25a6de752ded8d8e5090863309d296b95a00b11f1e2fc414b954c995a8a",
+    "public_tests": {
+      "passed": 794,
+      "skipped": 27,
+      "seconds": 49.61,
+      "report": "publication/checks-public.xml",
+      "sha256": "3fe146815f13b5f77a915df86c91caab7bd0803b0f594496c2bed93ae1d7f070",
+      "skip_reason": "private native libraries and evidence archives excluded from public snapshot"
+    },
+    "selection_timeout_and_execution_tests": {
+      "passed": 43,
+      "seconds": 79.76,
+      "report": "publication/checks-selection-timeout.xml",
+      "sha256": "7fe7d38a0bca17bd2cef819a6de3c57b4dda723a601832c9b8391645b34dd932",
+      "new_tests": 17,
+      "scope": "ENGINEERING_FULL_STATE_SUBPROCESS_AND_MOCK_TRANSPORT_ONLY"
+    },
+    "main_engine_tests": {"passed": 211, "seconds": 22.74},
+    "secret_scan_findings": 0,
+    "preserved_parent": "selection-1792730822491650000",
+    "parent_status": "failed_timeout_exit124_preserved",
+    "timeout_checkpoint_optimizer_steps_verified": 15,
+    "retry": "selection-retry-1792902961215570000",
+    "retry_wall_seconds": 86400,
+    "retry_status": "running_pending_terminal_verification",
+    "native_terminal_resume_verified": false,
+    "native_round2_executed": false,
+    "complete_full128_game_verified": false,
+    "training_admissible": false,
+    "formal_g2_pass": false,
+    "gates_closed": false,
+    "historical_entries_below_preserved": true
+  },
   "latest_random_execution_publication": {
     "source_files_verified": 2162,
     "source_manifest_sha256": "f861fd35bfa7379c35976491abb2e08b32744d096ce08ed1b98673ef2d437a0c",

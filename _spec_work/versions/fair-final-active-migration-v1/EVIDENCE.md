@@ -1,5 +1,15 @@
 # 最新实现独立原生验证：发现数值回归，修复后重新验证
 
+## 2026-10-25 terminal选优超时归档与独立恢复
+
+旧selection-1792730822491650000耗尽28800秒后exit124，停止/租约释放及归档
+已核验，无terminal报告；保留第15步checkpoint。新selection-timeout-v1独立
+重验父内容及完整游标，43项联合工程测试通过（其中17项新增），失败XML保留。
+独立selection-retry-1792902961215570000在.35 GPU1以86400秒预算启动，
+worker73377/start49307405，子进程73450/start49307994；快照1792903002
+活跃、确定性环境及第15步resume SHA匹配，尚无新terminal结果。
+旧失败原样保留，round2未启动；详见selection-timeout-v1/CONTRACT.md、EVIDENCE.md。
+
 ## 2026-10-23 原生恢复重试独立通过，真实选优启动
 
 native-active-retry-1792720054258999000完成，exit0、9430.322秒；归档298文件。

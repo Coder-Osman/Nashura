@@ -28,3 +28,4 @@ MACHINES.md
 *.pyc
 **/private-audit/
 /publication/checks-*.xml
+!/publication/checks-selection-timeout.xml
