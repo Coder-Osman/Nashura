@@ -1,0 +1,40 @@
+{
+  "schema": "headless-engine-p0-checks.v1",
+  "scope": "P0 audit; no native feasibility or training acceptance",
+  "source_branch_head": "1352bf0245aca4fe14851595fed68724602c08bf",
+  "main_head": "0012201830cfbfcbfeb3d9dccd91a855028da869",
+  "commands": [
+    {
+      "command": "python tools/run_main_engine_checks.py",
+      "exit_code": 0,
+      "log_sha256": "925fc461a9eddc9809e20c0868bf2672d0d03415fab3b6a320a078c7feabc58b",
+      "result_lines": [
+        "211 passed in 52.24s"
+      ]
+    },
+    {
+      "command": "python tools/run_public_checks.py",
+      "exit_code": 0,
+      "log_sha256": "7e6a2d0f966cdcbd19b3b64cb6dd3732f6a1a10e49eee9f79b2b64fc5a7eea27",
+      "result_lines": [
+        "794 passed, 27 skipped in 92.83s (0:01:32)",
+        "23 passed in 6.72s",
+        "82 passed in 128.93s (0:02:08)",
+        "15 passed, 3 skipped in 0.25s",
+        "25 passed, 4 skipped in 1.80s",
+        "31 passed, 3 skipped in 1.57s",
+        "31 passed, 2 skipped in 1.81s",
+        "38 passed, 3 skipped in 3.94s",
+        "65 passed in 28.74s"
+      ]
+    },
+    {
+      "command": "gitleaks dir . --config .gitleaks.toml --redact",
+      "exit_code": 0,
+      "log_sha256": "27f4e7c36cffbe4bd2769be6149ee83a7ea7ceec6704621d08bc03c25ddba947",
+      "result_lines": [
+        "12:17AM INF no leaks found"
+      ]
+    }
+  ]
+}

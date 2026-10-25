@@ -9903,6 +9903,20 @@
       "transformations": []
     },
     {
+      "path": "agent-handoff/HEADLESS_ENGINE_AUDIT_2026-10-25.md",
+      "sha256": "f79fc804f9cb25378a5aca27528b5091149acaf43abdb27450bc822c25fafa13",
+      "bytes": 4867,
+      "source_sha256": "f79fc804f9cb25378a5aca27528b5091149acaf43abdb27450bc822c25fafa13",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/HEADLESS_ENGINE_PLAN_2026-10-25.md",
+      "sha256": "4a609a091b532b59a5658a13a25c76f279ac8692da9b009ea96a807a58fdbc2b",
+      "bytes": 2342,
+      "source_sha256": "4a609a091b532b59a5658a13a25c76f279ac8692da9b009ea96a807a58fdbc2b",
+      "transformations": []
+    },
+    {
       "path": "firstlight_CR/.clang-format",
       "sha256": "46735788d2383a807d7244408295d2e1e04353f281387557a89e359e385ee161",
       "bytes": 78,
@@ -16310,6 +16324,13 @@
       "transformations": []
     },
     {
+      "path": "publication/headless-p0-checks.json",
+      "sha256": "a4e32109e63005b9b30cfa9d6a3a350e20a6f7862553afea5f28a4707fd30f70",
+      "bytes": 1338,
+      "source_sha256": "a4e32109e63005b9b30cfa9d6a3a350e20a6f7862553afea5f28a4707fd30f70",
+      "transformations": []
+    },
+    {
       "path": "wire-spec.md",
       "sha256": "1089dbdcfcdfe2b5780dad886addcca72eb1d77e362be0e7fd2e6087754b5c68",
       "bytes": 47640,
@@ -16317,7 +16338,7 @@
       "transformations": []
     }
   ],
-  "file_count": 2329,
+  "file_count": 2332,
   "source_bytes": 33136316,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
