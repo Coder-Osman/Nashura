@@ -12,7 +12,12 @@
 P1现已实际复验：两次原版ARM64完整局、26动作回执、29边界独立比较通过，
 结论NATIVE_HEADLESS_FEASIBLE。使用QEMU user-mode与Android用户态库，
 并非零Android依赖；未开启正式训练。代码及复现见
-[独立入口](tools/HEADLESS_NATIVE.md)，吞吐基准另行验收。
+[独立入口](tools/HEADLESS_NATIVE.md)。P3已核验拒绝/reset/快照及分段推进；
+P4固定工程轨迹45局全部完整，1/2/4/8路分别0.1574/0.3004/0.5121/0.8025局每秒。
+8路总吞吐为1路5.10倍，不是单局或Emulator相对加速。27项独立测试通过，
+主工程211项及公开入口通过。没有新Android同轨迹对照，也未接入训练。
+见[基准与限制](agent-handoff/HEADLESS_ENGINE_BENCHMARK_2026-10-25.md)
+及[阶段交付](agent-handoff/CODEX_REPLY_2026-10-25_HEADLESS_ENGINE.md)。
 
 ## 当前状态（2026-10-25）
 

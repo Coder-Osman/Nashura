@@ -9903,17 +9903,31 @@
       "transformations": []
     },
     {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-25_HEADLESS_ENGINE.md",
+      "sha256": "e5d89a347f4e9c1179e62106cf371360556784a2d6f748b8da87cb69296160a6",
+      "bytes": 5437,
+      "source_sha256": "e5d89a347f4e9c1179e62106cf371360556784a2d6f748b8da87cb69296160a6",
+      "transformations": []
+    },
+    {
       "path": "agent-handoff/HEADLESS_ENGINE_AUDIT_2026-10-25.md",
-      "sha256": "902869ef5de11d20988955bd0697d3a1211ea1df797a84777cf51fe7a1f5b366",
-      "bytes": 6351,
-      "source_sha256": "902869ef5de11d20988955bd0697d3a1211ea1df797a84777cf51fe7a1f5b366",
+      "sha256": "d00cf09aedea4889854171c2b3b08f30938b3d9b5053c1346fb06b5a54c628ea",
+      "bytes": 7155,
+      "source_sha256": "d00cf09aedea4889854171c2b3b08f30938b3d9b5053c1346fb06b5a54c628ea",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/HEADLESS_ENGINE_BENCHMARK_2026-10-25.md",
+      "sha256": "63a121f25284982add186ceed23ca2dcf9f42d026870d71206f046043f7d9b6c",
+      "bytes": 6999,
+      "source_sha256": "63a121f25284982add186ceed23ca2dcf9f42d026870d71206f046043f7d9b6c",
       "transformations": []
     },
     {
       "path": "agent-handoff/HEADLESS_ENGINE_PLAN_2026-10-25.md",
-      "sha256": "4a609a091b532b59a5658a13a25c76f279ac8692da9b009ea96a807a58fdbc2b",
-      "bytes": 2342,
-      "source_sha256": "4a609a091b532b59a5658a13a25c76f279ac8692da9b009ea96a807a58fdbc2b",
+      "sha256": "1b63d4c59d5923e7e563c32e7a385cca5c0252f6f264ac99359cfba24f71cdbb",
+      "bytes": 2988,
+      "source_sha256": "1b63d4c59d5923e7e563c32e7a385cca5c0252f6f264ac99359cfba24f71cdbb",
       "transformations": []
     },
     {
@@ -16324,6 +16338,20 @@
       "transformations": []
     },
     {
+      "path": "publication/headless-benchmark.json",
+      "sha256": "b037c0c0dcd5447b719527be97261c05580ec55d173e27156d2d6c464678b17a",
+      "bytes": 44154,
+      "source_sha256": "b037c0c0dcd5447b719527be97261c05580ec55d173e27156d2d6c464678b17a",
+      "transformations": []
+    },
+    {
+      "path": "publication/headless-cleanup.json",
+      "sha256": "c41fe9d814dca9e40035b0ad0a5fe2f0d44dacf2cfb2f684849ce91d58acdfab",
+      "bytes": 857,
+      "source_sha256": "c41fe9d814dca9e40035b0ad0a5fe2f0d44dacf2cfb2f684849ce91d58acdfab",
+      "transformations": []
+    },
+    {
       "path": "publication/headless-p0-checks.json",
       "sha256": "a4e32109e63005b9b30cfa9d6a3a350e20a6f7862553afea5f28a4707fd30f70",
       "bytes": 1338,
@@ -16338,24 +16366,54 @@
       "transformations": []
     },
     {
+      "path": "publication/headless-p3-native.json",
+      "sha256": "4344a0a0ea28a40d1122b298d74b65ca219fad9d23626be2de7d17a582f128f2",
+      "bytes": 4594,
+      "source_sha256": "4344a0a0ea28a40d1122b298d74b65ca219fad9d23626be2de7d17a582f128f2",
+      "transformations": []
+    },
+    {
+      "path": "publication/headless-release-checks.json",
+      "sha256": "4d08899585fed3fe30e54fc937533028e46e1bea81ebd973d2e77bb8a046fea4",
+      "bytes": 2654,
+      "source_sha256": "4d08899585fed3fe30e54fc937533028e46e1bea81ebd973d2e77bb8a046fea4",
+      "transformations": []
+    },
+    {
+      "path": "publication/headless-rich-benchmark.json",
+      "sha256": "993896e01ac26d1d44fae82329c779adda66e7f0d06ff51cc4e511cfd5550634",
+      "bytes": 10902,
+      "source_sha256": "993896e01ac26d1d44fae82329c779adda66e7f0d06ff51cc4e511cfd5550634",
+      "transformations": []
+    },
+    {
+      "path": "publication/headless-tests.xml",
+      "sha256": "2ef06f935ec606624c0b3d7d3655dc72767429a09edae62331da1952d1a08362",
+      "bytes": 3584,
+      "source_sha256": "27eaabfe00ea8571c6d031a5f33249e0d69739dff5a9c954b632c889047edae3",
+      "transformations": [
+        "remove local hostname attribute only"
+      ]
+    },
+    {
       "path": "tools/HEADLESS_NATIVE.md",
-      "sha256": "8b2e718c86792fb9961af4a8ae56c59a7f2880192d52ff4d024a6e9dbafa7301",
-      "bytes": 3336,
-      "source_sha256": "8b2e718c86792fb9961af4a8ae56c59a7f2880192d52ff4d024a6e9dbafa7301",
+      "sha256": "a01026cf07719e0eea1cb80d97352c24462d3b04320cce72bd740ddbad3e04e8",
+      "bytes": 4347,
+      "source_sha256": "a01026cf07719e0eea1cb80d97352c24462d3b04320cce72bd740ddbad3e04e8",
       "transformations": []
     },
     {
       "path": "tools/headless_native.py",
-      "sha256": "78c2997820b271da6b9154c6c5427d57101df5cf65eb278fbb59bf80ef6b46ef",
-      "bytes": 23594,
-      "source_sha256": "78c2997820b271da6b9154c6c5427d57101df5cf65eb278fbb59bf80ef6b46ef",
+      "sha256": "48d271bf42a9db51bad626ff98c64293ea02dc6cac53b852c63044aa8acb24c5",
+      "bytes": 26772,
+      "source_sha256": "48d271bf42a9db51bad626ff98c64293ea02dc6cac53b852c63044aa8acb24c5",
       "transformations": []
     },
     {
       "path": "tools/tests/test_headless_native.py",
-      "sha256": "834a64672f504b42d1c2d3189fe912a6a4564a04c023916af8f17a664e25732b",
-      "bytes": 5873,
-      "source_sha256": "834a64672f504b42d1c2d3189fe912a6a4564a04c023916af8f17a664e25732b",
+      "sha256": "2e9164813d27e0b9f06793183daccdf824d9ff1343ebc330c0f4022b18b04bf7",
+      "bytes": 8582,
+      "source_sha256": "2e9164813d27e0b9f06793183daccdf824d9ff1343ebc330c0f4022b18b04bf7",
       "transformations": []
     },
     {
@@ -16380,7 +16438,7 @@
       "transformations": []
     }
   ],
-  "file_count": 2338,
+  "file_count": 2346,
   "source_bytes": 33136316,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,

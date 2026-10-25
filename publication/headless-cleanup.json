@@ -1,0 +1,18 @@
+{
+  "schema": "headless-cleanup-verification.v1",
+  "task_processes_checked": 30,
+  "owned_processes_running": 0,
+  "task_listeners_remaining": 0,
+  "frozen_input_identity_reverified": true,
+  "identity": {
+    "libg": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "probe": "0f0b8488946339c3edf7fdaa8c69fda8f52621922d74230fbf4b4927cb0a7700",
+    "bootstrap": "18f035da64c80674e73bdbec09dd0c8137d234e83b6169afae633e0c6fd1bc6b",
+    "dex": "214cc0edaf900d6268d2bfb35202b11374aac178d302d23e5ea31618eadfe909",
+    "verifier": "278d3a787b5f9632bc2a4dfb234eeace84c92b17bdceac8d9d48f175fa67ab02",
+    "qemu": "e4f8d99e9ff69c3cefffab71cee358ce2af1ecba1282d04c3eeb44ef76f5a71e",
+    "property_shim": "68d3e8123c1562a12d2cec272b7099fffbd81e64203c9135d8cc87100c8567c3"
+  },
+  "protocol_cleanup_reaped": true,
+  "training_admissible": false
+}

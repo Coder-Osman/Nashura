@@ -60,6 +60,8 @@ class FakeEngine:
             events.append({"sequence": 1, "kind": "card_play", "tick": 90,
                            "deploymentContext": {"owner": 0, "playedCardGlobalId": 26000021,
                                                  "cardParameter": 99}})
+        if command == "observe":
+            return ordinary
         return {"ok": True, "tick": self.tick, "ordinary": ordinary,
                 "rich": {"combatEvents": {"events": events,
                                            "epochFirstSequence": 1,
@@ -80,6 +82,56 @@ def test_sequence_rebasing_preserves_relative_order_and_causes():
 
     assert MODULE.semantic_capture(capture(1), {}) == MODULE.semantic_capture(capture(7), {})
     assert MODULE.semantic_capture(capture(1), {}) != MODULE.semantic_capture(capture(7, 1), {})
+
+
+def test_deployment_rebase_keeps_links_and_gaps():
+    def capture(base):
+        return {"rich": {"events": [{"deploymentSequence": base},
+                                    {"deploymentSequence": base + 2},
+                                    {"deploymentSequence": base}]}}
+
+    left, right = capture(1), capture(100)
+    assert MODULE.semantic_capture(left, {}) == MODULE.semantic_capture(right, {})
+    assert right["rich"]["events"][0]["deploymentSequence"] == 100
+    changed = capture(100)
+    changed["rich"]["events"][1]["deploymentSequence"] += 1
+    assert MODULE.semantic_capture(left, {}) != MODULE.semantic_capture(changed, {})
+
+
+def test_protocol_check_fails_if_invalid_step_accepted():
+    class ProtocolEngine:
+        def request(self, command):
+            return {"ok": True}
+
+    with pytest.raises(ValueError, match="invalid zero tick"):
+        MODULE.protocol_check(ProtocolEngine(), fixture())
+
+
+@pytest.mark.parametrize("failure", [None, "mutated", "stale"])
+def test_protocol_check_rejection_and_reset_contract(failure):
+    class ProtocolEngine:
+        def __init__(self):
+            self.changed = False
+
+        def request(self, command):
+            if command == "state-digest":
+                return {"digest": int(self.changed)}
+            if command == "step 0":
+                self.changed = failure == "mutated"
+                raise ValueError("invalid step")
+            if command == "snapshot-create":
+                return {"handle": 1}
+            if command.startswith("restore ") and failure != "stale":
+                raise ValueError("stale snapshot")
+            return {"ok": True}
+
+    if failure is None:
+        assert MODULE.protocol_check(ProtocolEngine(), fixture()) == {
+            "invalid_step_rejected": True, "rejection_preserved_state": True,
+            "reset_invalidated_snapshot": True}
+    else:
+        with pytest.raises(ValueError, match="changed state|survived reset"):
+            MODULE.protocol_check(ProtocolEngine(), fixture())
 
 
 @pytest.mark.parametrize("tick", [True, -1, 20, 90.5])
@@ -113,6 +165,14 @@ def test_segmented_stepping_keeps_boundary_trajectory():
     assert first["trace_sha256"] == second["trace_sha256"]
 
 
+def test_ordinary_mode_still_requires_final_native_receipts():
+    result = MODULE.play(FakeEngine(), fixture(), capture_mode="ordinary")
+    assert result["capture_mode"] == "ordinary"
+    assert result["actions"] == 1
+    with pytest.raises(ValueError):
+        MODULE.play(FakeEngine(missing_receipt=True), fixture(), capture_mode="ordinary")
+
+
 def test_instance_state_isolation():
     first, second = FakeEngine(), FakeEngine()
     MODULE.play(first, fixture())
@@ -132,6 +192,14 @@ def test_digest_mismatch_rejected(tmp_path):
     path.write_bytes(b"second")
     with pytest.raises(ValueError):
         MODULE.require_sha(path, expected)
+
+
+def test_atomic_report_replaces_complete_json(tmp_path):
+    path = tmp_path / "result.json"
+    MODULE.atomic_json(path, {"step": 1})
+    MODULE.atomic_json(path, {"step": 2})
+    assert path.read_text().strip() == '{\n  "step": 2\n}'
+    assert list(tmp_path.glob("*.new")) == []
 
 
 def test_frozen_output_rejected(tmp_path):

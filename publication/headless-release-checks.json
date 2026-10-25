@@ -1,0 +1,93 @@
+{
+  "schema": "headless-release-checks.v1",
+  "execution_date": "2026-10-26",
+  "branch": "codex/headless-engine-plan-20261025",
+  "checks": {
+    "native_tools": {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python -m pytest -q -p no:cacheprovider tools/tests/test_headless_native.py tools/tests/test_headless_trace_verifier.py --junitxml=publication/headless-tests.xml",
+      "exit_code": 0,
+      "passed": 27,
+      "seconds": 0.04,
+      "log_sha256": "44710deb75a68e9f5d8930270f4d8d486540dd7dc5c9acb9400795c40b88990f"
+    },
+    "main_engine": {
+      "command": "python tools/run_main_engine_checks.py",
+      "exit_code": 0,
+      "passed": 211,
+      "seconds": 22.04,
+      "log_sha256": "bd5c43c8b2aeb71fa342e528d94c3c7abc821bff74f52fb1dfcc3d558ee66bcd"
+    },
+    "public_checks": {
+      "command": "python tools/run_public_checks.py",
+      "exit_code": 0,
+      "primary": {
+        "passed": 794,
+        "skipped": 27,
+        "seconds": 48.45
+      },
+      "additional_groups": [
+        {
+          "passed": 23,
+          "skipped": 0
+        },
+        {
+          "passed": 82,
+          "skipped": 0
+        },
+        {
+          "passed": 15,
+          "skipped": 3
+        },
+        {
+          "passed": 25,
+          "skipped": 4
+        },
+        {
+          "passed": 31,
+          "skipped": 3
+        },
+        {
+          "passed": 31,
+          "skipped": 2
+        },
+        {
+          "passed": 38,
+          "skipped": 3
+        },
+        {
+          "passed": 65,
+          "skipped": 0
+        }
+      ],
+      "overlapping_scopes_not_summed": true,
+      "log_sha256": "d51a14f1cc930984826cadcc6ed62d0d957ababe2cf95e541c266c9875f9acb6"
+    },
+    "source_manifest": {
+      "command": "python tools/check_public_snapshot.py",
+      "exit_code": 0,
+      "log_sha256": "8e02c8f24867105668d4fc7e99c6978f34b64f2430da4eeba5c888ff11ba8e21",
+      "verified_files": 2346
+    },
+    "credential_scan": {
+      "command": "gitleaks dir . --config .gitleaks.toml --redact",
+      "exit_code": 0,
+      "log_sha256": "c17685dcaa062696027a65df3a2a87e3e3ab2cf99273d9b218c9ba130555bc91",
+      "leaks_found": 0,
+      "bytes_scanned_approx": 32213616
+    },
+    "whitespace": {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  },
+  "training_admissible": false,
+  "main_commit": "0012201830cfbfcbfeb3d9dccd91a855028da869",
+  "native_tools_xml": {
+    "path": "publication/headless-tests.xml",
+    "raw_source_sha256": "27eaabfe00ea8571c6d031a5f33249e0d69739dff5a9c954b632c889047edae3",
+    "transformations": [
+      "remove local hostname attribute only"
+    ],
+    "assertions_unchanged": true
+  }
+}

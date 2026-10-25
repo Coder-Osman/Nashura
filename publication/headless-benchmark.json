@@ -1,0 +1,1124 @@
+{
+  "schema": "headless-native-benchmark.v1",
+  "identity": {
+    "libg": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "probe": "0f0b8488946339c3edf7fdaa8c69fda8f52621922d74230fbf4b4927cb0a7700",
+    "bootstrap": "18f035da64c80674e73bdbec09dd0c8137d234e83b6169afae633e0c6fd1bc6b",
+    "dex": "214cc0edaf900d6268d2bfb35202b11374aac178d302d23e5ea31618eadfe909",
+    "verifier": "278d3a787b5f9632bc2a4dfb234eeace84c92b17bdceac8d9d48f175fa67ab02"
+  },
+  "runner_sha256": "ae43d50fe7e0f1d137169dc1288c0fa26298f51b98296bd4618b7506b03946d2",
+  "fixture_sha256": "51bc65212c77803858350b38f13a23bee042d2770388c2e0f40e89158fe8b3d8",
+  "training_admissible": false,
+  "android_emulator_started": false,
+  "observation_ticks": 250,
+  "levels": [
+    {
+      "summary": {
+        "concurrency": 1,
+        "repetitions": 3,
+        "completed_matches": 3,
+        "matches_per_second": 0.15740551173090192,
+        "seconds_per_match": 6.353017686633393,
+        "ticks_per_second": 566.8172477429779,
+        "game_seconds_per_second": 28.340862387148892,
+        "mean_match_latency_seconds": 6.343627571089503,
+        "p95_match_latency_seconds": 6.502829823992215,
+        "round_seconds_stdev": 0.13887782197074672,
+        "round_throughput_median": 0.15921732180836126,
+        "cpu_core_equivalents": 0.8919645664751109,
+        "max_process_peak_rss_kib": 372068,
+        "scaling_efficiency": 1,
+        "complete_fraction": 1,
+        "rejected_fraction": 0
+      },
+      "rounds": [
+        {
+          "seconds": 6.513129330938682,
+          "matches": [
+            {
+              "seconds": 6.474964607041329,
+              "reset_seconds": 0.02786521695088595,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.789999999999999,
+              "peak_rss_kib": 371528,
+              "timings_seconds": {
+                "capture": 4.130458298837766,
+                "step": 2.273953053751029,
+                "inject": 0.0232471723575145
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 6.265200069989078,
+          "matches": [
+            {
+              "seconds": 6.206114742089994,
+              "reset_seconds": 0.050011806073598564,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.600000000000001,
+              "peak_rss_kib": 371808,
+              "timings_seconds": {
+                "capture": 3.9780017050215974,
+                "step": 2.1653232680400833,
+                "inject": 0.017155464040115476
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 6.28072365897242,
+          "matches": [
+            {
+              "seconds": 6.221764280111529,
+              "reset_seconds": 0.05016206100117415,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.609999999999999,
+              "peak_rss_kib": 372068,
+              "timings_seconds": {
+                "capture": 3.9798105199588463,
+                "step": 2.1791152430232614,
+                "inject": 0.017534323153086007
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        }
+      ],
+      "startup_seconds": [
+        36.24670859100297
+      ],
+      "attestation_sha256": [
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4"
+      ]
+    },
+    {
+      "summary": {
+        "concurrency": 2,
+        "repetitions": 3,
+        "completed_matches": 6,
+        "matches_per_second": 0.3003827965848488,
+        "seconds_per_match": 3.329085458186455,
+        "ticks_per_second": 1081.6784505020405,
+        "game_seconds_per_second": 54.08392252510202,
+        "mean_match_latency_seconds": 6.552993307025948,
+        "p95_match_latency_seconds": 6.816108878934756,
+        "round_seconds_stdev": 0.14601824094617288,
+        "round_throughput_median": 0.30365956335088795,
+        "cpu_core_equivalents": 1.6801411088979201,
+        "max_process_peak_rss_kib": 371828,
+        "scaling_efficiency": 0.9541686097319726,
+        "complete_fraction": 1,
+        "rejected_fraction": 0
+      },
+      "rounds": [
+        {
+          "seconds": 6.826192307053134,
+          "matches": [
+            {
+              "seconds": 6.704647504957393,
+              "reset_seconds": 0.11146137397736311,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.729999999999997,
+              "peak_rss_kib": 369132,
+              "timings_seconds": {
+                "capture": 4.3538698992924765,
+                "step": 2.29833570192568,
+                "inject": 0.02257201191969216
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 6.522582427016459,
+              "reset_seconds": 0.10596761805936694,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.729999999999997,
+              "peak_rss_kib": 371056,
+              "timings_seconds": {
+                "capture": 3.959016091073863,
+                "step": 2.4914927893551067,
+                "inject": 0.024002149933949113
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 6.561997330980375,
+          "matches": [
+            {
+              "seconds": 6.309246125048958,
+              "reset_seconds": 0.04818689706735313,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.529999999999994,
+              "peak_rss_kib": 369492,
+              "timings_seconds": {
+                "capture": 3.890350962523371,
+                "step": 2.36884563555941,
+                "inject": 0.018722925102338195
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 6.4932924510212615,
+              "reset_seconds": 0.05881389300338924,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.509999999999998,
+              "peak_rss_kib": 371568,
+              "timings_seconds": {
+                "capture": 4.295403217780404,
+                "step": 2.135029449011199,
+                "inject": 0.01798285369295627
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 6.586323111085221,
+          "matches": [
+            {
+              "seconds": 6.52829645993188,
+              "reset_seconds": 0.04841754701919854,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.530000000000001,
+              "peak_rss_kib": 369752,
+              "timings_seconds": {
+                "capture": 4.280705748242326,
+                "step": 2.1887134396238253,
+                "inject": 0.017537057516165078
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 6.33781274408102,
+              "reset_seconds": 0.04923480097204447,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.530000000000001,
+              "peak_rss_kib": 371828,
+              "timings_seconds": {
+                "capture": 3.9049154811073095,
+                "step": 2.360206123092212,
+                "inject": 0.020575644681230187
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        }
+      ],
+      "startup_seconds": [
+        36.46859105001204,
+        36.35165672702715
+      ],
+      "attestation_sha256": [
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4",
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4"
+      ]
+    },
+    {
+      "summary": {
+        "concurrency": 4,
+        "repetitions": 3,
+        "completed_matches": 12,
+        "matches_per_second": 0.5120794116272368,
+        "seconds_per_match": 1.9528221156603347,
+        "ticks_per_second": 1843.9979612696798,
+        "game_seconds_per_second": 92.19989806348399,
+        "mean_match_latency_seconds": 7.521820621196336,
+        "p95_match_latency_seconds": 7.954945835983381,
+        "round_seconds_stdev": 0.15523185400010386,
+        "round_throughput_median": 0.5140282267521731,
+        "cpu_core_equivalents": 2.897516004124114,
+        "max_process_peak_rss_kib": 372560,
+        "scaling_efficiency": 0.8133123897571644,
+        "complete_fraction": 1,
+        "rejected_fraction": 0
+      },
+      "rounds": [
+        {
+          "seconds": 7.979194304905832,
+          "matches": [
+            {
+              "seconds": 7.843842115020379,
+              "reset_seconds": 0.11110372096300125,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.75,
+              "peak_rss_kib": 371960,
+              "timings_seconds": {
+                "capture": 5.243149482877925,
+                "step": 2.528568296926096,
+                "inject": 0.023693846887908876
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 7.6664552229922265,
+              "reset_seconds": 0.1122932720463723,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.68,
+              "peak_rss_kib": 371324,
+              "timings_seconds": {
+                "capture": 5.214785865275189,
+                "step": 2.3475790662923828,
+                "inject": 0.03250040486454964
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 7.237453775014728,
+              "reset_seconds": 0.11029182898346335,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.739999999999995,
+              "peak_rss_kib": 369476,
+              "timings_seconds": {
+                "capture": 3.8803649145411327,
+                "step": 3.0317313759587705,
+                "inject": 0.03595755703281611
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 7.481789653887972,
+              "reset_seconds": 0.10822465608362108,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.969999999999999,
+              "peak_rss_kib": 369376,
+              "timings_seconds": {
+                "capture": 4.6653043132973835,
+                "step": 2.7067322650691494,
+                "inject": 0.03442595584783703
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 7.781673830002546,
+          "matches": [
+            {
+              "seconds": 7.536895459052175,
+              "reset_seconds": 0.06392927002161741,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.469999999999999,
+              "peak_rss_kib": 372292,
+              "timings_seconds": {
+                "capture": 5.024221679777838,
+                "step": 2.4256631557364017,
+                "inject": 0.02396761125419289
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 7.352995660970919,
+              "reset_seconds": 0.06385445804335177,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.539999999999999,
+              "peak_rss_kib": 372192,
+              "timings_seconds": {
+                "capture": 4.79653979127761,
+                "step": 2.480576188652776,
+                "inject": 0.01975668896920979
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 7.102803759975359,
+              "reset_seconds": 0.06252461799886078,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.689999999999998,
+              "peak_rss_kib": 370336,
+              "timings_seconds": {
+                "capture": 4.236564470804296,
+                "step": 2.7816824967740104,
+                "inject": 0.03037637984380126
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 7.710662931087427,
+              "reset_seconds": 0.060014317044988275,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.719999999999999,
+              "peak_rss_kib": 369720,
+              "timings_seconds": {
+                "capture": 5.128567531006411,
+                "step": 2.4739609891548753,
+                "inject": 0.0350989360595122
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 7.672997253015637,
+          "matches": [
+            {
+              "seconds": 7.611639966024086,
+              "reset_seconds": 0.05089402792509645,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.550000000000004,
+              "peak_rss_kib": 372560,
+              "timings_seconds": {
+                "capture": 4.691023579915054,
+                "step": 2.7883660938823596,
+                "inject": 0.08595800772309303
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 7.011077600065619,
+              "reset_seconds": 0.04868226801045239,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.6299999999999955,
+              "peak_rss_kib": 372468,
+              "timings_seconds": {
+                "capture": 3.9142020997824147,
+                "step": 3.010112864547409,
+                "inject": 0.027104066452011466
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 7.407944496022537,
+              "reset_seconds": 0.048789342981763184,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.509999999999998,
+              "peak_rss_kib": 370600,
+              "timings_seconds": {
+                "capture": 4.627736102906056,
+                "step": 2.240159782813862,
+                "inject": 0.022769064991734922
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 7.40974430507049,
+              "reset_seconds": 0.04794072906952351,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.649999999999999,
+              "peak_rss_kib": 369980,
+              "timings_seconds": {
+                "capture": 5.101222833618522,
+                "step": 2.210588047397323,
+                "inject": 0.023621941567398608
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        }
+      ],
+      "startup_seconds": [
+        36.574099885998294,
+        36.37992958596442,
+        36.391091401921585,
+        36.527525575016625
+      ],
+      "attestation_sha256": [
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4",
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4",
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4",
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4"
+      ]
+    },
+    {
+      "summary": {
+        "concurrency": 8,
+        "repetitions": 3,
+        "completed_matches": 24,
+        "matches_per_second": 0.8024567665160623,
+        "seconds_per_match": 1.2461730547074694,
+        "ticks_per_second": 2889.6468162243405,
+        "game_seconds_per_second": 144.48234081121703,
+        "mean_match_latency_seconds": 9.14527261952268,
+        "p95_match_latency_seconds": 10.066038438933901,
+        "round_seconds_stdev": 0.15261386911099376,
+        "round_throughput_median": 0.7998011888600057,
+        "cpu_core_equivalents": 4.578684566946232,
+        "max_process_peak_rss_kib": 372220,
+        "scaling_efficiency": 0.6372527538043985,
+        "complete_fraction": 1,
+        "rejected_fraction": 0
+      },
+      "rounds": [
+        {
+          "seconds": 10.002485756995156,
+          "matches": [
+            {
+              "seconds": 9.879679500008933,
+              "reset_seconds": 0.11240789492148906,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.799999999999997,
+              "peak_rss_kib": 371552,
+              "timings_seconds": {
+                "capture": 6.718151608016342,
+                "step": 2.910089115262963,
+                "inject": 0.04330330027732998
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 8.102266373927705,
+              "reset_seconds": 0.11405606591142714,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.799999999999997,
+              "peak_rss_kib": 371608,
+              "timings_seconds": {
+                "capture": 5.084848666912876,
+                "step": 2.6968735482078046,
+                "inject": 0.06039877817966044
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 9.490087309968658,
+              "reset_seconds": 0.11679871892556548,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.919999999999995,
+              "peak_rss_kib": 371612,
+              "timings_seconds": {
+                "capture": 5.764146148809232,
+                "step": 3.149265863816254,
+                "inject": 0.4986165398731828
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 8.881430745008402,
+              "reset_seconds": 0.11150430305860937,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.850000000000001,
+              "peak_rss_kib": 369584,
+              "timings_seconds": {
+                "capture": 5.678140070522204,
+                "step": 3.014147094101645,
+                "inject": 0.03494787507224828
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 9.121393868001178,
+              "reset_seconds": 0.11042619589716196,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.789999999999999,
+              "peak_rss_kib": 369224,
+              "timings_seconds": {
+                "capture": 5.999448839807883,
+                "step": 2.8455192550318316,
+                "inject": 0.20471957558766007
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 9.3071980640525,
+              "reset_seconds": 0.11279638600535691,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.780000000000001,
+              "peak_rss_kib": 369352,
+              "timings_seconds": {
+                "capture": 6.456488546682522,
+                "step": 2.7572330327238888,
+                "inject": 0.0348313266877085
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 9.69023168599233,
+              "reset_seconds": 0.11384605197235942,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.789999999999999,
+              "peak_rss_kib": 371144,
+              "timings_seconds": {
+                "capture": 6.717971583246253,
+                "step": 2.761055743554607,
+                "inject": 0.030833312892355025
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 7.947107729036361,
+              "reset_seconds": 0.10968187102116644,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.910000000000004,
+              "peak_rss_kib": 369988,
+              "timings_seconds": {
+                "capture": 4.682262102724053,
+                "step": 2.9971960600232705,
+                "inject": 0.1957393802003935
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 10.102731143007986,
+          "matches": [
+            {
+              "seconds": 7.713488155044615,
+              "reset_seconds": 0.06329915195237845,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.720000000000006,
+              "peak_rss_kib": 371896,
+              "timings_seconds": {
+                "capture": 4.432985141058452,
+                "step": 3.1428783503361046,
+                "inject": 0.056351164006628096
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 8.968258340028115,
+              "reset_seconds": 0.06072312593460083,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.649999999999999,
+              "peak_rss_kib": 371960,
+              "timings_seconds": {
+                "capture": 5.803670742898248,
+                "step": 2.8836688532028347,
+                "inject": 0.10658380156382918
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 10.005173900979571,
+              "reset_seconds": 0.061637535924091935,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.579999999999998,
+              "peak_rss_kib": 371948,
+              "timings_seconds": {
+                "capture": 7.03916316491086,
+                "step": 2.63148707523942,
+                "inject": 0.02517276245635003
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 9.473353615961969,
+              "reset_seconds": 0.06514879898168147,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.619999999999997,
+              "peak_rss_kib": 369936,
+              "timings_seconds": {
+                "capture": 6.148677580873482,
+                "step": 3.0142112482571974,
+                "inject": 0.04701128206215799
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 8.265617846045643,
+              "reset_seconds": 0.06229984399396926,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.670000000000002,
+              "peak_rss_kib": 369568,
+              "timings_seconds": {
+                "capture": 5.241932266857475,
+                "step": 2.775286079850048,
+                "inject": 0.15052768751047552
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 9.660126817063428,
+              "reset_seconds": 0.06369603599887341,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.609999999999999,
+              "peak_rss_kib": 369700,
+              "timings_seconds": {
+                "capture": 6.632482842775062,
+                "step": 2.794991693459451,
+                "inject": 0.13198104174807668
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 9.998240618035197,
+              "reset_seconds": 0.06779782089870423,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.539999999999999,
+              "peak_rss_kib": 371484,
+              "timings_seconds": {
+                "capture": 7.555302505847067,
+                "step": 2.363573506125249,
+                "inject": 0.02444967266637832
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 9.259931442909874,
+              "reset_seconds": 0.06474180798977613,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.6100000000000065,
+              "peak_rss_kib": 370328,
+              "timings_seconds": {
+                "capture": 5.95065086777322,
+                "step": 3.120615728199482,
+                "inject": 0.05387986288405955
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 9.802936412976123,
+          "matches": [
+            {
+              "seconds": 8.77088050590828,
+              "reset_seconds": 0.0478900809539482,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.719999999999999,
+              "peak_rss_kib": 372156,
+              "timings_seconds": {
+                "capture": 5.494584086118266,
+                "step": 3.1603357100393623,
+                "inject": 0.03749021072871983
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 9.55853079794906,
+              "reset_seconds": 0.04762682307045907,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.539999999999999,
+              "peak_rss_kib": 372220,
+              "timings_seconds": {
+                "capture": 7.047527683083899,
+                "step": 2.341679606353864,
+                "inject": 0.10907225625123829
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 9.166688321041875,
+              "reset_seconds": 0.048457139055244625,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.719999999999999,
+              "peak_rss_kib": 372220,
+              "timings_seconds": {
+                "capture": 6.075927830650471,
+                "step": 2.979016129625961,
+                "inject": 0.04914295894559473
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 8.980064011993818,
+              "reset_seconds": 0.04975378606468439,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.68,
+              "peak_rss_kib": 370196,
+              "timings_seconds": {
+                "capture": 5.61813443468418,
+                "step": 3.256437274394557,
+                "inject": 0.03588775685057044
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 7.894399068085477,
+              "reset_seconds": 0.051986797945573926,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.699999999999996,
+              "peak_rss_kib": 369828,
+              "timings_seconds": {
+                "capture": 4.540599978878163,
+                "step": 3.171515363152139,
+                "inject": 0.11757550609763712
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 8.417015005019493,
+              "reset_seconds": 0.04807339096441865,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.690000000000005,
+              "peak_rss_kib": 369956,
+              "timings_seconds": {
+                "capture": 5.085295306635089,
+                "step": 3.1692661601118743,
+                "inject": 0.07789716497063637
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 9.738586834049784,
+              "reset_seconds": 0.05014606995973736,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.640000000000001,
+              "peak_rss_kib": 371752,
+              "timings_seconds": {
+                "capture": 7.023212237400003,
+                "step": 2.4594421793008223,
+                "inject": 0.021909828181378543
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 9.39168475707993,
+              "reset_seconds": 0.05031185795087367,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.609999999999999,
+              "peak_rss_kib": 370592,
+              "timings_seconds": {
+                "capture": 6.482367246760987,
+                "step": 2.8092725657625124,
+                "inject": 0.04398987058084458
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        }
+      ],
+      "startup_seconds": [
+        36.315845320001245,
+        36.49581194703933,
+        36.56147184909787,
+        36.636340540018864,
+        36.62258111999836,
+        36.53386407904327,
+        36.678310876945034,
+        36.65791107295081
+      ],
+      "attestation_sha256": [
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4",
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4",
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4",
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4",
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4",
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4",
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4",
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4"
+      ]
+    }
+  ],
+  "capture_mode": "ordinary",
+  "snapshot_check": {
+    "roundtrip": true,
+    "handles_remaining": 0
+  },
+  "status": "NATIVE_HEADLESS_FEASIBLE",
+  "raw_results_sha256": "0932cc29cfd7d5691696893622edc4e65eb6c2046fc0ea6f86e80ecacd5adb46",
+  "source_variant": "p4-ordinary-v10",
+  "host": {
+    "architecture": "x86_64",
+    "logical_cpus": 64,
+    "cpu_model": "Intel(R) Xeon(R) Gold 6130 CPU @ 2.10GHz"
+  }
+}

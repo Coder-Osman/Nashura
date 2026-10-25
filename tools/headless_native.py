@@ -30,6 +30,14 @@ def digest(path):
     return result.hexdigest()
 
 
+def atomic_json(path, value):
+    path = Path(path)
+    temporary = path.with_name(path.name + "." + str(time.time_ns()) + ".new")
+    with temporary.open("x") as output:
+        output.write(json.dumps(value, indent=2) + "\n")
+    temporary.replace(path)
+
+
 def canonical(value):
     if isinstance(value, dict):
         return {key: canonical(item) for key, item in value.items()
@@ -249,6 +257,9 @@ class NativeProcess:
             except subprocess.TimeoutExpired:
                 self.process.kill()
                 self.process.wait(timeout=10)
+        if self.process is not None:
+            atomic_json(self.output / "cleanup.json", {"pid": self.process.pid,
+                "returncode": self.process.poll(), "reaped": self.process.poll() is not None})
         for handle in self.handles:
             handle.close()
 
@@ -271,7 +282,7 @@ def validate_fixture(fixture):
             raise ValueError("unsupported native command")
 
 
-def play(engine, fixture, chunk=20, progress=False, observation_ticks=20):
+def play(engine, fixture, chunk=20, progress=False, observation_ticks=20, capture_mode="rich"):
     validate_fixture(fixture)
     if chunk < 1 or observation_ticks < 1:
         raise ValueError("positive step and observation intervals required")
@@ -291,7 +302,16 @@ def play(engine, fixture, chunk=20, progress=False, observation_ticks=20):
     timings = {"capture": 0.0, "step": 0.0, "inject": 0.0}
     while tick < limit:
         phase_start = time.perf_counter()
-        capture = engine.request("observe-atomic")
+        if capture_mode == "rich":
+            capture = engine.request("observe-atomic")
+        elif capture_mode == "ordinary":
+            ordinary = engine.request("observe")
+            capture = {"tick": ordinary["tick"], "ordinary": ordinary,
+                       "rich": {"combatEvents": {"events": []}}}
+            if ordinary.get("ended") or (tick > 0 and tick % 1000 == 0):
+                capture = engine.request("observe-atomic")
+        else:
+            raise ValueError("unsupported capture mode")
         timings["capture"] += time.perf_counter() - phase_start
         ordinary = capture["ordinary"]
         if ordinary["tick"] != tick or capture["tick"] != tick:
@@ -302,9 +322,11 @@ def play(engine, fixture, chunk=20, progress=False, observation_ticks=20):
         for event in combat.get("events", []):
             if event.get("kind") == "card_play":
                 receipts[event["sequence"]] = event
-        rows.append({"tick": tick, "state_sha256": object_sha(semantic_capture(capture, sequence_bases))})
-        with gzip.open(audit_path, "at", compresslevel=1) as audit:
-            audit.write(json.dumps(capture, separators=(",", ":")) + "\n")
+        semantic = semantic_capture(capture, sequence_bases) if capture_mode == "rich" else ordinary
+        rows.append({"tick": tick, "state_sha256": object_sha(semantic)})
+        if capture_mode == "rich":
+            with gzip.open(audit_path, "at", compresslevel=1) as audit:
+                audit.write(json.dumps(capture, separators=(",", ":")) + "\n")
         if ordinary.get("ended"):
             terminal = ordinary
             break
@@ -352,9 +374,10 @@ def play(engine, fixture, chunk=20, progress=False, observation_ticks=20):
     return {"seconds": elapsed, "reset_seconds": reset_seconds,
             "ticks": tick, "winner": terminal["winner"], "actions": len(sent),
             "trace_sha256": object_sha(rows), "terminal_sha256": object_sha(terminal),
-            "private_trace_file": audit_path.name,
+            "private_trace_file": audit_path.name if capture_mode == "rich" else None,
             "boundary_count": len(rows), "cpu_seconds": stats["cpu_seconds"] - cpu_start,
             "peak_rss_kib": stats["peak_rss_kib"], "timings_seconds": timings,
+            "capture_mode": capture_mode,
             "complete": True, "rejected": 0}
 
 
@@ -375,6 +398,30 @@ def snapshot_check(engine, fixture):
     if engine.request("status").get("snapshotHandles") != 0:
         raise ValueError("snapshot handle leak")
     return {"roundtrip": True, "handles_remaining": 0}
+
+
+def protocol_check(engine, fixture):
+    configured = "configure " + json.dumps(fixture["match"], separators=(",", ":"))
+    engine.request(configured)
+    before = engine.request("state-digest")
+    try:
+        engine.request("step 0")
+    except ValueError:
+        pass
+    else:
+        raise ValueError("invalid zero tick advance accepted")
+    if engine.request("state-digest") != before:
+        raise ValueError("rejected command changed state")
+    snapshot = engine.request("snapshot-create")
+    engine.request(configured)
+    try:
+        engine.request("restore " + str(snapshot["handle"]))
+    except ValueError:
+        pass
+    else:
+        raise ValueError("stale snapshot survived reset")
+    return {"invalid_step_rejected": True, "rejection_preserved_state": True,
+            "reset_invalidated_snapshot": True}
 
 
 def aggregate(rounds, concurrency, baseline=None):
@@ -406,12 +453,17 @@ def main(argv=None):
     parser.add_argument("--concurrency", default="1,2,4,8")
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--observation-ticks", type=int, default=20)
+    parser.add_argument("--capture-mode", choices=("rich", "ordinary"), default="rich")
+    parser.add_argument("--step-chunk", type=int)
+    parser.add_argument("--protocol-check", action="store_true")
     args = parser.parse_args(argv)
     if not sys.platform.startswith("linux"):
         parser.error("real native runtime requires a Linux host")
     levels = [int(value) for value in args.concurrency.split(",")]
     if levels != sorted(set(levels)) or not levels or levels[0] != 1 or levels[-1] > 8 or args.repeats < 2 or args.observation_ticks < 1:
         parser.error("use increasing concurrency 1..8 and at least two repetitions")
+    if args.step_chunk is not None and args.step_chunk < 1:
+        parser.error("step chunk must be positive")
     if shutil.disk_usage(args.output.parent).free < 5 * 1024 ** 3:
         raise RuntimeError("diagnostic disk headroom below 5 GiB")
     meminfo = dict(line.split(":", 1) for line in Path("/proc/meminfo").read_text().splitlines())
@@ -421,6 +473,8 @@ def main(argv=None):
     pins = {"libg": LIBG_SHA256, **{name: getattr(args, name + "_sha256")
                                     for name in ("probe", "bootstrap", "dex", "verifier")}}
     identities = verified_runtime(args.runtime, args.resident, pins)
+    identities["qemu"] = digest(args.runtime / "qemu/usr/bin/qemu-aarch64-static")
+    identities["property_shim"] = digest(args.runtime / "libpropertypath.so")
     fixture = json.loads(args.fixture.read_text())
     validate_fixture(fixture)
     args.output.mkdir(parents=False, exist_ok=False)
@@ -428,6 +482,12 @@ def main(argv=None):
               "runner_sha256": digest(__file__), "fixture_sha256": digest(args.fixture),
               "training_admissible": False, "android_emulator_started": False,
               "observation_ticks": args.observation_ticks, "levels": []}
+    report["capture_mode"] = args.capture_mode
+    report["step_chunk"] = args.step_chunk or args.observation_ticks
+    report["host"] = {"architecture": os.uname().machine, "logical_cpus": os.cpu_count(),
+                      "cpu_model": next((line.split(":", 1)[1].strip()
+                                         for line in Path("/proc/cpuinfo").read_text().splitlines()
+                                         if line.startswith("model name")), "unknown")}
     baseline = None
     expected_trace = None
     for concurrency in levels:
@@ -441,13 +501,17 @@ def main(argv=None):
             attestations = [engine.request("attest") for engine in engines]
             if concurrency == 1:
                 report["snapshot_check"] = snapshot_check(engines[0], fixture)
+                if args.protocol_check:
+                    report["protocol_check"] = protocol_check(engines[0], fixture)
             rounds = []
             for repeat in range(args.repeats):
                 started = time.perf_counter()
                 with ThreadPoolExecutor(max_workers=concurrency) as pool:
-                    matches = list(pool.map(lambda engine: play(engine, fixture, chunk=args.observation_ticks,
-                                                               observation_ticks=args.observation_ticks, progress=True), engines))
+                    matches = list(pool.map(lambda engine: play(engine, fixture, chunk=report["step_chunk"],
+                                                               observation_ticks=args.observation_ticks, progress=True,
+                                                               capture_mode=args.capture_mode), engines))
                 rounds.append({"seconds": time.perf_counter() - started, "matches": matches})
+                atomic_json(args.output / f"round-c{concurrency}-r{repeat}.json", rounds[-1])
                 for match in matches:
                     trace = (match["trace_sha256"], match["terminal_sha256"])
                     expected_trace = trace if expected_trace is None else expected_trace
@@ -461,12 +525,12 @@ def main(argv=None):
             report["levels"].append({"summary": summary, "rounds": rounds,
                                      "startup_seconds": [engine.startup_seconds for engine in engines],
                                      "attestation_sha256": [object_sha(value) for value in attestations]})
-            (args.output / "results.json").write_text(json.dumps(report, indent=2) + "\n")
+            atomic_json(args.output / "results.json", report)
         finally:
             for engine in engines:
                 engine.close()
     report["status"] = "NATIVE_HEADLESS_FEASIBLE"
-    (args.output / "results.json").write_text(json.dumps(report, indent=2) + "\n")
+    atomic_json(args.output / "results.json", report)
     print(json.dumps({"status": report["status"], "levels": [level["summary"] for level in report["levels"]]}))
 
 

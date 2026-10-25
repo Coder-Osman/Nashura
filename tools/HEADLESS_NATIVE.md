@@ -29,12 +29,18 @@ python tools/headless_native.py \
   --output "$NEW_EVIDENCE_DIR" --fixture "$ENGINEERING_FIXTURE" \
   --probe-sha256 "$PROBE_SHA256" --bootstrap-sha256 "$BOOTSTRAP_SHA256" \
   --dex-sha256 "$DEX_SHA256" --verifier-sha256 "$VERIFIER_SHA256" \
-  --concurrency 1,2,4,8 --repeats 3 --observation-ticks 250
+  --concurrency 1,2,4,8 --repeats 3 --observation-ticks 250 --capture-mode ordinary
 python -m pytest -q -p no:cacheprovider tools/tests/test_headless_native.py tools/tests/test_headless_trace_verifier.py
 python tools/verify_headless_traces.py "$TRACE_LEFT" "$TRACE_RIGHT" --output "$NEW_VERIFICATION"
 ```
 
 默认20tick观测用于细粒度检查；250tick是独立吞吐配置，不相互声称速度倍率。相同配置、动作流、观测周期才允许比较。基准计时包含reset和完整推进/观测，不含一次性启动；启动单列。CPU是子进程CPU秒/墙钟秒的核数等效，内存为每进程VmHWM；不是整机总体GPU/内存指标。
+
+`--capture-mode ordinary`在250tick决策边界只读取普通观测，每1000tick及终局仍抓取完整原生事件并逐条验收26动作。只在终局读事件会丢失保留窗口外的早期回执，已实际验证为拒收；不以缺失回执获得吞吐。ordinary与rich基准分别标注，前者不写逐边界大归档，后者保留完整私有capture用于逐字段对照。
+
+分段检查使用相同参数并附加 --step-chunk 5 --protocol-check --concurrency 1 --repeats 2：验证零tick拒绝不改变状态、reset使旧快照失效，并将完整局边界及终局SHA与250tick推进比较。本次两次完整局均一致。非法卡牌、延迟计划、FAIR观测及训练schema仍需单独验收。
+
+每轮结果原子写入，子进程回收单独记录。ordinary基准来自较早runner，保留真实producer SHA，不把后续报告/协议检查改动冒作同一源码身份。结果及限制见 agent-handoff/HEADLESS_ENGINE_BENCHMARK_2026-10-25.md。
 
 ## 证据语义
 

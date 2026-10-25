@@ -1,0 +1,289 @@
+{
+  "schema": "headless-native-benchmark.v1",
+  "identity": {
+    "libg": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "probe": "0f0b8488946339c3edf7fdaa8c69fda8f52621922d74230fbf4b4927cb0a7700",
+    "bootstrap": "18f035da64c80674e73bdbec09dd0c8137d234e83b6169afae633e0c6fd1bc6b",
+    "dex": "214cc0edaf900d6268d2bfb35202b11374aac178d302d23e5ea31618eadfe909",
+    "verifier": "278d3a787b5f9632bc2a4dfb234eeace84c92b17bdceac8d9d48f175fa67ab02"
+  },
+  "runner_sha256": "78c2997820b271da6b9154c6c5427d57101df5cf65eb278fbb59bf80ef6b46ef",
+  "fixture_sha256": "51bc65212c77803858350b38f13a23bee042d2770388c2e0f40e89158fe8b3d8",
+  "training_admissible": false,
+  "android_emulator_started": false,
+  "observation_ticks": 250,
+  "levels": [
+    {
+      "summary": {
+        "concurrency": 1,
+        "repetitions": 3,
+        "completed_matches": 3,
+        "matches_per_second": 0.01841611868702153,
+        "seconds_per_match": 54.30025821373177,
+        "ticks_per_second": 66.31644339196453,
+        "game_seconds_per_second": 3.3158221695982264,
+        "mean_match_latency_seconds": 54.28843960872231,
+        "p95_match_latency_seconds": 54.62746475008316,
+        "round_seconds_stdev": 0.29437964982302667,
+        "round_throughput_median": 0.01847151008651378,
+        "cpu_core_equivalents": 0.37366304815966694,
+        "max_process_peak_rss_kib": 372756,
+        "scaling_efficiency": 1,
+        "complete_fraction": 1,
+        "rejected_fraction": 0
+      },
+      "rounds": [
+        {
+          "seconds": 54.64008027804084,
+          "matches": [
+            {
+              "seconds": 54.59950729610864,
+              "reset_seconds": 0.02795745397452265,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "4a509d6e969c72fab8956be66b49f57dfef448496636d68db13197b4f6e11af0",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 20.400000000000006,
+              "peak_rss_kib": 372164,
+              "timings_seconds": {
+                "capture": 20.72622754261829,
+                "step": 2.9135590799851343,
+                "inject": 0.0418924605473876
+              },
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 54.12326892709825,
+          "matches": [
+            {
+              "seconds": 54.06319414405152,
+              "reset_seconds": 0.04852987302001566,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "4a509d6e969c72fab8956be66b49f57dfef448496636d68db13197b4f6e11af0",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 20.230000000000004,
+              "peak_rss_kib": 372480,
+              "timings_seconds": {
+                "capture": 20.554360660142265,
+                "step": 2.820712327840738,
+                "inject": 0.0352406365564093
+              },
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 54.13742543605622,
+          "matches": [
+            {
+              "seconds": 54.0773062040098,
+              "reset_seconds": 0.04882385500241071,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "4a509d6e969c72fab8956be66b49f57dfef448496636d68db13197b4f6e11af0",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 20.24000000000001,
+              "peak_rss_kib": 372756,
+              "timings_seconds": {
+                "capture": 20.58324358507525,
+                "step": 2.8373653147136793,
+                "inject": 0.035115834791213274
+              },
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        }
+      ],
+      "startup_seconds": [
+        36.385294490959495
+      ],
+      "attestation_sha256": [
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4"
+      ]
+    },
+    {
+      "summary": {
+        "concurrency": 2,
+        "repetitions": 3,
+        "completed_matches": 6,
+        "matches_per_second": 0.029243538370337767,
+        "seconds_per_match": 34.19558834967514,
+        "ticks_per_second": 105.3059816715863,
+        "game_seconds_per_second": 5.265299083579315,
+        "mean_match_latency_seconds": 67.50711926901324,
+        "p95_match_latency_seconds": 68.61828753910959,
+        "round_seconds_stdev": 0.21162519600255988,
+        "round_throughput_median": 0.029281521694054416,
+        "cpu_core_equivalents": 0.5956908766037804,
+        "max_process_peak_rss_kib": 371776,
+        "scaling_efficiency": 0.7939658422962569,
+        "complete_fraction": 1,
+        "rejected_fraction": 0
+      },
+      "rounds": [
+        {
+          "seconds": 68.63272063608747,
+          "matches": [
+            {
+              "seconds": 68.50491419702303,
+              "reset_seconds": 0.11337334208656102,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "4a509d6e969c72fab8956be66b49f57dfef448496636d68db13197b4f6e11af0",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 20.560000000000002,
+              "peak_rss_kib": 371060,
+              "timings_seconds": {
+                "capture": 30.34668680105824,
+                "step": 3.429605605546385,
+                "inject": 0.4350659118499607
+              },
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 66.81076519901399,
+              "reset_seconds": 0.10730224300641567,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "4a509d6e969c72fab8956be66b49f57dfef448496636d68db13197b4f6e11af0",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 20.409999999999997,
+              "peak_rss_kib": 371172,
+              "timings_seconds": {
+                "capture": 27.38294121006038,
+                "step": 3.464331937604584,
+                "inject": 0.6281330304918811
+              },
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 68.30246122099925,
+          "matches": [
+            {
+              "seconds": 68.22988741705194,
+              "reset_seconds": 0.06120602099690586,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "4a509d6e969c72fab8956be66b49f57dfef448496636d68db13197b4f6e11af0",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 20.400000000000006,
+              "peak_rss_kib": 371408,
+              "timings_seconds": {
+                "capture": 30.554291290114634,
+                "step": 3.292454209062271,
+                "inject": 0.313488662824966
+              },
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 66.43910871294793,
+              "reset_seconds": 0.06109130405820906,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "4a509d6e969c72fab8956be66b49f57dfef448496636d68db13197b4f6e11af0",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 20.220000000000006,
+              "peak_rss_kib": 371516,
+              "timings_seconds": {
+                "capture": 27.4357946094824,
+                "step": 3.3764186340849847,
+                "inject": 0.670910271932371
+              },
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 68.23834824096411,
+          "matches": [
+            {
+              "seconds": 68.17625909601338,
+              "reset_seconds": 0.05001494591124356,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "4a509d6e969c72fab8956be66b49f57dfef448496636d68db13197b4f6e11af0",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 20.400000000000006,
+              "peak_rss_kib": 371672,
+              "timings_seconds": {
+                "capture": 31.08455727994442,
+                "step": 3.2748506576754153,
+                "inject": 0.2850077988114208
+              },
+              "complete": true,
+              "rejected": 0
+            },
+            {
+              "seconds": 66.43837007100228,
+              "reset_seconds": 0.05042306496761739,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "4a509d6e969c72fab8956be66b49f57dfef448496636d68db13197b4f6e11af0",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 20.230000000000004,
+              "peak_rss_kib": 371776,
+              "timings_seconds": {
+                "capture": 27.202919531730004,
+                "step": 3.3730045831762254,
+                "inject": 0.6454282361082733
+              },
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        }
+      ],
+      "startup_seconds": [
+        36.416957099922,
+        37.06369188299868
+      ],
+      "attestation_sha256": [
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4",
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4"
+      ]
+    }
+  ],
+  "snapshot_check": {
+    "roundtrip": true,
+    "handles_remaining": 0
+  },
+  "raw_results_sha256": "3a52bf95a19c6ea35bf3ea10e1c9b71140b44ec5c24626a129751f8091addf9f",
+  "source_variant": "p4-v7",
+  "host": {
+    "architecture": "x86_64",
+    "logical_cpus": 64,
+    "cpu_model": "Intel(R) Xeon(R) Gold 6130 CPU @ 2.10GHz"
+  },
+  "status": "PARTIAL_OPERATOR_STOPPED",
+  "stop_reason": "Stopped only the owned diagnostic runner during concurrency-4 startup; completed levels 1 and 2 retained. Different capture modes are not a controlled speed comparison."
+}

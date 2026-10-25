@@ -1,0 +1,124 @@
+{
+  "schema": "headless-native-benchmark.v1",
+  "identity": {
+    "libg": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "probe": "0f0b8488946339c3edf7fdaa8c69fda8f52621922d74230fbf4b4927cb0a7700",
+    "bootstrap": "18f035da64c80674e73bdbec09dd0c8137d234e83b6169afae633e0c6fd1bc6b",
+    "dex": "214cc0edaf900d6268d2bfb35202b11374aac178d302d23e5ea31618eadfe909",
+    "verifier": "278d3a787b5f9632bc2a4dfb234eeace84c92b17bdceac8d9d48f175fa67ab02",
+    "qemu": "e4f8d99e9ff69c3cefffab71cee358ce2af1ecba1282d04c3eeb44ef76f5a71e",
+    "property_shim": "68d3e8123c1562a12d2cec272b7099fffbd81e64203c9135d8cc87100c8567c3"
+  },
+  "runner_sha256": "48d271bf42a9db51bad626ff98c64293ea02dc6cac53b852c63044aa8acb24c5",
+  "fixture_sha256": "51bc65212c77803858350b38f13a23bee042d2770388c2e0f40e89158fe8b3d8",
+  "training_admissible": false,
+  "android_emulator_started": false,
+  "observation_ticks": 250,
+  "levels": [
+    {
+      "summary": {
+        "concurrency": 1,
+        "repetitions": 2,
+        "completed_matches": 2,
+        "matches_per_second": 0.15736019274464966,
+        "seconds_per_match": 6.354847325477749,
+        "ticks_per_second": 566.6540540734834,
+        "game_seconds_per_second": 28.332702703674173,
+        "mean_match_latency_seconds": 6.344893429486547,
+        "p95_match_latency_seconds": 6.433503453969024,
+        "round_seconds_stdev": 0.12590186929604238,
+        "round_throughput_median": 0.15739108177240224,
+        "cpu_core_equivalents": 0.885937885152378,
+        "max_process_peak_rss_kib": 371664,
+        "scaling_efficiency": 1,
+        "complete_fraction": 1,
+        "rejected_fraction": 0
+      },
+      "rounds": [
+        {
+          "seconds": 6.443873391021043,
+          "matches": [
+            {
+              "seconds": 6.418423636932857,
+              "reset_seconds": 0.015079817036166787,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.720000000000006,
+              "peak_rss_kib": 371384,
+              "timings_seconds": {
+                "capture": 3.900287067051977,
+                "step": 2.4493123315041885,
+                "inject": 0.02070411725435406
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        },
+        {
+          "seconds": 6.265821259934455,
+          "matches": [
+            {
+              "seconds": 6.204299977980554,
+              "reset_seconds": 0.051983427023515105,
+              "ticks": 3601,
+              "winner": 1,
+              "actions": 26,
+              "trace_sha256": "5f60c3b420bec6e4aead27b5dc02535c6efadbff4908a9b6bcf300eca6a9b978",
+              "terminal_sha256": "fe457c3bf3c77b778e19bc5a55bf2567692262263611916f90ebebe437754037",
+              "boundary_count": 29,
+              "cpu_seconds": 5.539999999999999,
+              "peak_rss_kib": 371664,
+              "timings_seconds": {
+                "capture": 3.812577835051343,
+                "step": 2.3270663165021688,
+                "inject": 0.017114458954893053
+              },
+              "capture_mode": "ordinary",
+              "complete": true,
+              "rejected": 0
+            }
+          ]
+        }
+      ],
+      "startup_seconds": [
+        36.33161446091253
+      ],
+      "attestation_sha256": [
+        "625240aced234c2c51b6bdb994d9eebc7c053e88898fe9b5317da17d41f21cf4"
+      ]
+    }
+  ],
+  "capture_mode": "ordinary",
+  "step_chunk": 5,
+  "host": {
+    "architecture": "x86_64",
+    "logical_cpus": 64,
+    "cpu_model": "Intel(R) Xeon(R) Gold 6130 CPU @ 2.10GHz"
+  },
+  "snapshot_check": {
+    "roundtrip": true,
+    "handles_remaining": 0
+  },
+  "protocol_check": {
+    "invalid_step_rejected": true,
+    "rejection_preserved_state": true,
+    "reset_invalidated_snapshot": true
+  },
+  "status": "NATIVE_HEADLESS_FEASIBLE",
+  "raw_results_sha256": "f48230ad3d6fc629a2bda2ec7d71bd2e01b56325b329b9c1b97e6259ee27a498",
+  "ordinary_reference_sha256": "b037c0c0dcd5447b719527be97261c05580ec55d173e27156d2d6c464678b17a",
+  "segmented_boundary_comparison": {
+    "passed": true,
+    "step_chunk_ticks": 5,
+    "reference_step_chunk_ticks": 250,
+    "trace_and_terminal_sha256_match": true,
+    "complete_matches": 2,
+    "native_android_comparison": "NATIVE_PARITY_NOT_RUN"
+  }
+}
