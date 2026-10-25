@@ -1,0 +1,57 @@
+{
+  "schema": "FairFinalReservationMappingPublicEvidence/v1",
+  "status": "verified_limited_scope",
+  "attempt": "native-plugin-1792912707427676000",
+  "launch_sha256": "f58f44028512add7e945b5ea9447208e99caa147e15fedb11cc04e1e28974baa",
+  "receipt_sha256": "580bc59a89e4cb1580353ebdac944f1728e1c1be228458c580897c5bad2ffed9",
+  "verification_sha256": "d85290e97ca15f333bd2a7fae8763509362c46bcef0af4ac0629e9a62d16384f",
+  "mapping_runner_sha256": "9f0c17796c6c844c2886732015b3a3f8d32150f5fa4316570ae340683f106b37",
+  "mapping_auditor_sha256": "793ba13a278330774762f4ce6956f188b47d2e93c065016a4b612d9f1347beec",
+  "generated_parent_verifier_sha256": "0f3bced4e041ec2ee07c2373cef3a3abe86814deda1097b0f7473c64b7a8b0f1",
+  "library_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "archived_files": 62,
+  "compared_variants": 3,
+  "decision_groups_per_variant": 213,
+  "decisions_per_variant": 426,
+  "periodic_boundaries_per_variant": 20,
+  "terminal_tick": 5897,
+  "winner": 0,
+  "phase_seconds": {
+    "baseline": 215.23403446003795,
+    "upgraded": 240.71030221600085,
+    "plugin": 329.17140237998683
+  },
+  "trace_version": 4,
+  "instruction_points": 17,
+  "trace_bytes": 191633,
+  "captured_entries": 1736,
+  "trace_closure": "supervised_after_native_terminal",
+  "dispatch_calls": 188,
+  "ct86_return_codes": {
+    "0": 188
+  },
+  "reservation_mapping": {
+    "schema": "FairFinalReservationMappingEvidence/v1",
+    "status": "verified_limited_scope",
+    "mapped_reservations": 188,
+    "owners": {
+      "0": 96,
+      "1": 92
+    },
+    "simultaneous_execution_ticks": 68,
+    "distinct_native_objects": 20,
+    "object_reuse_across_ticks_supported": true,
+    "per_reservation_object_mapping_proven": true,
+    "legal_rejection_coverage_proven": false,
+    "training_admissible": false,
+    "gates_closed": false
+  },
+  "native_object_field_equality_proven": false,
+  "coordinate_transform_independently_recomputed": false,
+  "owned_engines_clean": true,
+  "all_ports_released": true,
+  "hidden_random_coverage_closed": false,
+  "training_admissible": false,
+  "gates_closed": false,
+  "private_archive_included": false
+}

@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "0f46d92b740ba6c52972f0e0579d33bfe7442b31f0ec9552428830fff9c65ac6",
-      "bytes": 99830,
-      "source_sha256": "0f46d92b740ba6c52972f0e0579d33bfe7442b31f0ec9552428830fff9c65ac6",
+      "sha256": "e0bc381edeff76a4a58f9f6fde7fa49f06fbf93fd67a04d0a217ab72f3cd5909",
+      "bytes": 101360,
+      "source_sha256": "e0bc381edeff76a4a58f9f6fde7fa49f06fbf93fd67a04d0a217ab72f3cd5909",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "b5625e201a604cc1a668ffc650be48c68f6356e5ad7c30a93dd41de70623972e",
-      "bytes": 55186,
-      "source_sha256": "b5625e201a604cc1a668ffc650be48c68f6356e5ad7c30a93dd41de70623972e",
+      "sha256": "5e89d3767f57668d6939fd34ef9b6016d03e696996c526cd1e313436be5e2b70",
+      "bytes": 56130,
+      "source_sha256": "5e89d3767f57668d6939fd34ef9b6016d03e696996c526cd1e313436be5e2b70",
       "transformations": []
     },
     {
@@ -9308,6 +9308,90 @@
       "transformations": []
     },
     {
+      "path": "_spec_work/versions/fair-final-reservation-map-v1/CONTRACT.md",
+      "sha256": "a56caabacc813db58834ad4790fc31a9850991671058ea27b4a6b0011819479e",
+      "bytes": 1465,
+      "source_sha256": "a56caabacc813db58834ad4790fc31a9850991671058ea27b4a6b0011819479e",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-reservation-map-v1/EVIDENCE.md",
+      "sha256": "418f59ad0f8ce0fbded33d0d89664aef4c8c4298138772789d0c1122e54770b9",
+      "bytes": 3246,
+      "source_sha256": "418f59ad0f8ce0fbded33d0d89664aef4c8c4298138772789d0c1122e54770b9",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-reservation-map-v1/native-evidence-summary.json",
+      "sha256": "f7be3f0ee424d44cb024b0dff75fd4d3a9b3df135bf10ad15800fad11a1aa7b1",
+      "bytes": 2158,
+      "source_sha256": "f7be3f0ee424d44cb024b0dff75fd4d3a9b3df135bf10ad15800fad11a1aa7b1",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-reservation-map-v1/plugin_probe.py",
+      "sha256": "cbafb831bcc22c3dab5919f036b97a7cf4e33ff918da7a18822aebbffeed3c7d",
+      "bytes": 3377,
+      "source_sha256": "cbafb831bcc22c3dab5919f036b97a7cf4e33ff918da7a18822aebbffeed3c7d",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-reservation-map-v1/reservation_audit.py",
+      "sha256": "793ba13a278330774762f4ce6956f188b47d2e93c065016a4b612d9f1347beec",
+      "bytes": 7450,
+      "source_sha256": "793ba13a278330774762f4ce6956f188b47d2e93c065016a4b612d9f1347beec",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-reservation-map-v1/run_mapping.py",
+      "sha256": "9f0c17796c6c844c2886732015b3a3f8d32150f5fa4316570ae340683f106b37",
+      "bytes": 3179,
+      "source_sha256": "9f0c17796c6c844c2886732015b3a3f8d32150f5fa4316570ae340683f106b37",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-reservation-map-v1/test_mapping.py",
+      "sha256": "4a78128d1b3908ae1335f199b88cb946753e8a13edb99c837bbf29335802ab1c",
+      "bytes": 7560,
+      "source_sha256": "4a78128d1b3908ae1335f199b88cb946753e8a13edb99c837bbf29335802ab1c",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-reservation-map-v1/test_native_archive.py",
+      "sha256": "5e499f872e0be9f1f92d442b21d149208ab350e60b20645d5eee4fbd6ccecf92",
+      "bytes": 2215,
+      "source_sha256": "5e499f872e0be9f1f92d442b21d149208ab350e60b20645d5eee4fbd6ccecf92",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-reservation-map-v1/tests-engineering.xml",
+      "sha256": "ea04711a0f4dd293a0c0a9d85910ef51ec3580bc90a237ec8f377e326f0b827f",
+      "bytes": 6079,
+      "source_sha256": "ea04711a0f4dd293a0c0a9d85910ef51ec3580bc90a237ec8f377e326f0b827f",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-reservation-map-v1/tests-final.xml",
+      "sha256": "9ae8b4662b916389397a56a7d23ddf656fbfd45957a599bbcbafb2917efbf01c",
+      "bytes": 5817,
+      "source_sha256": "9ae8b4662b916389397a56a7d23ddf656fbfd45957a599bbcbafb2917efbf01c",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-reservation-map-v1/tests-initial.xml",
+      "sha256": "e7544704d0953eb482e15790e8bcd0159fee4c5a9af8ff5447ec40f7f6976797",
+      "bytes": 4839,
+      "source_sha256": "e7544704d0953eb482e15790e8bcd0159fee4c5a9af8ff5447ec40f7f6976797",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-reservation-map-v1/tests-review.xml",
+      "sha256": "41008043bba2d65bdb8d312a9e93815b4dc7eff4c5f19c07eeef0cbd313c47c0",
+      "bytes": 5470,
+      "source_sha256": "41008043bba2d65bdb8d312a9e93815b4dc7eff4c5f19c07eeef0cbd313c47c0",
+      "transformations": []
+    },
+    {
       "path": "_spec_work/versions/fair-final-retry-collection-bridge-v1/CONTRACT.md",
       "sha256": "e153f7e60e1ac8d161c69bd4297269ed95ba199f0ea218dfc31bf1ec750ed558",
       "bytes": 2685,
@@ -16072,8 +16156,8 @@
       "transformations": []
     }
   ],
-  "file_count": 2294,
-  "source_bytes": 32792544,
+  "file_count": 2306,
+  "source_bytes": 32847873,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
