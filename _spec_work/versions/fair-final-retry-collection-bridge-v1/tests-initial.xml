@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="10" skipped="0" tests="35" time="2.310" timestamp="2026-10-25T12:50:32.335156+08:00" hostname="gujigadeMacBook-Pro-3.local"><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_actual_verifier_rejects_synthetic_terminal_before_output" time="0.046"><failure message="AssertionError: assert not True&#10; +  where True = exists()&#10; +    where exists = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_actual_verifier_rejects_s0/handoff').exists">terminal = {'arguments': {'data_roots': [PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pyt...alse, 'gates_closed': False, 'launch_sha256': '456737a0d2ce0b7b738eeafa54a705eacce1eb088e5f15e9e5275876a321abac', ...}}
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_actual_verifier_rejects_s0')
+
+    def test_actual_verifier_rejects_synthetic_terminal_before_output(terminal, tmp_path):
+        output = tmp_path / "handoff"
+        with pytest.raises((ValueError, KeyError, FileNotFoundError)):
+            bridge.prepare(terminal["parent"], output=output, **terminal["arguments"])
+&gt;       assert not output.exists()
+E       AssertionError: assert not True
+E        +  where True = exists()
+E        +    where exists = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_actual_verifier_rejects_s0/handoff').exists
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/test_bridge.py:65: AssertionError</failure></testcase><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_mock_verified_bridge_preserves_frozen_bytes_and_parent" time="0.043"><failure message="ValueError: new collection handoff directory required">terminal = {'arguments': {'data_roots': [PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pyt...alse, 'gates_closed': False, 'launch_sha256': '58a2a998aeb2bb8c432197b8f7b52a08e689f5d975f69a93cb75602220756b97', ...}}
+execution = {'files': {'_spec_work/versions/fair-final-migration-selection-v1/train_round.py': b'import hashlib\nimport json\nimpo...': 1293, 'sha256': '761f4260046a52ea16f1da38db7b0dca06165026f7351508618dc4289afcb56a'}}, 'formal_g2_pass': False, ...}}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x17b4e2d70&gt;
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_mock_verified_bridge_pres0')
+
+    def test_mock_verified_bridge_preserves_frozen_bytes_and_parent(terminal, execution, monkeypatch, tmp_path):
+        calls = allow_fixture(terminal, monkeypatch)
+        parent = terminal["parent"]
+        before = retry.safe_tree_hash(parent)
+        original = retry.safe_tree_hash(terminal["original"])
+        output = tmp_path / "handoff"
+&gt;       report = bridge.prepare(parent, output=output, **terminal["arguments"])
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/test_bridge.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:114: in prepare
+    parent, output = independent_output(parent, output)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+parent = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_mock_verified_bridge_pres0/received-retry')
+output = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_mock_verified_bridge_pres0/handoff')
+
+    def independent_output(parent, output):
+        parent, output = Path(parent), Path(output)
+        if any(path.is_symlink() for endpoint in (parent, output)
+                for path in (endpoint, *endpoint.parents)):
+            raise ValueError("collection handoff paths must not contain symlinks")
+        parent, output = parent.resolve(), output.resolve()
+        if output.is_relative_to(parent) or parent.is_relative_to(output):
+            raise ValueError("new collection handoff must be independent of retry parent")
+        if output.exists():
+&gt;           raise ValueError("new collection handoff directory required")
+E           ValueError: new collection handoff directory required
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:34: ValueError</failure></testcase><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_wrong_proof_rejected[status-passed_preflight_only]" time="0.044" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_wrong_proof_rejected[launch_sha256-0000000000000000000000000000000000000000000000000000000000000000]" time="0.042" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_wrong_proof_rejected[receipt_sha256-0000000000000000000000000000000000000000000000000000000000000000]" time="0.038" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_wrong_proof_rejected[verifier_sha256-0000000000000000000000000000000000000000000000000000000000000000]" time="0.047" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_wrong_proof_rejected[native_game_provenance_reverified-True]" time="0.065" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_wrong_proof_rejected[training_admissible-True]" time="0.046" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_wrong_proof_rejected[formal_g2_pass-True]" time="0.041" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_wrong_proof_rejected[gates_closed-True]" time="0.043" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_incomplete_content_rejected[native_schedule_verified-False]" time="0.042" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_incomplete_content_rejected[timeout_history_prefix_verified-False]" time="0.040" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_incomplete_content_rejected[latest_optimizer_steps-15]" time="0.042" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_changed_parent_after_verification_rejected[launch.json]" time="0.042" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_changed_parent_after_verification_rejected[receipt.json]" time="0.042" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_changed_parent_after_verification_rejected[archive/selection/selected.pt]" time="0.042" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_changed_parent_after_verification_rejected[archive/selection/inputs/payload.tar.gz]" time="0.042" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_changed_parent_after_verification_rejected[archive/selection/inputs/selection-handoff.json]" time="0.044" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_ineligible_receipt_or_archive_rejected[running]" time="0.039" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_ineligible_receipt_or_archive_rejected[lease]" time="0.042" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_ineligible_receipt_or_archive_rejected[status]" time="0.042" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_ineligible_receipt_or_archive_rejected[extra]" time="0.044" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_ineligible_receipt_or_archive_rejected[symlink]" time="0.044" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_output_must_be_new_and_independent[child]" time="0.039" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_output_must_be_new_and_independent[ancestor]" time="0.042" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_output_must_be_new_and_independent[existing]" time="0.041" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_output_must_be_new_and_independent[alias]" time="0.042" /><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_output_failure_keeps_quarantine_without_completion" time="0.042"><failure message="ValueError: new collection handoff directory required">terminal = {'arguments': {'data_roots': [PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pyt...alse, 'gates_closed': False, 'launch_sha256': '9b4ce41d7dca608d043ae02792a62828a30780290a162dc2f8b712d1fc63b42e', ...}}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x17b5bab30&gt;
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_output_failure_keeps_quar0')
+
+    def test_output_failure_keeps_quarantine_without_completion(terminal, monkeypatch, tmp_path):
+        allow_fixture(terminal, monkeypatch)
+        original = bridge.write_new
+        def interrupted(path, data):
+            if path.name == "selected.pt":
+                raise OSError("fixture interrupted write")
+            original(path, data)
+        monkeypatch.setattr(bridge, "write_new", interrupted)
+        output = tmp_path / "handoff"
+        with pytest.raises(OSError, match="interrupted"):
+&gt;           bridge.prepare(terminal["parent"], output=output, **terminal["arguments"])
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/test_bridge.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:114: in prepare
+    parent, output = independent_output(parent, output)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+parent = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_output_failure_keeps_quar0/received-retry')
+output = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_output_failure_keeps_quar0/handoff')
+
+    def independent_output(parent, output):
+        parent, output = Path(parent), Path(output)
+        if any(path.is_symlink() for endpoint in (parent, output)
+                for path in (endpoint, *endpoint.parents)):
+            raise ValueError("collection handoff paths must not contain symlinks")
+        parent, output = parent.resolve(), output.resolve()
+        if output.is_relative_to(parent) or parent.is_relative_to(output):
+            raise ValueError("new collection handoff must be independent of retry parent")
+        if output.exists():
+&gt;           raise ValueError("new collection handoff directory required")
+E           ValueError: new collection handoff directory required
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:34: ValueError</failure></testcase><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_handoff_revalidation_rejects_changes[bytes]" time="0.043"><failure message="ValueError: new collection handoff directory required">terminal = {'arguments': {'data_roots': [PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pyt...alse, 'gates_closed': False, 'launch_sha256': '9fdf21a69bd1083890358e4e7d21fedcd4dc8933b59f4ccb9c4517de7290e2be', ...}}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x17b5bbd90&gt;
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje0')
+change = 'bytes'
+
+    @pytest.mark.parametrize("change", ["bytes", "reseal", "gate", "extra", "symlink", "parent"])
+    def test_handoff_revalidation_rejects_changes(terminal, monkeypatch, tmp_path, change):
+        allow_fixture(terminal, monkeypatch)
+        output = tmp_path / "handoff"
+&gt;       bridge.prepare(terminal["parent"], output=output, **terminal["arguments"])
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/test_bridge.py:183: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:114: in prepare
+    parent, output = independent_output(parent, output)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+parent = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje0/received-retry')
+output = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje0/handoff')
+
+    def independent_output(parent, output):
+        parent, output = Path(parent), Path(output)
+        if any(path.is_symlink() for endpoint in (parent, output)
+                for path in (endpoint, *endpoint.parents)):
+            raise ValueError("collection handoff paths must not contain symlinks")
+        parent, output = parent.resolve(), output.resolve()
+        if output.is_relative_to(parent) or parent.is_relative_to(output):
+            raise ValueError("new collection handoff must be independent of retry parent")
+        if output.exists():
+&gt;           raise ValueError("new collection handoff directory required")
+E           ValueError: new collection handoff directory required
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:34: ValueError</failure></testcase><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_handoff_revalidation_rejects_changes[reseal]" time="0.042"><failure message="ValueError: new collection handoff directory required">terminal = {'arguments': {'data_roots': [PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pyt...alse, 'gates_closed': False, 'launch_sha256': '3729f078062c850d5624028c26acfc1094ff152cf4bac28689ae0d557da06588', ...}}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x17b5bb4d0&gt;
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje1')
+change = 'reseal'
+
+    @pytest.mark.parametrize("change", ["bytes", "reseal", "gate", "extra", "symlink", "parent"])
+    def test_handoff_revalidation_rejects_changes(terminal, monkeypatch, tmp_path, change):
+        allow_fixture(terminal, monkeypatch)
+        output = tmp_path / "handoff"
+&gt;       bridge.prepare(terminal["parent"], output=output, **terminal["arguments"])
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/test_bridge.py:183: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:114: in prepare
+    parent, output = independent_output(parent, output)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+parent = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje1/received-retry')
+output = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje1/handoff')
+
+    def independent_output(parent, output):
+        parent, output = Path(parent), Path(output)
+        if any(path.is_symlink() for endpoint in (parent, output)
+                for path in (endpoint, *endpoint.parents)):
+            raise ValueError("collection handoff paths must not contain symlinks")
+        parent, output = parent.resolve(), output.resolve()
+        if output.is_relative_to(parent) or parent.is_relative_to(output):
+            raise ValueError("new collection handoff must be independent of retry parent")
+        if output.exists():
+&gt;           raise ValueError("new collection handoff directory required")
+E           ValueError: new collection handoff directory required
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:34: ValueError</failure></testcase><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_handoff_revalidation_rejects_changes[gate]" time="0.042"><failure message="ValueError: new collection handoff directory required">terminal = {'arguments': {'data_roots': [PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pyt...alse, 'gates_closed': False, 'launch_sha256': '39f10c649f13eb21c9860024b710aff3ed2f9ecb1f8760bc0e0bfdbfcf5c7737', ...}}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x17b5b84b0&gt;
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje2')
+change = 'gate'
+
+    @pytest.mark.parametrize("change", ["bytes", "reseal", "gate", "extra", "symlink", "parent"])
+    def test_handoff_revalidation_rejects_changes(terminal, monkeypatch, tmp_path, change):
+        allow_fixture(terminal, monkeypatch)
+        output = tmp_path / "handoff"
+&gt;       bridge.prepare(terminal["parent"], output=output, **terminal["arguments"])
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/test_bridge.py:183: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:114: in prepare
+    parent, output = independent_output(parent, output)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+parent = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje2/received-retry')
+output = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje2/handoff')
+
+    def independent_output(parent, output):
+        parent, output = Path(parent), Path(output)
+        if any(path.is_symlink() for endpoint in (parent, output)
+                for path in (endpoint, *endpoint.parents)):
+            raise ValueError("collection handoff paths must not contain symlinks")
+        parent, output = parent.resolve(), output.resolve()
+        if output.is_relative_to(parent) or parent.is_relative_to(output):
+            raise ValueError("new collection handoff must be independent of retry parent")
+        if output.exists():
+&gt;           raise ValueError("new collection handoff directory required")
+E           ValueError: new collection handoff directory required
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:34: ValueError</failure></testcase><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_handoff_revalidation_rejects_changes[extra]" time="0.041"><failure message="ValueError: new collection handoff directory required">terminal = {'arguments': {'data_roots': [PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pyt...alse, 'gates_closed': False, 'launch_sha256': '6108e26a80bf8ff6b6dca0ade4068b857fdd1a56e8832bb1b2da4fd83368d59d', ...}}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x17b5608a0&gt;
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje3')
+change = 'extra'
+
+    @pytest.mark.parametrize("change", ["bytes", "reseal", "gate", "extra", "symlink", "parent"])
+    def test_handoff_revalidation_rejects_changes(terminal, monkeypatch, tmp_path, change):
+        allow_fixture(terminal, monkeypatch)
+        output = tmp_path / "handoff"
+&gt;       bridge.prepare(terminal["parent"], output=output, **terminal["arguments"])
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/test_bridge.py:183: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:114: in prepare
+    parent, output = independent_output(parent, output)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+parent = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje3/received-retry')
+output = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje3/handoff')
+
+    def independent_output(parent, output):
+        parent, output = Path(parent), Path(output)
+        if any(path.is_symlink() for endpoint in (parent, output)
+                for path in (endpoint, *endpoint.parents)):
+            raise ValueError("collection handoff paths must not contain symlinks")
+        parent, output = parent.resolve(), output.resolve()
+        if output.is_relative_to(parent) or parent.is_relative_to(output):
+            raise ValueError("new collection handoff must be independent of retry parent")
+        if output.exists():
+&gt;           raise ValueError("new collection handoff directory required")
+E           ValueError: new collection handoff directory required
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:34: ValueError</failure></testcase><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_handoff_revalidation_rejects_changes[symlink]" time="0.042"><failure message="ValueError: new collection handoff directory required">terminal = {'arguments': {'data_roots': [PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pyt...alse, 'gates_closed': False, 'launch_sha256': '8503c71fe4aa6338a294429e0fadff4e7e4cdf04fca013674f8bcbda3df99512', ...}}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x17b562580&gt;
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje4')
+change = 'symlink'
+
+    @pytest.mark.parametrize("change", ["bytes", "reseal", "gate", "extra", "symlink", "parent"])
+    def test_handoff_revalidation_rejects_changes(terminal, monkeypatch, tmp_path, change):
+        allow_fixture(terminal, monkeypatch)
+        output = tmp_path / "handoff"
+&gt;       bridge.prepare(terminal["parent"], output=output, **terminal["arguments"])
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/test_bridge.py:183: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:114: in prepare
+    parent, output = independent_output(parent, output)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+parent = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje4/received-retry')
+output = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje4/handoff')
+
+    def independent_output(parent, output):
+        parent, output = Path(parent), Path(output)
+        if any(path.is_symlink() for endpoint in (parent, output)
+                for path in (endpoint, *endpoint.parents)):
+            raise ValueError("collection handoff paths must not contain symlinks")
+        parent, output = parent.resolve(), output.resolve()
+        if output.is_relative_to(parent) or parent.is_relative_to(output):
+            raise ValueError("new collection handoff must be independent of retry parent")
+        if output.exists():
+&gt;           raise ValueError("new collection handoff directory required")
+E           ValueError: new collection handoff directory required
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:34: ValueError</failure></testcase><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_handoff_revalidation_rejects_changes[parent]" time="0.043"><failure message="ValueError: new collection handoff directory required">terminal = {'arguments': {'data_roots': [PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pyt...alse, 'gates_closed': False, 'launch_sha256': '52a3a5fee5d22b7d16e050cecd7421d2933cdedd9b48380ee97598845806f957', ...}}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x17b575630&gt;
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje5')
+change = 'parent'
+
+    @pytest.mark.parametrize("change", ["bytes", "reseal", "gate", "extra", "symlink", "parent"])
+    def test_handoff_revalidation_rejects_changes(terminal, monkeypatch, tmp_path, change):
+        allow_fixture(terminal, monkeypatch)
+        output = tmp_path / "handoff"
+&gt;       bridge.prepare(terminal["parent"], output=output, **terminal["arguments"])
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/test_bridge.py:183: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:114: in prepare
+    parent, output = independent_output(parent, output)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+parent = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje5/received-retry')
+output = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_handoff_revalidation_reje5/handoff')
+
+    def independent_output(parent, output):
+        parent, output = Path(parent), Path(output)
+        if any(path.is_symlink() for endpoint in (parent, output)
+                for path in (endpoint, *endpoint.parents)):
+            raise ValueError("collection handoff paths must not contain symlinks")
+        parent, output = parent.resolve(), output.resolve()
+        if output.is_relative_to(parent) or parent.is_relative_to(output):
+            raise ValueError("new collection handoff must be independent of retry parent")
+        if output.exists():
+&gt;           raise ValueError("new collection handoff directory required")
+E           ValueError: new collection handoff directory required
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:34: ValueError</failure></testcase><testcase classname="_spec_work.versions.fair-final-retry-collection-bridge-v1.test_bridge" name="test_second_prepare_keeps_completed_handoff_unchanged" time="0.042"><failure message="ValueError: new collection handoff directory required">terminal = {'arguments': {'data_roots': [PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pyt...alse, 'gates_closed': False, 'launch_sha256': 'ef391cff63b7746618e9bfdbeeb8733855a0db2958753deb0a7f32a29e4a67f8', ...}}
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x17b576f20&gt;
+tmp_path = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_second_prepare_keeps_comp0')
+
+    def test_second_prepare_keeps_completed_handoff_unchanged(terminal, monkeypatch, tmp_path):
+        allow_fixture(terminal, monkeypatch)
+        output = tmp_path / "handoff"
+&gt;       bridge.prepare(terminal["parent"], output=output, **terminal["arguments"])
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/test_bridge.py:210: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:114: in prepare
+    parent, output = independent_output(parent, output)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+parent = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_second_prepare_keeps_comp0/received-retry')
+output = PosixPath('/private/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/pytest-of-gujiga/pytest-696/test_second_prepare_keeps_comp0/handoff')
+
+    def independent_output(parent, output):
+        parent, output = Path(parent), Path(output)
+        if any(path.is_symlink() for endpoint in (parent, output)
+                for path in (endpoint, *endpoint.parents)):
+            raise ValueError("collection handoff paths must not contain symlinks")
+        parent, output = parent.resolve(), output.resolve()
+        if output.is_relative_to(parent) or parent.is_relative_to(output):
+            raise ValueError("new collection handoff must be independent of retry parent")
+        if output.exists():
+&gt;           raise ValueError("new collection handoff directory required")
+E           ValueError: new collection handoff directory required
+
+_spec_work/versions/fair-final-retry-collection-bridge-v1/prepare_collection.py:34: ValueError</failure></testcase></testsuite></testsuites>

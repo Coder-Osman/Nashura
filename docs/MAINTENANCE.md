@@ -45,3 +45,6 @@ rng-callsite-audit-v1/tests-initial.xml保留首次断言与无偏移SP分类失
 
 selection-timeout-v1/tests-initial.xml保留首次fixture路径错误的原始回溯及尾随
 空白，仅该精确文件登记行尾豁免；另保留write-once测试构造失败，不重写证据。
+
+retry-collection-bridge-v1/tests-initial.xml保留初次测试误用已有handoff目录的
+失败回溯；仅该精确文件豁免行尾空白，后续使用独立输出目录的结果单独记录。

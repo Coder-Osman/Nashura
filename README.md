@@ -15,6 +15,16 @@
 
 测试通过、限定子项通过、整体门通过和模型实战提升分别记录，测试数量存在重叠，不累加。
 
+本次完成全局快照搜索的原生限定验收：4根/512有效模拟、2对隐藏干预结果一致，
+1483次快照创建与释放、551次恢复及所属双引擎清理通过。完整搜索局仍待验。
+新增terminal恢复结果到补充采集包的独立交接，联合82项工程测试通过，含39项
+交接测试；真实terminal未完成，真实交接与round2尚未开始。Full128最新快照
+提交175组/350根/44800模拟，tick5744继续。G0/G1及34/43保持开放。
+详见[_spec_work/versions/fair-final-global-search-v1/EVIDENCE.md](_spec_work/versions/fair-final-global-search-v1/EVIDENCE.md)
+及[_spec_work/versions/fair-final-retry-collection-bridge-v1/EVIDENCE.md](_spec_work/versions/fair-final-retry-collection-bridge-v1/EVIDENCE.md)。
+发布复核：公开794通过/27项缺私有附件跳过，独立恢复与交接82通过、主工程211
+通过；2244项源码清单通过，凭据扫描零发现。下面保留此前阶段与时间点记录。
+
 新增独立terminal超时恢复：旧8小时选优失败保留，第15步完整状态核验通过，
 43项联合工程测试通过；24小时续跑已在.35 GPU1启动，真实terminal仍待验。
 Full128同局恢复174组/348根/44544模拟至tick5728并继续；独立全局MT搜索

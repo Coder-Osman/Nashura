@@ -1,0 +1,23 @@
+{
+  "schema": "FairFinalGlobalSearchPublicEvidence/v1",
+  "status": "verified_limited_scope",
+  "launch_sha256": "58cecfb3cc240b686677af8a2f711944d75ea4ac5b0080e2c65bb7a28bc48fea",
+  "receipt_sha256": "5c5e39cf822507953cb513599e6c83c46b627e764a9e3b23292ee9d184b93d10",
+  "verification_sha256": "3d9288711d0ad893cce2589f24ee72ade0adb7936c2ba1fad2329462a44703c0",
+  "verifier_sha256": "3c47853dcf3e432da71884582e983b704fd785a701c9c2751e1a8d1691e5281e",
+  "engine_sha256": "fbd97f8f02621d37adc41b9782440950d9e0346ad2cffcb68601c01fb237141e",
+  "searches": 4,
+  "valid_simulations": 512,
+  "hidden_pairs": 2,
+  "snapshot_operations": {"create": 1483, "restore": 551, "release": 1483},
+  "archived_files": 369,
+  "probe_seconds": 2078.4384525030036,
+  "owned_engines_clean": true,
+  "complete_game_verified": false,
+  "native_pending_verified": false,
+  "native_fallback_verified": false,
+  "hidden_random_coverage_closed": false,
+  "training_admissible": false,
+  "gates_closed": false,
+  "private_archive_included": false
+}

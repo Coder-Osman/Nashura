@@ -1,0 +1,10 @@
+{
+  "status": "verification_invocation_failed_before_result_publication",
+  "launch_sha256": "58cecfb3cc240b686677af8a2f711944d75ea4ac5b0080e2c65bb7a28bc48fea",
+  "receipt_sha256": "5c5e39cf822507953cb513599e6c83c46b627e764a9e3b23292ee9d184b93d10",
+  "exception": "ValueError: FAIR history rejects private audit or unknown fields",
+  "cause": "Direct invocation preloaded active firstlight_CR native_runner instead of frozen history-v2.",
+  "resolution": "Fresh process preloads the frozen package before executing the unchanged verifier; no archived bytes or verification conditions changed.",
+  "training_admissible": false,
+  "gates_closed": false
+}
