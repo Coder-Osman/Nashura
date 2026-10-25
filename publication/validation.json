@@ -1,5 +1,55 @@
 {
   "schema": "hashura.publication-validation.v1",
+  "latest_affordability_boundary_publication": {
+    "source_files_verified": 2257,
+    "source_manifest_sha256": "f9a162e1f37b990863a662da99a5c9016cc4d5e8519caf8170759f2a3304d52a",
+    "public_tests": {
+      "passed": 794,
+      "skipped": 27,
+      "seconds": 47.947,
+      "report": "publication/checks-public.xml",
+      "sha256": "3e431af7d6e07dcb4a602e586172bf7448678c8df17d1aaac5fe559270d2e079",
+      "skip_reason": "private native libraries and evidence archives excluded from public snapshot"
+    },
+    "threshold_tests": {
+      "passed": 23,
+      "seconds": 4.338,
+      "report": "publication/checks-affordability.xml",
+      "sha256": "c14dcd7825417265f612426c8d80f36032cd2d572a5eeb2a68bff2da9af3bfe1",
+      "scope": "ENGINEERING_CANDIDATE_AND_TAMPER_FIXTURES_ONLY"
+    },
+    "public_source_normalization": "four explicitly listed source files have extra EOF blank lines removed in public copy; source manifest preserves original frozen SHA256",
+    "selection_timeout_and_bridge_tests": {
+      "passed": 82,
+      "seconds": 82.091,
+      "report": "publication/checks-selection-timeout.xml",
+      "sha256": "b9b2c465c95669ca8e35f59cd8dee7c7c85e095a18fb351f426cab316142122d",
+      "scope": "ENGINEERING_FULL_STATE_SUBPROCESS_AND_MOCK_TRANSPORT_ONLY"
+    },
+    "main_engine_tests": {"passed": 211, "seconds": 22.08},
+    "secret_scan_findings": 0,
+    "native_evidence": "_spec_work/versions/fair-final-affordability-boundaries-v1/native-evidence-summary.json",
+    "native_evidence_sha256": "a0ec55672ef2d12a07b726a5f5a2cf2adc330e1fa8ed0f98a30f72ca1715330c",
+    "native_status": "passed_limited_scope",
+    "native_trials": 37,
+    "native_continuations": 74,
+    "native_rejected_trials": 0,
+    "native_single_ready_trials": 0,
+    "owned_engine_clean": true,
+    "global_unreachability_proven": false,
+    "general_pending_gate_closed": false,
+    "full128_snapshot_timestamp": 1792905521.401129,
+    "full128_committed_groups": 176,
+    "full128_valid_simulations": 45056,
+    "full128_search_tick": 5804,
+    "complete_full128_game_verified": false,
+    "native_terminal_resume_verified": false,
+    "native_round2_executed": false,
+    "training_admissible": false,
+    "formal_g2_pass": false,
+    "gates_closed": false,
+    "historical_entries_below_preserved": true
+  },
   "latest_selection_timeout_publication": {
     "source_files_verified": 2230,
     "source_manifest_sha256": "17bdb25a6de752ded8d8e5090863309d296b95a00b11f1e2fc414b954c995a8a",

@@ -22,6 +22,10 @@ SPECIAL_NAMES = {"LICENSE", "NOTICE", ".gitignore", ".gitattributes", ".clang-fo
 COMPILED_TABLES = {"card_specs.json.gz", "card_logic.json.gz", "effects.json.gz",
     "projectiles.json.gz", "model_catalogs.json.gz"}
 EVIDENCE_ROOT = Path("_spec_work/evidence/fair-final-v1-20261019")
+NORMALIZED_EOF_PATHS = {
+    Path("_spec_work/versions/fair-final-affordability-boundaries-v1") / name
+    for name in ("cases.py", "probe.py", "run_native.py", "verify.py")
+}
 
 
 def digest(content):
@@ -128,6 +132,9 @@ def export(workspace, destination):
                 if secret in text:
                     raise ValueError("credential requires manual review: " + str(relative))
                 transformations.append("removed embedded credential default; use CR_REMOTE_PASSWORD")
+        if relative in NORMALIZED_EOF_PATHS and text.endswith("\n\n"):
+            text = text.rstrip("\n") + "\n"
+            transformations.append("removed extra EOF blank lines in public copy; frozen native source hashes preserved")
         if transformations:
             content = text.encode("utf-8")
         target = destination / relative

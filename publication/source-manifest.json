@@ -45,16 +45,16 @@
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/DOCUMENT_EXECUTION_PROGRESS.md",
-      "sha256": "c4d8fc00358439551f5fe1e5b28d19869ca51f02797ffcea04519a7dbb7f19e1",
-      "bytes": 96049,
-      "source_sha256": "c4d8fc00358439551f5fe1e5b28d19869ca51f02797ffcea04519a7dbb7f19e1",
+      "sha256": "f606d7bdf637689a8be4f0d27cbcf2c5f0673f50bacb55e1fb03930b3c550fe7",
+      "bytes": 96935,
+      "source_sha256": "f606d7bdf637689a8be4f0d27cbcf2c5f0673f50bacb55e1fb03930b3c550fe7",
       "transformations": []
     },
     {
       "path": "_spec_work/evidence/fair-final-v1-20261019/G0_G1_CLOSURE_CHECKLIST.md",
-      "sha256": "7612c4904669f793de3ac87b1d27e890d35bf606384a2cf608f5594055ee15b3",
-      "bytes": 52004,
-      "source_sha256": "7612c4904669f793de3ac87b1d27e890d35bf606384a2cf608f5594055ee15b3",
+      "sha256": "22d18c39d92a711e4cc10a11b76aa412e137639f34decf49aba56437088800b2",
+      "bytes": 52664,
+      "source_sha256": "22d18c39d92a711e4cc10a11b76aa412e137639f34decf49aba56437088800b2",
       "transformations": []
     },
     {
@@ -2205,6 +2205,105 @@
       "bytes": 9751,
       "source_sha256": "772bac7b3b6514aedae6a74a30838e5d9d851969aacc478bb6f4d4c90897751a",
       "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/CONTRACT.md",
+      "sha256": "c8b70531db2939e8df8eb2acc8e3d67cb25676dbe637ee66465dff55ebc3f76c",
+      "bytes": 1359,
+      "source_sha256": "c8b70531db2939e8df8eb2acc8e3d67cb25676dbe637ee66465dff55ebc3f76c",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/EVIDENCE.md",
+      "sha256": "e41435849c62563d881600c2065829341e07b752087074d8df196ccaaad10833",
+      "bytes": 2385,
+      "source_sha256": "e41435849c62563d881600c2065829341e07b752087074d8df196ccaaad10833",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/cases.py",
+      "sha256": "622410cece5b2545799169a59533e375c6167f323bc9e40db55aa0d85f4cbe82",
+      "bytes": 1341,
+      "source_sha256": "f975f10dbdfcdc8ed119f23ddeeebd2651299348804c07898b8433cfdb5e38a6",
+      "transformations": [
+        "removed extra EOF blank lines in public copy; frozen native source hashes preserved"
+      ]
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/native-evidence-summary.json",
+      "sha256": "a0ec55672ef2d12a07b726a5f5a2cf2adc330e1fa8ed0f98a30f72ca1715330c",
+      "bytes": 1577,
+      "source_sha256": "a0ec55672ef2d12a07b726a5f5a2cf2adc330e1fa8ed0f98a30f72ca1715330c",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/probe.py",
+      "sha256": "649b07f49e91d0f3e0af944dd67845e44074093ecf5ce79cd473334b2caa9f80",
+      "bytes": 712,
+      "source_sha256": "698b02ce7f5de85e11c0d73b68292c9d16037e664a427e6f3c599c6f3f735b82",
+      "transformations": [
+        "removed extra EOF blank lines in public copy; frozen native source hashes preserved"
+      ]
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/run_native.py",
+      "sha256": "95fe5c3de6f7fe8a68a69f9704f6cdfe120fcd72e38189555e1da143dd2ecffb",
+      "bytes": 8213,
+      "source_sha256": "74275f7702a103f19f0ad383f6944cda70375e1dd922393bf2bab2680ad2069e",
+      "transformations": [
+        "removed extra EOF blank lines in public copy; frozen native source hashes preserved"
+      ]
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/test_cases.py",
+      "sha256": "e668e078f4f8e0141f3e3d46cf61b07edb54838f99bc2caa2d44b8d7b8438ab6",
+      "bytes": 2694,
+      "source_sha256": "e668e078f4f8e0141f3e3d46cf61b07edb54838f99bc2caa2d44b8d7b8438ab6",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/test_verification.py",
+      "sha256": "a3f03510ca7a3ff6ac008d7a6236e2f2071e015f7a63c4cf0f940c6d9e770032",
+      "bytes": 8626,
+      "source_sha256": "a3f03510ca7a3ff6ac008d7a6236e2f2071e015f7a63c4cf0f940c6d9e770032",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/tests-final.xml",
+      "sha256": "35dbde22d9d16a7a09b40c6b189c2db9e25766da7c543e309d8da5458e15c84b",
+      "bytes": 4340,
+      "source_sha256": "35dbde22d9d16a7a09b40c6b189c2db9e25766da7c543e309d8da5458e15c84b",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/tests-hardened.xml",
+      "sha256": "427497393d62e2bd1512514c9fe9cb0a9a1ad679a5a83d6089655e2fcd12c722",
+      "bytes": 2016,
+      "source_sha256": "427497393d62e2bd1512514c9fe9cb0a9a1ad679a5a83d6089655e2fcd12c722",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/tests-initial.xml",
+      "sha256": "b4bf227fa382dd5f2f357635975df86ceb6147822f8005e49ccf39b7a237bb1e",
+      "bytes": 2016,
+      "source_sha256": "b4bf227fa382dd5f2f357635975df86ceb6147822f8005e49ccf39b7a237bb1e",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/tests-verifier.xml",
+      "sha256": "7246621869ccb0aa00d1f85d3fd659d65b94835f3f0c68b1700371429bcdfc90",
+      "bytes": 4171,
+      "source_sha256": "7246621869ccb0aa00d1f85d3fd659d65b94835f3f0c68b1700371429bcdfc90",
+      "transformations": []
+    },
+    {
+      "path": "_spec_work/versions/fair-final-affordability-boundaries-v1/verify.py",
+      "sha256": "e2d39a1e04879a8ca40ae0f95a9e15909227de69e22f83acbd40d24f8f7dcbaa",
+      "bytes": 6335,
+      "source_sha256": "329cc9497efe9d11b12a4e7d3c4b7d3dd2aebe6205473c61a3555ed492e17e9a",
+      "transformations": [
+        "removed extra EOF blank lines in public copy; frozen native source hashes preserved"
+      ]
     },
     {
       "path": "_spec_work/versions/fair-final-boundary-reachability-v1/CONTRACT.md",
@@ -15714,8 +15813,8 @@
       "transformations": []
     }
   ],
-  "file_count": 2244,
-  "source_bytes": 32569115,
+  "file_count": 2257,
+  "source_bytes": 32616446,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

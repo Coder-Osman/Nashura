@@ -1,5 +1,11 @@
 # 阶段性同步流程
 
+affordability-boundaries-v1的cases.py、probe.py、run_native.py、verify.py仅在
+公开副本移除额外EOF空行，导出器按这四个精确路径处理，清单记录原始/公开SHA
+及变换原因。原生冻结源码与原始验收字节保留；native-evidence-summary.json
+中的verifier身份指向原始冻结字节。公开副本可复跑工程测试及创建新实验，但
+重验原始归档须使用清单对应的原始源码，勿将公开副本SHA冒作冻结身份。
+
 用户已要求每完成一个目标更新本公开仓库。维护时使用现有 GitHub 账号 Coder-Osman，目标仓库为 https://github.com/Coder-Osman/Nashura 。在本仓库提交、推送，保留其他工作区及运行中冻结部署。
 
 1. 完成该目标并取得对应验证结果；更新进度、成果、局限和 CHANGELOG。
