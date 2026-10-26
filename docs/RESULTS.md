@@ -1,5 +1,18 @@
 # 阶段成果与证据索引
 
+## 2026-10-26 原版战斗依赖闭包续报
+
+两个入口的219/175条汇编及32/28条直接BL在三组对照中不变。预声明callee使越界
+P-code由9/2308降为4/2023；数据库尾部控制流覆盖后0/0，只定位分析器扩张来源，
+未证明运行语义。4项新增Ghidra集成测试通过。匹配libg、资源及历史AVD存在；历史micro
+输入清单核验通过。Linux x86-64 QEMU与Darwin不兼容不构成引擎失败，Android模拟器
+路线无需另建Linux。授权克隆AVD后已完成E0固定轨迹不变性：无插桩与两次成功插桩
+均tick3601终局，28动作、3602份原生快照全字节一致，restore/reset通过。
+实测VM9991、JNI43434、AAsset19474事件，2hook失败与线程/对象表覆盖缺口保留。
+69项专项通过；本轮独立实例已回收，旧adb/冻结部署不动。E1/E2及无VM/10倍未验证。
+详细计数与失败记录：agent-handoff/E0_DYNAMIC_DEPENDENCY_COUNTS_2026-10-26.md。边界报告：
+agent-handoff/NATIVE_BATTLE_DEPENDENCY_CLOSURE_CONTINUATION_2026-10-26.md。
+
 ## 2026-10-26 REA后端恢复与真实反编译
 
 官方Ghidra12.1.4安装及mac_arm_64 native组件构建通过，使用既有ARM64 JDK25。

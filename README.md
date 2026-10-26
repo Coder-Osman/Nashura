@@ -30,6 +30,16 @@ P4固定工程轨迹45局全部完整，1/2/4/8路分别0.1574/0.3004/0.5121/0.8
 demo安装成功但目标分析未通过。49项工具测试、主工程211项通过；未改引擎、
 main或冻结部署。见[后端恢复续报](agent-handoff/REA_BACKEND_RECOVERY_2026-10-26.md)。
 
+两个越界pcode入口的受限对照已完成：预声明callee后越界数由9/2308降为4/2023；
+仅在新Ghidra数据库覆盖尾部控制流后降为0/0。原汇编、直接BL和源身份一致；
+这只定位分析器控制流问题，不验证ABI或实际运行语义。新增4项真实Ghidra合成测试通过。
+用户授权后已克隆独立ARM64 AVD完成E0：无插桩与两次成功插桩均原生完整终局，
+每次3602份原生快照全字节一致，28动作、restore及reset通过。实测JNI/JavaVM/AssetManager，
+2个hook失败、间接调用及线程归因缺口仍在，不宣称覆盖穷尽。69项专项测试通过，
+本轮实例已回收，原adb及冻结部署保留；E1/E2、无VM完整局和10倍吞吐仍未验证。详见
+[E0动态计数](agent-handoff/E0_DYNAMIC_DEPENDENCY_COUNTS_2026-10-26.md)及
+[依赖闭包续报](agent-handoff/NATIVE_BATTLE_DEPENDENCY_CLOSURE_CONTINUATION_2026-10-26.md)。
+
 ## 当前状态（2026-10-25）
 
 | 阶段 | 状态 | 尚待完成 |

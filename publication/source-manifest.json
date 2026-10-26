@@ -16467,9 +16467,9 @@
     },
     {
       "path": "tools/ghidra/ExportBoundedFunctions.java",
-      "sha256": "c5dda8920909aa3c99096e4ef3ed31bd531798837654ccc35ff3c5d7557f2f71",
-      "bytes": 6710,
-      "source_sha256": "c5dda8920909aa3c99096e4ef3ed31bd531798837654ccc35ff3c5d7557f2f71",
+      "sha256": "5660346bf255daa66506ebbab47a30fce917a7aedcb77a72e8d7fc4c079e1dcd",
+      "bytes": 9798,
+      "source_sha256": "5660346bf255daa66506ebbab47a30fce917a7aedcb77a72e8d7fc4c079e1dcd",
       "transformations": []
     },
     {
@@ -16485,10 +16485,80 @@
       "bytes": 3357,
       "source_sha256": "a9bff57d4355fc884dcd144716bd73ea8b2f184f06725521019a64d914a63a38",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-26.md",
+      "sha256": "b9a79f789ef7d51b8aaeb353a0cbff0b2b4ef24425903fb4e21373c8c67445b4",
+      "bytes": 2950,
+      "source_sha256": "b9a79f789ef7d51b8aaeb353a0cbff0b2b4ef24425903fb4e21373c8c67445b4",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/NATIVE_BATTLE_DEPENDENCY_CLOSURE_CONTINUATION_2026-10-26.md",
+      "sha256": "ba080f2b08ae5e63c11988804fb0aea23b5c45fe20de653edf25aa995e59cb4d",
+      "bytes": 3124,
+      "source_sha256": "ba080f2b08ae5e63c11988804fb0aea23b5c45fe20de653edf25aa995e59cb4d",
+      "transformations": []
+    },
+    {
+      "path": "tools/e0_dependency_observer.js",
+      "sha256": "bc15f64a34ae2c6703ae8e0492e2d2ceb8c2b400735bd170fc5a109690c93a4f",
+      "bytes": 7687,
+      "source_sha256": "bc15f64a34ae2c6703ae8e0492e2d2ceb8c2b400735bd170fc5a109690c93a4f",
+      "transformations": []
+    },
+    {
+      "path": "tools/verify_e0_snapshots.py",
+      "sha256": "509a3148e32a7aa004b7b409fd76370b5e0321dfe51ea1fa0c27e5d5e6c4cf0f",
+      "bytes": 5476,
+      "source_sha256": "509a3148e32a7aa004b7b409fd76370b5e0321dfe51ea1fa0c27e5d5e6c4cf0f",
+      "transformations": []
+    },
+    {
+      "path": "tools/tests/test_e0_snapshot_verifier.py",
+      "sha256": "cce64f6661cc85cc092d8fd1926d4ac8bc0d7b37bcf837cbdfaf91fec171243e",
+      "bytes": 3895,
+      "source_sha256": "cce64f6661cc85cc092d8fd1926d4ac8bc0d7b37bcf837cbdfaf91fec171243e",
+      "transformations": []
+    },
+    {
+      "path": "tools/tests/test_bounded_ghidra.py",
+      "sha256": "9864efb732a8c9702ebaa8ddf9dacb35a4da5e4191d2eb058b8419121e1a8588",
+      "bytes": 3860,
+      "source_sha256": "9864efb732a8c9702ebaa8ddf9dacb35a4da5e4191d2eb058b8419121e1a8588",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/E0_DYNAMIC_DEPENDENCY_COUNTS_2026-10-26.md",
+      "sha256": "d71a87d4fe48afad34dd8406f2c9e8f7f1c2ef833f5a40525270ab470e10878d",
+      "bytes": 12488,
+      "source_sha256": "d71a87d4fe48afad34dd8406f2c9e8f7f1c2ef833f5a40525270ab470e10878d",
+      "transformations": []
+    },
+    {
+      "path": "README.md",
+      "sha256": "224de066bd8c34ce1d3f80d9ccad0270eff0bc9759c1d2dbfc262b09f4b2ad89",
+      "bytes": 26805,
+      "source_sha256": "224de066bd8c34ce1d3f80d9ccad0270eff0bc9759c1d2dbfc262b09f4b2ad89",
+      "transformations": []
+    },
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "32f042bf900029a73d51ead7b29c7007f90aa05d545e8089128497db96b36a24",
+      "bytes": 30260,
+      "source_sha256": "32f042bf900029a73d51ead7b29c7007f90aa05d545e8089128497db96b36a24",
+      "transformations": []
+    },
+    {
+      "path": "docs/RESULTS.md",
+      "sha256": "03ee77fcddca3b8349c1157b4ad0e40b09be4961e5ef63e2b7634d3b7da5e49d",
+      "bytes": 54406,
+      "source_sha256": "03ee77fcddca3b8349c1157b4ad0e40b09be4961e5ef63e2b7634d3b7da5e49d",
+      "transformations": []
     }
   ],
-  "file_count": 2353,
-  "source_bytes": 33330894,
+  "file_count": 2363,
+  "source_bytes": 33484933,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
