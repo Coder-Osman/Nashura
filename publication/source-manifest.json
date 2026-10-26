@@ -16450,10 +16450,45 @@
       "bytes": 47640,
       "source_sha256": "1089dbdcfcdfe2b5780dad886addcca72eb1d77e362be0e7fd2e6087754b5c68",
       "transformations": []
+    },
+    {
+      "path": "tools/verify_rea_evidence.py",
+      "sha256": "f46a112b49972c820379c01badeebf1708bc8e6ff41f6c3a545525ecd18102d7",
+      "bytes": 8832,
+      "source_sha256": "f46a112b49972c820379c01badeebf1708bc8e6ff41f6c3a545525ecd18102d7",
+      "transformations": []
+    },
+    {
+      "path": "tools/tests/test_rea_evidence.py",
+      "sha256": "a124dac2658327b5bf0bb90dfb12ab3af640947672cad334c6be114f789b1282",
+      "bytes": 7253,
+      "source_sha256": "a124dac2658327b5bf0bb90dfb12ab3af640947672cad334c6be114f789b1282",
+      "transformations": []
+    },
+    {
+      "path": "tools/ghidra/ExportBoundedFunctions.java",
+      "sha256": "c5dda8920909aa3c99096e4ef3ed31bd531798837654ccc35ff3c5d7557f2f71",
+      "bytes": 6710,
+      "source_sha256": "c5dda8920909aa3c99096e4ef3ed31bd531798837654ccc35ff3c5d7557f2f71",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/REA_BACKEND_RECOVERY_2026-10-26.md",
+      "sha256": "c3003120ba2dcb1b8cd29a03839cab120e27e41c72de60a3ee981b831e6db028",
+      "bytes": 12667,
+      "source_sha256": "c3003120ba2dcb1b8cd29a03839cab120e27e41c72de60a3ee981b831e6db028",
+      "transformations": []
+    },
+    {
+      "path": "publication/rea-backend-recovery.json",
+      "sha256": "a9bff57d4355fc884dcd144716bd73ea8b2f184f06725521019a64d914a63a38",
+      "bytes": 3357,
+      "source_sha256": "a9bff57d4355fc884dcd144716bd73ea8b2f184f06725521019a64d914a63a38",
+      "transformations": []
     }
   ],
-  "file_count": 2348,
-  "source_bytes": 33154335,
+  "file_count": 2353,
+  "source_bytes": 33330894,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

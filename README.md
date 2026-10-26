@@ -21,8 +21,14 @@ P4固定工程轨迹45局全部完整，1/2/4/8路分别0.1574/0.3004/0.5121/0.8
 
 新增原生依赖闭包只读调查：匹配libg指纹，86份入口本地档案，17项静态证据
 校验通过。确认配置JNI、资源provider虚表与原始快照service依赖；无UI已有
-历史完整局证据，无VM/无Android框架仍未证明。REA后端缺失如实记录，不安装
-组件、不改引擎或训练门。见[调查报告](agent-handoff/NATIVE_BATTLE_DEPENDENCY_CLOSURE_2026-10-26.md)。
+历史完整局证据，无VM/无Android框架仍未证明。首轮后端缺失记录保留，见
+[调查报告](agent-handoff/NATIVE_BATTLE_DEPENDENCY_CLOSURE_2026-10-26.md)。
+
+后续获准安装后，Ghidra12.1.4与ARM64原生反编译器已实际投入REA分析：
+84个入口通过身份/引用交叉核验，83个函数指令范围完全一致，另1个边界合并
+显式保留。两个补验入口虽有伪代码，但越界pcode尚未解决，不算通过。Hopper
+demo安装成功但目标分析未通过。49项工具测试、主工程211项通过；未改引擎、
+main或冻结部署。见[后端恢复续报](agent-handoff/REA_BACKEND_RECOVERY_2026-10-26.md)。
 
 ## 当前状态（2026-10-25）
 

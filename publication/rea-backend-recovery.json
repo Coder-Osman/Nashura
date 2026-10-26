@@ -1,0 +1,88 @@
+{
+  "schema": "nashura.rea-backend-recovery.v1",
+  "date": "2026-10-26",
+  "base_commit": "4359eab7822f42edaba6e6588e01d676b54b2196",
+  "source_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "tools": {
+    "rea": "6.5.0",
+    "ghidra": "12.1.4",
+    "jdk": "25 arm64",
+    "native_decompiler": "mac_arm_64 built from official bundled source",
+    "hopper": "6.6.0 demo; target analysis not verified",
+    "rea_upgrade": "not performed; installed Node does not meet 6.8.0 engine constraint"
+  },
+  "readiness": {
+    "explicit_ghidra_hopper_scope_healthy": true,
+    "environment_healthy": false,
+    "client_registration_modified": false
+  },
+  "rea_analysis": {
+    "requested_functions": 86,
+    "successful_functions": 84,
+    "exact_instruction_extents": 83,
+    "extended_function": "TableLoadBatch",
+    "extended_instructions": 204,
+    "instructions": 6551,
+    "pseudocode_characters": 139327,
+    "incoming_references": 46110,
+    "outgoing_references": 2420,
+    "unresolved_calls_in_selected_exports": 184,
+    "missing_known_direct_bl_edges": 0,
+    "high_pcode_outside_reported_body": 0,
+    "failed_entries": ["NativeReplayRunner", "ReaderRegister"],
+    "disabled_global_analyzers": ["Decompiler Switch Analysis"],
+    "load_image_validator_status": "unsupported"
+  },
+  "bounded_diagnostics": [
+    {
+      "name": "NativeReplayRunner",
+      "decompiler_completed": true,
+      "exact_instructions": 219,
+      "matched_direct_calls": 32,
+      "outside_body_pcode_operations": 9,
+      "outside_body_pcode_unique_addresses": 2,
+      "semantic_status": "unresolved"
+    },
+    {
+      "name": "ReaderRegister",
+      "decompiler_completed": true,
+      "exact_instructions": 175,
+      "matched_direct_calls": 28,
+      "outside_body_pcode_operations": 2308,
+      "outside_body_pcode_unique_addresses": 192,
+      "semantic_status": "unresolved"
+    }
+  ],
+  "tests": {
+    "new_synthetic_verifier": 22,
+    "combined_headless_tools": 49,
+    "private_static": 17,
+    "active_main_engine": 211,
+    "public_main_group": {"passed": 794, "skipped": 27},
+    "public_supplement_groups": [
+      {"passed": 23, "skipped": 0},
+      {"passed": 82, "skipped": 0},
+      {"passed": 15, "skipped": 3},
+      {"passed": 25, "skipped": 4},
+      {"passed": 31, "skipped": 3},
+      {"passed": 31, "skipped": 2},
+      {"passed": 38, "skipped": 3},
+      {"passed": 65, "skipped": 0}
+    ],
+    "note": "Overlapping suites; do not add counts. Missing private artifacts remain explicit skips."
+  },
+  "evidence_hashes": {
+    "provider_doctor": "c738749a514c6cee6088f4456d1a8659986dc84078a6e816bfde71a0c1d93447",
+    "independent_rea_verification": "89e0ea574bb9e7687096d77128880c2b14a93e68e390996070e5aa9e1e755607",
+    "bounded_verification": "54d3d8b8aa6924ad92f7ea1ad031c95b25b99b96d27ab15063ba2deddb9705d5",
+    "private_static_tests": "9e81f75bb973647184521d78982df52a226dd9ccfb31d66f6b652288748fff12",
+    "main_engine_tests": "3962de3159eecfc01a02422e4ac5696a82eb24c1bb00a64a14539d97af38ed40",
+    "public_tests": "f1dac9745d6c870e303bf472b73951bc55538a73fcd7a0b2ff33e79ce6f56908"
+  },
+  "raw_evidence_published": false,
+  "new_native_games": 0,
+  "engine_modified": false,
+  "frozen_deployments_modified": false,
+  "training_started": false,
+  "vm_framework_free_status": "VM_FRAMEWORK_FREE_INCONCLUSIVE"
+}
