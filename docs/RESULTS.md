@@ -1,5 +1,21 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2配置JNI局部替换与未闭合严格门
+
+32键固定轨迹替换通过：original/shadow/三次replacement/两次strict-targeted，
+各3602份快照9120440bytes逐字节一致，28动作、终局、restore/reset/destroy一致。
+四次最终源码和真实线程补验一致；E1资源平台事件0、Provider19474/failures0/live0。
+目标32读4写/targeted fallback0；46排除键99次fallback仍在。
+
+默认/异常/重复初始化/持久化/关闭释放的原生等价未证明，任务书严格门CLI退出2；
+显式fixed-trajectory退出0但strict=false。No-VM仅preinit局部返回，未创建完整战斗；
+Android框架仍映射，不声明无VM完整局/Android-free/10×或训练准入。
+
+E2及真实负向32项通过6.29s；E0/E1/E2回归101项通过7.81s；主工程211通过21.27s；
+公开入口主组794/27skip及八组专项通过。C -Wall/-Wextra/-Werror及JS语法检查通过。
+线程计数/覆盖/遗漏、失败及命令详见agent-handoff/E2_JAVAVM_CONFIG_JNI_REPLACEMENT_2026-10-27.md
+及e2_dynamic_dependency_counts.json、e2_comparison_manifest.json、e2_gate.json、e2_failure_index.json。
+
 ## 2026-10-26 E1 FMOD绑定与namespace严格续验
 
 固定原生轨迹及规定资源矩阵严格门CLI退出0：3602份快照、28动作、终局、

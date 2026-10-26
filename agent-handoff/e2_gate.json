@@ -1,0 +1,101 @@
+{
+  "schema": "e2-acceptance.v2",
+  "status": "blocked",
+  "requested_scope": "strict",
+  "fixed_trajectory_check": "passed",
+  "targeted_strict_gate_verified": false,
+  "strict_gate_gaps": [
+    "native default/missing-value equivalence beyond observed empty strings",
+    "native configuration exception equivalence",
+    "native repeated initialization and persistence equivalence",
+    "native store close/free lifecycle and reference retirement"
+  ],
+  "scope": "32 declared stable preference keys only; individually enumerated fallback remains outside gate",
+  "runs": [
+    {
+      "run": "original-v11",
+      "mode": "original",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5"
+    },
+    {
+      "run": "targeted-v3-1-shadow",
+      "mode": "shadow",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "targeted_reads": 32,
+      "targeted_writes": 4,
+      "explicitly_excluded_fallbacks": 99,
+      "targeted_fallback": 0
+    },
+    {
+      "run": "targeted-v3-2-replacement",
+      "mode": "replacement",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "targeted_reads": 32,
+      "targeted_writes": 4,
+      "explicitly_excluded_fallbacks": 99,
+      "targeted_fallback": 0
+    },
+    {
+      "run": "targeted-v3-3-replacement",
+      "mode": "replacement",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "targeted_reads": 32,
+      "targeted_writes": 4,
+      "explicitly_excluded_fallbacks": 99,
+      "targeted_fallback": 0
+    },
+    {
+      "run": "targeted-v3-4-replacement",
+      "mode": "replacement",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "targeted_reads": 32,
+      "targeted_writes": 4,
+      "explicitly_excluded_fallbacks": 99,
+      "targeted_fallback": 0
+    },
+    {
+      "run": "targeted-v2-1-strict-targeted",
+      "mode": "strict-targeted",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "targeted_reads": 32,
+      "targeted_writes": 4,
+      "explicitly_excluded_fallbacks": 99,
+      "targeted_fallback": 0
+    },
+    {
+      "run": "targeted-v2-2-strict-targeted",
+      "mode": "strict-targeted",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "targeted_reads": 32,
+      "targeted_writes": 4,
+      "explicitly_excluded_fallbacks": 99,
+      "targeted_fallback": 0
+    }
+  ],
+  "targeted_config_verified": true,
+  "whole_e2_closure_verified": false,
+  "semantics_scope": "observed fixed-lifecycle string reads, empty results, four idempotent writes, reset and two native negative experiments; generalized defaults/persistence/reinitialization unknown",
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false,
+  "uncovered": [
+    "unknown Java class/reference lifetime",
+    "unsampled JNI return values",
+    "unconfigured indirect targets",
+    "OS teardown",
+    "full configuration persistence",
+    "natural FMOD playback"
+  ],
+  "private_manifest_sha256": "e530c32173d1684eb61d2f959182596ca80ca34441f44ecc1c0dec09ed2c73c9",
+  "attachment_count": 94,
+  "private_attachments_distributed": false,
+  "strict_cli_exit_code": 2
+}

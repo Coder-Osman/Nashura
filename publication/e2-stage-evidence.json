@@ -1,0 +1,35 @@
+{
+  "schema": "e2-public-stage-evidence.v1",
+  "base_commit": "d812102edf724807249e65942da6fcf52334fd01",
+  "branch": "codex/headless-engine-plan-20261025",
+  "main_unchanged": "0012201830cfbfcbfeb3d9dccd91a855028da869",
+  "fixed_trajectory_check": "passed",
+  "targeted_strict_gate": "blocked",
+  "whole_e2_closure_verified": false,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false,
+  "checks": [
+    {"command": "verify_e2_gate.py --manifest PRIVATE_MANIFEST --scope strict --output NEW_OUTPUT", "exit_code": 2, "reason": "native semantic matrix incomplete"},
+    {"command": "verify_e2_gate.py --manifest PRIVATE_MANIFEST --scope fixed-trajectory --output NEW_OUTPUT", "exit_code": 0, "scope": "32 declared keys only"},
+    {"command": "pytest test_e2_gate.py test_e2_config_store.py test_e2_observer.py test_e2_public_summary.py with private manifest", "passed": 32, "seconds": 6.29, "exit_code": 0},
+    {"command": "E0/E1/E2 pytest files listed in report section 7", "passed": 101, "seconds": 7.81, "exit_code": 0},
+    {"command": "python tools/run_main_engine_checks.py", "passed": 211, "seconds": 21.27, "exit_code": 0},
+    {"command": "python tools/run_public_checks.py", "main_group_passed": 794, "main_group_skipped": 27, "additional_groups": 8, "exit_code": 0},
+    {"command": "NDK ARM64 C builds -std=c11 -Wall -Wextra -Werror -O2", "sources": ["e2_config_store.c", "e2_no_vm_probe.c"], "exit_code": 0},
+    {"command": "node --check", "sources": ["e2_jni_config_observer.js", "e2_config_replace.js", "tests/e2_observer_harness.js"], "exit_code": 0}
+  ],
+  "cleanup": {
+    "status": "completed",
+    "exit_code": 0,
+    "owned_instance_exited": true,
+    "owned_adb_exited": true,
+    "owned_listeners_remaining": 0,
+    "old_adb_identity_unchanged": true,
+    "private_data_retained": true,
+    "semantic_os_teardown_verified": false
+  },
+  "privacy": "No APK, libraries, resources, raw assembly, configuration values, model weights or private audit included. Public XML hostname and workspace prefix sanitized; raw hashes recorded in source manifest.",
+  "test_caveat": "Overlapping test groups are not summed; fixtures and skips do not substitute for native semantic evidence."
+}

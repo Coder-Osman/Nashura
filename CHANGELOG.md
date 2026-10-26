@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-27：E2配置局部替换、分线程观测与严格门边界
+
+- 新增显式native store、ARM64读写桥、JNI/VM观测和独立原生运行器；未知键显式失败。
+- 32键固定轨迹original/shadow/三次replacement/两次strict对照通过，3602快照/28动作一致。
+- 补采真实线程名，区分Mainloop并发与Step同线程；两个短stub/引用生命周期保持未知。
+- 真实遗漏键/错值abort及证据负向突变拒收；最终严格门默认BLOCKED，局部范围单独验收。
+- no-VM原preinit局部返回，不是完整冷启动/战斗；保留46键和99次fallback的边界。
+- 新增脱敏报告、计数、失败索引及门禁；不改main/冻结任务/输入，不训练、不声明10×。
+
 ## 2026-10-26：E1 FMOD接管、原生namespace矩阵与严格门闭合
 
 - 动态追踪实际libdl resolver、FMOD六槽和manager传播，资源调用接入同一Provider。

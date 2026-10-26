@@ -1,0 +1,198 @@
+"""Run a private, identity-bound E2 attempt on an explicitly owned AVD."""
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import socket
+import subprocess
+import time
+import traceback
+
+
+def digest(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def run(config_path, output):
+    import frida
+
+    config = json.loads(config_path.read_text())
+    output.mkdir(parents=True, exist_ok=False)
+    scripts = {}
+    receipts = []
+    messages = []
+    session = None
+    lifecycle_completed = False
+    started = time.time()
+    repository = Path(__file__).resolve().parent
+
+    def save(name, value):
+        (output / name).write_text(json.dumps(value, indent=2) + '\n')
+
+    def command(*arguments):
+        result = subprocess.run(config['adb'] + list(arguments), capture_output=True, text=True, timeout=180)
+        with (output / 'commands.jsonl').open('a') as target:
+            target.write(json.dumps(dict(argv=config['adb'] + list(arguments), code=result.returncode,
+                                         stdout=result.stdout, stderr=result.stderr)) + '\n')
+        result.check_returncode()
+        return result.stdout.strip()
+
+    def identity():
+        files = command('shell', 'sha256sum', *config['guest_identity'].keys())
+        actual = {line.split(maxsplit=1)[1].strip(): line.split()[0] for line in files.splitlines()}
+        if actual != config['guest_identity']:
+            raise RuntimeError('guest identity mismatch')
+        updates = command('shell', config['update_identity_command'])
+        if hashlib.sha256(updates.encode()).hexdigest() != config['update_identity_sha256']:
+            raise RuntimeError('update identity mismatch')
+        return dict(files=actual, update_manifest_sha256=hashlib.sha256(updates.encode()).hexdigest())
+
+    def thread_inventory(pid, phase):
+        raw = command('shell', 'for task in /proc/' + str(pid) + '/task/*; do '
+                      'printf "%s\t" "${task##*/}"; cat "$task/comm" 2>/dev/null || true; done')
+        rows = []
+        for line in raw.splitlines():
+            parts = line.split('\t', 1)
+            if len(parts) == 2 and parts[0].isdigit():
+                rows.append(dict(tid=int(parts[0]), comm=parts[1]))
+        save('threads-' + phase + '.json', dict(phase=phase, threads=rows,
+                                              scope='proc task comm snapshot; exited or renamed threads remain unknown'))
+
+    def control(text, phase):
+        for name in ('e0', 'e2', 'fmod', 'replacement'):
+            if name in scripts:
+                scripts[name].exports_sync.phase(phase)
+        beginning = time.monotonic()
+        with socket.create_connection(('127.0.0.1', config['control_port']), timeout=300) as connection:
+            connection.sendall((text + '\n').encode())
+            response = json.loads(connection.makefile('rb').readline())
+        receipts.append(dict(command=text, phase=phase, response=response, seconds=time.monotonic() - beginning))
+        save('control-receipts.json', receipts)
+        if not response.get('ok'):
+            raise RuntimeError('native command rejected: ' + text + ': ' + str(response))
+        return response
+
+    def create(name, filename, settings):
+        script = session.create_script((repository / filename).read_text())
+        def message(payload, data):
+            messages.append(dict(script=name, payload=payload))
+            with (output / 'messages.jsonl').open('a') as target:
+                target.write(json.dumps(messages[-1]) + '\n')
+        script.on('message', message)
+        script.load()
+        scripts[name] = script
+        script.exports_sync.configure(settings)
+        print('configured ' + name, flush=True)
+
+    save('run-start.json', dict(started=started, config_sha256=digest(config_path),
+                                mode=config.get('mode', 'original'), runner_sha256=digest(__file__)))
+    save('private-config.json', config)
+    save('source-identity.json', {path.name: digest(path) for path in repository.glob('e[012]_*.js')})
+    source_directory = output / 'sources'
+    source_directory.mkdir()
+    for path in list(repository.glob('e[012]_*.js')) + [Path(__file__), repository / 'e2_config_store.c']:
+        (source_directory / path.name).write_bytes(path.read_bytes())
+    try:
+        if command('emu', 'avd', 'name').splitlines()[0] != config['avd']:
+            raise RuntimeError('AVD ownership mismatch')
+        if command('shell', 'pidof ' + config['package'] + ':engine0 || true'):
+            raise RuntimeError('existing engine must be separately reviewed before this attempt')
+        save('identity-before.json', identity())
+        for path, expected in config['local_identity'].items():
+            if digest(path) != expected:
+                raise RuntimeError('local identity mismatch: ' + path)
+        device = frida.get_device_manager().add_remote_device('127.0.0.1:' + str(config['frida_port']))
+        pid = device.spawn(config['package'], activity=config['activity'])
+        save('owned-process.json', dict(pid=pid, avd=config['avd'],
+                                        stat=command('shell', 'cat', '/proc/' + str(pid) + '/stat')))
+        session = device.attach(pid)
+        observer = json.loads(Path(config['observer_config']).read_text())
+        observer.update(capture_backtraces=False, enumerate_threads=False)
+        if config.get('replacement'):
+            observer['functions'] = [entry for entry in observer['functions']
+                                     if entry['name'] not in {'PreferenceNativeReadBridge', 'PreferenceNativeWriteBridge'}]
+        create('e0', 'e0_dependency_observer.js', observer)
+        if config.get('enable_e2_observer', True):
+            create('e2', 'e2_jni_config_observer.js', observer)
+        resource = dict(config['resource_config'])
+        resource['audit_path'] = config['audit_prefix'] + output.name + '.tsv'
+        create('resource', 'e1_resource_redirect.js', resource)
+        create('fmod', 'e1_fmod_binding.js', config['fmod_config'])
+        if config.get('replacement'):
+            create('replacement', 'e2_config_replace.js', config['replacement'])
+        device.resume(pid)
+        print('resumed ' + str(pid), flush=True)
+        for attempt in range(90):
+            try:
+                status = control('status', 'cold_ready_wait')
+                if status.get('coldReady'):
+                    break
+            except (OSError, ValueError):
+                pass
+            time.sleep(1)
+        else:
+            raise RuntimeError('cold ready not reached')
+        save('cold-ready.json', status)
+        thread_inventory(pid, 'cold-ready')
+        match = json.loads(Path(config['match']).read_text())
+        control('configure ' + json.dumps(match, separators=(',', ':')), 'state_create_load')
+        control('observe', 'initial_state')
+        initial = control('snapshot-create', 'snapshot_create')
+        control('step 21', 'snapshot_branch')
+        first = control('snapshot-create', 'snapshot_create')
+        control('restore ' + str(initial['handle']), 'restore')
+        control('step 21', 'snapshot_branch_replay')
+        second = control('snapshot-create', 'snapshot_create')
+        if (first['digest'], first['bytes']) != (second['digest'], second['bytes']):
+            raise RuntimeError('snapshot branch replay mismatch')
+        for snapshot in (initial, first, second):
+            control('release-snapshot ' + str(snapshot['handle']), 'snapshot_release')
+        control('reset', 'reset')
+        control('observe', 'after_reset')
+        thread_inventory(pid, 'before-trace')
+        result = control('standalone-trace 10000 ' + config['actions_name'], 'full_trace')
+        save('trace.json', result)
+        if not result['finalized'] or result['injected'] != 28 or result['queue_count'] != 0:
+            raise RuntimeError('incomplete native trace')
+        command('pull', result['snapshot_directory'], str(output / 'snapshots'))
+        control('observe', 'terminal')
+        control('reset', 'terminal_reset_destroy')
+        control('observe', 'final_reset_state')
+        thread_inventory(pid, 'after-trace')
+        (output / 'threads-final.txt').write_text(command('shell', 'ps', '-T', '-p', str(pid), '-o', 'TID,NAME,WCHAN'))
+        save('identity-after.json', identity())
+        command('pull', resource['audit_path'], str(output / 'provider-audit.tsv'))
+        if any(message['payload'].get('type') == 'error' for message in messages):
+            raise RuntimeError('Frida script error; inspect retained messages')
+        lifecycle_completed = True
+        print('native lifecycle completed', flush=True)
+    except BaseException as failure:
+        save('run-finished.json', dict(status='failed', exit_code=1, elapsed=time.time() - started,
+                                      error=str(failure), traceback=traceback.format_exc()))
+        raise
+    finally:
+        snapshot_errors = []
+        for name, script in scripts.items():
+            try:
+                save(name + '-final.json', script.exports_sync.snapshot())
+            except BaseException as failure:
+                save(name + '-snapshot-failure.json', dict(error=str(failure)))
+                snapshot_errors.append(name)
+        if session:
+            session.detach()
+        if snapshot_errors:
+            save('evidence-incomplete.json', dict(missing_final_snapshots=snapshot_errors))
+            save('run-finished.json', dict(status='failed', exit_code=1, elapsed=time.time() - started,
+                                          error='final evidence snapshots missing', snapshots=snapshot_errors))
+            raise RuntimeError('final evidence snapshots missing: ' + ', '.join(snapshot_errors))
+        if lifecycle_completed:
+            save('run-finished.json', dict(status='completed', exit_code=0, elapsed=time.time() - started))
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--config', type=Path, required=True)
+    parser.add_argument('--output', type=Path, required=True)
+    args = parser.parse_args()
+    run(args.config, args.output)

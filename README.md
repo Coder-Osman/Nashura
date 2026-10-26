@@ -4,6 +4,13 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+2026-10-27 E2续验：32键native配置替换的固定原生完整轨迹通过；
+original/shadow/三次replacement/两次strict-targeted及最终线程补验均3602快照一致。
+目标fallback0，但46个排除键仍有99次原路径fallback；默认/异常/重复初始化等
+原生语义未闭合，任务书严格门CLI退出2。无VM仅原preinit探针返回，未完成整局；
+Android-free、10×和训练准入均未通过。见[E2报告](agent-handoff/E2_JAVAVM_CONFIG_JNI_REPLACEMENT_2026-10-27.md)。
+以下E1和较早状态保留历史含义。
+
 E1最新续验：固定原生完整轨迹与规定资源矩阵严格门通过（CLI退出0）。
 FMOD真实resolver与六槽已接入同一只读Provider；libg九槽核验，正常生命周期
 平台AssetManager事件0、失败0、live assets0；3602快照/28动作/终局及restore/reset
