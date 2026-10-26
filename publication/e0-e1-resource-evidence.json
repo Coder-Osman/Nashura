@@ -1,0 +1,123 @@
+{
+  "schema": "e0-e1-resource-evidence.v1",
+  "baseline_commit": "74769af2c95fb095ae970a3b8c89934206805aea",
+  "corrected_e0_totals": {
+    "JNI": 45411,
+    "VM": 11911,
+    "AAsset": 19474
+  },
+  "setup_total": 3655,
+  "setup_step_scope": 3643,
+  "concurrent_full_trace_vm_jni": 19079,
+  "full_trace_step_scope_vm_jni": 0,
+  "trajectory": {
+    "schema": "e0-snapshot-comparison.v1",
+    "status": "passed",
+    "comparison": "complete stock serialized bytes; no field normalization",
+    "snapshot_count": 3602,
+    "terminal_tick": 3601,
+    "injected_actions": 28,
+    "total_bytes": 9120440,
+    "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+    "training_admissible": false,
+    "vm_framework_free_verified": false,
+    "counts_sha256": "4ac45c12143368045c9eb42c52878ab929d848e389f3c331e44091d80cb7d7d8"
+  },
+  "replacement": {
+    "receipt": {
+      "schema": "e1-resource-redirect.v1",
+      "installed": true,
+      "redirects": [
+        {
+          "name": "AAssetManager_open",
+          "verified": true
+        },
+        {
+          "name": "AAsset_getLength",
+          "verified": true
+        },
+        {
+          "name": "AAsset_close",
+          "verified": true
+        },
+        {
+          "name": "AAsset_read",
+          "verified": true
+        },
+        {
+          "name": "AAsset_openFileDescriptor64",
+          "verified": true
+        },
+        {
+          "name": "AAsset_seek64",
+          "verified": true
+        },
+        {
+          "name": "AAsset_getLength64",
+          "verified": true
+        },
+        {
+          "name": "AAsset_getRemainingLength64",
+          "verified": true
+        },
+        {
+          "name": "AAssetManager_fromJava",
+          "verified": true
+        }
+      ],
+      "errors": [],
+      "resolver_observations": [],
+      "resolver_coverage": "libdl dlsym observed; other resolver paths unknown",
+      "scope": "engine import slots only; VM and configuration JNI unchanged"
+    },
+    "metrics": {
+      "calls": "19473",
+      "failures": "0",
+      "live_assets": "0",
+      "entries": "9829"
+    }
+  },
+  "gate": {
+    "schema": "e1-acceptance.v1",
+    "status": "blocked",
+    "reasons": [
+      "actual platform AssetManager events remain",
+      "unverified semantics: namespace_priority, fallback"
+    ],
+    "actual_assetmanager_events": 1,
+    "unverified_semantics": [
+      "namespace_priority",
+      "fallback"
+    ],
+    "coverage_scope": "observed exports and configured hooks; not exhaustive",
+    "vm_framework_free_verified": false,
+    "training_admissible": false,
+    "tenfold_speedup_verified": false
+  },
+  "resource_comparison": {
+    "files": 9829,
+    "bytes": 849482445,
+    "mismatches": 0,
+    "descriptor_checks": 9829,
+    "missing_checks": 2,
+    "scope": "separate post-trace diagnostic intentionally invokes stock AssetManager"
+  },
+  "identity_after": {
+    "update_files": 990,
+    "unchanged": true,
+    "apk_sha256": "f1ee6d6146efc8c998843958ae0788e5121c265445c0c7ff5ffa2a5202d7dd9b",
+    "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "probe_sha256": "84cddf82e866540ff33d4b5f0c6b5b535c8485182e4cc84961028c7a56e65ec4"
+  },
+  "evidence_sha256": {
+    "provider-audit.tsv": "86beba71b2687fed879f73a6fe3494adbc4db58273fd389aa9c5c3782e0354fc",
+    "resource-comparison-v4b.tsv": "5dd3bb7148c7bcc7871fd7e3a7c487a8313129e5ccf6e6b2f6eedb0ba09d2f2c",
+    "dependency-counts-final.json": "4ac45c12143368045c9eb42c52878ab929d848e389f3c331e44091d80cb7d7d8",
+    "control-receipts.json": "11eb18701488f9fb21bd01e6dd1657f833d5cc60c6986b4e0eda0b36e134f6d2",
+    "identity-after.json": "d670d9b7f7ee4ec104b61a64fb6636ae847153a4f13313a8ef3e9a1d0ec9b937",
+    "e1-gate.json": "622dc4d9c1c669df72e4749e460e9cc82e88b01065bad31e7a701a8f33774d39"
+  },
+  "no_e2_started": true,
+  "no_training_started": true,
+  "no_main_modified": true
+}

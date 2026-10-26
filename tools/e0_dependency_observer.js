@@ -4,6 +4,7 @@ let configuration = null;
 let hostPhase = 'load';
 let engine = null;
 const stacks = new Map();
+const nativeScopes = new Map();
 const hooks = new Map();
 const counts = new Map();
 const coverage = [];
@@ -28,12 +29,17 @@ function record(entry, invocation, args) {
   const caller = location(invocation.returnAddress);
   let instruction = 'unknown';
   try { instruction = Instruction.parse(invocation.returnAddress.sub(4)).mnemonic; } catch (_) {}
-  const key = [entry.address, current, caller, instruction, thread].join('|');
+  const scopes = (nativeScopes.get(thread) || []).slice();
+  const key = [entry.address, current, hostPhase, scopes.join('>'), caller, instruction, thread].join('|');
   let row = counts.get(key);
   if (!row) {
     row = {target: entry.address, labels: entry.labels.slice(), phase: current, caller, thread,
       caller_instruction: instruction, count: 0, first_sequence: sequence++,
       samples: [], state_effect: 'unknown', label_semantics: 'candidate aliases for this target'};
+    row.host_phase = hostPhase;
+    row.native_scopes = scopes;
+    row.attribution = scopes.length ? 'same-thread instrumented native scope' :
+      'host command overlap only; no cross-thread causal attribution';
     counts.set(key, row);
   }
   row.count++;
@@ -66,6 +72,13 @@ function hook(address, label, options = {}) {
     if (!range || !range.protection.includes('x')) throw new Error('target is not executable');
     Interceptor.attach(address, {
       onEnter(args) {
+        this.scopeThread = Process.getCurrentThreadId();
+        if (options.track_scope || options.step) {
+          const scopes = nativeScopes.get(this.scopeThread) || [];
+          scopes.push(label);
+          nativeScopes.set(this.scopeThread, scopes);
+          this.trackedScope = true;
+        }
         this.entryPhase = null;
         if (options.phase) this.entryPhase = options.phase;
         if (options.step) {
@@ -98,12 +111,23 @@ function hook(address, label, options = {}) {
         if (this.manager) watchManager(this.manager);
         if (options.bootstrap) installTrampolines();
         if (this.entryPhase) stacks.get(Process.getCurrentThreadId()).pop();
+        if (this.trackedScope) nativeScopes.get(this.scopeThread).pop();
       }
     });
     hooks.set(identity, entry);
     coverage.push({label, target: entry.address, status: 'attached'});
   } catch (error) {
-    errors.push({label, target: entry.address, error: String(error)});
+    const instructions = [];
+    try {
+      let cursor = address;
+      for (let index = 0; index < 4; index++) {
+        const decoded = Instruction.parse(cursor);
+        instructions.push({address: location(cursor), instruction: decoded.toString()});
+        cursor = decoded.next;
+      }
+    } catch (_) {}
+    errors.push({label, target: entry.address, error: String(error), instructions,
+      count: null, coverage: 'uncovered; hook installation failed'});
     coverage.push({label, target: entry.address, status: 'failed'});
   }
 }
@@ -191,6 +215,8 @@ rpc.exports = {
   phase(value) { hostPhase = value; return true; },
   snapshot() {
     return {schema: 'e0-dependency-counts.v1', engine_loaded: engine !== null,
+      attribution_version: 2,
+      threads: Process.enumerateThreads().map(thread => ({id: thread.id, name: thread.name || null})),
       counts: Array.from(counts.values()), coverage, errors, tables: tableEvidence,
       scope: 'configured entry points and observed vtables; not exhaustive',
       state_effect: 'unknown; counters do not establish causality'};

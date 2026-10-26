@@ -1,5 +1,23 @@
 # 阶段成果与证据索引
 
+## 2026-10-26 E0归因修正与E1资源替换限定对照
+
+E0区分宿主阶段、同线程native scope和跨线程时间重叠；GameStateSetup的3655次
+调用中3643次处于Step scope。两个失败hook继续标记未覆盖、count=null；零计数
+不代表依赖不存在。E1保留VM和配置JNI，只重定向libg的9个AAsset导入槽。
+最终原生完整局tick3601、28动作、3602份快照共9120440bytes与基线逐字节一致，
+snapshot/restore与reset通过；9829项真实APK资源、849482445bytes对照零差异。
+provider操作19473次、失败0、live assets0，但真实平台仍有1次FMOD发起的
+AAssetManager_fromJava；namespace_priority和fallback缺证。严格门CLI退出2，
+E1整体BLOCKED，不进入E2，不声称无VM或10倍加速。
+
+专项111通过6.25秒；主工程211通过53.14秒；公开入口退出0：主组794通过、
+27跳过106.78秒；其余组23、82、15/3跳过、25/4跳过、31/3跳过、
+31/2跳过、38/3跳过、65通过。集合有重叠，不累加；跳过不是原生覆盖。
+本轮独立game/Frida/AVD/adb及端口已回收，原adb身份不变，克隆及失败证据保留。
+详见agent-handoff/E1_RESOURCE_PROVIDER_2026-10-26.md与
+publication/e0-e1-resource-evidence.json。
+
 ## 2026-10-26 原版战斗依赖闭包续报
 
 两个入口的219/175条汇编及32/28条直接BL在三组对照中不变。预声明callee使越界

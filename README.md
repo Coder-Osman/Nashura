@@ -40,6 +40,14 @@ main或冻结部署。见[后端恢复续报](agent-handoff/REA_BACKEND_RECOVERY
 [E0动态计数](agent-handoff/E0_DYNAMIC_DEPENDENCY_COUNTS_2026-10-26.md)及
 [依赖闭包续报](agent-handoff/NATIVE_BATTLE_DEPENDENCY_CLOSURE_CONTINUATION_2026-10-26.md)。
 
+E0阶段归因现已按线程与native scope修正：GameStateSetup共3655次，其中3643次
+位于Step scope；并发Mainloop调用仅按时间重叠记录，不当作tick因果归属。
+E1只替换libg的9个资源导入槽，保留VM与配置JNI：完整局3602份快照与原版
+全字节一致，9829项真实APK资源对照零差异。但仍有1次FMOD发起的平台
+AssetManager调用，namespace优先级及fallback尚未验证，故E1整体BLOCKED，
+E2未启动。本轮独立实例已回收，原adb身份保持不变。详见
+[E1报告](agent-handoff/E1_RESOURCE_PROVIDER_2026-10-26.md)。
+
 ## 当前状态（2026-10-25）
 
 | 阶段 | 状态 | 尚待完成 |
