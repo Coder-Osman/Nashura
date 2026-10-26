@@ -96,7 +96,7 @@ QEMU 只负责指令翻译，不会自动解决 Bionic、JNI、AssetManager 或�
 
 输出 dependency-report.json 与 DEPENDENCY_MAP.md。每项标记 STATIC_FOUND、RUNTIME_OBSERVED、PROVEN_REQUIRED 或 UNRESOLVED。符号名只是线索，不能直接推断依赖必需性。不得公开二进制、私有地址/寄存器原始日志或资源。
 
-### Phase 2：验证 QEMU user-mode 与 ABI
+### Phase 2：在本机 ARM64 Linux guest 验证运行环境与 ABI
 
 先用最小 AArch64 Linux ELF 验证进程启动、syscall、线程、时钟、文件 I/O、IPC、signal、退出码和日志。这只是 smoke test，不是游戏成功。
 
