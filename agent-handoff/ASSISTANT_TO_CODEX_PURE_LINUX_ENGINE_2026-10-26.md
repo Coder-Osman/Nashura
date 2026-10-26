@@ -1,18 +1,21 @@
-# Codex 执行规范：原版战斗引擎脱离 Android，在 Linux 直接运行
+# Codex 执行规范：在 Apple Silicon Mac 本机实验，剥离 Android 战斗运行环境并加速
 
 - 日期：2026-10-26
 - 仓库：Coder-Osman/Nashura
 - 工作分支：codex/pure-linux-libg-headless-20261026
-- 目标：普通 Linux x86_64 主机直接驱动原版 ARM64 战斗逻辑；不启动 Android Emulator、APK Activity、Android UI、ART 或 Java VM。
+- 目标机器：用户本机 Apple Silicon ARM64 Mac。实验首先在本机完成；必要时使用 ARM64 Linux VM/容器作为隔离宿主，不使用 Android Emulator。目标是让训练程序直接驱动战斗状态转移逻辑，优先复用原版 libg.so 中可分离的逻辑，完全不启动 Android 客户端 UI/Activity/ART/Java VM；若原版核心无法在这些组件缺席时初始化，必须如实记录并评估自有 headless 引擎后备路线。
+- 重要平台事实：macOS 是 Darwin，不能直接用 dyld 加载 Android ELF/Bionic 的 libg.so。Apple Silicon 只解决 ARM64 指令架构相同的问题，不自动解决 ELF、Bionic、JNI 或 AssetManager 依赖。不要把“Mac 是 ARM”误写成“可以直接 dlopen libg.so”。
 - 性能门槛：同等硬件、同等动作轨迹和终局语义下，吞吐至少达到当前 Android 模拟器路径的 10 倍。此为待验证目标，不得预先宣称达成。
 - 本文不授权启动正式训练，不允许修改 main 或干扰冻结任务。
 
 ## 1. 完成定义
 
+本轮是本机可行性实验与加速原型，不是远端训练部署。所有构建、缓存、日志和临时文件放在独立的本机工作目录；不得默认修改用户已有环境，不得把 APK、libg.so、资源包、模型或私有审计文件提交到 GitHub。先做可证伪的小实验，再决定是否构建更复杂的运行时。
+
 只有同时满足以下条件，才可报告 PURE_LINUX_NATIVE_ENGINE=PASS：
 
 1. 实际运行匹配版本 libg.so 中的战斗逻辑，不能把自写模拟器说成原版引擎。
-2. 在普通 Linux x86_64 用户进程中运行。允许 QEMU user-mode 翻译 ARM64 指令；它不是 Android Emulator，也不需要 KVM，但不会自动提供 Android ABI。
+2. 首选在 Apple Silicon Mac 上的 ARM64 Linux guest/容器中做实验；若最终在 Linux ARM64 用户进程运行，ARM64 指令由同架构 CPU 执行，不需要 QEMU 指令翻译。macOS 原生进程不能直接加载 Android ELF，因此 macOS 是开发宿主，不是直接 dlopen libg.so 的目标运行环境。
 3. 不启动 Android Emulator、APK Activity、Android framework、ART、Java VM、Surface/EGL/GLES 或 Android UI。
 4. 不通过截图、ADB touch、Frida 附加 Android 进程或读取 Android 进程内存来控制对局。
 5. 训练程序通过本机 IPC 发送动作并获取结构化状态。
@@ -60,31 +63,41 @@ libg.so 是 ARM64 Android native library，不是普通 x86_64 Linux ELF。复�
 7. 生命周期：必须从无 UI 的状态创建战斗、推进、取状态、结束和销毁。
 8. 隔离：每局要有独立随机状态、对象池、事件缓存和终局状态。先实现每进程一局，再考虑并行。
 
-## 4. 推荐路线
+## 4. 本机 Apple Silicon 的优先路线
 
-### A：QEMU user-mode + 最小 ABI / 资源适配
+### 路线 A0：先确认 Mac 原生加载边界（只做快速否证）
 
-目标结构：训练程序 / BattleEnvV1 → Unix domain socket → Linux x86_64 host → QEMU AArch64 user-mode worker → libg.so + 最小必要 ABI shim → 原生战斗状态 / tick / 动作 / 观测。
+macOS 的 dyld 不能把 Android ELF/Bionic 的 libg.so 当作普通 Mach-O dylib 加载。先用 file/readelf（可通过已有工具，或在 Linux guest 内执行）确认格式、ABI 与依赖。不要尝试在 macOS 上直接 dlopen 该 ELF，也不要把加载失败当作战斗逻辑无法剥离的证据。Mac 原生代码可用于构建 IPC 客户端、分析工具、benchmark 与自有模拟器。
 
-QEMU 只负责指令翻译，不会自动解决 Bionic、JNI、AssetManager 或游戏初始化。先查依赖，再对真正可达且必需的函数逐个实现 shim。每个 shim 都要有契约测试，不允许对未知函数统一返回 0 或 null。如果 worker 启动完整 ART/Java VM 或 Android system_server，则不符合本文定义。若使用局部 Android userspace/Bionic 组件，必须如实记录为 Android ABI 兼容层。
+### 路线 A1：Apple Silicon Mac + ARM64 Linux guest（首选实验宿主）
 
-### B：抽取原版战斗更新路径
+使用用户本机已有的 VMware Fusion / UTM / Docker Desktop ARM64 Linux 环境；若没有，先记录环境并向用户说明需要选择的最小方案，不要未经允许安装或修改系统设置。确认 guest 的 uname -m 为 aarch64/arm64。ARM64 Linux guest 运行 ARM64 Linux 程序时不需要 QEMU user-mode 做 CPU 指令翻译；但 Android libg.so 仍需要解决 ELF 动态链接、Bionic、JNI、AssetManager 和初始化依赖。
 
-若 Android/JNI 依赖主要集中在启动和资源加载，而每 tick 的战斗更新依赖较少，识别：内容资源加载和全局注册；GameState 构造、初始化、载入；BattleManager / ReplayBattleController 创建和生命周期；单 tick/update；原生状态快照；动作构造、校验、排队和应用时刻；正常销毁与 reset。
+目标结构：Mac 上的开发工具 → ARM64 Linux guest → 独立 native host / IPC → 经过验证的原生战斗状态与 tick。先在 guest 中完成只读静态审计和最小 ABI 探针。不要先构建完整 Android 系统，也不要假定容器会自动提供 Android runtime。
+
+如果已有 VMware Fusion Ubuntu 22.04 ARM64 VM，先只读检查其当前状态和启动能力；历史上出现过启动/网络问题，不能假定它当前可用，也不要未经同意删除或重建。
+
+### 路线 A2：只有在明确需要时才测试 QEMU user-mode
+
+QEMU user-mode 是 x86 主机执行 ARM64 Linux 用户程序的方案。我们的本机是 ARM64 Mac，所以它不是默认加速方案。仅当需要复现 x86_64 训练服务器上的跨架构执行，或某个测试明确需要时才使用；不要把 QEMU 引入本机热路径来增加复杂度。
+
+### 路线 B：抽取原版战斗更新路径
+
+在匹配版本的依赖图和初始化证据基础上，识别：内容资源加载和全局注册；GameState 构造、初始化、载入；BattleManager / ReplayBattleController 创建和生命周期；单 tick/update；原生状态快照；动作构造、校验、排队和应用时刻；正常销毁与 reset。
 
 优先复用原版状态创建、动作处理和更新函数，不要自己重写移动、寻敌、伤害、弹道和卡牌行为。frozen/android_reference_probe.cpp 中 GameState new/constructor/setup/step/tick/destroy、JSON/logic command、ReplayBattleController 偏移只是匹配版本的候选入口。每次使用前核对 libg.so SHA、机器码签名、调用约定、前置对象和返回语义，不能跨版本复制偏移。
 
 如果每 tick 都依赖 Java 对象、Android Looper、图形上下文或不可分离的客户端全局状态，量化依赖闭包，不要盲目添加 stub。
 
-### C：自有高保真模拟器（后备）
+### 路线 C：自有高保真 headless 模拟器（性能后备）
 
-复用 firstlight_CR/native_runner/sim_core 的接口与测试，或借鉴外部 simulator 的 A* 与机制模块。此路线可能达到更高吞吐，但属于重新实现，不得声称原版引擎已剥离或 122 卡等价。必须按卡牌/机制建立原生对照与 sim-to-real 误差报告。
+复用 firstlight_CR/native_runner/sim_core 的接口与测试，或借鉴外部 simulator 的 A* 与机制模块。此路线可能达到更高吞吐，但属于重新实现，不得声称原版引擎已剥离或 122 卡等价。必须按卡牌/机制建立真实原生对照与 sim-to-real 误差报告。
 
 ## 5. Codex 分阶段执行
 
-### Phase 0：保护现状并锁定输入
+### Phase 0：本机环境与仓库状态基线
 
-记录 git status --short --branch、HEAD SHA、origin/main SHA。重读 AGENTS.md、README.md、CHANGELOG.md、TRAINING_ENGINE_PLAN.md、docs/REPRODUCING.md、supported_engine.json 与 data/competitive/manifest.json。
+先记录 macOS 版本、芯片架构（uname -m）、内存、可用磁盘空间，以及已有 ARM64 Linux guest/容器是否可用。不要输出个人隐私信息。记录 git status --short --branch、HEAD SHA、origin/main SHA。重读 AGENTS.md、README.md、CHANGELOG.md、TRAINING_ENGINE_PLAN.md、docs/REPRODUCING.md、supported_engine.json 与 data/competitive/manifest.json。
 
 核对 APK 版本、ABI、libg.so SHA、runtime fingerprint 和资源身份。缺少匹配输入则报告 BLOCKED_MISSING_INPUT，不得用其他版本代替。检查运行中的冻结任务与输出目录；不得发信号、重启、覆盖文件或复用端口。
 
@@ -98,11 +111,11 @@ QEMU 只负责指令翻译，不会自动解决 Bionic、JNI、AssetManager 或�
 
 ### Phase 2：在本机 ARM64 Linux guest 验证运行环境与 ABI
 
-先用最小 AArch64 Linux ELF 验证进程启动、syscall、线程、时钟、文件 I/O、IPC、signal、退出码和日志。这只是 smoke test，不是游戏成功。
+先检查本机已有的 ARM64 Linux guest/容器能否启动并联网。若已有 VMware Fusion Ubuntu 22.04 ARM64 VM，先检查其当前状态；历史上出现过启动/网络问题，不能假定当前可用，也不要未经同意删除或重建。没有可用 guest 时，先报告 BLOCKED_ENVIRONMENT，并给出最小化的用户选择，不擅自安装或修改系统设置。
 
-然后验证 Android ELF 的动态链接方式、Bionic sysroot、Android linker 与未解析符号。固定 QEMU 版本和 SHA。不得将普通 Linux ELF 通过写成 libg.so 通过；不得将合成程序通过写成原生游戏证据。
+在可用的 ARM64 Linux guest 中，用最小 AArch64 Linux ELF 验证进程启动、syscall、线程、时钟、文件 I/O、IPC、signal、退出码和日志。这只是 smoke test，不是游戏成功。然后验证 Android ELF 的动态链接方式、Bionic sysroot、Android linker 与未解析符号。由于 guest 与引擎都是 ARM64，默认不使用 QEMU user-mode；固定并记录 guest 镜像/系统版本和测试二进制身份。
 
-输出 QEMU_ABI_FEASIBILITY.md 与独立 smoke tests。
+不得将普通 Linux ELF 通过写成 libg.so 通过；不得将合成程序通过写成原生游戏证据。输出 ARM64_LINUX_ABI_FEASIBILITY.md 与独立 smoke tests。
 
 ### Phase 3：确认最小游戏生命周期
 
@@ -110,9 +123,9 @@ QEMU 只负责指令翻译，不会自动解决 Bionic、JNI、AssetManager 或�
 
 现有 frozen/android_reference_probe.cpp 包含 GameState 和 ReplayBattleController 候选偏移；它们必须和当前二进制 SHA/机器码签名绑定。每个实验记录输入 canary、返回值、调用前后状态摘要、未解决 API、资源释放和退出状态。重点判断能否绕开 UI 场景管理器创建 GameState/battle manager，还是必须由 GameApp/Replay scene 建立隐式全局状态。
 
-### Phase 4：构建 Linux host 与 IPC
+### Phase 4：在本机 ARM64 Linux guest 中构建 host 与 IPC
 
-仅当 Phase 1–3 有证据支持时开始。组件建议：linux_engine_host（管理生命周期、IPC、计时、日志）；arm64_engine_worker（QEMU user-mode 下的 ARM64 进程）；android_abi_shim（只包含已证明必需的兼容函数）；native_battle_adapter（转换 Nashura 的 Action/Observation）；protocol（优先 Unix domain socket，消息含版本、请求 ID、tick、engine SHA、状态摘要）。
+仅当 Phase 1–3 有证据支持时开始。组件建议：linux_engine_host（管理生命周期、IPC、计时、日志）；arm64_engine_worker（在 ARM64 Linux guest 中直接运行，不默认加 QEMU）；android_abi_shim（只包含已证明必需的兼容函数）；native_battle_adapter（转换 Nashura 的 Action/Observation）；protocol（优先 Unix domain socket，消息含版本、请求 ID、tick、engine SHA、状态摘要）。
 
 最低命令：PING、CREATE_MATCH、RESET、STEP_TICKS、APPLY_ACTIONS、OBSERVE、STATE_DIGEST、TERMINATE。STEP_TICKS 必须由原生 tick/update 入口推进，不能靠 sleep 或改游戏时间变量冒充。APPLY_ACTIONS 返回 accepted/rejected 和原因。OBSERVE 只在决策边界序列化，避免逐 tick JSON 开销。
 
@@ -141,7 +154,15 @@ QEMU 只负责指令翻译，不会自动解决 Bionic、JNI、AssetManager 或�
 
 每配置多次重复并报告中位数与离散程度。只有 Linux 路径达到 Android 路径至少 10×，且完整局和正确性门通过，才记为 PERFORMANCE_10X_PASS。否则如实报告倍率与瓶颈。
 
-## 6. 交付物与回执
+## 6. 本机实验特别约束
+
+- 不得未经用户明确同意安装 Homebrew 包、修改 shell 配置、安装/升级 VMware/UTM/Docker、创建或删除 VM、改系统安全策略。先盘点现有工具与 guest。
+- 所有 build、cache、日志和实验输出放在专用临时目录；不覆盖用户项目已有文件，不使用仓库中冻结任务的端口与输出目录。
+- 如果需要的 APK/libg.so/资源但本机没有，记录 BLOCKED_MISSING_INPUT，并给出需要用户放置的路径和 SHA 校验命令；不上传、不复制到公开仓库。
+- 先做本机单局、短轨迹、无训练的可行性探针；没有通过前，不启动多局 benchmark、不跑正式自博弈、不使用 GPU 训练资源。
+- 加速目标分解为：去掉 Android UI/帧率等待、减少 IPC/序列化、降低初始化/reset 成本、直接推进原生 tick、最后再并行。先用 profiler/计时证据确定瓶颈，不预设 QEMU 或 ARM CPU 是唯一瓶颈。
+
+## 7. 交付物与回执
 
 先完成审计再决定是否实现 host，不要先铺开大量 shim。必须创建：
 
@@ -151,4 +172,4 @@ QEMU 只负责指令翻译，不会自动解决 Bionic、JNI、AssetManager 或�
 
 公开检查、主工程检查、source-manifest 和凭据扫描必须按仓库规则执行。公开报告不得包含私有二进制或原始地址/寄存器审计。
 
-最终原则：先证明原版战斗状态能在无 Android 进程的 Linux host 中创建、推进、观测和销毁；再证明语义正确；最后才追求 10× 吞吐。不要把“无渲染”当作“脱离 Android”。
+最终原则：实验先在用户本机 Apple Silicon Mac 上完成；优先利用 ARM64 Linux guest 避免不必要的指令翻译，但不假定它自动解决 Android ABI。先证明原版战斗状态能在无 Android 进程中创建、推进、观测和销毁，再证明语义正确，最后才追求 10× 吞吐。不要把“无渲染”当作“脱离 Android”，也不要把“ARM64 同架构”当作“ABI 兼容”。
