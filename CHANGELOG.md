@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-26：E1 FMOD接管、原生namespace矩阵与严格门闭合
+
+- 动态追踪实际libdl resolver、FMOD六槽和manager传播，资源调用接入同一Provider。
+- 新增真实引擎文件入口探针，24项namespace/exists/优先级/fallback原生对照一致。
+- 修正延迟解压及损坏数据语义；32项Android API诊断对照，故意失败明确计数。
+- 完整局3602快照/28动作及restore/reset一致，正常平台资源事件0，严格CLI退出0。
+- 加强证据SHA、构建一致、原生销毁及负向突变检查；96专项、主工程及公开入口通过。
+- 发布脱敏续报，保留旧BLOCKED及未覆盖项；回收独立实例，不进入E2或训练。
+
 ## 2026-10-26：E0归因修正与E1资源替换
 
 - observer增加同线程native scope与宿主时间窗区分，失败hook继续保留未知次数。

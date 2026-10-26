@@ -1,5 +1,26 @@
 # E0修正与E1阶段回执
 
+## 最新续验回执：限定E1严格门通过
+
+基于d49aab860ee8696808dcdf9118a30b55b3a2f5ff；本轮SHA以包含此回执的提交为准。
+仅发布任务分支，不修改main。完整结果见
+[FMOD与namespace续报](E1_FMOD_NAMESPACE_VALIDATION_2026-10-26.md)。
+
+- 实际libdl resolver→FMOD六槽→Provider→保存manager传播链已动态验证。
+- 24项真实引擎namespace/exists/优先级/fallback矩阵原版与替换一致。
+- 最终3602份原生快照、28动作、终局、snapshot/restore/reset全字节或响应一致。
+- libg9槽核验；正常生命周期平台AAsset事件0，Provider19474操作、失败0、live0。
+- 全量9829资源/849482445bytes对照一致；同一Provider构建；990个update文件未变。
+- `verify_e1_gate.py`真实附件CLI退出0，17项检查通过；20项真实证据负向突变全部拒绝。
+- 专项pytest96通过、主工程211通过、公开入口完成，均exit0；工程与原生证据分开。
+- 独立实例回收exit0，原adb身份不变；失败、损坏诊断及未覆盖项保留。
+
+范围为冷启动至终局、战斗销毁及最终reset的配置观测边界。自然音频播放、
+OS进程teardown、未配置间接调用及E0两个短stub仍未覆盖，不宣称穷尽生命周期。
+Java VM和配置JNI保留，未进入E2、训练或10倍性能实验。
+
+以下为旧阶段回执，其BLOCKED结果保留历史含义。
+
 基线提交：`74769af2c95fb095ae970a3b8c89934206805aea`。
 本阶段提交身份以包含本回执的Git提交为准；仅提交任务分支
 `codex/headless-engine-plan-20261025`，不修改main。

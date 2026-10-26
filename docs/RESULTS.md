@@ -1,5 +1,23 @@
 # 阶段成果与证据索引
 
+## 2026-10-26 E1 FMOD绑定与namespace严格续验
+
+固定原生轨迹及规定资源矩阵严格门CLI退出0：3602份快照、28动作、终局、
+snapshot/restore/reset一致；libg9槽核验、FMOD6槽及manager传播链动态验证。
+正常生命周期平台AAsset事件0，Provider19474操作、失败0、live assets0。
+真实引擎24项namespace/exists/优先级/fallback矩阵一致；同构建Provider全量
+9829资源、849482445bytes逐字节相同。输入和990个update文件身份未变。
+
+32项损坏/路径/mode边界使用合成归档经真实Android API对照，故意失败48次
+显式保留，不混入正常生命周期；20项真实附件突变均被拒，CLI篡改退出2。
+专项96项通过9.24s，主工程211项通过58.52s，公开入口主组794/27skip及
+八组专项通过，均退出0；测试集合不累加，不替代原生证据。
+
+E1限定范围通过，自然音频、OS进程teardown及未配置间接目标仍未覆盖。
+保留VM/配置JNI，不进入E2、训练或10倍实验；实例回收，原adb不变。
+旧BLOCKED历史保留，详见agent-handoff/E1_FMOD_NAMESPACE_VALIDATION_2026-10-26.md
+和publication/e0-e1-resource-evidence.json的followup字段。
+
 ## 2026-10-26 E0归因修正与E1资源替换限定对照
 
 E0区分宿主阶段、同线程native scope和跨线程时间重叠；GameStateSetup的3655次

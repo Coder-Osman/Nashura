@@ -139,9 +139,22 @@ void *e1_AAssetManager_open(void *manager, const char *name, int mode) {
     const Entry *entry = bsearch(&key, provider->entries, provider->count, sizeof(Entry), compare_entry);
     if (!entry) { audit(provider, "missing", name, mode, 0, 0); errno = ENOENT; return NULL; }
     Asset *asset = calloc(1, sizeof(*asset));
+    if (!asset) {
+        audit(provider, "open_error", name, mode, -1, 1); return NULL;
+    }
+    asset->provider = provider; asset->entry = entry;
+    pthread_mutex_lock(&provider->lock); provider->live++; pthread_mutex_unlock(&provider->lock);
+    audit(provider, "open", name, mode, entry->length, 0);
+    return asset;
+}
+
+static int materialize(Asset *asset) {
+    if (asset->data) return 1;
+    Provider *provider = asset->provider;
+    const Entry *entry = asset->entry;
     unsigned char *packed = malloc((size_t)entry->packed + 1);
-    if (asset) asset->data = malloc((size_t)entry->length + 1);
-    int okay = asset && asset->data && packed;
+    asset->data = malloc((size_t)entry->length + 1);
+    int okay = asset->data && packed;
     int64_t received = 0;
     while (okay && received < entry->packed) {
         ssize_t amount = pread(provider->apk, packed + received, (size_t)(entry->packed - received), entry->offset + received);
@@ -160,16 +173,13 @@ void *e1_AAssetManager_open(void *manager, const char *name, int mode) {
             inflateEnd(&stream);
         }
     } else if (okay) memcpy(asset->data, packed, (size_t)entry->length);
-    if (okay) okay = crc32(0, asset->data, (uInt)entry->length) == entry->crc;
     free(packed);
     if (!okay) {
-        if (asset) { free(asset->data); free(asset); }
-        audit(provider, "open_error", name, mode, -1, 1); errno = EIO; return NULL;
+        free(asset->data); asset->data = NULL;
+        audit(provider, "read_error", entry->name, asset->position, -1, 1);
+        errno = EIO; return 0;
     }
-    asset->provider = provider; asset->entry = entry;
-    pthread_mutex_lock(&provider->lock); provider->live++; pthread_mutex_unlock(&provider->lock);
-    audit(provider, "open", name, mode, entry->length, 0);
-    return asset;
+    return 1;
 }
 
 int e1_AAsset_read(void *handle, void *buffer, size_t count) {
@@ -178,6 +188,7 @@ int e1_AAsset_read(void *handle, void *buffer, size_t count) {
         audit(asset->provider, "invalid_read", asset->entry->name, (int64_t)count, -1, 1);
         errno = EINVAL; return -1;
     }
+    if (!materialize(asset)) return -1;
     int64_t amount = asset->entry->length - asset->position;
     if ((uint64_t)amount > count) amount = (int64_t)count;
     if (amount) memcpy(buffer, asset->data + asset->position, (size_t)amount);

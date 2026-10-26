@@ -130,19 +130,50 @@ def test_provider_rejects_malformed_index(provider, line):
     index.write_text(line)
     assert not api.e1_initialize(bytes(path), bytes(index), bytes(audit))
 
-def test_provider_missing_invalid_crc_and_no_leaks(provider):
+def test_provider_missing_invalid_and_no_leaks(provider):
     api, context, rows = initialize(provider)
     assert not api.e1_AAssetManager_open(context, b"missing", 0)
     assert api.e1_metric(1) == 0
     assert not api.e1_AAssetManager_open(context, b"../invalid", 0)
     assert not api.e1_AAssetManager_open(None, b"stored", 0)
     assert not api.e1_AAssetManager_open(context, b"stored", 4)
+    assert api.e1_metric(1) == 3 and api.e1_metric(2) == 0
+
+
+def test_stored_payload_crc_is_not_an_android_read_error(provider):
+    api, context, rows = initialize(provider)
     stored = next(row for row in rows if row[0] == "stored")
     with provider[1].open("r+b") as target:
         target.seek(stored[1])
         target.write(b"X")
-    assert not api.e1_AAssetManager_open(context, b"stored", 0)
-    assert api.e1_metric(1) == 4 and api.e1_metric(2) == 0
+    handle = api.e1_AAssetManager_open(context, b"stored", 0)
+    assert handle
+    output = ctypes.create_string_buffer(stored[2])
+    assert api.e1_AAsset_read(handle, output, stored[2]) == stored[2]
+    assert output.raw == b"Xixture-stored-content"
+    api.e1_AAsset_close(handle)
+    assert api.e1_metric(1) == 0 and api.e1_metric(2) == 0
+
+
+@pytest.mark.parametrize("mode", [0, 1, 2, 3])
+def test_deflate_error_occurs_on_read_and_keeps_position(provider, mode):
+    api, context, rows = initialize(provider)
+    compressed = next(row for row in rows if row[0] == "compressed")
+    with provider[1].open("r+b") as target:
+        target.seek(compressed[1])
+        target.write(b"\xff")
+    handle = api.e1_AAssetManager_open(context, b"compressed", mode)
+    assert handle and api.e1_metric(1) == 0
+    output = ctypes.create_string_buffer(1)
+    for count in (0, 1):
+        assert api.e1_AAsset_read(handle, output, count) == -1
+        assert api.e1_AAsset_getRemainingLength64(handle) == compressed[2]
+    assert api.e1_AAsset_seek64(handle, compressed[2], 0) == compressed[2]
+    assert api.e1_AAsset_read(handle, output, 1) == -1
+    assert api.e1_AAsset_getRemainingLength64(handle) == 0
+    assert api.e1_metric(1) == 3
+    api.e1_AAsset_close(handle)
+    assert api.e1_metric(2) == 0
 
 def test_independent_handles_concurrent_reads(provider):
     api, context, rows = initialize(provider)

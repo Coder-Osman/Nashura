@@ -119,5 +119,200 @@
   },
   "no_e2_started": true,
   "no_training_started": true,
-  "no_main_modified": true
+  "no_main_modified": true,
+  "followup": {
+    "schema": "e1-fmod-namespace-followup.v1",
+    "base_commit": "d49aab860ee8696808dcdf9118a30b55b3a2f5ff",
+    "report": "agent-handoff/E1_FMOD_NAMESPACE_VALIDATION_2026-10-26.md",
+    "evidence_scope": "private native attachments retained; public aggregate alone does not reproduce the native run",
+    "gate_exit_code": 0,
+    "gate": {
+      "schema": "e1-acceptance.v2",
+      "status": "passed",
+      "reasons": [],
+      "actual_assetmanager_events": 0,
+      "unverified_semantics": [],
+      "semantic_errors": {},
+      "semantic_checks": {
+        "bytes": true,
+        "read": true,
+        "seek": true,
+        "length": true,
+        "remaining": true,
+        "descriptor": true,
+        "missing": true,
+        "namespace_priority": true,
+        "fallback": true,
+        "snapshot_restore": true,
+        "reset": true,
+        "identities_unchanged": true,
+        "fmod_binding": true,
+        "fmod_files": true,
+        "damaged_data": true,
+        "provider_identity": true,
+        "stock_trajectory": true
+      },
+      "coverage_scope": "cold startup through terminal, battle destruction and final reset; configured hooks only",
+      "uncovered": [
+        "process teardown",
+        "natural FMOD audio playback",
+        "unconfigured indirect targets"
+      ],
+      "vm_framework_free_verified": false,
+      "training_admissible": false,
+      "tenfold_speedup_verified": false,
+      "attachment_sha256": {
+        "stock_namespace": "5548776e26db3c4a79235358f0e097d92cd5ea6fac7cfb78ab4a6ab2e05830d5",
+        "replacement_namespace": "0fbc8a2b7591adff30f350f57a1117bba103499cb609a0d3f1720d77d8a3c825",
+        "stock_roots": "0c5286668296d5a3eddf573147c4d362dd65cf08977085f4b0301ece697dde99",
+        "replacement_roots": "1752b4ad018e327012f77cee32b0b6b850c7708f2db4ecc4935600410fba57cc",
+        "fmod_binding": "dc42146da1d9f7cf7ef603c66b6512c5d676a46c324da2c48261062e02f659b5",
+        "stock_fmod_files": "f077c4012b0fcebbf7e36e24ac3dfd4f67acae68a5740910c52ab839df531a90",
+        "replacement_fmod_files": "592cc23af945eca93d53bb8696d140675c91b12d03c7e1952a412a613b650d1d",
+        "stock_controls": "91f37a0ffbd7915155ad5fa45f113199426efed6023754401994cab67f03cdba",
+        "replacement_controls": "a6870e1f728fd4638c1e7011746583d47cf55ed777e3aca0597c0e6699e071e9",
+        "asset_boundary": "588a5ae48e4f92ae82168090bfe6d5fde0f9162ddd674bf887047b72df202d73",
+        "resource_comparison": "5dd3bb7148c7bcc7871fd7e3a7c487a8313129e5ccf6e6b2f6eedb0ba09d2f2c",
+        "resource_metrics": "7bd98c54a61306765be2c8445fdf8a958887f1d5ad22acddb0acb2ce45b7fbb0",
+        "resource_build": "aeb5ebdeb2ae136df95851e38d4faa43df3ec38608632742f9eb42fd342c281a",
+        "replacement_build": "aeb5ebdeb2ae136df95851e38d4faa43df3ec38608632742f9eb42fd342c281a",
+        "stock_comparison": "f4b067821a605b76914fdb043ef98047d68ab67a619e802c6ed43b8ed23a3a1d",
+        "stock_identity_before": "5bb4730e8f66010217ae45de6efe2ca7d497edeeeda0319f6ee837f45c6bb383",
+        "replacement_identity_before": "5bb4730e8f66010217ae45de6efe2ca7d497edeeeda0319f6ee837f45c6bb383",
+        "stock_identity_after": "5bb4730e8f66010217ae45de6efe2ca7d497edeeeda0319f6ee837f45c6bb383",
+        "replacement_identity_after": "5bb4730e8f66010217ae45de6efe2ca7d497edeeeda0319f6ee837f45c6bb383",
+        "stock_update_before": "411aa1c884c90366e4cae2600d13e886aebe000af282847eb494d65d7d62a942",
+        "stock_update_after": "411aa1c884c90366e4cae2600d13e886aebe000af282847eb494d65d7d62a942",
+        "replacement_update_before": "411aa1c884c90366e4cae2600d13e886aebe000af282847eb494d65d7d62a942",
+        "replacement_update_after": "411aa1c884c90366e4cae2600d13e886aebe000af282847eb494d65d7d62a942"
+      }
+    },
+    "trajectory": {
+      "schema": "e0-snapshot-comparison.v1",
+      "status": "passed",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "counts_sha256": "a3c497f3405fd095fc1b0bb058d3121c0bd488234782e99e565626e877ab1c57",
+      "training_admissible": false,
+      "vm_framework_free_verified": false
+    },
+    "provider": {
+      "build": {
+        "sha256": "82732f436560055e60a8f2e760b731bafd8436c02313cf086a109d55476f234e",
+        "source_sha256": "e074c24c4e7d8c852715bdc536b9541d528a206e194eef74e7bca5466e6d1e2a"
+      },
+      "metrics": {
+        "calls": "19474",
+        "failures": "0",
+        "live_assets": "0",
+        "entries": "9829"
+      },
+      "engine_slots_verified": 9,
+      "fmod_slots_verified": 6
+    },
+    "fmod": {
+      "actual_libdl_dlopen_and_dlsym_observed": true,
+      "resource_symbols_resolved": 6,
+      "resolver_calls": 2066,
+      "unknown_resolver_requests": 31,
+      "manager_and_java_reference_propagation_verified": true,
+      "first_phase": "cold_ready_wait",
+      "natural_audio_playback_covered": false,
+      "explicit_native_file_entry_cases": 3,
+      "explicit_file_entry_results_equal": true
+    },
+    "namespace": {
+      "real_engine_entry_cases": 24,
+      "priority": "unqualified path prefers update; data:/ is APK-only; update:/ is update-only",
+      "fallback": "unqualified path falls back to APK after update fixture removal; explicit namespaces do not cross-fallback",
+      "bytes_exists_routing_and_file_operations_equal": true,
+      "battle_snapshot_normalization": false
+    },
+    "full_resource_diagnostic": {
+      "files": 9829,
+      "bytes": 849482445,
+      "descriptor_checks": 9829,
+      "missing_checks": 2,
+      "metrics": {
+        "result": 0,
+        "operations": "276073",
+        "failures": "0",
+        "live_assets": "0",
+        "messages": []
+      },
+      "scope": "separate diagnostic intentionally invokes original Android API; not zero-event lifecycle counts"
+    },
+    "boundary_diagnostic": {
+      "schema": "e1-native-asset-boundary.v2",
+      "cases": 32,
+      "scope": "synthetic archive compared through actual Android API; not natural game corruption coverage",
+      "all_rows_equal": true,
+      "intentional_provider_failures": 48,
+      "live_assets": 0
+    },
+    "identities_unchanged": true,
+    "update_files": 990,
+    "negative_tests": {
+      "real_attachment_mutations": 20,
+      "all_blocked": true,
+      "cli_attachment_tamper_exit_code": 2
+    },
+    "engineering_tests": {
+      "targeted": {
+        "passed": 96,
+        "seconds": 9.24,
+        "exit_code": 0
+      },
+      "main": {
+        "passed": 211,
+        "seconds": 58.52,
+        "exit_code": 0
+      },
+      "public": {
+        "main_passed": 794,
+        "main_skipped": 27,
+        "main_seconds": 117.31,
+        "exit_code": 0
+      },
+      "counts_overlap": true,
+      "does_not_replace_native_evidence": true
+    },
+    "cleanup": {
+      "status": "passed",
+      "owned_emulator_exited": true,
+      "owned_adb_exited": true,
+      "owned_forwards_removed": true,
+      "owned_game_and_frida_terminated": true,
+      "original_adb_identity_unchanged": true,
+      "remaining_owned_listeners": [],
+      "evidence_and_clone_retained": true,
+      "os_teardown_dependency_observation": "uncovered"
+    },
+    "unresolved": [
+      "OS process teardown dependency observation",
+      "natural FMOD audio playback",
+      "unconfigured indirect targets",
+      "E0 manager_b0.slot1 and command.slot2 remain uncovered",
+      "VM and configuration JNI remain present"
+    ],
+    "evidence_sha256": {
+      "replacement-v6/comparison.json": "503c4d31304c3850a157d8b34663aa1d57237b9afba38888efc9f5bbc7dfd602",
+      "replacement-v6/dependency-counts-final.json": "a3c497f3405fd095fc1b0bb058d3121c0bd488234782e99e565626e877ab1c57",
+      "replacement-v6/redirect-receipt.json": "4fddf24d27e00a8cec13e07fe7a9a2581201d669284164b8b5e0b3052d905f60",
+      "followup-gate-v2/semantics.json": "eecd21e95109b2866fdfeb2696c623968edca3d096ac99825a5398a0ca022e99",
+      "followup-gate-v2/gate.json": "d602f6395e603afcaf6b23f0a713f05cf34a9ba3864e0d3c868c8117ee92ab48",
+      "replacement-v6/fmod-binding.json": "dc42146da1d9f7cf7ef603c66b6512c5d676a46c324da2c48261062e02f659b5",
+      "asset-boundary-v5/result.json": "588a5ae48e4f92ae82168090bfe6d5fde0f9162ddd674bf887047b72df202d73",
+      "resources-stock-v4/result.json": "7bd98c54a61306765be2c8445fdf8a958887f1d5ad22acddb0acb2ce45b7fbb0",
+      "negative-gate-v1/in-memory.json": "cad45687048ada592b3322fb9bcfdd5c025aeaf244781ce6d3310ed89fa4c668",
+      "negative-gate-v1/cli-receipt.json": "f246500367a12fb94429c720e6eea0bcbecfaaf864b1dbeb45d9b6aa9120f1ed",
+      "cleanup-summary.json": "af9316e281bd96ddeb12a3162573fda05616b6519148d8142f38912a683ea040"
+    },
+    "no_e2_started": true,
+    "no_training_started": true,
+    "no_main_modified": true
+  }
 }

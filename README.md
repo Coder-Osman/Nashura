@@ -4,6 +4,14 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+E1最新续验：固定原生完整轨迹与规定资源矩阵严格门通过（CLI退出0）。
+FMOD真实resolver与六槽已接入同一只读Provider；libg九槽核验，正常生命周期
+平台AssetManager事件0、失败0、live assets0；3602快照/28动作/终局及restore/reset
+一致，24项真实引擎namespace/优先级/fallback矩阵通过。自然音频、OS进程teardown
+及未配置间接目标仍未覆盖；Java VM和配置JNI保留，本轮不进入E2或训练。
+见[E1续报](agent-handoff/E1_FMOD_NAMESPACE_VALIDATION_2026-10-26.md)。
+以下较早状态保留其历史含义。
+
 2026-10-26 headless任务在独立分支开展：P0已核实主线含8卡sim_core，
 原生user-mode路线已有历史实现，正在独立复验，不改训练后端。视频技术路线
 尚未核验；G0/G1、34/43及后续门保持原状。见

@@ -216,7 +216,10 @@ rpc.exports = {
   snapshot() {
     return {schema: 'e0-dependency-counts.v1', engine_loaded: engine !== null,
       attribution_version: 2,
-      threads: Process.enumerateThreads().map(thread => ({id: thread.id, name: thread.name || null})),
+      threads: configuration.enumerate_threads === false ? [] :
+        Process.enumerateThreads().map(thread => ({id: thread.id, name: thread.name || null})),
+      thread_inventory: configuration.enumerate_threads === false ?
+        'not collected in process; external inventory required' : 'in-process enumeration',
       counts: Array.from(counts.values()), coverage, errors, tables: tableEvidence,
       scope: 'configured entry points and observed vtables; not exhaustive',
       state_effect: 'unknown; counters do not establish causality'};
