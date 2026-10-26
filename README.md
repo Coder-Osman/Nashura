@@ -19,6 +19,11 @@ P4固定工程轨迹45局全部完整，1/2/4/8路分别0.1574/0.3004/0.5121/0.8
 见[基准与限制](agent-handoff/HEADLESS_ENGINE_BENCHMARK_2026-10-25.md)
 及[阶段交付](agent-handoff/CODEX_REPLY_2026-10-25_HEADLESS_ENGINE.md)。
 
+新增原生依赖闭包只读调查：匹配libg指纹，86份入口本地档案，17项静态证据
+校验通过。确认配置JNI、资源provider虚表与原始快照service依赖；无UI已有
+历史完整局证据，无VM/无Android框架仍未证明。REA后端缺失如实记录，不安装
+组件、不改引擎或训练门。见[调查报告](agent-handoff/NATIVE_BATTLE_DEPENDENCY_CLOSURE_2026-10-26.md)。
+
 ## 当前状态（2026-10-25）
 
 | 阶段 | 状态 | 尚待完成 |

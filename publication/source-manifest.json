@@ -16431,6 +16431,20 @@
       "transformations": []
     },
     {
+      "path": "agent-handoff/NATIVE_BATTLE_DEPENDENCY_CLOSURE_2026-10-26.md",
+      "sha256": "5ee90520b80749d41325b0f0f1c7bfd120c1073e66a0e831dee45b00a479b537",
+      "bytes": 15469,
+      "source_sha256": "5ee90520b80749d41325b0f0f1c7bfd120c1073e66a0e831dee45b00a479b537",
+      "transformations": []
+    },
+    {
+      "path": "publication/native-battle-closure-audit.json",
+      "sha256": "5baa1afc1038d1ceaf7db7026300910b715913171cc79ca9b9c4b4584c2c2187",
+      "bytes": 2550,
+      "source_sha256": "5baa1afc1038d1ceaf7db7026300910b715913171cc79ca9b9c4b4584c2c2187",
+      "transformations": []
+    },
+    {
       "path": "wire-spec.md",
       "sha256": "1089dbdcfcdfe2b5780dad886addcca72eb1d77e362be0e7fd2e6087754b5c68",
       "bytes": 47640,
@@ -16438,8 +16452,8 @@
       "transformations": []
     }
   ],
-  "file_count": 2346,
-  "source_bytes": 33136316,
+  "file_count": 2348,
+  "source_bytes": 33154335,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

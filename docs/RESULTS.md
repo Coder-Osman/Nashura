@@ -1,5 +1,19 @@
 # 阶段成果与证据索引
 
+## 2026-10-26 原生战斗依赖闭包调查
+
+匹配版本libg本地SHA/ABI核验通过；扫描unwind范围及PLT，86份私有入口档案，
+其中50份人工摘要、36份低层骨架。REA实际调用因Ghidra/Hopper后端缺失停止，
+以现有LIEF/Capstone继续，未声称完整反编译。17项静态证据一致性检查通过。
+确认Java配置调用链、AssetManager provider虚表和快照service前置条件；Step
+直接图2313地址、507函数含1957未解析间接控制转移点（含BR/BLR，非全部虚调用），
+不能据无直接JNI边断言纯原生。
+
+主工程211通过20.89秒；公开入口退出0：主组794通过/27跳过48.74秒，另八组
+23、82、15/3跳过、25/4跳过、31/3跳过、31/2跳过、38/3跳过、65通过；集合不累加。
+本轮未启动原生对局，未修改引擎/部署/main/训练门。VM_FRAMEWORK_FREE_INCONCLUSIVE。
+报告见agent-handoff/NATIVE_BATTLE_DEPENDENCY_CLOSURE_2026-10-26.md。
+
 ## 2026-10-26 Headless P3限定契约与P4工程吞吐
 
 原生step0拒绝且状态不变、reset使旧快照失效、快照往返及释放通过。

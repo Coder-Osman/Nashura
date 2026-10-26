@@ -1,0 +1,71 @@
+{
+  "schema": "native-battle-closure-audit.v1",
+  "date": "2026-10-26",
+  "status": "VM_FRAMEWORK_FREE_INCONCLUSIVE",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "abi": "arm64-v8a",
+  "rea": {
+    "version": "6.5.0",
+    "result": "provider_unavailable",
+    "ghidra": "not_configured",
+    "hopper": "executable_missing",
+    "installed_components": false
+  },
+  "static_tools": {"lief": "0.16.4", "capstone": "5.0.7"},
+  "coverage": {
+    "unwind_function_ranges": 71280,
+    "identified_plt_stubs": 422,
+    "instruction_records": 4336660,
+    "dossiers": 86,
+    "manual_summaries": 50,
+    "low_level_skeletons": 36,
+    "all_scan_decode_gaps": 44,
+    "selected_entry_decode_gaps": 0,
+    "probe_prologues_matched": 7
+  },
+  "step_direct_graph": {
+    "addresses": 2313,
+    "functions_with_unresolved_indirect_control_transfers": 507,
+    "unresolved_indirect_control_transfer_sites": 1957,
+    "includes_blr_br_tailcalls_and_possible_switches": true,
+    "negative_direct_jni_result_is_not_proof": true
+  },
+  "tests": {
+    "static_evidence": {"passed": 17, "seconds": 0.194},
+    "main_engine": {"passed": 211, "seconds": 20.89},
+    "public_checks": {
+      "exit_code": 0,
+      "groups": [
+        {"passed": 794, "skipped": 27, "seconds": 48.74},
+        {"passed": 23, "skipped": 0, "seconds": 4.36},
+        {"passed": 82, "skipped": 0, "seconds": 79.51},
+        {"passed": 15, "skipped": 3, "seconds": 0.12},
+        {"passed": 25, "skipped": 4, "seconds": 0.96},
+        {"passed": 31, "skipped": 3, "seconds": 0.92},
+        {"passed": 31, "skipped": 2, "seconds": 0.94},
+        {"passed": 38, "skipped": 3, "seconds": 2.09},
+        {"passed": 65, "skipped": 0, "seconds": 20.03}
+      ],
+      "counts_not_additive": true,
+      "xml_outputs_redirected_to_private_evidence": true
+    }
+  },
+  "new_runtime_matches": 0,
+  "new_throughput_benchmark": false,
+  "training_admissible": false,
+  "engine_modified": false,
+  "frozen_tasks_modified": false,
+  "raw_evidence_published": false,
+  "open_items": [
+    "Decompiler backend absent; complete high-level pseudocode remains open",
+    "VM-free content and configuration cold start",
+    "Runtime targets for unresolved virtual calls",
+    "Snapshot context equivalence beyond historical fixed harness",
+    "Loader/runtime and init-array dependency effects"
+  ],
+  "historical_runtime_evidence": [
+    "publication/headless-p1-native.json",
+    "publication/headless-p3-native.json",
+    "publication/headless-benchmark.json"
+  ]
+}
