@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-27：E2.1-I 自然冷启动PN原生控制桥
+
+- 原生PN控制桥增加显式first-native-bridge安装，保留H阶段默认post-cold-ready契约。
+- 预加载自有桥库，原调用点返回指令关联自然窗口，独立记录外部probe和非PN原桥fallback。
+- 四进程各3602快照/28动作全字节一致；两次替换自然PN读写、真实commit和跨进程读回通过。
+- 14651附件限定验证exit0，E2全组280 passed/218 skipped；新增独立时序fixture和真实证据损坏负测。
+- 严格门仍exit2，Java密钥派生/Cipher/XML/VM保留，46键移除0；未进入no-VM、训练或10×。
+- 保留冷启动、detach、验证器和辅助命令失败；回收本轮实例，历史进程及证据保持。
+
 ## 2026-10-27：E2.1-H PN控制逻辑原生桥
 
 - 新增C双store控制逻辑、post-cold-ready桥、真实入口矩阵、ART backup解析和独立证据验证器。

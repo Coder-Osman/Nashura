@@ -1,5 +1,25 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-I 自然冷启动PN原生控制桥
+
+原自然冷启动PN read/write接入C双store控制逻辑，保留Java密钥派生、Cipher/XML/backup及VM。
+四独立进程各3602快照、9120440bytes、28动作、tick3601终局全字节一致，
+snapshot/restore/reset回执一致；实际平台资源事件、Provider failures/live assets均0。
+原九项输入/990update每轮身份保持，自有桥库/dex复编与guest身份一致。
+
+两次替换各138次入口=133次非PN原桥fallback+5条PN事件；自然read/write各一次，
+显式readback三次。内部phase、caller和线程独立关联；自然read零commit，write双store
+各commit(true)一次，跨进程读回一致。onLeave=0保留，以原调用点返回指令完成窗口。
+退休自有Java引用6个、JNI global分配/删除各1；独占实例回收，历史adb保持。
+
+14651附件限定验证exit0，E2全组280 passed/218 skipped；公开及主工程检查exit0。
+跳过不计原生通过，集合不累加；严格门仍exit2，46键可移除性unknown、移除0。
+首个未解决依赖为Java密钥派生和原生持久化交接；backup交付、并发和崩溃语义未闭合。
+保留前两次冷启动停滞、detach、source字段验证器及辅助命令失败。
+未进入E2.2/no-VM、Android-free、训练或10×。
+详见E2_1I_COLD_PN_NATIVE_BRIDGE_2026-10-27.md、CODEX_REPLY_2026-10-27_E2_1I.md、
+e2_1i_evidence_summary.json和e2_1i_failure_index.json。
+
 ## 2026-10-27 E2.1-H PN控制逻辑原生桥
 
 post-cold-ready、state_create前安装C PN控制逻辑，保留原Java逐store Cipher/XML及VM。

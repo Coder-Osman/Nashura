@@ -1,12 +1,15 @@
 'use strict';
 
-function createPNBridge(config, invoke) {
+function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
+  const coldInstall = config.install_at === 'first-native-bridge';
   if (Process.arch !== 'arm64' || config.read_bridge !== 21022348 || config.write_bridge !== 21018548 ||
-      !Number.isInteger(config.string_constructor) || config.mode !== 'replacement') {
-    throw new Error('verified post-cold-ready PN bridge contract required');
+      !Number.isInteger(config.string_constructor) || config.mode !== 'replacement' ||
+      (config.install_at !== undefined && !['post-cold-ready', 'first-native-bridge'].includes(config.install_at)) ||
+      (coldInstall && (!lifecycle || typeof lifecycle.entry !== 'function' || typeof lifecycle.pn !== 'function'))) {
+    throw new Error('explicit PN bridge installation contract required');
   }
   const engine = Process.getModuleByName('libg.so');
-  const library = Module.load(config.library);
+  const library = preloadedLibrary || Module.load(config.library);
   const read = new NativeFunction(library.getExportByName('e21_bridge_read'), 'int', ['pointer', 'pointer', 'ulong', 'pointer']);
   const write = new NativeFunction(library.getExportByName('e21_bridge_write'), 'int', ['pointer', 'pointer', 'pointer']);
   const construct = new NativeFunction(engine.base.add(config.string_constructor), 'void', ['pointer', 'pointer']);
@@ -15,7 +18,7 @@ function createPNBridge(config, invoke) {
   const errors = [];
   let installed = false;
   let retired = false;
-  let phase = 'post-cold-ready';
+  let phase = coldInstall ? 'cold-start' : 'post-cold-ready';
   let fallbacks = 0;
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
   const encode = value => {
@@ -85,6 +88,7 @@ function createPNBridge(config, invoke) {
   const dispatch = (key, value, source, writing) => {
     try {
       if (retired) throw new Error('PN bridge retired');
+      if (coldInstall) lifecycle.entry(writing);
       if (key.add(4).readU32() !== 8) { fallbacks++; return 0; }
       const keyBytes = new Uint8Array(key.add(8).readPointer().and('0x00ffffffffffffff').readByteArray(8));
       if ([80, 78, 95, 80, 79, 80, 85, 80].some((byte, index) => keyBytes[index] !== byte)) {
@@ -96,6 +100,12 @@ function createPNBridge(config, invoke) {
         caller: source.compare(engine.base) >= 0 && source.compare(engine.base.add(engine.size)) < 0
           ? 'libg.so+' + source.sub(engine.base) : 'external-probe', route: 'native-state-machine-java-backend'};
       events.push(row);
+      if (coldInstall) {
+        row.module_base = engine.base.toString();
+        row.return_site = source.toString();
+        if (writing) row.input = boundedText(value);
+        lifecycle.pn(row);
+      }
       const receipt = Memory.alloc(20);
       const output = Memory.alloc(4096);
       row.status = writing ? write(backend, Memory.allocUtf8String(boundedText(value)), receipt)
@@ -103,7 +113,10 @@ function createPNBridge(config, invoke) {
       row.receipt = {reads: receipt.readU32(), writes: receipt.add(4).readU32(), changed: receipt.add(8).readU32(),
         backup_method_returns: receipt.add(12).readU32(), failure: receipt.add(16).readS32()};
       if (row.status !== 0) throw new Error('PN native transition failed: ' + row.status);
-      if (!writing) construct(value, output);
+      if (!writing) {
+        construct(value, output);
+        if (coldInstall) row.result = output.readUtf8String();
+      }
       return 1;
     } catch (failure) {
       errors.push(String(failure));
@@ -147,9 +160,10 @@ function createPNBridge(config, invoke) {
       return true;
     },
     snapshot() {
-      return {schema: 'e2.1h-pn-bridge.v1', installed, retired, events, errors, fallbacks,
+      return {schema: coldInstall ? 'e2.1i-cold-pn-bridge.v1' : 'e2.1h-pn-bridge.v1', installed, retired, events, errors, fallbacks,
         retained_allocations: retained.length,
-        scope: 'post-cold-ready PN bridge; original per-store Cipher/XML/backup and JavaVM retained',
+        scope: coldInstall ? 'first-native-bridge PN control; original per-store Cipher/XML/backup and JavaVM retained'
+          : 'post-cold-ready PN bridge; original per-store Cipher/XML/backup and JavaVM retained',
         original_xml_writer_replaced: false, backup_delivery: 'unknown', concurrency_equivalence: 'unknown',
         no_vm_verified: false, strict_gate: 'BLOCKED'};
     }

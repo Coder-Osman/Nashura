@@ -8,6 +8,7 @@ let retired = false;
 let allocatedGlobals = 0;
 let deletedGlobals = 0;
 let pnBridge = null;
+let pnLibrary = null;
 const cold = {armed: false, attempted: false, installed: false, installing: false,
   entries: 0, returns: 0, reentrant_entries: 0, windows: [], external_windows: 0, errors: []};
 const returnSites = new Map();
@@ -106,6 +107,48 @@ function invoke(operation) {
 
 function armCold(module) {
   if (module.name !== 'libg.so' || cold.armed) return;
+  if (settings.pn_bridge) {
+    cold.armed = true;
+    pnBridge = createPNBridge(settings.pn_bridge, invoke, {
+      entry(writing) {
+        cold.entries++;
+        if (cold.installing) {
+          cold.reentrant_entries++;
+          throw new Error('reentrant original bridge during cold backend installation');
+        }
+        if (!cold.attempted) {
+          cold.attempted = true;
+          cold.installing = true;
+          cold.install_entry = {operation: writing ? 'write' : 'read', offset: writing ? 21018548 : 21022348,
+            thread: Process.getCurrentThreadId(), entry: cold.entries};
+          try {
+            cold.install_result = invoke('install');
+            cold.installed = cold.install_result === 'installed\t2';
+            if (!cold.installed) throw new Error('unexpected cold backend install receipt');
+          } catch (failure) {
+            cold.errors.push({stage: 'install', error: String(failure)});
+            throw failure;
+          } finally { cold.installing = false; }
+        }
+        if (!cold.installed) throw new Error('cold PN backend not installed');
+      },
+      pn(row) {
+        if (row.caller === 'external-probe') { cold.external_windows++; return; }
+        if (cold.windows.length >= 32) throw new Error('cold PN window budget exhausted');
+        const address = ptr(row.return_site);
+        watchReturnSite(address);
+        const window = {operation: row.operation, thread: row.thread, entry: cold.entries,
+          caller: address.sub(module.base).toString(), return_site: row.return_site,
+          module_base: row.module_base, bridge_event: pnBridge.snapshot().events.length - 1,
+          before: invoke('snapshot')};
+        cold.windows.push(window);
+        const stack = pendingWindows.get(row.thread) || [];
+        stack.push(window);
+        pendingWindows.set(row.thread, stack);
+      }
+    }, pnLibrary);
+    return;
+  }
   for (const [operation, offset] of [['read', 21022348], ['write', 21018548]]) {
     const target = module.base.add(offset);
     const range = Process.findRangeByAddress(target);
@@ -179,7 +222,10 @@ rpc.exports = {
     if (config.install_at !== undefined && !['post-cold-ready', 'first-native-bridge'].includes(config.install_at)) {
       throw new Error('unsupported observer installation phase');
     }
+    if (config.pn_bridge && (config.install_at !== 'first-native-bridge' || config.enable_pn_backend !== true ||
+        config.pn_bridge.install_at !== 'first-native-bridge')) throw new Error('explicit cold PN backend required');
     settings = config;
+    if (config.pn_bridge) pnLibrary = Module.load(config.pn_bridge.library);
     if (config.install_at === 'first-native-bridge') Process.attachModuleObserver({onAdded: armCold});
     return true;
   },
@@ -199,7 +245,8 @@ rpc.exports = {
   snapshot() {
     return {events, cold, references: {allocated_globals: allocatedGlobals, deleted_globals: deletedGlobals, retired},
       scope: settings && settings.install_at === 'first-native-bridge'
-        ? 'original libg PN_POPUP bridge callsites after first native bridge; earlier Java accesses and external direct probes unobserved'
+        ? (settings.pn_bridge ? 'cold PN replacement at original callsites; original Java persistence retained'
+          : 'original libg PN_POPUP bridge callsites after first native bridge; earlier Java accesses and external direct probes unobserved')
         : 'two temporary forwarding SharedPreferences wrappers; explicit post-cold-ready windows only',
       coverage: 'actual delegated return values only; no JVMTI or exhaustive Java coverage', no_vm_verified: false};
   }

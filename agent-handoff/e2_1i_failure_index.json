@@ -1,0 +1,68 @@
+{
+  "schema": "e2.1i-public-failure-index.v1",
+  "private_artifacts_published": false,
+  "failures": [
+    {
+      "attempts": ["replacement-cold-1", "replacement-cold-2"],
+      "exit_code": 1,
+      "observation": "cold ready not reached; armed=true, attempted=false, entries=0; no snapshots",
+      "suspected_cause": "first nested bridge Module.load during libg moduleAdded callback",
+      "exact_lock_relationship": "unknown",
+      "resolution_scope": "preload own bridge before registering module observer; four final runs passed"
+    },
+    {
+      "operation": "detach after failed cold attempt",
+      "observation": "detach stalled; original failure and status snapshots retained",
+      "general_fix": "unresolved",
+      "cleanup": "owned process identities checked before release; historical processes preserved"
+    },
+    {
+      "attempt": "verification-1",
+      "exit_code": 1,
+      "cause": "verifier expected exception-state object without the actual source field",
+      "observed_readback_value_difference": false,
+      "resolution": "validate exact before/after/source; reject corrupted source, exceptions and values"
+    },
+    {
+      "attempt": "tests-i-1",
+      "exit_code": 1,
+      "passed": 75,
+      "failed": 1,
+      "cause": "same exception-state source-field verifier error",
+      "subsequent_e2_regression": {"exit_code": 0, "passed": 280, "skipped": 218}
+    },
+    {
+      "operation": "relative-path syntax check from incorrect cwd",
+      "exit_code": 1,
+      "resolution": "rerun from repository; syntax checks passed"
+    },
+    {
+      "operation": "shell exit-code wrapper",
+      "exit_code": 1,
+      "cause": "assignment to zsh readonly status variable",
+      "resolution": "use task-specific variable; subsequent commands recorded"
+    },
+    {
+      "operation": "initial combined report patch",
+      "result": "patch verification rejected README context; no repository changes applied",
+      "resolution": "separate new-file patch and exact README context"
+    },
+    {
+      "operation": "historical strict gate recheck",
+      "exit_code": 2,
+      "status": "BLOCKED",
+      "scope": "unchanged historical manifest; current bounded PN control evidence reported separately"
+    }
+  ],
+  "unresolved": [
+    "Java key derivation and per-store Cipher/XML persistence retained",
+    "backup delivery",
+    "concurrency equivalence and crash durability",
+    "46-key removability and initialization ABI",
+    "general detach stall"
+  ],
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false
+}

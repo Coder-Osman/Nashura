@@ -130,8 +130,11 @@ def run(config_path, output):
             path = repository / filename
             (source_directory / path.name).write_bytes(path.read_bytes())
     if config.get('pn_bridge'):
-        if config.get('replacement') or config.get('return_observer', {}).get('install_at') != 'post-cold-ready':
-            raise ValueError('PN bridge experiment requires independent post-cold-ready installation')
+        install_at = config.get('return_observer', {}).get('install_at')
+        if config.get('replacement') or install_at not in {'post-cold-ready', 'first-native-bridge'}:
+            raise ValueError('PN bridge experiment requires independent explicit installation')
+        if config['pn_bridge'].get('install_at', 'post-cold-ready') != install_at:
+            raise ValueError('PN bridge and backend installation phases differ')
         for filename in ('e2_1_pn_bridge.c', 'e2_1_pn_bridge.h'):
             path = repository / filename
             (source_directory / path.name).write_bytes(path.read_bytes())
@@ -165,7 +168,10 @@ def run(config_path, output):
             create('replacement', 'e2_config_replace.js', config['replacement'])
         early_observer = config.get('return_observer', {}).get('install_at') == 'first-native-bridge'
         if early_observer:
-            create('return-observer', 'e2_1_return_observer.js', config['return_observer'])
+            settings = dict(config['return_observer'])
+            if config.get('pn_bridge'):
+                settings['pn_bridge'] = config['pn_bridge']
+            create('return-observer', 'e2_1_return_observer.js', settings)
         device.resume(pid)
         print('resumed ' + str(pid), flush=True)
         for attempt in range(90):
@@ -198,7 +204,9 @@ def run(config_path, output):
             save('return-observer-install.json', dict(result=installed, phase='after_cold_ready_before_state_create'))
             return_observer_installed = True
         if config.get('pn_bridge'):
-            save('pn-bridge-install.json', scripts['return-observer'].exports_sync.bridge_install(config['pn_bridge']))
+            bridge = scripts['return-observer'].exports_sync
+            save('pn-bridge-install.json', bridge.bridge_snapshot() if early_observer
+                 else bridge.bridge_install(config['pn_bridge']))
             pn_bridge_installed = True
         match = json.loads(Path(config['match']).read_text())
         control('configure ' + json.dumps(match, separators=(',', ':')), 'state_create_load')
@@ -309,6 +317,12 @@ def run(config_path, output):
         raise
     finally:
         snapshot_errors = []
+        if config.get('pn_bridge') and config.get('return_observer', {}).get('install_at') == 'first-native-bridge' and 'return-observer' in scripts:
+            try:
+                pn_bridge_installed = scripts['return-observer'].exports_sync.bridge_snapshot()['installed']
+            except BaseException as failure:
+                save('pn-bridge-cold-status-failure.json', dict(error=str(failure)))
+                snapshot_errors.append('pn-bridge-cold-status')
         if pn_bridge_installed:
             try:
                 observer = scripts['return-observer'].exports_sync

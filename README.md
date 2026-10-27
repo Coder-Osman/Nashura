@@ -4,6 +4,14 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+2026-10-27 E2.1-I续验：自然冷启动PN读写已由原生控制桥接管，Java密钥派生、
+逐store Cipher/XML/backup及VM保留。四独立进程各3602快照/28动作全字节一致；
+两次替换均捕获自然read/write及真实commit，跨进程读回一致，非PN原桥回退各133次。
+14651附件限定验证exit0，E2回归280 passed/218 skipped；严格门仍exit2，46键移除0。
+独占实例回收，无no-VM、Android-free、训练或10×通过声明。
+见[E2.1-I报告](agent-handoff/E2_1I_COLD_PN_NATIVE_BRIDGE_2026-10-27.md)。
+以下为历史阶段记录，保留当时边界。
+
 2026-10-27 E2.1-H续验：PN双store控制逻辑已在post-cold-ready接入原生读写桥，
 Java/Cipher/XML逐store后端与VM保留。四个独立进程各3602快照/28动作全字节一致，
 两次替换各11项真实入口矩阵、7次commit(true)及XML逻辑恢复通过。
