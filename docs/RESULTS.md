@@ -1,5 +1,18 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-L PN异常语义与持久解密状态
+
+九独立原版进程各3602快照、9120440bytes、28动作、tick3601终局全字节一致。
+真实PN入口19项主矩阵和独立顺序实验均在完整轨迹后运行；不是自然替换证明。
+short-block及padding会影响后续有效密文；两独立进程共16项原Cipher/持久EVP差分
+状态和输出全匹配，padding后32bytes再16bytes。native异常类别对应仍unknown。
+原输入/990update身份保持，平台资源事件/Provider failures/live assets均0。
+33058附件限定验证exit0；42专项通过，E2回归349 passed/309 skipped，集合不累加。
+保留两次stream失败和Java测试桩缺API的首轮失败。原XML按语义恢复，非PN条目保持。
+Java身份/store/XML/backup/VM保留；strict仍BLOCKED，46键移除0，可移除性unknown。
+独占AVD保留用于下一阶段，历史进程保持；异常后完整局/真实替换尚待验，无训练或10×。
+见E2_1L_PN_EDGE_PERSISTENT_CIPHER_2026-10-27.md及e2_1l_evidence_summary.json。
+
 ## 2026-10-27 E2.1-K 自然PN原生派生/AES续验
 
 自然冷启动原PN调用点已接原生派生和codec，Java身份获取、原store构造、XML/backup及VM保留。

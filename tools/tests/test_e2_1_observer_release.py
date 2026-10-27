@@ -61,6 +61,12 @@ package org.json;
 public class JSONObject {
     public static final Object NULL = new Object();
     private final java.util.Map<String,Object> values = new java.util.LinkedHashMap<>();
+    public JSONObject() {}
+    public JSONObject(String source) { throw new UnsupportedOperationException("raw PN parsing outside release fixture"); }
+    public int length() { return values.size(); }
+    public boolean has(String key) { return values.containsKey(key); }
+    public boolean isNull(String key) { return values.get(key) == NULL; }
+    public Object get(String key) { return values.get(key); }
     public JSONObject put(String key, Object value) { values.put(key, value); return this; }
     public String toString() { return values.toString(); }
 }

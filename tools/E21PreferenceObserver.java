@@ -126,6 +126,49 @@ public final class E21PreferenceObserver {
         if (!installed || pnSaved == null || ++codecCommands > 128) {
             throw new IllegalStateException("bounded captured PN codec experiment required");
         }
+        if (operation.equals("codec-runtime")) {
+            JSONArray result = new JSONArray();
+            for (int index = 0; index < 2; ++index) {
+                Cipher cipher = (Cipher)stores[index].getClass().getField("b").get(stores[index]);
+                JSONObject row = new JSONObject().put("store", index).put("algorithm", cipher.getAlgorithm())
+                    .put("provider", cipher.getProvider().getName()).put("internal_state_coverage", "unknown");
+                JSONArray fields = new JSONArray();
+                for (Class<?> type = cipher.getClass(); type != null; type = type.getSuperclass()) {
+                    for (Field field : type.getDeclaredFields()) {
+                        if (!field.getType().getName().equals("javax.crypto.CipherSpi")) continue;
+                        field.setAccessible(true);
+                        Object spi = field.get(cipher);
+                        row.put("spi_class", spi == null ? JSONObject.NULL : spi.getClass().getName());
+                        if (spi == null) continue;
+                        row.put("internal_state_coverage", "reflected instance fields only; native context opaque");
+                        for (Class<?> spiType = spi.getClass(); spiType != null; spiType = spiType.getSuperclass()) {
+                            for (Field state : spiType.getDeclaredFields()) {
+                                if (java.lang.reflect.Modifier.isStatic(state.getModifiers())) continue;
+                                JSONObject entry = new JSONObject().put("owner", spiType.getName())
+                                    .put("name", state.getName()).put("type", state.getType().getName());
+                                try {
+                                    state.setAccessible(true);
+                                    Object value = state.get(spi);
+                                    if (state.getType() == boolean.class || state.getType() == int.class) {
+                                        entry.put("value", value);
+                                    } else if (value instanceof byte[]) {
+                                        entry.put("array_length", ((byte[])value).length);
+                                    } else {
+                                        entry.put("present", value != null);
+                                    }
+                                } catch (Exception failure) {
+                                    entry.put("coverage", "unknown").put("exception", failure.getClass().getName());
+                                }
+                                fields.put(entry);
+                            }
+                        }
+                    }
+                }
+                row.put("fields", fields);
+                result.put(row);
+            }
+            return result.toString();
+        }
         if (operation.equals("codec-info")) {
             JSONArray result = new JSONArray();
             for (int index = 0; index < 2; ++index) {
@@ -147,9 +190,49 @@ public final class E21PreferenceObserver {
             throw new IllegalArgumentException("explicit PN store required");
         }
         int index = Integer.parseInt(parts[1]);
+        if (parts[0].equals("codec-decrypt") && parts.length == 3 && parts[2].length() <= 5500) {
+            JSONObject result = new JSONObject().put("store", index)
+                .put("route", "explicit original store Cipher.b.doFinal; mutates decoder state");
+            try {
+                byte[] bytes = Base64.decode(parts[2], Base64.NO_WRAP);
+                if (bytes.length > 4096) throw new IllegalArgumentException("bounded ciphertext required");
+                Cipher cipher = (Cipher)stores[index].getClass().getField("b").get(stores[index]);
+                byte[] decoded = cipher.doFinal(bytes);
+                result.put("status", "returned").put("output", Base64.encodeToString(decoded, Base64.NO_WRAP))
+                    .put("bytes", decoded.length);
+            } catch (Exception failure) {
+                result.put("status", "threw").put("exception", failure.getClass().getName());
+            }
+            return result.toString();
+        }
         if (parts[0].equals("codec-state") && parts.length == 2) {
             SharedPreferences original = (SharedPreferences)originals[index];
             return new JSONObject().put("encoded", original.getString(pnKeys[index], null)).toString();
+        }
+        if (parts[0].equals("codec-inspect") && parts.length == 2) {
+            SharedPreferences original = (SharedPreferences)originals[index];
+            return new JSONObject().put("plain", original.getString("PN_POPUP", null))
+                .put("encoded", original.getString(pnKeys[index], null)).toString();
+        }
+        if (parts[0].equals("codec-fixture") && parts.length == 3 && parts[2].length() <= 16000) {
+            JSONObject fixture = new JSONObject(new String(Base64.decode(parts[2], Base64.NO_WRAP), "UTF-8"));
+            if (fixture.length() != 2 || !fixture.has("plain") || !fixture.has("encoded")) {
+                throw new IllegalArgumentException("explicit captured PN raw pair required");
+            }
+            SharedPreferences.Editor editor = ((SharedPreferences)originals[index]).edit();
+            for (String name : new String[]{"plain", "encoded"}) {
+                String key = name.equals("plain") ? "PN_POPUP" : pnKeys[index];
+                if (fixture.isNull(name)) editor.remove(key);
+                else {
+                    Object value = fixture.get(name);
+                    if (!(value instanceof String) || ((String)value).getBytes("UTF-8").length > 5500) {
+                        throw new IllegalArgumentException("bounded raw PN string required");
+                    }
+                    editor.putString(key, (String)value);
+                }
+            }
+            if (!editor.commit()) throw new IllegalStateException("raw PN fixture commit failed");
+            return "codec-fixture-set";
         }
         if (parts[0].equals("codec-read") && parts.length == 2) {
             String value = (String)pnReader.invoke(stores[index], "PN_POPUP");

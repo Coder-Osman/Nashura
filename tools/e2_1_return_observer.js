@@ -252,7 +252,9 @@ rpc.exports = {
       (/^pn-set:[A-Za-z0-9+/=]*:[A-Za-z0-9+/=]*$/.test(operation) ||
         ['pn-begin', 'pn-state', 'pn-restore'].includes(operation));
     const codec = settings && settings.enable_pn_codec === true &&
-      (operation === 'codec-info' || /^codec-(read|state):[01]$/.test(operation) ||
+      (['codec-info', 'codec-runtime'].includes(operation) || /^codec-(read|state|inspect):[01]$/.test(operation) ||
+       /^codec-fixture:[01]:[A-Za-z0-9+/=]*$/.test(operation) ||
+       /^codec-decrypt:[01]:[A-Za-z0-9+/=]*$/.test(operation) ||
        /^codec-raw:[01]:[A-Za-z0-9+/=]*$/.test(operation) ||
        /^codec-encode:[01]:(key|value):[A-Za-z0-9+/=]*$/.test(operation));
     const derivation = settings && settings.enable_pn_derivation === true && operation === 'derivation-source';

@@ -1,0 +1,42 @@
+{
+  "schema": "e2.1l-failure-index.v1",
+  "scope": "sanitized metadata; original logs retained privately",
+  "failures": [
+    {
+      "id": "stream-1",
+      "exit_code": 1,
+      "reason": "derivation source command not enabled",
+      "log_sha256": "7ff5a407af75be89175e317b19863ab8f89b809fc80740e30f9c9bf289f13aeb",
+      "resolution": "explicit derivation enabled; later independent attempts"
+    },
+    {
+      "id": "stream-2",
+      "exit_code": 1,
+      "reason": "incorrect exported derivation symbol; final snapshot failure masked primary",
+      "log_sha256": "eb2d37e132b3d69e303a031c0ef8e690ade84ddd2d26a4c1092d22d9e92280f5",
+      "resolution": "verified export name; runner separately retains primary exception; attempts 3/4 passed"
+    },
+    {
+      "id": "e2-regression-1",
+      "exit_code": 1,
+      "result": {
+        "failed": 1,
+        "passed": 348,
+        "skipped": 309
+      },
+      "log_sha256": "9de3a4c7ae7b6e0e441ad4e973193156edc86c53544d3971ac0342d5b83ea581",
+      "reason": "release engineering JSONObject stub lacks added API declarations",
+      "resolution": "stub API updated; independent second regression exit 0 with 349 passed/309 skipped"
+    },
+    {
+      "id": "inspection-helper-errors",
+      "exit_code": 1,
+      "reason": "private inspection script referenced wrong result keys twice",
+      "scope": "inspection only; not engine failures",
+      "resolution": "correct field names read; raw command errors retained privately"
+    }
+  ],
+  "strict_gate": "BLOCKED",
+  "failed_evidence_overwritten": false,
+  "no_vm_verified": false
+}

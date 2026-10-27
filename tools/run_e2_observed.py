@@ -109,7 +109,7 @@ def run(config_path, output):
             raise RuntimeError('native command rejected: ' + text + ': ' + str(response))
         return response
 
-    def create(name, filename, settings):
+    def create(name, filename, settings, *arguments):
         source = (repository / filename).read_text()
         if name == 'return-observer' and config.get('pn_bridge'):
             source = (repository / 'e2_1_pn_bridge.js').read_text() + '\n' + source
@@ -123,7 +123,7 @@ def run(config_path, output):
         script.on('message', message)
         script.load()
         scripts[name] = script
-        configured = script.exports_sync.configure(settings)
+        configured = script.exports_sync.configure(settings, *arguments)
         print('configured ' + name, flush=True)
         return configured
 
@@ -146,6 +146,14 @@ def run(config_path, output):
         for filename in ('e2_1_pn_codec.c', 'e2_1_pn_codec.h', 'e2_1_pn_codec.py', 'e2_1_pn_codec_matrix.py'):
             path = repository / filename
             (source_directory / path.name).write_bytes(path.read_bytes())
+    if config.get('pn_stream'):
+        observer_config = config.get('return_observer', {})
+        if (config.get('pn_bridge') or not config.get('pn_direct_cipher')
+                or not config.get('pn_edge_matrix')
+                or observer_config.get('enable_pn_derivation') is not True
+                or observer_config.get('enable_pn_codec') is not True
+                or observer_config.get('enable_pn_matrix') is not True):
+            raise ValueError('stream diagnostic requires explicit original observer, codec, matrix and derivation')
     if config.get('pn_derivation'):
         if not config.get('return_observer'):
             raise ValueError('explicit installed original observer required for derivation')
@@ -273,6 +281,42 @@ def run(config_path, output):
         if 'semantics' in scripts:
             save('semantics-terminal-reset.json', scripts['semantics'].exports_sync.batch([
                 dict(case='after_terminal_reset', operation='read', key='PN_POPUP')]))
+            if config.get('pn_edge_matrix'):
+                from e2_1_pn_edge_matrix import run_edge_matrix
+
+                path = repository / 'e2_1_pn_edge_matrix.py'
+                (source_directory / path.name).write_bytes(path.read_bytes())
+                for name in ('e0', 'e2', 'fmod', 'return-observer'):
+                    if name in scripts:
+                        scripts[name].exports_sync.phase('explicit_post_trajectory_pn_edge_matrix')
+
+                def capture_edge_xml(label, files):
+                    directory = output / ('edge-xml-' + label)
+                    directory.mkdir(exist_ok=False)
+                    records = []
+                    for index, filename in enumerate(files):
+                        local = directory / ('store-' + str(index) + '.xml')
+                        command('pull', filename, str(local))
+                        records.append(dict(sha256=digest(local), bytes_hex=local.read_bytes().hex()))
+                    return records
+
+                stream = None
+                if config.get('pn_stream'):
+                    if config.get('pn_bridge') or not config.get('pn_direct_cipher'):
+                        raise ValueError('stream requires separate original Cipher diagnostic')
+                    source = json.loads(
+                        scripts['return-observer'].exports_sync.command('derivation-source'))
+                    for name in ('e2_1_pn_stream.c', 'e2_1_pn_stream.h', 'e2_1_pn_derive.c',
+                                 'e2_1_pn_derive.h', 'e2_1_pn_codec.h'):
+                        path = repository / name
+                        (source_directory / path.name).write_bytes(path.read_bytes())
+                    save('pn-stream-configure.json', create('pn-stream', 'e2_1_pn_stream_probe.js',
+                                                          config['pn_stream'], source))
+                    stream = scripts['pn-stream'].exports_sync
+                run_edge_matrix(scripts['return-observer'].exports_sync, scripts['semantics'].exports_sync,
+                                bool(config.get('pn_bridge')), save, capture_edge_xml,
+                                config.get('pn_edge_cases'), config.get('pn_cipher_state', False),
+                                config.get('pn_direct_cipher', False), stream)
             if config.get('pn_bridge_matrix'):
                 from e2_1_pn_bridge_matrix import run_bridge_matrix
 
@@ -385,8 +429,10 @@ def run(config_path, output):
         lifecycle_completed = True
         print('native lifecycle completed', flush=True)
     except BaseException as failure:
-        save('run-finished.json', dict(status='failed', exit_code=1, elapsed=time.time() - started,
-                                      error=str(failure), traceback=traceback.format_exc()))
+        failure_record = dict(status='failed', exit_code=1, elapsed=time.time() - started,
+                              error=str(failure), traceback=traceback.format_exc())
+        save('run-exception.json', failure_record)
+        save('run-finished.json', failure_record)
         raise
     finally:
         snapshot_errors = []

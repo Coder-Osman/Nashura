@@ -1,0 +1,552 @@
+{
+  "schema": "e2.1l-bounded-evidence-summary.v1",
+  "status": "bounded_diagnostic_verified",
+  "runs": [
+    {
+      "run": "baseline",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "native_controls_equal": true,
+      "asset_platform_events": 0,
+      "frozen_inputs_unchanged": true
+    },
+    {
+      "run": "original-edges",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "native_controls_equal": true,
+      "asset_platform_events": 0,
+      "frozen_inputs_unchanged": true,
+      "edges": {
+        "cases": [
+          {
+            "case": "missing-both",
+            "commits": {},
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "missing-preferred",
+            "commits": {
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "same",
+              "changed"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "missing-older",
+            "commits": {},
+            "encoded_transitions": [
+              "missing",
+              "same"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "legacy-both",
+            "commits": {},
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "legacy-backfill",
+            "commits": {},
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "plain-empty",
+            "commits": {},
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "legacy-cipher-conflict",
+            "commits": {},
+            "encoded_transitions": [
+              "same",
+              "same"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "legacy-empty-cipher",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "empty-raw",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "empty-cipher",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "bad-base64",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "short-block",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "bad-padding",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "malformed-preferred",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "legacy-malformed",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "write-empty",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "write-empty-missing",
+            "commits": {},
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "write-over-legacy",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "changed",
+              "changed"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "write-over-malformed",
+            "commits": {
+              "o:true": 2,
+              "p:true": 2
+            },
+            "encoded_transitions": [
+              "changed",
+              "changed"
+            ],
+            "pending_jni_exception": false
+          }
+        ],
+        "restored_semantically": true,
+        "xml_order_normalization": "none; entry values compared",
+        "scope": "explicit post-trajectory raw fixtures; actual native PN entry",
+        "concurrency_equivalence": "unknown"
+      }
+    },
+    {
+      "run": "original-malformed-first",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "native_controls_equal": true,
+      "asset_platform_events": 0,
+      "frozen_inputs_unchanged": true,
+      "edges": {
+        "cases": [
+          {
+            "case": "malformed-preferred",
+            "commits": {
+              "p:true": 2
+            },
+            "encoded_transitions": [
+              "same",
+              "changed"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "missing-older",
+            "commits": {},
+            "encoded_transitions": [
+              "missing",
+              "same"
+            ],
+            "pending_jni_exception": false
+          }
+        ],
+        "restored_semantically": true,
+        "xml_order_normalization": "none; entry values compared",
+        "scope": "explicit post-trajectory raw fixtures; actual native PN entry",
+        "concurrency_equivalence": "unknown"
+      }
+    },
+    {
+      "run": "original-padding-first",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "native_controls_equal": true,
+      "asset_platform_events": 0,
+      "frozen_inputs_unchanged": true,
+      "edges": {
+        "cases": [
+          {
+            "case": "bad-padding",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "missing-older",
+            "commits": {
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "missing-preferred",
+            "commits": {
+              "o:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          }
+        ],
+        "restored_semantically": true,
+        "xml_order_normalization": "none; entry values compared",
+        "scope": "explicit post-trajectory raw fixtures; actual native PN entry",
+        "concurrency_equivalence": "unknown"
+      }
+    },
+    {
+      "run": "original-short-state",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "native_controls_equal": true,
+      "asset_platform_events": 0,
+      "frozen_inputs_unchanged": true,
+      "edges": {
+        "cases": [
+          {
+            "case": "short-block",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "missing-older",
+            "commits": {
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "missing-preferred",
+            "commits": {
+              "o:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          }
+        ],
+        "restored_semantically": true,
+        "xml_order_normalization": "none; entry values compared",
+        "scope": "explicit post-trajectory raw fixtures; actual native PN entry",
+        "concurrency_equivalence": "unknown"
+      }
+    },
+    {
+      "run": "original-padding-state",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "native_controls_equal": true,
+      "asset_platform_events": 0,
+      "frozen_inputs_unchanged": true,
+      "edges": {
+        "cases": [
+          {
+            "case": "bad-padding",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "write-over-legacy",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "changed",
+              "changed"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "missing-older",
+            "commits": {
+              "p:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          },
+          {
+            "case": "missing-preferred",
+            "commits": {
+              "o:true": 1
+            },
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          }
+        ],
+        "restored_semantically": true,
+        "xml_order_normalization": "none; entry values compared",
+        "scope": "explicit post-trajectory raw fixtures; actual native PN entry",
+        "concurrency_equivalence": "unknown"
+      }
+    },
+    {
+      "run": "original-direct-cipher",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "native_controls_equal": true,
+      "asset_platform_events": 0,
+      "frozen_inputs_unchanged": true,
+      "edges": {
+        "cases": [
+          {
+            "case": "missing-both",
+            "commits": {},
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          }
+        ],
+        "restored_semantically": true,
+        "xml_order_normalization": "none; entry values compared",
+        "scope": "explicit post-trajectory raw fixtures; actual native PN entry",
+        "concurrency_equivalence": "unknown"
+      },
+      "direct": {
+        "calls": 8,
+        "direct_original_exceptions": 4,
+        "padding_recovery_bytes": [
+          32,
+          16
+        ],
+        "native_stream_compared": false,
+        "native_mismatches": [],
+        "native_exception_class_equivalence": "unknown; native error is not a Java exception type"
+      }
+    },
+    {
+      "run": "original-stream-diff-3",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "native_controls_equal": true,
+      "asset_platform_events": 0,
+      "frozen_inputs_unchanged": true,
+      "edges": {
+        "cases": [
+          {
+            "case": "missing-both",
+            "commits": {},
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          }
+        ],
+        "restored_semantically": true,
+        "xml_order_normalization": "none; entry values compared",
+        "scope": "explicit post-trajectory raw fixtures; actual native PN entry",
+        "concurrency_equivalence": "unknown"
+      },
+      "direct": {
+        "calls": 8,
+        "direct_original_exceptions": 4,
+        "padding_recovery_bytes": [
+          32,
+          16
+        ],
+        "native_stream_compared": true,
+        "native_mismatches": [],
+        "native_exception_class_equivalence": "unknown; native error is not a Java exception type"
+      }
+    },
+    {
+      "run": "original-stream-diff-4",
+      "snapshot_count": 3602,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "native_controls_equal": true,
+      "asset_platform_events": 0,
+      "frozen_inputs_unchanged": true,
+      "edges": {
+        "cases": [
+          {
+            "case": "missing-both",
+            "commits": {},
+            "encoded_transitions": [
+              "missing",
+              "missing"
+            ],
+            "pending_jni_exception": false
+          }
+        ],
+        "restored_semantically": true,
+        "xml_order_normalization": "none; entry values compared",
+        "scope": "explicit post-trajectory raw fixtures; actual native PN entry",
+        "concurrency_equivalence": "unknown"
+      },
+      "direct": {
+        "calls": 8,
+        "direct_original_exceptions": 4,
+        "padding_recovery_bytes": [
+          32,
+          16
+        ],
+        "native_stream_compared": true,
+        "native_mismatches": [],
+        "native_exception_class_equivalence": "unknown; native error is not a Java exception type"
+      }
+    }
+  ],
+  "attachment_count": 33058,
+  "strict_gate": "BLOCKED",
+  "removed_keys": 0,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "abnormal_state_followed_by_complete_match": "not tested",
+  "direct_cipher_scope": "serial explicit Cipher/EVP differential after complete trajectory; not natural replacement",
+  "concurrency_equivalence": "unknown",
+  "private_manifest_sha256": "402bbe9594b8ede7254c13c8a9883382868c799ff8f96d0302b7a16cb62cad48"
+}
