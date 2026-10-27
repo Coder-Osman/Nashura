@@ -4,6 +4,16 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+## 2026-10-28 E2.1-N：持久Cipher与历史正常路径对照
+
+新增持久AES候选、SHA绑定的身份提取及私有参考工具；两个新ARM64/Bionic子进程
+各通过30条历史原版ECB/CBC字节参考，187项输入未变，9个实际映射核验。
+专项304通过/1跳过、主工程211通过、公开九组零失败错误；首次映射采集失败保留。
+本阶段未重新加载libg。当前身份、异常全域及真实存储/backup仍未闭合，严格catalog
+保持 **BLOCKED**，GameState及真实Step仍NOT_RUN。详见
+[报告](agent-handoff/PURE_LINUX_PREFERENCE_CIPHER_2026-10-28.md)和
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_PREFERENCE_CIPHER.md)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：有界初始化图与分步配置语义
 
 真实DEX初始化有界图142节点/15分支相同；完整onCreate仍不同。

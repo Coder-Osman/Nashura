@@ -16433,16 +16433,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "90d6b47bb63d1a045f46c5fdf9ce6276d67c0d9f192909a2182241d2145a69e7",
-      "bytes": 31628,
-      "source_sha256": "90d6b47bb63d1a045f46c5fdf9ce6276d67c0d9f192909a2182241d2145a69e7",
+      "sha256": "ce67a94b9fb6c5ee362801879fa28735daa565a9c450b9687aae218ef9acfd1c",
+      "bytes": 32361,
+      "source_sha256": "ce67a94b9fb6c5ee362801879fa28735daa565a9c450b9687aae218ef9acfd1c",
       "transformations": []
     },
     {
       "path": "README.md",
-      "sha256": "08024487d11483d7a3cd80048e6c2ad47112158563469c2ad4ce13ffa40be6a4",
-      "bytes": 29643,
-      "source_sha256": "08024487d11483d7a3cd80048e6c2ad47112158563469c2ad4ce13ffa40be6a4",
+      "sha256": "3ff60799c2d8ae6ccf708c161d2a85a4ebc2041bcf1c184df8e479b0bcf23f1c",
+      "bytes": 30357,
+      "source_sha256": "3ff60799c2d8ae6ccf708c161d2a85a4ebc2041bcf1c184df8e479b0bcf23f1c",
       "transformations": []
     },
     {
@@ -16468,9 +16468,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "c65d6c5aff7f7508c2c1e975c066be7b0d26ec7e86c5fe9cf466ebe00f72001e",
-      "bytes": 58427,
-      "source_sha256": "c65d6c5aff7f7508c2c1e975c066be7b0d26ec7e86c5fe9cf466ebe00f72001e",
+      "sha256": "f209beb3649c4862ccffe2c962f164931a30a8c8e36b6f8049170c6e3bc937e4",
+      "bytes": 59837,
+      "source_sha256": "f209beb3649c4862ccffe2c962f164931a30a8c8e36b6f8049170c6e3bc937e4",
       "transformations": []
     },
     {
@@ -16871,10 +16871,150 @@
       "bytes": 4005,
       "source_sha256": "fb58f40e650891e8167dbb285d7f7a62b24b7cc8eb807ec5193b6e6b0fc94837",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-28_PREFERENCE_CIPHER.md",
+      "sha256": "659e3fb8d1676a57bf4075ea2235a8d9ecacd697d69bc8c17418d81d4a210d3f",
+      "bytes": 3679,
+      "source_sha256": "659e3fb8d1676a57bf4075ea2235a8d9ecacd697d69bc8c17418d81d4a210d3f",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_PREFERENCE_CIPHER_2026-10-28.md",
+      "sha256": "7eb7a0c847d89516be552bf94b3d5d94bc7f4cae2465613a8cc1ccb24ae7c0c9",
+      "bytes": 10316,
+      "source_sha256": "7eb7a0c847d89516be552bf94b3d5d94bc7f4cae2465613a8cc1ccb24ae7c0c9",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-preference-cipher-evidence-20261028.json",
+      "sha256": "d9bdb8521eb55d7654426f1bc1baa76e703bfd360f9d539e2b0b74121afab37a",
+      "bytes": 32060,
+      "source_sha256": "d9bdb8521eb55d7654426f1bc1baa76e703bfd360f9d539e2b0b74121afab37a",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/mapped_files.h",
+      "sha256": "12bd856f46af85d9b56de0d52b822edd58f344cf491da3c501499bae500527de",
+      "bytes": 1288,
+      "source_sha256": "12bd856f46af85d9b56de0d52b822edd58f344cf491da3c501499bae500527de",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/preference_cipher.c",
+      "sha256": "f1fd7927f4da10c0e86419b4cc045cb9f25e78d9e1e54d1af2d6dcf5b6622e9f",
+      "bytes": 5362,
+      "source_sha256": "f1fd7927f4da10c0e86419b4cc045cb9f25e78d9e1e54d1af2d6dcf5b6622e9f",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/preference_cipher.h",
+      "sha256": "7261c139c6674710c07ac8a5bb126b43bc57ef579c686bb504f10b83fb5bc459",
+      "bytes": 651,
+      "source_sha256": "7261c139c6674710c07ac8a5bb126b43bc57ef579c686bb504f10b83fb5bc459",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/preference_cipher_job.py",
+      "sha256": "26991daf86d96413c5cad9a01b8adffb2a886b81689be5e5c42ed26e5ee575ba",
+      "bytes": 6315,
+      "source_sha256": "26991daf86d96413c5cad9a01b8adffb2a886b81689be5e5c42ed26e5ee575ba",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/preference_cipher_material.py",
+      "sha256": "234b8f40698f6c1dc8e22f49f5155897a56a0984eac5b37ccc29638011032f7f",
+      "bytes": 3222,
+      "source_sha256": "234b8f40698f6c1dc8e22f49f5155897a56a0984eac5b37ccc29638011032f7f",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/preference_cipher_probe.c",
+      "sha256": "d52ee8a29026152df1ca523a0e82fbd26555fe9059a429d3dd46571db404b4af",
+      "bytes": 6425,
+      "source_sha256": "d52ee8a29026152df1ca523a0e82fbd26555fe9059a429d3dd46571db404b4af",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/preference_cipher_record_probe.c",
+      "sha256": "09a5a7661b8b0155774e8554ff4ea613a1f4a2e7fbabaade7334f6b13234fa48",
+      "bytes": 2553,
+      "source_sha256": "09a5a7661b8b0155774e8554ff4ea613a1f4a2e7fbabaade7334f6b13234fa48",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/preference_identity_material.py",
+      "sha256": "1c52b6ec3655611b01b70556a28f554ea64b30bad95ddd5a2dd31a4b447bf63b",
+      "bytes": 5620,
+      "source_sha256": "1c52b6ec3655611b01b70556a28f554ea64b30bad95ddd5a2dd31a4b447bf63b",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/preference_reference_capsule.py",
+      "sha256": "e92131abaa4cfcb7f44920515bb8ec032847ebaf5607c1aa1e7e072bf3d7ef37",
+      "bytes": 5566,
+      "source_sha256": "e92131abaa4cfcb7f44920515bb8ec032847ebaf5607c1aa1e7e072bf3d7ef37",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/preference_reference_job.py",
+      "sha256": "e22f130540f9ae4c978f54b2a280298d080bfd9b62367c54d056b8b484ac0400",
+      "bytes": 3603,
+      "source_sha256": "e22f130540f9ae4c978f54b2a280298d080bfd9b62367c54d056b8b484ac0400",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_preference_cipher.py",
+      "sha256": "29691b938a5d6da16103eb11dd88e29498c663cf135406d60d961ebfaebb8d70",
+      "bytes": 4728,
+      "source_sha256": "29691b938a5d6da16103eb11dd88e29498c663cf135406d60d961ebfaebb8d70",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_preference_cipher_job.py",
+      "sha256": "299112ccfdad1f9ca5a381b7b30e616260a68f3ba6e9ad77c692d022e4208cf3",
+      "bytes": 3467,
+      "source_sha256": "299112ccfdad1f9ca5a381b7b30e616260a68f3ba6e9ad77c692d022e4208cf3",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_preference_cipher_material.py",
+      "sha256": "48e26b5737f81edf1bdd2a6a661225de522059e08314d440ca5743c4c3939e35",
+      "bytes": 995,
+      "source_sha256": "48e26b5737f81edf1bdd2a6a661225de522059e08314d440ca5743c4c3939e35",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_preference_cipher_record_probe.py",
+      "sha256": "1b71678cb26f0e1560c8b1e12e68fa95480d570aa0f7bce53a90791943459133",
+      "bytes": 2579,
+      "source_sha256": "1b71678cb26f0e1560c8b1e12e68fa95480d570aa0f7bce53a90791943459133",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_preference_identity_material.py",
+      "sha256": "699d63978c69ad819d13643e44bcff30db86290e02ccc11a27c2ad137de77fc8",
+      "bytes": 2541,
+      "source_sha256": "699d63978c69ad819d13643e44bcff30db86290e02ccc11a27c2ad137de77fc8",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_preference_reference_capsule.py",
+      "sha256": "db4c52ed00a24fd1eaf4492d5b51e7b1e8ab944981a3eaadc4e4a26ba8df00f0",
+      "bytes": 2980,
+      "source_sha256": "db4c52ed00a24fd1eaf4492d5b51e7b1e8ab944981a3eaadc4e4a26ba8df00f0",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_preference_reference_job.py",
+      "sha256": "c13590e33cc0e6cec42bb591e81684b95453a494faffb2230bbdeb9a2c4da38c",
+      "bytes": 1060,
+      "source_sha256": "c13590e33cc0e6cec42bb591e81684b95453a494faffb2230bbdeb9a2c4da38c",
+      "transformations": []
     }
   ],
-  "file_count": 2408,
-  "source_bytes": 33949801,
+  "file_count": 2428,
+  "source_bytes": 34057668,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

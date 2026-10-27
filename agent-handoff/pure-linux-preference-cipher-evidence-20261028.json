@@ -1,0 +1,897 @@
+{
+  "schema": "nashura.pure-linux.preference-cipher-evidence.v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "baseline_commit": "db684e816e9cad1f2ebb03cae1b89c9938f00b53",
+  "scope": "bounded historical original normal-path cipher bytes; not full configuration or battle parity",
+  "environment": {
+    "guest": "existing Ubuntu 22.04.5 ARM64",
+    "host": "Darwin ARM64",
+    "python": "3.13",
+    "android_started": false,
+    "libg_loaded_this_stage": false,
+    "vm_configuration_changed": false
+  },
+  "protected_libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "experiments": {
+    "v97": {
+      "archive": "v97-persistent-cipher-akula7e0/guest-result.json",
+      "sha256": "77fb4d9889a2e87492cc65cc07aad0533be9571eb40819191381899d3b0a5eb9",
+      "machine": "aarch64",
+      "kernel": "6.8.0-138-generic",
+      "input_count": 187,
+      "inputs_unchanged": true,
+      "repeat_equal": true,
+      "probe_sha256": "97f13164ceaffca25e058d233d96069ecd1f1d45c248638a2c1ddd4de262bdb4",
+      "catalog_ready_pass": false,
+      "runs": [
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout_sha256": "101446a8c0f4f794841c4b08d2294824a1bd9b94938d2c46e49ca8233036d34b",
+          "stderr_sha256": "886dec923ae1ef052f4bd1e6737da74bef87d6cbf473df154909a3dd835a83f8",
+          "passed": false,
+          "assertion_summary": null,
+          "evidence_error_count": 0,
+          "mapped_files": []
+        },
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout_sha256": "101446a8c0f4f794841c4b08d2294824a1bd9b94938d2c46e49ca8233036d34b",
+          "stderr_sha256": "886dec923ae1ef052f4bd1e6737da74bef87d6cbf473df154909a3dd835a83f8",
+          "passed": false,
+          "assertion_summary": null,
+          "evidence_error_count": 0,
+          "mapped_files": []
+        }
+      ],
+      "collector_exit_code": 1,
+      "failure": "logical linker name was not an actual hashable mapped file; preserved, fixed in v99"
+    },
+    "v99": {
+      "archive": "v99-cipher-proc-mapping-iho_9t96/guest-result.json",
+      "sha256": "2d43be3958e8cf7788df934c921fe12a3c904a76900e3b58fa7679c2f02c4f94",
+      "machine": "aarch64",
+      "kernel": "6.8.0-138-generic",
+      "input_count": 187,
+      "inputs_unchanged": true,
+      "repeat_equal": true,
+      "probe_sha256": "bb8566a5898c17643ae5c6461518b193f625f0554e6ed5695a8fee906b6bba94",
+      "catalog_ready_pass": false,
+      "runs": [
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout_sha256": "101446a8c0f4f794841c4b08d2294824a1bd9b94938d2c46e49ca8233036d34b",
+          "stderr_sha256": "062ffffd3179a4e5297ea5fdc20f4feaacf93a4dc775be0fc7ace091a8d7ab46",
+          "passed": true,
+          "assertion_summary": {
+            "scope": "primitive_candidate_public_key_real_dex_iv",
+            "libg_loaded": false,
+            "known_answer_first_blocks": 2,
+            "boundary_cases": 20,
+            "nonaligned": [
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              }
+            ],
+            "bad_padding": [
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": 0,
+                "length": 32,
+                "matches": false,
+                "output_unchanged": false
+              },
+              {
+                "result": 0,
+                "length": 16,
+                "matches": true,
+                "output_unchanged": false
+              },
+              {
+                "result": 0,
+                "length": 16,
+                "matches": true,
+                "output_unchanged": false
+              }
+            ],
+            "status": "PASS"
+          },
+          "evidence_error_count": 0,
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "bb8566a5898c17643ae5c6461518b193f625f0554e6ed5695a8fee906b6bba94"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ]
+        },
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout_sha256": "101446a8c0f4f794841c4b08d2294824a1bd9b94938d2c46e49ca8233036d34b",
+          "stderr_sha256": "062ffffd3179a4e5297ea5fdc20f4feaacf93a4dc775be0fc7ace091a8d7ab46",
+          "passed": true,
+          "assertion_summary": {
+            "scope": "primitive_candidate_public_key_real_dex_iv",
+            "libg_loaded": false,
+            "known_answer_first_blocks": 2,
+            "boundary_cases": 20,
+            "nonaligned": [
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              }
+            ],
+            "bad_padding": [
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": 0,
+                "length": 32,
+                "matches": false,
+                "output_unchanged": false
+              },
+              {
+                "result": 0,
+                "length": 16,
+                "matches": true,
+                "output_unchanged": false
+              },
+              {
+                "result": 0,
+                "length": 16,
+                "matches": true,
+                "output_unchanged": false
+              }
+            ],
+            "status": "PASS"
+          },
+          "evidence_error_count": 0,
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "bb8566a5898c17643ae5c6461518b193f625f0554e6ed5695a8fee906b6bba94"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ]
+        }
+      ]
+    },
+    "v101": {
+      "archive": "v101-102-cipher-references-bz9l7_fy/primitive-probe-result.json",
+      "sha256": "5afae7f5cd61fba74332f9f9eb544380731956e53f917974601157c3d96c1cc6",
+      "machine": "aarch64",
+      "kernel": "6.8.0-138-generic",
+      "input_count": 187,
+      "inputs_unchanged": true,
+      "repeat_equal": true,
+      "probe_sha256": "49d42be3784a4322ba6c6fc975e872cf64f7528d55ca93300d8c59ab739fce6a",
+      "catalog_ready_pass": false,
+      "runs": [
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout_sha256": "101446a8c0f4f794841c4b08d2294824a1bd9b94938d2c46e49ca8233036d34b",
+          "stderr_sha256": "7891d6128b660143f2775a2920cea60ff4032201a5c1d1cecf67fbe517b3c766",
+          "passed": true,
+          "assertion_summary": {
+            "scope": "primitive_candidate_public_key_real_dex_iv",
+            "libg_loaded": false,
+            "known_answer_first_blocks": 2,
+            "boundary_cases": 20,
+            "nonaligned": [
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              }
+            ],
+            "bad_padding": [
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": 0,
+                "length": 32,
+                "matches": false,
+                "output_unchanged": false
+              },
+              {
+                "result": 0,
+                "length": 16,
+                "matches": true,
+                "output_unchanged": false
+              },
+              {
+                "result": 0,
+                "length": 16,
+                "matches": true,
+                "output_unchanged": false
+              }
+            ],
+            "status": "PASS"
+          },
+          "evidence_error_count": 0,
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "49d42be3784a4322ba6c6fc975e872cf64f7528d55ca93300d8c59ab739fce6a"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ]
+        },
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout_sha256": "101446a8c0f4f794841c4b08d2294824a1bd9b94938d2c46e49ca8233036d34b",
+          "stderr_sha256": "7891d6128b660143f2775a2920cea60ff4032201a5c1d1cecf67fbe517b3c766",
+          "passed": true,
+          "assertion_summary": {
+            "scope": "primitive_candidate_public_key_real_dex_iv",
+            "libg_loaded": false,
+            "known_answer_first_blocks": 2,
+            "boundary_cases": 20,
+            "nonaligned": [
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              }
+            ],
+            "bad_padding": [
+              {
+                "result": -3,
+                "length": 0,
+                "matches": false,
+                "output_unchanged": true
+              },
+              {
+                "result": 0,
+                "length": 32,
+                "matches": false,
+                "output_unchanged": false
+              },
+              {
+                "result": 0,
+                "length": 16,
+                "matches": true,
+                "output_unchanged": false
+              },
+              {
+                "result": 0,
+                "length": 16,
+                "matches": true,
+                "output_unchanged": false
+              }
+            ],
+            "status": "PASS"
+          },
+          "evidence_error_count": 0,
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "49d42be3784a4322ba6c6fc975e872cf64f7528d55ca93300d8c59ab739fce6a"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ]
+        }
+      ],
+      "original_same_sequence_exception_parity_proven": false
+    },
+    "v102": {
+      "archive": "v101-102-cipher-references-bz9l7_fy/reference-probe-result.json",
+      "sha256": "e9477a7934fa47d0c5746bb1d53e7bd62352a5fc0cf087013b3539207143609f",
+      "machine": "aarch64",
+      "kernel": "6.8.0-138-generic",
+      "input_count": 187,
+      "inputs_unchanged": true,
+      "repeat_equal": true,
+      "probe_sha256": "ce5cd0e19c34ba23cefa68437f7af3775ec6262814ff50648d445cad125f73a3",
+      "catalog_ready_pass": false,
+      "runs": [
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout_sha256": "b4ac98a53024fa48a29c3698d84105a7a08c338860f829a56da65a3a0ca49a23",
+          "stderr_sha256": "7891d6128b660143f2775a2920cea60ff4032201a5c1d1cecf67fbe517b3c766",
+          "passed": true,
+          "assertion_summary": {
+            "status": "PASS",
+            "records": 2,
+            "libg_loaded": false,
+            "scope": "explicit_private_reference_bytes_only"
+          },
+          "evidence_error_count": 0,
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "ce5cd0e19c34ba23cefa68437f7af3775ec6262814ff50648d445cad125f73a3"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ]
+        },
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout_sha256": "b4ac98a53024fa48a29c3698d84105a7a08c338860f829a56da65a3a0ca49a23",
+          "stderr_sha256": "7891d6128b660143f2775a2920cea60ff4032201a5c1d1cecf67fbe517b3c766",
+          "passed": true,
+          "assertion_summary": {
+            "status": "PASS",
+            "records": 2,
+            "libg_loaded": false,
+            "scope": "explicit_private_reference_bytes_only"
+          },
+          "evidence_error_count": 0,
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "ce5cd0e19c34ba23cefa68437f7af3775ec6262814ff50648d445cad125f73a3"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ]
+        }
+      ]
+    },
+    "v104": {
+      "archive": "v104-original-cipher-native-ik40i6i1/result.json",
+      "sha256": "619e5fa51e2950d2a6999face5fb42f0931dbc1f752fdeed96b1b2f41843c7dd",
+      "machine": "aarch64",
+      "kernel": "6.8.0-138-generic",
+      "input_count": 187,
+      "inputs_unchanged": true,
+      "repeat_equal": true,
+      "probe_sha256": "ce5cd0e19c34ba23cefa68437f7af3775ec6262814ff50648d445cad125f73a3",
+      "catalog_ready_pass": false,
+      "runs": [
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout_sha256": "6d43ca72dc5c8165f7533f6eedf75ceae907cb1bf53ad93fd511674abc7dcfdf",
+          "stderr_sha256": "4c39a35262da3b2f859ee06884b13d01a0c36ba682c0ca904d94db5697b789c3",
+          "passed": true,
+          "assertion_summary": {
+            "status": "PASS",
+            "records": 30,
+            "libg_loaded": false,
+            "scope": "explicit_private_reference_bytes_only"
+          },
+          "evidence_error_count": 0,
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "ce5cd0e19c34ba23cefa68437f7af3775ec6262814ff50648d445cad125f73a3"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ]
+        },
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "stdout_sha256": "6d43ca72dc5c8165f7533f6eedf75ceae907cb1bf53ad93fd511674abc7dcfdf",
+          "stderr_sha256": "4c39a35262da3b2f859ee06884b13d01a0c36ba682c0ca904d94db5697b789c3",
+          "passed": true,
+          "assertion_summary": {
+            "status": "PASS",
+            "records": 30,
+            "libg_loaded": false,
+            "scope": "explicit_private_reference_bytes_only"
+          },
+          "evidence_error_count": 0,
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "ce5cd0e19c34ba23cefa68437f7af3775ec6262814ff50648d445cad125f73a3"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ]
+        }
+      ]
+    },
+    "v98": {
+      "status": "RUNTIME_OBSERVED",
+      "exit_code": 0,
+      "stdout_bytes": 693,
+      "exit_group": 0,
+      "identity_gate_verified": false,
+      "syscalls": {
+        "archive": "v98-cipher-exit-trace-ko7lfxkj/syscalls.log",
+        "sha256": "608e26d010051581be3775d0c984ecff919543bdac71e85e57196d4c691a56d4"
+      }
+    },
+    "v100": {
+      "status": "STATIC_FOUND",
+      "exit_code": 0,
+      "material_receipt": {
+        "archive": "v100-p-identity-qv9f_20q/material/result.json",
+        "sha256": "562f70f9eda1ba3990e7f09757050e9ded42092faf3fe9c6eb3898523aea751e"
+      },
+      "reference_selection": {
+        "archive": "v100-p-identity-qv9f_20q/reference-selection.json",
+        "sha256": "e73aad28f133d3c4a2f248770738f411ceddc06e3d2d64f337047c154f51ca9e"
+      },
+      "current_runtime_identity": "UNRESOLVED"
+    },
+    "v103": {
+      "exit_code": 0,
+      "material_receipt": {
+        "archive": "v103-original-cipher-yk7i4pr2/material/result.json",
+        "sha256": "da1f7fd8598bd8b109e5cabfd0dffe243fa6343e15eb64e291c29559ede67493"
+      },
+      "records": 30,
+      "expected_source": "historical original fields and known plaintext only; never native fields"
+    }
+  },
+  "auxiliary_receipts": {
+    "v98_syscalls": {
+      "archive": "v98-cipher-exit-trace-ko7lfxkj/syscalls.log",
+      "sha256": "608e26d010051581be3775d0c984ecff919543bdac71e85e57196d4c691a56d4"
+    },
+    "v100_material": {
+      "archive": "v100-p-identity-qv9f_20q/material/result.json",
+      "sha256": "562f70f9eda1ba3990e7f09757050e9ded42092faf3fe9c6eb3898523aea751e"
+    },
+    "v100_selection": {
+      "archive": "v100-p-identity-qv9f_20q/reference-selection.json",
+      "sha256": "e73aad28f133d3c4a2f248770738f411ceddc06e3d2d64f337047c154f51ca9e"
+    },
+    "v103_material": {
+      "archive": "v103-original-cipher-yk7i4pr2/material/result.json",
+      "sha256": "da1f7fd8598bd8b109e5cabfd0dffe243fa6343e15eb64e291c29559ede67493"
+    },
+    "v105": {
+      "archive": "v105-public-regression-rbhhjxtf/results.json",
+      "sha256": "f6512584a612013becfc66f744e3a9e1a38a2313d40c45b15d597227b8ceb647"
+    },
+    "v97_build": {
+      "archive": "v97-persistent-cipher-akula7e0/build-receipt.json",
+      "sha256": "123ca54af3fd8eb98804d19908a9a4e3a6d4f8d705b5b1f98eb825265bcd9ab0"
+    },
+    "v99_build": {
+      "archive": "v99-cipher-proc-mapping-iho_9t96/build.json",
+      "sha256": "401ba45b4393a1a3fc53ad93f36f8b2645b5af12cc4401f52de417d9f81c9744"
+    },
+    "v101_102_build": {
+      "archive": "v101-102-cipher-references-bz9l7_fy/build.json",
+      "sha256": "6bf69209dbe3ffaf46bc6f02f07abd70a456e4ff26ab1ac11d789af40eaf36ef"
+    },
+    "v101_transfer": {
+      "archive": "v101-native-ops-results.json",
+      "sha256": "8fde488c3caa34a75fc07c350b1ab99736ecfcf169672d30174bd0b36ebeb94a"
+    },
+    "v104_transfer": {
+      "archive": "v104-native-ops-results.json",
+      "sha256": "09237bb509617ec9336e1f49944728680182d111854657d92156f50c75da9144"
+    }
+  },
+  "historical_reference": {
+    "original_sha256": "6ea9940ea0796efce8ccc87346355873331c169dd0d936233d9629d485ef22d5",
+    "observer_sha256": "e27a6e4c8f0d1d994de922fe42c839a2cae15050d26cea3c9253fd6f6758aa31",
+    "matrix_source_sha256": "03bf8383e279038a0f53fb85115af1b950f34fb7c49e5fba3e9205727344b841",
+    "texts_source_sha256": "a8576fcd6b7f1a28867e3d131756c64c4a58bb04d442a9c520d382a4588a1a0d",
+    "capsule_sha256": "c69a3be0fbeaf061973e9b9432c981a92acc68d98f69710c75cc0da3e4fdeec7",
+    "expected_source": "historical original fields and known plaintext only; never native fields",
+    "normal_inputs": 10,
+    "operations": [
+      "KEY",
+      "ENCRYPT",
+      "DECRYPT"
+    ],
+    "records_per_child": 30,
+    "store_index": 1,
+    "restored_and_xml_unchanged": true,
+    "current_initialization_binding": "UNRESOLVED"
+  },
+  "source_static_audit": {
+    "current_dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+    "historical_dex_sha256": "ef1ac708f6e836daa925afc50d3bf3b139213b3a72323a354cc2e9493b50f608",
+    "sdk_api": 35,
+    "matching_runtime_proven": false,
+    "OpenSSLEvpCipher.java": "9175e182b275cbea3725c0475fe816ff1163868f6db5a6d8c7e7c871da15950a",
+    "SharedPreferencesImpl.java": "a1daeb52d3211428131f08ae236709059b3c46ab8d050a59d09a935e5ca6f8cd",
+    "BackupManager.java": "a062e23e6b9045898a7a1831dfe5147f2031b50bb245e676e100965176d79ff7",
+    "Cipher.java": "ade0446fd23282fcbcd81eded2b15aaf4ea61f6d533f8be2400355ebcab54290"
+  },
+  "regression": {
+    "receipt": {
+      "archive": "v105-public-regression-rbhhjxtf/results.json",
+      "sha256": "f6512584a612013becfc66f744e3a9e1a38a2313d40c45b15d597227b8ceb647"
+    },
+    "isolated_copy": true,
+    "overlapping_suites_not_summed": true,
+    "tracked_xml_files_unchanged": 248,
+    "commands": {
+      "pure_linux": {
+        "exit_code": 0,
+        "stdout_sha256": "0d2601063c5f474fba9b56187c0486c385f1bf71b2a511e2ba7f225c5833b914",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "command": "python3.13 -m pytest -q -p no:cacheprovider tools/pure_linux",
+        "passed": 304,
+        "skipped": 1,
+        "failures": 0,
+        "errors": 0
+      },
+      "main_engine": {
+        "exit_code": 0,
+        "stdout_sha256": "2ef086fb31561e31e99a4e4455bcae1b5706d3d997a28c5d862d2ce9f548c7a8",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "command": "python3.13 tools/run_main_engine_checks.py",
+        "passed": 211,
+        "skipped": 0,
+        "failures": 0,
+        "errors": 0
+      },
+      "public": {
+        "exit_code": 0,
+        "stdout_sha256": "a8dc8e3fa0f5d811f578a80da42182dfc9a548279fcb7581839c57c1c12587ae",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "command": "python3.13 tools/run_public_checks.py",
+        "passed": 1104,
+        "skipped": 42,
+        "failures": 0,
+        "errors": 0
+      }
+    }
+  },
+  "gates": {
+    "historical_normal_cipher_bytes": "bounded PASS",
+    "exception_sequence_original_differential": "NOT_RUN",
+    "current_runtime_identity": "UNRESOLVED",
+    "java_utf8_base64_full_domain": "UNRESOLVED",
+    "storage_and_backup": "UNRESOLVED",
+    "CATALOG_READY_PASS": false,
+    "resource_manager": "BLOCKED",
+    "GameState": "NOT_RUN",
+    "GameStateStep": "NOT_RUN",
+    "complete_battle": "NOT_RUN",
+    "android_tick_comparison": "NOT_RUN",
+    "no_JavaVM_lifecycle": "NOT_RUN",
+    "Android_free": "NOT_RUN",
+    "performance_10x": "NOT_RUN",
+    "training": "NOT_RUN"
+  },
+  "next_blocker": "current configuration platform identity, exception state, storage commit and backup semantics before strict catalog revalidation",
+  "redaction": "relative archive labels, counts, statuses and hashes only; no key/IV or identity material, raw XML, memory, binaries or private log bodies"
+}

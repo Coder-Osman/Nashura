@@ -1,5 +1,23 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：持久Cipher及历史原版正常字节
+
+新增SHA绑定的p身份静态提取、三持久EVP上下文及历史original参考胶囊工具。
+v97两child退出0但collector因逻辑linker路径求SHA退出1，失败保留；v99修复实际映射后
+两child/187项输入/9映射通过。v101两首块、20边界组合及错误序列为候选观察，
+v102每child两条XML加密键匹配；v104两个新ARM64/Bionic子进程各30条历史正常路径
+ECB/CBC参考逐字节一致、187项未变。expected仅来自历史original字段与已知输入，
+不来自native候选；不等于当前loading键及完整初始化等价。
+
+v105隔离专项304通过/1条件跳过、主工程211通过、公开九组1,104通过/42跳过/零失败错误。
+248份工作树已跟踪XML与HEAD一致，未覆盖历史输出。当前身份、异常后状态及真实
+storage/backup UNRESOLVED，CATALOG_READY_PASS=false、manager BLOCKED；
+GameState、空场/reset、真实Step、动作、完整战斗及Android逐tick对照NOT_RUN。
+本阶段未重新加载libg，未启动Android、训练或10×测试。证据边界与实际命令见
+[报告](../agent-handoff/PURE_LINUX_PREFERENCE_CIPHER_2026-10-28.md)、
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_PREFERENCE_CIPHER.md)及
+[机器证据](../agent-handoff/pure-linux-preference-cipher-evidence-20261028.json)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：初始化图与配置控制流差分
 
 真实当前/历史DEX的有界初始化图142节点、15分支相同，8个配置方法摘要相同，
