@@ -16510,9 +16510,9 @@
     },
     {
       "path": "agent-handoff/CODEX_REPLY_2026-10-27_NATIVE_INIT.md",
-      "sha256": "f4d325d9b9283ee9679efe7f56c8b5fd31ed3460259c3310d5d28e70f81ffdc9",
-      "bytes": 3629,
-      "source_sha256": "f4d325d9b9283ee9679efe7f56c8b5fd31ed3460259c3310d5d28e70f81ffdc9",
+      "sha256": "102cafda00d117b82bed8a78330a0903fd7e236b45f0dc3e4e67a8fcaaf34141",
+      "bytes": 3711,
+      "source_sha256": "102cafda00d117b82bed8a78330a0903fd7e236b45f0dc3e4e67a8fcaaf34141",
       "transformations": []
     },
     {
@@ -16566,7 +16566,7 @@
     }
   ],
   "file_count": 2364,
-  "source_bytes": 33523824,
+  "source_bytes": 33523906,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
