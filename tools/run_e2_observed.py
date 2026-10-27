@@ -144,6 +144,9 @@ def run(config_path, output):
         create('fmod', 'e1_fmod_binding.js', config['fmod_config'])
         if config.get('replacement'):
             create('replacement', 'e2_config_replace.js', config['replacement'])
+        early_observer = config.get('return_observer', {}).get('install_at') == 'first-native-bridge'
+        if early_observer:
+            create('return-observer', 'e2_1_return_observer.js', config['return_observer'])
         device.resume(pid)
         print('resumed ' + str(pid), flush=True)
         for attempt in range(90):
@@ -164,7 +167,13 @@ def run(config_path, output):
             create('semantics', 'e2_1_config_probe.js', config['semantics_probe'])
             save('semantics-cold.json', scripts['semantics'].exports_sync.batch([
                 dict(case='after_cold_ready', operation='read', key='PN_POPUP')]))
-        if config.get('return_observer'):
+        if early_observer:
+            observed = scripts['return-observer'].exports_sync.snapshot()
+            save('return-observer-cold.json', observed)
+            return_observer_installed = observed['cold']['installed']
+            if not return_observer_installed or observed['cold']['errors']:
+                raise RuntimeError('cold observer installation failed; original engine outcome retained separately')
+        elif config.get('return_observer'):
             create('return-observer', 'e2_1_return_observer.js', config['return_observer'])
             installed = scripts['return-observer'].exports_sync.command('install')
             save('return-observer-install.json', dict(result=installed, phase='after_cold_ready_before_state_create'))
@@ -223,18 +232,31 @@ def run(config_path, output):
         raise
     finally:
         snapshot_errors = []
+        if 'return-observer' in scripts and config.get('return_observer', {}).get('install_at') == 'first-native-bridge':
+            try:
+                return_observer_installed = scripts['return-observer'].exports_sync.snapshot()['cold']['installed']
+            except BaseException as failure:
+                save('return-observer-cold-status-failure.json', dict(error=str(failure)))
+                snapshot_errors.append('return-observer-cold-status')
         if return_observer_installed:
             try:
                 observer = scripts['return-observer'].exports_sync
                 (output / 'return-observer-events.tsv').write_text(observer.command('snapshot'))
                 save('return-observer-uninstall.json', dict(result=observer.command('uninstall')))
                 return_observer_installed = False
+                if config['return_observer'].get('release_after_uninstall'):
+                    save('return-observer-release.json', dict(result=observer.command('release')))
             except BaseException as failure:
                 save('return-observer-cleanup-failure.json', dict(error=str(failure)))
                 snapshot_errors.append('return-observer-cleanup')
         for name, script in scripts.items():
             try:
-                save(name + '-final.json', script.exports_sync.snapshot())
+                final = script.exports_sync.snapshot()
+                save(name + '-final.json', final)
+                if name == 'return-observer' and config.get('return_observer', {}).get('install_at') == 'first-native-bridge':
+                    cold = final['cold']
+                    if not cold['installed'] or cold['errors'] or any('after' not in window for window in cold['windows']):
+                        snapshot_errors.append('return-observer-cold-windows')
             except BaseException as failure:
                 save(name + '-snapshot-failure.json', dict(error=str(failure)))
                 snapshot_errors.append(name)

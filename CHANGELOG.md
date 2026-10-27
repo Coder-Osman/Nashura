@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-27：E2.1-D 自然冷启动PN返回与观测器引用退休
+
+- 两个独立早装观测进程与baseline各3602快照/28动作/终局及snapshot/restore/reset一致。
+- 原引擎调用点完成窗口，双store自然写各commit(true)一次；外部probe分离，早装onLeave原因unknown。
+- 正常进程重启读回一致；恢复原store，清除自有6个Java引用及1个JNI global reference。
+- 新增18307附件限定验证器、负向回归及白名单导出；保留前两次观测失败和验证器字段修正。
+- 限定验收exit0，严格门仍exit2；PN native持久化、46键移除性及游戏对象生命周期未闭合。
+- 独占实例回收，原adb保持；未进入E2.2、训练或10×。
+
 ## 2026-10-27：E2.1-C PN真实提交返回、写失败和不同值交错
 
 - 新增临时SharedPreferences转发观测器，直接记录原后端commit boolean，保留JavaVM及原桥。

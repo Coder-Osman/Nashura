@@ -1,5 +1,19 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-D 自然PN返回与观测器引用退休
+
+两个独立自然冷启动进程与baseline各3602快照/9120440bytes、28动作及tick3601终局一致；
+snapshot/restore/reset回执一致。自然读零commit，自然写两个原store各commit(true)一次。
+冷启动早装onLeave计数仍0、原因unknown；实际原引擎调用点返回证据另行关联caller/线程/阶段。
+正常进程重启读回一致，不证明崩溃持久化。观测器恢复原store，释放自身6个Java引用与
+1个JNI global reference，不外推GC/游戏对象生命周期。
+
+18307附件限定验证exit0，25项新增专项通过；E2专项146 passed/59 skipped，主工程211 passed。
+旧严格门exit2，46键仍保留、PN未native替换。前两次返回观测失败、诊断未知均保留。
+独占实例已回收；未进入E2.2、no-VM、正式训练或10×。
+见agent-handoff/E2_1D_COLD_PN_RETURNS_REFERENCE_RETIREMENT_2026-10-27.md、
+CODEX_REPLY_2026-10-27_E2_1D.md、e2_1d_evidence_summary.json和e2_1d_failure_index.json。
+
 ## 2026-10-27 E2.1-C PN实际commit返回、写失败及不同值交错
 
 六个独立进程各3602快照/9120440bytes、28动作、tick3601终局与snapshot/restore/reset一致；

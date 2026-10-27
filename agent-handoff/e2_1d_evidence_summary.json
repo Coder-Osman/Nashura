@@ -1,0 +1,88 @@
+{
+  "schema": "e2.1d-public-evidence.v1",
+  "status": "bounded_evidence_verified",
+  "strict_gate": "BLOCKED",
+  "private_attachment_count": 18307,
+  "runs": [
+    {
+      "run": "baseline",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "cold-3",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0,
+      "cold": {
+        "native_entries": 138,
+        "bridge_onleave_events": 0,
+        "external_windows": 3,
+        "released_java_references": 6,
+        "allocated_global_references": 1,
+        "deleted_global_references": 1,
+        "natural_read_commits": 0,
+        "natural_write_commits": {
+          "o:true": 1,
+          "p:true": 1
+        }
+      }
+    },
+    {
+      "run": "cold-4",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0,
+      "cold": {
+        "native_entries": 138,
+        "bridge_onleave_events": 0,
+        "external_windows": 3,
+        "released_java_references": 6,
+        "allocated_global_references": 1,
+        "deleted_global_references": 1,
+        "natural_read_commits": 0,
+        "natural_write_commits": {
+          "o:true": 1,
+          "p:true": 1
+        }
+      }
+    }
+  ],
+  "restart_readback_equal": true,
+  "restart_scope": "normal process restart; not crash or power-loss durability",
+  "return_scope": "two original libg PN_POPUP callsites; independent observer thread/caller/phase correlation",
+  "return_address_limit": "consistent relative callers and page-aligned module base; no independent module-base receipt",
+  "onleave_failure": "early bridge onLeave not observed; cause unknown; external probes separated",
+  "retirement_scope": "observer-owned explicit references only; no GC, class unload or game-object lifecycle proof",
+  "evidence_access": "private attachments required; public summary is not native revalidation",
+  "retained_incomplete_runs": 2,
+  "removed_keys": 0,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false,
+  "pn_native_replacement": false,
+  "unresolved": [
+    "46-key removability",
+    "PN native persistence and failure equivalence",
+    "game Java object lifetime",
+    "general concurrency and crash durability"
+  ],
+  "private_manifest_sha256": "6dcb81a9f2e090a105c71557177d50b793019b532a4655a3980813e2c01f1899"
+}

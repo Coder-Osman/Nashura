@@ -16,6 +16,7 @@ public final class E21PreferenceObserver {
     private static final Object[] proxies = new Object[2];
     private static Field backing;
     private static boolean installed;
+    private static boolean released;
     private static long sequence;
     private static long editors;
     private static int dropped;
@@ -57,7 +58,7 @@ public final class E21PreferenceObserver {
     }
 
     private static String install() throws Exception {
-        if (installed || backing != null) throw new IllegalStateException("single install only");
+        if (installed || backing != null || released) throw new IllegalStateException("single install only");
         ClassLoader parent = E21PreferenceObserver.class.getClassLoader().getParent();
         Class<?> gameType = Class.forName("com.supercell.titan.GameApp", false, parent);
         Object game = gameType.getField("q").get(null);
@@ -92,6 +93,7 @@ public final class E21PreferenceObserver {
     }
 
     public static synchronized String command(String operation) throws Exception {
+        if (released) throw new IllegalStateException("observer references retired");
         if (operation.equals("install")) return install();
         if (operation.equals("read-stores")) {
             if (!installed) throw new IllegalStateException("not installed");
@@ -127,6 +129,24 @@ public final class E21PreferenceObserver {
             }
             installed = false;
             return "uninstalled\t2";
+        }
+        if (operation.equals("release")) {
+            if (installed || backing == null) throw new IllegalStateException("restore stores before release");
+            for (int index = 0; index < 2; ++index) {
+                if (backing.get(stores[index]) != originals[index]) throw new IllegalStateException("restored store changed");
+            }
+            int cleared = 0;
+            for (int index = 0; index < 2; ++index) {
+                if (stores[index] != null) ++cleared;
+                if (originals[index] != null) ++cleared;
+                if (proxies[index] != null) ++cleared;
+                stores[index] = null;
+                originals[index] = null;
+                proxies[index] = null;
+            }
+            backing = null;
+            released = true;
+            return "released\t" + cleared;
         }
         throw new IllegalArgumentException("unknown observer command");
     }

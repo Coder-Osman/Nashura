@@ -4,8 +4,36 @@ let settings = null;
 let helper = null;
 let commandMethod = null;
 const events = [];
+let retired = false;
+let allocatedGlobals = 0;
+let deletedGlobals = 0;
+const cold = {armed: false, attempted: false, installed: false, installing: false,
+  entries: 0, returns: 0, reentrant_entries: 0, windows: [], external_windows: 0, errors: []};
+const returnSites = new Map();
+const pendingWindows = new Map();
+
+function watchReturnSite(address) {
+  const site = address.toString();
+  if (returnSites.has(site)) return;
+  const range = Process.findRangeByAddress(address);
+  if (!range || !range.protection.includes('x')) throw new Error('return site not executable');
+  returnSites.set(site, Interceptor.attach(address, {
+    onEnter() {
+      const thread = Process.getCurrentThreadId();
+      const stack = pendingWindows.get(thread) || [];
+      const window = stack[stack.length - 1];
+      if (!window || window.return_site !== site) return;
+      stack.pop();
+      try {
+        window.after = invoke('snapshot');
+        window.completion = 'original callsite return instruction';
+      } catch (failure) { cold.errors.push({stage: 'return-site', error: String(failure)}); }
+    }
+  }));
+}
 
 function invoke(operation) {
+  if (retired) throw new Error('observer references already retired');
   const engine = Process.getModuleByName('libg.so');
   const environment = new NativeFunction(engine.base.add(settings.jni_attach), 'pointer', [])();
   if (environment.isNull()) throw new Error('original JNI attach returned null');
@@ -51,6 +79,7 @@ function invoke(operation) {
         args([text('org.nashura.evidence.E21PreferenceObserver')])));
       helper = checked(jni(21, 'pointer', ['pointer'])(environment, type));
       if (helper.isNull()) throw new Error('global helper class allocation failed');
+      allocatedGlobals++;
       commandMethod = method(type, 'command', '(Ljava/lang/String;)Ljava/lang/String;', 113);
     }
     const output = local(jni(116, 'pointer', ['pointer', 'pointer', 'pointer'])(environment, helper, commandMethod,
@@ -61,10 +90,67 @@ function invoke(operation) {
     try { result = characters.readUtf8String(); }
     finally { jni(170, 'void', ['pointer', 'pointer'])(environment, output, characters); }
     events.push({operation, status: 'returned', thread: Process.getCurrentThreadId()});
+    if (operation === 'release') {
+      checked(jni(22, 'void', ['pointer'])(environment, helper));
+      helper = null;
+      commandMethod = null;
+      deletedGlobals++;
+      retired = true;
+    }
     return result;
   } finally {
     for (const reference of locals.reverse()) jni(23, 'void', ['pointer'])(environment, reference);
   }
+}
+
+function armCold(module) {
+  if (module.name !== 'libg.so' || cold.armed) return;
+  for (const [operation, offset] of [['read', 21022348], ['write', 21018548]]) {
+    const target = module.base.add(offset);
+    const range = Process.findRangeByAddress(target);
+    if (!range || !range.protection.includes('x')) throw new Error('cold observer target not executable');
+    Interceptor.attach(target, {
+      onEnter(args) {
+        cold.entries++;
+        if (cold.installing) { cold.reentrant_entries++; return; }
+        if (!cold.attempted) {
+          cold.attempted = true;
+          cold.installing = true;
+          cold.install_entry = {operation, offset, thread: Process.getCurrentThreadId(), entry: cold.entries};
+          try {
+            cold.install_result = invoke('install');
+            cold.installed = cold.install_result === 'installed\t2';
+            if (!cold.installed) throw new Error('unexpected cold install receipt');
+          } catch (failure) {
+            cold.errors.push({stage: 'install', error: String(failure)});
+          } finally { cold.installing = false; }
+        }
+        if (!cold.installed || retired) return;
+        try {
+          if (args[0].add(4).readU32() !== 8) return;
+          const data = args[0].add(8).readPointer().and('0x00ffffffffffffff');
+          if (data.isNull() || data.readUtf8String(8) !== 'PN_POPUP' || data.add(8).readU8() !== 0) return;
+          if (this.returnAddress.compare(module.base) < 0 || this.returnAddress.compare(module.base.add(module.size)) >= 0) {
+            cold.external_windows++;
+            return;
+          }
+          if (cold.windows.length >= 32) throw new Error('cold PN window budget exhausted');
+          watchReturnSite(this.returnAddress);
+          const window = {operation, thread: Process.getCurrentThreadId(), entry: cold.entries,
+            caller: this.returnAddress.sub(module.base).toString(), return_site: this.returnAddress.toString(),
+            before: invoke('snapshot')};
+          cold.windows.push(window);
+          const stack = pendingWindows.get(window.thread) || [];
+          stack.push(window);
+          pendingWindows.set(window.thread, stack);
+        } catch (failure) { cold.errors.push({stage: 'entry', error: String(failure)}); }
+      },
+      onLeave() {
+        cold.returns++;
+      }
+    });
+  }
+  cold.armed = true;
 }
 
 rpc.exports = {
@@ -74,15 +160,23 @@ rpc.exports = {
         !config.optimized_directory.startsWith('/data/user/0/nullsroyale.rel.free/')) {
       throw new Error('invalid immutable return observer configuration');
     }
+    if (config.install_at !== undefined && !['post-cold-ready', 'first-native-bridge'].includes(config.install_at)) {
+      throw new Error('unsupported observer installation phase');
+    }
     settings = config;
+    if (config.install_at === 'first-native-bridge') Process.attachModuleObserver({onAdded: armCold});
     return true;
   },
   command(operation) {
-    if (!settings || !['install', 'snapshot', 'uninstall', 'files', 'read-stores'].includes(operation)) throw new Error('invalid command');
+    if (!settings || !['install', 'snapshot', 'uninstall', 'files', 'read-stores', 'release'].includes(operation)) throw new Error('invalid command');
+    if (operation === 'install' && settings.install_at === 'first-native-bridge') throw new Error('cold install is driven by original bridge only');
     return invoke(operation);
   },
   snapshot() {
-    return {events, scope: 'two temporary forwarding SharedPreferences wrappers; explicit post-cold-ready windows only',
+    return {events, cold, references: {allocated_globals: allocatedGlobals, deleted_globals: deletedGlobals, retired},
+      scope: settings && settings.install_at === 'first-native-bridge'
+        ? 'original libg PN_POPUP bridge callsites after first native bridge; earlier Java accesses and external direct probes unobserved'
+        : 'two temporary forwarding SharedPreferences wrappers; explicit post-cold-ready windows only',
       coverage: 'actual delegated return values only; no JVMTI or exhaustive Java coverage', no_vm_verified: false};
   }
 };

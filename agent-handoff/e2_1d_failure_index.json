@@ -1,0 +1,61 @@
+{
+  "schema": "e2.1d-public-failure-index.v1",
+  "historical_evidence_preserved": true,
+  "records": [
+    {
+      "id": "cold-1-return-window-incomplete",
+      "exit_code": 0,
+      "observed": "Original early bridge onLeave did not complete observation windows; old runner completed native trajectory without rejecting missing after",
+      "attachment_sha256": "ade6c7636e9b5e8398760feb16bfaa403b14acec590895ab48ee7d16cb5a9aef",
+      "accepted_return_evidence": false
+    },
+    {
+      "id": "cold-2-fail-closed",
+      "exit_code": 1,
+      "observed": "138 bridge entries and zero bridge onLeave events; missing after explicitly rejected",
+      "attachment_sha256": "59ab511bcd0d6509b9a498807cd8cd1ac5af65ad6018c29716ade026f5cce3fd",
+      "accepted_return_evidence": false
+    },
+    {
+      "id": "early-onleave-root-cause",
+      "observed": "Late installation default diagnostic observed enter and return; early installation did not",
+      "attachment_sha256": "f8beb3d78a502044a27b925de23a25dadd46cebe0afd2d3dba5f00c56d4c2d70",
+      "cause": "unknown",
+      "resolution": "Observe actual original libg callsite return instruction; keep early bridge onLeave count zero"
+    },
+    {
+      "id": "diagnostic-configuration-and-interceptor-variants",
+      "observed": "Initial diagnostic expected absent adb_port field; later exclusive and traps-all variants encountered access violation at 0x90",
+      "exit_code": null,
+      "exit_code_note": "Separate process exit was not retained for every tool invocation; failures remain in tool history and diagnostic records",
+      "resolution": "Read actual adb argument list; accept only default late diagnostic and two complete independent early callsite runs"
+    },
+    {
+      "id": "comparison-before-cold-4-finished",
+      "exit_code": 1,
+      "observed": "Premature comparison found no cold-4 trace.json; later exclusive comparison after completion passed",
+      "resolution": "Retain failed tool invocation; separate completed comparison accepted"
+    },
+    {
+      "id": "bounded-verifier-schema-1",
+      "exit_code": 1,
+      "observed": "Verifier incorrectly expected exception-state object to have no source field",
+      "resolution": "Check actual before/after exception booleans; preserve source annotation"
+    },
+    {
+      "id": "bounded-verifier-schema-2",
+      "exit_code": 1,
+      "observed": "Verifier compared result length to byte-list object rather than its length",
+      "resolution": "Check actual byte-list length and UTF-8/value consistency; v3 passes without changing native evidence"
+    },
+    {
+      "id": "runner-completion-is-not-acceptance",
+      "observed": "Runner missing-after check alone permits an empty window list",
+      "resolution": "Independent D gate requires exactly two natural windows and rejects empty lists; generic runner completed status is not an acceptance gate",
+      "remaining_scope": "No claim of exhaustive Java coverage"
+    }
+  ],
+  "strict_gate": "BLOCKED",
+  "no_vm_verified": false,
+  "pn_native_replacement": false
+}
