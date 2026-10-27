@@ -9,6 +9,7 @@ let allocatedGlobals = 0;
 let deletedGlobals = 0;
 let pnBridge = null;
 let pnLibrary = null;
+let pnDispatchLibrary = null;
 const cold = {armed: false, attempted: false, installed: false, installing: false,
   entries: 0, returns: 0, reentrant_entries: 0, windows: [], external_windows: 0, errors: []};
 const returnSites = new Map();
@@ -159,7 +160,7 @@ function armCold(module) {
         stack.push(window);
         pendingWindows.set(row.thread, stack);
       }
-    }, pnLibrary);
+    }, pnLibrary, pnDispatchLibrary);
     return;
   }
   for (const [operation, offset] of [['read', 21022348], ['write', 21018548]]) {
@@ -244,6 +245,14 @@ rpc.exports = {
     }
     settings = config;
     if (config.pn_bridge) pnLibrary = Module.load(config.pn_bridge.library);
+    if (config.pn_bridge && config.pn_bridge.dispatch_gate) {
+      const gate = config.pn_bridge.dispatch_gate;
+      if (gate.mode !== 'native-serial-v1' || typeof gate.library !== 'string' ||
+          !gate.library.startsWith('/data/app/') || !gate.library.endsWith('/lib/arm64/libe21dispatchgate.so')) {
+        throw new Error('explicit native serial dispatch gate identity required');
+      }
+      pnDispatchLibrary = Module.load(gate.library);
+    }
     if (config.install_at === 'first-native-bridge') Process.attachModuleObserver({onAdded: armCold});
     return true;
   },
@@ -258,8 +267,9 @@ rpc.exports = {
        /^codec-raw:[01]:[A-Za-z0-9+/=]*$/.test(operation) ||
        /^codec-encode:[01]:(key|value):[A-Za-z0-9+/=]*$/.test(operation));
     const derivation = settings && settings.enable_pn_derivation === true && operation === 'derivation-source';
+    const lockContract = settings && settings.enable_lock_contract === true && operation === 'lock-contract';
     if (pnBridge && pnBridge.snapshot().installed && ['uninstall', 'release'].includes(operation)) throw new Error('retire PN bridge before backend');
-    if (!settings || (!matrix && !codec && !derivation && !['install', 'snapshot', 'uninstall', 'files', 'read-stores', 'release'].includes(operation))) throw new Error('invalid command');
+    if (!settings || (!matrix && !codec && !derivation && !lockContract && !['install', 'snapshot', 'uninstall', 'files', 'read-stores', 'release'].includes(operation))) throw new Error('invalid command');
     if (operation === 'install' && settings.install_at === 'first-native-bridge') throw new Error('cold install is driven by original bridge only');
     return invoke(operation);
   },

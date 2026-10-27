@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-27：E2.1-N PN并发观测与有界串行门
+
+- 真实入口/返回观测保留partial覆盖，原版跨线程重叠和替换JNI内重入拒绝分别归因。
+- 新增显式pthread串行诊断门，在JS callback前生效；通用并发语义仍unknown。
+- 两次独立串行替换成功，八完整轨迹各3602快照/28动作全字节一致。
+- 29164附件限定核验通过，E2回归349 passed/392 skipped；复编SO/DEX与部署字节相同。
+- 保留timeout、初始化失败、loader终止及验证器失败；不以成功retry覆盖历史证据。
+- strict仍BLOCKED，各替换133非PN fallback、46键移除0；无no-VM、训练或10×声明。
+
 ## 2026-10-27：E2.1-M 自然PN持久替换与异常后生命周期
 
 - 新增独立持久backend模式，接自然PN；保留原K模式和Java身份/store/XML/backup/VM。

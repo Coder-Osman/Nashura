@@ -1,0 +1,73 @@
+{
+  "schema": "e2.1n-failure-index.v1",
+  "scope": "sanitized metadata; original attempts and verification revisions retained privately",
+  "failures": [
+    {
+      "id": "replacement-diagnostics-race-lock-v2",
+      "exit_code": 124,
+      "seconds": 600.0153477923013,
+      "reason": "explicit cross-thread JNI-stage backend rejection and bridge violation, then external timeout; timeout cause and abort unknown; restore/final identity uncovered",
+      "attempt_sha256": "23f7904aba8ed4331e323ad85f18a3f2d147dfacefe262a84567a36edb871099"
+    },
+    {
+      "id": "replacement-dispatch-race-lock-v3",
+      "exit_code": 1,
+      "seconds": 24.80567404208705,
+      "reason": "initialization failed; required final observer snapshots absent; not the timeout experiment",
+      "attempt_sha256": "6aa998f3b4455c7f0bfe5e29b854b548a2e339572992813ad5de589ac37a94ba"
+    },
+    {
+      "id": "replacement-gate-race-v4",
+      "exit_code": -9,
+      "seconds": 143.35837929230183,
+      "reason": "external termination during nested module callback load; linker wait observed, exact deadlock causality unknown",
+      "attempt_sha256": "165a4c9b8abcb73932de75c6aa55e73afccae581bcfc01dc7759d074ed7d5183"
+    },
+    {
+      "id": "verify-n-v3-1",
+      "exit_code": 1,
+      "seconds": 1.518551291897893,
+      "reason": "incorrect first-lifecycle versus second-lifecycle identity comparison; corrected by comparing corresponding lifecycles, retaining every field",
+      "receipt_sha256": "77dc879baf1f0d2f183c21c9f2532bf08dfa728bb2b148630b559a13543b6a74",
+      "log_sha256": "4ce0993d7cad13ce0b5519cef6d764d4ffc5c4486c3c9c3c85941d3f660fa1f7"
+    },
+    {
+      "id": "verify-n-v4-1",
+      "exit_code": 1,
+      "seconds": 1.9935406246222556,
+      "reason": "manifest selected the initialization failure rather than the diagnostic timeout; original attempts retained, reference corrected",
+      "receipt_sha256": "e767484b35ea3714c781b0523f605fd83cb537caad4ff5fba396c9744a67f555",
+      "log_sha256": "9189f2000af62a7fc9f20f1c6433f6f9d271fe54bf4d60955e8b0214ee69b7af"
+    },
+    {
+      "id": "verify-n-v5-1",
+      "exit_code": 1,
+      "seconds": 1.9980543749406934,
+      "reason": "timeout-only classification contradicted explicit rejection; independent rejection and termination observations preserved",
+      "receipt_sha256": "4df5c53bbcc4ec8c9a9afb9491fd7263862b7f8ce641bcfe101016f06eb20277",
+      "log_sha256": "9c6f0b6766fdb619c45bb22d523a58c2261e39d48e2c8c0b44fa4ce456a493a5"
+    },
+    {
+      "id": "verify-n-v6-1",
+      "exit_code": 1,
+      "seconds": 3.1304720412008464,
+      "reason": "cross-run equality incorrectly rejected added self-built gate; only bound gate addition permitted and hashed, protected inputs unchanged",
+      "receipt_sha256": "8bde6d50bf79ed718ae1a6083fe2f49702e3f51851baa438a9279af2c404cf69",
+      "log_sha256": "bc9675816ec7a311a097414dd15d2849231246f18fc985bf318277c4fafe3184"
+    }
+  ],
+  "earlier_verifier_diagnostics": {
+    "receipt_literal": "pn-captured literal backslash-t; early expected receipt corrected",
+    "standalone_exit_receipt": "not available for earliest direct diagnostic checks"
+  },
+  "final_verifier": {
+    "id": "verify-n-v7-1",
+    "exit_code": 0,
+    "receipt_sha256": "91e12a026d01fbe912b8f1cd660fe1eee9c7d5c77f07ca7cf21ff71c736d4ba8",
+    "manifest_sha256": "69be0614f786ffacdbd166cf7b06dc409cf0265c9bc212609ffdce0656037d2c"
+  },
+  "failed_evidence_overwritten": false,
+  "general_thread_safety": "unknown",
+  "strict_gate": "BLOCKED",
+  "no_vm_verified": false
+}

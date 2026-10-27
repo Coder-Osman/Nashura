@@ -413,6 +413,47 @@ public final class E21PreferenceObserver {
     public static synchronized String command(String operation) throws Exception {
         if (released) throw new IllegalStateException("observer references retired");
         if (operation.equals("install")) return install();
+        if (operation.equals("lock-contract")) {
+            if (!installed) throw new IllegalStateException("installed stores required for lock metadata");
+            JSONArray result = new JSONArray();
+            ClassLoader parent = E21PreferenceObserver.class.getClassLoader().getParent();
+            Class<?> gameType = Class.forName("com.supercell.titan.GameApp", false, parent);
+            Class<?> bridgeType = Class.forName("com.supercell.titan.ApplicationUtilBase", false, parent);
+            Class<?>[] types = {bridgeType, gameType, stores[0].getClass(), E21PreferenceObserver.class};
+            int bridgeMethods = 0;
+            int backupMethods = 0;
+            int storeMethods = 0;
+            int observerMethods = 0;
+            for (Class<?> type : types) {
+                for (Method method : type.getDeclaredMethods()) {
+                    String name = method.getName();
+                    boolean bridgeMethod = type == bridgeType && (name.equals("getKeyValue") || name.equals("storeKeyValue"));
+                    boolean backupMethod = type == gameType && name.equals("requestBackup");
+                    boolean storeMethod = type == stores[0].getClass() && (name.equals("j") || name.equals("n"));
+                    boolean observerMethod = type == E21PreferenceObserver.class &&
+                        (name.equals("command") || name.equals("record") || name.equals("nextEditor"));
+                    if (!bridgeMethod && !backupMethod && !storeMethod && !observerMethod) continue;
+                    if (bridgeMethod) bridgeMethods++;
+                    if (backupMethod) backupMethods++;
+                    if (storeMethod) storeMethods++;
+                    if (observerMethod) observerMethods++;
+                    JSONArray parameters = new JSONArray();
+                    for (Class<?> parameter : method.getParameterTypes()) parameters.put(parameter.getName());
+                    int modifiers = method.getModifiers();
+                    result.put(new JSONObject().put("owner", type.getName()).put("name", name)
+                        .put("parameters", parameters).put("returns", method.getReturnType().getName())
+                        .put("modifiers", modifiers).put("synchronized", java.lang.reflect.Modifier.isSynchronized(modifiers))
+                        .put("static", java.lang.reflect.Modifier.isStatic(modifiers)));
+                }
+            }
+            if (bridgeMethods != 2 || backupMethods != 1 || storeMethods != 2 || observerMethods != 3) {
+                throw new IllegalStateException("observed PN path method metadata incomplete");
+            }
+            return new JSONObject().put("schema", "e2.1n-lock-metadata.v2").put("methods", result)
+                .put("same_store_type", stores[0].getClass() == stores[1].getClass())
+                .put("distinct_stores", stores[0] != stores[1])
+                .put("coverage", "reflected method modifiers only; internal synchronized blocks and lock acquisition unknown").toString();
+        }
         if (operation.startsWith("path-trace-start:")) {
             String path = operation.substring("path-trace-start:".length());
             if (!installed || pathTraceUsed || !path.matches("/data/user/0/nullsroyale[.]rel[.]free/e21k-[a-z0-9-]+[.]trace")) {

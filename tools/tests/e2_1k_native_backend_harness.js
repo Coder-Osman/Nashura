@@ -22,8 +22,10 @@ class Pointer {
   isNull() { return false; }
 }
 
-function fixture(failure, mode = 'present-ciphertext-v1') {
+function fixture(failure, mode = 'present-ciphertext-v1', options = {}) {
   const operations = [], buffers = [];
+  const messages = [];
+  let thread = 11;
   let closes = 0;
   let streamOpens = 0, streamCloses = 0;
   const streamCalls = [0, 0], plain = [false, false];
@@ -70,7 +72,8 @@ function fixture(failure, mode = 'present-ciphertext-v1') {
     }
   };
   const context = {
-    Process: {arch: 'arm64', pointerSize: 8, getCurrentThreadId: () => 11},
+    Process: {arch: 'arm64', pointerSize: 8, getCurrentThreadId: () => thread},
+    send(message) { messages.push(message); },
     Memory: {alloc(size) { const pointer = new Pointer(Buffer.alloc(size)); buffers.push(pointer); return pointer; },
       allocUtf8String(text) { return new Pointer(Buffer.from(text + '\0')); }},
     NativeFunction: function(address) { return functions[address]; },
@@ -87,7 +90,10 @@ function fixture(failure, mode = 'present-ciphertext-v1') {
     }
     if (operation.startsWith('native-get:')) {
       const store = Number(operation.split(':')[1]);
-      if (failure === 'reentrant') backend.read(store);
+      if (failure === 'reentrant') {
+        thread = 29;
+        try { backend.read(store); } finally { thread = 11; }
+      }
       return JSON.stringify({present: failure !== 'missing' && raw[store] !== null,
         plain_present: failure === 'legacy' || plain[store], encoded: raw[store]});
     }
@@ -106,8 +112,9 @@ function fixture(failure, mode = 'present-ciphertext-v1') {
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../e2_1_pn_native_backend.js'), 'utf8'), context);
   const config = {mode, package: 'fixture.app', crypto_library: '/fixture/crypto',
     table: new Array(24).fill(1), iv_source: new Array(16).fill(2)};
+  if (options.diagnostics !== undefined) config.diagnostics = options.diagnostics;
   const backend = context.createPNNativeBackend(config, invoke, {getExportByName: name => name});
-  return {backend, raw, plain, encrypt, operations, config, context, buffers, functions,
+  return {backend, raw, plain, encrypt, operations, config, context, buffers, functions, messages,
     streamCalls, streamOpens: () => streamOpens, streamCloses: () => streamCloses, closes: () => closes};
 }
 

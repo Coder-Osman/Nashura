@@ -1,0 +1,167 @@
+{
+  "schema": "e2.1n-bounded-diagnostics.v1",
+  "status": "bounded_diagnostics_verified",
+  "complete_trajectories": 8,
+  "snapshots_per_trajectory": 3602,
+  "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+  "race": {
+    "writes": 8,
+    "reads": 8,
+    "own_reads": 6,
+    "other_reads": 2,
+    "unknown_reads": 0,
+    "general_thread_safety": "unknown"
+  },
+  "original_timeline": {
+    "closed_calls": 18,
+    "cross_thread_entry_overlaps": 8,
+    "uncovered_calls": [
+      {
+        "operation": "read",
+        "phase": "explicit_after_cold_ready_pn_read",
+        "caller": "external-probe",
+        "completion": "unknown"
+      },
+      {
+        "operation": "read",
+        "phase": "after_reset",
+        "caller": "external-probe",
+        "completion": "unknown"
+      },
+      {
+        "operation": "read",
+        "phase": "final_reset_state",
+        "caller": "external-probe",
+        "completion": "unknown"
+      }
+    ],
+    "return_coverage": "partial",
+    "internal_locking": "unknown",
+    "general_thread_safety": "unknown"
+  },
+  "replacement_failure": {
+    "events": 95,
+    "entered_calls": 13,
+    "rejections": [
+      {
+        "stage": "jni:native-get",
+        "operation": "read",
+        "store": 0
+      }
+    ],
+    "observed_prefix": "closed",
+    "bridge_contract_violations": 1,
+    "replacement_concurrency_equivalence": "failed for observed attempt",
+    "native_process_abort_observed": "unknown",
+    "termination": "external experiment timeout",
+    "timeout_cause": "unknown",
+    "race_result": "uncovered",
+    "saved_store_restore": "uncovered after timeout",
+    "complete_post_race_lifecycle": "uncovered after timeout"
+  },
+  "replacement_failure_final_identity": "uncovered after timeout",
+  "serialized_replacement_experiments": [
+    {
+      "dispatch_calls": 154,
+      "gate_counters": {
+        "entered": 154,
+        "completed": 154,
+        "active": 0,
+        "waiting": 0,
+        "peak_waiting": 1,
+        "lock_errors": 0
+      },
+      "backend": {
+        "events": 282,
+        "entered_calls": 44,
+        "rejections": [],
+        "observed_prefix": "closed",
+        "bridge_contract_violations": 0,
+        "replacement_concurrency_equivalence": "unverified",
+        "native_process_abort_observed": "unknown"
+      },
+      "scope": "all native configuration bridge dispatches serialized before JavaScript; general equivalence unknown",
+      "general_thread_safety": "unknown",
+      "replacement_concurrency_equivalence": "unverified outside bounded serialized experiment",
+      "run": "replacement-gate-preload-race-v5",
+      "race": {
+        "writes": 8,
+        "reads": 8,
+        "own_reads": 4,
+        "other_reads": 4,
+        "unknown_reads": 0,
+        "general_thread_safety": "unknown"
+      }
+    },
+    {
+      "dispatch_calls": 154,
+      "gate_counters": {
+        "entered": 154,
+        "completed": 154,
+        "active": 0,
+        "waiting": 0,
+        "peak_waiting": 1,
+        "lock_errors": 0
+      },
+      "backend": {
+        "events": 306,
+        "entered_calls": 48,
+        "rejections": [],
+        "observed_prefix": "closed",
+        "bridge_contract_violations": 0,
+        "replacement_concurrency_equivalence": "unverified",
+        "native_process_abort_observed": "unknown"
+      },
+      "scope": "all native configuration bridge dispatches serialized before JavaScript; general equivalence unknown",
+      "general_thread_safety": "unknown",
+      "replacement_concurrency_equivalence": "unverified outside bounded serialized experiment",
+      "run": "replacement-gate-repeat-race-v6",
+      "race": {
+        "writes": 8,
+        "reads": 8,
+        "own_reads": 4,
+        "other_reads": 4,
+        "unknown_reads": 0,
+        "general_thread_safety": "unknown"
+      }
+    }
+  ],
+  "strict_gate": "BLOCKED",
+  "removed_keys": 0,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "general_thread_safety": "unknown",
+  "attachment_count": 29164,
+  "private_manifest_sha256": "69be0614f786ffacdbd166cf7b06dc409cf0265c9bc212609ffdce0656037d2c",
+  "source_commit": "256eaa6db54bd02539188fd4e6d7d7c42aaca72d",
+  "tests": {
+    "focused": {
+      "passed": 34,
+      "skipped": 54
+    },
+    "e2_regression": {
+      "passed": 349,
+      "skipped": 392,
+      "deselected": 149
+    },
+    "skip_scope": "other private manifests absent; no native coverage inferred"
+  },
+  "rebuild": {
+    "status": "byte_identical_rebuild",
+    "commands": 3,
+    "artifacts": {
+      "libe21dispatchgate.so": "755929d0ec0681cf28a5610f20f0cd098f52f507df3f5cc442d1c0d54199b7d6",
+      "classes.dex": "70b37ac6c4d63400a70a61bd4f540f018f194c3a5e4cf7a35d69b448877853e7"
+    },
+    "guest_modified": false,
+    "engine_modified": false
+  },
+  "successful_run_non_pn_fallbacks": [
+    133,
+    133
+  ],
+  "original_java_identity_retained": true,
+  "original_store_xml_backup_retained": true,
+  "public_raw_attachments": false
+}

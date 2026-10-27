@@ -1,6 +1,38 @@
 'use strict';
 
-function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
+function createPNDispatchDiagnostics(mode, currentPhase) {
+  if (mode !== undefined && mode !== 'entry-return-v1') throw new Error('unknown PN dispatch diagnostics');
+  let calls = 0, dropped = 0;
+  const events = [];
+  const record = (call, edge, stage) => {
+    if (mode === undefined) return;
+    if (events.length >= 4096) { dropped++; return; }
+    const row = {sequence: events.length + 1, call: call.id, operation: call.operation,
+      thread: Process.getCurrentThreadId(), phase: currentPhase(), edge, stage,
+      wall_milliseconds: Date.now()};
+    events.push(row);
+    send({event: 'pn_dispatch_timeline', detail: row});
+  };
+  return {
+    enter(writing) {
+      const call = {id: ++calls, operation: writing ? 'write' : 'read'};
+      record(call, 'enter', 'dispatch');
+      return call;
+    },
+    step(call, stage, callback) {
+      record(call, 'enter', stage);
+      try {
+        const result = callback();
+        record(call, 'return', stage);
+        return result;
+      } catch (failure) { record(call, 'throw', stage); throw failure; }
+    },
+    leave(call) { record(call, 'return', 'dispatch'); },
+    snapshot() { return mode === undefined ? undefined : {mode, calls, dropped, events}; }
+  };
+}
+
+function createPNBridge(config, invoke, lifecycle, preloadedLibrary, preloadedDispatchLibrary) {
   const coldInstall = config.install_at === 'first-native-bridge';
   if (Process.arch !== 'arm64' || config.read_bridge !== 21022348 || config.write_bridge !== 21018548 ||
       !Number.isInteger(config.string_constructor) || config.mode !== 'replacement' ||
@@ -9,6 +41,17 @@ function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
     throw new Error('explicit PN bridge installation contract required');
   }
   const engine = Process.getModuleByName('libg.so');
+  let dispatchGate = null, dispatchGateStat = null;
+  if (config.dispatch_gate !== undefined) {
+    if (config.dispatch_gate.mode !== 'native-serial-v1' || typeof config.dispatch_gate.library !== 'string' ||
+        !config.dispatch_gate.library.startsWith('/data/app/') ||
+        !config.dispatch_gate.library.endsWith('/lib/arm64/libe21dispatchgate.so')) {
+      throw new Error('explicit native serial dispatch gate identity required');
+    }
+    const gateLibrary = preloadedDispatchLibrary || Module.load(config.dispatch_gate.library);
+    dispatchGate = gateLibrary.getExportByName('e21_dispatch_gate');
+    dispatchGateStat = new NativeFunction(gateLibrary.getExportByName('e21_dispatch_gate_stat'), 'uint64', ['uint']);
+  }
   const library = preloadedLibrary || Module.load(config.library);
   const nativeBackend = config.codec_backend ? createPNNativeBackend(config.codec_backend, invoke, library) : null;
   const read = new NativeFunction(library.getExportByName('e21_bridge_read'), 'int', ['pointer', 'pointer', 'ulong', 'pointer']);
@@ -20,6 +63,7 @@ function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
   let installed = false;
   let retired = false;
   let phase = coldInstall ? 'cold-start' : 'post-cold-ready';
+  const diagnostics = createPNDispatchDiagnostics(config.dispatch_diagnostics, () => phase);
   let fallbacks = 0;
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
   const encode = value => {
@@ -88,9 +132,11 @@ function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
   [ptr(0), readCallback, writeCallback, backupCallback].forEach((value, index) => backend.add(index * Process.pointerSize).writePointer(value));
   retained.push(backend, readCallback, writeCallback, backupCallback);
   const dispatch = (key, value, source, writing) => {
+    const call = diagnostics.enter(writing);
+    const step = (stage, callback) => diagnostics.step(call, stage, callback);
     try {
       if (retired) throw new Error('PN bridge retired');
-      if (coldInstall) lifecycle.entry(writing);
+      if (coldInstall) step('lifecycle-entry', () => lifecycle.entry(writing));
       if (key.add(4).readU32() !== 8) { fallbacks++; return 0; }
       const keyBytes = new Uint8Array(key.add(8).readPointer().and('0x00ffffffffffffff').readByteArray(8));
       if ([80, 78, 95, 80, 79, 80, 85, 80].some((byte, index) => keyBytes[index] !== byte)) {
@@ -107,17 +153,18 @@ function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
         row.module_base = engine.base.toString();
         row.return_site = source.toString();
         if (writing) row.input = boundedText(value);
-        lifecycle.pn(row);
+        step('lifecycle-pn', () => lifecycle.pn(row));
       }
       const receipt = Memory.alloc(20);
       const output = Memory.alloc(4096);
-      row.status = writing ? write(backend, Memory.allocUtf8String(boundedText(value)), receipt)
-        : read(backend, output, 4096, receipt);
+      row.status = step(writing ? 'native-write' : 'native-read', () => writing
+        ? write(backend, Memory.allocUtf8String(boundedText(value)), receipt)
+        : read(backend, output, 4096, receipt));
       row.receipt = {reads: receipt.readU32(), writes: receipt.add(4).readU32(), changed: receipt.add(8).readU32(),
         backup_method_returns: receipt.add(12).readU32(), failure: receipt.add(16).readS32()};
       if (row.status !== 0) throw new Error('PN native transition failed: ' + row.status);
       if (!writing) {
-        construct(value, output);
+        step('string-construct', () => construct(value, output));
         if (coldInstall) row.result = output.readUtf8String();
       }
       return 1;
@@ -125,7 +172,7 @@ function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
       errors.push(String(failure));
       send({event: 'pn_bridge_contract_violation', error: String(failure)});
       return -1;
-    }
+    } finally { diagnostics.leave(call); }
   };
   const make = writing => {
     const callback = new NativeCallback((key, value, source) => dispatch(key, value, source, writing), 'int',
@@ -137,7 +184,11 @@ function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
       writer.putPushRegReg('x0', 'x1'); writer.putPushRegReg('x8', 'lr');
       writer.putMovRegReg('x2', 'lr');
       if (!writing) writer.putMovRegReg('x1', 'x8');
-      writer.putLdrRegAddress('x16', callback); writer.putBlrReg('x16');
+      if (dispatchGate) {
+        writer.putLdrRegAddress('x3', callback);
+        writer.putLdrRegAddress('x16', dispatchGate);
+      } else writer.putLdrRegAddress('x16', callback);
+      writer.putBlrReg('x16');
       writer.putTbnzRegImmLabel('w0', 31, 'fatal'); writer.putCmpRegReg('w0', 'wzr');
       writer.putPopRegReg('x8', 'lr'); writer.putPopRegReg('x0', 'x1');
       writer.putBCondLabel('eq', 'fallback'); writer.putRet();
@@ -169,6 +220,11 @@ function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
         (coldInstall ? 'e2.1i-cold-pn-bridge.v1' : 'e2.1h-pn-bridge.v1'), installed, retired, events, errors, fallbacks,
         retained_allocations: retained.length,
         native_backend: nativeBackend ? nativeBackend.snapshot() : null,
+        dispatch_diagnostics: diagnostics.snapshot(),
+        dispatch_gate: dispatchGateStat ? {mode: 'native-serial-v1',
+          counters: ['entered', 'completed', 'active', 'waiting', 'peak_waiting', 'lock_errors']
+            .reduce((result, key, index) => { result[key] = dispatchGateStat(index).toNumber(); return result; }, {}),
+          scope: 'all native configuration bridge dispatches serialized before JavaScript; general equivalence unknown'} : undefined,
         scope: nativeBackend ? 'first-native-bridge PN control and native codec; original store constructors/XML/backup and JavaVM retained'
           : (coldInstall ? 'first-native-bridge PN control; original per-store Cipher/XML/backup and JavaVM retained'
             : 'post-cold-ready PN bridge; original per-store Cipher/XML/backup and JavaVM retained'),

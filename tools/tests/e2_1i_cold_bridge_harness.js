@@ -4,18 +4,26 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
 
-function fixture(failure) {
+function fixture(failure, gate) {
   const order = [];
   let lifecycle;
   const library = {};
+  const dispatchLibrary = {};
   const context = {rpc: {exports: {}},
-    Module: {load() { order.push('library'); return library; }},
+    Module: {load(name) {
+      assert.equal(order.includes('module-observer'), false);
+      if (name === 'fixture-library') { order.push('library'); return library; }
+      assert.equal(name, '/data/app/fixture/lib/arm64/libe21dispatchgate.so');
+      order.push('dispatch-library');
+      return dispatchLibrary;
+    }},
     Process: {getCurrentThreadId: () => 7, attachModuleObserver(observer) {
       order.push('module-observer'); observer.onAdded({name: 'libg.so'});
     }},
-    createPNBridge(config, invoke, callbacks, loaded) {
+    createPNBridge(config, invoke, callbacks, loaded, loadedDispatch) {
       order.push('bridge');
       assert.equal(loaded, library);
+      assert.equal(loadedDispatch, gate ? dispatchLibrary : null);
       lifecycle = callbacks;
       return {snapshot: () => ({installed: true, events: []})};
     }};
@@ -31,10 +39,21 @@ function fixture(failure) {
     dex_path: '/data/user/0/nullsroyale.rel.free/fixture.dex',
     optimized_directory: '/data/user/0/nullsroyale.rel.free/code_cache',
     install_at: 'first-native-bridge', enable_pn_backend: true,
-    pn_bridge: {install_at: 'first-native-bridge', library: 'fixture-library'}});
-  assert.deepEqual(order, ['library', 'module-observer', 'bridge']);
+    pn_bridge: {install_at: 'first-native-bridge', library: 'fixture-library',
+      ...(gate ? {dispatch_gate: gate} : {})}});
+  assert.deepEqual(order, ['library', ...(gate ? ['dispatch-library'] : []), 'module-observer', 'bridge']);
   assert.equal(context.rpc.exports.snapshot().cold.attempted, false);
   return {context, order, lifecycle};
+}
+{
+  const gate = {mode: 'native-serial-v1', library: '/data/app/fixture/lib/arm64/libe21dispatchgate.so'};
+  const {context, lifecycle} = fixture(undefined, gate);
+  lifecycle.entry(true);
+  assert.equal(context.rpc.exports.snapshot().cold.installed, true);
+  for (const invalid of [{...gate, mode: 'unknown'}, {...gate, library: '/tmp/fixture.so'},
+                         {...gate, library: null}]) {
+    assert.throws(() => fixture(undefined, invalid), /explicit native serial dispatch gate identity required/);
+  }
 }
 
 {

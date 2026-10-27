@@ -1,5 +1,20 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-N PN并发归因与有界原生串行门
+
+原版有界入口/实际返回点观测记录8次跨线程重叠，另3返回点未覆盖，内部锁仍unknown。
+旧替换在JNI native-get中被另一线程read重入，拒绝及桥违约已观测；随后外部timeout124，
+超时原因/abort未知，race恢复和最终身份未覆盖。另保留初始化失败和loader终止尝试。
+显式native-serial-v1诊断门在JS前串行dispatch，非PN原桥fallback在门外；不称通用修复。
+两次独立串行替换各154门调用，拒绝/锁错误0，worker未知读0且detach成功。
+八完整轨迹各3602快照、9120440bytes、28动作、tick3601终局全字节一致，控制回执一致。
+29164附件限定验证exit0，复编三命令exit0且SO/DEX字节一致；E2回归349 passed/392 skipped。
+成功run资源门通过，原输入和990update身份保持；各替换133非PN fallback。
+Java身份/store/XML/backup/VM保留，46键移除0，通用并发等价unknown，strict仍BLOCKED。
+无no-VM、Android-free、训练或10×声明；下一项为真实commit(false)和持久化副作用对照。
+见E2_1N_PN_CONCURRENCY_2026-10-27.md、CODEX_REPLY_2026-10-27_E2_1N.md、
+e2_1n_evidence_summary.json及e2_1n_failure_index.json。历史记录均保留。
+
 ## 2026-10-27 E2.1-M 自然PN持久替换与异常后完整轨迹
 
 将已观测持久Cipher状态/清理/回退接入自然PN替换，保留Java身份/store/XML/backup/VM。

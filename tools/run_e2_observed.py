@@ -121,7 +121,7 @@ def run(config_path, output):
                                               scope='proc task comm snapshot; exited or renamed threads remain unknown'))
 
     def control(text, phase):
-        for name in ('e0', 'e2', 'fmod', 'replacement', 'return-observer'):
+        for name in ('e0', 'e2', 'fmod', 'replacement', 'return-observer', 'pn-timeline'):
             if name in scripts:
                 scripts[name].exports_sync.phase(phase)
         beginning = time.monotonic()
@@ -158,6 +158,15 @@ def run(config_path, output):
     save('source-identity.json', {path.name: digest(path) for path in repository.glob('e[012]_*.js')})
     source_directory = output / 'sources'
     source_directory.mkdir()
+    if config.get('pn_timeline') and config.get('pn_bridge'):
+        raise ValueError('original entry timeline and replaceFast require separate experiments')
+    if config.get('pn_race') and (not config.get('return_observer', {}).get('enable_pn_matrix')
+                                  or not config.get('pn_lock_contract')):
+        raise ValueError('PN race requires explicit store restore and lock metadata')
+    if config.get('pn_race'):
+        for filename in ('e2_1_race_probe.c', 'e2_1_concurrent_probe.c'):
+            path = repository / filename
+            (source_directory / path.name).write_bytes(path.read_bytes())
     if config.get('pn_post_edge_lifecycle') and not config.get('pn_edge_matrix'):
         raise ValueError('post-edge lifecycle requires an explicit PN edge matrix')
     for path in list(repository.glob('e[012]_*.js')) + [Path(__file__), repository / 'e2_config_store.c']:
@@ -190,6 +199,9 @@ def run(config_path, output):
             path = repository / filename
             (source_directory / path.name).write_bytes(path.read_bytes())
     if config.get('pn_bridge'):
+        if config['pn_bridge'].get('dispatch_gate'):
+            path = repository / 'e2_1_pn_dispatch_gate.c'
+            (source_directory / path.name).write_bytes(path.read_bytes())
         install_at = config.get('return_observer', {}).get('install_at')
         if config.get('replacement') or install_at not in {'post-cold-ready', 'first-native-bridge'}:
             raise ValueError('PN bridge experiment requires independent explicit installation')
@@ -236,6 +248,8 @@ def run(config_path, output):
         create('fmod', 'e1_fmod_binding.js', config['fmod_config'])
         if config.get('replacement'):
             create('replacement', 'e2_config_replace.js', config['replacement'])
+        if config.get('pn_timeline'):
+            create('pn-timeline', 'e2_1_pn_timeline.js', config['pn_timeline'])
         early_observer = config.get('return_observer', {}).get('install_at') == 'first-native-bridge'
         if early_observer:
             settings = dict(config['return_observer'])
@@ -263,6 +277,10 @@ def run(config_path, output):
             create('java-oracle', 'e2_1_java_oracle.js', config['java_oracle'])
         if config.get('semantics_probe'):
             create('semantics', 'e2_1_config_probe.js', config['semantics_probe'])
+            if config.get('pn_timeline') or config.get('pn_bridge', {}).get('codec_backend', {}).get('diagnostics'):
+                for name in ('e0', 'e2', 'fmod', 'return-observer', 'pn-timeline'):
+                    if name in scripts:
+                        scripts[name].exports_sync.phase('explicit_after_cold_ready_pn_read')
             save('semantics-cold.json', scripts['semantics'].exports_sync.batch([
                 dict(case='after_cold_ready', operation='read', key='PN_POPUP')]))
         if early_observer:
@@ -439,6 +457,22 @@ def run(config_path, output):
         if config.get('string_lifecycle_probe'):
             create('string-lifecycle', 'e2_1_string_lifecycle.js', config['string_lifecycle_probe'])
             save('string-lifecycle.json', scripts['string-lifecycle'].exports_sync.run())
+        if config.get('pn_lock_contract'):
+            save('pn-lock-contract.json', json.loads(scripts['return-observer'].exports_sync.command('lock-contract')))
+        if config.get('pn_race'):
+            observer = scripts['return-observer'].exports_sync
+            save('pn-race-begin.json', dict(receipt=observer.command('pn-begin')))
+            try:
+                for name in ('e0', 'e2', 'fmod', 'return-observer', 'pn-timeline'):
+                    if name in scripts:
+                        scripts[name].exports_sync.phase('explicit_post_trajectory_pn_race')
+                create('pn-race', 'e2_1_race_probe.js', config['pn_race'])
+                save('pn-race.json', scripts['pn-race'].exports_sync.run())
+            finally:
+                save('pn-race-restore.json', dict(receipt=observer.command('pn-restore')))
+            if config.get('pn_post_race_lifecycle'):
+                post_edge_lifecycle(control, lambda remote: command('pull', remote, str(output / 'post-edge-snapshots')),
+                                    save, json.loads(Path(config['match']).read_text()), config['actions_name'])
         if config.get('pn_native_readback'):
             if not config.get('pn_bridge', {}).get('codec_backend'):
                 raise ValueError('native PN readback requires explicit native codec experiment')
