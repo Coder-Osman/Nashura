@@ -1,5 +1,14 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 用户 APK 续验：真实原版库 LOAD_ONLY
+
+新提供 APK 的8个 ARM64 库和9,829个 assets（849,482,445 bytes）逐项 SHA 匹配；
+runtime214/214、update990/990、fingerprint匹配。Java/Android资源及整包SHA存在差异，
+因此单独记录输入身份，保留旧清单和gate。在真实Ubuntu ARM64 guest的新目录实际
+dlopen(RTLD_NOW|RTLD_LOCAL)/dlclose真实libg，进程exit0；187个暂存输入前后SHA相同。
+只有LOAD_ONLY，没有战斗初始化、动作/tick/快照/终局或无JavaVM冷启动结论。
+详见[报告](../agent-handoff/PURE_LINUX_USER_APK_LOAD_2026-10-27.md)。
+
 ## 2026-10-27 E2.1-N 续验：真实 guest 合成 ABI 通过
 
 现有 Fusion Ubuntu 22.04.5/Linux 6.8.0-138-generic guest 实测 aarch64。首次自有 smoke

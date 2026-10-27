@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-27：用户 APK 身份核验与真实 libg 加载
+
+- 逐项核验新APK的8个ARM64库和9,829个游戏资产，匹配既有基线。
+- 独立登记新输入，保留历史整包SHA差异、旧manifest和失败证据。
+- 真实Ubuntu ARM64中执行原版libg的dlopen/dlclose，exit0，取得LOAD_ONLY。
+- 保留linker警告；无新增shim，187个暂存输入前后SHA一致。
+- 未验证战斗初始化、生命周期、no-JavaVM、Android-free、10×或训练。
+
 ## 2026-10-27 续验：真实 ARM64 guest 与 Bionic smoke
 
 - 恢复经授权的现有 Ubuntu VM，真实 Linux 合成探针获得 PURE_LINUX_SMOKE_PASS。

@@ -144,3 +144,10 @@ run_main_engine_checks.*、run_public_checks.*。完整 SHA、退出码及脱敏
 取得该输入并闭合 manifest 冲突后，在新目录单独做真实 libg 加载；若成功只报 LOAD_ONLY。
 随后依次定位内容 root/context、manager、GameState 初始化及配置/JNI 首个实际调用依赖。
 本轮没有进入无 VM 冷启动或真实对局，更没有测得 10×。
+
+## 后续用户输入实验（独立记录）
+
+用户随后提供的同版本APK，8个ARM64库及全部9,829个assets已逐项SHA匹配。
+新输入单独登记，历史整包锁定清单保持原样。真实Ubuntu ARM64中已成功加载并卸载
+原版libg，exit0，取得LOAD_ONLY；未执行战斗初始化或生命周期。
+见[后续报告](PURE_LINUX_USER_APK_LOAD_2026-10-27.md)。本报告先前的NOT_RUN保留为历史记录。

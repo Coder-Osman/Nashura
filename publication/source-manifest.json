@@ -16332,9 +16332,9 @@
     },
     {
       "path": "agent-handoff/DEPENDENCY_MAP.md",
-      "sha256": "2e723634ddf3fdae5d27bdd3ac601a1fe2b616b387092c1eea6431df9ebae5f0",
-      "bytes": 6095,
-      "source_sha256": "2e723634ddf3fdae5d27bdd3ac601a1fe2b616b387092c1eea6431df9ebae5f0",
+      "sha256": "014b3daa50b1de9c7c7f77419b0569c3cdf4ec399b645f71c4669e9b22bfea0c",
+      "bytes": 7050,
+      "source_sha256": "014b3daa50b1de9c7c7f77419b0569c3cdf4ec399b645f71c4669e9b22bfea0c",
       "transformations": []
     },
     {
@@ -16434,16 +16434,16 @@
     {
       "path": "CHANGELOG.md",
       "transformations": [],
-      "sha256": "8714a12fb27166c4302f49da5e6b544d12546671002443098102fc20517bd2fc",
-      "bytes": 27821,
-      "source_sha256": "8714a12fb27166c4302f49da5e6b544d12546671002443098102fc20517bd2fc"
+      "sha256": "5f91dedcb4537b476b9d5c5dbdc3039437403ddf5aeebbbcd0178e85ad12ae8f",
+      "bytes": 28303,
+      "source_sha256": "5f91dedcb4537b476b9d5c5dbdc3039437403ddf5aeebbbcd0178e85ad12ae8f"
     },
     {
       "path": "README.md",
       "transformations": [],
-      "sha256": "628ee03d4218868532b5b6b8c40bfa58d65ffd944bd2e724e27cf2f48e6c8256",
-      "bytes": 25446,
-      "source_sha256": "628ee03d4218868532b5b6b8c40bfa58d65ffd944bd2e724e27cf2f48e6c8256"
+      "sha256": "f8498b3742774b0c1f9d814b3a65a451e21ff9e7d5ab0db187d053f449a90bc1",
+      "bytes": 26055,
+      "source_sha256": "f8498b3742774b0c1f9d814b3a65a451e21ff9e7d5ab0db187d053f449a90bc1"
     },
     {
       "path": "agent-handoff/CODEX_REPLY_2026-10-27_PURE_LINUX_GUEST.md",
@@ -16455,9 +16455,9 @@
     {
       "path": "agent-handoff/PURE_LINUX_GUEST_ABI_2026-10-27.md",
       "transformations": [],
-      "sha256": "0d2d004842139a0af99098a859ae95426df2adea37c0b097ffadae499e1a4213",
-      "bytes": 8563,
-      "source_sha256": "0d2d004842139a0af99098a859ae95426df2adea37c0b097ffadae499e1a4213"
+      "sha256": "1854bbbcdbd3898dec081165a7803a3cf40c90056bc5bb839cda35a6e2079fa9",
+      "bytes": 9005,
+      "source_sha256": "1854bbbcdbd3898dec081165a7803a3cf40c90056bc5bb839cda35a6e2079fa9"
     },
     {
       "path": "agent-handoff/pure-linux-guest-abi-evidence-20261027.json",
@@ -16469,9 +16469,9 @@
     {
       "path": "docs/RESULTS.md",
       "transformations": [],
-      "sha256": "9865d8cc1e1100cca47a9d8f81b9ea414c13061a29168b3f7b5c3f2292d15f12",
-      "bytes": 52118,
-      "source_sha256": "9865d8cc1e1100cca47a9d8f81b9ea414c13061a29168b3f7b5c3f2292d15f12"
+      "sha256": "7f0f766e6aff9029f67f263a818432346c5627752fcbc72af97dd1bab5e1d15e",
+      "bytes": 52748,
+      "source_sha256": "7f0f766e6aff9029f67f263a818432346c5627752fcbc72af97dd1bab5e1d15e"
     },
     {
       "path": "tools/pure_linux/loader_audit.py",
@@ -16486,10 +16486,31 @@
       "sha256": "92efe2d540860e2bb1c27bf2cecfb941943319a1c21d82a4863fa3ebf2ba7ec0",
       "bytes": 7283,
       "source_sha256": "92efe2d540860e2bb1c27bf2cecfb941943319a1c21d82a4863fa3ebf2ba7ec0"
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_USER_APK_LOAD_2026-10-27.md",
+      "sha256": "d10061fd9f47ba20c7c19affddded683834a4d6447dbb7bc5fdb8cea5c4e6bb1",
+      "bytes": 5476,
+      "source_sha256": "d10061fd9f47ba20c7c19affddded683834a4d6447dbb7bc5fdb8cea5c4e6bb1",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-27_USER_APK_LOAD.md",
+      "sha256": "afd35a66e3e732259018d9fb9d57276d6f51aeeb449d166ede140bd87edeb773",
+      "bytes": 2070,
+      "source_sha256": "afd35a66e3e732259018d9fb9d57276d6f51aeeb449d166ede140bd87edeb773",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-user-apk-load-evidence-20261027.json",
+      "sha256": "bbbce3d89834d04079b91ba5a9e0a23466048642e7c6068d9a8813630ff0c9ea",
+      "bytes": 6681,
+      "source_sha256": "bbbce3d89834d04079b91ba5a9e0a23466048642e7c6068d9a8813630ff0c9ea",
+      "transformations": []
     }
   ],
-  "file_count": 2353,
-  "source_bytes": 33389981,
+  "file_count": 2356,
+  "source_bytes": 33407326,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

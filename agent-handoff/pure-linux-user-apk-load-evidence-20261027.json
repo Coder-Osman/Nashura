@@ -1,0 +1,157 @@
+{
+  "schema": "nashura-user-apk-real-load-evidence.v1",
+  "date": "2026-10-27",
+  "parent_commit": "2b67d0d3a9a1ae2a972d6067fff8ea3208024abc",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "status": "LOAD_ONLY",
+  "native_match_lifecycle": "NOT_RUN",
+  "no_javavm_battle_cold_start": "NOT_RUN",
+  "android_free": "NOT_RUN",
+  "throughput_10x": "NOT_RUN",
+  "input": {
+    "schema": "nashura-user-apk-native-input.v1",
+    "apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "historical_apk_sha256": "685c115ee432d5fd2d7be856a58ea0cb029c9c187aa9061f3cd250994dfbcf2a",
+    "historical_container_match": false,
+    "reference_apk_sha256": "f1ee6d6146efc8c998843958ae0788e5121c265445c0c7ff5ffa2a5202d7dd9b",
+    "native_libraries": [
+      {
+        "name": "libc++_shared.so",
+        "sha256": "4397241b4bd20a8e579bfb41d21107857e12985f6a01ca0c2a5f83380d1270b4",
+        "bytes": 1292904
+      },
+      {
+        "name": "libfmod.so",
+        "sha256": "299d2a6b03ec865cd9234f4f7484fb7e74928d0180dc6c4b455a8d2b5b54dd45",
+        "bytes": 1179776
+      },
+      {
+        "name": "libfmodstudio.so",
+        "sha256": "592cdc4beba2aea5f177f0ed3c52c7ed018b09734a3fb584a4ec487cd926caf0",
+        "bytes": 1149048
+      },
+      {
+        "name": "libg.so",
+        "sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+        "bytes": 27554368
+      },
+      {
+        "name": "libscid_sdk.so",
+        "sha256": "2a6edcc8fcad301daa946157ea97c6c422067d5ceaab7cb2ed4655654b642319",
+        "bytes": 61072
+      },
+      {
+        "name": "libsentry-android.so",
+        "sha256": "6769fd03351610e93ca724ccc74c1c82a6caedd8c1d9996267599556545712a1",
+        "bytes": 15976
+      },
+      {
+        "name": "libsentry.so",
+        "sha256": "bea6725a4122db6e516da9ee4a62b066b05171fddcdf1513c98e33626746acda",
+        "bytes": 1222328
+      },
+      {
+        "name": "libwildcat.so",
+        "sha256": "664ff486f5c89c2f7e188adb60119166c483e7c0cd4d55fef774a1f47db8b442",
+        "bytes": 10685496
+      }
+    ],
+    "assets_matching": 9829,
+    "assets_bytes_matching": 849482445,
+    "asset_differences": [],
+    "runtime_fingerprint_sha256": "e0cb2fb9eb2fdd0df1afcb00df3e3ba61cf25aa8b24e39c17cc391d952a4e339",
+    "runtime_manifest_matching": 214,
+    "update_manifest_matching": 990
+  },
+  "input_scope": "Separate user-supplied native component identity; historical whole-APK lock and gate unchanged",
+  "environment": {
+    "guest_architecture_observed": "aarch64",
+    "existing_guest_distribution": "Ubuntu 22.04.5 LTS",
+    "guest_available_disk_kib": 2001572,
+    "new_android_emulator_started": false,
+    "new_system_components_installed": false
+  },
+  "staged_libraries": 185,
+  "input_files_before_after": 187,
+  "inputs_unchanged": true,
+  "input_identity_map_sha256": "0bc190b1238910ad77a1cda51bd309b9b03ef883fd101e9f6764c740a4ac4d78",
+  "probe": {
+    "source": "tools/pure_linux/bionic_probe.c",
+    "sha256": "02dbc40e7ff04eafd633d24b1c8bd69fe88959d9105c5cb8cfe4e78c7a8db9cc",
+    "linker64_sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7",
+    "dlopen_flags": [
+      "RTLD_NOW",
+      "RTLD_LOCAL"
+    ],
+    "dlclose_checked": true,
+    "explicit_jni_onload_called": false,
+    "explicit_battle_lifecycle_called": false,
+    "constructors_instrumented": false
+  },
+  "commands": [
+    {
+      "command": "uname -m",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.0011546870000529452,
+      "stdout_sha256": "5121ae59314a84da7b4d9587374398f1afa2000b243b3e54f491adefaac54f92",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_log": "command-0.stdout",
+      "stderr_log": "command-0.stderr"
+    },
+    {
+      "command": "df -Pk \"$GUEST\"",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.0009560779999446822,
+      "stdout_sha256": "91c10d1d03992490110f90d701c0781ab14b9b36bc38bc08a8a71dfe2a443504",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_log": "command-1.stdout",
+      "stderr_log": "command-1.stderr"
+    },
+    {
+      "command": "LD_LIBRARY_PATH=\"$GUEST/libs\" \"$GUEST/linker64\" \"$GUEST/bionic-probe-v2\"",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.0019551160003175028,
+      "stdout_sha256": "e32b0b5191648c12f7958393c46b9829f95a0d57a3eea65d6843d33f4eb05aff",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_log": "command-2.stdout",
+      "stderr_log": "command-2.stderr"
+    },
+    {
+      "command": "LD_LIBRARY_PATH=\"$GUEST/libs\" \"$GUEST/linker64\" \"$GUEST/bionic-probe-v2\" \"$GUEST/libs/libg.so\"",
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.06101265600000261,
+      "stdout_sha256": "e13046026644f37a4be64a680f6ed03fc69a7ac945fe44b5318504e5b3284c07",
+      "stderr_sha256": "f43fd652b4b90dd0eab74086b61a766dcee6ea0d776443dd65ebec7fe2de29db",
+      "stdout_log": "command-3.stdout",
+      "stderr_log": "command-3.stderr"
+    }
+  ],
+  "warning": "Two linker warnings: libc++_shared.so processor-specific DT entry 0x70000001, value 0, ignored; retained in private stderr",
+  "client_differences": {
+    "shared_entries_with_different_bytes": [
+      "AndroidManifest.xml",
+      "classes.dex",
+      "resources.arsc",
+      "META-INF/MANIFEST.MF"
+    ],
+    "additional_entry_differences": true,
+    "java_client_equivalence": "UNRESOLVED",
+    "signature_only_difference_proven": false
+  },
+  "first_unresolved_dependency": "Independent content/context/catalog and manager/GameState initialization; JNI/config/runtime object prerequisites unresolved",
+  "private_evidence_directory_id": "pure-linux-user-apk-20261027-xE1hhMr8",
+  "private_files": {
+    "input-audit.json": "bd963736d4c5acd80d232f97e76028df220cbcca9a4e24e17e5096c09d911b70",
+    "native-load-payload.tar": "1cd8722405df2382193976512863a48c35ee00cf1b8391f050ff8349bec0233a",
+    "payload_job.py": "9fadf10f71ac911cea23a4bbf64932dc65ec7186c2fa53609d03f0432064376f",
+    "prepare.py": "f479093b969c15d1d0edcd4f784191074992546812fc5fd513a94fc0a1818da1",
+    "native-load-ops.json": "b7d2ec2fedebfc5c01ed30e6d942491f04b74138c3ac32e757d59b2ed38a0ef4",
+    "native-load-ops-results.json": "a96afc0fe76305b374c3268e5d9b6308e102c1bdd6382527f5d4eb36a504f7fa",
+    "load-results.tar": "a3bb157a8b560b635c85f9dea7662aa2be1d343c4d343957fa46552a2470b26e"
+  },
+  "scope_limit": "Successful original library dlopen/dlclose only. Staged candidates are not a runtime dependency count or lifecycle proof."
+}

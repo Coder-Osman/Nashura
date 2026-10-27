@@ -88,3 +88,21 @@ ARM64 Linux guest [真实 aarch64]
 
 静态版本符号/relocation 审计不证明运行绑定；这里 RUNTIME_OBSERVED 只涉及合成 ABI，
 没有增加原版战斗热路径覆盖。详见[续验报告](PURE_LINUX_GUEST_ABI_2026-10-27.md)。
+
+## 用户 APK 补充后的最新前沿
+
+新输入的全部8个ARM64库、9,829个assets逐项SHA匹配既有组件；整包身份不同，
+单独登记而不修改旧锁定清单。真实ARM64 Linux中已成功dlopen/dlclose原版libg，
+进程exit0，取得LOAD_ONLY。没有调用JNI_OnLoad或战斗入口，没有新shim。
+上文“原版加载NOT_RUN”属于此前状态，现已由该独立实验推进。
+
+```text
+ARM64 Linux + Bionic [合成ABI已通过]
+  └─ 真实匹配libg dlopen/dlclose [LOAD_ONLY / exit0]
+      ├─ 实际加载映射/间接resolver覆盖 [未独立采集]
+      ├─ content/context/catalog → manager → GameState [UNRESOLVED / NOT_RUN]
+      └─ 动作/tick/snapshot/reset/终局 [NOT_RUN]
+```
+
+历史整包锁定门未通过不再阻塞这一新输入的独立组件加载实验；它仍不能用于声称历史
+Java客户端身份一致。见[新输入实验](PURE_LINUX_USER_APK_LOAD_2026-10-27.md)。

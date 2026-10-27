@@ -4,6 +4,14 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+## 2026-10-27 新输入续验：真实 libg 已取得 LOAD_ONLY
+
+用户提供的同版本 APK 中，8 个 ARM64 库及全部 9,829 个游戏资源与既有基线逐项 SHA
+一致。为该输入单独登记身份，保留历史整包 SHA 差异。在真实 Ubuntu ARM64 guest 中，
+匹配 Android linker/Bionic 对真实 libg 执行 dlopen/dlclose，进程 exit0，取得 **LOAD_ONLY**。
+全部 187 个暂存输入前后未变；未初始化战斗，未验证无 JavaVM 生命周期、完整对局或10×。
+详见[报告](agent-handoff/PURE_LINUX_USER_APK_LOAD_2026-10-27.md)。以下保留历史状态。
+
 ## 2026-10-27 续验：ARM64 Linux 与 Bionic 合成 ABI 已实测
 
 经用户授权恢复现有 Ubuntu ARM64 VM，真实 guest 的 Linux 八项 smoke、文件 canary 和
