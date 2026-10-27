@@ -1,0 +1,52 @@
+{
+  "schema": "e2.1j-sanitized-failure-index.v1",
+  "failures": [
+    {
+      "case": "derivation-1-and-2",
+      "exit_code": 1,
+      "observation": "Complete trajectories finished; explicit derivation-source RPC rejected by observer whitelist before comparison.",
+      "resolution": "Added explicit enable_pn_derivation configuration gate; two final independent runs passed.",
+      "historical_evidence_preserved": true
+    },
+    {
+      "case": "rpc-engineering-fixture-path",
+      "observation": "Initial fixture used a DEX path outside the immutable application path contract.",
+      "resolution": "Corrected only the synthetic fixture path; retained production path validation.",
+      "native_semantic_failure": false,
+      "historical_evidence_preserved": true
+    },
+    {
+      "case": "evidence-sealed-before-writer-exit",
+      "observation": "Initial manifest was produced during activity; second was produced before instance cleanup.",
+      "resolution": "Preserved both manifests as history. Final closed manifest sealed static attachments after verified instance release.",
+      "historical_evidence_preserved": true
+    },
+    {
+      "case": "first-e2-regression-java-fixture",
+      "exit_code": 1,
+      "result": {"failed": 1, "passed": 298, "skipped": 272},
+      "observation": "Release-only Java fixture lacked Context, ContentResolver and Settings type declarations required by the extended observer.",
+      "resolution": "Added compile declarations; fixture identity access explicitly throws. Targeted rerun passed; final E2 regression 299 passed, 272 skipped.",
+      "native_semantic_failure": false,
+      "historical_evidence_preserved": true
+    },
+    {
+      "case": "auxiliary-log-read-cwd",
+      "exit_code": 1,
+      "observation": "A relative cat path was resolved from the repository rather than the private run directory.",
+      "resolution": "Read the actual private log using its absolute path; no experiment output changed.",
+      "native_semantic_failure": false,
+      "historical_evidence_preserved": true
+    }
+  ],
+  "unresolved": [
+    "Original initialization integration and non-Java identity acquisition",
+    "Original missing or empty identity fallback semantics",
+    "Native XML persistence, backup delivery, concurrency and crash durability",
+    "46 excluded keys remain unknown for removability; removed count zero",
+    "Historical general Frida detach stall remains unresolved; not reproduced or fixed by this stage"
+  ],
+  "strict_gate": "BLOCKED",
+  "no_vm_verified": false,
+  "training_admissible": false
+}

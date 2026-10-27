@@ -1,5 +1,22 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-J PN原生派生与原Cipher差分
+
+新增显式输入C派生、guest有界probe、原Java oracle矩阵和独立附件验证器。
+两次独立进程各40项双store原Cipher差分、5项guest无效输入通过，host C/guest C/hashlib
+一致，XML原字节不变。矩阵仅在完整轨迹后执行；Java身份获取、原初始化及Cipher/XML保留。
+基线与两派生进程各3602快照、9120440bytes、28动作、tick3601终局全字节一致，
+17项非status控制回执一致；平台资源事件、Provider failures/live assets均0。
+原输入/990update身份保持，5条复编命令及4产物SHA对照通过。
+
+实例释放后封存22058附件，限定验证exit0；E2回归299 passed/272 skipped，
+公开检查及主工程211项通过。跳过不作原生证明，集合不累加。
+首两次RPC拒绝、首次Java fixture编译失败、早封存及辅助命令失败保留。
+严格门仍exit2，46键移除0/可移除性unknown；首个缺口为自然初始化集成和非Java身份来源，
+原生XML/backup/并发/崩溃契约仍待闭合。无no-VM、Android-free、训练或10×声明。
+详见E2_1J_PN_NATIVE_DERIVATION_2026-10-27.md、CODEX_REPLY_2026-10-27_E2_1J.md、
+e2_1j_evidence_summary.json和e2_1j_failure_index.json。
+
 ## 2026-10-27 E2.1-I 自然冷启动PN原生控制桥
 
 原自然冷启动PN read/write接入C双store控制逻辑，保留Java密钥派生、Cipher/XML/backup及VM。

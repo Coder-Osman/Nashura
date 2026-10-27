@@ -11,6 +11,27 @@ def test_real_java_helper_restores_then_retires_only_its_own_references(tmp_path
     if not java or not javac:
         pytest.skip('JDK required for engineering fixture; no native evidence claimed')
     sources = {
+        'android/content/Context.java': '''
+package android.content;
+public abstract class Context {
+    public abstract ContentResolver getContentResolver();
+    public abstract String getPackageName();
+}
+''',
+        'android/content/ContentResolver.java': '''
+package android.content;
+public class ContentResolver {}
+''',
+        'android/provider/Settings.java': '''
+package android.provider;
+public class Settings {
+    public static class Secure {
+        public static String getString(android.content.ContentResolver resolver, String key) {
+            throw new UnsupportedOperationException("identity acquisition outside release fixture");
+        }
+    }
+}
+''',
         'android/content/SharedPreferences.java': '''
 package android.content;
 public interface SharedPreferences {

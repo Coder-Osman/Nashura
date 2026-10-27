@@ -237,8 +237,9 @@ rpc.exports = {
       (operation === 'codec-info' || /^codec-(read|state):[01]$/.test(operation) ||
        /^codec-raw:[01]:[A-Za-z0-9+/=]*$/.test(operation) ||
        /^codec-encode:[01]:(key|value):[A-Za-z0-9+/=]*$/.test(operation));
+    const derivation = settings && settings.enable_pn_derivation === true && operation === 'derivation-source';
     if (pnBridge && pnBridge.snapshot().installed && ['uninstall', 'release'].includes(operation)) throw new Error('retire PN bridge before backend');
-    if (!settings || (!matrix && !codec && !['install', 'snapshot', 'uninstall', 'files', 'read-stores', 'release'].includes(operation))) throw new Error('invalid command');
+    if (!settings || (!matrix && !codec && !derivation && !['install', 'snapshot', 'uninstall', 'files', 'read-stores', 'release'].includes(operation))) throw new Error('invalid command');
     if (operation === 'install' && settings.install_at === 'first-native-bridge') throw new Error('cold install is driven by original bridge only');
     return invoke(operation);
   },

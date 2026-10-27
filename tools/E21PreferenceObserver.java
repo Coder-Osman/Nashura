@@ -31,6 +31,7 @@ public final class E21PreferenceObserver {
     private static int pnCommands;
     private static int codecCommands;
     private static int bridgeCommands;
+    private static int derivationCommands;
 
     private static String bridgeCommand(String operation) throws Exception {
         if (!installed || ++bridgeCommands > 4096) {
@@ -278,6 +279,20 @@ public final class E21PreferenceObserver {
     public static synchronized String command(String operation) throws Exception {
         if (released) throw new IllegalStateException("observer references retired");
         if (operation.equals("install")) return install();
+        if (operation.equals("derivation-source")) {
+            if (!installed || ++derivationCommands > 1) throw new IllegalStateException("single installed source query required");
+            ClassLoader parent = E21PreferenceObserver.class.getClassLoader().getParent();
+            Class<?> type = Class.forName("com.supercell.titan.GameApp", false, parent);
+            Object game = type.getField("q").get(null);
+            if (!(game instanceof android.content.Context)) throw new IllegalStateException("original app context missing");
+            android.content.Context context = (android.content.Context)game;
+            String identity = android.provider.Settings.Secure.getString(context.getContentResolver(), "android_id");
+            if (identity == null || !identity.matches("[0-9a-f]{16}")) {
+                throw new IllegalStateException("uncovered app identity; no default or fallback synthesized");
+            }
+            return new JSONObject().put("source", "original-app-context Settings.Secure")
+                .put("identity", identity).put("package", context.getPackageName()).toString();
+        }
         if (operation.startsWith("bridge-")) return bridgeCommand(operation);
         if (operation.startsWith("codec-")) return codecCommand(operation);
         if (operation.startsWith("pn-")) return pnCommand(operation);

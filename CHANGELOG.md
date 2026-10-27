@@ -1,5 +1,15 @@
 # 变更记录
 
+## 2026-10-27：E2.1-J PN显式来源原生派生
+
+- 新增C派生契约、有界guest probe、原App身份查询及双store原Cipher差分矩阵。
+- 两次各40项Cipher/5项无效输入通过，host/guest/hashlib一致，原XML字节不变。
+- 三独立进程各3602快照/28动作一致；原初始化、Java身份获取及Cipher/XML writer保留。
+- 回收后封存22058附件，限定验证exit0；E2全组299 passed/272 skipped，主工程211通过。
+- 修复相关Java释放fixture编译声明，保留RPC拒绝、首次失败及早封存等记录。
+- strict仍exit2，46键移除0；初始化集成、非Java身份来源与原生持久化未闭合。
+- 实例已回收，历史进程保持；未进入no-VM、Android-free、正式训练或10×。
+
 ## 2026-10-27：E2.1-I 自然冷启动PN原生控制桥
 
 - 原生PN控制桥增加显式first-native-bridge安装，保留H阶段默认post-cold-ready契约。

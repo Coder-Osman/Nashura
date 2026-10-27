@@ -1,0 +1,68 @@
+{
+  "schema": "e2.1j-bounded-summary.v1",
+  "status": "bounded_evidence_verified",
+  "runs": [
+    {
+      "run": "baseline-final",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "derivation-final-1",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0,
+      "derivation": {
+        "original_cipher_cases": 40,
+        "native_negative_cases": 5,
+        "host_guest_hashlib_equal": true,
+        "original_xml_bytes_unchanged": true,
+        "stores": 2
+      }
+    },
+    {
+      "run": "derivation-final-2",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0,
+      "derivation": {
+        "original_cipher_cases": 40,
+        "native_negative_cases": 5,
+        "host_guest_hashlib_equal": true,
+        "original_xml_bytes_unchanged": true,
+        "stores": 2
+      }
+    }
+  ],
+  "attachment_count": 22058,
+  "strict_gate": "BLOCKED",
+  "removed_keys": 0,
+  "initialization_replaced": false,
+  "original_xml_writer_replaced": false,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false,
+  "unresolved": [
+    "original initialization integration and identity source without Java",
+    "native XML persistence, backup delivery, concurrency and crash durability",
+    "46-key removability"
+  ],
+  "private_manifest_sha256": "9eab1cd6f1321381d7100701379e04da48e57f226a53bd28a2976b8ea079266e"
+}

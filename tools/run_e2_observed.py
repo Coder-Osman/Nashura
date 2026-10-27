@@ -129,6 +129,14 @@ def run(config_path, output):
         for filename in ('e2_1_pn_codec.c', 'e2_1_pn_codec.h', 'e2_1_pn_codec.py', 'e2_1_pn_codec_matrix.py'):
             path = repository / filename
             (source_directory / path.name).write_bytes(path.read_bytes())
+    if config.get('pn_derivation'):
+        if not config.get('return_observer'):
+            raise ValueError('explicit installed original observer required for derivation')
+        for filename in ('e2_1_pn_derive.c', 'e2_1_pn_derive.h', 'e2_1_pn_derive.py',
+                         'e2_1_pn_derive_matrix.py', 'e2_1_pn_codec.c', 'e2_1_pn_codec.h',
+                         'e2_1_pn_codec.py', 'e2_1_pn_codec_matrix.py'):
+            path = repository / filename
+            (source_directory / path.name).write_bytes(path.read_bytes())
     if config.get('pn_bridge'):
         install_at = config.get('return_observer', {}).get('install_at')
         if config.get('replacement') or install_at not in {'post-cold-ready', 'first-native-bridge'}:
@@ -266,6 +274,28 @@ def run(config_path, output):
                     oracle,
                     lambda: command('pull', config['java_oracle']['trace_path'], str(output / 'java-methods.trace')),
                     save)
+            if config.get('pn_derivation'):
+                from e2_1_pn_derive_matrix import run_derivation_matrix
+
+                for name in ('e0', 'e2', 'fmod', 'return-observer'):
+                    if name in scripts:
+                        scripts[name].exports_sync.phase('explicit_post_trajectory_derivation')
+
+                def capture_derivation_xml(label, files):
+                    directory = output / ('derivation-xml-' + label)
+                    directory.mkdir(exist_ok=False)
+                    records = []
+                    for index, filename in enumerate(files):
+                        local = directory / ('store-' + str(index) + '.xml')
+                        command('pull', filename, str(local))
+                        records.append(dict(sha256=digest(local), bytes_hex=local.read_bytes().hex()))
+                    return records
+
+                save('pn-derivation-configure.json', create('pn-derivation', 'e2_1_pn_derive_probe.js', config['pn_derivation']))
+                run_derivation_matrix(scripts['return-observer'].exports_sync,
+                                      scripts['pn-derivation'].exports_sync, config['pn_derivation'], save,
+                                      capture_derivation_xml)
+                save('pn-derivation-final.json', scripts['pn-derivation'].exports_sync.snapshot())
             if config.get('pn_codec'):
                 from e2_1_pn_codec_matrix import run_codec_matrix
 

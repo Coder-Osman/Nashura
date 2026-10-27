@@ -4,6 +4,14 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+2026-10-27 E2.1-J续验：显式App身份输入的原生派生与host/guest/hashlib及原双store
+Cipher差分一致，两次各40项对照和5项负测通过。三独立进程各3602快照/28动作全字节一致。
+矩阵在完整轨迹后执行，原初始化、Java身份获取、Cipher/XML writer及VM保留。
+22058附件限定验证exit0；E2回归299 passed/272 skipped；strict仍exit2，46键移除0。
+独占实例已回收；无no-VM、Android-free、训练或10×声明。
+见[E2.1-J报告](agent-handoff/E2_1J_PN_NATIVE_DERIVATION_2026-10-27.md)。
+以下为历史阶段记录，保留当时边界。
+
 2026-10-27 E2.1-I续验：自然冷启动PN读写已由原生控制桥接管，Java密钥派生、
 逐store Cipher/XML/backup及VM保留。四独立进程各3602快照/28动作全字节一致；
 两次替换均捕获自然read/write及真实commit，跨进程读回一致，非PN原桥回退各133次。
