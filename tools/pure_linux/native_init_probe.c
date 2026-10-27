@@ -12,6 +12,8 @@
 
 static uintptr_t engine_base;
 
+extern int native_provider_probe(uintptr_t, int (*)(uintptr_t, size_t)) __attribute__((weak));
+
 static int mappings(struct dl_phdr_info *information, size_t size, void *argument) {
     (void)size;
     (void)argument;
@@ -141,6 +143,8 @@ __attribute__((noinline, visibility("default"))) void native_init_loaded_marker(
     __asm__ volatile("" ::: "memory");
     const char *observe = getenv("NASHURA_OBSERVE_TRAP");
     if (observe && strcmp(observe, "1") == 0) raise(SIGTRAP);
+    const char *stop = getenv("NASHURA_OBSERVE_STOP");
+    if (stop && strcmp(stop, "1") == 0) raise(SIGSTOP);
 }
 
 int main(int argument_count, char **arguments) {
@@ -163,6 +167,21 @@ int main(int argument_count, char **arguments) {
     int content = inspect_content();
     printf("CONTENT_INSPECTION\t%d\n", content);
     native_init_loaded_marker();
+    const char *asset_root = getenv("NASHURA_NATIVE_ASSET_ROOT");
+    const char *asset_index = getenv("NASHURA_NATIVE_ASSET_INDEX");
+    int (*assets_finish)(void) = NULL;
+    if (asset_root || asset_index) {
+        if (!asset_root || !asset_index) return 90;
+        int (*assets_init)(const char *, const char *) = dlsym(RTLD_DEFAULT, "nashura_assets_init");
+        assets_finish = dlsym(RTLD_DEFAULT, "nashura_assets_finish");
+        void *asset_open = dlsym(RTLD_DEFAULT, "AAssetManager_open");
+        Dl_info binding;
+        if (!assets_init || !assets_finish || !asset_open || !dladdr(asset_open, &binding)) return 91;
+        printf("NATIVE_ASSET_BINDING\t%s\n", binding.dli_fname);
+        int status = assets_init(asset_root, asset_index);
+        printf("NATIVE_ASSET_INIT_RESULT\t%d\n", status);
+        if (status) return 92;
+    }
     if (argument_count >= 3) {
         int result = bootstrap(arguments[2]);
         printf("BOOTSTRAP_RESULT\t%d\n", result);
@@ -172,10 +191,20 @@ int main(int argument_count, char **arguments) {
         int result = filesystem_bootstrap(arguments[3]);
         printf("FILESYSTEM_RESULT\t%d\n", result);
         if (result != 0) return result;
+        if (native_provider_probe) {
+            result = native_provider_probe(engine_base, readable);
+            printf("PROVIDER_RESULT\t%d\n", result);
+            if (result != 0) return result;
+        }
     }
     puts("PHASE\tbefore_close");
     if (dlclose(handle) != 0) return 7;
     puts("PHASE\tafter_close");
+    if (assets_finish) {
+        int status = assets_finish();
+        printf("NATIVE_ASSET_FINISH_RESULT\t%d\n", status);
+        if (status) return 93;
+    }
     if (save_maps("closed.maps")) return 8;
     return 0;
 }

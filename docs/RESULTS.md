@@ -1,5 +1,19 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：Provider / catalog 前置依赖
+
+data-only/update-only/both三个独立原生注册及释放通过；四次settings/version真实资源
+读取wrapper0/child0，完整字节SHA、length/read/EOF/seek/close/backend finish均通过。
+两次catalog list158/preload368和分批load返回，每次369个资源只读mmap共6,071,750字节，
+暂存SHA一致；未hash映射内存，ready始终0，未取得CATALOG_READY_PASS或RESOURCE_MANAGER_PASS。
+自然loader进入native log→Java logger→JNIEnv获取，在空JavaVM指针处SIGSEGV；
+未实际调用AttachCurrentThread。wrapper/GDB1与inferior exit_code=null分别记录。
+旧路径child60与旧probe不识别APK虚表child61保留；未跳日志或假造VM。
+专项108通过/1平台条件跳过，主工程211通过；公开9组XML零失败零错误，最终wrapper退出码
+未持久化而保持null。测试在隔离副本运行，历史XML保留。真实update优先级/fallback尚未验证。
+GameState/empty/reset/Step/完整局NOT_RUN，整体BLOCKED，无训练或10×结论。详见
+[报告](../agent-handoff/PURE_LINUX_PROVIDER_CATALOG_2026-10-28.md)及机器证据。
+
 ## 2026-10-27 E2.1-N：原生初始化对象图限定推进
 
 真实Ubuntu/aarch64中libg753/753 constructor调用返回，全体1070/1070；

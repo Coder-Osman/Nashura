@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N Provider 注册与 catalog 调查
+
+- 新增版本绑定Provider/catalog探针、只读asset backend、所属子进程GDB观察与独立测试。
+- data/update独立注册及释放通过，四次真实资源读取字节SHA、EOF/seek/close通过。
+- catalog两次list/preload/分批调用返回，mmap资源证据补齐，ready仍0。
+- 定位自然loader日志路径读取空JavaVM的SIGSEGV，保留失败；未跳日志或伪造VM。
+- 108项专项通过/1条件跳过、主工程211项通过、公开9组XML零失败；各范围不累加。
+- 新报告区分局部通过与catalog/manager阻塞，GameState/Step及完整局继续NOT_RUN。
+
 ## 2026-10-27：E2.1-N原生初始化对象图
 
 - 新增真实加载/映射/content/filesystem探针、限额runner、constructor解析及GDB观测。

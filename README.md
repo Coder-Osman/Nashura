@@ -4,6 +4,15 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+## 2026-10-28 E2.1-N：Provider 注册及真实资源读取
+
+Ubuntu ARM64中新子进程完成data/update原生注册和四次完整资源读取，字节SHA、
+read/EOF/seek/close通过；catalog两次list158/preload368及分批调用返回，ready仍0。
+自然loader在日志路径获取JNIEnv时读取空JavaVM指针而SIGSEGV，整体 **BLOCKED**。
+108项专项通过、1项平台条件跳过；主工程211项通过，公开回归9组XML零失败。
+GameState/真实Step及完整局未运行，未取得无JavaVM或Android-free结论。
+详见[本轮报告](agent-handoff/PURE_LINUX_PROVIDER_CATALOG_2026-10-28.md)。以下保留历史状态。
+
 ## 2026-10-27 E2.1-N：真实constructor及内容对象构造
 
 在真实Ubuntu ARM64 guest中，linker记录libg753次constructor进入/返回；
