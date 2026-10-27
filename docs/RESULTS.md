@@ -1,5 +1,24 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-N 续验：真实 guest 合成 ABI 通过
+
+现有 Fusion Ubuntu 22.04.5/Linux 6.8.0-138-generic guest 实测 aarch64。首次自有 smoke
+因 raw clone 的 TLS 参数位置错误 SIGSEGV（程序 -11、runner 1）；失败原样保留。
+修复后 v4 SHA 1969edf1…9b232，真实 guest 八项检查及 canary 通过，正常退出 0、
+指定退出 23，runner 0，获得 PURE_LINUX_SMOKE_PASS。Bionic 探针和 --list 均 exit 0，
+实际 libc/libdl 来自本实验隔离目录；未加载真实 libg。
+
+新增只读版本符号和 relocation 审计：185 个 ARM64 库、473 导入，469 有静态候选，
+4 个 unresolved weak ZSTD trace 符号保持未知；753 个 init_array 槽未运行。
+专项 29 项通过。父提交隔离副本加新增 loader 的主工程 211 项通过21.79秒，公开入口
+exit0，主组794/27skip 48.40秒，其他23、82、15/3skip、25/4skip、31/3skip、31/2skip、
+38/3skip、65，各集合不累加；最后汇编修复由实际 guest 重验。
+
+guest 环境阻塞解除，首个真实加载门仍为锁定原 APK MISSING_INPUT（app 8/9），
+不是引擎失败。真实 libg LOAD_ONLY、生命周期、no-VM、Android-free 和10×均未取得。
+完整命令、SHA、私有日志标识见[续验报告](../agent-handoff/PURE_LINUX_GUEST_ABI_2026-10-27.md)
+及[证据](../agent-handoff/pure-linux-guest-abi-evidence-20261027.json)。以下为历史状态。
+
 ## 2026-10-27 E2.1-N：ARM64 Linux ABI 实验准备与静态审计
 
 仅任务分支，源基线82b94be；不修改main或冻结部署。Darwin arm64/macOS15.6，

@@ -69,3 +69,22 @@ Activity、UI、Surface、EGL/GLES、Looper、JavaVM、客户端全局场景管�
 5. 首次原生初始化通过后，再做动作/tick/snapshot/reset/终局对照；最后测吞吐。
 
 本轮未实现任何假定值 shim，未传入伪 JavaVM、默认配置或 ready 标志。
+
+## 2026-10-27 续验后的依赖前沿
+
+上图保留最初检查状态。授权恢复现有 VM 后，ARM64 Linux guest 已实测，direct Linux
+合成 smoke 通过；匹配 Android linker/Bionic 的 pthread/TLS 合成探针也通过。
+故前两层环境/合成 ABI 阻塞解除，原版引擎层仍未运行。
+
+```text
+ARM64 Linux guest [真实 aarch64]
+  ├─ Linux synthetic ABI [PURE_LINUX_SMOKE_PASS]
+  └─ Android linker + libc/libdl synthetic ABI [exit0；实际绑定已核对]
+      └─ 真实 libg 加载 [NOT_RUN / MISSING_INPUT：锁定 APK]
+          ├─ 473 imports → 469 静态候选；4 unresolved weak
+          ├─ namespace、IFUNC、753 init_array 槽 [运行 NOT_RUN]
+          └─ content/context → manager → GameState [UNRESOLVED]
+```
+
+静态版本符号/relocation 审计不证明运行绑定；这里 RUNTIME_OBSERVED 只涉及合成 ABI，
+没有增加原版战斗热路径覆盖。详见[续验报告](PURE_LINUX_GUEST_ABI_2026-10-27.md)。

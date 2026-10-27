@@ -77,3 +77,15 @@ python3 tools/pure_linux/run_arm64_smoke.py \
 
 旧 `start.S` / `smoke.c` / `run_smoke.py` 是 x86_64 Linux + QEMU 历史工具，原字节保留；
 它们不充当本轮 ARM64 guest 证据。当前限制下的最小下一步是提供独立可用 guest 会话。
+
+## 2026-10-27 授权恢复 VM 后的续验
+
+以上为先前时间点记录。现有 Ubuntu ARM64 VM 已经授权恢复，实测 Linux/aarch64。
+自有 raw clone TLS 参数修复后，v4 在真实 guest 八项检查及文件 canary 全通过，
+runner exit0，指定退出码23，取得 PURE_LINUX_SMOKE_PASS。匹配 linker/Bionic 的
+合成 pthread/TLS 探针及 --list 均 exit0，libc/libdl 实际绑定到隔离目录。
+
+原版 libg 尚未加载：锁定 APK 仍为 MISSING_INPUT，原生初始化对象图 UNRESOLVED。
+完整命令、失败保留、输入/输出 SHA 与边界见
+[续验报告](PURE_LINUX_GUEST_ABI_2026-10-27.md)及
+[证据 JSON](pure-linux-guest-abi-evidence-20261027.json)。无 VM 生命周期和10×尚未验证。

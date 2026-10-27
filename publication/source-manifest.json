@@ -16318,9 +16318,9 @@
     },
     {
       "path": "agent-handoff/ARM64_LINUX_ABI_FEASIBILITY.md",
-      "sha256": "d4fd142308066008cefff74a249f14105e8b7382a16bd3a85cf23dae6b37f868",
-      "bytes": 4449,
-      "source_sha256": "d4fd142308066008cefff74a249f14105e8b7382a16bd3a85cf23dae6b37f868",
+      "sha256": "e31f73ef31f743fc3d4850ee3c151dfc595b1e08811d4522c87651c48b1a30c3",
+      "bytes": 5195,
+      "source_sha256": "e31f73ef31f743fc3d4850ee3c151dfc595b1e08811d4522c87651c48b1a30c3",
       "transformations": []
     },
     {
@@ -16332,18 +16332,19 @@
     },
     {
       "path": "agent-handoff/DEPENDENCY_MAP.md",
-      "sha256": "f01f740d0209b91f7dfb7e55ef29b5a25bac6eeb7a3fad73189a09cbbc4aabbe",
-      "bytes": 5102,
-      "source_sha256": "f01f740d0209b91f7dfb7e55ef29b5a25bac6eeb7a3fad73189a09cbbc4aabbe",
+      "sha256": "2e723634ddf3fdae5d27bdd3ac601a1fe2b616b387092c1eea6431df9ebae5f0",
+      "bytes": 6095,
+      "source_sha256": "2e723634ddf3fdae5d27bdd3ac601a1fe2b616b387092c1eea6431df9ebae5f0",
       "transformations": []
     },
     {
       "path": "agent-handoff/PURE_LINUX_ENGINE_AUDIT_2026-10-26.md",
-      "sha256": "494ae348766bcbf294860d6003eea1dbbd0253feec4e9b882ed98134ae02829e",
-      "bytes": 8530,
+      "sha256": "8bc9c2325c2cbb8a0a66e8f37d0c610030ed44e3346bed863c9560d662bf8d93",
+      "bytes": 9405,
       "source_sha256": "6f7be503b9601591c13e8504871779a63985491a9e74f7cfb738724b00f6132b",
       "transformations": [
-        "Preserve original draft and append 2026-10-27 architecture, ELF and input-identity corrections plus actual continuation evidence."
+        "Preserve original draft and append 2026-10-27 architecture, ELF and input-identity corrections plus actual continuation evidence.",
+        "Append authorized guest Linux/Bionic synthetic ABI continuation; preserve prior audit evidence and distinguish unrun original-engine lifecycle."
       ]
     },
     {
@@ -16369,9 +16370,9 @@
     },
     {
       "path": "tools/pure_linux/arm64_start.S",
-      "sha256": "09f1300a1d3d48d4e910b943bda1a08bd660fd1262280eaec1df7c58875fa3ca",
-      "bytes": 444,
-      "source_sha256": "09f1300a1d3d48d4e910b943bda1a08bd660fd1262280eaec1df7c58875fa3ca",
+      "sha256": "deb0c7d32ed70d915eb2026ed56aa86412d88ab2edb13123691aef7732de554b",
+      "bytes": 429,
+      "source_sha256": "deb0c7d32ed70d915eb2026ed56aa86412d88ab2edb13123691aef7732de554b",
       "transformations": []
     },
     {
@@ -16429,10 +16430,66 @@
       "bytes": 9386,
       "source_sha256": "9805d8c80191d3e44b0e663fb44ff77b33fd973e7e10e8498251b03cd93b4d23",
       "transformations": []
+    },
+    {
+      "path": "CHANGELOG.md",
+      "transformations": [],
+      "sha256": "8714a12fb27166c4302f49da5e6b544d12546671002443098102fc20517bd2fc",
+      "bytes": 27821,
+      "source_sha256": "8714a12fb27166c4302f49da5e6b544d12546671002443098102fc20517bd2fc"
+    },
+    {
+      "path": "README.md",
+      "transformations": [],
+      "sha256": "628ee03d4218868532b5b6b8c40bfa58d65ffd944bd2e724e27cf2f48e6c8256",
+      "bytes": 25446,
+      "source_sha256": "628ee03d4218868532b5b6b8c40bfa58d65ffd944bd2e724e27cf2f48e6c8256"
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-27_PURE_LINUX_GUEST.md",
+      "transformations": [],
+      "sha256": "1eafdb0a33a65b813f8ee4d390bf6560fa045a878e99f63101cc20e042e348c2",
+      "bytes": 3083,
+      "source_sha256": "1eafdb0a33a65b813f8ee4d390bf6560fa045a878e99f63101cc20e042e348c2"
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_GUEST_ABI_2026-10-27.md",
+      "transformations": [],
+      "sha256": "0d2d004842139a0af99098a859ae95426df2adea37c0b097ffadae499e1a4213",
+      "bytes": 8563,
+      "source_sha256": "0d2d004842139a0af99098a859ae95426df2adea37c0b097ffadae499e1a4213"
+    },
+    {
+      "path": "agent-handoff/pure-linux-guest-abi-evidence-20261027.json",
+      "transformations": [],
+      "sha256": "65d0b17ed25cb0cd629d088255be90b38893e16d48bcd56192938196799a7299",
+      "bytes": 11219,
+      "source_sha256": "65d0b17ed25cb0cd629d088255be90b38893e16d48bcd56192938196799a7299"
+    },
+    {
+      "path": "docs/RESULTS.md",
+      "transformations": [],
+      "sha256": "9865d8cc1e1100cca47a9d8f81b9ea414c13061a29168b3f7b5c3f2292d15f12",
+      "bytes": 52118,
+      "source_sha256": "9865d8cc1e1100cca47a9d8f81b9ea414c13061a29168b3f7b5c3f2292d15f12"
+    },
+    {
+      "path": "tools/pure_linux/loader_audit.py",
+      "transformations": [],
+      "sha256": "7194b19f2a8246fa41465216689abf6089f9754bf7b13c5584b6cd303b444ea5",
+      "bytes": 13458,
+      "source_sha256": "7194b19f2a8246fa41465216689abf6089f9754bf7b13c5584b6cd303b444ea5"
+    },
+    {
+      "path": "tools/pure_linux/test_loader_audit.py",
+      "transformations": [],
+      "sha256": "92efe2d540860e2bb1c27bf2cecfb941943319a1c21d82a4863fa3ebf2ba7ec0",
+      "bytes": 7283,
+      "source_sha256": "92efe2d540860e2bb1c27bf2cecfb941943319a1c21d82a4863fa3ebf2ba7ec0"
     }
   ],
-  "file_count": 2345,
-  "source_bytes": 33238391,
+  "file_count": 2353,
+  "source_bytes": 33389981,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

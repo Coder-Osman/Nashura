@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-27 续验：真实 ARM64 guest 与 Bionic smoke
+
+- 恢复经授权的现有 Ubuntu VM，真实 Linux 合成探针获得 PURE_LINUX_SMOKE_PASS。
+- 修复自有 AArch64 raw clone TLS 参数顺序，保留初次 SIGSEGV 与 v4 成功记录。
+- 匹配 Android linker/Bionic 合成 pthread/TLS 探针 exit0，核对实际 libc/libdl 绑定。
+- 新增只读版本符号、relocation 写跨度、构造器槽审计及14项测试，专项总计29通过。
+- 补充脱敏报告/回执/JSON及历史文档续验，不提交二进制、资源和原始审计。
+- 原APK锁定身份仍缺失；真实libg加载、无VM生命周期、10×和训练均未运行。
+
 ## 2026-10-27：E2.1-N 原版 ELF 审计与 ARM64 Linux 探针
 
 - 新增PT_DYNAMIC/PT_LOAD动态符号审计、manifest/SHA守门和ABI感知依赖候选发现。

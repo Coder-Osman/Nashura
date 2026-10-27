@@ -115,3 +115,16 @@ payload，restore 还涉及 service/controller；reset/destroy 涉及 listener�
 结论：工程准备 **IMPLEMENTED / UNIT_PASS**；guest smoke **BLOCKED**；
 Bionic 运行、真实 libg 加载、GameState 生命周期、无 VM、原生一致性和 10× 均 **NOT_RUN**。
 没有 PURE_LINUX_SMOKE_PASS、LOAD_ONLY 或原生完整局通过证据。视频核验仍为 NOT_RUN。
+
+## 2026-10-27 续验：guest/Bionic 合成 ABI
+
+上节为获得 VM 恢复授权前的历史结论。现有 Ubuntu guest 已恢复并实测 aarch64，
+修复自有 clone 探针 TLS 参数后取得 PURE_LINUX_SMOKE_PASS；匹配的 Android linker/Bionic
+合成 pthread/TLS 探针退出0，实际 libc/libdl 绑定已核对。首次 SIGSEGV 原记录保留。
+
+新增 loader 版本符号和 relocation 写跨度静态审计，专项29项通过；原版 libg 尚未加载。
+首个加载前输入阻塞仍为锁定 APK 缺失，后续内容上下文/manager 构造未知。
+未取得 LOAD_ONLY、原生生命周期、no-VM、Android-free 或10×证据。
+命令、环境、SHA、退出码与独立日志见[续验报告](PURE_LINUX_GUEST_ABI_2026-10-27.md)、
+[回执](CODEX_REPLY_2026-10-27_PURE_LINUX_GUEST.md)和
+[证据 JSON](pure-linux-guest-abi-evidence-20261027.json)。

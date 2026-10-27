@@ -12,9 +12,8 @@ spawn_thread:
     mov x5, x0
     mov x6, x1
     mov x1, x2
-    mov x4, x3
+    mov x4, #0
     mov x2, #0
-    mov x3, #0
     mov x0, #0x0f00
     movk x0, #0xd, lsl #16
     mov x8, #220

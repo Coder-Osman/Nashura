@@ -1,0 +1,328 @@
+{
+  "schema": "nashura-pure-linux-guest-abi-evidence.v1",
+  "date": "2026-10-27",
+  "parent_commit": "3326d9f9dc7838c37750dfc02fc7a16f38661e87",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "scope": "Real ARM64 guest executing synthetic Linux/Bionic probes; original game library not loaded. Private raw logs are not published. $GUEST denotes the new isolated guest directory.",
+  "environment": {
+    "host_os": "macOS 15.6 (24G84)",
+    "host_arch": "arm64",
+    "host_memory_gib": 36,
+    "host_free_disk_gib_approx": 159,
+    "guest_os": "Ubuntu 22.04.5 LTS",
+    "guest_arch": "aarch64",
+    "guest_kernel": "6.8.0-138-generic",
+    "guest_memory_bytes": 6195167232,
+    "guest_available_memory_bytes": 5521088512,
+    "guest_swap_bytes": 0,
+    "guest_root_free_kib": 2293212,
+    "transport": "existing VMware Fusion guest operations; no SSH installed",
+    "network_probe": {
+      "target": "github.com HTTPS",
+      "exit_code": 1,
+      "result": "TLS handshake timed out; offline ABI probes unaffected"
+    },
+    "new_components_installed": false,
+    "vm_configuration_modified": false,
+    "android_emulator_started": false
+  },
+  "status": {
+    "implementation": "IMPLEMENTED",
+    "unit_tests": "UNIT_PASS",
+    "linux_synthetic_abi": "NATIVE_VERIFIED",
+    "bionic_synthetic_abi": "NATIVE_VERIFIED",
+    "linux_smoke": "PURE_LINUX_SMOKE_PASS",
+    "original_libg_load": "NOT_RUN",
+    "original_libg_load_only": "NOT_RUN",
+    "original_lifecycle": "BLOCKED",
+    "native_game_verified": false,
+    "no_vm_lifecycle": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "training": "NOT_RUN",
+    "throughput_10x": "NOT_RUN"
+  },
+  "prior_failure": {
+    "binary": "arm64-linux-smoke-v3",
+    "sha256": "2249f3439c240dd6bde1aeb8652a6c1de98a04bb1fdf30f3a9f7054af9b6e8b1",
+    "program_exit_code": -11,
+    "runner_exit_code": 1,
+    "phase": "clone/thread",
+    "cause": "Own raw-clone wrapper used x86_64 tls/child_tid ordering on AArch64; x3 must retain TLS, x4 is child_tid.",
+    "reference": "https://man7.org/linux/man-pages/man2/clone.2.html",
+    "logs_preserved": true
+  },
+  "linux_smoke": {
+    "schema": "nashura-direct-arm64-smoke.v1",
+    "synthetic": true,
+    "native_game_verified": false,
+    "status": "PURE_LINUX_SMOKE_PASS",
+    "system": "Linux",
+    "arch": "aarch64",
+    "kernel": "6.8.0-138-generic",
+    "checks": [
+      "process_syscall",
+      "monotonic_clock",
+      "file_io",
+      "unix_socket_ipc",
+      "clone_thread_shared_state",
+      "tls_isolation",
+      "signal_delivery",
+      "all_checks"
+    ],
+    "elf_sha256": "1969edf15f4c7f7b34713675e0b30caf65fdcdac33bedea7c737fd6a1d99b232",
+    "runs": [
+      {
+        "command": [
+          "$GUEST/arm64-linux-smoke-v4"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "3513fb9aac476f1195dae15ff25eda4c37380f29406e5ad8b6d56c2d96d902c9",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "$GUEST/arm64-linux-smoke-v4",
+          "--exit-23"
+        ],
+        "exit_code": 23,
+        "stdout_sha256": "93b31c3d2940aabcae51c93058e230df36f62da615b453692dcb6e72b7041565",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "file_canary_verified": true,
+    "private_report_sha256": "f0889273ed928daabc17a1cf6690bfd1e7440fdad38b1f915bc331b4ab06ecf5"
+  },
+  "guest_commands": [
+    {
+      "name": "direct-smoke",
+      "command": [
+        "/usr/bin/python3",
+        "$GUEST/run_arm64_smoke.py",
+        "--elf",
+        "$GUEST/arm64-linux-smoke-v4",
+        "--sha256",
+        "1969edf15f4c7f7b34713675e0b30caf65fdcdac33bedea7c737fd6a1d99b232",
+        "--output",
+        "$GUEST/direct-smoke-output"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "6ea18bd4e66931568d5fc90e609e0024c29fbaa540feaa7c4e22990fd0448677",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "linker-help",
+      "command": [
+        "$GUEST/linker64",
+        "--help"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "d11cdda335164a8815cc1d9fac732e6a8cfeeab3b84bb123c1bbc2c3668099e6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bionic-probe",
+      "command": [
+        "$GUEST/linker64",
+        "$GUEST/bionic-probe-v2"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e32b0b5191648c12f7958393c46b9829f95a0d57a3eea65d6843d33f4eb05aff",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "bionic_bindings": {
+    "command": [
+      "$GUEST/linker64",
+      "--list",
+      "$GUEST/bionic-probe-v2"
+    ],
+    "exit_code": 0,
+    "stdout_sha256": "922efcfaa8e2a071f6252409c2921ae563f521ab8a3ca19e8a3655b05dd362bb",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inputs": {
+      "linker64": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7",
+      "libc.so": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569",
+      "libdl.so": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4",
+      "bionic-probe-v2": "02dbc40e7ff04eafd633d24b1c8bd69fe88959d9105c5cb8cfe4e78c7a8db9cc"
+    },
+    "observed_bindings": {
+      "libc.so": "$GUEST/libc.so",
+      "libdl.so": "$GUEST/libdl.so",
+      "linux-vdso.so.1": "kernel vdso"
+    },
+    "ld_android_note": "ld-android.so is declared by libc/libdl; --list has no separate ld-android.so file binding row. No extra binding is inferred."
+  },
+  "static_loader_audit": {
+    "schema": "nashura-static-loader-audit.v1",
+    "status": "STATIC_FOUND",
+    "native_game_verified": false,
+    "runtime_load": "NOT_RUN",
+    "namespace_resolution": "UNRESOLVED",
+    "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "runtime_fingerprint_match": true,
+    "manifest_matches": {
+      "app-manifest.json": {
+        "manifest_sha256": "a0ab94c58c8b5bee7a9594a95b0a851ef1f8bea346d62a2b45c3e84793c61ad6",
+        "files": 9,
+        "matching": 8
+      },
+      "runtime-manifest.json": {
+        "manifest_sha256": "cfaa02b87719bba68ac034459fa5da9298e5bf14be3da865cb2b3e128c3327b4",
+        "files": 214,
+        "matching": 214
+      },
+      "resources-manifest.json": {
+        "manifest_sha256": "7a435be60fe6759509824194afa3748537c6cb4e945bdeaf7ae1bd3229cb7a82",
+        "files": 990,
+        "matching": 990
+      }
+    },
+    "candidate_libraries": 185,
+    "version_requirements": [
+      {
+        "name": "LIBC",
+        "hash": 331107,
+        "file": "libdl.so",
+        "flags": 0
+      },
+      {
+        "name": "LIBC",
+        "hash": 331107,
+        "file": "libm.so",
+        "flags": 0
+      },
+      {
+        "name": "LIBC",
+        "hash": 331107,
+        "file": "libc.so",
+        "flags": 0
+      },
+      {
+        "name": "LIBC_N",
+        "hash": 84764990,
+        "file": "libc.so",
+        "flags": 0
+      }
+    ],
+    "startup": {
+      "init_array_slots": 753,
+      "fini_array_slots": 2,
+      "dt_init_present": false,
+      "dt_fini_present": false,
+      "constructors_executed": false,
+      "array_entries_are_not_coverage": true
+    },
+    "counts": {
+      "imports": 473,
+      "with_static_candidates": 469,
+      "without_candidates": 4,
+      "weak_without_candidates": 4
+    },
+    "relocations": {
+      "tables": [
+        {
+          "table": "RELA",
+          "count": 116326,
+          "types": {
+            "257": {
+              "name": "ABS64",
+              "count": 1276
+            },
+            "1025": {
+              "name": "GLOB_DAT",
+              "count": 29
+            },
+            "1027": {
+              "name": "RELATIVE",
+              "count": 115021
+            }
+          },
+          "targets_outside_load_segments": 0,
+          "known_width_spans_outside_load_segments": 0,
+          "unknown_width_relocations": 0
+        },
+        {
+          "table": "JMPREL",
+          "count": 422,
+          "types": {
+            "1026": {
+              "name": "JUMP_SLOT",
+              "count": 422
+            }
+          },
+          "targets_outside_load_segments": 0,
+          "known_width_spans_outside_load_segments": 0,
+          "unknown_width_relocations": 0
+        }
+      ],
+      "counts_are_per_table_not_deduplicated": true,
+      "undecoded_encodings": [],
+      "applied": false
+    },
+    "unresolved_weak_names": [
+      "ZSTD_trace_compress_begin",
+      "ZSTD_trace_compress_end",
+      "ZSTD_trace_decompress_begin",
+      "ZSTD_trace_decompress_end"
+    ],
+    "private_report_sha256": "0fe36fe90ad0ce1326a8030d8b4bb8a669107ff6ab584c8e59ddcb729492e3fd"
+  },
+  "tests": [
+    {
+      "argv": [
+        "python",
+        "tools/run_main_engine_checks.py"
+      ],
+      "exit_code": 0,
+      "scope": "isolated 3326d9f tracked snapshot plus new loader audit and tests",
+      "stdout_sha256": "fcc58c7f75d5143ffb25b8d32b403d006f03050eeb76a738bf7b774779ea1ba7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "python",
+        "tools/run_public_checks.py"
+      ],
+      "exit_code": 0,
+      "scope": "isolated 3326d9f tracked snapshot plus new loader audit and tests",
+      "stdout_sha256": "35f0eea1728eeb93d69f3400309173e36d7b4ec468e442c859e32228cbfa6614",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/pure_linux",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "tests_passed": 29,
+      "stdout_sha256": "7075962eabb3b00ae3f8e96c4e692a009ef88f28b56f57ff362ba91d7f376c16",
+      "stderr_sha256": "3a16907c3e1f45b68bda64feaf56d83f2eab75eec75fb32841469082367daaeb"
+    }
+  ],
+  "private_artifact_hashes": {
+    "guest-baseline.tar": "cb1ce356d8cd60b5b24c09591e36699169936e0166fd54f2a5e08a2b9ab701ac",
+    "guest-probe-results.tar": "6491c7f44a28372b16cab66b1c9b85df9fc745a815ae8cee9030503a1aa64c74",
+    "guest-probe-v4-results.tar": "9ea51e8ef306428f8119e949351ef4bd2776ece17f7d2c9351546a5fdc7ccdf1",
+    "bionic-list-results.tar": "0c1cb1ca30592dfa276d0a46b9676c0299d822c47a30d783b0dc6b1bdb316c90",
+    "clone-man2.html": "2ca4447e1dd2bcd221478f495a745cb34cfaeff0cd379e30451be817db16f13a"
+  },
+  "real_load_gate": {
+    "status": "MISSING_INPUT",
+    "first_blocker": "Locked original APK unavailable; local same-version APK has a different whole-file SHA. No replacement accepted.",
+    "expected_apk_sha256": "685c115ee432d5fd2d7be856a58ea0cb029c9c187aa9061f3cd250994dfbcf2a",
+    "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "runtime_fingerprint_sha256": "e0cb2fb9eb2fdd0df1afcb00df3e3ba61cf25aa8b24e39c17cc391d952a4e339",
+    "subsequent_unresolved": [
+      "actual libg runtime namespace and symbol binding",
+      "native content root/context construction",
+      "manager/GameState initialization and JNI/configuration boundaries"
+    ]
+  }
+}

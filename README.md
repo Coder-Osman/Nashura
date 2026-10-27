@@ -4,6 +4,18 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+## 2026-10-27 续验：ARM64 Linux 与 Bionic 合成 ABI 已实测
+
+经用户授权恢复现有 Ubuntu ARM64 VM，真实 guest 的 Linux 八项 smoke、文件 canary 和
+退出码通过，取得 **PURE_LINUX_SMOKE_PASS**；匹配 Android linker/Bionic 的线程/TLS 探针
+也退出 0，已核对隔离目录中的 libc/libdl 实际绑定。新增版本符号/relocation 静态审计，
+29 项专项通过。初次 clone 探针失败和修复后输出分别保留。
+
+这些结果仅验证合成 ABI，原版 libg 尚未加载：锁定 APK 身份仍缺失，原生内容/manager
+初始化依赖仍待验证。no-VM、Android-free、真实完整对局、10× 和训练均未启动。
+详见[续验报告](agent-handoff/PURE_LINUX_GUEST_ABI_2026-10-27.md)及
+[回执](agent-handoff/CODEX_REPLY_2026-10-27_PURE_LINUX_GUEST.md)。以下保留此前状态。
+
 ## 2026-10-27：Apple Silicon → ARM64 Linux 原版引擎审计
 
 任务分支新增匹配 ELF/输入审计及 direct ARM64 Linux、Bionic 探针，15 项专项通过，
