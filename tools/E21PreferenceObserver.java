@@ -32,6 +32,53 @@ public final class E21PreferenceObserver {
     private static int codecCommands;
     private static int bridgeCommands;
     private static int derivationCommands;
+    private static String[] nativeKeys;
+    private static int nativeCommands;
+    private static boolean pathTrace;
+    private static boolean pathTraceUsed;
+
+    private static String nativeCommand(String operation) throws Exception {
+        if (!installed || ++nativeCommands > 4096) throw new IllegalStateException("bounded installed native PN backend required");
+        String[] parts = operation.split(":", -1);
+        if (parts[0].equals("native-bind") && parts.length == 3 && nativeKeys == null) {
+            for (int index = 1; index < 3; ++index) {
+                if (!parts[index].matches("[A-Za-z0-9+/]{22}==") ||
+                        !Base64.encodeToString(Base64.decode(parts[index], Base64.NO_WRAP), Base64.NO_WRAP).equals(parts[index])) {
+                    throw new IllegalArgumentException("native PN encoded key outside contract");
+                }
+            }
+            if (parts[1].equals(parts[2])) throw new IllegalArgumentException("distinct original stores required");
+            nativeKeys = new String[]{parts[1], parts[2]};
+            return "native-bound\t2";
+        }
+        if (nativeKeys == null) throw new IllegalStateException("native PN keys not bound");
+        if (operation.equals("native-unbind")) {
+            nativeKeys = null;
+            return "native-unbound\t2";
+        }
+        if (parts.length < 2 || !(parts[1].equals("0") || parts[1].equals("1"))) {
+            throw new IllegalArgumentException("explicit native PN store required");
+        }
+        int index = Integer.parseInt(parts[1]);
+        if (backing.get(stores[index]) != proxies[index]) throw new IllegalStateException("native PN store changed externally");
+        SharedPreferences preferences = (SharedPreferences)proxies[index];
+        if (parts[0].equals("native-get") && parts.length == 2) {
+            boolean present = preferences.contains(nativeKeys[index]);
+            return new JSONObject().put("present", present).put("plain_present", preferences.contains("PN_POPUP"))
+                .put("encoded", present ? preferences.getString(nativeKeys[index], null) : JSONObject.NULL).toString();
+        }
+        if (parts[0].equals("native-put") && parts.length == 3 && parts[2].length() <= 5464 &&
+                parts[2].length() > 0 && parts[2].matches("[A-Za-z0-9+/]+={0,2}")) {
+            byte[] bytes = Base64.decode(parts[2], Base64.NO_WRAP);
+            if (bytes.length == 0 || bytes.length > 4096 || bytes.length % 16 != 0 ||
+                    !Base64.encodeToString(bytes, Base64.NO_WRAP).equals(parts[2])) {
+                throw new IllegalArgumentException("native PN ciphertext outside contract");
+            }
+            boolean committed = preferences.edit().putString(nativeKeys[index], parts[2]).commit();
+            return new JSONObject().put("commit", committed).toString();
+        }
+        throw new IllegalArgumentException("unknown native PN backend command");
+    }
 
     private static String bridgeCommand(String operation) throws Exception {
         if (!installed || ++bridgeCommands > 4096) {
@@ -279,6 +326,22 @@ public final class E21PreferenceObserver {
     public static synchronized String command(String operation) throws Exception {
         if (released) throw new IllegalStateException("observer references retired");
         if (operation.equals("install")) return install();
+        if (operation.startsWith("path-trace-start:")) {
+            String path = operation.substring("path-trace-start:".length());
+            if (!installed || pathTraceUsed || !path.matches("/data/user/0/nullsroyale[.]rel[.]free/e21k-[a-z0-9-]+[.]trace")) {
+                throw new IllegalStateException("explicit one-shot installed path trace required");
+            }
+            pathTraceUsed = true;
+            android.os.Debug.startMethodTracing(path, 32 * 1024 * 1024, 0);
+            pathTrace = true;
+            return "path-trace-started";
+        }
+        if (operation.equals("path-trace-stop")) {
+            if (!pathTrace) throw new IllegalStateException("path trace not active");
+            android.os.Debug.stopMethodTracing();
+            pathTrace = false;
+            return "path-trace-stopped";
+        }
         if (operation.equals("derivation-source")) {
             if (!installed || ++derivationCommands > 1) throw new IllegalStateException("single installed source query required");
             ClassLoader parent = E21PreferenceObserver.class.getClassLoader().getParent();
@@ -294,6 +357,7 @@ public final class E21PreferenceObserver {
                 .put("identity", identity).put("package", context.getPackageName()).toString();
         }
         if (operation.startsWith("bridge-")) return bridgeCommand(operation);
+        if (operation.startsWith("native-")) return nativeCommand(operation);
         if (operation.startsWith("codec-")) return codecCommand(operation);
         if (operation.startsWith("pn-")) return pnCommand(operation);
         if (operation.equals("read-stores")) {
@@ -320,6 +384,8 @@ public final class E21PreferenceObserver {
         }
         if (operation.equals("uninstall")) {
             if (!installed) throw new IllegalStateException("not installed");
+            if (pathTrace) throw new IllegalStateException("stop path trace before uninstall");
+            if (nativeKeys != null) throw new IllegalStateException("unbind native PN before uninstall");
             if (pnSaved != null) throw new IllegalStateException("restore PN capture before uninstall");
             for (int index = 0; index < 2; ++index) {
                 if (backing.get(stores[index]) != proxies[index]) throw new IllegalStateException("store changed externally");

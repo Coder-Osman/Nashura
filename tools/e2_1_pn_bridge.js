@@ -10,6 +10,7 @@ function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
   }
   const engine = Process.getModuleByName('libg.so');
   const library = preloadedLibrary || Module.load(config.library);
+  const nativeBackend = config.codec_backend ? createPNNativeBackend(config.codec_backend, invoke, library) : null;
   const read = new NativeFunction(library.getExportByName('e21_bridge_read'), 'int', ['pointer', 'pointer', 'ulong', 'pointer']);
   const write = new NativeFunction(library.getExportByName('e21_bridge_write'), 'int', ['pointer', 'pointer', 'pointer']);
   const construct = new NativeFunction(engine.base.add(config.string_constructor), 'void', ['pointer', 'pointer']);
@@ -67,13 +68,14 @@ function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
   };
   const readCallback = new NativeCallback(guarded((context, store, output, capacity) => {
     if (store > 1 || Number(capacity) !== 4096) throw new Error('PN backend read ABI differs');
-    const bytes = decode(backendCall('bridge-read:' + store));
+    const bytes = nativeBackend ? nativeBackend.read(store) : decode(backendCall('bridge-read:' + store));
     if (bytes.length > 4095 || bytes.includes(0)) throw new Error('PN backend read text differs');
     output.writeByteArray(bytes.concat([0]));
     return 0;
   }), 'int', ['pointer', 'uint', 'pointer', 'ulong']);
   const writeCallback = new NativeCallback(guarded((context, store, value) => {
     if (store > 1) throw new Error('PN backend store differs');
+    if (nativeBackend) { nativeBackend.write(store, value.readUtf8String()); return 0; }
     if (backendCall('bridge-write:' + store + ':' + encode(value.readUtf8String())) !==
         'writer-method-returned; commit-observe-separately') throw new Error('PN writer receipt differs');
     return 0;
@@ -98,7 +100,8 @@ function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
       if (events.length >= 1024) throw new Error('PN event budget exceeded');
       const row = {operation: writing ? 'write' : 'read', phase, thread: Process.getCurrentThreadId(),
         caller: source.compare(engine.base) >= 0 && source.compare(engine.base.add(engine.size)) < 0
-          ? 'libg.so+' + source.sub(engine.base) : 'external-probe', route: 'native-state-machine-java-backend'};
+          ? 'libg.so+' + source.sub(engine.base) : 'external-probe',
+        route: nativeBackend ? 'native-state-machine-native-codec-java-xml' : 'native-state-machine-java-backend'};
       events.push(row);
       if (coldInstall) {
         row.module_base = engine.base.toString();
@@ -157,13 +160,17 @@ function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
       for (const target of targets) Interceptor.revert(target);
       Interceptor.flush();
       installed = false; retired = true;
+      if (nativeBackend) nativeBackend.retire();
       return true;
     },
     snapshot() {
-      return {schema: coldInstall ? 'e2.1i-cold-pn-bridge.v1' : 'e2.1h-pn-bridge.v1', installed, retired, events, errors, fallbacks,
+      return {schema: nativeBackend ? 'e2.1k-cold-pn-codec-bridge.v1' :
+        (coldInstall ? 'e2.1i-cold-pn-bridge.v1' : 'e2.1h-pn-bridge.v1'), installed, retired, events, errors, fallbacks,
         retained_allocations: retained.length,
-        scope: coldInstall ? 'first-native-bridge PN control; original per-store Cipher/XML/backup and JavaVM retained'
-          : 'post-cold-ready PN bridge; original per-store Cipher/XML/backup and JavaVM retained',
+        native_backend: nativeBackend ? nativeBackend.snapshot() : null,
+        scope: nativeBackend ? 'first-native-bridge PN control and native codec; original store constructors/XML/backup and JavaVM retained'
+          : (coldInstall ? 'first-native-bridge PN control; original per-store Cipher/XML/backup and JavaVM retained'
+            : 'post-cold-ready PN bridge; original per-store Cipher/XML/backup and JavaVM retained'),
         original_xml_writer_replaced: false, backup_delivery: 'unknown', concurrency_equivalence: 'unknown',
         no_vm_verified: false, strict_gate: 'BLOCKED'};
     }

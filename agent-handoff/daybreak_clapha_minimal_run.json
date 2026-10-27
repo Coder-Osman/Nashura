@@ -1,0 +1,53 @@
+{
+  "schema": "nashura.daybreak-clapha.minimal-run.v1",
+  "date": "2026-10-27",
+  "status": "BLOCKED_EXTERNAL_DEPENDENCY",
+  "nashura_base_commit": "dba6d81bf8ea58413f83123d0a108955891e0f6b",
+  "branch": "codex/headless-engine-plan-20261025",
+  "daybreak_repository": "https://github.com/Jason-XII/daybreak-cr",
+  "daybreak_commit": "73334a00ee38bab949c5bc88dc133cad42ffd4f4",
+  "attempted": false,
+  "reason": "External clapha bundle not located; imports and execution have no qualified input.",
+  "python_import_attempted": false,
+  "command": null,
+  "exit_code": null,
+  "stderr": null,
+  "pid": null,
+  "thread_count": null,
+  "elapsed_seconds": null,
+  "battle_created": null,
+  "tick_advanced": null,
+  "players_read": null,
+  "hands_read": null,
+  "entities_read": null,
+  "tower_hp_read": null,
+  "normal_close_or_destroy": null,
+  "android_emulator_required": "unknown",
+  "adb_required": "unknown",
+  "java_vm_required": "unknown",
+  "jni_required": "unknown",
+  "loaded_libraries": null,
+  "resource_accesses": null,
+  "android_path_accesses": null,
+  "host": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "macos_version": "15.6"
+  },
+  "linux_environment_tested": false,
+  "trajectory_comparison": {
+    "attempted": false,
+    "snapshot_count": null,
+    "action_count": null,
+    "terminal_tick": null,
+    "state_hash": null,
+    "reason": "Minimal run and compatible identity have not passed."
+  },
+  "not_evidence": [
+    "Wrapper source code",
+    "Wrapper-only tests using Engine.__new__",
+    "README native-engine claims",
+    "Nashura historical native snapshots"
+  ],
+  "next_required_input": "Locatable, legitimately prepared clapha bundle including crx, engine builds, resources, version manifest and build/run instructions."
+}

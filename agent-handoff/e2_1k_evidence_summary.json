@@ -1,0 +1,174 @@
+{
+  "schema": "e2.1k-bounded-summary.v1",
+  "status": "bounded_evidence_verified",
+  "runs": [
+    {
+      "run": "baseline-final",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "original-final",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0,
+      "cold": {
+        "windows": [
+          {
+            "operation": "read",
+            "phase": "configuration",
+            "caller": "0x1394198",
+            "commits": {}
+          },
+          {
+            "operation": "write",
+            "phase": "cold_ready_wait",
+            "caller": "0x13942f0",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            }
+          }
+        ],
+        "native_entries": 138,
+        "bridge_onleave_events": 0,
+        "external_windows": 3,
+        "released_java_references": 6,
+        "allocated_global_references": 1,
+        "deleted_global_references": 1
+      },
+      "art_scope": "all named original get/store roots during window; not PN-only"
+    },
+    {
+      "run": "replacement-final-3",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0,
+      "cold": {
+        "natural_windows": [
+          {
+            "operation": "read",
+            "independently_observed_phase": "configuration",
+            "commits": {}
+          },
+          {
+            "operation": "write",
+            "independently_observed_phase": "cold_ready_wait",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            }
+          }
+        ],
+        "explicit_reads": 3,
+        "derivations": 1,
+        "native_transforms": 10,
+        "raw_art_roots": 6,
+        "raw_named_cipher_calls": 0,
+        "raw_named_old_store_calls": 0,
+        "global_named_cipher_calls": 262,
+        "opaque_method_ids": 8,
+        "exhaustive_method_coverage": false,
+        "non_pn_original_bridge_fallbacks": 133,
+        "released_java_references": 6,
+        "allocated_global_references": 1,
+        "deleted_global_references": 1
+      },
+      "xml": {
+        "stores": 2,
+        "original_java_readback_equal": true,
+        "xml_bytes_unchanged_by_readback": true
+      }
+    },
+    {
+      "run": "replacement-final-4",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0,
+      "cold": {
+        "natural_windows": [
+          {
+            "operation": "read",
+            "independently_observed_phase": "configuration",
+            "commits": {}
+          },
+          {
+            "operation": "write",
+            "independently_observed_phase": "cold_ready_wait",
+            "commits": {
+              "o:true": 1,
+              "p:true": 1
+            }
+          }
+        ],
+        "explicit_reads": 3,
+        "derivations": 1,
+        "native_transforms": 10,
+        "raw_art_roots": 6,
+        "raw_named_cipher_calls": 0,
+        "raw_named_old_store_calls": 0,
+        "global_named_cipher_calls": 262,
+        "opaque_method_ids": 8,
+        "exhaustive_method_coverage": false,
+        "non_pn_original_bridge_fallbacks": 133,
+        "released_java_references": 6,
+        "allocated_global_references": 1,
+        "deleted_global_references": 1
+      },
+      "xml": {
+        "stores": 2,
+        "original_java_readback_equal": true,
+        "xml_bytes_unchanged_by_readback": true
+      }
+    }
+  ],
+  "attachment_count": 14707,
+  "independent_process_readback_equal": true,
+  "pn_native_replacement": "natural control, explicit-source derivation and AES; Java identity/store/XML/backup retained",
+  "strict_gate": "BLOCKED",
+  "removed_keys": 0,
+  "original_xml_writer_replaced": false,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false,
+  "unsupported": [
+    "missing",
+    "legacy-plain",
+    "empty",
+    "malformed",
+    "commit-false-equivalence",
+    "concurrency"
+  ],
+  "backup_delivery": "unknown",
+  "concurrency_equivalence": "unknown",
+  "unresolved": [
+    "non-Java identity acquisition and original store construction",
+    "XML persistence and backup delivery",
+    "missing/legacy/empty/malformed/commit-false equivalence",
+    "concurrency and crash durability",
+    "opaque method identities and 46-key removability"
+  ],
+  "private_manifest_sha256": "ae0f4b02085ec05db0785ac1559f3b533c33caced241594a8d33bf2f997c4dff"
+}

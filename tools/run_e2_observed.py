@@ -15,6 +15,21 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def wait_path_trace(snapshot, save, timeout=30, clock=time.monotonic, pause=time.sleep):
+    deadline = clock() + timeout
+    while True:
+        state = snapshot()
+        tracing = state['path_trace']
+        save('pn-path-trace-state.json', tracing)
+        if state['cold']['errors']:
+            raise RuntimeError('natural PN method trace observer failed')
+        if tracing == dict(started=True, stopped=True):
+            return
+        if clock() >= deadline:
+            raise RuntimeError('natural PN method trace incomplete after bounded wait')
+        pause(0.1)
+
+
 def traced_probe(operation, oracle, collect, save):
     if oracle is None:
         return operation()
@@ -98,6 +113,8 @@ def run(config_path, output):
         source = (repository / filename).read_text()
         if name == 'return-observer' and config.get('pn_bridge'):
             source = (repository / 'e2_1_pn_bridge.js').read_text() + '\n' + source
+            if config['pn_bridge'].get('codec_backend'):
+                source = (repository / 'e2_1_pn_native_backend.js').read_text() + '\n' + source
         script = session.create_script(source)
         def message(payload, data):
             messages.append(dict(script=name, payload=payload))
@@ -146,6 +163,12 @@ def run(config_path, output):
         for filename in ('e2_1_pn_bridge.c', 'e2_1_pn_bridge.h'):
             path = repository / filename
             (source_directory / path.name).write_bytes(path.read_bytes())
+        if config['pn_bridge'].get('codec_backend'):
+            if install_at != 'first-native-bridge':
+                raise ValueError('native codec backend requires natural cold installation')
+            for filename in ('e2_1_pn_derive.c', 'e2_1_pn_derive.h', 'e2_1_pn_codec.c', 'e2_1_pn_codec.h'):
+                path = repository / filename
+                (source_directory / path.name).write_bytes(path.read_bytes())
     try:
         if command('emu', 'avd', 'name').splitlines()[0] != config['avd']:
             raise RuntimeError('AVD ownership mismatch')
@@ -193,6 +216,9 @@ def run(config_path, output):
         else:
             raise RuntimeError('cold ready not reached')
         save('cold-ready.json', status)
+        if config.get('return_observer', {}).get('pn_path_trace'):
+            wait_path_trace(scripts['return-observer'].exports_sync.snapshot, save)
+            command('pull', config['return_observer']['pn_path_trace'], str(output / 'pn-path.trace'))
         thread_inventory(pid, 'cold-ready')
         if config.get('java_oracle'):
             create('java-oracle', 'e2_1_java_oracle.js', config['java_oracle'])
@@ -334,6 +360,23 @@ def run(config_path, output):
         if config.get('string_lifecycle_probe'):
             create('string-lifecycle', 'e2_1_string_lifecycle.js', config['string_lifecycle_probe'])
             save('string-lifecycle.json', scripts['string-lifecycle'].exports_sync.run())
+        if config.get('pn_native_readback'):
+            if not config.get('pn_bridge', {}).get('codec_backend'):
+                raise ValueError('native PN readback requires explicit native codec experiment')
+            observer = scripts['return-observer'].exports_sync
+            files = observer.command('files').splitlines()
+            if len(files) != 2 or len(set(files)) != 2 or any(
+                    not path.startswith('/data/user/0/' + config['package'] + '/shared_prefs/')
+                    or not path.endswith('.xml') or '..' in Path(path).parts for path in files):
+                raise RuntimeError('original PN XML paths outside read-only contract')
+            directory = output / 'natural-pn-xml'
+            directory.mkdir()
+            for index, path in enumerate(files):
+                command('pull', path, str(directory / ('store-' + str(index) + '-before.xml')))
+            values = observer.command('read-stores').splitlines()
+            save('original-java-readback.json', dict(route='original c.a.j via retained store objects', values=values))
+            for index, path in enumerate(files):
+                command('pull', path, str(directory / ('store-' + str(index) + '-after.xml')))
         (output / 'threads-final.txt').write_text(command('shell', 'ps', '-T', '-p', str(pid), '-o', 'TID,NAME,WCHAN'))
         save('identity-after.json', identity())
         command('pull', resource['audit_path'], str(output / 'provider-audit.tsv'))

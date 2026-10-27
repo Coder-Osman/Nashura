@@ -1,0 +1,104 @@
+{
+  "schema": "nashura.daybreak-clapha.failure-index.v1",
+  "date": "2026-10-27",
+  "status": "BLOCKED_EXTERNAL_DEPENDENCY",
+  "nashura_base_commit": "dba6d81bf8ea58413f83123d0a108955891e0f6b",
+  "branch": "codex/headless-engine-plan-20261025",
+  "daybreak_repository": "https://github.com/Jason-XII/daybreak-cr",
+  "daybreak_commit": "73334a00ee38bab949c5bc88dc133cad42ffd4f4",
+  "failures": [
+    {
+      "id": "search_partial_coverage",
+      "stage": "A",
+      "kind": "incomplete_readonly_search",
+      "exit_code": 1,
+      "exit_code_scope": "combined shell only",
+      "query_exit_codes": [
+        null,
+        null,
+        null
+      ],
+      "matches": 0,
+      "permission_error_lines_per_query": 124,
+      "missing_root": "/workspace",
+      "interpretation": "Accessible range returned no match; protected paths and renamed bundles remain unknown."
+    },
+    {
+      "id": "clapha_repository_unavailable",
+      "stage": "A/public-source",
+      "argv": [
+        "gh",
+        "api",
+        "repos/ClashAlpha/clapha-engine"
+      ],
+      "exit_code": 1,
+      "http_status": 404,
+      "interpretation": "Current account access unavailable; not proof of repository absence."
+    },
+    {
+      "id": "clapha_release_unavailable",
+      "stage": "A/public-source",
+      "argv": [
+        "gh",
+        "api",
+        "repos/ClashAlpha/clapha-engine/releases/tags/conversion-2026-10-24"
+      ],
+      "exit_code": 1,
+      "http_status": 404,
+      "interpretation": "No release asset names, checksums or binaries fetched from the release."
+    },
+    {
+      "id": "local_bundle_missing",
+      "stage": "B-C-D",
+      "kind": "blocked_not_run",
+      "attempted": false,
+      "exit_code": null,
+      "interpretation": "No qualified external engine input; no import/runtime failure invented."
+    },
+    {
+      "id": "trajectory_not_run",
+      "stage": "F",
+      "kind": "blocked_not_run",
+      "attempted": false,
+      "exit_code": null,
+      "interpretation": "No new snapshot or native lifecycle comparison."
+    },
+    {
+      "id": "auxiliary_path_checks",
+      "stage": "evidence-location",
+      "kind": "operator_path_lookup",
+      "details": [
+        {
+          "command": "sed agent-handoff/daybreak_clapha_version_matrix.json",
+          "result": "File not yet created; compound shell exit 0 is not the sed exit."
+        },
+        {
+          "command": "rg agent-handoff/e0-e1-resource-evidence.json",
+          "exit_code": 2,
+          "result": "Actual existing location: publication/e0-e1-resource-evidence.json"
+        },
+        {
+          "command": "ls /workspace",
+          "exit_code": 1,
+          "result": "Directory does not exist."
+        }
+      ],
+      "interpretation": "Evidence lookup failures; unrelated to native engine viability."
+    }
+  ],
+  "publication_edit_failures": [
+    {
+      "operation": "source manifest patch generation",
+      "attempts_rejected": 2,
+      "reasons": [
+        "Hunks followed selected-file order rather than manifest order; expected context was not found.",
+        "Numeric unified-diff hunk headers were interpreted as context by apply_patch."
+      ],
+      "effect": "Both patches rejected without applying; corrected ordered contextual patch then applied.",
+      "scope": "Publication tooling only; unrelated to native runtime."
+    }
+  ],
+  "runtime_failure_count": null,
+  "reason": "No external runtime was launched.",
+  "raw_failure_records": "Kept in private isolated evidence; no private stderr uploaded."
+}

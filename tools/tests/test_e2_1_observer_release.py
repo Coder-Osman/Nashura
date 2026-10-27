@@ -11,6 +11,13 @@ def test_real_java_helper_restores_then_retires_only_its_own_references(tmp_path
     if not java or not javac:
         pytest.skip('JDK required for engineering fixture; no native evidence claimed')
     sources = {
+        'android/os/Debug.java': '''
+package android.os;
+public class Debug {
+    public static void startMethodTracing(String path, int size, int flags) { throw new UnsupportedOperationException(); }
+    public static void stopMethodTracing() { throw new UnsupportedOperationException(); }
+}
+''',
         'android/content/Context.java': '''
 package android.content;
 public abstract class Context {
@@ -45,14 +52,17 @@ public interface SharedPreferences {
 package android.util;
 public class Base64 {
     public static final int NO_WRAP = 2;
-    public static byte[] decode(String value, int flags) { throw new UnsupportedOperationException("unused PN fixture"); }
-    public static String encodeToString(byte[] value, int flags) { throw new UnsupportedOperationException("unused codec fixture"); }
+    public static byte[] decode(String value, int flags) { return java.util.Base64.getDecoder().decode(value); }
+    public static String encodeToString(byte[] value, int flags) { return java.util.Base64.getEncoder().encodeToString(value); }
 }
 ''',
         'org/json/JSONObject.java': '''
 package org.json;
 public class JSONObject {
-    public JSONObject put(String key, Object value) { throw new UnsupportedOperationException("unused PN fixture"); }
+    public static final Object NULL = new Object();
+    private final java.util.Map<String,Object> values = new java.util.LinkedHashMap<>();
+    public JSONObject put(String key, Object value) { values.put(key, value); return this; }
+    public String toString() { return values.toString(); }
 }
 ''',
         'org/json/JSONArray.java': '''
@@ -71,13 +81,13 @@ public class GameApp {
     public static class Store { public SharedPreferences d = new Preferences(); }
     public static class Preferences implements SharedPreferences {
         public int commits;
-        public String value = "fixture";
-        public String getString(String key, String fallback) { return value; }
-        public boolean contains(String key) { return true; }
+        public java.util.Map<String,String> values = new java.util.HashMap<>();
+        public String getString(String key, String fallback) { return values.containsKey(key) ? values.get(key) : fallback; }
+        public boolean contains(String key) { return values.containsKey(key); }
         public Editor edit() {
             return new Editor() {
-                public Editor putString(String key, String replacement) { value = replacement; return this; }
-                public Editor remove(String key) { value = null; return this; }
+                public Editor putString(String key, String replacement) { values.put(key, replacement); return this; }
+                public Editor remove(String key) { values.remove(key); return this; }
                 public boolean commit() { ++commits; return false; }
             };
         }
@@ -113,6 +123,23 @@ public class Harness {
         require(((GameApp.Preferences)first).commits == 1);
         require(GameApp.q.o.d.getString("fixture", "").equals("updated"));
         require(call("snapshot").contains("commit:exit\\tfalse"));
+        rejected("native-get:0");
+        String firstKey = "AAAAAAAAAAAAAAAAAAAAAA==", secondKey = "AQEBAQEBAQEBAQEBAQEBAQ==";
+        require(call("native-bind:" + firstKey + ":" + secondKey).equals("native-bound\\t2"));
+        require(call("native-get:0").contains("present=false"));
+        require(call("native-put:0:" + secondKey).contains("commit=false"));
+        require(((GameApp.Preferences)first).values.get(firstKey).equals(secondKey));
+        String raw = call("native-get:0");
+        require(raw.contains("present=true") && raw.contains("plain_present=false") && raw.contains(secondKey));
+        require(!((GameApp.Preferences)second).values.containsKey(firstKey));
+        rejected("uninstall");
+        GameApp.q.o.d = second;
+        rejected("native-get:0");
+        rejected("native-put:0:" + secondKey);
+        Field proxies = helper.getDeclaredField("proxies"); proxies.setAccessible(true);
+        GameApp.q.o.d = (SharedPreferences)((Object[])proxies.get(null))[0];
+        require(call("native-unbind").equals("native-unbound\\t2"));
+        rejected("native-get:1");
         require(call("uninstall").equals("uninstalled\\t2"));
         require(GameApp.q.o.d == first && GameApp.q.p.d == second);
         GameApp.q.o.d = second;

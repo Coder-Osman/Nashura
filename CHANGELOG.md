@@ -1,5 +1,22 @@
 # 变更记录
 
+## 2026-10-27：E2.1-K 自然冷启动PN原生派生与AES
+
+- 恢复K；自然入口接C派生/codec，原Java身份、store构造、XML/backup及VM保留。
+- 四进程各3602快照/28动作全字节一致；两替换自然窗口、双store真实commit及跨进程读回通过。
+- 新增raw路径ART解析、严格附件验证器和独立负测；opaque方法保持unknown，不扩大覆盖。
+- 14707附件限定验证exit0，E2全组338 passed/278 skipped；历史strict仍exit2，46键移除0。
+- 自有库/DEX复编身份匹配，专用实例回收；保留早期cleanup、trace、parser与fixture失败。
+- daybreak/clapha历史核验一并保留，外部引擎未运行；未进入no-VM、训练或10×。
+
+## 2026-10-27：daybreak/clapha交叉核验与缺口封存
+
+- 当时暂停E2.1-K，保留13个未提交文件及既有实例；该条仅记录当时只读核验范围。
+- 新增交叉核验报告、inventory、version matrix、minimal run、failure index和回执。
+- 固定daybreak源码身份；外部bundle未定位，clapha仓库/release访问HTTP404。
+- 区分声明libg一致、实际APK不同和外部兼容unknown；动态项目保留未执行。
+- 状态BLOCKED_EXTERNAL_DEPENDENCY，未进入E2.2、训练或性能实验。
+
 ## 2026-10-27：E2.1-J PN显式来源原生派生
 
 - 新增C派生契约、有界guest probe、原App身份查询及双store原Cipher差分矩阵。

@@ -1,0 +1,63 @@
+{
+  "schema": "e2.1k-failure-index.v1",
+  "status": "historical_failures_preserved",
+  "items": [
+    {
+      "attempt": "replacement-1",
+      "exit_code": 1,
+      "stage": "final evidence",
+      "observed": "final evidence snapshots missing: return-observer-cleanup",
+      "resolution": "failure retained; later final runs include verified cleanup; no inferred successful cleanup for failed attempt"
+    },
+    {
+      "attempt": "replacement-2",
+      "exit_code": 1,
+      "stage": "natural trace",
+      "observed": "natural PN method trace incomplete",
+      "resolution": "bounded 30-second wait added; final-3 and final-4 complete"
+    },
+    {
+      "attempt": "initial path parsing",
+      "exit_code": 1,
+      "stage": "ART metadata",
+      "observed": "duplicate or unaligned trace method",
+      "resolution": "one identical duplicate, no conflicting row; explicit option permits identical metadata only; default strict behavior retained; opaque IDs unknown"
+    },
+    {
+      "attempt": "tests-wait",
+      "exit_code": 2,
+      "stage": "pytest collection",
+      "observed": "ModuleNotFoundError: run_e2_observed",
+      "resolution": "test import path corrected; final wait group 18 passed, 1 skipped"
+    },
+    {
+      "attempt": "historical strict gate recheck",
+      "exit_code": 2,
+      "stage": "historical manifest verification",
+      "observed": "BLOCKED",
+      "resolution": "old evidence preserved; not a replacement for current K bounded verification"
+    },
+    {
+      "attempt": "report lookup",
+      "exit_code": 1,
+      "stage": "auxiliary read",
+      "observed": "incorrect historical summary filename",
+      "resolution": "correct evidence_summary filename read; no native execution affected"
+    },
+    {
+      "attempt": "crosscheck verification log lookup",
+      "exit_code": 1,
+      "stage": "auxiliary read",
+      "observed": "public result searched below validation tree instead of evidence root",
+      "resolution": "actual root results located; public and main-engine checks exit 0"
+    }
+  ],
+  "private_logs_published": false,
+  "unknowns": [
+    "missing/legacy/empty/malformed native-equivalence",
+    "commit-false and concurrency equivalence",
+    "backup delivery and crash durability",
+    "opaque method identities",
+    "46-key removability"
+  ]
+}

@@ -1,5 +1,28 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-K 自然PN原生派生/AES续验
+
+自然冷启动原PN调用点已接原生派生和codec，Java身份获取、原store构造、XML/backup及VM保留。
+四进程各3602快照、9120440bytes、28动作、tick3601终局全字节一致，17项非status回执一致。
+两替换各138桥入口=133非PN fallback+5PN事件；自然read/write、真实双commit与跨进程读回通过。
+原Java读回前后XML字节不变；raw ART六根内具名Cipher/旧store零，全局Cipher262，
+另8个opaque method IDs语义unknown；不声称JNI穷尽覆盖。
+复编/guest身份通过，独占实例释放后14707附件限定验证exit0；E2全组338 passed/278 skipped。
+历史strict重验exit2，本轮strict仍BLOCKED，46键移除0/可移除性unknown；无no-VM、Android-free、训练或10×。
+首个依赖为非Java身份和原store/XML/backup，失败/并发/崩溃持久化仍待验证。
+详见E2_1K_NATURAL_PN_NATIVE_CODEC_2026-10-27.md及e2_1k_evidence_summary.json。
+
+## 2026-10-27 daybreak/clapha外部引擎交叉核验
+
+状态BLOCKED_EXTERNAL_DEPENDENCY；暂停E2.1-K并保留13个未提交文件。
+可访问搜索范围中外部目录、压缩包及engine文件均未定位；每轮124权限错误，
+组合exit1，单轮exit未捕获。clapha仓库和release当前账号访问均HTTP404。
+daybreak固定73334a00ee38bab949c5bc88dc133cad42ffd4f4，只读取12份公开文本。
+wrapper依赖外部loader/env/engine/assets；其无引擎fixture不是原生运行证据。
+声明libg与本地重算一致，实际APK与daybreak声明不同；外部产物、资源及ABI兼容unknown。
+未执行导入、最小运行或3602快照比较；无no-VM、Android-free或10×声明。
+详见DAYBREAK_CLAPHA_CROSSCHECK_2026-10-27.md及daybreak_clapha_*.json。
+
 ## 2026-10-27 E2.1-J PN原生派生与原Cipher差分
 
 新增显式输入C派生、guest有界probe、原Java oracle矩阵和独立附件验证器。

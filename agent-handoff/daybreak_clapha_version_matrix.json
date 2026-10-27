@@ -1,0 +1,234 @@
+{
+  "schema": "nashura.daybreak-clapha.version-matrix.v1",
+  "date": "2026-10-27",
+  "status": "BLOCKED_EXTERNAL_DEPENDENCY",
+  "nashura_base_commit": "dba6d81bf8ea58413f83123d0a108955891e0f6b",
+  "branch": "codex/headless-engine-plan-20261025",
+  "daybreak_repository": "https://github.com/Jason-XII/daybreak-cr",
+  "daybreak_commit": "73334a00ee38bab949c5bc88dc133cad42ffd4f4",
+  "compatibility": "unknown",
+  "rows": [
+    {
+      "field": "package",
+      "comparison_scope": "daybreak manifest vs Nashura supported_engine.json declarations",
+      "daybreak": "nullsroyale.rel.free",
+      "nashura": "nullsroyale.rel.free",
+      "result": "equal",
+      "external_clapha_artifact": "unknown",
+      "evidence_level": "static_declaration"
+    },
+    {
+      "field": "apk_version",
+      "comparison_scope": "daybreak manifest vs Nashura supported_engine.json declarations",
+      "daybreak": "15.535.13",
+      "nashura": "15.535.13",
+      "result": "equal",
+      "external_clapha_artifact": "unknown",
+      "evidence_level": "static_declaration"
+    },
+    {
+      "field": "apk_version_code",
+      "comparison_scope": "daybreak manifest vs Nashura supported_engine.json declarations",
+      "daybreak": 150535013,
+      "nashura": 150535013,
+      "result": "equal",
+      "external_clapha_artifact": "unknown",
+      "evidence_level": "static_declaration"
+    },
+    {
+      "field": "abi",
+      "comparison_scope": "daybreak manifest vs Nashura supported_engine.json declarations",
+      "daybreak": "arm64-v8a",
+      "nashura": "arm64-v8a",
+      "result": "equal",
+      "external_clapha_artifact": "unknown",
+      "evidence_level": "static_declaration"
+    },
+    {
+      "field": "apk_sha256",
+      "comparison_scope": "daybreak manifest vs Nashura supported_engine.json declarations",
+      "daybreak": "685c115ee432d5fd2d7be856a58ea0cb029c9c187aa9061f3cd250994dfbcf2a",
+      "nashura": "685c115ee432d5fd2d7be856a58ea0cb029c9c187aa9061f3cd250994dfbcf2a",
+      "result": "equal",
+      "external_clapha_artifact": "unknown",
+      "evidence_level": "static_declaration"
+    },
+    {
+      "field": "libg_sha256",
+      "comparison_scope": "daybreak manifest vs Nashura supported_engine.json declarations",
+      "daybreak": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "nashura": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "result": "equal",
+      "external_clapha_artifact": "unknown",
+      "evidence_level": "static_declaration"
+    },
+    {
+      "field": "resource_directory",
+      "comparison_scope": "daybreak manifest vs Nashura supported_engine.json declarations",
+      "daybreak": "nr_15.535.13_release_ff1c6c29",
+      "nashura": "nr_15.535.13_release_ff1c6c29",
+      "result": "equal",
+      "external_clapha_artifact": "unknown",
+      "evidence_level": "static_declaration"
+    },
+    {
+      "field": "runtime_content_version",
+      "comparison_scope": "daybreak manifest vs Nashura supported_engine.json declarations",
+      "daybreak": "15.535.86",
+      "nashura": "15.535.86",
+      "result": "equal",
+      "external_clapha_artifact": "unknown",
+      "evidence_level": "static_declaration"
+    },
+    {
+      "field": "runtime_fingerprint_sha256",
+      "comparison_scope": "daybreak manifest vs Nashura supported_engine.json declarations",
+      "daybreak": "e0cb2fb9eb2fdd0df1afcb00df3e3ba61cf25aa8b24e39c17cc391d952a4e339",
+      "nashura": "e0cb2fb9eb2fdd0df1afcb00df3e3ba61cf25aa8b24e39c17cc391d952a4e339",
+      "result": "equal",
+      "external_clapha_artifact": "unknown",
+      "evidence_level": "static_declaration"
+    },
+    {
+      "field": "apk_sha256",
+      "comparison_scope": "daybreak declaration vs rehashed Nashura experiment APK",
+      "daybreak": "685c115ee432d5fd2d7be856a58ea0cb029c9c187aa9061f3cd250994dfbcf2a",
+      "nashura": "f1ee6d6146efc8c998843958ae0788e5121c265445c0c7ff5ffa2a5202d7dd9b",
+      "result": "different",
+      "external_clapha_artifact": "unknown",
+      "evidence_level": "declaration_vs_local_file"
+    },
+    {
+      "field": "libg_sha256",
+      "comparison_scope": "daybreak declaration vs rehashed Nashura experiment libg",
+      "daybreak": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "nashura": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "result": "equal",
+      "external_clapha_artifact": "unknown",
+      "evidence_level": "declaration_vs_local_file"
+    },
+    {
+      "field": "complete_resource_file_list_and_per_file_sha256",
+      "comparison_scope": "actual clapha artifact vs Nashura experiment",
+      "daybreak": null,
+      "nashura": "Existing Nashura evidence does not supply missing clapha side",
+      "result": "unknown",
+      "evidence_level": "not_observed"
+    },
+    {
+      "field": "exports",
+      "comparison_scope": "actual clapha artifact vs Nashura experiment",
+      "daybreak": null,
+      "nashura": "Existing Nashura evidence does not supply missing clapha side",
+      "result": "unknown",
+      "evidence_level": "not_observed"
+    },
+    {
+      "field": "DT_NEEDED",
+      "comparison_scope": "actual clapha artifact vs Nashura experiment",
+      "daybreak": null,
+      "nashura": "Existing Nashura evidence does not supply missing clapha side",
+      "result": "unknown",
+      "evidence_level": "not_observed"
+    },
+    {
+      "field": "initialization_entry_and_ABI",
+      "comparison_scope": "actual clapha artifact vs Nashura experiment",
+      "daybreak": null,
+      "nashura": "Existing Nashura evidence does not supply missing clapha side",
+      "result": "unknown",
+      "evidence_level": "not_observed"
+    },
+    {
+      "field": "resource_provider_contract",
+      "comparison_scope": "actual clapha artifact vs Nashura experiment",
+      "daybreak": null,
+      "nashura": "Existing Nashura evidence does not supply missing clapha side",
+      "result": "unknown",
+      "evidence_level": "not_observed"
+    },
+    {
+      "field": "configuration_bridge_contract",
+      "comparison_scope": "actual clapha artifact vs Nashura experiment",
+      "daybreak": null,
+      "nashura": "Existing Nashura evidence does not supply missing clapha side",
+      "result": "unknown",
+      "evidence_level": "not_observed"
+    },
+    {
+      "field": "battle_tick_entry_and_ABI",
+      "comparison_scope": "actual clapha artifact vs Nashura experiment",
+      "daybreak": null,
+      "nashura": "Existing Nashura evidence does not supply missing clapha side",
+      "result": "unknown",
+      "evidence_level": "not_observed"
+    },
+    {
+      "field": "snapshot_serialization",
+      "comparison_scope": "actual clapha artifact vs Nashura experiment",
+      "daybreak": null,
+      "nashura": "Existing Nashura evidence does not supply missing clapha side",
+      "result": "unknown",
+      "evidence_level": "not_observed"
+    },
+    {
+      "field": "reset_restore_destroy",
+      "comparison_scope": "actual clapha artifact vs Nashura experiment",
+      "daybreak": null,
+      "nashura": "Existing Nashura evidence does not supply missing clapha side",
+      "result": "unknown",
+      "evidence_level": "not_observed"
+    }
+  ],
+  "local_file_check": {
+    "libg": {
+      "sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "format": "ELF 64-bit LSB shared object, ARM aarch64, SYSV, dynamically linked, stripped",
+      "build_id": "90e6f351f0dec4a28b494c3812d2629fd45d5a83",
+      "file_exit_code": 0
+    },
+    "apk": {
+      "sha256": "f1ee6d6146efc8c998843958ae0788e5121c265445c0c7ff5ffa2a5202d7dd9b",
+      "format": "Zip archive; deflate",
+      "file_exit_code": 0
+    }
+  },
+  "historical_experiment_identity": {
+    "source": "E2.1-K baseline-final/identity-before.json; guest files were not re-collected in this check",
+    "probe_sha256": "84cddf82e866540ff33d4b5f0c6b5b535c8485182e4cc84961028c7a56e65ec4",
+    "fmod_sha256": "299d2a6b03ec865cd9234f4f7484fb7e74928d0180dc6c4b455a8d2b5b54dd45",
+    "apk_index_sha256": "6c9b427faeaba3a83c487754637be0eca7c4ab43516f660e2de813043babd1ed",
+    "update_file_count": 990,
+    "update_manifest_sha256": "2e0df49be42b28e4e0da8f7ead6bd5a57fb7f8aa54b5b9e9e0f51d8086070943",
+    "update_manifest_serialization": "Historical command-sorted listing; not interchangeable with other serialized manifest digests."
+  },
+  "conversion_doc_versions": {
+    "evidence_level": "static_declaration",
+    "minimum_clapha_commit": "ba78ae1",
+    "engine_codes": [
+      150535029,
+      160402002,
+      160402012,
+      160402020
+    ],
+    "data_versions": [
+      "d22jul",
+      "jul6",
+      "d86",
+      "aug26",
+      "d2a",
+      "d2b",
+      "sep17",
+      "oct1",
+      "d19",
+      "d22"
+    ],
+    "actual_selected_engine": "unknown"
+  },
+  "optional_manifest_variant": {
+    "libg_sha256": "f7d55ed36c4c98d6ee104c3ba3f4dccefdcaefb58ca81c667ff3c6dd7d95fb63",
+    "used_by_external_engine": "unknown",
+    "applied_in_this_check": false
+  },
+  "conclusion": "Same declared libg hash is insufficient for resource, runtime, ABI or full version compatibility."
+}

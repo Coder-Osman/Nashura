@@ -1,0 +1,380 @@
+{
+  "schema": "nashura.daybreak-clapha.inventory.v1",
+  "date": "2026-10-27",
+  "status": "BLOCKED_EXTERNAL_DEPENDENCY",
+  "nashura_base_commit": "dba6d81bf8ea58413f83123d0a108955891e0f6b",
+  "branch": "codex/headless-engine-plan-20261025",
+  "daybreak_repository": "https://github.com/Jason-XII/daybreak-cr",
+  "daybreak_commit": "73334a00ee38bab949c5bc88dc133cad42ffd4f4",
+  "host": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "macos_version": "15.6"
+  },
+  "engine_present": false,
+  "engine_present_scope": "No matching external bundle located in accessible searched paths; protected paths remain unknown.",
+  "search": {
+    "search_roots": [
+      "/Users/gujiga",
+      "/workspace",
+      "/opt"
+    ],
+    "combined_exit_code": 1,
+    "combined_stdout": "",
+    "searches": [
+      {
+        "query": "directories",
+        "matches": [],
+        "stderr_lines": 125,
+        "permission_errors": 124,
+        "exit_code": null,
+        "exit_code_scope": "individual exit not captured; combined shell exit 1"
+      },
+      {
+        "query": "archives",
+        "matches": [],
+        "stderr_lines": 125,
+        "permission_errors": 124,
+        "exit_code": null,
+        "exit_code_scope": "individual exit not captured; combined shell exit 1"
+      },
+      {
+        "query": "executables",
+        "matches": [],
+        "stderr_lines": 125,
+        "permission_errors": 124,
+        "exit_code": null,
+        "exit_code_scope": "individual exit not captured; combined shell exit 1"
+      }
+    ],
+    "workspace_exists": false
+  },
+  "search_commands": [
+    "find \"$HOME\" /workspace /opt -type d \\( -name clapha-engine -o -name 'clapha-engine-*' -o -name daybreak-cr -o -name 'daybreak-cr-*' \\) -print",
+    "find \"$HOME\" /workspace /opt -type f \\( -name 'engines-*.tar.zst' -o -name 'data-*.tar.zst' \\) -print",
+    "find \"$HOME\" /workspace /opt -type f -name engine -perm -111 -print"
+  ],
+  "search_limitations": [
+    "Each query produced 124 permission errors and one missing-/workspace error; search overlap must not be summed as distinct inaccessible directories.",
+    "Individual find exit codes were not captured; only combined shell exit 1 is available.",
+    "Name-based search does not exclude renamed or inaccessible bundles."
+  ],
+  "missing": [
+    "Locatable external clapha-engine bundle",
+    "crx/loader.py and crx/env.py with CrxEnv implementation",
+    "engine build/library directory or executable; actual format and architecture",
+    "data/assets and per-file resource identity",
+    "Bundle commit/version manifest, archive SHA256 and build instructions"
+  ],
+  "public_wrapper": {
+    "found": true,
+    "source_only": true,
+    "tree_entries": 103,
+    "blob_entries": 91,
+    "tree_truncated": false,
+    "third_party_code_executed": false,
+    "downloaded_binary": false,
+    "files": {
+      "README.md": {
+        "sha256": "1138e8660d1f8738e7dc8f9dfd9322e5f70544840c6bc30b9dc200d2988562c4",
+        "bytes": 14859
+      },
+      "arena.py": {
+        "sha256": "0a9d899a0a8f7d898e7e390770d2785f8e1215da764a8e7b79c867e43277421c",
+        "bytes": 4972
+      },
+      "assets/engine.json": {
+        "sha256": "46bfbd9dcc1f74e851abfa58a016fb8e393275f09dab5d978349438e68c5eff2",
+        "bytes": 842
+      },
+      "convert.py": {
+        "sha256": "6a3d755dee6a17a89cb59ffbe15eda83f36a7cf669376030e24ee06606f4e94f",
+        "bytes": 55281
+      },
+      "cr/engine.py": {
+        "sha256": "664e23a5f86992d37fcf473bc25f2919138e164a6c662cba8b4d91ac45da7fcb",
+        "bytes": 25169
+      },
+      "docs/CONVERSION.md": {
+        "sha256": "f6fb66b2c5a0d5769abba37706021c8aed6a691eef873f08f9d4f8d718a96d28",
+        "bytes": 7572
+      },
+      "docs/GAME_INTEGRATION.md": {
+        "sha256": "c31c46acbc0b6f67eab515bc8b7f34d5d0b39fc9868565c6299792941a4a9c9e",
+        "bytes": 18697
+      },
+      "docs/THROUGHPUT.md": {
+        "sha256": "94e95da08a7182b641a57d5d4d442a8fdc4003a7fb228e100e1335ea747191c3",
+        "bytes": 7063
+      },
+      "ppo.py": {
+        "sha256": "e6cafcc55ddc464dd08c3d123791613ed685a427decb0dbcff1d6d9b66b4f9a2",
+        "bytes": 39461
+      },
+      "tests/conftest.py": {
+        "sha256": "be72d917ad6c178dc9e51832f28f7f6f72b8fa3ad91cf3ab8ebc55004aecdf79",
+        "bytes": 271
+      },
+      "tests/test_engine.py": {
+        "sha256": "1fe8ae7349407c8a39ccf233550118f3cc65e5ad87cc856cfe9560a214bd5b2e",
+        "bytes": 3782
+      },
+      "vendor/firstlight/supported_engine.json": {
+        "sha256": "6157d9d816eaa4ae6fbbf51b21a51fbbe8ef493c0ac68cfe414ce0302fbafdb9",
+        "bytes": 537
+      }
+    },
+    "collection_commands": [
+      {
+        "label": "file-0",
+        "argv": [
+          "gh",
+          "api",
+          "-H",
+          "Accept: application/vnd.github.raw+json",
+          "repos/Jason-XII/daybreak-cr/contents/README.md?ref=73334a00ee38bab949c5bc88dc133cad42ffd4f4"
+        ],
+        "exit_code": 0,
+        "seconds": 0.73,
+        "output": "daybreak-source/README.md",
+        "sha256": "1138e8660d1f8738e7dc8f9dfd9322e5f70544840c6bc30b9dc200d2988562c4",
+        "bytes": 14859
+      },
+      {
+        "label": "file-1",
+        "argv": [
+          "gh",
+          "api",
+          "-H",
+          "Accept: application/vnd.github.raw+json",
+          "repos/Jason-XII/daybreak-cr/contents/cr/engine.py?ref=73334a00ee38bab949c5bc88dc133cad42ffd4f4"
+        ],
+        "exit_code": 0,
+        "seconds": 0.785,
+        "output": "daybreak-source/cr/engine.py",
+        "sha256": "664e23a5f86992d37fcf473bc25f2919138e164a6c662cba8b4d91ac45da7fcb",
+        "bytes": 25169
+      },
+      {
+        "label": "file-2",
+        "argv": [
+          "gh",
+          "api",
+          "-H",
+          "Accept: application/vnd.github.raw+json",
+          "repos/Jason-XII/daybreak-cr/contents/docs/CONVERSION.md?ref=73334a00ee38bab949c5bc88dc133cad42ffd4f4"
+        ],
+        "exit_code": 0,
+        "seconds": 1.061,
+        "output": "daybreak-source/docs/CONVERSION.md",
+        "sha256": "f6fb66b2c5a0d5769abba37706021c8aed6a691eef873f08f9d4f8d718a96d28",
+        "bytes": 7572
+      },
+      {
+        "label": "file-3",
+        "argv": [
+          "gh",
+          "api",
+          "-H",
+          "Accept: application/vnd.github.raw+json",
+          "repos/Jason-XII/daybreak-cr/contents/docs/GAME_INTEGRATION.md?ref=73334a00ee38bab949c5bc88dc133cad42ffd4f4"
+        ],
+        "exit_code": 0,
+        "seconds": 0.782,
+        "output": "daybreak-source/docs/GAME_INTEGRATION.md",
+        "sha256": "c31c46acbc0b6f67eab515bc8b7f34d5d0b39fc9868565c6299792941a4a9c9e",
+        "bytes": 18697
+      },
+      {
+        "label": "file-4",
+        "argv": [
+          "gh",
+          "api",
+          "-H",
+          "Accept: application/vnd.github.raw+json",
+          "repos/Jason-XII/daybreak-cr/contents/docs/THROUGHPUT.md?ref=73334a00ee38bab949c5bc88dc133cad42ffd4f4"
+        ],
+        "exit_code": 0,
+        "seconds": 0.686,
+        "output": "daybreak-source/docs/THROUGHPUT.md",
+        "sha256": "94e95da08a7182b641a57d5d4d442a8fdc4003a7fb228e100e1335ea747191c3",
+        "bytes": 7063
+      },
+      {
+        "label": "file-5",
+        "argv": [
+          "gh",
+          "api",
+          "-H",
+          "Accept: application/vnd.github.raw+json",
+          "repos/Jason-XII/daybreak-cr/contents/assets/engine.json?ref=73334a00ee38bab949c5bc88dc133cad42ffd4f4"
+        ],
+        "exit_code": 0,
+        "seconds": 0.669,
+        "output": "daybreak-source/assets/engine.json",
+        "sha256": "46bfbd9dcc1f74e851abfa58a016fb8e393275f09dab5d978349438e68c5eff2",
+        "bytes": 842
+      },
+      {
+        "label": "file-6",
+        "argv": [
+          "gh",
+          "api",
+          "-H",
+          "Accept: application/vnd.github.raw+json",
+          "repos/Jason-XII/daybreak-cr/contents/vendor/firstlight/supported_engine.json?ref=73334a00ee38bab949c5bc88dc133cad42ffd4f4"
+        ],
+        "exit_code": 0,
+        "seconds": 0.636,
+        "output": "daybreak-source/vendor/firstlight/supported_engine.json",
+        "sha256": "6157d9d816eaa4ae6fbbf51b21a51fbbe8ef493c0ac68cfe414ce0302fbafdb9",
+        "bytes": 537
+      },
+      {
+        "label": "file-7",
+        "argv": [
+          "gh",
+          "api",
+          "-H",
+          "Accept: application/vnd.github.raw+json",
+          "repos/Jason-XII/daybreak-cr/contents/convert.py?ref=73334a00ee38bab949c5bc88dc133cad42ffd4f4"
+        ],
+        "exit_code": 0,
+        "seconds": 3.156,
+        "output": "daybreak-source/convert.py",
+        "sha256": "6a3d755dee6a17a89cb59ffbe15eda83f36a7cf669376030e24ee06606f4e94f",
+        "bytes": 55281
+      },
+      {
+        "label": "file-8",
+        "argv": [
+          "gh",
+          "api",
+          "-H",
+          "Accept: application/vnd.github.raw+json",
+          "repos/Jason-XII/daybreak-cr/contents/arena.py?ref=73334a00ee38bab949c5bc88dc133cad42ffd4f4"
+        ],
+        "exit_code": 0,
+        "seconds": 0.95,
+        "output": "daybreak-source/arena.py",
+        "sha256": "0a9d899a0a8f7d898e7e390770d2785f8e1215da764a8e7b79c867e43277421c",
+        "bytes": 4972
+      },
+      {
+        "label": "file-9",
+        "argv": [
+          "gh",
+          "api",
+          "-H",
+          "Accept: application/vnd.github.raw+json",
+          "repos/Jason-XII/daybreak-cr/contents/ppo.py?ref=73334a00ee38bab949c5bc88dc133cad42ffd4f4"
+        ],
+        "exit_code": 0,
+        "seconds": 1.097,
+        "output": "daybreak-source/ppo.py",
+        "sha256": "e6cafcc55ddc464dd08c3d123791613ed685a427decb0dbcff1d6d9b66b4f9a2",
+        "bytes": 39461
+      },
+      {
+        "label": "file-10",
+        "argv": [
+          "gh",
+          "api",
+          "-H",
+          "Accept: application/vnd.github.raw+json",
+          "repos/Jason-XII/daybreak-cr/contents/tests/test_engine.py?ref=73334a00ee38bab949c5bc88dc133cad42ffd4f4"
+        ],
+        "exit_code": 0,
+        "seconds": 0.93,
+        "output": "daybreak-source/tests/test_engine.py",
+        "sha256": "1fe8ae7349407c8a39ccf233550118f3cc65e5ad87cc856cfe9560a214bd5b2e",
+        "bytes": 3782
+      },
+      {
+        "label": "file-11",
+        "argv": [
+          "gh",
+          "api",
+          "-H",
+          "Accept: application/vnd.github.raw+json",
+          "repos/Jason-XII/daybreak-cr/contents/tests/conftest.py?ref=73334a00ee38bab949c5bc88dc133cad42ffd4f4"
+        ],
+        "exit_code": 0,
+        "seconds": 1.071,
+        "output": "daybreak-source/tests/conftest.py",
+        "sha256": "be72d917ad6c178dc9e51832f28f7f6f72b8fa3ad91cf3ab8ebc55004aecdf79",
+        "bytes": 271
+      },
+      {
+        "label": "tree",
+        "argv": [
+          "gh",
+          "api",
+          "repos/Jason-XII/daybreak-cr/git/trees/73334a00ee38bab949c5bc88dc133cad42ffd4f4?recursive=1"
+        ],
+        "exit_code": 0,
+        "seconds": 1.103,
+        "output": "daybreak-tree.json",
+        "sha256": "9c735344fb3aea1657220ee63c5e3bd818fecae6eb41cf860e508445009a9082",
+        "bytes": 24837
+      },
+      {
+        "label": "repository",
+        "argv": [
+          "gh",
+          "api",
+          "repos/Jason-XII/daybreak-cr"
+        ],
+        "exit_code": 0,
+        "seconds": 0.879,
+        "output": "daybreak-repository.json",
+        "sha256": "de947558fb036c03eb3c6da7c05007cca6cf78f15749bf87465681a32bc9ffb9",
+        "bytes": 5303
+      },
+      {
+        "label": "clapha-repository",
+        "argv": [
+          "gh",
+          "api",
+          "repos/ClashAlpha/clapha-engine"
+        ],
+        "exit_code": 1,
+        "seconds": 0.642,
+        "output": "clapha-repository-response.json",
+        "sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+        "bytes": 118
+      },
+      {
+        "label": "clapha-release",
+        "argv": [
+          "gh",
+          "api",
+          "repos/ClashAlpha/clapha-engine/releases/tags/conversion-2026-10-24"
+        ],
+        "exit_code": 1,
+        "seconds": 0.655,
+        "output": "clapha-release-response.json",
+        "sha256": "010563d2cfb8f1e87f700936ce59ee3a33364da46e3db41b0049227918ece74d",
+        "bytes": 133
+      }
+    ]
+  },
+  "remote_access": {
+    "repository_http_status": 404,
+    "release_http_status": 404,
+    "interpretation": "Unavailable to the current account during this check; existence is unknown.",
+    "release": "conversion-2026-10-24",
+    "archive_names_declared_in_conversion_doc": [
+      "engines-*.tar.zst",
+      "data-*.tar.zst"
+    ],
+    "release_asset_inventory_verified": false
+  },
+  "external_engine_identity": {
+    "file_type": "unknown",
+    "architecture": "unknown",
+    "sha256": null,
+    "version": null
+  },
+  "evidence_storage": "Raw API responses, stderr and source texts retained in private isolated evidence; not bundled."
+}

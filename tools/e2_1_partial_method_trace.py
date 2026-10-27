@@ -8,22 +8,28 @@ from e2_1_method_trace import ROOT_CLASS, ROOT_METHODS, selected
 from verify_e2_gate import require
 
 
-def parse_partial(raw):
+def parse_partial(raw, root_class=ROOT_CLASS, root_methods=ROOT_METHODS, allow_identical_metadata=False):
     boundary = raw.find(b'*end\n')
     require(boundary >= 0, 'trace text header missing')
     lines = raw[:boundary].decode('utf-8').splitlines()
     require(lines[:2] == ['*version', '3'] and 'data-file-overflow=false' in lines,
             'unsupported or overflowed trace')
     metadata = dict(line.split('=', 1) for line in lines if '=' in line and not line.startswith('0x'))
-    methods = {}
+    methods, metadata_rows, duplicate_rows = {}, {}, 0
     for line in lines[lines.index('*methods') + 1:]:
         fields = line.split('\t')
         require(len(fields) >= 4 and (fields[0].startswith('0x') or fields[0] == '0'),
                 'invalid trace method table')
         identifier = int(fields[0], 0)
-        require(identifier not in methods and identifier & 3 == 0, 'duplicate or unaligned trace method')
+        require(identifier & 3 == 0, 'unaligned trace method')
+        if identifier in methods:
+            require(allow_identical_metadata and metadata_rows[identifier] == fields[1:],
+                    'duplicate or conflicting trace method')
+            duplicate_rows += 1
+            continue
+        metadata_rows[identifier] = fields[1:]
         methods[identifier] = tuple(fields[1:4])
-    require(ROOT_METHODS <= {method[1] for method in methods.values() if method[0] == ROOT_CLASS},
+    require(root_methods <= {method[1] for method in methods.values() if method[0] == root_class},
             'known bridge roots absent from method table')
     binary = raw[boundary + 5:]
     require(len(binary) >= 32, 'short binary header')
@@ -40,7 +46,7 @@ def parse_partial(raw):
         identifier, action = encoded & ~3, encoded & 3
         require(action != 3 and thread > 0, 'unsupported action or thread')
         method = methods.get(identifier)
-        is_root = method is not None and method[0] == ROOT_CLASS and method[1] in ROOT_METHODS
+        is_root = method is not None and method[0] == root_class and method[1] in root_methods
         is_selected = method is not None and selected(method)
         require(not (is_root and action and thread not in active), 'known root exit without entry')
         if method is None:
@@ -76,6 +82,7 @@ def parse_partial(raw):
     require(not active, 'incomplete known root')
     return dict(schema='e2.1-partial-art-summary.v1', trace_sha256=hashlib.sha256(raw).hexdigest(),
                 records=records, roots=roots, selected_counts=dict(sorted(counts.items())),
+                identical_metadata_duplicates=duplicate_rows,
                 unnamed_methods=[dict(identifier=identifier, **row) for identifier, row in sorted(unknown.items())],
                 exhaustive_method_coverage=False,
                 coverage='known method-table roots only; unnamed IDs retain opaque stack identity; semantics unknown',

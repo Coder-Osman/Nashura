@@ -13,6 +13,14 @@ const cold = {armed: false, attempted: false, installed: false, installing: fals
   entries: 0, returns: 0, reentrant_entries: 0, windows: [], external_windows: 0, errors: []};
 const returnSites = new Map();
 const pendingWindows = new Map();
+let pathTraceStarted = false;
+let pathTraceStopped = false;
+
+function beginPathTrace() {
+  if (!settings.pn_path_trace || pathTraceStarted) return;
+  if (invoke('path-trace-start:' + settings.pn_path_trace) !== 'path-trace-started') throw new Error('path trace start receipt differs');
+  pathTraceStarted = true;
+}
 
 function watchReturnSite(address) {
   const site = address.toString();
@@ -29,6 +37,10 @@ function watchReturnSite(address) {
       try {
         window.after = invoke('snapshot');
         window.completion = 'original callsite return instruction';
+        if (settings.pn_path_trace && window.operation === 'write') {
+          if (invoke('path-trace-stop') !== 'path-trace-stopped') throw new Error('path trace stop receipt differs');
+          pathTraceStopped = true;
+        }
       } catch (failure) { cold.errors.push({stage: 'return-site', error: String(failure)}); }
     }
   }));
@@ -142,6 +154,7 @@ function armCold(module) {
           module_base: row.module_base, bridge_event: pnBridge.snapshot().events.length - 1,
           before: invoke('snapshot')};
         cold.windows.push(window);
+        beginPathTrace();
         const stack = pendingWindows.get(row.thread) || [];
         stack.push(window);
         pendingWindows.set(row.thread, stack);
@@ -184,6 +197,7 @@ function armCold(module) {
             caller: this.returnAddress.sub(module.base).toString(), return_site: this.returnAddress.toString(),
             before: invoke('snapshot')};
           cold.windows.push(window);
+          beginPathTrace();
           const stack = pendingWindows.get(window.thread) || [];
           stack.push(window);
           pendingWindows.set(window.thread, stack);
@@ -224,6 +238,10 @@ rpc.exports = {
     }
     if (config.pn_bridge && (config.install_at !== 'first-native-bridge' || config.enable_pn_backend !== true ||
         config.pn_bridge.install_at !== 'first-native-bridge')) throw new Error('explicit cold PN backend required');
+    if (config.pn_path_trace && (config.install_at !== 'first-native-bridge' ||
+        !/^\/data\/user\/0\/nullsroyale[.]rel[.]free\/e21k-[a-z0-9-]+[.]trace$/.test(config.pn_path_trace))) {
+      throw new Error('explicit natural path trace required');
+    }
     settings = config;
     if (config.pn_bridge) pnLibrary = Module.load(config.pn_bridge.library);
     if (config.install_at === 'first-native-bridge') Process.attachModuleObserver({onAdded: armCold});
@@ -244,7 +262,8 @@ rpc.exports = {
     return invoke(operation);
   },
   snapshot() {
-    return {events, cold, references: {allocated_globals: allocatedGlobals, deleted_globals: deletedGlobals, retired},
+    return {events, cold, path_trace: {started: pathTraceStarted, stopped: pathTraceStopped},
+      references: {allocated_globals: allocatedGlobals, deleted_globals: deletedGlobals, retired},
       scope: settings && settings.install_at === 'first-native-bridge'
         ? (settings.pn_bridge ? 'cold PN replacement at original callsites; original Java persistence retained'
           : 'original libg PN_POPUP bridge callsites after first native bridge; earlier Java accesses and external direct probes unobserved')

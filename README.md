@@ -4,6 +4,22 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+2026-10-27 E2.1-K续验：恢复自然冷启动PN原生派生/AES集成，保留Java身份、
+原store构造、XML/backup及VM。四进程各3602快照/28动作全字节一致；两替换
+自然读写、真实commit、原Java及跨进程读回一致，各133次非PN fallback保留。
+14707附件限定验证exit0，E2回归338 passed/278 skipped；strict仍BLOCKED，46键移除0。
+具名raw根内Cipher零不代表全局零：全局262次，8个opaque method IDs仍unknown。
+独占实例已回收；无no-VM、Android-free、训练或10×声明。
+见[E2.1-K报告](agent-handoff/E2_1K_NATURAL_PN_NATIVE_CODEC_2026-10-27.md)。
+以下为历史阶段记录，保留当时边界。
+
+2026-10-27 daybreak/clapha交叉核验：当时暂停E2.1-K，状态BLOCKED_EXTERNAL_DEPENDENCY。
+可访问范围未定位外部bundle；受限目录仍unknown。公开wrapper已固定源码身份，
+clapha仓库/release当前账号访问均HTTP404；同libg声明不代表完整版本兼容，
+实际Nashura APK与daybreak声明不同。未执行导入、最小原生运行或轨迹比较。
+见[交叉核验报告](agent-handoff/DAYBREAK_CLAPHA_CROSSCHECK_2026-10-27.md)。
+以下为历史阶段记录，保留当时边界。
+
 2026-10-27 E2.1-J续验：显式App身份输入的原生派生与host/guest/hashlib及原双store
 Cipher差分一致，两次各40项对照和5项负测通过。三独立进程各3602快照/28动作全字节一致。
 矩阵在完整轨迹后执行，原初始化、Java身份获取、Cipher/XML writer及VM保留。
