@@ -1,0 +1,354 @@
+{
+  "schema": "e2.1b-public-evidence.v1",
+  "status": "bounded_evidence_verified",
+  "strict_gate": "BLOCKED",
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false,
+  "pn_native_replacement": false,
+  "removed_keys": 0,
+  "runs": [
+    {
+      "run": "baseline",
+      "mode": "original",
+      "comparison": {
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440
+      },
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "resource_platform_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0,
+      "jni_samples_dropped": 55770,
+      "exhaustive_jni_arguments": false
+    },
+    {
+      "run": "series-1-original",
+      "mode": "original",
+      "comparison": {
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440
+      },
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "resource_platform_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0,
+      "jni_samples_dropped": 64773,
+      "exhaustive_jni_arguments": false,
+      "pn_sequence": {
+        "trace_sha256": "215cd072b9953a112aa87005b0278baafbfe5afcf250552755e11878fd43ad8b",
+        "records": 53577,
+        "cases": [
+          {
+            "case": "normal_repeat",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "changed_write",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "changed_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "same_write",
+            "operation": "write",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "empty_write",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "empty_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "restore",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "restored_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "prepare_fresh",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "prepared_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          }
+        ],
+        "commit_return_value": "unknown",
+        "power_loss_durability": "unknown"
+      }
+    },
+    {
+      "run": "series-2-shadow",
+      "mode": "shadow",
+      "comparison": {
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440
+      },
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "resource_platform_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0,
+      "jni_samples_dropped": 64788,
+      "exhaustive_jni_arguments": false,
+      "fallback_calls_including_probes": 110,
+      "targeted_reads": 32,
+      "targeted_writes": 4,
+      "pn_sequence": {
+        "trace_sha256": "28691fab4f99e9d657cfb66eb8a5646106dcff4b05f2e083d7f5bb5cdf34fe77",
+        "records": 40229,
+        "cases": [
+          {
+            "case": "normal_repeat",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "changed_write",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "changed_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "same_write",
+            "operation": "write",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "empty_write",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "empty_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "restore",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "restored_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          }
+        ],
+        "commit_return_value": "unknown",
+        "power_loss_durability": "unknown"
+      },
+      "fresh_process_prepared_read_and_increment": "verified"
+    },
+    {
+      "run": "series-3-replacement",
+      "mode": "replacement",
+      "comparison": {
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440
+      },
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "resource_platform_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0,
+      "jni_samples_dropped": 57904,
+      "exhaustive_jni_arguments": false,
+      "fallback_calls_including_probes": 110,
+      "targeted_reads": 32,
+      "targeted_writes": 4,
+      "pn_sequence": {
+        "trace_sha256": "d3de45387ef596ba146a0a03d3c5506a24c25a295be84a18c527b2cfafb53d48",
+        "records": 40071,
+        "cases": [
+          {
+            "case": "normal_repeat",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "changed_write",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "changed_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "same_write",
+            "operation": "write",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "empty_write",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "empty_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "restore",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "restored_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          }
+        ],
+        "commit_return_value": "unknown",
+        "power_loss_durability": "unknown"
+      }
+    },
+    {
+      "run": "series-4-strict-targeted",
+      "mode": "strict-targeted",
+      "comparison": {
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440
+      },
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "resource_platform_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0,
+      "jni_samples_dropped": 58307,
+      "exhaustive_jni_arguments": false,
+      "fallback_calls_including_probes": 110,
+      "targeted_reads": 32,
+      "targeted_writes": 4,
+      "pn_sequence": {
+        "trace_sha256": "acbe61e0281f090d17ca6ef6a0780cf2f4b5d555503dd38af78edf773fc41ace",
+        "records": 40009,
+        "cases": [
+          {
+            "case": "normal_repeat",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "changed_write",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "changed_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "same_write",
+            "operation": "write",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "empty_write",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "empty_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          },
+          {
+            "case": "restore",
+            "operation": "write",
+            "commits": 2,
+            "completion": "returned"
+          },
+          {
+            "case": "restored_read",
+            "operation": "read",
+            "commits": 0,
+            "completion": "returned"
+          }
+        ],
+        "commit_return_value": "unknown",
+        "power_loss_durability": "unknown"
+      }
+    }
+  ],
+  "source_apk_sha256": "f1ee6d6146efc8c998843958ae0788e5121c265445c0c7ff5ffa2a5202d7dd9b",
+  "installed_dex_sha256": "ef1ac708f6e836daa925afc50d3bf3b139213b3a72323a354cc2e9493b50f608",
+  "concurrent": {
+    "workers": 2,
+    "write_calls": 8,
+    "read_calls": 8,
+    "commit_calls": 0,
+    "overlapping_java_root_pairs": 6
+  },
+  "concurrent_trace_sha256": "683b91284b412b34cbf2ef0778e514b6e810a94f3b29ae44012dde001f7c8158",
+  "concurrency_scope": "same saved value only; different-value races and general thread safety unknown",
+  "trace_scope": "explicit post-cold-ready probe windows; not natural cold-start or complete-battle Java traces",
+  "evidence_scope": "private attachments required for native revalidation; public summary is not raw evidence",
+  "private_manifest_sha256": "8c6b5ee1a7c87e362f157607365e8b6a637531ed6c91b4ffb108ce11a1221ded",
+  "private_attachment_count": 21861
+}

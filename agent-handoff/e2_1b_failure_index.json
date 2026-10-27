@@ -1,0 +1,18 @@
+{
+  "schema": "e2.1b-public-failure-index.v1",
+  "historical_evidence_preserved": true,
+  "records": [
+    {"id": "method-id-zero", "observed": "ART method table used literal 0 instead of 0x0", "exit_code": null, "evidence": "tool output retained; standalone exit code not recorded", "resolution": "accept literal zero and test it"},
+    {"id": "python-module-shadow", "observed": "private script named concurrent.py shadowed concurrent.futures", "exit_code": null, "evidence": "tool output retained; standalone exit code not recorded", "resolution": "use run_pn_threads.py"},
+    {"id": "helper-mmap-denied", "observed": "SELinux rejected helper mapping from temporary directory", "exit_code": null, "evidence": "failed tool output retained; no security setting changed", "resolution": "add owned helper to independent clone native library directory; original libraries unchanged"},
+    {"id": "ledger-syntax", "observed": "initial removability builder had an extra parenthesis", "exit_code": null, "evidence": "tool output retained; standalone exit code not recorded", "resolution": "syntax corrected before native evidence verification"},
+    {"id": "fresh-process-observer-layer", "observed": "initial validator expected bridge attach events that replacement intentionally disables", "exit_code": 1, "initial_private_manifest_sha256": "c4ae2579cb95c9c5e907958f58b993e439f1f3487f05a7c415c07f07e0e59b47", "resolution": "validate wrapper values/order separately from matching-thread constructor fallback dispatch; do not align observer sequences"},
+    {"id": "fetch-http2", "observed": "git fetch reported fatal HTTP2 transport failure", "exit_code": null, "evidence": "shell final status was zero; git standalone status not captured", "resolution": "retry with per-command HTTP1.1; exit 0; no global Git configuration change"},
+    {"id": "export-static-label", "observed": "allowlist rejected a real dotted static configuration key", "exit_code": 1, "log_sha256": "9ec423c36200fff996f78c6643708ed10d5b62886de855d681395324b84decde", "result": "1 failed, 64 passed", "resolution": "accept dotted static labels, retain path rejection, add regression; 65 passed, exit 0"},
+    {"id": "strict-gate-unresolved", "observed": "strict E2.1 gate remains blocked by unresolved semantics", "exit_code": 2, "receipt_sha256": "58105bfb230c07808f0a55194c6b949a8915d2c699d71d0ebb34f13d269d30d4", "resolution": "not resolved; bounded verifier is a separate gate"}
+  ],
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false
+}

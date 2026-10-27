@@ -1,5 +1,23 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-B PN同步提交路径与46键可移除性边界
+
+五个独立原生进程各3602快照/9120440bytes、28动作、终局及snapshot/restore/reset一致。
+当前APK的DEX与旧分析DEX不同；使用匹配版本定位双store、Cipher、按变化同步commit。
+显式Java窗口观察变化/空值/恢复各两次commit、同值零次，fresh-process自然读回并加一。
+双线程同值probe8写8读、6对Java root重叠，未证明不同值竞争或完整线程安全。
+
+新账本将46键保守路由required与战斗必需性分开：必需性/可移除性全部unknown，未移除键。
+本轮fallback110=99自然+11显式probe；减少不代表剥离依赖。PN仍原JNI；commit boolean、
+写失败、close/free、引用退休及初始化对象ABI未闭合。JNI采样不穷尽、两个stub仍未覆盖。
+21,861附件限定验证exit0；旧E2.1严格门重验exit2，不混淆两个门。
+
+真实附件专项65 passed/7.99s、主工程211 passed/41.29s、公开主组794 passed/27 skipped
+及八专项exit0；JS与NDK严格编译通过。首次脱敏器键名拒收保留，回归通过。
+独占实例回收、监听0、历史adb身份不变。未启动no-VM、Android-free、训练、G0/G1或10×。
+见agent-handoff/E2_1B_REMOVABILITY_PN_SEMANTICS_2026-10-27.md、CODEX_REPLY_2026-10-27_E2_1B.md
+及e2_1b_*.json；公开摘要不包含原始私有附件。
+
 ## 2026-10-27 E2.1配置语义限定续验
 
 46个排除键与99次历史自然fallback已逐项建账，全部required、尚未新增replacement。

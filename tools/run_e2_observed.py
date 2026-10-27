@@ -6,12 +6,31 @@ import json
 from pathlib import Path
 import socket
 import subprocess
+import sys
 import time
 import traceback
 
 
 def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def traced_probe(operation, oracle, collect, save):
+    if oracle is None:
+        return operation()
+    oracle.start()
+    try:
+        return operation()
+    finally:
+        original_failure = sys.exc_info()[1]
+        try:
+            oracle.stop()
+            collect()
+        except BaseException as failure:
+            save('java-trace-cleanup-failure.json', dict(error=str(failure),
+                 original_error=str(original_failure) if original_failure else None))
+            if original_failure is None:
+                raise
 
 
 def run(config_path, output):
@@ -135,6 +154,8 @@ def run(config_path, output):
             raise RuntimeError('cold ready not reached')
         save('cold-ready.json', status)
         thread_inventory(pid, 'cold-ready')
+        if config.get('java_oracle'):
+            create('java-oracle', 'e2_1_java_oracle.js', config['java_oracle'])
         if config.get('semantics_probe'):
             create('semantics', 'e2_1_config_probe.js', config['semantics_probe'])
             save('semantics-cold.json', scripts['semantics'].exports_sync.batch([
@@ -171,7 +192,12 @@ def run(config_path, output):
             save('semantics-terminal-reset.json', scripts['semantics'].exports_sync.batch([
                 dict(case='after_terminal_reset', operation='read', key='PN_POPUP')]))
             if config.get('semantics_cases'):
-                save('semantics-cases.json', scripts['semantics'].exports_sync.batch(config['semantics_cases']))
+                oracle = scripts['java-oracle'].exports_sync if 'java-oracle' in scripts else None
+                traced_probe(
+                    lambda: save('semantics-cases.json', scripts['semantics'].exports_sync.batch(config['semantics_cases'])),
+                    oracle,
+                    lambda: command('pull', config['java_oracle']['trace_path'], str(output / 'java-methods.trace')),
+                    save)
         if config.get('string_lifecycle_probe'):
             create('string-lifecycle', 'e2_1_string_lifecycle.js', config['string_lifecycle_probe'])
             save('string-lifecycle.json', scripts['string-lifecycle'].exports_sync.run())

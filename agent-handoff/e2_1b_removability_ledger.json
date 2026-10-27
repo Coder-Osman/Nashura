@@ -1,0 +1,2217 @@
+{
+  "schema": "e2.1b-public-removability.v1",
+  "excluded_keys": 46,
+  "natural_bridge_calls": 99,
+  "explicit_probe_calls": 3,
+  "classification_counts": {
+    "unknown": 46
+  },
+  "rows": [
+    {
+      "key": "PN_POPUP",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 1,
+        "PreferenceNativeWriteBridge": 1
+      },
+      "callers": [
+        "libg.so+0x1394198",
+        "libg.so+0x13942f0"
+      ],
+      "phases": [
+        "cold_ready_wait",
+        "configuration"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        13905,
+        76136
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0x76cae0",
+          "thread": 5153,
+          "sequence": 13903,
+          "phase": "configuration",
+          "phase_chain": [
+            "preinit",
+            "configuration"
+          ]
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0x76cfcc",
+          "thread": 5153,
+          "sequence": 76134,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_STAGE27",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        15312,
+        77612
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 15310,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 77610,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_PROD",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        15433,
+        77733
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 15431,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 77731,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION4",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        15554,
+        77854
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 15552,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 77852,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_CONTENT_STAGE",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        15675,
+        77975
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 15673,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 77973,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_DEV",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        15796,
+        78096
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 15794,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 78094,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_1",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        15917,
+        78217
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 15915,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 78215,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_2",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        16038,
+        78338
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 16036,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 78336,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_3",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        16159,
+        78459
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 16157,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 78457,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_BRANCH_STAGE",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        16280,
+        78580
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 16278,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 78578,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_4",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        16401,
+        78701
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 16399,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 78699,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_CN",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        16522,
+        78822
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 16520,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 78820,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_STAGE_CN",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        16643,
+        78943
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 16641,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 78941,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_STAGE_GOV_CN",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        16764,
+        79064
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 16762,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 79062,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_PROD_CN",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        16885,
+        79185
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 16883,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 79183,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_5",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        17006,
+        79306
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 17004,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 79304,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_6",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        17127,
+        79427
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 17125,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 79425,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_7",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        17248,
+        79548
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 17246,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 79546,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_8",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        17369,
+        79669
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 17367,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 79667,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_9",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        17490,
+        79790
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 17488,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 79788,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_10",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        17611,
+        79911
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 17609,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 79909,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_LOC_TEST",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        17732,
+        80032
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 17730,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 80030,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_AUTO_TEST",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        17853,
+        80153
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 17851,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 80151,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_11",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        17974,
+        80274
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 17972,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 80272,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_12",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        18095,
+        80395
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 18093,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 80393,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_13",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        18216,
+        80516
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 18214,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 80514,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_14",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        18337,
+        80637
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 18335,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 80635,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_15",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        18458,
+        80758
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 18456,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 80756,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_TITAN_LATEST",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        18579,
+        80879
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 18577,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 80877,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_TITAN_DEV",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        18700,
+        81000
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 18698,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 80998,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_16",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        18821,
+        81121
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 18819,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 81119,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_17",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        18942,
+        81244
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 18940,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 81242,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Pass_INTEGRATION_EXT_18",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 2
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        19063,
+        81365
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 19061,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xadb598",
+          "thread": 5153,
+          "sequence": 81363,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "CachedLocation",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 1,
+      "operations": {
+        "PreferenceNativeReadBridge": 1
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        19443
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0x759984",
+          "thread": 5153,
+          "sequence": 19441,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "GameSCIDSocial",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 1,
+      "operations": {
+        "PreferenceNativeWriteBridge": 1
+      },
+      "callers": [
+        "libg.so+0x13942f0"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        19564
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xba5f64",
+          "thread": 5153,
+          "sequence": 19562,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "INSTALL_ID",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 1,
+      "operations": {
+        "PreferenceNativeReadBridge": 1
+      },
+      "callers": [
+        "libg.so+0x1394198"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        19763
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0x14336c8",
+          "thread": 5153,
+          "sequence": 19761,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "SCID_PROD_ACCOUNTS",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 1,
+      "operations": {
+        "PreferenceNativeReadBridge": 1
+      },
+      "callers": [
+        "libg.so+0x1394198"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        19880
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0x14336c8",
+          "thread": 5153,
+          "sequence": 19878,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "SCID_PROD_DEBUG_FAIL_ALL_API_CALLS",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 1,
+      "operations": {
+        "PreferenceNativeReadBridge": 1
+      },
+      "callers": [
+        "libg.so+0x1394198"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        20001
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0x14336c8",
+          "thread": 5153,
+          "sequence": 19999,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "SCID_PROD_CURRENT_ACCOUNT_SUPERCELL_ID",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 1,
+      "operations": {
+        "PreferenceNativeReadBridge": 1
+      },
+      "callers": [
+        "libg.so+0x1394198"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        20474
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0x14336c8",
+          "thread": 5153,
+          "sequence": 20472,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "SCID_PROD_CURRENT_ACCOUNT_EMAIL",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 1,
+      "operations": {
+        "PreferenceNativeReadBridge": 1
+      },
+      "callers": [
+        "libg.so+0x1394198"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        20649
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0x14336c8",
+          "thread": 5153,
+          "sequence": 20647,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "ClanChatLastReadH",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 1,
+      "operations": {
+        "PreferenceNativeReadBridge": 1
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        21495
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0x935abc",
+          "thread": 5153,
+          "sequence": 21493,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "SCID_PROD_HAS_USED_SUPERCELL_ACCOUNT",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 1,
+      "operations": {
+        "PreferenceNativeReadBridge": 1
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        21923
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0x143392c",
+          "thread": 5153,
+          "sequence": 21921,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "titan.installevent",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 1,
+      "operations": {
+        "PreferenceNativeReadBridge": 1
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        22062
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0x1385e24",
+          "thread": 5153,
+          "sequence": 22060,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "LOADING_SCREEN_STATE_COUNT",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 2,
+      "operations": {
+        "PreferenceNativeReadBridge": 1,
+        "PreferenceNativeWriteBridge": 1
+      },
+      "callers": [
+        "libg.so+0x13941fc",
+        "libg.so+0x13942f0"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        23804,
+        38239
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xc8ecfc",
+          "thread": 5153,
+          "sequence": 23802,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0xc8ed10",
+          "thread": 5153,
+          "sequence": 23924,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8edd0",
+          "thread": 5153,
+          "sequence": 38237,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "LOADING_SCREEN_STATE_LABEL",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 20,
+      "operations": {
+        "PreferenceNativeReadBridge": 1,
+        "PreferenceNativeWriteBridge": 19
+      },
+      "callers": [
+        "libg.so+0x13941fc",
+        "libg.so+0x13942f0"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153,
+        5247
+      ],
+      "source_sequences": [
+        23928,
+        26118,
+        27563,
+        28666,
+        29631,
+        31180,
+        32822,
+        34635,
+        35782,
+        36854,
+        39221,
+        40174,
+        41020,
+        63402,
+        64426,
+        65481,
+        69891,
+        74740,
+        75445,
+        76921
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0xc8ed3c",
+          "thread": 5153,
+          "sequence": 23926,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0xc8ed50",
+          "thread": 5153,
+          "sequence": 24069,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8ef14",
+          "thread": 5153,
+          "sequence": 26116,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8f014",
+          "thread": 5153,
+          "sequence": 27561,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8f124",
+          "thread": 5153,
+          "sequence": 28664,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8f168",
+          "thread": 5153,
+          "sequence": 29629,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc91530",
+          "thread": 5153,
+          "sequence": 31178,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc916cc",
+          "thread": 5153,
+          "sequence": 32820,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8f194",
+          "thread": 5153,
+          "sequence": 34633,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8f25c",
+          "thread": 5153,
+          "sequence": 35780,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8f4a0",
+          "thread": 5153,
+          "sequence": 36852,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8edfc",
+          "thread": 5153,
+          "sequence": 39219,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8ee28",
+          "thread": 5153,
+          "sequence": 40172,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8ee4c",
+          "thread": 5153,
+          "sequence": 41018,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc91938",
+          "thread": 5247,
+          "sequence": 63400,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8f680",
+          "thread": 5247,
+          "sequence": 64424,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8f7d0",
+          "thread": 5247,
+          "sequence": 65479,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc8344c",
+          "thread": 5153,
+          "sequence": 69889,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc906c8",
+          "thread": 5153,
+          "sequence": 74738,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xc907cc",
+          "thread": 5153,
+          "sequence": 75443,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceWrite",
+          "caller": "libg.so+0xadcc9c",
+          "thread": 5153,
+          "sequence": 76919,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    },
+    {
+      "key": "Lng",
+      "containment_policy": "retain original route",
+      "historical_replacement_class": "required",
+      "battle_necessity": "unknown",
+      "removability": "unknown",
+      "removal_intervention": "not performed",
+      "natural_bridge_calls": 1,
+      "operations": {
+        "PreferenceNativeReadBridge": 1
+      },
+      "callers": [
+        "libg.so+0x13941fc"
+      ],
+      "phases": [
+        "cold_ready_wait"
+      ],
+      "threads": [
+        5153
+      ],
+      "source_sequences": [
+        27436
+      ],
+      "wrapper_observations": [
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0x76d008",
+          "thread": 5153,
+          "sequence": 27434,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0xc8ef30",
+          "thread": 5153,
+          "sequence": 27559,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0x76d008",
+          "thread": 5153,
+          "sequence": 32761,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0xc91564",
+          "thread": 5153,
+          "sequence": 32763,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0x76d008",
+          "thread": 5153,
+          "sequence": 66331,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0xc93eb4",
+          "thread": 5153,
+          "sequence": 66333,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0x76d008",
+          "thread": 5153,
+          "sequence": 66401,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0xc9407c",
+          "thread": 5153,
+          "sequence": 66403,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0x76d008",
+          "thread": 5153,
+          "sequence": 75435,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0xadb9c0",
+          "thread": 5153,
+          "sequence": 75437,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceExists",
+          "caller": "libg.so+0x76d008",
+          "thread": 5153,
+          "sequence": 75439,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        },
+        {
+          "operation": "PreferenceRead",
+          "caller": "libg.so+0xadba88",
+          "thread": 5153,
+          "sequence": 75441,
+          "phase": "cold_ready_wait",
+          "phase_chain": []
+        }
+      ],
+      "interpretation": "host phase and callsite observations; consumer semantics and removal effects unknown"
+    }
+  ],
+  "counting": "native bridge layer only; wrapper and JNI aliases are nonadditive",
+  "inference_limit": "finite fixed trajectory; observed reachability is not necessity or removability",
+  "no_vm_verified": false,
+  "training_admissible": false
+}
