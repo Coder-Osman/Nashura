@@ -1,5 +1,20 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：历史padding序列与store0参考
+
+v106两份历史原版归档各两个新ARM64/Bionic子进程，四条返回码/长度/字节/canary全匹配：
+成功16、失败输出0、成功32、成功16。expected只取原版result，缺原始ciphertext的归档显式拒收。
+XML原字节恢复为[true,false]，解析条目恢复；不宣称全部字节恢复。
+v107从原版历史身份记录绑定store0，两份参考各两个child、每child30条正常KEY/ENC/DEC全匹配。
+各187输入未变、9实际映射核验，均未重新加载libg。保留首次缺input失败、store参数遮蔽测试失败
+及宿主OpenSSL3异常后字节差异。当前身份、Java字符串全域、storage/commit/backup仍未闭合，
+严格catalog仍false、ResourceManager BLOCKED，GameState/真实Step/完整局/Android逐tick对照NOT_RUN。
+v108独立副本专项378通过/1跳过、主工程211通过、公开九组1,104通过/42跳过，均exit0；
+集合不累加，248份工作树历史XML与HEAD逐字节一致。
+实际命令与本轮隔离回归见[报告](../agent-handoff/PURE_LINUX_PREFERENCE_SEQUENCE_2026-10-28.md)、
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_PREFERENCE_SEQUENCE.md)及
+[机器证据](../agent-handoff/pure-linux-preference-sequence-evidence-20261028.json)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：持久Cipher及历史原版正常字节
 
 新增SHA绑定的p身份静态提取、三持久EVP上下文及历史original参考胶囊工具。

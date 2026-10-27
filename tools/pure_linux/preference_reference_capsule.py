@@ -14,7 +14,9 @@ TEXTS = ["", "a", "b" * 15, "c" * 16, "d" * 17, "中文", "🙂",
          'line\n<>&"', "x" * 255, "z" * 4095]
 
 
-def build(document, key, iv):
+def build(document, key, iv, store=1):
+    if type(store) is not int or store not in (0, 1):
+        raise ValueError("explicit historical store0 or store1 required")
     if len(key) != 32 or len(iv) != 16:
         raise ValueError("explicit AES256 key and IV required")
     if (document.get("schema") != "e2.1j-derivation-matrix.v1" or
@@ -49,11 +51,11 @@ def build(document, key, iv):
         raise ValueError("complete bounded historical matrix required")
     selected = {}
     for row in rows:
-        store, ordinal, purpose = row["store"], row["ordinal"], row["purpose"]
-        if (type(store) is not int or store not in (0, 1) or type(ordinal) is not int or
+        row_store, ordinal, purpose = row["store"], row["ordinal"], row["purpose"]
+        if (type(row_store) is not int or row_store not in (0, 1) or type(ordinal) is not int or
                 not 0 <= ordinal < len(TEXTS) or purpose not in ("key", "value")):
             raise ValueError("unknown historical case")
-        identity = (store, ordinal, purpose)
+        identity = (row_store, ordinal, purpose)
         if identity in selected:
             raise ValueError("duplicate historical case")
         encrypted = base64.b64decode(row["original"], validate=True)
@@ -64,8 +66,8 @@ def build(document, key, iv):
     records = []
     for ordinal, text in enumerate(TEXTS):
         plain = text.encode("utf-8")
-        encoded_key = selected[1, ordinal, "key"]
-        encoded_value = selected[1, ordinal, "value"]
+        encoded_key = selected[store, ordinal, "key"]
+        encoded_value = selected[store, ordinal, "value"]
         records.extend([(0, plain, encoded_key), (1, plain, encoded_value), (2, encoded_value, plain)])
     capsule = b"NCR1" + key + iv + struct.pack("<I", len(records))
     for operation, input_bytes, expected in records:
@@ -80,6 +82,7 @@ def main():
         parser.add_argument("--" + name, required=True, type=Path)
         parser.add_argument("--" + name + "-sha256", required=True)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--store", type=int, choices=(0, 1), default=1)
     args = parser.parse_args()
     inputs = {}
     for name in names:
@@ -87,7 +90,7 @@ def main():
         if hashlib.sha256(data).hexdigest() != getattr(args, name.replace("-", "_") + "_sha256"):
             raise ValueError("reviewed private input identity differs")
         inputs[name] = data
-    capsule = build(json.loads(inputs["reference"]), inputs["key"], inputs["iv"])
+    capsule = build(json.loads(inputs["reference"]), inputs["key"], inputs["iv"], args.store)
     if any(getattr(args, name.replace("-", "_")).read_bytes() != data for name, data in inputs.items()):
         raise ValueError("private input changed")
     args.output.mkdir(mode=0o700, exist_ok=False)
@@ -97,7 +100,8 @@ def main():
                "matrix_source_sha256": args.matrix_source_sha256, "texts_source_sha256": args.texts_source_sha256,
                "capsule_sha256": hashlib.sha256(capsule).hexdigest(), "inputs_unchanged": True,
                "source": "historical original field; native field never used",
-               "scope": "store1 p; reviewed normal-path historical Cipher bytes only",
+               "store": args.store,
+               "scope": "store%d; reviewed normal-path historical Cipher bytes only" % args.store,
                "runtime_binding": "UNRESOLVED", "storage_and_backup": "UNRESOLVED"}
     private_write(args.output / "result.json", (json.dumps(summary, indent=2) + "\n").encode())
     return 0

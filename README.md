@@ -4,6 +4,16 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+## 2026-10-28 E2.1-N：历史异常恢复与store0字节对照
+
+store1四步padding异常/恢复序列在两份历史原版参考上逐字节匹配；
+找到原版历史身份采集记录，store0两份参考各两个ARM64/Bionic子进程、每child30条全匹配。
+各187输入未变，本阶段未重新加载libg。XML解析内容恢复不等于整份原字节恢复。
+隔离专项378通过/1跳过、主工程211通过、公开九组1,104通过/42跳过，三组分别记录。
+当前身份、完整异常及storage/backup仍UNRESOLVED，严格catalog保持 **BLOCKED**，
+GameState和真实Step仍NOT_RUN。详见[报告](agent-handoff/PURE_LINUX_PREFERENCE_SEQUENCE_2026-10-28.md)
+和[机器证据](agent-handoff/pure-linux-preference-sequence-evidence-20261028.json)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：持久Cipher与历史正常路径对照
 
 新增持久AES候选、SHA绑定的身份提取及私有参考工具；两个新ARM64/Bionic子进程

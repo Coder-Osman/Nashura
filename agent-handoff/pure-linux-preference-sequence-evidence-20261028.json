@@ -1,0 +1,913 @@
+{
+  "schema": "nashura.pure-linux.preference-sequence-evidence.v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "baseline_commit": "479280d9a17db0a059b9e424b57aab52fb16d0ba",
+  "scope": "historical store1 padding recovery and historical store0 normal bytes only",
+  "environment": {
+    "host": "Darwin ARM64",
+    "guest": "existing Ubuntu ARM64",
+    "python": "3.13",
+    "android_started": false,
+    "libg_loaded_this_stage": false,
+    "vm_configuration_changed": false
+  },
+  "protected_libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "experiments": {
+    "v106-original-stream-diff-3": {
+      "machine": "aarch64",
+      "kernel": "6.8.0-138-generic",
+      "input_count": 187,
+      "inputs_unchanged": true,
+      "repeat_equal": true,
+      "probe_sha256": "bec1a6b3abc581ddefce31e6815c9fe7b9c464a957ebb126cb486293ea7f0399",
+      "catalog_ready_pass": false,
+      "receipt": {
+        "archive": "v106-padding-sequence-8m4juu6k/original-stream-diff-3/result.json",
+        "sha256": "794d464363925cd9995337da03c719e38ca49902a2db6bd54c616a780f9e572a"
+      },
+      "runs": [
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "passed": true,
+          "assertion_summary": {
+            "rows": [
+              {
+                "result": 0,
+                "length": 16,
+                "expected_length": 16,
+                "matched": true,
+                "output_guard": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "expected_length": 0,
+                "matched": true,
+                "output_guard": true
+              },
+              {
+                "result": 0,
+                "length": 32,
+                "expected_length": 32,
+                "matched": true,
+                "output_guard": true
+              },
+              {
+                "result": 0,
+                "length": 16,
+                "expected_length": 16,
+                "matched": true,
+                "output_guard": true
+              }
+            ],
+            "status": "PASS",
+            "records": 4,
+            "libg_loaded": false,
+            "scope": "historical_store1_padding_sequence_bytes_only"
+          },
+          "stdout_sha256": "0ce5ebdc6f5e63e33ffeb2ebd350a5e5ba3f439cbee126393646b50777c31282",
+          "stderr_sha256": "8f8a5bf20e94a597e1180fb9ba254d611ab1420ad6404b667f19d25cc69f2014",
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "bec1a6b3abc581ddefce31e6815c9fe7b9c464a957ebb126cb486293ea7f0399"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ],
+          "evidence_error_count": 0
+        },
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "passed": true,
+          "assertion_summary": {
+            "rows": [
+              {
+                "result": 0,
+                "length": 16,
+                "expected_length": 16,
+                "matched": true,
+                "output_guard": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "expected_length": 0,
+                "matched": true,
+                "output_guard": true
+              },
+              {
+                "result": 0,
+                "length": 32,
+                "expected_length": 32,
+                "matched": true,
+                "output_guard": true
+              },
+              {
+                "result": 0,
+                "length": 16,
+                "expected_length": 16,
+                "matched": true,
+                "output_guard": true
+              }
+            ],
+            "status": "PASS",
+            "records": 4,
+            "libg_loaded": false,
+            "scope": "historical_store1_padding_sequence_bytes_only"
+          },
+          "stdout_sha256": "0ce5ebdc6f5e63e33ffeb2ebd350a5e5ba3f439cbee126393646b50777c31282",
+          "stderr_sha256": "8f8a5bf20e94a597e1180fb9ba254d611ab1420ad6404b667f19d25cc69f2014",
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "bec1a6b3abc581ddefce31e6815c9fe7b9c464a957ebb126cb486293ea7f0399"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ],
+          "evidence_error_count": 0
+        }
+      ],
+      "material_receipt": {
+        "archive": "v106-padding-sequence-8m4juu6k/original-stream-diff-3/material/result.json",
+        "sha256": "13961e3ef20b3fb852f693ae4da8c0fbbf4f9b3b5a78c5265de4cf934dbe9e79"
+      },
+      "material": {
+        "reference_sha256": "484100a23b1bf5126e0b40424cbe597f5169b8514b9d9732f2c97295732353d5",
+        "observer_sha256": "833ccb595fa664df9f5249e9ced3bb201a0e1f99f18898590edf8b72ec1bd1e5",
+        "matrix_source_sha256": "10495fd372cfbe341df5aa607f61b3e6254b919dae4818082ddb549c75304e3c",
+        "capsule_sha256": "5d868b8a45eba1f8a1da5b39e1e93de08ca0017688d61be0f090ac02d99fa7bc",
+        "inputs_unchanged": true,
+        "records": 4,
+        "xml_bytes_restored": [
+          true,
+          false
+        ],
+        "xml_entries_restored": true
+      },
+      "capsule-command.json": {
+        "archive": "v106-padding-sequence-8m4juu6k/original-stream-diff-3/capsule-command.json",
+        "sha256": "63eb9f7b4c065b339b79f3e48a4ab664c814e3aad5d8d15f792e8268ec456f85",
+        "exit_code": 0
+      }
+    },
+    "v106-original-stream-diff-4": {
+      "machine": "aarch64",
+      "kernel": "6.8.0-138-generic",
+      "input_count": 187,
+      "inputs_unchanged": true,
+      "repeat_equal": true,
+      "probe_sha256": "bec1a6b3abc581ddefce31e6815c9fe7b9c464a957ebb126cb486293ea7f0399",
+      "catalog_ready_pass": false,
+      "receipt": {
+        "archive": "v106-padding-sequence-8m4juu6k/original-stream-diff-4/result.json",
+        "sha256": "0af1a5aeafcfbabc3436c50d0e2731923171808c6bdf7f24a3c4ebf62bd67d3a"
+      },
+      "runs": [
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "passed": true,
+          "assertion_summary": {
+            "rows": [
+              {
+                "result": 0,
+                "length": 16,
+                "expected_length": 16,
+                "matched": true,
+                "output_guard": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "expected_length": 0,
+                "matched": true,
+                "output_guard": true
+              },
+              {
+                "result": 0,
+                "length": 32,
+                "expected_length": 32,
+                "matched": true,
+                "output_guard": true
+              },
+              {
+                "result": 0,
+                "length": 16,
+                "expected_length": 16,
+                "matched": true,
+                "output_guard": true
+              }
+            ],
+            "status": "PASS",
+            "records": 4,
+            "libg_loaded": false,
+            "scope": "historical_store1_padding_sequence_bytes_only"
+          },
+          "stdout_sha256": "0ce5ebdc6f5e63e33ffeb2ebd350a5e5ba3f439cbee126393646b50777c31282",
+          "stderr_sha256": "2172b950eafbf28a1f020361e3c736c59b0d04d60a4164ce02dc2cf590cfc729",
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "bec1a6b3abc581ddefce31e6815c9fe7b9c464a957ebb126cb486293ea7f0399"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ],
+          "evidence_error_count": 0
+        },
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "passed": true,
+          "assertion_summary": {
+            "rows": [
+              {
+                "result": 0,
+                "length": 16,
+                "expected_length": 16,
+                "matched": true,
+                "output_guard": true
+              },
+              {
+                "result": -3,
+                "length": 0,
+                "expected_length": 0,
+                "matched": true,
+                "output_guard": true
+              },
+              {
+                "result": 0,
+                "length": 32,
+                "expected_length": 32,
+                "matched": true,
+                "output_guard": true
+              },
+              {
+                "result": 0,
+                "length": 16,
+                "expected_length": 16,
+                "matched": true,
+                "output_guard": true
+              }
+            ],
+            "status": "PASS",
+            "records": 4,
+            "libg_loaded": false,
+            "scope": "historical_store1_padding_sequence_bytes_only"
+          },
+          "stdout_sha256": "0ce5ebdc6f5e63e33ffeb2ebd350a5e5ba3f439cbee126393646b50777c31282",
+          "stderr_sha256": "2172b950eafbf28a1f020361e3c736c59b0d04d60a4164ce02dc2cf590cfc729",
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "bec1a6b3abc581ddefce31e6815c9fe7b9c464a957ebb126cb486293ea7f0399"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ],
+          "evidence_error_count": 0
+        }
+      ],
+      "material_receipt": {
+        "archive": "v106-padding-sequence-8m4juu6k/original-stream-diff-4/material/result.json",
+        "sha256": "e3a1e83cd6b3d665d89924ce0779fb61c1e1a0374d1f78091a1681057be4628c"
+      },
+      "material": {
+        "reference_sha256": "e86034b24258e2c25091f10c5786e979b783d6ee7989897089e640771328f20d",
+        "observer_sha256": "833ccb595fa664df9f5249e9ced3bb201a0e1f99f18898590edf8b72ec1bd1e5",
+        "matrix_source_sha256": "10495fd372cfbe341df5aa607f61b3e6254b919dae4818082ddb549c75304e3c",
+        "capsule_sha256": "5d868b8a45eba1f8a1da5b39e1e93de08ca0017688d61be0f090ac02d99fa7bc",
+        "inputs_unchanged": true,
+        "records": 4,
+        "xml_bytes_restored": [
+          true,
+          false
+        ],
+        "xml_entries_restored": true
+      },
+      "capsule-command.json": {
+        "archive": "v106-padding-sequence-8m4juu6k/original-stream-diff-4/capsule-command.json",
+        "sha256": "dd6eeada4e3330d19b7eb85b3735c1a66ce5b03d33d9cbf435527b0a83c86488",
+        "exit_code": 0
+      }
+    },
+    "v107-derivation-final-1": {
+      "machine": "aarch64",
+      "kernel": "6.8.0-138-generic",
+      "input_count": 187,
+      "inputs_unchanged": true,
+      "repeat_equal": true,
+      "probe_sha256": "ce5cd0e19c34ba23cefa68437f7af3775ec6262814ff50648d445cad125f73a3",
+      "catalog_ready_pass": false,
+      "receipt": {
+        "archive": "v107-historical-store0-tbo840uz/derivation-final-1/result.json",
+        "sha256": "518c2e23cbf490158adb791b53a3ebc5c6bf7da877a21f442d5cb264f9b6e11c"
+      },
+      "runs": [
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "passed": true,
+          "assertion_summary": {
+            "status": "PASS",
+            "records": 30,
+            "libg_loaded": false,
+            "scope": "explicit_private_reference_bytes_only"
+          },
+          "stdout_sha256": "6d43ca72dc5c8165f7533f6eedf75ceae907cb1bf53ad93fd511674abc7dcfdf",
+          "stderr_sha256": "4b3d6a2eb2d0985d66b3498055ca43bc00ca2424dfebfa5312c0a799fbc13dfe",
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "ce5cd0e19c34ba23cefa68437f7af3775ec6262814ff50648d445cad125f73a3"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ],
+          "evidence_error_count": 0
+        },
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "passed": true,
+          "assertion_summary": {
+            "status": "PASS",
+            "records": 30,
+            "libg_loaded": false,
+            "scope": "explicit_private_reference_bytes_only"
+          },
+          "stdout_sha256": "6d43ca72dc5c8165f7533f6eedf75ceae907cb1bf53ad93fd511674abc7dcfdf",
+          "stderr_sha256": "4b3d6a2eb2d0985d66b3498055ca43bc00ca2424dfebfa5312c0a799fbc13dfe",
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "ce5cd0e19c34ba23cefa68437f7af3775ec6262814ff50648d445cad125f73a3"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ],
+          "evidence_error_count": 0
+        }
+      ],
+      "material_receipt": {
+        "archive": "v107-historical-store0-tbo840uz/derivation-final-1/material/result.json",
+        "sha256": "51c4f4679f130023c6967bc00223b8426e5c07f91560781de034b768938ec245"
+      },
+      "material": {
+        "reference_sha256": "6ea9940ea0796efce8ccc87346355873331c169dd0d936233d9629d485ef22d5",
+        "observer_sha256": "e27a6e4c8f0d1d994de922fe42c839a2cae15050d26cea3c9253fd6f6758aa31",
+        "matrix_source_sha256": "03bf8383e279038a0f53fb85115af1b950f34fb7c49e5fba3e9205727344b841",
+        "texts_source_sha256": "a8576fcd6b7f1a28867e3d131756c64c4a58bb04d442a9c520d382a4588a1a0d",
+        "capsule_sha256": "13beec25d0cb1cbf22630046ec171cb0e29e726ae1507aec86099a4371dda409",
+        "inputs_unchanged": true,
+        "store": 0,
+        "records": 30
+      },
+      "identity-command.json": {
+        "archive": "v107-historical-store0-tbo840uz/derivation-final-1/identity-command.json",
+        "sha256": "afaeb9c6ba69447e2bb321500dfd26edc639579038aa9dff1167503206a776da",
+        "exit_code": 0
+      },
+      "capsule-command.json": {
+        "archive": "v107-historical-store0-tbo840uz/derivation-final-1/capsule-command.json",
+        "sha256": "ee7de2d258377d224284c31a6fa225469e2ddaebf31e346022a5774b001fb7b7",
+        "exit_code": 0
+      },
+      "identity": {
+        "archive": "v107-historical-store0-tbo840uz/derivation-final-1/identity/result.json",
+        "sha256": "ec5eb7f67b847bbb2efa7b66012a3b2a002a804d550828dee8cb0b775922cf53",
+        "status": "STATIC_FOUND",
+        "reference_sha256": "6ea9940ea0796efce8ccc87346355873331c169dd0d936233d9629d485ef22d5",
+        "dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+        "dexdump_sha256": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692",
+        "dump_sha256": "75ef26a5ceab202be9bb1deb1d1cd372acc2b05ea41ff49ede88f45880f30148",
+        "dump_exit_code": 0,
+        "inputs_unchanged": true,
+        "current_runtime_binding": "UNRESOLVED",
+        "storage_and_backup": "UNRESOLVED",
+        "initializer_graph_sha256": "a3953d78b813fbe1acf11cce103ddc80c89703e1f5831a3781fa5d18e5cce39d",
+        "constructor_sha256": "ede1757207ae8739cf760276a6224c8ae18409cb1b8050bf95123268648e4827"
+      }
+    },
+    "v107-derivation-final-2": {
+      "machine": "aarch64",
+      "kernel": "6.8.0-138-generic",
+      "input_count": 187,
+      "inputs_unchanged": true,
+      "repeat_equal": true,
+      "probe_sha256": "ce5cd0e19c34ba23cefa68437f7af3775ec6262814ff50648d445cad125f73a3",
+      "catalog_ready_pass": false,
+      "receipt": {
+        "archive": "v107-historical-store0-tbo840uz/derivation-final-2/result.json",
+        "sha256": "d1e34d3cd2b2882fb00ed62e5392b386644d5849f33a2bfda19d9fae78ab1c82"
+      },
+      "runs": [
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "passed": true,
+          "assertion_summary": {
+            "status": "PASS",
+            "records": 30,
+            "libg_loaded": false,
+            "scope": "explicit_private_reference_bytes_only"
+          },
+          "stdout_sha256": "6d43ca72dc5c8165f7533f6eedf75ceae907cb1bf53ad93fd511674abc7dcfdf",
+          "stderr_sha256": "59506d613b3da2c7375621e1bf73d3f813c7f45c1bcd8ee8fc7a2fedf30e68c9",
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "ce5cd0e19c34ba23cefa68437f7af3775ec6262814ff50648d445cad125f73a3"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ],
+          "evidence_error_count": 0
+        },
+        {
+          "exit_code": 0,
+          "timed_out": false,
+          "passed": true,
+          "assertion_summary": {
+            "status": "PASS",
+            "records": 30,
+            "libg_loaded": false,
+            "scope": "explicit_private_reference_bytes_only"
+          },
+          "stdout_sha256": "6d43ca72dc5c8165f7533f6eedf75ceae907cb1bf53ad93fd511674abc7dcfdf",
+          "stderr_sha256": "59506d613b3da2c7375621e1bf73d3f813c7f45c1bcd8ee8fc7a2fedf30e68c9",
+          "mapped_files": [
+            {
+              "name": "linker64",
+              "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+            },
+            {
+              "name": "probe",
+              "sha256": "ce5cd0e19c34ba23cefa68437f7af3775ec6262814ff50648d445cad125f73a3"
+            },
+            {
+              "name": "[vdso]",
+              "sha256": null
+            },
+            {
+              "name": "libdl.so",
+              "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+            },
+            {
+              "name": "libc.so",
+              "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+            },
+            {
+              "name": "libnetd_client.so",
+              "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+            },
+            {
+              "name": "libc++.so",
+              "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+            },
+            {
+              "name": "libm.so",
+              "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+            },
+            {
+              "name": "libcrypto.so",
+              "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+            }
+          ],
+          "evidence_error_count": 0
+        }
+      ],
+      "material_receipt": {
+        "archive": "v107-historical-store0-tbo840uz/derivation-final-2/material/result.json",
+        "sha256": "4dc1c219b16c9d84056721b176b2195bef8c1ad4945e56a4627a499bbf9702b8"
+      },
+      "material": {
+        "reference_sha256": "48b8083ba873e8cbc961954a0d7e2ce662c34badba3f789439af91fc4e090952",
+        "observer_sha256": "e27a6e4c8f0d1d994de922fe42c839a2cae15050d26cea3c9253fd6f6758aa31",
+        "matrix_source_sha256": "03bf8383e279038a0f53fb85115af1b950f34fb7c49e5fba3e9205727344b841",
+        "texts_source_sha256": "a8576fcd6b7f1a28867e3d131756c64c4a58bb04d442a9c520d382a4588a1a0d",
+        "capsule_sha256": "13beec25d0cb1cbf22630046ec171cb0e29e726ae1507aec86099a4371dda409",
+        "inputs_unchanged": true,
+        "store": 0,
+        "records": 30
+      },
+      "identity-command.json": {
+        "archive": "v107-historical-store0-tbo840uz/derivation-final-2/identity-command.json",
+        "sha256": "f99fc2e36b0b071232154a03c0d53ce5479f43c85c334c989d1b1e23167ff025",
+        "exit_code": 0
+      },
+      "capsule-command.json": {
+        "archive": "v107-historical-store0-tbo840uz/derivation-final-2/capsule-command.json",
+        "sha256": "244d738666f3a3e997eb24629d00b3702598521e9369fadfbfa888150f0f8ab4",
+        "exit_code": 0
+      },
+      "identity": {
+        "archive": "v107-historical-store0-tbo840uz/derivation-final-2/identity/result.json",
+        "sha256": "21b5510a7239b3c8e3390b2b240277b07ad7c0db7e305b3752b9c9edf9797bdc",
+        "status": "STATIC_FOUND",
+        "reference_sha256": "48b8083ba873e8cbc961954a0d7e2ce662c34badba3f789439af91fc4e090952",
+        "dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+        "dexdump_sha256": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692",
+        "dump_sha256": "75ef26a5ceab202be9bb1deb1d1cd372acc2b05ea41ff49ede88f45880f30148",
+        "dump_exit_code": 0,
+        "inputs_unchanged": true,
+        "current_runtime_binding": "UNRESOLVED",
+        "storage_and_backup": "UNRESOLVED",
+        "initializer_graph_sha256": "a3953d78b813fbe1acf11cce103ddc80c89703e1f5831a3781fa5d18e5cce39d",
+        "constructor_sha256": "ede1757207ae8739cf760276a6224c8ae18409cb1b8050bf95123268648e4827"
+      }
+    }
+  },
+  "operations": {
+    "v106-padding-sequence-8m4juu6k": {
+      "archive": "v106-padding-sequence-8m4juu6k-ops-results.json",
+      "sha256": "075932f24ae5d00d9b54689352153ed22ecf7760f7064007c0037f04643f9acd",
+      "count": 32,
+      "all_exit_codes_zero": true
+    },
+    "v107-historical-store0-tbo840uz": {
+      "archive": "v107-historical-store0-tbo840uz-ops-results.json",
+      "sha256": "24896571cc1396d459215e3cc5484b001b2d68fc6146bf34bcb6012b42525f52",
+      "count": 30,
+      "all_exit_codes_zero": true
+    }
+  },
+  "builds": {
+    "v106": {
+      "archive": "v106-padding-sequence-8m4juu6k/build.json",
+      "sha256": "a814bde0686a04c912c31870124cb7c61409e90353df23657681c6a092b50f5f",
+      "exit_code": 0
+    },
+    "v107": {
+      "archive": "v107-historical-store0-tbo840uz/build-command.json",
+      "sha256": "23aa9bf4d0ea1152e30fccc2bfbcffc4cfea627a11b8c42248d98f9d3c6849ae",
+      "exit_code": 0
+    }
+  },
+  "regression": {
+    "receipt": {
+      "archive": "v108-public-regression-zr5l4phj/results.json",
+      "sha256": "62ffde7032a16c1a8c4b695da3f110727456b905bd535e69f8cf481e1214988f"
+    },
+    "isolated_copy": true,
+    "overlapping_suites_not_summed": true,
+    "commands": {
+      "pure_linux": {
+        "exit_code": 0,
+        "stdout_sha256": "37b4077cdd898b9532f7476702b43197cfcbd89c3f8001a8d0e4aad1690b28c3",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "main_engine": {
+        "exit_code": 0,
+        "stdout_sha256": "24579f4e27532093f27bfdc1dcbe9167be6f7df26d6b77e4c64e9018ea3122a7",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "public": {
+        "exit_code": 0,
+        "stdout_sha256": "d15e921f84c4f3bbe30e2ba6bccb2d82f2dec80d7dd5978f36c1280bd13775aa",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "xml": {
+      "pure-linux.xml": {
+        "tests": 379,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1,
+        "sha256": "aeceb417326f47eaabddee3c0c4596c86e7a4934d4c869fbd040a37727ad2707"
+      },
+      "checks-affordability.xml": {
+        "tests": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "sha256": "2e28551f96928c7d38f852000008e0c4ed8b87d3ca0660e94bcf74546a2b75b4"
+      },
+      "checks-collection-coordinator.xml": {
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "sha256": "315bbb08fb6d233035da1d357476a1a57adc1a9763c6ba38be0e0e677c4c7111"
+      },
+      "checks-command-coordinates.xml": {
+        "tests": 41,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "sha256": "1abf063027c5e7e2661ced82a4cc4342507e8678badcdc5affbf5cb2571ab7ef"
+      },
+      "checks-dispatch-command.xml": {
+        "tests": 34,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "sha256": "7c353593aebcd2f74deb79c1fe1af6a12f803ee80aa1aa8b89d966f1c4ff8c16"
+      },
+      "checks-live-command.xml": {
+        "tests": 29,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 4,
+        "sha256": "77fd45cc296527762b9d1f835f05a50378fcc99d090065a2e353ea9493d75b30"
+      },
+      "checks-position-guards.xml": {
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "sha256": "f9c19cbb9420d8af07b5851782b0bd2e4cd3ca454e256a25a9a119dceb49aa2e"
+      },
+      "checks-public.xml": {
+        "tests": 821,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 27,
+        "sha256": "0876e0fb3d4f3d7d7ad0edd228d9668a4d1c48632a3eec1008e6f6e50e836083"
+      },
+      "checks-reservation-mapping.xml": {
+        "tests": 33,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2,
+        "sha256": "4cc3da6dbdd7e333c78f33f67b9a4f4b8e237655180b506ddc188e1b7a8a15e3"
+      },
+      "checks-selection-timeout.xml": {
+        "tests": 82,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "sha256": "3017e085dd744a41e7a851839603c530b9e1a8c0d48575eb785ba872387dc89b"
+      }
+    },
+    "tracked_xml_files_unchanged": 248
+  },
+  "limitations_and_preserved_failures": {
+    "initial_missing_ciphertext": {
+      "archive": "v106-padding-sequence-khlgpemu",
+      "status": "MISSING_INPUT",
+      "initial_failure": "KeyError; changed to explicit ValueError without reconstructing ciphertext"
+    },
+    "original_direct_cipher": {
+      "capsule_exit_code": 1,
+      "status": "MISSING_INPUT",
+      "reason": "archive has no recorded ciphertext input"
+    },
+    "store_selector_shadowing": {
+      "first_test": "1 failed, 95 passed",
+      "resolved": "row_store no longer overwrites selected store"
+    },
+    "xml_restoration": {
+      "bytes_restored": [
+        true,
+        false
+      ],
+      "entries_restored": true,
+      "whole_byte_equivalence": false
+    },
+    "host_backend_difference": {
+      "status": "RUNTIME_OBSERVED",
+      "scope": "host OpenSSL3 failure-following bytes differ from reviewed Bionic sequence; tests preserve honest mismatch and subsequent recovery"
+    },
+    "exception_type_equivalence": "UNRESOLVED"
+  },
+  "gates": {
+    "historical_store1_padding_sequence_bytes": "bounded PASS",
+    "historical_store0_normal_bytes": "bounded PASS",
+    "current_runtime_identity": "UNRESOLVED",
+    "java_utf8_base64_full_domain": "UNRESOLVED",
+    "full_exception_domain": "UNRESOLVED",
+    "storage_commit_bak_fsync_listeners": "UNRESOLVED",
+    "backup_external_effects": "UNRESOLVED",
+    "CATALOG_READY_PASS": false,
+    "resource_manager": "BLOCKED",
+    "GameState": "NOT_RUN",
+    "empty_battle_reset": "NOT_RUN",
+    "GameStateStep": "NOT_RUN",
+    "actions": "NOT_RUN",
+    "snapshot": "NOT_RUN",
+    "complete_battle": "NOT_RUN",
+    "android_tick_comparison": "NOT_RUN",
+    "no_JavaVM_lifecycle": "NOT_RUN",
+    "Android_free": "NOT_RUN",
+    "performance_10x": "NOT_RUN",
+    "training": "NOT_RUN"
+  },
+  "next_blocker": "current configuration platform contract: bind actual identity and close storage/commit/backup semantics before strict catalog revalidation",
+  "redaction": "relative archive labels, statuses, counts and hashes only; no raw identity, key/IV, XML values, binaries, memory or private log bodies"
+}

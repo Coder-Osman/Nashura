@@ -1,5 +1,15 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N历史异常恢复及store0字节参考
+
+- 新增原版result专用NCS1胶囊、持久上下文序列probe与双子进程严格核验；缺input显式拒收。
+- 两份历史store1四步padding异常/恢复参考各两个Bionic子进程全匹配；XML字节差异明确保留。
+- SHA绑定真实DEX与原版历史身份来源，store0两份参考各两个child、每child30条正常字节匹配。
+- reference胶囊增加显式store选择，修复新测试发现的局部变量遮蔽；保留首次失败及后端差异。
+- 新增8份源码和测试、修改2份工具；各187输入未变，未重载libg或启动Android/训练。
+- 隔离专项378通过/1跳过、主工程211通过、公开九组1,104通过/42跳过；保留248份历史XML。
+- 当前平台身份、storage/backup仍UNRESOLVED；严格catalog/manager BLOCKED，GameState/Step未运行。
+
 ## 2026-10-28：E2.1-N持久Cipher与独立原版字节参考
 
 - 新增三持久EVP上下文、成功final后reset及错误状态保留，缺符号/未知材料显式失败。

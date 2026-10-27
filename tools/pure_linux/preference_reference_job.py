@@ -18,14 +18,17 @@ def validate(parsed, mapped, identities, expected_records):
         validate_mappings(mapped, identities))
 
 
-def main():
-    parser = argparse.ArgumentParser()
+def arguments(description=None):
+    parser = argparse.ArgumentParser(description=description)
     for name in ("payload", "probe", "capsule", "output"):
         parser.add_argument("--" + name, required=True, type=Path)
     for name in ("probe-sha256", "capsule-sha256"):
         parser.add_argument("--" + name, required=True)
     parser.add_argument("--expected-records", required=True, type=int)
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def execute(args, validator=validate, schema="nashura.preference-reference-native.v1"):
     if platform.system() != "Linux" or platform.machine() not in {"aarch64", "arm64"}:
         raise ValueError("native ARM64 Linux required")
     if not 1 <= args.expected_records <= 64:
@@ -47,13 +50,13 @@ def main():
         result.update(assertion_summary=parsed, mapped_files=mapped, evidence_errors=errors,
                       stdout_sha256=digest(output / "stdout.log"), stderr_sha256=digest(output / "stderr.log"),
                       passed=result["exit_code"] == 0 and not result["timed_out"] and not errors and
-                      validate(parsed, mapped, {**before, "probe": args.probe_sha256}, args.expected_records))
+                      validator(parsed, mapped, {**before, "probe": args.probe_sha256}, args.expected_records))
         records.append(result)
     after = check_inputs(args.payload)
     unchanged = (before == after and digest(args.probe) == args.probe_sha256 and
                  digest(args.capsule) == args.capsule_sha256)
     repeat = records[0]["assertion_summary"] == records[1]["assertion_summary"]
-    report = {"schema": "nashura.preference-reference-native.v1", "machine": platform.machine(),
+    report = {"schema": schema, "machine": platform.machine(),
               "kernel": platform.release(), "inputs_before": before, "inputs_after": after,
               "input_count": len(before), "inputs_unchanged": unchanged, "repeat_equal": repeat,
               "probe_sha256": args.probe_sha256, "records": records,
@@ -63,6 +66,10 @@ def main():
         json.dump(report, stream, indent=2)
         stream.write("\n")
     return int(not unchanged or not repeat or not all(row["passed"] for row in records))
+
+
+def main():
+    return execute(arguments())
 
 
 if __name__ == "__main__":
