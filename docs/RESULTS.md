@@ -1,5 +1,19 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：双槽配置接入与 backup 动态边界
+
+v116 独立后端两 child 各 48 条历史参考一致、两槽持久化及重开通过，未加载 libg。
+v117/v118 四个真实 libg child 各两次真实 commit 后因候选 backup callback 未闭合主动 exit96；
+wrapper exit1，ready 仅 0，表加载未完成。不是原版 BackupManager 的动态失败证据。
+v121 两个 NDK checkService 查询在 /dev/binder ENOENT 后 SIGABRT(-6)，未返回；服务状态未知。
+各 187 输入不变；四个 libg child 各 188 实际映射核验，资源清单不是新的 9,829 资产全量对照。
+v122 隔离专项 482 通过/1 跳过、主工程 211 通过、公开九组 1,104 通过/42 跳过，入口均 exit0。
+248 份 tracked 历史 XML 保留；失败记录、当前初始化身份及完整异常域缺口保留。
+严格 catalog/manager 仍 BLOCKED，GameState、真正 Step、完整局/no-VM/10×/训练 NOT_RUN。
+详见[报告](../agent-handoff/PURE_LINUX_PREFERENCE_BACKEND_2026-10-28.md)、
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_PREFERENCE_BACKEND.md)及
+[机器证据](../agent-handoff/pure-linux-preference-backend-evidence-20261028.json)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：配置文件原语与Android30静态证据
 
 两个新ARM64/Bionic子进程各19组/444项文件检查通过，187受保护输入未变；

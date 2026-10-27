@@ -192,3 +192,24 @@ def test_launcher_rejects_early_exit(tmp_path):
                             capture_output=True, timeout=20)
     assert result.returncode != 0
     assert b"did not reach SIGSTOP" in result.stderr
+
+
+@pytest.mark.parametrize("extra,message", [
+    (["--preference-material", "/missing"], b"all three explicit hashes"),
+    (["--preference-material-sha256", "0" * 64], b"all three explicit hashes"),
+    (["--preference-xml0", "/missing"], b"all three explicit hashes"),
+    (["--preference-xml1-sha256", "0" * 64], b"all three explicit hashes"),
+    ([argument for name in ("material", "xml0", "xml1")
+      for argument in ("--preference-" + name, "/missing", "--preference-" + name + "-sha256", "0" * 64)]
+     + ["--loading-config-candidate"], b"exclusive"),
+])
+def test_preference_flags_rejected_before_opening_inputs(tmp_path, extra, message):
+    output = tmp_path / "untouched"
+    command = [sys.executable, str(Path(__file__).with_name("provider_job.py")),
+               "--payload", "/missing", "--probe", "/missing", "--output", str(output),
+               "--mode", "both", "--data-root", "/missing", "--update-root", "/missing",
+               "--resource-manifest", "/missing", *extra]
+    result = subprocess.run(command, capture_output=True, timeout=10)
+    assert result.returncode == 2
+    assert message in result.stderr
+    assert not output.exists()

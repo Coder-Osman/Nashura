@@ -4,7 +4,10 @@ from parsed_tables import observations as parsed_table_observations
 import json
 import os
 from pathlib import Path
+import shutil
 import sys
+
+from preference_hook_evidence import observations as preference_observations
 
 from elf_audit import Elf64
 from native_init_job import check_inputs, digest, run
@@ -224,6 +227,9 @@ def main():
     parser.add_argument("--asset-backend-sha256")
     parser.add_argument("--observe-targets", type=Path)
     parser.add_argument("--loading-config-candidate", action="store_true")
+    for name in ("preference-material", "preference-xml0", "preference-xml1"):
+        parser.add_argument("--" + name, type=Path)
+        parser.add_argument("--" + name + "-sha256")
     parser.add_argument("--inspect-parsed-tables", action="store_true")
     parser.add_argument("--expected-preload-requests", type=int, default=368,
                         help="Explicit observation profile, bound to the resource manifest; not a semantic gate")
@@ -235,6 +241,13 @@ def main():
                        arguments.asset_backend, arguments.asset_backend_sha256]
     if any(asset_arguments) and not all(asset_arguments):
         parser.error("asset root, index, backend and both expected hashes must be supplied together")
+    preference_arguments = [getattr(arguments, name + suffix)
+                            for name in ("preference_material", "preference_xml0", "preference_xml1")
+                            for suffix in ("", "_sha256")]
+    if any(preference_arguments) and not all(preference_arguments):
+        parser.error("preference material and both XML seeds require all three explicit hashes")
+    if any(preference_arguments) and arguments.loading_config_candidate:
+        parser.error("strict preference backend and legacy loading candidate are exclusive")
     if not 1 <= arguments.timeout <= 120:
         parser.error("timeout must be 1..120 seconds")
     if not 1 <= arguments.expected_preload_requests <= 16384:
@@ -262,6 +275,12 @@ def main():
             extras[label] = (path.resolve(), expected)
     if arguments.observe_targets:
         extras["observation_targets"] = (arguments.observe_targets.resolve(), digest(arguments.observe_targets))
+    if all(preference_arguments):
+        for name in ("preference_material", "preference_xml0", "preference_xml1"):
+            path, expected = getattr(arguments, name).resolve(), getattr(arguments, name + "_sha256")
+            if digest(path) != expected:
+                raise ValueError(name + " identity mismatch")
+            extras[name] = (path, expected)
     output = arguments.output.resolve()
     output.mkdir(exist_ok=False)
     environment = {key: value for key, value in os.environ.items()
@@ -274,6 +293,15 @@ def main():
         configuration = output / "loading-config"
         configuration.mkdir(exist_ok=False)
         environment["NASHURA_LOADING_CONFIG_DIRECTORY"] = str(configuration)
+    if all(preference_arguments):
+        configuration = output / "preference-store"
+        configuration.mkdir(mode=0o700, exist_ok=False)
+        for slot in range(2):
+            shutil.copyfile(extras["preference_xml" + str(slot)][0],
+                            configuration / ("store-" + str(slot) + ".xml"))
+        environment.update(NASHURA_PREFERENCE_DIRECTORY=str(configuration),
+                           NASHURA_PREFERENCE_MATERIAL=str(extras["preference_material"][0]),
+                           NASHURA_PREFERENCE_CRYPTO=str(payload / "libs/libcrypto.so"))
     if arguments.inspect_parsed_tables:
         if arguments.catalog_mode not in {"loader", "loader-construct"}:
             parser.error("parsed table observation requires a loader experiment")
@@ -321,6 +349,7 @@ def main():
         after = None
         postcheck_errors.append("input identity: " + str(error))
     text = (output / "stdout.log").read_text(errors="replace")
+    preference = preference_observations(text, (output / "stderr.log").read_text(errors="replace")) if all(preference_arguments) else None
     observations = registration_observations(text, arguments.mode)
     try:
         resources_after = resource_inventory(roots)
@@ -354,6 +383,8 @@ def main():
     generic_return = ([row for row in text.splitlines() if row.startswith("PHASE\tgeneric_register_return")] ==
                       ["PHASE\tgeneric_register_return\t" + arguments.disk_namespace]) if arguments.disk_namespace else None
     passed = passed and (generic_return is not False) and (backend_binding is not False) and (candidate_bound is not False) and catalog["complete"] and auxiliary_unchanged and not postcheck_errors
+    if preference is not None:
+        passed = passed and preference["configuration_contract_pass"]
     if arguments.observe_targets:
         try:
             observation = json.loads((output / "observation.json").read_text())
@@ -377,6 +408,10 @@ def main():
                    "catalog_ready_pass": False, "resource_access_verified": bool(passed and resource_result),
                    "loading_config_candidate": arguments.loading_config_candidate,
                    "loading_config_candidate_bound": candidate_bound,
+                   "strict_preference_backend": bool(all(preference_arguments)),
+                   "strict_preference_observations": preference,
+                   "preference_current_runtime_identity": "UNRESOLVED" if all(preference_arguments) else None,
+                   "preference_backup_service": "UNRESOLVED" if all(preference_arguments) else None,
                    "outputs": {path.name: digest(path) for path in output.iterdir() if path.is_file()}})
     if not result["probe_unchanged"]:
         result["status"] = "BLOCKED"

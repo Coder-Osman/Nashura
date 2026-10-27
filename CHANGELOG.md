@@ -1,5 +1,15 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N双槽持久化及真实服务查询边界
+
+- 新增 15 份源码/测试，修改 provider job 及测试；严格绑定材料/XML 身份，拒绝与旧候选混用。
+- 独立 ARM64/Bionic 两 child 各 48 条历史 ASCII 参考一致，双槽重开、无关项及同值写入检查通过。
+- 四个真实 libg child 完成双槽持久化后因 backup 未闭合主动 exit96，wrapper exit1，不放开 catalog。
+- 两个真实 NDK checkService 查询在返回前 SIGABRT，/dev/binder ENOENT，不误报 SERVICE_ABSENT。
+- 187 输入未变，材料内容及 SHA 不发布，保留 v115 collector 失败、全部原生失败及历史报告。
+- 隔离专项 482 通过/1 跳过、主工程 211 通过、公开九组 1,104 通过/42 跳过；保留 248 份历史 XML。
+- 当前身份、XML/异常全域及 backup 未闭合；GameState/真正 Step/完整局/no-VM/10×/训练未运行。
+
 ## 2026-10-28：E2.1-N配置文件原语与平台审计
 
 - 新增8份源码/测试：文件原语、分步故障和进程恢复probe、双进程job及真实平台方法审计。

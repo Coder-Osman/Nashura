@@ -4,6 +4,17 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+## 2026-10-28 E2.1-N：双槽持久化接入真实 libg
+
+新增双槽 XML/string-map、历史 ASCII codec 与严格配置桥。独立后端两个 ARM64/Bionic
+child 各 48 条参考一致；真实 libg 四 child 完成双槽 commit 后因 backup 未闭合主动 exit96。
+独立 NDK 服务查询在返回前因 /dev/binder ENOENT 而 SIGABRT，服务状态仍未知。
+专项 482 通过/1 跳过、主工程 211 通过、公开九组 1,104 通过/42 跳过；保留历史 XML。
+严格 catalog 及 ResourceManager 仍 **BLOCKED**，GameState/真实 Step/完整局均 NOT_RUN。
+当前身份、XML/异常完整域及 backup 契约尚未闭合；详见
+[报告](agent-handoff/PURE_LINUX_PREFERENCE_BACKEND_2026-10-28.md)及
+[机器证据](agent-handoff/pure-linux-preference-backend-evidence-20261028.json)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：配置文件原语与平台审计
 
 新增真实文件分步写入、bak恢复与异常退出验证；两个新ARM64/Bionic子进程
