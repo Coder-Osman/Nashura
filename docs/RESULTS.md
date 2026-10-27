@@ -1,5 +1,20 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-E 独立PN原生候选
+
+新增自有双文件原生存储与窄C ABI。baseline和candidate-3两个独立原版进程各3602快照、
+9120440bytes、28动作及tick3601终局一致，snapshot/restore/reset回执一致、资源平台事件0。
+候选在这些tick完成之后加载；它的14行重放/7次实际读值与原桥对应，不代表接管战斗通过。
+真实EACCES下内存更新、磁盘不变，同值不重试，恢复权限close/open后读回旧磁盘值；
+三次close后读取拒收。原始输入及990个update文件身份保持。
+
+14604附件限定验证exit0；44项专项通过，E2回归175 passed/74 skipped；主工程211 passed。
+公开主组794 passed/27 skipped与八专项exit0。严格门仍BLOCKED/exit2，PN尚未native替换，
+46键未移除。原Cipher/XML迁移、真实p/o冲突与回填、backup交付、并发和崩溃恢复unknown。
+初次加载SELinux拒绝保留，安全保护未关闭；独占实例已回收，历史adb保持。
+未进入E2.2、no-VM、Android-free、训练或10×。详见E2_1E_PN_NATIVE_CANDIDATE_2026-10-27.md、
+CODEX_REPLY_2026-10-27_E2_1E.md、e2_1e_evidence_summary.json及e2_1e_failure_index.json。
+
 ## 2026-10-27 E2.1-D 自然PN返回与观测器引用退休
 
 两个独立自然冷启动进程与baseline各3602快照/9120440bytes、28动作及tick3601终局一致；

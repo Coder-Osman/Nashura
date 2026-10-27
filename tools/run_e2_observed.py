@@ -116,6 +116,10 @@ def run(config_path, output):
     if config.get('return_observer'):
         path = repository / 'E21PreferenceObserver.java'
         (source_directory / path.name).write_bytes(path.read_bytes())
+    if config.get('pn_candidate'):
+        for filename in ('e2_1_pn_store.c', 'e2_1_pn_store.h'):
+            path = repository / filename
+            (source_directory / path.name).write_bytes(path.read_bytes())
     try:
         if command('emu', 'avd', 'name').splitlines()[0] != config['avd']:
             raise RuntimeError('AVD ownership mismatch')
@@ -216,6 +220,10 @@ def run(config_path, output):
                     oracle,
                     lambda: command('pull', config['java_oracle']['trace_path'], str(output / 'java-methods.trace')),
                     save)
+                if config.get('pn_candidate'):
+                    create('pn-candidate', 'e2_1_pn_candidate.js', config['pn_candidate'])
+                    original = json.loads((output / 'semantics-cases.json').read_text())
+                    save('pn-candidate-replay.json', scripts['pn-candidate'].exports_sync.replay(original))
         if config.get('string_lifecycle_probe'):
             create('string-lifecycle', 'e2_1_string_lifecycle.js', config['string_lifecycle_probe'])
             save('string-lifecycle.json', scripts['string-lifecycle'].exports_sync.run())

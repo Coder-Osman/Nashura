@@ -1,0 +1,38 @@
+{
+  "schema": "e2.1e-failure-index.v1",
+  "failures": [
+    {
+      "experiment": "host-build-1",
+      "status": "failed",
+      "reason": "platform feature macros missing",
+      "resolution": "explicit platform macros; subsequent strict builds passed",
+      "raw_evidence_retained": true
+    },
+    {
+      "experiment": "candidate-1",
+      "exit_code": 1,
+      "reason": "SELinux rejected loading the self-built candidate from the temporary directory",
+      "resolution": "new candidate added to the exclusive instance app library directory with the correct label; security enforcement retained",
+      "raw_evidence_retained": true
+    },
+    {
+      "experiment": "candidate-2",
+      "exit_code": 0,
+      "limitation": "reopen read evidence insufficient for final bounded verification",
+      "resolution": "candidate-3 records actual before and after reads",
+      "raw_evidence_retained": true
+    },
+    {
+      "experiment": "strict-gate-recheck-1",
+      "exit_code": 2,
+      "status": "BLOCKED",
+      "reason": "native bridge integration and original persistence semantics remain unresolved",
+      "raw_evidence_retained": true
+    }
+  ],
+  "pn_native_replacement": false,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false
+}
