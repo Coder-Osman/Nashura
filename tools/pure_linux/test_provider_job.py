@@ -56,6 +56,16 @@ def test_tables_are_not_catalog_ready():
     assert result["complete"] and not result["catalog_ready_pass"]
 
 
+def test_update_preload_profile_does_not_grant_semantic_gate():
+    text = catalog_log().replace("CATALOG_PRELOAD\t3\t368", "CATALOG_PRELOAD\t3\t377")
+    assert not catalog_observations(text, "preload")["complete"]
+    result = catalog_observations(text, "preload", expected_preload_requests=377)
+    assert result["complete"] and result["expected_preload_requests"] == 377
+    assert not result["catalog_ready_pass"]
+    assert not catalog_observations(text, "preload", expected_preload_requests=376)["complete"]
+    assert not catalog_observations(text + "\nCATALOG_PRELOAD\t3\t377", "preload", 377)["complete"]
+
+
 @pytest.mark.parametrize("old,new", [
     ("CATALOG_LOAD_RETURN\t39\t0\t0", "CATALOG_LOAD_RETURN\t39\t1\t0"),
     ("CATALOG_LOAD_RETURN\t78\t0\t0", ""),
@@ -145,6 +155,13 @@ def test_strace_keeps_android_loader_environment_out_of_host(tmp_path):
     assert command[command.index("-E"):] == ["-E", "LD_LIBRARY_PATH=/android/libs",
                                             "-E", "LD_PRELOAD=/android/backend.so", *inferior]
     assert environment == original
+
+
+def test_resource_trace_omits_buffers_and_preserves_io_calls(tmp_path):
+    command, _ = strace_launch(['probe'], tmp_path, {}, resource_trace=True)
+    assert 'raw=read,pread64' in command
+    assert 'trace=openat,close,fcntl,dup,dup3,chdir,fchdir,fstat,newfstatat,mmap,munmap,lseek,read,pread64,exit_group' in command
+    assert command[-1] == 'probe'
 
 
 @pytest.mark.skipif(sys.platform != "linux", reason="owned-child SIGSTOP observation requires Linux")

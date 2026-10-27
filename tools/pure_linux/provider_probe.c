@@ -207,6 +207,49 @@ static int load_catalog(uintptr_t context, uintptr_t list, int32_t count) {
     return 0;
 }
 
+static int inspect_parsed_tables(uintptr_t context, const char *phase) {
+    if (!guard("NASHURA_CONTEXT_GET_GUARD", 0xdccb88) ||
+        !guard("NASHURA_TABLE_CTOR_GUARD", 0xdc76ac) ||
+        !guard("NASHURA_CSV_GET_GUARD", 0x12101d4) ||
+        !is_readable(context, 219 * sizeof(uintptr_t))) return 107;
+    unsigned int populated = 0;
+    uint64_t total_rows = 0;
+    for (size_t index = 0; index < 219; ++index) {
+        uintptr_t object = pointer_at(context + index * sizeof(uintptr_t));
+        if (!object) continue;
+        if (!is_readable(object, 0x90)) return 108;
+        int32_t capacity, count, type;
+        memcpy(&capacity, (void *)(object + 0x38), 4);
+        memcpy(&count, (void *)(object + 0x3c), 4);
+        memcpy(&type, (void *)(object + 0x84), 4);
+        uintptr_t owner = pointer_at(object + 0x78);
+        uintptr_t rows = pointer_at(object + 0x30);
+        if (type != (int32_t)index || owner != context || count < 0 || count > 1000000 ||
+            capacity < count || capacity > 1000000 ||
+            (count && !is_readable(rows, (size_t)count * sizeof(uintptr_t)))) return 109;
+        unsigned int nonnull_rows = 0;
+        for (int32_t row = 0; row < count; ++row) {
+            uintptr_t value;
+            memcpy(&value, (void *)(rows + (size_t)row * sizeof(uintptr_t)), sizeof(value));
+            nonnull_rows += value != 0;
+        }
+        int32_t csv_rows = -1, csv_columns = -1;
+        uintptr_t csv = pointer_at(object + 0x88);
+        if (csv) {
+            if (!is_readable(csv, 0x58)) return 110;
+            memcpy(&csv_rows, (void *)(csv + 0x54), 4);
+            memcpy(&csv_columns, (void *)(csv + 0x34), 4);
+            if (csv_rows < 0 || csv_rows > 1000000 || csv_columns < 0 || csv_columns > 100000) return 111;
+        }
+        printf("PARSED_TABLE\t%s\t%zu\t%d\t%d\t%u\t%d\t%d\n",
+               phase, index, count, capacity, nonnull_rows, csv_rows, csv_columns);
+        ++populated;
+        total_rows += (uint64_t)count;
+    }
+    printf("PARSED_TABLE_SUMMARY\t%s\t%u\t%" PRIu64 "\n", phase, populated, total_rows);
+    return 0;
+}
+
 static int run_catalog_loader(uintptr_t context, uintptr_t list, int construct_only) {
     if (!guard("NASHURA_LOADER_CTOR_GUARD", 0xc828d8) ||
         !guard("NASHURA_LOADER_START_GUARD", 0xc833ec) ||
@@ -227,6 +270,10 @@ static int run_catalog_loader(uintptr_t context, uintptr_t list, int construct_o
     if (pointer_at((uintptr_t)loader.object) != context ||
         pointer_at((uintptr_t)loader.object + 8) != list) return 104;
     unsigned int iterations = 0;
+    if (getenv("NASHURA_INSPECT_PARSED_TABLES")) {
+        int status = inspect_parsed_tables(context, "before");
+        if (status) return status;
+    }
     if (!construct_only) {
         puts("PHASE\tloader_start_enter");
         ((void (*)(void *))(base + 0xc833ec))(loader.object);
@@ -241,6 +288,10 @@ static int run_catalog_loader(uintptr_t context, uintptr_t list, int construct_o
         printf("LOADER_STEP_RETURN\t%u\t%d\t%d\t%u\n", iterations, state, result,
                *(unsigned char *)(context + 0x6e8));
         if (result != 1 && !*(unsigned char *)(context + 0x6e8)) return 105;
+    }
+    if (getenv("NASHURA_INSPECT_PARSED_TABLES")) {
+        int status = inspect_parsed_tables(context, "after");
+        if (status) return status;
     }
     puts("PHASE\tloader_destructor_enter");
     ((void (*)(void *))(base + 0xc8eb64))(loader.object);

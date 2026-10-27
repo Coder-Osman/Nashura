@@ -16433,16 +16433,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "0832c0531b48379be556b48d0903452c94ab16ce6bec57a9163748a3741d2f0f",
-      "bytes": 29594,
-      "source_sha256": "0832c0531b48379be556b48d0903452c94ab16ce6bec57a9163748a3741d2f0f",
+      "sha256": "1c942540e1caa02a2da2acebbe1b63b8281a0393c66d60fda03e0bac1a8c877c",
+      "bytes": 30287,
+      "source_sha256": "1c942540e1caa02a2da2acebbe1b63b8281a0393c66d60fda03e0bac1a8c877c",
       "transformations": []
     },
     {
       "path": "README.md",
-      "sha256": "ccfe091baf54993abecb5a98926195c6dc841dbb713778b73cab343ca06fe969",
-      "bytes": 27344,
-      "source_sha256": "ccfe091baf54993abecb5a98926195c6dc841dbb713778b73cab343ca06fe969",
+      "sha256": "59032790c6c5fbcef87d2d9a494c8ce4e5346f522506fbf96dfa04ea8073da76",
+      "bytes": 28237,
+      "source_sha256": "59032790c6c5fbcef87d2d9a494c8ce4e5346f522506fbf96dfa04ea8073da76",
       "transformations": []
     },
     {
@@ -16468,9 +16468,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "738880504f8889c52ffef0fb49a2f22eea6e3cbe113f8ae06bbbba9234797bf1",
-      "bytes": 54797,
-      "source_sha256": "738880504f8889c52ffef0fb49a2f22eea6e3cbe113f8ae06bbbba9234797bf1",
+      "sha256": "ff463dc99e900c362469b52510832b11a548cb081294338e232f1df95410efbe",
+      "bytes": 56330,
+      "source_sha256": "ff463dc99e900c362469b52510832b11a548cb081294338e232f1df95410efbe",
       "transformations": []
     },
     {
@@ -16538,9 +16538,9 @@
     },
     {
       "path": "tools/pure_linux/native_init_gdb.py",
-      "sha256": "bd4663cf13f66ed57032cc2aeb2cf8b7d2ebd5f2e6a74b33dfefa6e3ea5913af",
-      "bytes": 5044,
-      "source_sha256": "bd4663cf13f66ed57032cc2aeb2cf8b7d2ebd5f2e6a74b33dfefa6e3ea5913af",
+      "sha256": "5fa4a00a98969214f9804a28d77894b568a4099d01c96995565c169601103a87",
+      "bytes": 5883,
+      "source_sha256": "5fa4a00a98969214f9804a28d77894b568a4099d01c96995565c169601103a87",
       "transformations": []
     },
     {
@@ -16552,9 +16552,9 @@
     },
     {
       "path": "tools/pure_linux/native_init_probe.c",
-      "sha256": "44cfe84711a8700290501d9fa1fe80c32f8b6dadc77b72b8ac302459bbbe1d1e",
-      "bytes": 8419,
-      "source_sha256": "44cfe84711a8700290501d9fa1fe80c32f8b6dadc77b72b8ac302459bbbe1d1e",
+      "sha256": "aba0c83f8124a14d283e532878105e1daa9a365d8505a86ad24536c6954dc6da",
+      "bytes": 8718,
+      "source_sha256": "aba0c83f8124a14d283e532878105e1daa9a365d8505a86ad24536c6954dc6da",
       "transformations": []
     },
     {
@@ -16601,16 +16601,16 @@
     },
     {
       "path": "tools/pure_linux/provider_job.py",
-      "sha256": "188d7c4d4bcd826da62d8627bca559f8b1af4ec7789b7aeca68dc001d0ac1d3f",
-      "bytes": 22498,
-      "source_sha256": "188d7c4d4bcd826da62d8627bca559f8b1af4ec7789b7aeca68dc001d0ac1d3f",
+      "sha256": "ca7e6b4a83e433fff718c41de08509455657ca1591c64c38495a7cbd20247b39",
+      "bytes": 25285,
+      "source_sha256": "ca7e6b4a83e433fff718c41de08509455657ca1591c64c38495a7cbd20247b39",
       "transformations": []
     },
     {
       "path": "tools/pure_linux/provider_probe.c",
-      "sha256": "ef2db541bc74c7ac8533272793c18207e03cb47d9d7e319fce740aaa1cb292d7",
-      "bytes": 22810,
-      "source_sha256": "ef2db541bc74c7ac8533272793c18207e03cb47d9d7e319fce740aaa1cb292d7",
+      "sha256": "bd56346148d0658ba1334a09dabadc717911829e55398f5c025c3cf1f79303db",
+      "bytes": 25219,
+      "source_sha256": "bd56346148d0658ba1334a09dabadc717911829e55398f5c025c3cf1f79303db",
       "transformations": []
     },
     {
@@ -16622,14 +16622,105 @@
     },
     {
       "path": "tools/pure_linux/test_provider_job.py",
-      "sha256": "f4fb0c101f2b0650f3936c8b8c975e1a1eb4a132516682104b490ff730262dfd",
-      "bytes": 9016,
-      "source_sha256": "f4fb0c101f2b0650f3936c8b8c975e1a1eb4a132516682104b490ff730262dfd",
+      "sha256": "897fba068cee8266dff14bcc60b8753ee28e81c54646e421768bc9c704179198",
+      "bytes": 9989,
+      "source_sha256": "897fba068cee8266dff14bcc60b8753ee28e81c54646e421768bc9c704179198",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-28_CATALOG_CONFIG.md",
+      "sha256": "b817ef645f7357c844ffcde5a901767cf546e398f9dd2d45ece7ccfdfd0e6879",
+      "bytes": 2275,
+      "source_sha256": "b817ef645f7357c844ffcde5a901767cf546e398f9dd2d45ece7ccfdfd0e6879",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_CATALOG_CONFIG_2026-10-28.md",
+      "sha256": "8f30c38f0059a65f0f52dab96e048444cf61e0bafc5efb9e078a0190148c8139",
+      "bytes": 7921,
+      "source_sha256": "8f30c38f0059a65f0f52dab96e048444cf61e0bafc5efb9e078a0190148c8139",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-catalog-config-evidence-20261028.json",
+      "sha256": "8453c4883aa7c14e00a2fa3018b30e72c4b4144fefaf50d2e8d25311144f2e00",
+      "bytes": 42109,
+      "source_sha256": "8453c4883aa7c14e00a2fa3018b30e72c4b4144fefaf50d2e8d25311144f2e00",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/loading_config.c",
+      "sha256": "31e58a0330d3ab161160c0e359a24c31d89f180d8df678bd6c147e7aaadc7252",
+      "bytes": 5221,
+      "source_sha256": "31e58a0330d3ab161160c0e359a24c31d89f180d8df678bd6c147e7aaadc7252",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/loading_config_hook.c",
+      "sha256": "5f8ae6aaf5a67f44ceac5559cce7bf7b084a298231d019668f5a80184afb2843",
+      "bytes": 3336,
+      "source_sha256": "5f8ae6aaf5a67f44ceac5559cce7bf7b084a298231d019668f5a80184afb2843",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/loading_config_probe.c",
+      "sha256": "06dc7a3edfcf69740d4be2c61142553b5976b4f1c4ff851060ad13cf34fd9867",
+      "bytes": 1546,
+      "source_sha256": "06dc7a3edfcf69740d4be2c61142553b5976b4f1c4ff851060ad13cf34fd9867",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/observed_string.py",
+      "sha256": "a67b0a73b786fb6867ccab023af9fda24b904e11cceff29e575baedc03720e0b",
+      "bytes": 1622,
+      "source_sha256": "a67b0a73b786fb6867ccab023af9fda24b904e11cceff29e575baedc03720e0b",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/parsed_tables.py",
+      "sha256": "fb3be0f443aab4db6594683b1ab9f616daba98bd93c0b217f8bb73926fc18b3d",
+      "bytes": 2545,
+      "source_sha256": "fb3be0f443aab4db6594683b1ab9f616daba98bd93c0b217f8bb73926fc18b3d",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/resource_trace.py",
+      "sha256": "ab84226b5e917e9bc05a4d8cd7c436d67af2d869fb6b26b84cb04a0a64250c1f",
+      "bytes": 6468,
+      "source_sha256": "ab84226b5e917e9bc05a4d8cd7c436d67af2d869fb6b26b84cb04a0a64250c1f",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_loading_config.py",
+      "sha256": "21cc6a0460c0b9a2de5b093449384f043c4679146b7d43f11297ff8d2501254a",
+      "bytes": 5684,
+      "source_sha256": "21cc6a0460c0b9a2de5b093449384f043c4679146b7d43f11297ff8d2501254a",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_observed_string.py",
+      "sha256": "8b4862eef438de8f1c5d995dc5dae214a04cb7c03dc98c2da7ca705e55dff67b",
+      "bytes": 2928,
+      "source_sha256": "8b4862eef438de8f1c5d995dc5dae214a04cb7c03dc98c2da7ca705e55dff67b",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_parsed_tables.py",
+      "sha256": "a0e5f1360a28bc9dc38f967aa92be1479069748cdfc604a1e34b45577e930476",
+      "bytes": 1533,
+      "source_sha256": "a0e5f1360a28bc9dc38f967aa92be1479069748cdfc604a1e34b45577e930476",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_resource_trace.py",
+      "sha256": "5cfb72c05baaf2b78ea8501e7a551205a5c27e2c8c0ccf5da9e46ccc0619390f",
+      "bytes": 5499,
+      "source_sha256": "5cfb72c05baaf2b78ea8501e7a551205a5c27e2c8c0ccf5da9e46ccc0619390f",
       "transformations": []
     }
   ],
-  "file_count": 2373,
-  "source_bytes": 33686293,
+  "file_count": 2386,
+  "source_bytes": 33785406,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

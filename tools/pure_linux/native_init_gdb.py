@@ -9,6 +9,10 @@ import os
 from pathlib import Path
 
 import gdb
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from observed_string import read_string
 
 
 targets = json.loads(Path(os.environ["NASHURA_GDB_TARGETS"]).read_text())
@@ -35,6 +39,17 @@ class Observe(gdb.Breakpoint):
                                   "arguments": [int(frame.read_register("x%d" % index))
                                                 for index in range(8)]}
         record["events"].append(event)
+        for specification in self.row.get("string_arguments", []):
+            register = specification["register"]
+            if register not in {"x%d" % index for index in range(8)}:
+                raise ValueError("unsupported observation register")
+            try:
+                value = read_string(gdb.selected_inferior().read_memory,
+                                    int(frame.read_register(register)),
+                                    specification["encoding"], specification.get("limit", 4096))
+            except Exception as error:
+                value = {"error": str(error)}
+            event.setdefault("strings", {})[register] = value
         for slot in self.row.get("pointer_slots", []):
             address = self.row["base"] + slot["offset"]
             event.setdefault("pointer_slots", {})[slot["name"]] = int.from_bytes(
@@ -90,6 +105,7 @@ try:
         row = {"name": target["name"], "module": target["module"],
                "offset": target["offset"], "calls": 0, "armed": False,
                "base": base, "pointer_slots": target.get("pointer_slots", [])}
+        row["string_arguments"] = target.get("string_arguments", [])
         record["targets"].append(row)
         protected = json.loads(os.environ.get("NASHURA_GDB_GUARD_RANGES", "{}"))
         if any(start <= target["offset"] < start + 16 for start in protected.get(target["module"], [])):

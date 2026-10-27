@@ -4,6 +4,17 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+## 2026-10-28 E2.1-N：catalog 自然 ready 与配置依赖纠错
+
+真实 Ubuntu ARM64 的两个新子进程均 exit0，原生 loader 自然推进53步，ready由0变1，
+真实加载162张表/24,353行。两次追踪各确认247次update缺失后APK打开、131次update存在后打开。
+此前空JavaVM故障已定位为配置写入桥；以下旧报告中的日志桥归因由新证据纠正，原文保留。
+单键native持久化候选尚未闭合Android加密、commit及backup外部语义，严格catalog门仍
+**BLOCKED**；ResourceManager整体门未通过，GameState及真实Step保持NOT_RUN。
+专项157通过/1条件跳过，主工程211通过，公开回归exit0、9组XML零失败错误。
+详见[新报告](agent-handoff/PURE_LINUX_CATALOG_CONFIG_2026-10-28.md)及
+[机器证据](agent-handoff/pure-linux-catalog-config-evidence-20261028.json)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：Provider 注册及真实资源读取
 
 Ubuntu ARM64中新子进程完成data/update原生注册和四次完整资源读取，字节SHA、

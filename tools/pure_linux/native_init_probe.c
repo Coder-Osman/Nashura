@@ -13,6 +13,7 @@
 static uintptr_t engine_base;
 
 extern int native_provider_probe(uintptr_t, int (*)(uintptr_t, size_t)) __attribute__((weak));
+extern int native_config_install(uintptr_t, int (*)(uintptr_t, size_t)) __attribute__((weak));
 
 static int mappings(struct dl_phdr_info *information, size_t size, void *argument) {
     (void)size;
@@ -166,6 +167,11 @@ int main(int argument_count, char **arguments) {
     printf("JNI_SYMBOL_ONLY\t%p\t%s\n", jni, error ? error : "resolved_not_called");
     int content = inspect_content();
     printf("CONTENT_INSPECTION\t%d\n", content);
+    if (native_config_install) {
+        int status = native_config_install(engine_base, readable);
+        printf("LOADING_CONFIG_INSTALL_RESULT\t%d\n", status);
+        if (status) return status;
+    }
     native_init_loaded_marker();
     const char *asset_root = getenv("NASHURA_NATIVE_ASSET_ROOT");
     const char *asset_index = getenv("NASHURA_NATIVE_ASSET_INDEX");

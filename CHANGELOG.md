@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N catalog自然加载与配置归因纠正
+
+- 真实两个ARM64子进程自然ready，53步、162表/24,353行，原始输入与辅助文件不变。
+- 纠正旧SIGSEGV为配置写入桥获取JNIEnv，保留旧报告和失败原字节。
+- 新增有界字符串、表布局与资源trace诊断、单键配置持久化候选及跨进程恢复测试。
+- 真实update/APK同名资源读取通过；两次实际fallback路径有序关联，未知路径及资源fd残留0。
+- 专项157通过/1条件跳过、主工程211通过、公开入口exit0且9组XML零失败错误。
+- 配置Android语义未闭合，严格catalog/manager门仍BLOCKED，GameState及Step未运行。
+
 ## 2026-10-28：E2.1-N Provider 注册与 catalog 调查
 
 - 新增版本绑定Provider/catalog探针、只读asset backend、所属子进程GDB观察与独立测试。

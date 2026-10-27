@@ -1,5 +1,24 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：自然 catalog 加载与单键配置候选
+
+真实Ubuntu ARM64 v78/v79各wrapper0/child0；loader53步到终态9，ready自然0→1，
+162表/24,353行，布局SHA一致。247个APK文件完整read、131个update文件完整只读mmap，
+378个实际打开路径前后manifest/SHA一致；mmap不证明逐字节消费，布局不证明cell内容等价。
+两次有序追踪各确认247次同路径update ENOENT后APK打开、131次update exists成功后打开，
+unknown路径0、资源fd残留0。证据仅覆盖实际路径，不代表全部namespace/fallback异常语义。
+
+纠正下方历史归因：原故障是PreferenceWrite→storeKeyValue→JNIEnv→空JavaVM，
+不是已证明的日志桥，AttachCurrentThread尚未执行。新增单键native持久化候选，
+真实六进程恢复/拒绝用例符合预期；Android加密、commit/failure和BackupManager外部副作用
+仍UNRESOLVED，因此CATALOG_READY_PASS=false，ResourceManager整体门BLOCKED。
+GameState/empty/reset/Step/动作/完整局/Android对照NOT_RUN，未启动训练、10×或无VM验收。
+
+隔离专项157通过/1平台条件跳过、主工程211通过、公开入口exit0/9组XML零失败错误；
+trace行序诊断后专项复跑一致。旧报告、旧失败和历史XML原字节保留。
+命令、退出码、输入输出及私有日志SHA见[新报告](../agent-handoff/PURE_LINUX_CATALOG_CONFIG_2026-10-28.md)
+和[证据](../agent-handoff/pure-linux-catalog-config-evidence-20261028.json)。以下为历史状态。
+
 ## 2026-10-28 E2.1-N：Provider / catalog 前置依赖
 
 data-only/update-only/both三个独立原生注册及释放通过；四次settings/version真实资源

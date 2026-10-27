@@ -1,5 +1,6 @@
 """Identity-bound provider and catalog experiments; no battle calls or ready writes."""
 import argparse
+from parsed_tables import observations as parsed_table_observations
 import json
 import os
 from pathlib import Path
@@ -36,6 +37,10 @@ ENTRY_GUARDS = {
     "LOADER_START": (0xc833ec, "7ac720a2b26e423c729dddda1bf9f261b4cc5c44f6407a2137d500a11250622c"),
     "LOADER_STEP": (0xc8346c, "c0d3b895fdcbcb0047c3c8b79528770c75af7d7bac5d98242bf48f78852ba609"),
     "LOADER_DTOR": (0xc8eb64, "678076dcebd45809617481c463e518663dfe5db67a9313fc0309b7a2a11fdb61"),
+    "CONFIG_WRITE": (0x140b7b4, "933f712dea4e29227706a7844942154c6d804c243643bd187471059f18c3a977"),
+    "CONTEXT_GET": (0xdccb88, "bfb80a9c1f22429f8fca1b05a763abedc72565dcfb45c039a1407d49941859b6"),
+    "TABLE_CTOR": (0xdc76ac, "678076dcebd45809617481c463e518663dfe5db67a9313fc0309b7a2a11fdb61"),
+    "CSV_GET": (0x12101d4, "a5b69ec0fdb9b5118edacf3e9e32c76e87982c7b15007c0ab769ffa1ca13982d"),
 }
 
 
@@ -114,9 +119,12 @@ def resource_inventory(roots):
     return observed
 
 
-def strace_launch(inferior, output, environment):
+def strace_launch(inferior, output, environment, resource_trace=False):
     host_environment = {key: value for key, value in environment.items() if not key.startswith("LD_")}
     command = ["strace", "-ff", "-tt", "-s", "128", "-o", str(output / "syscalls")]
+    if resource_trace:
+        command.extend(["-e", "trace=openat,close,fcntl,dup,dup3,chdir,fchdir,fstat,newfstatat,mmap,munmap,lseek,read,pread64,exit_group",
+                        "-e", "raw=read,pread64"])
     for key, value in sorted(environment.items()):
         if key.startswith("LD_"):
             command.extend(["-E", key + "=" + value])
@@ -153,12 +161,12 @@ def resource_observations(output, text, expected):
     return {"sha256": actual, "expected_sha256": expected, "complete": passed}
 
 
-def catalog_observations(text, mode):
+def catalog_observations(text, mode, expected_preload_requests=368):
     rows = [line.split("\t") for line in text.splitlines()]
     lists = [row[1:] for row in rows if row[0] == "CATALOG_LIST"]
     listing = lists == [["224", "158"]]
     preloaded = (["PHASE", "catalog_preload_return"] in rows and
-                 [row for row in rows if row[0] == "CATALOG_PRELOAD"] == [["CATALOG_PRELOAD", "3", "368"]] and
+                 [row for row in rows if row[0] == "CATALOG_PRELOAD"] == [["CATALOG_PRELOAD", "3", str(expected_preload_requests)]] and
                  [row for row in rows if row[0] == "CATALOG_READY_AFTER_PRELOAD"] == [["CATALOG_READY_AFTER_PRELOAD", "0"]] and
                  ["LISTENER_CANARY", "1"] in rows and
                  ["PHASE", "listener_destructor_return"] in rows)
@@ -184,6 +192,7 @@ def catalog_observations(text, mode):
     if mode == "loader":
         complete = listing and preloaded and loader_destroyed and ready_observed
     return {"mode": mode, "complete": complete, "list_verified": listing,
+            "expected_preload_requests": expected_preload_requests,
             "preload_returned": preloaded, "table_load_completed": table_loaded,
             "loader_destroyed": loader_destroyed, "ready_observed": ready_observed,
             "catalog_ready_pass": False,
@@ -203,6 +212,8 @@ def main():
     parser.add_argument("--disk-namespace", choices=["data:", "asset:"])
     parser.add_argument("--catalog-mode", choices=["inspect", "list", "preload", "load", "loader", "loader-construct"])
     parser.add_argument("--data-path", help="Logical native provider root; inventory remains limited to --data-root")
+    parser.add_argument("--resource-trace", action="store_true",
+                        help="Bounded resource syscalls with raw read arguments; no buffer contents")
     parser.add_argument("--search-root", type=Path)
     parser.add_argument("--factory-mode", choices=["construct", "register"])
     parser.add_argument("--resource-manifest", type=Path, required=True)
@@ -212,6 +223,10 @@ def main():
     parser.add_argument("--asset-backend", type=Path)
     parser.add_argument("--asset-backend-sha256")
     parser.add_argument("--observe-targets", type=Path)
+    parser.add_argument("--loading-config-candidate", action="store_true")
+    parser.add_argument("--inspect-parsed-tables", action="store_true")
+    parser.add_argument("--expected-preload-requests", type=int, default=368,
+                        help="Explicit observation profile, bound to the resource manifest; not a semantic gate")
     parser.add_argument("--timeout", type=int, default=55)
     arguments = parser.parse_args()
     if bool(arguments.resource_name) != bool(arguments.expected_resource_sha256):
@@ -222,6 +237,8 @@ def main():
         parser.error("asset root, index, backend and both expected hashes must be supplied together")
     if not 1 <= arguments.timeout <= 120:
         parser.error("timeout must be 1..120 seconds")
+    if not 1 <= arguments.expected_preload_requests <= 16384:
+        parser.error("expected preload requests must be 1..16384")
     payload, probe = arguments.payload.resolve(), arguments.probe.resolve()
     before = check_inputs(payload)
     guards = entry_guards(payload / "libs/libg.so")
@@ -253,6 +270,14 @@ def main():
                         "NASHURA_DATA_PATH": arguments.data_path or str(arguments.data_root.resolve()),
                         "NASHURA_UPDATE_PATH": str(arguments.update_root.resolve())})
     environment.update({"NASHURA_" + name + "_GUARD": value for name, value in guards.items()})
+    if arguments.loading_config_candidate:
+        configuration = output / "loading-config"
+        configuration.mkdir(exist_ok=False)
+        environment["NASHURA_LOADING_CONFIG_DIRECTORY"] = str(configuration)
+    if arguments.inspect_parsed_tables:
+        if arguments.catalog_mode not in {"loader", "loader-construct"}:
+            parser.error("parsed table observation requires a loader experiment")
+        environment["NASHURA_INSPECT_PARSED_TABLES"] = "1"
     if arguments.resource_name:
         environment["NASHURA_RESOURCE_NAME"] = arguments.resource_name
     if arguments.disk_namespace:
@@ -275,6 +300,8 @@ def main():
         script = Path(__file__).with_name("native_init_gdb.py").resolve()
         launcher = Path(__file__).with_name("native_init_attach.py").resolve()
         extras.update({"gdb_script": (script, digest(script)), "gdb_launcher": (launcher, digest(launcher))})
+        decoder = Path(__file__).with_name("observed_string.py").resolve()
+        extras["string_decoder"] = (decoder, digest(decoder))
         environment.update(NASHURA_GDB_TARGETS=str(arguments.observe_targets.resolve()),
                            NASHURA_GDB_OUTPUT=str(output / "observation.json"),
                            NASHURA_GDB_GUARD_RANGES=json.dumps({"libg.so": [entry[0] for entry in ENTRY_GUARDS.values()]}))
@@ -284,7 +311,7 @@ def main():
             json.dump(specification, stream, indent=2)
         command = [sys.executable, str(launcher), str(specification_path)]
     else:
-        command, environment = strace_launch(inferior, output, environment)
+        command, environment = strace_launch(inferior, output, environment, arguments.resource_trace)
     probe_before = digest(probe)
     result = run(command, output, environment, arguments.timeout)
     postcheck_errors = []
@@ -316,13 +343,17 @@ def main():
     if arguments.asset_backend:
         bindings = [row.split("\t")[1:] for row in text.splitlines() if row.startswith("NATIVE_ASSET_BINDING\t")]
         backend_binding = bindings == [[str(arguments.asset_backend.resolve())]]
-    catalog = catalog_observations(text, arguments.catalog_mode)
+    catalog = catalog_observations(text, arguments.catalog_mode, arguments.expected_preload_requests)
+    parsed_tables = parsed_table_observations(text) if arguments.inspect_parsed_tables else None
+    candidate_bound = ("LOADING_CONFIG_INSTALL_RESULT\t0" in text.splitlines() and
+                       "LOADING_CONFIG_HOOK\tisolated_native_candidate_no_android_backup_parity" in text.splitlines()) if arguments.loading_config_candidate else None
     resource_result = resource_observations(output, text, arguments.expected_resource_sha256) if arguments.resource_name else None
     passed = result["exit_code"] == 0 and not result["timed_out"] and before == after and observations["complete"]
     passed = passed and resources_before == resources_after and (resource_result is None or resource_result["complete"])
+    passed = passed and (parsed_tables is None or parsed_tables["complete"])
     generic_return = ([row for row in text.splitlines() if row.startswith("PHASE\tgeneric_register_return")] ==
                       ["PHASE\tgeneric_register_return\t" + arguments.disk_namespace]) if arguments.disk_namespace else None
-    passed = passed and (generic_return is not False) and (backend_binding is not False) and catalog["complete"] and auxiliary_unchanged and not postcheck_errors
+    passed = passed and (generic_return is not False) and (backend_binding is not False) and (candidate_bound is not False) and catalog["complete"] and auxiliary_unchanged and not postcheck_errors
     if arguments.observe_targets:
         try:
             observation = json.loads((output / "observation.json").read_text())
@@ -340,9 +371,12 @@ def main():
                    "resources_unchanged": resources_before == resources_after,
                    "resource_observations": resource_result,
                    "catalog": catalog, "postcheck_errors": postcheck_errors,
+                   "parsed_tables": parsed_tables,
                    "auxiliary_before": {label: expected for label, (_, expected) in extras.items()},
                    "auxiliary_after": extras_after, "auxiliary_unchanged": auxiliary_unchanged,
                    "catalog_ready_pass": False, "resource_access_verified": bool(passed and resource_result),
+                   "loading_config_candidate": arguments.loading_config_candidate,
+                   "loading_config_candidate_bound": candidate_bound,
                    "outputs": {path.name: digest(path) for path in output.iterdir() if path.is_file()}})
     if not result["probe_unchanged"]:
         result["status"] = "BLOCKED"

@@ -1,0 +1,1194 @@
+{
+  "schema": "nashura.pure-linux-catalog-config-evidence.v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "source_base": "4b581dd0703f938a86a5ab88aa8722c450858f96",
+  "commit_identity": "commit containing this file; no self-referential hash",
+  "overall_status": "BLOCKED",
+  "first_unresolved_dependency": "LOADING_SCREEN_STATE_LABEL native persistence vs Android encrypted SharedPreferences/commit/BackupManager semantics",
+  "missing_input": false,
+  "environment": {
+    "host": {
+      "os": "macOS 15.6 / 24G84",
+      "architecture": "arm64",
+      "memory_bytes": 38654705664
+    },
+    "guest": {
+      "machine": "aarch64",
+      "platform": "Linux-6.8.0-138-generic-aarch64-with-glibc2.35",
+      "free_bytes": 1298956288
+    },
+    "execution": "existing Ubuntu ARM64 guest, matched Android linker/Bionic, new isolated child per case",
+    "android_emulator_started": false,
+    "art_started": false,
+    "java_vm_injected": false,
+    "training_started": false
+  },
+  "inputs": {
+    "apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "runtime_fingerprint": "e0cb2fb9eb2fdd0df1afcb00df3e3ba61cf25aa8b24e39c17cc391d952a4e339",
+    "assets_manifest_sha256": "4cf1736e74514e3c5f857bfac8dec9bcb30ee47091fbfe5542af12331652db54",
+    "asset_index_sha256": "cc7fedcfb2a43a3cc8aae9afb586114915bfc69ae461d92420de349550772916",
+    "update_manifest_sha256": "7a435be60fe6759509824194afa3748537c6cb4e945bdeaf7ae1bd3229cb7a82",
+    "runtime_manifest_sha256": "cfaa02b87719bba68ac034459fa5da9298e5bf14be3da865cb2b3e128c3327b4",
+    "current_dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+    "game_libraries": 8,
+    "apk_assets": 9829,
+    "apk_asset_bytes": 849482445,
+    "staged_apk_files": 619,
+    "staged_apk_bytes": 8043281,
+    "update_files": 990,
+    "update_bytes": 151493511,
+    "historical_whole_apk_sha_difference_retained": true,
+    "identity_scope": "inherited full source identity plus per-experiment staged payload/resource/probe/auxiliary before-and-after hashes"
+  },
+  "correction": {
+    "status": "RUNTIME_OBSERVED",
+    "supersedes_attribution_only": [
+      "PURE_LINUX_PROVIDER_CATALOG_2026-10-28.md",
+      "CODEX_REPLY_2026-10-28_PROVIDER_CATALOG.md",
+      "pure-linux-provider-catalog-evidence-20261028.json"
+    ],
+    "observed_chain": [
+      "loader_start",
+      "preference_write",
+      "store_key_value_bridge",
+      "jni_env_acquire",
+      "SIGSEGV on null JavaVM virtual table read"
+    ],
+    "observed_key": "LOADING_SCREEN_STATE_LABEL",
+    "observed_value": "datatables-init",
+    "attach_current_thread_executed": false,
+    "logs": [
+      {
+        "private_log_label": "v59-result-loader-observation.json",
+        "sha256": "9d98d1b3281c11c7b4e27935a46bcc12d7a29067095aaa4015e9d5c9c098b294",
+        "bytes": 4457,
+        "published": false
+      },
+      {
+        "private_log_label": "v61-result-loader-observation.json",
+        "sha256": "ef228cfe58c539477ae6352d0a2e127d7178650e51db91e0b65213e551cb33f7",
+        "bytes": 2303,
+        "published": false
+      },
+      {
+        "private_log_label": "v62-result-loader-observation.json",
+        "sha256": "7762aab1e3a3141df75b64a0401a2fe00af0c55e60e032664f9102dc3a1e7dde",
+        "bytes": 2303,
+        "published": false
+      }
+    ],
+    "coverage": "explicit post-load addresses; constructors excluded, partial unwind, zero hits are not absence of dependencies"
+  },
+  "candidate": {
+    "status": "REPLACEABLE_CANDIDATE",
+    "key_allowlist": [
+      "LOADING_SCREEN_STATE_LABEL"
+    ],
+    "unknown_key_behavior": "explicit -1, unchanged state; hook terminates with exit 96",
+    "maximum_ascii_bytes": 4095,
+    "persistence_bytes": 8216,
+    "implemented": [
+      "p/o slot storage",
+      "p-first read and o-to-p repair",
+      "atomic rename and fsync",
+      "cross-process restore",
+      "corrupt/symlink/pending transaction rejection"
+    ],
+    "not_equivalent_or_unverified": [
+      "Android encryption and representation",
+      "SharedPreferences commit/failure semantics",
+      "BackupManager external side effects",
+      "concurrent interprocess writers"
+    ],
+    "backup_counter_is_not_android_backup": true,
+    "hook_scope": "one guarded raw write bridge in isolated process memory; RW-to-RX and instruction cache clear; original libg file unchanged; read/remove/cache/lock paths not replaced",
+    "ready_written_by_probe": false,
+    "java_vm_faked": false,
+    "strict_catalog_gate": false
+  },
+  "resource_reads": [
+    {
+      "label": "v70",
+      "status": "RESOURCE_READ_PASS",
+      "child_exit_code": 0,
+      "wrapper_exit_code": 0,
+      "mode": "explicit update namespace",
+      "resource_sha256": "e674ff867ec52970a88e2a303530ea5e1f066afb7c65ff757986ec5600e1871e",
+      "resource_check": {
+        "sha256": "e674ff867ec52970a88e2a303530ea5e1f066afb7c65ff757986ec5600e1871e",
+        "expected_sha256": "e674ff867ec52970a88e2a303530ea5e1f066afb7c65ff757986ec5600e1871e",
+        "complete": true
+      },
+      "inputs_unchanged": true,
+      "resources_unchanged": true,
+      "logs": [
+        {
+          "private_log_label": "v70-result.json",
+          "sha256": "78163d90f2ad8be11ec7d231d9939db7b1df6e655e803e57f8bbfbc264de9909",
+          "bytes": 736213,
+          "published": false
+        }
+      ]
+    },
+    {
+      "label": "v71",
+      "status": "RESOURCE_READ_PASS",
+      "child_exit_code": 0,
+      "wrapper_exit_code": 0,
+      "mode": "APK search-root",
+      "resource_sha256": "7e5ecfb5f696dc79bc10bf59eb3e3cba055a4a277f8c607591d50514d43cdf60",
+      "resource_check": {
+        "sha256": "7e5ecfb5f696dc79bc10bf59eb3e3cba055a4a277f8c607591d50514d43cdf60",
+        "expected_sha256": "7e5ecfb5f696dc79bc10bf59eb3e3cba055a4a277f8c607591d50514d43cdf60",
+        "complete": true
+      },
+      "inputs_unchanged": true,
+      "resources_unchanged": true,
+      "logs": [
+        {
+          "private_log_label": "v71-result.json",
+          "sha256": "6b8579aeb90f9dc067badef0eb54c29e8e78e5f6069c8dfb95d87be011622c78",
+          "bytes": 736213,
+          "published": false
+        }
+      ]
+    },
+    {
+      "label": "v72",
+      "status": "RESOURCE_READ_PASS",
+      "child_exit_code": 0,
+      "wrapper_exit_code": 0,
+      "mode": "update search-root",
+      "resource_sha256": "e674ff867ec52970a88e2a303530ea5e1f066afb7c65ff757986ec5600e1871e",
+      "resource_check": {
+        "sha256": "e674ff867ec52970a88e2a303530ea5e1f066afb7c65ff757986ec5600e1871e",
+        "expected_sha256": "e674ff867ec52970a88e2a303530ea5e1f066afb7c65ff757986ec5600e1871e",
+        "complete": true
+      },
+      "inputs_unchanged": true,
+      "resources_unchanged": true,
+      "logs": [
+        {
+          "private_log_label": "v72-result.json",
+          "sha256": "2b36c544434227282973b0f5f49e9b9f8fa01312ad343a2cae88642791d385b1",
+          "bytes": 874121,
+          "published": false
+        }
+      ]
+    }
+  ],
+  "catalog_runs": [
+    {
+      "label": "v67",
+      "status": "CATALOG_LOADER_OBSERVED",
+      "child_exit_code": 0,
+      "wrapper_exit_code": 0,
+      "elapsed_seconds": 13.890144213000895,
+      "loader_steps": 53,
+      "last_step": [
+        "52",
+        "9",
+        "0",
+        "1"
+      ],
+      "natural_ready": true,
+      "profile": "APK-only",
+      "catalog": {
+        "mode": "loader",
+        "complete": true,
+        "list_verified": true,
+        "preload_returned": true,
+        "table_load_completed": false,
+        "loader_destroyed": true,
+        "ready_observed": true,
+        "catalog_ready_pass": false,
+        "gate_reason": "requires independent repeat and full resource identity/semantic evidence"
+      },
+      "parsed_tables": null,
+      "probe_sha256": "fa8b66a5751057e75f63c9601915080a86c7029b6512251abaf9941c5448a63f",
+      "inputs_unchanged": true,
+      "resources_unchanged": true,
+      "probe_unchanged": true,
+      "auxiliary_unchanged": true,
+      "postcheck_errors": [],
+      "strict_catalog_gate": false,
+      "logs": [
+        {
+          "private_log_label": "v67-result-loader-result.json",
+          "sha256": "6f218e7ac627c4b756a92637b81e7d4f3d8d0e07e719d6fe291ee1ab2be3a750",
+          "bytes": 598034,
+          "published": false
+        },
+        {
+          "private_log_label": "v67-result-loader-stdout.log",
+          "sha256": "e3885a3db93e6489ed0b781417c93a55d9b2e6194e0317fce1731f0a3a5c9907",
+          "bytes": 27880,
+          "published": false
+        },
+        {
+          "private_log_label": "v67-result-loader-stderr.log",
+          "sha256": "75aab34943985bd7e04f7d8f4b584e97aca7b9692895854a5b16b314e04cdf55",
+          "bytes": 18560,
+          "published": false
+        }
+      ]
+    },
+    {
+      "label": "v68",
+      "status": "CATALOG_LOADER_OBSERVED",
+      "child_exit_code": 0,
+      "wrapper_exit_code": 0,
+      "elapsed_seconds": 14.038627205998637,
+      "loader_steps": 53,
+      "last_step": [
+        "52",
+        "9",
+        "0",
+        "1"
+      ],
+      "natural_ready": true,
+      "profile": "APK-only",
+      "catalog": {
+        "mode": "loader",
+        "complete": true,
+        "list_verified": true,
+        "preload_returned": true,
+        "table_load_completed": false,
+        "loader_destroyed": true,
+        "ready_observed": true,
+        "catalog_ready_pass": false,
+        "gate_reason": "requires independent repeat and full resource identity/semantic evidence"
+      },
+      "parsed_tables": null,
+      "probe_sha256": "fa8b66a5751057e75f63c9601915080a86c7029b6512251abaf9941c5448a63f",
+      "inputs_unchanged": true,
+      "resources_unchanged": true,
+      "probe_unchanged": true,
+      "auxiliary_unchanged": true,
+      "postcheck_errors": [],
+      "strict_catalog_gate": false,
+      "logs": [
+        {
+          "private_log_label": "v68-result-loader-result.json",
+          "sha256": "e58d4370340585844a894f1df3f436d75cd498ca465048efc8ecfff5202a589b",
+          "bytes": 735942,
+          "published": false
+        },
+        {
+          "private_log_label": "v68-result-loader-stdout.log",
+          "sha256": "b54c7020682fe923b6d75264b57b052d89ec686717c25788b19f6c1ad5a0b9b1",
+          "bytes": 27890,
+          "published": false
+        },
+        {
+          "private_log_label": "v68-result-loader-stderr.log",
+          "sha256": "75aab34943985bd7e04f7d8f4b584e97aca7b9692895854a5b16b314e04cdf55",
+          "bytes": 18560,
+          "published": false
+        }
+      ]
+    },
+    {
+      "label": "v69",
+      "status": "CATALOG_LOADER_OBSERVED",
+      "child_exit_code": 0,
+      "wrapper_exit_code": 0,
+      "elapsed_seconds": 13.890214184997603,
+      "loader_steps": 53,
+      "last_step": [
+        "52",
+        "9",
+        "0",
+        "1"
+      ],
+      "natural_ready": true,
+      "profile": "APK-only",
+      "catalog": {
+        "mode": "loader",
+        "complete": true,
+        "list_verified": true,
+        "preload_returned": true,
+        "table_load_completed": false,
+        "loader_destroyed": true,
+        "ready_observed": true,
+        "catalog_ready_pass": false,
+        "gate_reason": "requires independent repeat and full resource identity/semantic evidence"
+      },
+      "parsed_tables": null,
+      "probe_sha256": "fa8b66a5751057e75f63c9601915080a86c7029b6512251abaf9941c5448a63f",
+      "inputs_unchanged": true,
+      "resources_unchanged": true,
+      "probe_unchanged": true,
+      "auxiliary_unchanged": true,
+      "postcheck_errors": [],
+      "strict_catalog_gate": false,
+      "logs": [
+        {
+          "private_log_label": "v69-result-loader-result.json",
+          "sha256": "2a2e50f2995f95fc83949dd8fe077d152dd7297ad0d061c2480d23d098211520",
+          "bytes": 735942,
+          "published": false
+        },
+        {
+          "private_log_label": "v69-result-loader-stdout.log",
+          "sha256": "0c57df7a4145ce7e090ed29104f9d5084b9a1bab18b0fdb24255f468f230f18d",
+          "bytes": 27890,
+          "published": false
+        },
+        {
+          "private_log_label": "v69-result-loader-stderr.log",
+          "sha256": "75aab34943985bd7e04f7d8f4b584e97aca7b9692895854a5b16b314e04cdf55",
+          "bytes": 18560,
+          "published": false
+        }
+      ]
+    },
+    {
+      "label": "v75",
+      "status": "CATALOG_LOADER_OBSERVED",
+      "child_exit_code": 0,
+      "wrapper_exit_code": 0,
+      "elapsed_seconds": 14.141068328000983,
+      "loader_steps": 53,
+      "last_step": [
+        "52",
+        "9",
+        "0",
+        "1"
+      ],
+      "natural_ready": true,
+      "profile": "real update search-root + APK fallback",
+      "catalog": {
+        "mode": "loader",
+        "complete": true,
+        "list_verified": true,
+        "expected_preload_requests": 377,
+        "preload_returned": true,
+        "table_load_completed": false,
+        "loader_destroyed": true,
+        "ready_observed": true,
+        "catalog_ready_pass": false,
+        "gate_reason": "requires independent repeat and full resource identity/semantic evidence"
+      },
+      "parsed_tables": {
+        "complete": true,
+        "errors": [],
+        "summaries": {
+          "before": [
+            0,
+            0
+          ],
+          "after": [
+            162,
+            24353
+          ]
+        },
+        "layout_sha256": "8ff1043b9d3544dbd6cbefae576025845e1f5f6e8cb9a78a931428eb5de36f89",
+        "coverage": "table layout, counts and nonnull row pointers; not cell contents or Android parity",
+        "catalog_ready_pass": false
+      },
+      "probe_sha256": "fa8b66a5751057e75f63c9601915080a86c7029b6512251abaf9941c5448a63f",
+      "inputs_unchanged": true,
+      "resources_unchanged": true,
+      "probe_unchanged": true,
+      "auxiliary_unchanged": true,
+      "postcheck_errors": [],
+      "strict_catalog_gate": false,
+      "logs": [
+        {
+          "private_log_label": "v75-result.json",
+          "sha256": "c177e6e3e290c41515c32d985daf8af077308c93a707f258bb1c534064b6dee6",
+          "bytes": 874302,
+          "published": false
+        },
+        {
+          "private_log_label": "v75-stdout.log",
+          "sha256": "6991233cb2531ddfc867d519dfbdb445146dd8b5d22e6b62013c4f9fdcd2986e",
+          "bytes": 27904,
+          "published": false
+        },
+        {
+          "private_log_label": "v75-stderr.log",
+          "sha256": "0b15f6b97cf845a56cf98b176f5fcac50ca68d1d3f2cd537b8da92e9301c151a",
+          "bytes": 61277,
+          "published": false
+        }
+      ]
+    },
+    {
+      "label": "v76",
+      "status": "CATALOG_LOADER_OBSERVED",
+      "child_exit_code": 0,
+      "wrapper_exit_code": 0,
+      "elapsed_seconds": 14.040728066000156,
+      "loader_steps": 53,
+      "last_step": [
+        "52",
+        "9",
+        "0",
+        "1"
+      ],
+      "natural_ready": true,
+      "profile": "real update search-root + APK fallback",
+      "catalog": {
+        "mode": "loader",
+        "complete": true,
+        "list_verified": true,
+        "expected_preload_requests": 377,
+        "preload_returned": true,
+        "table_load_completed": false,
+        "loader_destroyed": true,
+        "ready_observed": true,
+        "catalog_ready_pass": false,
+        "gate_reason": "requires independent repeat and full resource identity/semantic evidence"
+      },
+      "parsed_tables": {
+        "complete": true,
+        "errors": [],
+        "summaries": {
+          "before": [
+            0,
+            0
+          ],
+          "after": [
+            162,
+            24353
+          ]
+        },
+        "layout_sha256": "8ff1043b9d3544dbd6cbefae576025845e1f5f6e8cb9a78a931428eb5de36f89",
+        "coverage": "table layout, counts and nonnull row pointers; not cell contents or Android parity",
+        "catalog_ready_pass": false
+      },
+      "probe_sha256": "fa8b66a5751057e75f63c9601915080a86c7029b6512251abaf9941c5448a63f",
+      "inputs_unchanged": true,
+      "resources_unchanged": true,
+      "probe_unchanged": true,
+      "auxiliary_unchanged": true,
+      "postcheck_errors": [],
+      "strict_catalog_gate": false,
+      "logs": [
+        {
+          "private_log_label": "v76-result.json",
+          "sha256": "4a79d5ffc41834f37038a438d26521524d176cd0c74d711612cbbcb22e5d1a25",
+          "bytes": 874302,
+          "published": false
+        },
+        {
+          "private_log_label": "v76-stdout.log",
+          "sha256": "21219afdd001371dc4509b9b3b35142a85f3e943f127d9d229562520d919e513",
+          "bytes": 27904,
+          "published": false
+        },
+        {
+          "private_log_label": "v76-stderr.log",
+          "sha256": "0b15f6b97cf845a56cf98b176f5fcac50ca68d1d3f2cd537b8da92e9301c151a",
+          "bytes": 61277,
+          "published": false
+        }
+      ]
+    },
+    {
+      "label": "v78",
+      "status": "CATALOG_LOADER_OBSERVED",
+      "child_exit_code": 0,
+      "wrapper_exit_code": 0,
+      "elapsed_seconds": 14.14480812200054,
+      "loader_steps": 53,
+      "last_step": [
+        "52",
+        "9",
+        "0",
+        "1"
+      ],
+      "natural_ready": true,
+      "profile": "real update search-root + APK fallback",
+      "catalog": {
+        "mode": "loader",
+        "complete": true,
+        "list_verified": true,
+        "expected_preload_requests": 377,
+        "preload_returned": true,
+        "table_load_completed": false,
+        "loader_destroyed": true,
+        "ready_observed": true,
+        "catalog_ready_pass": false,
+        "gate_reason": "requires independent repeat and full resource identity/semantic evidence"
+      },
+      "parsed_tables": {
+        "complete": true,
+        "errors": [],
+        "summaries": {
+          "before": [
+            0,
+            0
+          ],
+          "after": [
+            162,
+            24353
+          ]
+        },
+        "layout_sha256": "8ff1043b9d3544dbd6cbefae576025845e1f5f6e8cb9a78a931428eb5de36f89",
+        "coverage": "table layout, counts and nonnull row pointers; not cell contents or Android parity",
+        "catalog_ready_pass": false
+      },
+      "probe_sha256": "fa8b66a5751057e75f63c9601915080a86c7029b6512251abaf9941c5448a63f",
+      "inputs_unchanged": true,
+      "resources_unchanged": true,
+      "probe_unchanged": true,
+      "auxiliary_unchanged": true,
+      "postcheck_errors": [],
+      "strict_catalog_gate": false,
+      "logs": [
+        {
+          "private_log_label": "v78-result.json",
+          "sha256": "4d2f48d4bcd507d2b96f198c55d518cbf4e16343e6aa16928432da72531d3c44",
+          "bytes": 874323,
+          "published": false
+        },
+        {
+          "private_log_label": "v78-stdout.log",
+          "sha256": "ad8c73646f4df565c6efdaba28fb284cbe5130f89875424646b6f002292cb38f",
+          "bytes": 27904,
+          "published": false
+        },
+        {
+          "private_log_label": "v78-stderr.log",
+          "sha256": "0b15f6b97cf845a56cf98b176f5fcac50ca68d1d3f2cd537b8da92e9301c151a",
+          "bytes": 61277,
+          "published": false
+        }
+      ],
+      "resource_trace": {
+        "incomplete_lines": [],
+        "termination": [
+          "exited with 0"
+        ],
+        "complete_successful_trace": true,
+        "all_open_paths_resolved": true,
+        "open_descriptors_at_end": 0,
+        "coverage": "observed syscalls only; mmap is not proof of CPU byte consumption",
+        "content_sha_verified_by_trace": false,
+        "trace_sha256": "9691f7e137e08a0139cf7f94eecd783c2b2d50162eb3a4316db4e5c40e353a8b",
+        "trace_bytes": 12495241,
+        "unresolved_count": 0,
+        "roots": {
+          "apk": {
+            "opens": 247,
+            "unique_paths": 247,
+            "size_sum": 3421119,
+            "full_mmap": 0,
+            "mappings": 0,
+            "reads": 247,
+            "read_bytes": 3421119,
+            "closed": 247,
+            "errors": 0,
+            "out_of_range": 0,
+            "exists": 0,
+            "missing_opens": 0
+          },
+          "update": {
+            "opens": 131,
+            "unique_paths": 131,
+            "size_sum": 2805535,
+            "full_mmap": 131,
+            "mappings": 131,
+            "reads": 0,
+            "read_bytes": 0,
+            "closed": 131,
+            "errors": 0,
+            "out_of_range": 0,
+            "exists": 1147,
+            "missing_opens": 0
+          }
+        }
+      },
+      "ordered_fallback": {
+        "trace_sha256": "9691f7e137e08a0139cf7f94eecd783c2b2d50162eb3a4316db4e5c40e353a8b",
+        "ordered_matches": {
+          "apk": {
+            "opens": 247,
+            "preceded_by_expected_update_exists": 247,
+            "all_manifest_paths_unchanged": true
+          },
+          "update": {
+            "opens": 131,
+            "preceded_by_expected_update_exists": 131,
+            "all_manifest_paths_unchanged": true
+          }
+        },
+        "coverage": "same-process syscall order and path association only; not complete engine namespace equivalence"
+      },
+      "outputs_sha256": {
+        "before.maps": "2f503f0fa4719934789ce53265531ea6e7431d1311084c86ed6f4cbb1cba3eeb",
+        "stderr.log": "0b15f6b97cf845a56cf98b176f5fcac50ca68d1d3f2cd537b8da92e9301c151a",
+        "syscalls.3076": "9691f7e137e08a0139cf7f94eecd783c2b2d50162eb3a4316db4e5c40e353a8b",
+        "stdout.log": "ad8c73646f4df565c6efdaba28fb284cbe5130f89875424646b6f002292cb38f",
+        "after.maps": "b04530d8b074fe71edd5b6e3e3114654f9f3e86d3bbd949e67aec4c787b30392",
+        "closed.maps": "48d996f48f82ff6901e72e06a5d60105d06578f272823f8afc7a5fe1930a2c46"
+      },
+      "config_state_sha256": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+      "command_redacted": [
+        "python3",
+        "tools/pure_linux/provider_job.py",
+        "--payload",
+        "<PAYLOAD>",
+        "--probe",
+        "<PROBE>",
+        "--output",
+        "<NEW_V78_OUTPUT>",
+        "--mode",
+        "both",
+        "--data-root",
+        "<APK_TABLES>",
+        "--update-root",
+        "<UPDATE>",
+        "--data-path",
+        "/",
+        "--search-root",
+        "<UPDATE>",
+        "--factory-mode",
+        "register",
+        "--resource-manifest",
+        "<MANIFEST>",
+        "--asset-root",
+        "<APK_TABLES>",
+        "--asset-index",
+        "<INDEX>",
+        "--asset-index-sha256",
+        "cc7fedcfb2a43a3cc8aae9afb586114915bfc69ae461d92420de349550772916",
+        "--asset-backend",
+        "<BACKEND>",
+        "--asset-backend-sha256",
+        "905fb58cc33ed308107d433c6c1f9cfd57f6b6e121ff5e77dd1896176e11ea84",
+        "--timeout",
+        "55",
+        "--resource-trace",
+        "--catalog-mode",
+        "loader",
+        "--loading-config-candidate",
+        "--inspect-parsed-tables",
+        "--expected-preload-requests",
+        "377"
+      ]
+    },
+    {
+      "label": "v79",
+      "status": "CATALOG_LOADER_OBSERVED",
+      "child_exit_code": 0,
+      "wrapper_exit_code": 0,
+      "elapsed_seconds": 14.039693532002275,
+      "loader_steps": 53,
+      "last_step": [
+        "52",
+        "9",
+        "0",
+        "1"
+      ],
+      "natural_ready": true,
+      "profile": "real update search-root + APK fallback",
+      "catalog": {
+        "mode": "loader",
+        "complete": true,
+        "list_verified": true,
+        "expected_preload_requests": 377,
+        "preload_returned": true,
+        "table_load_completed": false,
+        "loader_destroyed": true,
+        "ready_observed": true,
+        "catalog_ready_pass": false,
+        "gate_reason": "requires independent repeat and full resource identity/semantic evidence"
+      },
+      "parsed_tables": {
+        "complete": true,
+        "errors": [],
+        "summaries": {
+          "before": [
+            0,
+            0
+          ],
+          "after": [
+            162,
+            24353
+          ]
+        },
+        "layout_sha256": "8ff1043b9d3544dbd6cbefae576025845e1f5f6e8cb9a78a931428eb5de36f89",
+        "coverage": "table layout, counts and nonnull row pointers; not cell contents or Android parity",
+        "catalog_ready_pass": false
+      },
+      "probe_sha256": "fa8b66a5751057e75f63c9601915080a86c7029b6512251abaf9941c5448a63f",
+      "inputs_unchanged": true,
+      "resources_unchanged": true,
+      "probe_unchanged": true,
+      "auxiliary_unchanged": true,
+      "postcheck_errors": [],
+      "strict_catalog_gate": false,
+      "logs": [
+        {
+          "private_log_label": "v79-result.json",
+          "sha256": "4e9d360238ab40c01e72db4b0d7754e2af34fd85fefc7af9be5d8ff6ed5151d3",
+          "bytes": 874324,
+          "published": false
+        },
+        {
+          "private_log_label": "v79-stdout.log",
+          "sha256": "e23acd88805f1e21ff26143f13053b4d836690b571c759867d4b4fbe099b4bc1",
+          "bytes": 27904,
+          "published": false
+        },
+        {
+          "private_log_label": "v79-stderr.log",
+          "sha256": "0b15f6b97cf845a56cf98b176f5fcac50ca68d1d3f2cd537b8da92e9301c151a",
+          "bytes": 61277,
+          "published": false
+        }
+      ],
+      "resource_trace": {
+        "incomplete_lines": [],
+        "termination": [
+          "exited with 0"
+        ],
+        "complete_successful_trace": true,
+        "all_open_paths_resolved": true,
+        "open_descriptors_at_end": 0,
+        "coverage": "observed syscalls only; mmap is not proof of CPU byte consumption",
+        "content_sha_verified_by_trace": false,
+        "trace_sha256": "77fbf072f5461379e52718b5f71c8ec984c88b92dee37de373a6637f9645d375",
+        "trace_bytes": 12381188,
+        "unresolved_count": 0,
+        "roots": {
+          "apk": {
+            "opens": 247,
+            "unique_paths": 247,
+            "size_sum": 3421119,
+            "full_mmap": 0,
+            "mappings": 0,
+            "reads": 247,
+            "read_bytes": 3421119,
+            "closed": 247,
+            "errors": 0,
+            "out_of_range": 0,
+            "exists": 0,
+            "missing_opens": 0
+          },
+          "update": {
+            "opens": 131,
+            "unique_paths": 131,
+            "size_sum": 2805535,
+            "full_mmap": 131,
+            "mappings": 131,
+            "reads": 0,
+            "read_bytes": 0,
+            "closed": 131,
+            "errors": 0,
+            "out_of_range": 0,
+            "exists": 1147,
+            "missing_opens": 0
+          }
+        }
+      },
+      "ordered_fallback": {
+        "trace_sha256": "77fbf072f5461379e52718b5f71c8ec984c88b92dee37de373a6637f9645d375",
+        "ordered_matches": {
+          "apk": {
+            "opens": 247,
+            "preceded_by_expected_update_exists": 247,
+            "all_manifest_paths_unchanged": true
+          },
+          "update": {
+            "opens": 131,
+            "preceded_by_expected_update_exists": 131,
+            "all_manifest_paths_unchanged": true
+          }
+        },
+        "coverage": "same-process syscall order and path association only; not complete engine namespace equivalence"
+      },
+      "outputs_sha256": {
+        "before.maps": "f4fda1d25888a63fdf1b396707decf403eed8f2d5236542880d0026dc5e7a74d",
+        "stderr.log": "0b15f6b97cf845a56cf98b176f5fcac50ca68d1d3f2cd537b8da92e9301c151a",
+        "stdout.log": "e23acd88805f1e21ff26143f13053b4d836690b571c759867d4b4fbe099b4bc1",
+        "after.maps": "275169da9680e1add0c8d8f75d141e6a722ce60a305835690c1bd7953ddf7926",
+        "closed.maps": "d6d510fb92109b8a5648f26c5a88e8c3bd0ce542c6a99155ae31678bcc59b71c",
+        "syscalls.3086": "77fbf072f5461379e52718b5f71c8ec984c88b92dee37de373a6637f9645d375"
+      },
+      "config_state_sha256": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+      "command_redacted": [
+        "python3",
+        "tools/pure_linux/provider_job.py",
+        "--payload",
+        "<PAYLOAD>",
+        "--probe",
+        "<PROBE>",
+        "--output",
+        "<NEW_V79_OUTPUT>",
+        "--mode",
+        "both",
+        "--data-root",
+        "<APK_TABLES>",
+        "--update-root",
+        "<UPDATE>",
+        "--data-path",
+        "/",
+        "--search-root",
+        "<UPDATE>",
+        "--factory-mode",
+        "register",
+        "--resource-manifest",
+        "<MANIFEST>",
+        "--asset-root",
+        "<APK_TABLES>",
+        "--asset-index",
+        "<INDEX>",
+        "--asset-index-sha256",
+        "cc7fedcfb2a43a3cc8aae9afb586114915bfc69ae461d92420de349550772916",
+        "--asset-backend",
+        "<BACKEND>",
+        "--asset-backend-sha256",
+        "905fb58cc33ed308107d433c6c1f9cfd57f6b6e121ff5e77dd1896176e11ea84",
+        "--timeout",
+        "55",
+        "--resource-trace",
+        "--catalog-mode",
+        "loader",
+        "--loading-config-candidate",
+        "--inspect-parsed-tables",
+        "--expected-preload-requests",
+        "377"
+      ]
+    }
+  ],
+  "retained_failures": [
+    {
+      "labels": [
+        "v59"
+      ],
+      "status": "BLOCKED",
+      "failure": "null JavaVM read in config write bridge",
+      "child_exit_code": null,
+      "signal": "SIGSEGV"
+    },
+    {
+      "labels": [
+        "v64",
+        "v65",
+        "v66"
+      ],
+      "status": "BLOCKED",
+      "failure": "32MiB trace output resource limit; incomplete termination record",
+      "wrapper_exit_code": -25
+    },
+    {
+      "labels": [
+        "v73",
+        "v74"
+      ],
+      "status": "BLOCKED",
+      "failure": "observation validator expected APK-only 368 requests; update profile emitted 377",
+      "child_exit_code": 0,
+      "wrapper_exit_code": 1
+    },
+    {
+      "labels": [
+        "v75",
+        "v76"
+      ],
+      "status": "UNRESOLVED",
+      "failure": "old parser did not propagate Bionic directory dup; paths unknown until v78/v79 tracing/parser",
+      "child_exit_code": 0,
+      "wrapper_exit_code": 0
+    },
+    {
+      "labels": [
+        "v70",
+        "v71",
+        "v72"
+      ],
+      "status": "NOT_RUN",
+      "failure": "optional config-state transfer exit255; config candidate disabled, native resource checks still exit0"
+    },
+    {
+      "labels": [
+        "stage_update_v64 initial"
+      ],
+      "status": "BLOCKED",
+      "failure": "staging helper syntax error, independent retry succeeded",
+      "exit_code": 1
+    }
+  ],
+  "nodes": {
+    "provider_registration": "PASS",
+    "finite_real_resource_reads": "PASS",
+    "catalog_natural_ready": "RUNTIME_OBSERVED",
+    "catalog_semantics": "BLOCKED",
+    "resource_manager": "BLOCKED",
+    "gamestate_create_setup_load": "NOT_RUN",
+    "empty_battle_reset_destroy": "NOT_RUN",
+    "real_gamestate_step": "NOT_RUN",
+    "actions_multitick_snapshot_complete_match_android_parity": "NOT_RUN",
+    "no_java_vm_cold_start": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "tests": {
+    "targeted": {
+      "command": [
+        "python3",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tools/pure_linux"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.735172750428319,
+      "stdout_sha256": "cb861eea6b876de674f0b24545d2c271e2c14d24aa6874938ed0be1634cb8fc9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "UNIT_PASS",
+      "scope": "isolated public-source copy; not native lifecycle evidence",
+      "summary": "157 passed, 1 platform-condition skipped; rerun after line-order diagnostics also 157/1"
+    },
+    "public": {
+      "command": [
+        "python3",
+        "tools/run_public_checks.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 166.71146762464195,
+      "stdout_sha256": "1c90ba0d60306610835530c0cdec0de507685259514c0e5564549f46528f0585",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "UNIT_PASS",
+      "scope": "isolated public-source copy; not native lifecycle evidence",
+      "xml_groups": [
+        {
+          "label": "checks-affordability.xml",
+          "sha256": "794decae8484385cd3d205b5cac235214f2f7d1a9b691295db6715e965515843",
+          "tests": 23,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "label": "checks-collection-coordinator.xml",
+          "sha256": "ff24b6a67f4dcf2890145b3e84b5bcdc349329e027714350ab6da3f389117102",
+          "tests": 65,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "label": "checks-command-coordinates.xml",
+          "sha256": "e44da0a8102929a29044d2e59f285f7b7e0d5e021a858d1ead089a4638268c2b",
+          "tests": 41,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 3
+        },
+        {
+          "label": "checks-dispatch-command.xml",
+          "sha256": "b77f6076d13cda1f4162a1e8c16ee264e83201ee0acbcdbe74837bd9d3f9293e",
+          "tests": 34,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 3
+        },
+        {
+          "label": "checks-live-command.xml",
+          "sha256": "f4b7db3717e58311ce449e69e2e5b21e37dcbd7b0cc9cc289257c19f8b2d8339",
+          "tests": 29,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 4
+        },
+        {
+          "label": "checks-position-guards.xml",
+          "sha256": "06ecbb129bd56d7918364c78f91e0c2a04c3a465c2783a02375ada3cf50419a5",
+          "tests": 18,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 3
+        },
+        {
+          "label": "checks-public.xml",
+          "sha256": "3a39a7163f6775043dd31c8bcfa3b9405e9ab1ed19c9ee7e96a9ceac27608aeb",
+          "tests": 821,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 27
+        },
+        {
+          "label": "checks-reservation-mapping.xml",
+          "sha256": "683aa2ca9bf09bced9711550fa507b7ba9d2d88f67cd78c7c952234cf6af3f73",
+          "tests": 33,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 2
+        },
+        {
+          "label": "checks-selection-timeout.xml",
+          "sha256": "511da41adffce70202dc0f6fa1b1b400d832ec76887437623ccf1b92f1e6f919",
+          "tests": 82,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ]
+    },
+    "main": {
+      "command": [
+        "python3",
+        "tools/run_main_engine_checks.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 22.632686792407185,
+      "stdout_sha256": "000c0b3c75348741bb5533dbdf23e8bbb2e4af60eb6706f0a676b871e5a83886",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "UNIT_PASS",
+      "scope": "isolated public-source copy; not native lifecycle evidence",
+      "summary": "211 passed"
+    }
+  },
+  "next_step": "Close the observed single-key configuration contract using matching-version Java implementation and existing Android evidence; retain unknown external side effects. Only after strict catalog and manager gates pass, call GameState.",
+  "native_config_probe": {
+    "machine": "aarch64",
+    "probe_sha256": "8544145b03843dcbae991aec7457541b305903cd0ef7a6058130c0c8e3dde4e4",
+    "probe_unchanged": true,
+    "loader_input_unchanged": true,
+    "rows": [
+      {
+        "command": [
+          "<MATCHING_LINKER64>",
+          "<CONFIG_PROBE>",
+          "<ISOLATED_STATE_DIRECTORY>",
+          "fresh"
+        ],
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "state_sha_before": null,
+        "state_sha_after": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "stdout_sha256": "1e25fd134c436ac8b72456b0c8525848e3c1d5dd69536b8be1e0d35d3414feef",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "passed": true
+      },
+      {
+        "command": [
+          "<MATCHING_LINKER64>",
+          "<CONFIG_PROBE>",
+          "<ISOLATED_STATE_DIRECTORY>",
+          "restore"
+        ],
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "state_sha_before": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "state_sha_after": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "stdout_sha256": "4b4554634796e9039779c8500e20ffe8fb5fee6be1a4ca7f87a8238fab187a4f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "passed": true
+      },
+      {
+        "command": [
+          "<MATCHING_LINKER64>",
+          "<CONFIG_PROBE>",
+          "<ISOLATED_STATE_DIRECTORY>",
+          "unknown"
+        ],
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "state_sha_before": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "state_sha_after": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "stdout_sha256": "a2543fc63cc823ca5ec8e2f9a1348478c9cf3979e0df43578d8a0a7aad0c18d2",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "passed": true
+      },
+      {
+        "command": [
+          "<MATCHING_LINKER64>",
+          "<CONFIG_PROBE>",
+          "<ISOLATED_STATE_DIRECTORY>",
+          "fresh"
+        ],
+        "exit_code": 3,
+        "expected_exit_code": 3,
+        "state_sha_before": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "state_sha_after": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "passed": true
+      },
+      {
+        "command": [
+          "<MATCHING_LINKER64>",
+          "<CONFIG_PROBE>",
+          "<ISOLATED_STATE_DIRECTORY>",
+          "restore"
+        ],
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "state_sha_before": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "state_sha_after": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "stdout_sha256": "4b4554634796e9039779c8500e20ffe8fb5fee6be1a4ca7f87a8238fab187a4f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "passed": true
+      },
+      {
+        "command": [
+          "<MATCHING_LINKER64>",
+          "<CONFIG_PROBE>",
+          "<ISOLATED_STATE_DIRECTORY>",
+          "unknown"
+        ],
+        "exit_code": 0,
+        "expected_exit_code": 0,
+        "state_sha_before": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "state_sha_after": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "stdout_sha256": "a2543fc63cc823ca5ec8e2f9a1348478c9cf3979e0df43578d8a0a7aad0c18d2",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "passed": true
+      }
+    ],
+    "coverage": "native candidate persistence only; Android backup/encryption parity unverified",
+    "logs": [
+      {
+        "private_log_label": "v77-config-result.json",
+        "sha256": "a636b575bca09fd82bfc0b0b28c02c0ff3420b441ea0275a8b2a8eb946192400",
+        "bytes": 4674,
+        "published": false
+      }
+    ]
+  },
+  "source_sha256": {
+    "arm64_smoke.c": "ef2b24167f2f6895cfc8a0f5ad1fc909325901eee5d3c8d0a0da7d99c1e703da",
+    "audit_inputs.py": "5aaa70b37e017e287d4fd6e9423dd3903027e42b15a16b563e179f42fde708e6",
+    "bionic_probe.c": "ddb405e76e18a437b7823e036809001643e07ff7506d49099adcb313747e2c77",
+    "constructor_trace.py": "fa42574b6b2f137a99f0e988b195159038de15e2485f6b7b202aa964c92130f3",
+    "elf_audit.py": "8b68ffd130ef34b08e22435a7d58c31cd203ef9789c8f0b844980612e0efd042",
+    "loader_audit.py": "7194b19f2a8246fa41465216689abf6089f9754bf7b13c5584b6cd303b444ea5",
+    "loading_config.c": "31e58a0330d3ab161160c0e359a24c31d89f180d8df678bd6c147e7aaadc7252",
+    "loading_config_hook.c": "5f8ae6aaf5a67f44ceac5559cce7bf7b084a298231d019668f5a80184afb2843",
+    "loading_config_probe.c": "06dc7a3edfcf69740d4be2c61142553b5976b4f1c4ff851060ad13cf34fd9867",
+    "native_assets.c": "0d28891573642df9c854da9a4341562a13fed6a0ec7a47b16cf01d921cb0c45e",
+    "native_init_attach.py": "dbb2c0f6fa29feaad0b72617d26d78a6d2831ae22e08dc108e814a1d99eec2b5",
+    "native_init_gdb.py": "5fa4a00a98969214f9804a28d77894b568a4099d01c96995565c169601103a87",
+    "native_init_job.py": "02059dd5af31ccc7966ed67e4e2dff614a4d496a12282057bfb1086fc6859f80",
+    "native_init_probe.c": "aba0c83f8124a14d283e532878105e1daa9a365d8505a86ad24536c6954dc6da",
+    "observed_string.py": "a67b0a73b786fb6867ccab023af9fda24b904e11cceff29e575baedc03720e0b",
+    "parsed_tables.py": "fb3be0f443aab4db6594683b1ab9f616daba98bd93c0b217f8bb73926fc18b3d",
+    "provider_job.py": "ca7e6b4a83e433fff718c41de08509455657ca1591c64c38495a7cbd20247b39",
+    "provider_probe.c": "bd56346148d0658ba1334a09dabadc717911829e55398f5c025c3cf1f79303db",
+    "resource_trace.py": "ab84226b5e917e9bc05a4d8cd7c436d67af2d869fb6b26b84cb04a0a64250c1f",
+    "run_arm64_smoke.py": "86e1856db985f4eeb45e7000b4bea568fb628c6e4edf993ba8c521631ea3f77a",
+    "run_smoke.py": "34be3da31b1cba5c562c6e1659c932240d5488d73ec1a591d2f0eb012cbf9b31",
+    "smoke.c": "36ceb0492cd09f1da85147d1c5796d23d1529e7f1a47886720e651a193cf920f",
+    "test_audit.py": "9805d8c80191d3e44b0e663fb44ff77b33fd973e7e10e8498251b03cd93b4d23",
+    "test_loader_audit.py": "92efe2d540860e2bb1c27bf2cecfb941943319a1c21d82a4863fa3ebf2ba7ec0",
+    "test_loading_config.py": "21cc6a0460c0b9a2de5b093449384f043c4679146b7d43f11297ff8d2501254a",
+    "test_native_assets.py": "5741ad2f9d80b250dd2233feb13b662c133803ddd2fdcdee5d8e7ef292b03e6e",
+    "test_native_init.py": "8e23d266972d5b47342a33ebc9e3c373c93c4d32c3d9e25f02712ef5e1768f19",
+    "test_observed_string.py": "8b4862eef438de8f1c5d995dc5dae214a04cb7c03dc98c2da7ca705e55dff67b",
+    "test_parsed_tables.py": "a0e5f1360a28bc9dc38f967aa92be1479069748cdfc604a1e34b45577e930476",
+    "test_provider_job.py": "897fba068cee8266dff14bcc60b8753ee28e81c54646e421768bc9c704179198",
+    "test_resource_trace.py": "5cfb72c05baaf2b78ea8501e7a551205a5c27e2c8c0ccf5da9e46ccc0619390f"
+  }
+}
