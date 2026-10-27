@@ -16434,16 +16434,16 @@
     {
       "path": "CHANGELOG.md",
       "transformations": [],
-      "sha256": "5f91dedcb4537b476b9d5c5dbdc3039437403ddf5aeebbbcd0178e85ad12ae8f",
-      "bytes": 28303,
-      "source_sha256": "5f91dedcb4537b476b9d5c5dbdc3039437403ddf5aeebbbcd0178e85ad12ae8f"
+      "sha256": "0e4666ac97da85448d2aea8d498278797960bd4bcd653f60a08e1572fcb5c932",
+      "bytes": 28926,
+      "source_sha256": "0e4666ac97da85448d2aea8d498278797960bd4bcd653f60a08e1572fcb5c932"
     },
     {
       "path": "README.md",
       "transformations": [],
-      "sha256": "f8498b3742774b0c1f9d814b3a65a451e21ff9e7d5ab0db187d053f449a90bc1",
-      "bytes": 26055,
-      "source_sha256": "f8498b3742774b0c1f9d814b3a65a451e21ff9e7d5ab0db187d053f449a90bc1"
+      "sha256": "fb362653777c522d74d05ffa8f8f26e915be91002108403488149dccb37711df",
+      "bytes": 26692,
+      "source_sha256": "fb362653777c522d74d05ffa8f8f26e915be91002108403488149dccb37711df"
     },
     {
       "path": "agent-handoff/CODEX_REPLY_2026-10-27_PURE_LINUX_GUEST.md",
@@ -16469,9 +16469,9 @@
     {
       "path": "docs/RESULTS.md",
       "transformations": [],
-      "sha256": "7f0f766e6aff9029f67f263a818432346c5627752fcbc72af97dd1bab5e1d15e",
-      "bytes": 52748,
-      "source_sha256": "7f0f766e6aff9029f67f263a818432346c5627752fcbc72af97dd1bab5e1d15e"
+      "sha256": "ba98f70f912e22d484d86b52788a858c16c26c0f0cec3f9adcdbb534c1b3b817",
+      "bytes": 53637,
+      "source_sha256": "ba98f70f912e22d484d86b52788a858c16c26c0f0cec3f9adcdbb534c1b3b817"
     },
     {
       "path": "tools/pure_linux/loader_audit.py",
@@ -16507,10 +16507,66 @@
       "bytes": 6681,
       "source_sha256": "bbbce3d89834d04079b91ba5a9e0a23466048642e7c6068d9a8813630ff0c9ea",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-27_NATIVE_INIT.md",
+      "sha256": "f4d325d9b9283ee9679efe7f56c8b5fd31ed3460259c3310d5d28e70f81ffdc9",
+      "bytes": 3629,
+      "source_sha256": "f4d325d9b9283ee9679efe7f56c8b5fd31ed3460259c3310d5d28e70f81ffdc9",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_NATIVE_INIT_2026-10-27.md",
+      "sha256": "c3a5766465251ed31e82507d103b85bad1c29a360e7aa87bc371a1d00d783e37",
+      "bytes": 11141,
+      "source_sha256": "c3a5766465251ed31e82507d103b85bad1c29a360e7aa87bc371a1d00d783e37",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-native-init-evidence-20261027.json",
+      "sha256": "8f1db370bb8c1d3a944cf213bc9e3c6f115abd7d4217091ee6802000f9343a43",
+      "bytes": 76307,
+      "source_sha256": "8f1db370bb8c1d3a944cf213bc9e3c6f115abd7d4217091ee6802000f9343a43",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/constructor_trace.py",
+      "sha256": "fa42574b6b2f137a99f0e988b195159038de15e2485f6b7b202aa964c92130f3",
+      "bytes": 2830,
+      "source_sha256": "fa42574b6b2f137a99f0e988b195159038de15e2485f6b7b202aa964c92130f3",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/native_init_gdb.py",
+      "sha256": "3e8bd39e74813dc30bce43cb0d303b60379d6aa57f30390c4ec98f08b523ac32",
+      "bytes": 3209,
+      "source_sha256": "3e8bd39e74813dc30bce43cb0d303b60379d6aa57f30390c4ec98f08b523ac32",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/native_init_job.py",
+      "sha256": "02059dd5af31ccc7966ed67e4e2dff614a4d496a12282057bfb1086fc6859f80",
+      "bytes": 5348,
+      "source_sha256": "02059dd5af31ccc7966ed67e4e2dff614a4d496a12282057bfb1086fc6859f80",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/native_init_probe.c",
+      "sha256": "09142a537619c9a211ee1305974bedf19f7f449b232b7d197c2f9d033392ae47",
+      "bytes": 6991,
+      "source_sha256": "09142a537619c9a211ee1305974bedf19f7f449b232b7d197c2f9d033392ae47",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_native_init.py",
+      "sha256": "8e23d266972d5b47342a33ebc9e3c373c93c4d32c3d9e25f02712ef5e1768f19",
+      "bytes": 4894,
+      "source_sha256": "8e23d266972d5b47342a33ebc9e3c373c93c4d32c3d9e25f02712ef5e1768f19",
+      "transformations": []
     }
   ],
-  "file_count": 2356,
-  "source_bytes": 33407326,
+  "file_count": 2364,
+  "source_bytes": 33523824,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

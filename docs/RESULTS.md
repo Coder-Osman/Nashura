@@ -1,5 +1,17 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-N：原生初始化对象图限定推进
+
+真实Ubuntu/aarch64中libg753/753 constructor调用返回，全体1070/1070；
+content bootstrap构造root/context，filesystem bootstrap分配392字节对象，均exit0。
+取得CONSTRUCTOR_TRACE_PASS及CONTENT_CONTEXT_PASS；ready=0，未登记MANAGER_INIT_PASS。
+27个post-load断点两正对照各1，其余已知JNI/Asset地址0，仅覆盖明确地址和分配窗口。
+属性路径及logdw访问已真实出现，不作Android-free或no-JavaVM生命周期结论。
+v3 tagged-pointer观测错误、v6断点撞guard、REA超时、写盘失败及恢复证据保留。
+42项pure_linux工程专项通过；GameState/empty/reset/Step仍NOT_RUN，整体BLOCKED。
+首个前置依赖是provider注册与catalog真实加载契约，详见
+[报告](../agent-handoff/PURE_LINUX_NATIVE_INIT_2026-10-27.md)及机器可读证据。
+
 ## 2026-10-27 用户 APK 续验：真实原版库 LOAD_ONLY
 
 新提供 APK 的8个 ARM64 库和9,829个 assets（849,482,445 bytes）逐项 SHA 匹配；

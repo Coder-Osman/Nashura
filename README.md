@@ -4,6 +4,15 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+## 2026-10-27 E2.1-N：真实constructor及内容对象构造
+
+在真实Ubuntu ARM64 guest中，linker记录libg753次constructor进入/返回；
+内容root/context和filesystem原生构造均返回exit0，187项输入前后SHA一致。
+新增限定结果 **CONSTRUCTOR_TRACE_PASS / CONTENT_CONTEXT_PASS**；ready仍为0，
+provider/catalog未接通，整体 **BLOCKED**。GameState、empty battle和真实Step均未运行。
+限定JNI/Asset断点计数不代表全路径无依赖；实际观测到Android属性/logdw路径访问。
+详见[本轮报告](agent-handoff/PURE_LINUX_NATIVE_INIT_2026-10-27.md)。以下保留历史状态。
+
 ## 2026-10-27 新输入续验：真实 libg 已取得 LOAD_ONLY
 
 用户提供的同版本 APK 中，8 个 ARM64 库及全部 9,829 个游戏资源与既有基线逐项 SHA

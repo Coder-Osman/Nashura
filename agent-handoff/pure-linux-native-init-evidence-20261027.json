@@ -1,0 +1,2516 @@
+{
+  "schema": "nashura-pure-linux-native-init-evidence.v1",
+  "date": "2026-10-27",
+  "parent_commit": "2624b86f7b025d56c4abeb908996c7824448d1aa",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "overall_status": "BLOCKED",
+  "input": {
+    "schema": "nashura-user-apk-native-input.v1",
+    "apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "historical_apk_sha256": "685c115ee432d5fd2d7be856a58ea0cb029c9c187aa9061f3cd250994dfbcf2a",
+    "historical_container_match": false,
+    "reference_apk_sha256": "f1ee6d6146efc8c998843958ae0788e5121c265445c0c7ff5ffa2a5202d7dd9b",
+    "native_libraries": [
+      {
+        "name": "libc++_shared.so",
+        "sha256": "4397241b4bd20a8e579bfb41d21107857e12985f6a01ca0c2a5f83380d1270b4",
+        "bytes": 1292904
+      },
+      {
+        "name": "libfmod.so",
+        "sha256": "299d2a6b03ec865cd9234f4f7484fb7e74928d0180dc6c4b455a8d2b5b54dd45",
+        "bytes": 1179776
+      },
+      {
+        "name": "libfmodstudio.so",
+        "sha256": "592cdc4beba2aea5f177f0ed3c52c7ed018b09734a3fb584a4ec487cd926caf0",
+        "bytes": 1149048
+      },
+      {
+        "name": "libg.so",
+        "sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+        "bytes": 27554368
+      },
+      {
+        "name": "libscid_sdk.so",
+        "sha256": "2a6edcc8fcad301daa946157ea97c6c422067d5ceaab7cb2ed4655654b642319",
+        "bytes": 61072
+      },
+      {
+        "name": "libsentry-android.so",
+        "sha256": "6769fd03351610e93ca724ccc74c1c82a6caedd8c1d9996267599556545712a1",
+        "bytes": 15976
+      },
+      {
+        "name": "libsentry.so",
+        "sha256": "bea6725a4122db6e516da9ee4a62b066b05171fddcdf1513c98e33626746acda",
+        "bytes": 1222328
+      },
+      {
+        "name": "libwildcat.so",
+        "sha256": "664ff486f5c89c2f7e188adb60119166c483e7c0cd4d55fef774a1f47db8b442",
+        "bytes": 10685496
+      }
+    ],
+    "assets_matching": 9829,
+    "assets_bytes_matching": 849482445,
+    "asset_differences": [],
+    "runtime_fingerprint_sha256": "e0cb2fb9eb2fdd0df1afcb00df3e3ba61cf25aa8b24e39c17cc391d952a4e339",
+    "runtime_manifest_matching": 214,
+    "update_manifest_matching": 990
+  },
+  "input_identity_sha256": "bd963736d4c5acd80d232f97e76028df220cbcca9a4e24e17e5096c09d911b70",
+  "input_files_verified_unchanged": 187,
+  "environment": {
+    "host": "Darwin arm64/macOS15.6",
+    "guest": "Ubuntu22.04.5/Linux6.8.0-138-generic/aarch64",
+    "new_components_installed": false,
+    "android_emulator_started": false,
+    "qemu_used": false
+  },
+  "objects": [
+    {
+      "node": "real_libg",
+      "status": "LOAD_ONLY_PASS",
+      "evidence": "RTLD_NOW|RTLD_LOCAL and dlclose returned successfully."
+    },
+    {
+      "node": "constructors_and_mappings",
+      "status": "CONSTRUCTOR_TRACE_PASS",
+      "evidence": "1070 actual linker call/return pairs; libg753/753.",
+      "coverage": "Linker call/return messages; constructor-internal platform calls are not fully covered."
+    },
+    {
+      "node": "content_root_context",
+      "status": "CONTENT_CONTEXT_PASS",
+      "evidence": "Native bootstrap returned; root/context allocated and readable; ready=0.",
+      "ready": 0,
+      "caller_supplied_object_buffer": false,
+      "canary": "Exact engine SHA, 16-byte entry guard, null global slot, mapped/readable native allocations; no fabricated object or ready flag."
+    },
+    {
+      "node": "catalog_data_tables",
+      "status": "BLOCKED",
+      "evidence": "Provider registration and actual table loading sequence/parameters not closed; no resource reads demonstrated."
+    },
+    {
+      "node": "resource_manager",
+      "status": "BLOCKED",
+      "evidence": "Filesystem constructor returned and produced readable392-byte object; provider/catalog initialization NOT_RUN.",
+      "allocation_substep_returned": true
+    },
+    {
+      "node": "battle_manager_or_replay_controller",
+      "status": "NOT_RUN",
+      "evidence": "Blocked by catalog/resource initialization."
+    },
+    {
+      "node": "GameState_constructor",
+      "status": "NOT_RUN",
+      "evidence": "Predecessor object graph incomplete."
+    },
+    {
+      "node": "GameState_setup",
+      "status": "NOT_RUN",
+      "evidence": "No GameState created."
+    },
+    {
+      "node": "GameState_load",
+      "status": "NOT_RUN",
+      "evidence": "No GameState created."
+    },
+    {
+      "node": "create_empty_battle",
+      "status": "NOT_RUN",
+      "evidence": "No configured GameState."
+    },
+    {
+      "node": "reset",
+      "status": "NOT_RUN",
+      "evidence": "No empty battle."
+    },
+    {
+      "node": "GameStateStep",
+      "status": "NOT_RUN",
+      "evidence": "Never called; GameStateTick getter is not a step."
+    },
+    {
+      "node": "native_object_destroy",
+      "status": "NOT_RUN",
+      "evidence": "dlclose/process exit observed; native object destruction not separately verified."
+    }
+  ],
+  "runs": [
+    {
+      "run": "baseline",
+      "command": [
+        "$PAYLOAD/linker64",
+        "$RUN/native-init-probe",
+        "$PAYLOAD/libs/libg.so"
+      ],
+      "process_exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.0353892889997951,
+      "input_files_unchanged": 187,
+      "probe_sha256": "5ddd9c79da17a8fd750662c46985c204093d4aabe774756897428e2aee21b6a9",
+      "outputs_sha256": {
+        "after.maps": "eabc000fa67aa795fffe1bc41464dea551949cc2244144be7c86b6bbc4b9270e",
+        "before.maps": "8ccf8220ef16e29758a8ddae3483902fe1bf5b5eda155278b614f050445369d8",
+        "closed.maps": "7bc5748291b1b309b741b4e728d5382ab7c329b27ebcfbe4ff8585bc3547a94d",
+        "stderr.log": "f43fd652b4b90dd0eab74086b61a766dcee6ea0d776443dd65ebec7fe2de29db",
+        "stdout.log": "16708e29828d1727a59e62a22ff051fe66cb57bbef3babf7b7ae97412f96f24c",
+        "result.json": "36c96599f5eb4db17dd16534a2f23e7cd5d1ef9a6083cd4a85fef24aa9b9c54a"
+      }
+    },
+    {
+      "run": "debug",
+      "command": [
+        "$PAYLOAD/linker64",
+        "$RUN/native-init-probe",
+        "$PAYLOAD/libs/libg.so"
+      ],
+      "process_exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 22.379236428999775,
+      "input_files_unchanged": 187,
+      "probe_sha256": "5ddd9c79da17a8fd750662c46985c204093d4aabe774756897428e2aee21b6a9",
+      "outputs_sha256": {
+        "after.maps": "04d3ab99f10568b587b96d36629fc62ec2facfc9933febc990bf0560dca15e14",
+        "before.maps": "5e4961f155c0d10f1b1bca22e84e858d5fb07cfa828ae952c80755f944a2f0b5",
+        "closed.maps": "39df39cab90a7da861f9109c8bab4117892fcbaee72c9c342371860139e1475a",
+        "stderr.log": "b94b3edbc0450af9ebf764de0298d995d9c94539e931eb62a3672590dbe119ff",
+        "stdout.log": "fcf1ccebbeb9447246955f664341e19b9f8e8f8e65e02799b614abca5c58ccbd",
+        "result.json": "41c176ab98e9a0d0cf33904712870099c53c2cb7feb52ede134e65f914cfcc2c"
+      },
+      "stderr_storage": "Full stderr exists only as verified archive member; do not use truncated host stderr copy."
+    },
+    {
+      "run": "strace",
+      "command": [
+        "strace",
+        "-ff",
+        "-tt",
+        "-s",
+        "256",
+        "-o",
+        "$RUN/strace/syscalls",
+        "$PAYLOAD/linker64",
+        "$RUN/native-init-probe",
+        "$PAYLOAD/libs/libg.so"
+      ],
+      "process_exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.7111776790002295,
+      "input_files_unchanged": 187,
+      "probe_sha256": "5ddd9c79da17a8fd750662c46985c204093d4aabe774756897428e2aee21b6a9",
+      "outputs_sha256": {
+        "after.maps": "b85b23538095629a59bbade17fc5a2feb701f66753b33352d355c57c140c88c5",
+        "before.maps": "504417f3e81ed720e160428f1a0c86962b3bd65873702f781b586947e546049a",
+        "closed.maps": "0d4d68e0b7f5113c20afd038478434c27a9ec63b45b9cc9f03a0108f4b124b97",
+        "stderr.log": "f43fd652b4b90dd0eab74086b61a766dcee6ea0d776443dd65ebec7fe2de29db",
+        "stdout.log": "0cafab6e22a2340c5d9cfc732e56d924394e3b98f1d7e75c612c32cebc8d76fe",
+        "syscalls.2181": "ebaebf231cc72f7aa26801c2ebd0d02bd4e72d87dfa77f6c6fd2cc73476d3c94",
+        "result.json": "19d20345925d9a6f2a74ecdf439c5be27449da83533bf74be866d629d187a8e9"
+      }
+    },
+    {
+      "run": "content-root-v3",
+      "command": [
+        "$PAYLOAD/linker64",
+        "$RUN/native-init-probe-v3",
+        "$PAYLOAD/libs/libg.so",
+        "<verified-content-prologue16>"
+      ],
+      "process_exit_code": 23,
+      "timed_out": false,
+      "elapsed_seconds": 0.06525684000007459,
+      "input_files_unchanged": 187,
+      "probe_sha256": "e3238d08fb36d37b82a3ed9fcaa0954e38b4a780b68ded53408ef3276c9e4430",
+      "outputs_sha256": {
+        "after.maps": "bfbef8095f5e4f0227733468323b8640e542dc26b75ea4a3233375bee3331692",
+        "before.maps": "35e675a4259f09fc65de6a42bf37565520bc5c7e19e27f1193d2126e4159665a",
+        "stderr.log": "f43fd652b4b90dd0eab74086b61a766dcee6ea0d776443dd65ebec7fe2de29db",
+        "stdout.log": "f459aa77d432f1296a1b5f160bcebb596acb1f55cdc50c3fc8e6dd8a6e7169c5",
+        "result.json": "402aad9a88ecc143471545516761207a8c44e490bc3eba405a42295b403f2b4d"
+      },
+      "failure": "Observer rejected a Bionic top-byte tagged pointer after native bootstrap returned; not an engine or JNI failure."
+    },
+    {
+      "run": "content-root-v4",
+      "command": [
+        "$PAYLOAD/linker64",
+        "$RUN/native-init-probe-v4",
+        "$PAYLOAD/libs/libg.so",
+        "<verified-content-prologue16>"
+      ],
+      "process_exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.06569513699923846,
+      "input_files_unchanged": 187,
+      "probe_sha256": "78188bcfb641e3593804482e702c5ace437bd872cfd79bb6bbea738fee03b995",
+      "outputs_sha256": {
+        "after.maps": "dfcba843d064b04f936d9eaeffdb9b3fc8bbedd4781ebff308800a05190ddda4",
+        "before.maps": "18c5a4a5d899b582da36e307efe74bf46cd171af98086589860dca626d9ab837",
+        "closed.maps": "6fdaccb5669098dc3982f461bd70d56beefc8edb910b39fd8d4aaedc6aeece17",
+        "stderr.log": "f43fd652b4b90dd0eab74086b61a766dcee6ea0d776443dd65ebec7fe2de29db",
+        "stdout.log": "3bf421c49e85b544b7954db0da23711644d2e74376aa6a05cfe8e9ee5d6e02bd",
+        "result.json": "e47e9985cc81be35d2724298e9e9ba25fa9ed15c65fc62caa6d77b1e88d5d6c4"
+      }
+    },
+    {
+      "run": "filesystem-v5",
+      "command": [
+        "strace",
+        "-ff",
+        "-tt",
+        "-s",
+        "256",
+        "-o",
+        "$RUN/filesystem-v5/syscalls",
+        "$PAYLOAD/linker64",
+        "$RUN/native-init-probe-v5",
+        "$PAYLOAD/libs/libg.so",
+        "<verified-content-prologue16>",
+        "<verified-filesystem-prologue16>"
+      ],
+      "process_exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.4184059270000944,
+      "input_files_unchanged": 187,
+      "probe_sha256": "8cc9964d4a18efcf67e4fab6369d20ff8bd1982b54e13c76655b08bcf3c2974e",
+      "outputs_sha256": {
+        "after.maps": "967f9bb66c16344623057c9ec1e62654dddef48c2df89c2c3483128299558141",
+        "before.maps": "2cd5a5c73b88da00eb254b9dc72b83124650fb24f1e46f83ffce6dd6c94aad91",
+        "closed.maps": "4cf495886532332072c97a9aa71ae651c5f312ab3734bc0c58f645c718dd8774",
+        "stderr.log": "f43fd652b4b90dd0eab74086b61a766dcee6ea0d776443dd65ebec7fe2de29db",
+        "stdout.log": "799ccf09d783bb6ad8a22c450942e78982c2a5f4efca159456c646bbfec97647",
+        "syscalls.2222": "9806fc5890b428cdbac345f2c7d7b19cb0d7953b1fcfc3ea7dc7374e93194c56",
+        "result.json": "b6ecaeab391c1c1d8297287a40db103e8a3dde29725eecab0653242627a46f7f"
+      }
+    },
+    {
+      "run": "boundaries-v6",
+      "command": [
+        "/usr/bin/gdb",
+        "-nx",
+        "-nh",
+        "--batch",
+        "-ex",
+        "set environment LD_LIBRARY_PATH=$PAYLOAD/libs",
+        "-ex",
+        "set environment NASHURA_OBSERVE_TRAP=1",
+        "-ex",
+        "source $RUN/native_init_gdb.py",
+        "--args",
+        "$PAYLOAD/linker64",
+        "$RUN/native-init-probe-v6",
+        "$PAYLOAD/libs/libg.so",
+        "<verified-content-prologue16>",
+        "<verified-filesystem-prologue16>"
+      ],
+      "process_exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.322633474000213,
+      "input_files_unchanged": 187,
+      "probe_sha256": "9992bbe58200484147b96741b026d0194828d43ff90f5bda563bae8c762e3cf9",
+      "outputs_sha256": {
+        "before.maps": "2d9699bde568a8c5cfe1d5b0e3e10ee6e94ef48b1a866f59b8528eb5d40bb7fe",
+        "stderr.log": "f43fd652b4b90dd0eab74086b61a766dcee6ea0d776443dd65ebec7fe2de29db",
+        "observation.json": "b024739d0d24bed22f32bf7ac3684c53a0e50cc4eef501f2a0be83b918329e3d",
+        "stdout.log": "0d828fd7982111d2147a235ad70c501bcab235a04428cd6123564ff3a7d1c09a",
+        "after.maps": "5f4ae7c2490937c0b30320a4336c859097e363a23d223db2a4a4c9016dcbe8e6",
+        "result.json": "9b35c544b4239424817289c186bc0bda76af53642d37b74bfddfa5a351c678ae"
+      },
+      "inferior_exit_code": 32,
+      "coverage_valid": false,
+      "failure": "Observer entry breakpoint changed prologue bytes checked by the probe; inferior exit32 invalidates all zero counts despite GDB exit0."
+    },
+    {
+      "run": "boundaries-v7",
+      "command": [
+        "/usr/bin/gdb",
+        "-nx",
+        "-nh",
+        "--batch",
+        "-ex",
+        "set environment LD_LIBRARY_PATH=$PAYLOAD/libs",
+        "-ex",
+        "set environment NASHURA_OBSERVE_TRAP=1",
+        "-ex",
+        "source $RUN/native_init_gdb.py",
+        "--args",
+        "$PAYLOAD/linker64",
+        "$RUN/native-init-probe-v6",
+        "$PAYLOAD/libs/libg.so",
+        "<verified-content-prologue16>",
+        "<verified-filesystem-prologue16>"
+      ],
+      "process_exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.3166535810005371,
+      "input_files_unchanged": 187,
+      "probe_sha256": "9992bbe58200484147b96741b026d0194828d43ff90f5bda563bae8c762e3cf9",
+      "outputs_sha256": {
+        "before.maps": "3b14538bbd17016a2b73009b6a25e09747fca8a6654567570e0769beabf4e439",
+        "stderr.log": "f43fd652b4b90dd0eab74086b61a766dcee6ea0d776443dd65ebec7fe2de29db",
+        "observation.json": "646ad0b5a34d8e0ff2f744a130c4fbfaa0a43ec96b6a5ae7bfaf6b5adc7a54e6",
+        "stdout.log": "6a3483baabe2f4bf202429dcb472abc258aa4c6aea64b5d6213bba74a8fb46ad",
+        "after.maps": "d6e04f0c97f445f0a6928b8c91d2160896d33bc98e7721c75f27051b76724c21",
+        "closed.maps": "5a5b230539e1d85e164dcc0e6cdc6ee66d0de5591dcebeff3ee8d3d91346eadf",
+        "result.json": "01505035f306efb7216328e874719e238a490c5b87af534bffbb82449ef03a12"
+      },
+      "inferior_exit_code": 0,
+      "coverage_valid": true
+    }
+  ],
+  "constructors": {
+    "log_sha256": "b94b3edbc0450af9ebf764de0298d995d9c94539e931eb62a3672590dbe119ff",
+    "lines": 9761788,
+    "modules": [
+      {
+        "module": "android.frameworks.bufferhub@1.0.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.cas.native@1.0.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.cas@1.0.so",
+        "array_sizes": [
+          4
+        ],
+        "entered": 4,
+        "returned": 4,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.configstore@1.0.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.configstore@1.1.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.drm@1.0.so",
+        "array_sizes": [
+          5
+        ],
+        "entered": 5,
+        "returned": 5,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.drm@1.1.so",
+        "array_sizes": [
+          3
+        ],
+        "entered": 3,
+        "returned": 3,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.drm@1.2.so",
+        "array_sizes": [
+          5
+        ],
+        "entered": 5,
+        "returned": 5,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.drm@1.3.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.graphics.allocator@2.0.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.graphics.allocator@3.0.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.graphics.allocator@4.0.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.graphics.bufferqueue@1.0.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.graphics.bufferqueue@2.0.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.graphics.mapper@2.0.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.graphics.mapper@2.1.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.graphics.mapper@3.0.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.graphics.mapper@4.0.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.media.bufferpool@2.0.so",
+        "array_sizes": [
+          4
+        ],
+        "entered": 4,
+        "returned": 4,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.media.c2@1.0.so",
+        "array_sizes": [
+          8
+        ],
+        "entered": 8,
+        "returned": 8,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.media.c2@1.1.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.media.omx@1.0.so",
+        "array_sizes": [
+          6
+        ],
+        "entered": 6,
+        "returned": 6,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hardware.memtrack@1.0.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hidl.allocator@1.0.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hidl.memory.token@1.0.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hidl.memory@1.0.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hidl.token@1.0-utils.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.hidl.token@1.0.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "android.system.suspend@1.0.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "capture_state_listener-aidl-V1-cpp.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libEGL.so",
+        "array_sizes": [
+          6
+        ],
+        "entered": 6,
+        "returned": 6,
+        "unreturned": 0
+      },
+      {
+        "module": "libandroid.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "libandroid_runtime.so",
+        "array_sizes": [
+          15
+        ],
+        "entered": 15,
+        "returned": 15,
+        "unreturned": 0
+      },
+      {
+        "module": "libandroidfw.so",
+        "array_sizes": [
+          4
+        ],
+        "entered": 4,
+        "returned": 4,
+        "unreturned": 0
+      },
+      {
+        "module": "libandroidicu.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libappfuse.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libaudioclient.so",
+        "array_sizes": [
+          11
+        ],
+        "entered": 11,
+        "returned": 11,
+        "unreturned": 0
+      },
+      {
+        "module": "libaudiomanager.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libbinder.so",
+        "array_sizes": [
+          22
+        ],
+        "entered": 22,
+        "returned": 22,
+        "unreturned": 0
+      },
+      {
+        "module": "libbinder_ndk.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libc++.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libc++_shared.so",
+        "array_sizes": [
+          3
+        ],
+        "entered": 3,
+        "returned": 3,
+        "unreturned": 0
+      },
+      {
+        "module": "libc.so",
+        "array_sizes": [
+          3
+        ],
+        "entered": 3,
+        "returned": 3,
+        "unreturned": 0
+      },
+      {
+        "module": "libcamera_client.so",
+        "array_sizes": [
+          12
+        ],
+        "entered": 12,
+        "returned": 12,
+        "unreturned": 0
+      },
+      {
+        "module": "libcodec2_vndk.so",
+        "array_sizes": [
+          3
+        ],
+        "entered": 3,
+        "returned": 3,
+        "unreturned": 0
+      },
+      {
+        "module": "libcrypto.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libdatasource.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libdng_sdk.so",
+        "array_sizes": [
+          4
+        ],
+        "entered": 4,
+        "returned": 4,
+        "unreturned": 0
+      },
+      {
+        "module": "libfmod.so",
+        "array_sizes": [
+          6
+        ],
+        "entered": 6,
+        "returned": 6,
+        "unreturned": 0
+      },
+      {
+        "module": "libfmodstudio.so",
+        "array_sizes": [
+          3
+        ],
+        "entered": 3,
+        "returned": 3,
+        "unreturned": 0
+      },
+      {
+        "module": "libg.so",
+        "array_sizes": [
+          753
+        ],
+        "entered": 753,
+        "returned": 753,
+        "unreturned": 0
+      },
+      {
+        "module": "libgralloctypes.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libgraphicsenv.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libgui.so",
+        "array_sizes": [
+          14
+        ],
+        "entered": 14,
+        "returned": 14,
+        "unreturned": 0
+      },
+      {
+        "module": "libhidlbase.so",
+        "array_sizes": [
+          9
+        ],
+        "entered": 9,
+        "returned": 9,
+        "unreturned": 0
+      },
+      {
+        "module": "libhidlmemory.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libhwui.so",
+        "array_sizes": [
+          7
+        ],
+        "entered": 7,
+        "returned": 7,
+        "unreturned": 0
+      },
+      {
+        "module": "libimg_utils.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libinput.so",
+        "array_sizes": [
+          3
+        ],
+        "entered": 3,
+        "returned": 3,
+        "unreturned": 0
+      },
+      {
+        "module": "libmedia.so",
+        "array_sizes": [
+          20
+        ],
+        "entered": 20,
+        "returned": 20,
+        "unreturned": 0
+      },
+      {
+        "module": "libmedia_codeclist.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libmedia_omx.so",
+        "array_sizes": [
+          3
+        ],
+        "entered": 3,
+        "returned": 3,
+        "unreturned": 0
+      },
+      {
+        "module": "libmediadrm.so",
+        "array_sizes": [
+          3
+        ],
+        "entered": 3,
+        "returned": 3,
+        "unreturned": 0
+      },
+      {
+        "module": "libmediametrics.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "libmediautils.so",
+        "array_sizes": [
+          5
+        ],
+        "entered": 5,
+        "returned": 5,
+        "unreturned": 0
+      },
+      {
+        "module": "libmeminfo.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libmemunreachable.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "libnativedisplay.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "libnativehelper.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libnblog.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libnetdutils.so",
+        "array_sizes": [
+          8
+        ],
+        "entered": 8,
+        "returned": 8,
+        "unreturned": 0
+      },
+      {
+        "module": "libpowermanager.so",
+        "array_sizes": [
+          4
+        ],
+        "entered": 4,
+        "returned": 4,
+        "unreturned": 0
+      },
+      {
+        "module": "libprotobuf-cpp-lite.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libselinux.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libsensor.so",
+        "array_sizes": [
+          3
+        ],
+        "entered": 3,
+        "returned": 3,
+        "unreturned": 0
+      },
+      {
+        "module": "libsfplugin_ccodec.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libsfplugin_ccodec_utils.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libstagefright.so",
+        "array_sizes": [
+          7
+        ],
+        "entered": 7,
+        "returned": 7,
+        "unreturned": 0
+      },
+      {
+        "module": "libstagefright_bufferpool@2.0.1.so",
+        "array_sizes": [
+          3
+        ],
+        "entered": 3,
+        "returned": 3,
+        "unreturned": 0
+      },
+      {
+        "module": "libstagefright_foundation.so",
+        "array_sizes": [
+          3
+        ],
+        "entered": 3,
+        "returned": 3,
+        "unreturned": 0
+      },
+      {
+        "module": "libstagefright_framecapture_utils.so",
+        "array_sizes": [
+          3
+        ],
+        "entered": 3,
+        "returned": 3,
+        "unreturned": 0
+      },
+      {
+        "module": "libstatspull.so",
+        "array_sizes": [
+          5
+        ],
+        "entered": 5,
+        "returned": 5,
+        "unreturned": 0
+      },
+      {
+        "module": "libtimeinstate.so",
+        "array_sizes": [
+          1
+        ],
+        "entered": 1,
+        "returned": 1,
+        "unreturned": 0
+      },
+      {
+        "module": "libui.so",
+        "array_sizes": [
+          9
+        ],
+        "entered": 9,
+        "returned": 9,
+        "unreturned": 0
+      },
+      {
+        "module": "libutils.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "libvibrator.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      },
+      {
+        "module": "libvintf.so",
+        "array_sizes": [
+          17
+        ],
+        "entered": 17,
+        "returned": 17,
+        "unreturned": 0
+      },
+      {
+        "module": "libvulkan.so",
+        "array_sizes": [
+          2
+        ],
+        "entered": 2,
+        "returned": 2,
+        "unreturned": 0
+      }
+    ],
+    "unexpected_returns": 0,
+    "warnings": 3,
+    "ifunc_calls": 304,
+    "unique_ifunc_resolvers": 6,
+    "coverage_limit": "Linker call/return messages only; no proof of internal platform API coverage."
+  },
+  "loaded": {
+    "phdr_entries": 187,
+    "identity_matched_modules": 185,
+    "shared_objects": 184,
+    "modules": [
+      {
+        "module": "linker64",
+        "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+      },
+      {
+        "module": "libdl.so",
+        "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+      },
+      {
+        "module": "libc.so",
+        "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+      },
+      {
+        "module": "libnetd_client.so",
+        "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+      },
+      {
+        "module": "libc++.so",
+        "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+      },
+      {
+        "module": "libm.so",
+        "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+      },
+      {
+        "module": "libg.so",
+        "sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783"
+      },
+      {
+        "module": "libscid_sdk.so",
+        "sha256": "2a6edcc8fcad301daa946157ea97c6c422067d5ceaab7cb2ed4655654b642319"
+      },
+      {
+        "module": "liblog.so",
+        "sha256": "3f7a866098c04e8f215e43d9e662c7333a05d3ba607e76cbb62d8eb0a53572cc"
+      },
+      {
+        "module": "libandroid.so",
+        "sha256": "57d7f1149904d904e14c79135f3d6ef8282b098dec497e9337dda59ee786f60c"
+      },
+      {
+        "module": "libEGL.so",
+        "sha256": "e9d82eb31d325f59effc43c29755ebb35a86dc23b1db36823b0db8366ae503e5"
+      },
+      {
+        "module": "libfmod.so",
+        "sha256": "299d2a6b03ec865cd9234f4f7484fb7e74928d0180dc6c4b455a8d2b5b54dd45"
+      },
+      {
+        "module": "libfmodstudio.so",
+        "sha256": "592cdc4beba2aea5f177f0ed3c52c7ed018b09734a3fb584a4ec487cd926caf0"
+      },
+      {
+        "module": "libsentry-android.so",
+        "sha256": "6769fd03351610e93ca724ccc74c1c82a6caedd8c1d9996267599556545712a1"
+      },
+      {
+        "module": "libsentry.so",
+        "sha256": "bea6725a4122db6e516da9ee4a62b066b05171fddcdf1513c98e33626746acda"
+      },
+      {
+        "module": "libc++_shared.so",
+        "sha256": "4397241b4bd20a8e579bfb41d21107857e12985f6a01ca0c2a5f83380d1270b4"
+      },
+      {
+        "module": "libhidlbase.so",
+        "sha256": "ab365cc34d43d8661fc2170c3d9fa36e19ff4e19f306b5296efdec4911a16ab4"
+      },
+      {
+        "module": "libcutils.so",
+        "sha256": "20d282399b0ecfe5e8904ec764560ebb108f2797ae2c1b40091e86a7affed304"
+      },
+      {
+        "module": "libandroidfw.so",
+        "sha256": "ede161e7a0bdaa5a05c588aae5e8c6aac25fc8ed34d9e645af46dd86e519cfe9"
+      },
+      {
+        "module": "libinput.so",
+        "sha256": "b349429c5b4f8bd097d4041bf14da9eee03c3b71879ebc8b242e6426bd67f66c"
+      },
+      {
+        "module": "libutils.so",
+        "sha256": "f67a4a20450acb622d4e8dfc56a856f17ce18c6c45059274598862163f5e8ef1"
+      },
+      {
+        "module": "libbinder.so",
+        "sha256": "8e9bbd9c79de6cf56ffa2cd49af4f63aba089cccac4ea6eb545c9dacc7368683"
+      },
+      {
+        "module": "libui.so",
+        "sha256": "f23745de13b3175f884789dcfb8d9942c06dcc85ab56354c7c5694c5f9b383bc"
+      },
+      {
+        "module": "libgui.so",
+        "sha256": "83d0cc1a2229b2ec1d8fea42bf0ea4281c163570a22b2f777f64dbd9e9d54430"
+      },
+      {
+        "module": "libharfbuzz_ng.so",
+        "sha256": "e36a8432b9ff3a041a0fbe395ad794a27c15e569875b6127a676f8ffbad1a399"
+      },
+      {
+        "module": "libsensor.so",
+        "sha256": "530488948fd93529ecedf5fe794083114111a3ad4992f87d8759ec1663948982"
+      },
+      {
+        "module": "libandroid_runtime.so",
+        "sha256": "806a7753d28556488dc7c6535b111128e6ad60b3d25db2a8183a4643f9c7add6"
+      },
+      {
+        "module": "libminikin.so",
+        "sha256": "6cb6b205fbd0f579a5c12e9073268ac428b7f424b6a364c1c35265976992b681"
+      },
+      {
+        "module": "libhwui.so",
+        "sha256": "e0d9c668fd06e421c0e36213083d281f50066fa8e38d4df3dea68c0e44b48987"
+      },
+      {
+        "module": "libxml2.so",
+        "sha256": "22f019774097a6519fe424b49ab2d3576ad223d0ec51e4ae2cd94cab6caf6b8b"
+      },
+      {
+        "module": "libGLESv2.so",
+        "sha256": "017c3194b1b931d275e1f5141179e6fcfc2970115cd59ec7c657f56d9def8c4d"
+      },
+      {
+        "module": "libpowermanager.so",
+        "sha256": "5c68f56c5e9ccaf2eec8b440b86a109cbff6d8069a976457d552d90ed1d4ecaa"
+      },
+      {
+        "module": "android.hardware.configstore@1.0.so",
+        "sha256": "ddfe74eec3dadc51925f7f9f8de04d5ed841b588bf0cabf547b91bb797948f09"
+      },
+      {
+        "module": "android.hardware.configstore-utils.so",
+        "sha256": "5fb924e24b725bc1b6a7ad24b3193b0f3ddc2e3dad8af550da5c8a89ccdcd0d9"
+      },
+      {
+        "module": "libnativedisplay.so",
+        "sha256": "fcc7b359751b1cf26e684e252c6a1d182289bdccac46dbbdbd5f5e70a2ce7ffe"
+      },
+      {
+        "module": "libgraphicsenv.so",
+        "sha256": "436ad4db26c7215bbc317e9806b5813fae7bf3059a05185be82d5f4597029021"
+      },
+      {
+        "module": "libnativewindow.so",
+        "sha256": "32a1fe78a54e24cf0ec0edebf47687ea0f308edfb6510279f8d0283436c439da"
+      },
+      {
+        "module": "libbacktrace.so",
+        "sha256": "ab3ae6169ae63873b818f9d203402b224fd9a7d9709fd36204b4e1d2a39ef04a"
+      },
+      {
+        "module": "libvndksupport.so",
+        "sha256": "05d19c6193ea165acc32c259fd947c3b6aa1f190d5253d500f091a24f5494330"
+      },
+      {
+        "module": "libbase.so",
+        "sha256": "962ac47c0233ab3cab18bd180d89dcfd932de6da7ef6fa308ca8d1c346cc9498"
+      },
+      {
+        "module": "libnativebridge_lazy.so",
+        "sha256": "32d4c65f34d8b534f8e2614b941812e450bf4f44820a10be87885977577adfe4"
+      },
+      {
+        "module": "libnativeloader_lazy.so",
+        "sha256": "bd0bb18e05dce1034758f71a25a029c2d3acd80c30f121d23e389b2dc89658c0"
+      },
+      {
+        "module": "libSurfaceFlingerProp.so",
+        "sha256": "710d6e0cf6122156ba568381d2217e39916ccdc3e966c65b08b92f17a2441b40"
+      },
+      {
+        "module": "libstdc++.so",
+        "sha256": "62c93ee0c9de89bc9a95c1a1ae53c8c8d904801ff0a3f47f7bc666db32b3f63e"
+      },
+      {
+        "module": "libziparchive.so",
+        "sha256": "79b5c50df12de57a6ab2d281eed775350d4848573f650df8a8534fe1f97eb14b"
+      },
+      {
+        "module": "libz.so",
+        "sha256": "846789c3f8bcbe1a472c44ff28b5a63891c7f825fde552d42122cb881b8d64d2"
+      },
+      {
+        "module": "libprocessgroup.so",
+        "sha256": "6e5788f7082ad28b89c97670b5c459f214f4ce6809e45bc4c33b7798e51f23c7"
+      },
+      {
+        "module": "android.hardware.graphics.allocator@2.0.so",
+        "sha256": "395c387b3f1951307714bb54a4afc172b625437d3b3af33a1384b70ae8de9b87"
+      },
+      {
+        "module": "android.hardware.graphics.allocator@3.0.so",
+        "sha256": "86ec599e9ae4694befe6c0cb12cf16962ffaf33b019af88e1f418b0d68b263cc"
+      },
+      {
+        "module": "android.hardware.graphics.allocator@4.0.so",
+        "sha256": "84241ec0a8e5c085a1a300971d26adf81d63193774a8fc75ffe869f07ebc2d40"
+      },
+      {
+        "module": "android.hardware.graphics.common-V1-ndk_platform.so",
+        "sha256": "9ecf10d34e53277181860bddb9d8fcc0e3da15d2dbad14e9fbb11c67e5a7f0a7"
+      },
+      {
+        "module": "android.hardware.graphics.common@1.2.so",
+        "sha256": "f45608364dddf378fa4ad3d1b1068f65d8a8e32da72c5c4b512eacef674579d9"
+      },
+      {
+        "module": "android.hardware.graphics.mapper@2.0.so",
+        "sha256": "c7bab2e6656fb9228fe0d837b60f3f033c3b6882c9c0c999cd1d538871061bba"
+      },
+      {
+        "module": "android.hardware.graphics.mapper@2.1.so",
+        "sha256": "85f62c71969ccce5c7f19f392202260fdce96165a0721d05b30d12d65e14b791"
+      },
+      {
+        "module": "android.hardware.graphics.mapper@3.0.so",
+        "sha256": "a3fd666dd6edb817ca05001e7d94ad46298d6c09a7c05ec6d8c32504723b463b"
+      },
+      {
+        "module": "android.hardware.graphics.mapper@4.0.so",
+        "sha256": "545fb8b4b662a5ab983719d3fbd90520d6ec23235f069dbaf0d62527a6b9e911"
+      },
+      {
+        "module": "libgralloctypes.so",
+        "sha256": "5c84e8fa4dbaec1e9382c4f61e2489db29dd50fbe8a04c04fa46af3dd386d7f5"
+      },
+      {
+        "module": "libsync.so",
+        "sha256": "3f30d536b1af1d9bece061b2655ce6f36ea5f3be2d7f1d7b1a461f12314a2a64"
+      },
+      {
+        "module": "android.hardware.graphics.bufferqueue@1.0.so",
+        "sha256": "0045ff822e26588bfd0460c1ab2052cec6416dbf36b2cb4cd5883228693a1ead"
+      },
+      {
+        "module": "android.hardware.graphics.bufferqueue@2.0.so",
+        "sha256": "31bc51fe899604a0ce3f0344edaf1ee922efc5626c76c4141c2dabacb7392ca3"
+      },
+      {
+        "module": "android.hardware.graphics.common@1.1.so",
+        "sha256": "8fb1d34433e21e325ca0bd6e7e3c5fecc98711232927abf1fcbdc63ab41f4e28"
+      },
+      {
+        "module": "android.hidl.token@1.0-utils.so",
+        "sha256": "3caa1f8c30bcb3ead34c94a92fb8a04ff2ff2705566d8e0a0239146e47c6a509"
+      },
+      {
+        "module": "android.frameworks.bufferhub@1.0.so",
+        "sha256": "f3ea5bd36dfb9ad26af199981e3ed307ba7d741e8258a03aa0c24260271da720"
+      },
+      {
+        "module": "libbufferhub.so",
+        "sha256": "fd9073bbda0d07811436a752576348a5caada34c1455a731924cdff16de4df2c"
+      },
+      {
+        "module": "libbufferhubqueue.so",
+        "sha256": "027a8d4c652a767c1f4131ab49d213c606f40800426159ecd69a949e5bd1ae04"
+      },
+      {
+        "module": "libpdx_default_transport.so",
+        "sha256": "a07d3179e394f9f7b3d09e5d6c37ac7992c0a368cd01a346afd6bb7c6ad14b10"
+      },
+      {
+        "module": "libandroidicu.so",
+        "sha256": "aa53fd70572923ed9f55a2967a661eb45fac10ca740e2382967b5c4c39c78ba0"
+      },
+      {
+        "module": "libhardware.so",
+        "sha256": "6a213e816911fd5097fa27a8fb15daf1434e288d7751df04fa9972907b9b21e5"
+      },
+      {
+        "module": "libnativehelper.so",
+        "sha256": "7e78db56b92217eaa8b5f8dcfd5a59d5cfdca98ab8aa3a85c9cee6063ad26b7e"
+      },
+      {
+        "module": "libbpf_android.so",
+        "sha256": "16b6f3444c6a2b75ee8a37666c47db4d2c657360687b225e442680da1e1f6f7c"
+      },
+      {
+        "module": "libnetdbpf.so",
+        "sha256": "596f5deef5b26fc8328b4be646a0380f09c577f1e17a4f81749442b7cc8393f0"
+      },
+      {
+        "module": "libnetdutils.so",
+        "sha256": "7eb0b0ef1ec07d531a4780ce5217974307170bce7a93f721bcaff8ad13e459d5"
+      },
+      {
+        "module": "libmemtrack.so",
+        "sha256": "731a51d192d8d22af5ec21f5d101bb381857e5f7df8fa65309db4664fe7409cf"
+      },
+      {
+        "module": "libappfuse.so",
+        "sha256": "80f6e03f1ea1ac4fc7ea6c63eaae577753eb3445809620aebfe2427dc8d919e7"
+      },
+      {
+        "module": "libcrypto.so",
+        "sha256": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b"
+      },
+      {
+        "module": "libdebuggerd_client.so",
+        "sha256": "6330cc03d2ec8c54817d8891a344eae2c2abc9dea5f4d289b806c251a97f963d"
+      },
+      {
+        "module": "libmediandk.so",
+        "sha256": "38ebc41fbdf25ee57a42b7de5b742d46d72752102da601c95c9a1ba36602cba6"
+      },
+      {
+        "module": "libcamera_client.so",
+        "sha256": "1789a3f46c613d47d4c006555403d6f6aa6d21b987082fafb6a346ae05ce12c7"
+      },
+      {
+        "module": "libcamera_metadata.so",
+        "sha256": "22d5b8a8ae09165ed4762e0a03ef659a1ab34cc10d4da0ad34d7d01fad23e7d9"
+      },
+      {
+        "module": "libsqlite.so",
+        "sha256": "23f8741d6eb637dd3c556015d51bf93880f080c48cd8638a7fe0979a400b446b"
+      },
+      {
+        "module": "libGLESv1_CM.so",
+        "sha256": "bc4a9aa97acf4405e7ac899a2b54ce132b4249c1c50ebbe7ac873eabc2e6de90"
+      },
+      {
+        "module": "libGLESv3.so",
+        "sha256": "9ec2f58eb8ae1ab1fe06cd431737297c0f8f3b84a8f1f0ac86f79f95e6e69345"
+      },
+      {
+        "module": "libincfs.so",
+        "sha256": "e0d3566e1fae37c36253441f37d6f22663e91cf3baafcbd0b6e555db8961ed6a"
+      },
+      {
+        "module": "libdataloader.so",
+        "sha256": "ee173d849b396679fc7d84189a80e0d391327edc9a7ed90428787236635e3393"
+      },
+      {
+        "module": "libvulkan.so",
+        "sha256": "0e078f65111c3d763b064fddbb40d1eebc63526b8598fafe0d50afc7cc21eef2"
+      },
+      {
+        "module": "libETC1.so",
+        "sha256": "e2a79b81c0ac4731e0b32331645370cf40c791ead7a52baabd5d99b5ab298c61"
+      },
+      {
+        "module": "libhardware_legacy.so",
+        "sha256": "155176a3f573f7e15efe4e9a1330ff724f5281c7397b46f1d9e41a790334e482"
+      },
+      {
+        "module": "libselinux.so",
+        "sha256": "e2c87af123c55fbe4e682f444c44e79c93098fbe1e4a208d8417e00303e9e0af"
+      },
+      {
+        "module": "libmedia.so",
+        "sha256": "81039a8c3238a96c2b5ec439f0442e439e311b3aab9c5f5d11eca5f92297b2ee"
+      },
+      {
+        "module": "libmedia_helper.so",
+        "sha256": "588850535303f27d6a6dd64088eae51ee3cea64151c0144f9266ad6b90e85b12"
+      },
+      {
+        "module": "libmediametrics.so",
+        "sha256": "5cdf63103385224c524cd17690a83a9b85ca319edd6b6edcaf0518c58b1d1fdd"
+      },
+      {
+        "module": "libmeminfo.so",
+        "sha256": "464eb618aebbf1fcec650e03cbfa8ba1d97b6db858e8c0d0cd4c834b7c9c4293"
+      },
+      {
+        "module": "libaudioclient.so",
+        "sha256": "6377cd87ff14ace712eedcd0addde0a0ac7e806b5e0a1e6670b4f92ce8aa2b5c"
+      },
+      {
+        "module": "libaudiofoundation.so",
+        "sha256": "07edafd1bf86a00f20d964c0ecfff7a07a538311407d286c29b6f1561a78802d"
+      },
+      {
+        "module": "libaudiopolicy.so",
+        "sha256": "dbcd3c67046482f94860ade3784244ad67de6bd143d2f1344e7b3d8ecb28c96f"
+      },
+      {
+        "module": "libusbhost.so",
+        "sha256": "118ceb72e346fe81ce04588876444f1fa99816fcd7e95bca3da55521b561f772"
+      },
+      {
+        "module": "libpdfium.so",
+        "sha256": "392fc044e1546398d6afed0d96de0fcff00e477e69b74249a356cf2246664cb4"
+      },
+      {
+        "module": "libimg_utils.so",
+        "sha256": "a33ac8981f10122db423c281f4e2c09817f3e14ec54648177e647ed4a63fc421"
+      },
+      {
+        "module": "libmemunreachable.so",
+        "sha256": "9df8005720702c0b2350eaa1cff70ea50add00d19dcf5a082f278b7b5813151a"
+      },
+      {
+        "module": "libvintf.so",
+        "sha256": "4d8897025667830edd3025883bb4fa7ea2c5caa735f19c350d47ec2687bef3fb"
+      },
+      {
+        "module": "libdl_android.so",
+        "sha256": "99a059bbb1a6abd1465a107e098069440011af254746a27fa44fd2c2b7496d51"
+      },
+      {
+        "module": "libstatslog.so",
+        "sha256": "3a0f7f34eed3a8b77a0a81ce89c41b1f775b49bd207d593b70d1c41c422d6d40"
+      },
+      {
+        "module": "libstatssocket.so",
+        "sha256": "c70fa366743987548481e54c169c7d928c4d35d2fb1c37533498bd9f8fdd92ed"
+      },
+      {
+        "module": "libtimeinstate.so",
+        "sha256": "6654ce30727e1d4f8eb91fc6a93ef1b42ff27693ae119737ae919296e3f4170d"
+      },
+      {
+        "module": "server_configurable_flags.so",
+        "sha256": "23955bf56c3d8adf29a7ee4f4b543ec71ad72652310822edb9d0452c6227a934"
+      },
+      {
+        "module": "libstatspull.so",
+        "sha256": "0ff86311f4be8c046548f07efe263f28c75c4d7589af3d49d36dafd4a833252a"
+      },
+      {
+        "module": "libdng_sdk.so",
+        "sha256": "b9148cbe8d2e24604b874163959e4cfc85489c5dcc6817f2eb90e11fccce16e7"
+      },
+      {
+        "module": "libexpat.so",
+        "sha256": "cbcb285fce6e6a9aea949b15ae812571ceeca9e37dc29c3eda93d45715af4ba8"
+      },
+      {
+        "module": "libjpeg.so",
+        "sha256": "cebd77b32fe8353a5fe7ab6eb3810ea0926492f5f71096fb29956e7e9813e048"
+      },
+      {
+        "module": "libpiex.so",
+        "sha256": "b7af67e98e24a2c0b54c0fd46555baea5aeafa42ea8fce2a57704eb639091949"
+      },
+      {
+        "module": "libpng.so",
+        "sha256": "489c2ef48a62e0ab6db5325a4c7f1aefb112b70cb1342db7b9ce46076cf24dc0"
+      },
+      {
+        "module": "libbinder_ndk.so",
+        "sha256": "0cc7a65ba916d9c8b474bfbcdb4ccaaad36fbfdbb87e925c35d95e98d247f9b7"
+      },
+      {
+        "module": "libheif.so",
+        "sha256": "f8402e4079250b2be0a00322036a7d9772da4bc5a5a13d57f06b74c1f940332b"
+      },
+      {
+        "module": "libprotobuf-cpp-lite.so",
+        "sha256": "5a7f196d9ead375904c9fd7b13985f0d1db56d03dc8562afd42293c5b54b53fb"
+      },
+      {
+        "module": "libft2.so",
+        "sha256": "4166d384a556d1d12df12e1dbb38618d9aaaaf9d57a80c5ee78f49f40653e32d"
+      },
+      {
+        "module": "android.hardware.configstore@1.1.so",
+        "sha256": "e25e8b1bc767ac49258ede6ffda73f6abd0e0ef96579a1055c39311ccdf82877"
+      },
+      {
+        "module": "libunwindstack.so",
+        "sha256": "5e4bc25c498fb8d391c8d65a235c457507a4d26e7857c72ccb9b11e27f4a4693"
+      },
+      {
+        "module": "libcgrouprc.so",
+        "sha256": "21fe8584ee9c1fcea79023efdd858f8f5cfdbfa1d8234275adbee7f613312a04"
+      },
+      {
+        "module": "android.hardware.graphics.common@1.0.so",
+        "sha256": "1aac77e13aceef4fc4e06c89a44b04907c730f29e94e1e3c313fc3f59cc176c0"
+      },
+      {
+        "module": "android.hardware.common-V1-ndk_platform.so",
+        "sha256": "7e4615189905824466ffc6b133b9a9efdd4dbf4f136cefcb230855c0472926b5"
+      },
+      {
+        "module": "android.hardware.media@1.0.so",
+        "sha256": "1124a77b20ce24e7d8914cd19d04c6c36d3deceee25b2436db71096ea3efd88e"
+      },
+      {
+        "module": "android.hidl.token@1.0.so",
+        "sha256": "f8053bca836667a4b551ab602116c658be53a349761c17e3c5571563437cc144"
+      },
+      {
+        "module": "libicuuc.so",
+        "sha256": "edb488eee815bcfc14d122b54889b950f8cc1e39208cbb5e834f96a666415abc"
+      },
+      {
+        "module": "libicui18n.so",
+        "sha256": "2bb6373b9d43e09a9b6a8160e8f8470a21a1b77ceb943bc013908c6ea091056f"
+      },
+      {
+        "module": "libbpf.so",
+        "sha256": "3924f2c8c5aedb67936bb3e093818718f870c5b21d4b90fd2db295b981c0d29b"
+      },
+      {
+        "module": "android.hardware.memtrack@1.0.so",
+        "sha256": "11c6eab3a268fc9a5b50e20e26b6ee0faed3f8337544bcb0a43be6714cade282"
+      },
+      {
+        "module": "libprocinfo.so",
+        "sha256": "762c448423c27fd139c40c05c6497452f15c2cfe14ba6c81294e8b85264d3688"
+      },
+      {
+        "module": "libandroid_runtime_lazy.so",
+        "sha256": "ede117b77e0e07160ae6f781af96f811ec1a5b2e23506949d5f4b79a2a67b296"
+      },
+      {
+        "module": "libdatasource.so",
+        "sha256": "639b302e78ecbb01231f3c4218f26beffff0289efc1fb1577014ed6cb4865967"
+      },
+      {
+        "module": "libmediadrm.so",
+        "sha256": "b242e3716cf5bfa6d8896c1f8ddab494f3e58bb685a3dadcf4e085070ac527c6"
+      },
+      {
+        "module": "libmedia_omx.so",
+        "sha256": "5fb0efa45d8b347955f077659aa3ae1d1769424fdedfc5487bc7671bf4128237"
+      },
+      {
+        "module": "libmedia_jni_utils.so",
+        "sha256": "9fc0a179d4c3722e848f0ca1bde9e2c262832168e1a22dc24b30d2d0fc557d05"
+      },
+      {
+        "module": "libstagefright.so",
+        "sha256": "bbaf00ede8096b03bc46ec83720c9b10c1220d4f69b882d838b247f2ec6f9f56"
+      },
+      {
+        "module": "libstagefright_foundation.so",
+        "sha256": "a5a6626f834458e11c4830699c4c9a142eb6ec3b9675ee0f3b9614bf9879e114"
+      },
+      {
+        "module": "libmediandk_utils.so",
+        "sha256": "8ae820c8c68f0c1d23c5eb1197a732cfadaeea97ca03a44eaf47fe065d29a4b3"
+      },
+      {
+        "module": "android.system.suspend@1.0.so",
+        "sha256": "c1f693c59753a6c3dadc327fb58fe73382f4202795a4b58afb2fb612ad6b4ba2"
+      },
+      {
+        "module": "libpcre2.so",
+        "sha256": "0afa7b84e8d030e2b608f5b2107162a4d06e98fdb7f28f6abf5ba750f1feca62"
+      },
+      {
+        "module": "libpackagelistparser.so",
+        "sha256": "a364a71073856c1c6176df519b08d8668da5ba4c222de6a4148a403ecc7fdeae"
+      },
+      {
+        "module": "libmedia_codeclist.so",
+        "sha256": "34ac150d8c43b30c3010d343b16bb162dc67a2c43a404b61ce355b1e4432c682"
+      },
+      {
+        "module": "capture_state_listener-aidl-V1-cpp.so",
+        "sha256": "4b0dff7650636eb31b41dd494655eadf8f40f9690d4d194fef681848f3fcaf3d"
+      },
+      {
+        "module": "libaudioutils.so",
+        "sha256": "475d5365adad0fa457bb43153f5fea4e4241c96184db7765c2123539abdd4747"
+      },
+      {
+        "module": "libaudiomanager.so",
+        "sha256": "8ac0514211f2fdad868c0b2bc7a209e1fa563ed116cdc6b4a9616ce0e769541e"
+      },
+      {
+        "module": "libmediautils.so",
+        "sha256": "f0a8c63acde74ccc8d95def40d199cca49edb4026edd8135fb9d94b8a5384c53"
+      },
+      {
+        "module": "libnblog.so",
+        "sha256": "7ee76ce42d21faf409b6884923271107750d2e5217ae390a9578df0d34f16179"
+      },
+      {
+        "module": "libvibrator.so",
+        "sha256": "e9e4fbf8fd7af519aaeb5834c659d9d014952f2b91100fa730e8af1ae461e37b"
+      },
+      {
+        "module": "libhidl-gen-utils.so",
+        "sha256": "42eff804d70f691adbbd4717e359357be4d9a0d555a48d931c195d1fa4c17a25"
+      },
+      {
+        "module": "libtinyxml2.so",
+        "sha256": "e402c85be9a17ba2b5a6fbf0bf52d4b33a79e7a9a25f078c14140802f79ed5c1"
+      },
+      {
+        "module": "liblzma.so",
+        "sha256": "619d52f2b141a8a5ede229ac69f2eb46c9c181a5f7f8edf523fc21d28b24a071"
+      },
+      {
+        "module": "libdexfile_support.so",
+        "sha256": "29386005209c0d9263af48bdcb558003be523047c7e5d669f9549686cdc4ee7c"
+      },
+      {
+        "module": "libmediadrmmetrics_lite.so",
+        "sha256": "d98921fae6c691466ea90cae1ee89883768268aecafec1017fad64546bdb4f44"
+      },
+      {
+        "module": "android.hardware.drm@1.0.so",
+        "sha256": "d2f4a81ffb5374ba04c5c52f2e7093cee911078ee3df1a21b19c7f2daa2738d5"
+      },
+      {
+        "module": "android.hardware.drm@1.1.so",
+        "sha256": "342d00a5038f4a7e38c7f4dc6e4b31bbf34ccc2f979ac1466e156fdbaf376e63"
+      },
+      {
+        "module": "android.hardware.drm@1.2.so",
+        "sha256": "7129af21e06e3f99d7a52951d910223142ee56a4a039a8d06e62bde33a45221a"
+      },
+      {
+        "module": "android.hardware.drm@1.3.so",
+        "sha256": "df37732dac71a2c8fb234b8306c92ceb91f9c380aa355ec996714ccde1abc08d"
+      },
+      {
+        "module": "libhidlallocatorutils.so",
+        "sha256": "98e2b727965f8978c88742c2d20a09ee33fddd4575d25805a20e0aeccfabd171"
+      },
+      {
+        "module": "android.hardware.media.omx@1.0.so",
+        "sha256": "5e5134a55d1cbc6774f61a99ff78e4f0ad1c0c593d54cbef98afbf2503fd89e9"
+      },
+      {
+        "module": "libstagefright_framecapture_utils.so",
+        "sha256": "4c8859ba88b341029a23fbf9376d13d27173522678443a749125a1a9688dfff1"
+      },
+      {
+        "module": "libcodec2.so",
+        "sha256": "d6b20ec154f8ed18d3ec9560e152dc951481b93c38aa30c21d60bb72dbf3ef1e"
+      },
+      {
+        "module": "libcodec2_vndk.so",
+        "sha256": "909cfd2ea6e51db49b99baff9d0bf580989b7b8cc1e1d7e7e2dc34ac0487e12c"
+      },
+      {
+        "module": "libmedia_omx_client.so",
+        "sha256": "3ec2377eacbda996d0be34bb3c69c2eeb9f866c862ac51eb7cfa31363b600a9e"
+      },
+      {
+        "module": "libsfplugin_ccodec.so",
+        "sha256": "8eb9ff6416b31e6a4c10cd58b9c125fe28429030d6d01c9cd9a868683a3358d6"
+      },
+      {
+        "module": "libsfplugin_ccodec_utils.so",
+        "sha256": "6f94693293e8b72a5bc40ce50fc827c5fb5d73f499a4ad69572841d68e3222a1"
+      },
+      {
+        "module": "libstagefright_codecbase.so",
+        "sha256": "21c26219031528b12d7a489ecd1e4389f80f51b49e662561653cb913f1a45a75"
+      },
+      {
+        "module": "libstagefright_omx_utils.so",
+        "sha256": "a62be7fcfca7f0ac0dfa169acac774ad95415a124ab65fa84a95be38e766cf29"
+      },
+      {
+        "module": "libRScpp.so",
+        "sha256": "89fb097805bab7803aa6ef5c7d30f5055da1ef9b125bf70f009a5f1c667e380d"
+      },
+      {
+        "module": "libhidlmemory.so",
+        "sha256": "2fc62f493cd2b379480a26d2a036f2ee46f5f2c02791128d623a5938d35915cd"
+      },
+      {
+        "module": "android.hidl.allocator@1.0.so",
+        "sha256": "9a58a29b885b8035a0c78283a349d995a1bfe9d6558afa97ac319866790258d7"
+      },
+      {
+        "module": "android.hardware.cas.native@1.0.so",
+        "sha256": "14891f142a355cb3f15ab38652e7a1b6d43187781e5fefba56b6d9685248fa5c"
+      },
+      {
+        "module": "libspeexresampler.so",
+        "sha256": "f63fda36875fafb587e32881c45ad63af38ca5e065079e55953f3c17d692a507"
+      },
+      {
+        "module": "android.hidl.memory@1.0.so",
+        "sha256": "dfc2111020c3ab2bdb81c17f74753ec5450b2984a789e377af1ed8fd51194d17"
+      },
+      {
+        "module": "android.hardware.media.bufferpool@2.0.so",
+        "sha256": "94558f87b29975f44918610c267677da85f1ec9895ff396bc03cdd16849df51b"
+      },
+      {
+        "module": "libion.so",
+        "sha256": "e76840f77b8323e936f5713b6e871d273436617473ead5869d94d5a178f424ae"
+      },
+      {
+        "module": "libfmq.so",
+        "sha256": "cbcecbfa369c108a4700623307e2f8481d6a5988aa61cf5d73cbf66a1a7789ba"
+      },
+      {
+        "module": "libstagefright_bufferpool@2.0.1.so",
+        "sha256": "173ce71222e830165f4640898ee23919da1a18840bc4178555ec49e9d0fdd5b2"
+      },
+      {
+        "module": "android.hardware.media.c2@1.0.so",
+        "sha256": "3c9ae88de3318576d45ca38cad0825ad254f447636d7afb8e0c059cde444e71e"
+      },
+      {
+        "module": "libcodec2_client.so",
+        "sha256": "168e1c13a8326f7a6f6f4dee0e2e0fa8415a1b51e700a70ce08fa89ad4bbe58b"
+      },
+      {
+        "module": "libstagefright_bufferqueue_helper.so",
+        "sha256": "be1722eda9a11d01eb8dba12a0c47a984c308836ca7752559f4c71b90510c426"
+      },
+      {
+        "module": "libstagefright_omx.so",
+        "sha256": "1104d6289c9a6dad6847ea1aa0cc4c17d855481131d92da79d0b1d798d64f293"
+      },
+      {
+        "module": "libstagefright_xmlparser.so",
+        "sha256": "05732cb11e76dd2eb5fd392a3fa93b33dacb886109fe796018c5f178e068ab49"
+      },
+      {
+        "module": "android.hidl.memory.token@1.0.so",
+        "sha256": "534869974ffed546ceab425fa9d73fb59a023e965cb84e27dce6bc2a85f4c513"
+      },
+      {
+        "module": "android.hardware.cas@1.0.so",
+        "sha256": "45b0b5f28951f9eb88942851e4503bf67d85c5df790b5f553fcff0ce59edc56c"
+      },
+      {
+        "module": "android.hidl.safe_union@1.0.so",
+        "sha256": "adee99e9d823ee4f963108815a9cd151cf9bb293c1fa83c79d23ff1baed364a6"
+      },
+      {
+        "module": "android.hardware.media.c2@1.1.so",
+        "sha256": "97c9184b1465e5e3fdf111d38e33980893a7a256a52e8d7dd26e904bc4b89759"
+      },
+      {
+        "module": "libcodec2_hidl_client@1.0.so",
+        "sha256": "b8b484104ec1c6a92df65db29adef37a0cd6a5957c6cbf22172f8d642422133e"
+      },
+      {
+        "module": "libcodec2_hidl_client@1.1.so",
+        "sha256": "76c8d2eab7a9520fc5107a65566ca17f892b0f82a30616b59fec19f8bc2ad08a"
+      }
+    ],
+    "other_mappings": [
+      "owned probe",
+      "kernel vdso"
+    ],
+    "staged_but_not_seen_in_phdr": [
+      "bionic-probe-v2",
+      "ld-android.so"
+    ],
+    "mapping_limit": "PHDR records/after.maps identify loaded modules, not executed API coverage or minimal dependencies."
+  },
+  "post_load_breakpoints": {
+    "run": "boundaries-v7",
+    "inferior_exit_code": 0,
+    "targets": [
+      {
+        "name": "JNI_OnLoad",
+        "module": "libg.so",
+        "offset": 20774516,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "JavaVMBind",
+        "module": "libg.so",
+        "offset": 25004224,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "JNIEnvAttach",
+        "module": "libg.so",
+        "offset": 25004776,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "JNIClassResolve",
+        "module": "libg.so",
+        "offset": 25005028,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "JNIExceptionCheck",
+        "module": "libg.so",
+        "offset": 25005716,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "PreferenceJNIReadBridge",
+        "module": "libg.so",
+        "offset": 21022716,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AssetManagerBind",
+        "module": "libg.so",
+        "offset": 18438792,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "ContentBootstrap_after_prologue16",
+        "module": "libg.so",
+        "offset": 8389044,
+        "calls": 1,
+        "armed": true
+      },
+      {
+        "name": "FileSystemBootstrap_after_prologue16",
+        "module": "libg.so",
+        "offset": 19791588,
+        "calls": 1,
+        "armed": true
+      },
+      {
+        "name": "AAssetManager_open",
+        "module": "libandroid.so",
+        "offset": 73772,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAsset_read",
+        "module": "libandroid.so",
+        "offset": 74664,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAssetDir_getNextFileName",
+        "module": "libandroid.so",
+        "offset": 74436,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAsset_seek",
+        "module": "libandroid.so",
+        "offset": 74696,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAsset_getBuffer",
+        "module": "libandroid.so",
+        "offset": 74816,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAsset_openFileDescriptor",
+        "module": "libandroid.so",
+        "offset": 74900,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAsset_seek64",
+        "module": "libandroid.so",
+        "offset": 74712,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAsset_getLength64",
+        "module": "libandroid.so",
+        "offset": 74852,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAssetManager_fromJava",
+        "module": "libandroid.so",
+        "offset": 73748,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAssetManager_openDir",
+        "module": "libandroid.so",
+        "offset": 74108,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAsset_getRemainingLength",
+        "module": "libandroid.so",
+        "offset": 74868,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAsset_close",
+        "module": "libandroid.so",
+        "offset": 74728,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAssetDir_rewind",
+        "module": "libandroid.so",
+        "offset": 74584,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAssetDir_close",
+        "module": "libandroid.so",
+        "offset": 74592,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAsset_isAllocated",
+        "module": "libandroid.so",
+        "offset": 75040,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAsset_getLength",
+        "module": "libandroid.so",
+        "offset": 74836,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAsset_getRemainingLength64",
+        "module": "libandroid.so",
+        "offset": 74884,
+        "calls": 0,
+        "armed": true
+      },
+      {
+        "name": "AAsset_openFileDescriptor64",
+        "module": "libandroid.so",
+        "offset": 75024,
+        "calls": 0,
+        "armed": true
+      }
+    ],
+    "event_count": 2,
+    "constructors_covered": false,
+    "coverage": "Only27 explicitly armed post-dlopen addresses: two constructor positive controls, seven known libg JNI/Asset bridges and18 libandroid AAsset exports. Zero counts do not exclude other JNI/function-table/resolver paths.",
+    "raw_observation_sha256": "646ad0b5a34d8e0ff2f744a130c4fbfaa0a43ec96b6a5ae7bfaf6b5adc7a54e6"
+  },
+  "syscalls": {
+    "run": "filesystem-v5",
+    "counts": {
+      "close": 209,
+      "connect": 1,
+      "execve": 1,
+      "exit_group": 1,
+      "faccessat": 3,
+      "fcntl": 3,
+      "fstat": 203,
+      "fstatfs": 184,
+      "futex": 77,
+      "getpid": 1,
+      "getrandom": 4,
+      "getrlimit": 1,
+      "gettid": 15,
+      "getuid": 1,
+      "madvise": 14,
+      "mmap": 2102,
+      "mprotect": 18744,
+      "mremap": 372,
+      "munmap": 1330,
+      "newfstatat": 7,
+      "openat": 214,
+      "prctl": 493,
+      "pread64": 185,
+      "read": 730,
+      "readlinkat": 186,
+      "rt_sigaction": 12,
+      "rt_sigprocmask": 4,
+      "sched_getaffinity": 1,
+      "sched_getscheduler": 1,
+      "set_tid_address": 1,
+      "sigaltstack": 1,
+      "socket": 1,
+      "statfs": 2,
+      "write": 259,
+      "writev": 1
+    },
+    "log_sha256": "9806fc5890b428cdbac345f2c7d7b19cb0d7953b1fcfc3ea7dc7374e93194c56",
+    "first_android_path": {
+      "path": "/dev/__properties__",
+      "before_probe_main": true,
+      "newfstatat": 2,
+      "openat": 2,
+      "result": "ENOENT",
+      "caller": "UNRESOLVED: syscall trace alone does not attribute a native call stack."
+    },
+    "logdw": {
+      "path": "/dev/socket/logdw",
+      "attempts": 1,
+      "result": "ENOENT",
+      "phase": "Between before_load and after_load; exact caller unresolved."
+    },
+    "resource_path_search": {
+      "patterns": [
+        "assets",
+        "update:",
+        "data:",
+        ".csv"
+      ],
+      "matched_lines": 0,
+      "limit": "Only this syscall log; providers and catalog were not registered. Not proof of absent resource dependencies."
+    },
+    "thread_limit": "Owned main-thread markers and no clone/clone3 observed in this run; not a general threading claim."
+  },
+  "entry_paths": [
+    {
+      "path": "A direct dlopen",
+      "status": "LOAD_ONLY_PASS",
+      "explicit_JNI_OnLoad": false,
+      "jni_registration": "NOT_RUN",
+      "fact": "Native constructors completed. No automatic JNI_OnLoad evidence; seven post-load known JNI/asset bridges had zero observed hits within scope."
+    },
+    {
+      "path": "B System.loadLibrary",
+      "status": "NOT_RUN",
+      "jni_registration": "Unknown in this round"
+    },
+    {
+      "path": "C explicit JNI_OnLoad",
+      "status": "NOT_RUN",
+      "jni_registration": "Unknown in this round"
+    },
+    {
+      "path": "D resident/serve_jni",
+      "status": "NOT_RUN",
+      "preconditions": "Existing Android resident baseline assumes ready content; not an independent Linux cold-start entry."
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "Android linker/Bionic plus185 loaded identity-matched modules",
+      "classification": [
+        "RUNTIME_OBSERVED"
+      ],
+      "limit": "Loaded set is not a proven minimum; most modules have not been tested for removability."
+    },
+    {
+      "name": "JNI_OnLoad invocation",
+      "classification": [
+        "NOT_NEEDED_FOR_DIRECT_LOAD"
+      ],
+      "limit": "Not explicitly invoked for this direct load and two allocation steps; not a conclusion about subsequent content or battle initialization."
+    },
+    {
+      "name": "Known seven libg JNI/Asset bridges and18 AAsset exports after load",
+      "classification": [
+        "RUNTIME_OBSERVED"
+      ],
+      "limit": "Armed and zero hits only in post-load allocation window; constructors and other paths not covered."
+    },
+    {
+      "name": "Android properties/logd accesses",
+      "classification": [
+        "RUNTIME_OBSERVED",
+        "UNRESOLVED"
+      ],
+      "limit": "Missing paths tolerated by observed load/allocation process; exact callers and later-stage necessity unknown."
+    },
+    {
+      "name": "Catalog/resource-provider registration and table preload",
+      "classification": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "limit": "Required next object-graph checkpoint, not proof JavaVM is required. Verify real provider/string arguments, namespaces and initialization order before invoking."
+    },
+    {
+      "name": "Read-only APK/update Provider reuse",
+      "classification": [
+        "REPLACEABLE_CANDIDATE"
+      ],
+      "limit": "Existing E1 Android evidence does not prove registration or behavior in this Linux cold-start process."
+    }
+  ],
+  "static_timebox": {
+    "startup_deadline_seconds": 240,
+    "outer_deadline_seconds": 300,
+    "result": "Timeout for first parent analysis and cancellation of remaining requests; no new pseudocode used as runtime evidence.",
+    "records": [
+      {
+        "record": "12e166c.json",
+        "sha256": "646aef1af973873838494c1ceb46b0e6a537cb4d49ad3631631339dba931c6aa",
+        "ok": false,
+        "error_kind": "AnalysisCancelledError"
+      },
+      {
+        "record": "12e1714.json",
+        "sha256": "646aef1af973873838494c1ceb46b0e6a537cb4d49ad3631631339dba931c6aa",
+        "ok": false,
+        "error_kind": "AnalysisCancelledError"
+      },
+      {
+        "record": "756be8.json",
+        "sha256": "1e943d107bd181cdfd4460bf6add915c2bba8ecc3a0dc466046b97d891193700",
+        "ok": false,
+        "error_kind": "AnalysisTimeoutError"
+      },
+      {
+        "record": "close.json",
+        "sha256": "2b2684638be7293df19ad9bd5d3c6a1188b9f06834085093745320d72722fcb2",
+        "ok": true,
+        "error_kind": null
+      },
+      {
+        "record": "e1bdf4.json",
+        "sha256": "cdb430033e02d9841e5bf184bfdd962fc6a29c922159bda75996a8f5fff41ea8",
+        "ok": false,
+        "error_kind": "AnalysisCancelledError"
+      },
+      {
+        "record": "open.json",
+        "sha256": "fa969b1cd01f0326ef97f34fce989aab8a2990e6baed99ed1dcecc72e2f4e9b4",
+        "ok": true,
+        "error_kind": null
+      }
+    ]
+  },
+  "failures_and_recovery": {
+    "tagged_pointer_observer": "v3 exit23 preserved; only maps-range check strips top byte in v4; engine objects are unchanged.",
+    "breakpoint_guard_collision": "v6 inferior32/GDB0 preserved; v7 positive controls moved16 bytes beyond guard, wrapper now fails on inferior errors.",
+    "disk_exhaustion": "Unbounded initial LD_DEBUG=3 created1.557GB log and a failed archive; raw records retained in verified recovery archive. Subsequent bounded runner uses LD_DEBUG=2,45s timeout,32MiB per-file limit,CORE0.",
+    "archive": {
+      "verified_members": 26,
+      "sha256": "5d67f28ee6a15c17952f07e3836cbda5ee0ef1c5a1091f86150d030ebe9a8e35",
+      "bytes": 103305332
+    },
+    "reclaimed_own_files_record_sha256": "f4695314a803395a18a067fd2fdbae53aaf0be632894161a94bbcc89100a325b"
+  },
+  "private_evidence_location": "isolated/pure-linux-native-init-20261027-V2W7aQAz (outside public repository); raw maps/registers/memory/logs are private.",
+  "next_unique_blocker": "Close real catalog initialization: verify resource-provider registration arguments and content-service/table-load order. Context ready remains0; do not bypass it with GameState calls.",
+  "not_claimed": [
+    "NATIVE_MATCH_LIFECYCLE_PASS",
+    "PURE_LINUX_NATIVE_ENGINE=PASS",
+    "Android-free",
+    "no-JavaVM cold start",
+    "complete battle",
+    "PERFORMANCE_10X_PASS"
+  ],
+  "engineering_validation": {
+    "command": "python3 -m unittest discover -s tools/pure_linux -p test_*.py",
+    "exit_code": 0,
+    "tests": 42,
+    "seconds": 0.155,
+    "scope": "Synthetic tool tests plus earlier ELF/smoke tooling tests; not native lifecycle parity.",
+    "repeat_seconds": 0.174,
+    "isolated_regression": {
+      "python": "3.13.5/Anaconda",
+      "main": {
+        "command": "/opt/anaconda3/bin/python3 tools/run_main_engine_checks.py",
+        "exit_code": 0,
+        "passed": 211,
+        "seconds": 22.75
+      },
+      "public": {
+        "command": "/opt/anaconda3/bin/python3 tools/run_public_checks.py",
+        "exit_code": 0,
+        "passed": 1104,
+        "skipped": 42,
+        "reports": [
+          {
+            "file": "checks-affordability.xml",
+            "tests": 23,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "sha256": "a5833adf2e98838e97df239c3867bf8daf03c7e9fa4afbf78f860b823dee6999"
+          },
+          {
+            "file": "checks-collection-coordinator.xml",
+            "tests": 65,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "sha256": "65fec0292e8c2880609e1620b84a8a306d4b5fd02f60df1d056852afe4d6d3a0"
+          },
+          {
+            "file": "checks-command-coordinates.xml",
+            "tests": 41,
+            "skipped": 3,
+            "failures": 0,
+            "errors": 0,
+            "sha256": "d103939c97139c0e6eee99ceaaaa990532e0496e624fd0492fbc80b35bd9ff96"
+          },
+          {
+            "file": "checks-dispatch-command.xml",
+            "tests": 34,
+            "skipped": 3,
+            "failures": 0,
+            "errors": 0,
+            "sha256": "c1ee9b0182dccbc0dc1750910dd06b12030089e994278fda34955e15da17a05f"
+          },
+          {
+            "file": "checks-live-command.xml",
+            "tests": 29,
+            "skipped": 4,
+            "failures": 0,
+            "errors": 0,
+            "sha256": "38452a452e7a0c469a6046fbe7024c4ce24fc18fb0c50f2860255cfff04c214e"
+          },
+          {
+            "file": "checks-position-guards.xml",
+            "tests": 18,
+            "skipped": 3,
+            "failures": 0,
+            "errors": 0,
+            "sha256": "1a000fca395b26784bd12c61f8b3db46a3fa6d932a6c1fb20fbd5017eefb8235"
+          },
+          {
+            "file": "checks-public.xml",
+            "tests": 821,
+            "skipped": 27,
+            "failures": 0,
+            "errors": 0,
+            "sha256": "167027bb8a765a5dd830c7c41877bdd6fb5a6dcda873417d454e5e888f82e2da"
+          },
+          {
+            "file": "checks-reservation-mapping.xml",
+            "tests": 33,
+            "skipped": 2,
+            "failures": 0,
+            "errors": 0,
+            "sha256": "ed117a427de233beb7aecfbfa8242963b4830af2e9bb8c2c58740cc838e99a58"
+          },
+          {
+            "file": "checks-selection-timeout.xml",
+            "tests": 82,
+            "skipped": 0,
+            "failures": 0,
+            "errors": 0,
+            "sha256": "623ae94fca9b9db1978b44131e8a7ef95459893e2c96e8ff7e22c25236e49157"
+          }
+        ]
+      },
+      "scope": "Independent repository copy; generated XML retained privately, historical public reports unchanged."
+    },
+    "initial_environment_failure": {
+      "python": "3.9/Apple CommandLineTools",
+      "commands": [
+        "python3 tools/run_main_engine_checks.py",
+        "python3 tools/run_public_checks.py"
+      ],
+      "wrapper_exit_codes": [
+        1,
+        1
+      ],
+      "pytest_exit_codes": [
+        2,
+        2
+      ],
+      "collection_errors": [
+        8,
+        20
+      ],
+      "reason": "Existing dataclass(slots=...) requires newer Python; existing3.13 used without installing or changing system configuration."
+    },
+    "compile": {
+      "command": "$NDK/bin/aarch64-linux-android24-clang -O0 -g -Wall -Wextra -Werror -fPIE -pie -Wl,--export-dynamic tools/pure_linux/native_init_probe.c -ldl -o $PRIVATE/native-init-probe-final",
+      "exit_code": 0,
+      "binary_sha256": "fc7eabb4d82ef585502da300d81121405b1d5c2639966cc924adcdb2e728347e",
+      "note": "Final source rebuild in validation snapshot; actual guest probe identity remains separately recorded."
+    },
+    "publication_checks": {
+      "manifest_command": "python3 tools/check_public_snapshot.py",
+      "manifest_exit_code": 0,
+      "manifest_files": 2364,
+      "gitleaks_command": "gitleaks dir . --config .gitleaks.toml --redact",
+      "gitleaks_exit_code": 0,
+      "findings": 0,
+      "diff_command": "git diff --check",
+      "diff_exit_code": 0
+    },
+    "logs": {
+      "main-checks-py313.stderr.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "main-checks-py313.stdout.log": {
+        "sha256": "e67ab8a967415d2d739451c3954cfa0eab5fac0ed9c8e3044d1d1c11a4ec8b31",
+        "bytes": 261
+      },
+      "main-checks.stderr.log": {
+        "sha256": "6b0195bde472fcaec09c7b90a8159552ab850ac63f7d1128d8c04547c7889d96",
+        "bytes": 2315
+      },
+      "main-checks.stdout.log": {
+        "sha256": "bde9ee2ef5e4317ff7c4c2f206caa6931476ce8b6d8a8d1911d6113afbc0b560",
+        "bytes": 11223
+      },
+      "public-checks-py313.stderr.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "public-checks-py313.stdout.log": {
+        "sha256": "6981943b0fef6613d165b8c04c4d75b174d24c33c3b1ba0dd5811797d2eb79ae",
+        "bytes": 3547
+      },
+      "public-checks.stderr.log": {
+        "sha256": "a60bf07b08244bdf697e2a769101468463f979d25cebf1ca596a30eb7e97ebce",
+        "bytes": 7214
+      },
+      "public-checks.stdout.log": {
+        "sha256": "33f9d40a5580550586aba0a7482824d1584cedf01427b9f8224ef328c68b7d8f",
+        "bytes": 30304
+      },
+      "pure-linux-checks.stderr.log": {
+        "sha256": "4d8b2f9a38db87ab4a5f72b5757f788971ffdc069b2bbe384ae18ea84ccdf649",
+        "bytes": 141
+      },
+      "pure-linux-checks.stdout.log": {
+        "sha256": "7075962eabb3b00ae3f8e96c4e692a009ef88f28b56f57ff362ba91d7f376c16",
+        "bytes": 1252
+      },
+      "gitleaks.stdout.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "gitleaks.stderr.log": {
+        "sha256": "adf6d34df19ce9a8a7cca747f34761c38271fed91fddc0197c57d863f8446792",
+        "bytes": 148
+      },
+      "compile.stdout.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "compile.stderr.log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    }
+  }
+}

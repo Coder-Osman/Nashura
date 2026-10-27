@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-27：E2.1-N原生初始化对象图
+
+- 新增真实加载/映射/content/filesystem探针、限额runner、constructor解析及GDB观测。
+- libg753/753构造器实际返回；内容root/context和filesystem分配exit0，ready仍0。
+- 限定post-load边界观测有正对照；零命中不冒充全路径无JNI/Asset依赖。
+- 保留tagged-pointer、断点guard、REA超时及写盘失败证据，187项输入未变。
+- pure_linux专项42项通过；catalog/manager门仍BLOCKED，GameState和Step未运行。
+- 新增脱敏报告/JSON/回执，不修改main、冻结部署、旧报告和原始二进制。
+
 ## 2026-10-27：用户 APK 身份核验与真实 libg 加载
 
 - 逐项核验新APK的8个ARM64库和9,829个游戏资产，匹配既有基线。
