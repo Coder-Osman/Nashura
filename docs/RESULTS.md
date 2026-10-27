@@ -1,5 +1,20 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-H PN控制逻辑原生桥
+
+post-cold-ready、state_create前安装C PN控制逻辑，保留原Java逐store Cipher/XML及VM。
+四独立进程各3602快照、9120440bytes、28动作、tick3601终局全字节一致；
+snapshot/restore/reset回执一致，实际平台资源事件0，Provider failures/live_assets均0。
+原9输入/990update每轮身份保持，新增桥库/dex整体窗口初末身份与复编产物一致。
+
+原桥和两次替换各11项顺序矩阵，真实commit(true)7次；XML逻辑恢复、非PN保持。
+两具名backup方法各5次正常返回，其余7种方法/480records及backup交付仍unknown。
+两次替换13条PN事件均为显式probe，自然战斗PN未观测；非PN原桥回退0/31，键名unknown。
+14744附件限定验证exit0，专项85 passed，E2全组271 passed/171 skipped；集合重叠不累加。
+严格门exit2，46键移除性、自然冷启动/key来源、native持久化及并发/崩溃语义未闭合。
+独占实例回收，历史adb保持；无no-VM、Android-free、训练或10×通过声明。
+详见E2_1H_PN_NATIVE_BRIDGE_2026-10-27.md与CODEX_REPLY_2026-10-27_E2_1H.md。
+
 ## 2026-10-27 E2.1-G 原PN Cipher/XML互操作
 
 最终runner的独立baseline-current与两次codec-scoped进程各3602份原生快照、

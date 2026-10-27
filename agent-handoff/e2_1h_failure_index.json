@@ -1,0 +1,22 @@
+{
+  "schema": "e2.1h-failure-index.v1",
+  "failures": [
+    {"experiment": "replacement-1", "exit_code": 1, "reason": "Frida RPC export naming mismatch before battle", "resolution": "camelCase RPC exports", "raw_evidence_retained": true},
+    {"experiment": "replacement-2", "exit_code": 1, "reason": "same RPC naming mismatch", "resolution": "new independent run after correction", "raw_evidence_retained": true},
+    {"experiment": "replacement-fixed-1", "exit_code": 1, "reason": "callback/code allocation retention missing; access violation after installation", "resolution": "retain callbacks/backend/code until bridge retirement, rerun independent processes", "raw_evidence_retained": true},
+    {"experiment": "verification-command-1", "exit_code": 1, "reason": "verifier incorrectly required zero non-PN original bridge fallbacks; second run observed 31", "resolution": "retain actual non-PN counts, verify explicit PN windows are stable, keep strict gate blocked and key names unknown", "raw_evidence_retained": true},
+    {"experiment": "targeted-tests-1", "exit_code": 1, "reason": "negative-test fixture searched for an AAsset count row in zero-event evidence", "resolution": "inject one platform event and verify semantic rejection; 85 tests pass on rerun", "raw_evidence_retained": true},
+    {"experiment": "strict-gate-recheck", "exit_code": 2, "status": "BLOCKED", "reason": "cold initialization, native persistence, concurrency and 46-key removability remain unresolved", "raw_evidence_retained": true}
+  ],
+  "replacement_scope": "post-cold-ready native PN control logic with original Java per-store backend",
+  "original_xml_writer_replaced": false,
+  "cold_start_bridge_replaced": false,
+  "natural_battle_pn_calls_observed": 0,
+  "non_pn_original_bridge_fallbacks": [0, 31],
+  "fallback_key_names": "unknown",
+  "removed_keys": 0,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false
+}

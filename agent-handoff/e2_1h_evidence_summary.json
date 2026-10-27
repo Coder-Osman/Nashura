@@ -1,0 +1,297 @@
+{
+  "schema": "e2.1h-bounded-summary.v1",
+  "status": "bounded_evidence_verified",
+  "strict_gate": "BLOCKED",
+  "attachment_count": 14744,
+  "runs": [
+    {
+      "run": "baseline-final",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "original-final",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "replacement-retained-1",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "replacement-final-2",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    }
+  ],
+  "matrices": [
+    {
+      "run": "original-final",
+      "cases": [
+        {
+          "case": "both-empty",
+          "commits": {}
+        },
+        {
+          "case": "o-backfill",
+          "commits": {
+            "p:true": 1
+          }
+        },
+        {
+          "case": "p-only",
+          "commits": {}
+        },
+        {
+          "case": "conflict",
+          "commits": {}
+        },
+        {
+          "case": "equal",
+          "commits": {}
+        },
+        {
+          "case": "unicode-backfill",
+          "commits": {
+            "p:true": 1
+          }
+        },
+        {
+          "case": "unicode-conflict",
+          "commits": {}
+        },
+        {
+          "case": "write-conflict",
+          "commits": {
+            "o:true": 1,
+            "p:true": 1
+          }
+        },
+        {
+          "case": "write-partial",
+          "commits": {
+            "p:true": 1
+          }
+        },
+        {
+          "case": "write-same",
+          "commits": {}
+        },
+        {
+          "case": "write-empty",
+          "commits": {
+            "o:true": 1,
+            "p:true": 1
+          }
+        }
+      ],
+      "actual_commit_true": 7,
+      "xml_restored": true,
+      "original_xml_writer_replaced": false,
+      "native_entry_scope": "11 explicit sequential matrix calls; two additional explicit lifecycle reads",
+      "natural_battle_pn_calls_observed": null,
+      "non_pn_original_bridge_fallbacks": null,
+      "fallback_key_names": "not collected by PN bridge counter; unknown",
+      "backup": {
+        "request_backup_returns": 5,
+        "data_changed_returns": 5,
+        "unnamed_method_count": 7,
+        "unnamed_records": 480,
+        "coverage": "two explicitly named methods only; all unnamed method semantics remain unknown",
+        "backup_delivery": "unknown"
+      }
+    },
+    {
+      "run": "replacement-retained-1",
+      "cases": [
+        {
+          "case": "both-empty",
+          "commits": {}
+        },
+        {
+          "case": "o-backfill",
+          "commits": {
+            "p:true": 1
+          }
+        },
+        {
+          "case": "p-only",
+          "commits": {}
+        },
+        {
+          "case": "conflict",
+          "commits": {}
+        },
+        {
+          "case": "equal",
+          "commits": {}
+        },
+        {
+          "case": "unicode-backfill",
+          "commits": {
+            "p:true": 1
+          }
+        },
+        {
+          "case": "unicode-conflict",
+          "commits": {}
+        },
+        {
+          "case": "write-conflict",
+          "commits": {
+            "o:true": 1,
+            "p:true": 1
+          }
+        },
+        {
+          "case": "write-partial",
+          "commits": {
+            "p:true": 1
+          }
+        },
+        {
+          "case": "write-same",
+          "commits": {}
+        },
+        {
+          "case": "write-empty",
+          "commits": {
+            "o:true": 1,
+            "p:true": 1
+          }
+        }
+      ],
+      "actual_commit_true": 7,
+      "xml_restored": true,
+      "original_xml_writer_replaced": false,
+      "native_entry_scope": "11 explicit sequential matrix calls; two additional explicit lifecycle reads",
+      "natural_battle_pn_calls_observed": 0,
+      "non_pn_original_bridge_fallbacks": 0,
+      "fallback_key_names": "not collected by PN bridge counter; unknown",
+      "backup": {
+        "request_backup_returns": 5,
+        "data_changed_returns": 5,
+        "unnamed_method_count": 7,
+        "unnamed_records": 480,
+        "coverage": "two explicitly named methods only; all unnamed method semantics remain unknown",
+        "backup_delivery": "unknown"
+      }
+    },
+    {
+      "run": "replacement-final-2",
+      "cases": [
+        {
+          "case": "both-empty",
+          "commits": {}
+        },
+        {
+          "case": "o-backfill",
+          "commits": {
+            "p:true": 1
+          }
+        },
+        {
+          "case": "p-only",
+          "commits": {}
+        },
+        {
+          "case": "conflict",
+          "commits": {}
+        },
+        {
+          "case": "equal",
+          "commits": {}
+        },
+        {
+          "case": "unicode-backfill",
+          "commits": {
+            "p:true": 1
+          }
+        },
+        {
+          "case": "unicode-conflict",
+          "commits": {}
+        },
+        {
+          "case": "write-conflict",
+          "commits": {
+            "o:true": 1,
+            "p:true": 1
+          }
+        },
+        {
+          "case": "write-partial",
+          "commits": {
+            "p:true": 1
+          }
+        },
+        {
+          "case": "write-same",
+          "commits": {}
+        },
+        {
+          "case": "write-empty",
+          "commits": {
+            "o:true": 1,
+            "p:true": 1
+          }
+        }
+      ],
+      "actual_commit_true": 7,
+      "xml_restored": true,
+      "original_xml_writer_replaced": false,
+      "native_entry_scope": "11 explicit sequential matrix calls; two additional explicit lifecycle reads",
+      "natural_battle_pn_calls_observed": 0,
+      "non_pn_original_bridge_fallbacks": 31,
+      "fallback_key_names": "not collected by PN bridge counter; unknown",
+      "backup": {
+        "request_backup_returns": 5,
+        "data_changed_returns": 5,
+        "unnamed_method_count": 7,
+        "unnamed_records": 480,
+        "coverage": "two explicitly named methods only; all unnamed method semantics remain unknown",
+        "backup_delivery": "unknown"
+      }
+    }
+  ],
+  "pn_native_replacement": "post-cold-ready control logic only; original Java per-store backend retained",
+  "original_xml_writer_replaced": false,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false,
+  "removed_keys": 0,
+  "unresolved": [
+    "cold-start PN bridge and key derivation",
+    "native persistence backend",
+    "backup delivery",
+    "concurrency equivalence and crash durability",
+    "46-key removability"
+  ],
+  "private_manifest_sha256": "0b223f07b86690bfe327c347f89d64d893cbb7247d0094673a43d522a756ec72"
+}

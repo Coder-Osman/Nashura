@@ -30,6 +30,49 @@ public final class E21PreferenceObserver {
     private static Method pnWriter;
     private static int pnCommands;
     private static int codecCommands;
+    private static int bridgeCommands;
+
+    private static String bridgeCommand(String operation) throws Exception {
+        if (!installed || ++bridgeCommands > 4096) {
+            throw new IllegalStateException("bounded installed PN backend required");
+        }
+        if (operation.equals("bridge-backup")) {
+            ClassLoader parent = E21PreferenceObserver.class.getClassLoader().getParent();
+            Class<?> gameType = Class.forName("com.supercell.titan.GameApp", false, parent);
+            Object game = gameType.getField("q").get(null);
+            if (game == null) throw new IllegalStateException("original GameApp missing");
+            gameType.getMethod("requestBackup").invoke(game);
+            return "backup-method-returned; delivery-unknown";
+        }
+        String[] parts = operation.split(":", -1);
+        if (parts.length < 2 || !(parts[1].equals("0") || parts[1].equals("1"))) {
+            throw new IllegalArgumentException("explicit PN backend store required");
+        }
+        int index = Integer.parseInt(parts[1]);
+        if (!stores[index].getClass().getName().equals("c.a")) {
+            throw new IllegalStateException("unverified PN backend type");
+        }
+        if (parts[0].equals("bridge-read") && parts.length == 2) {
+            Method reader = stores[index].getClass().getMethod("j", String.class);
+            String result = (String)reader.invoke(stores[index], "PN_POPUP");
+            if (result == null || result.indexOf('\0') >= 0 || result.getBytes("UTF-8").length > 4095) {
+                throw new IllegalStateException("PN backend result outside contract");
+            }
+            return Base64.encodeToString(result.getBytes("UTF-8"), Base64.NO_WRAP);
+        }
+        if (parts[0].equals("bridge-write") && parts.length == 3 && parts[2].length() <= 5500) {
+            byte[] bytes = Base64.decode(parts[2], Base64.NO_WRAP);
+            String value = new String(bytes, "UTF-8");
+            if (bytes.length > 4095 || value.indexOf('\0') >= 0 ||
+                    !java.util.Arrays.equals(bytes, value.getBytes("UTF-8"))) {
+                throw new IllegalArgumentException("bounded valid UTF-8 PN text required");
+            }
+            Method writer = stores[index].getClass().getMethod("n", String.class, String.class);
+            writer.invoke(stores[index], "PN_POPUP", value);
+            return "writer-method-returned; commit-observe-separately";
+        }
+        throw new IllegalArgumentException("unknown PN backend command");
+    }
 
     private static String codecCommand(String operation) throws Exception {
         if (!installed || pnSaved == null || ++codecCommands > 128) {
@@ -235,6 +278,7 @@ public final class E21PreferenceObserver {
     public static synchronized String command(String operation) throws Exception {
         if (released) throw new IllegalStateException("observer references retired");
         if (operation.equals("install")) return install();
+        if (operation.startsWith("bridge-")) return bridgeCommand(operation);
         if (operation.startsWith("codec-")) return codecCommand(operation);
         if (operation.startsWith("pn-")) return pnCommand(operation);
         if (operation.equals("read-stores")) {

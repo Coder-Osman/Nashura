@@ -7,6 +7,7 @@ const events = [];
 let retired = false;
 let allocatedGlobals = 0;
 let deletedGlobals = 0;
+let pnBridge = null;
 const cold = {armed: false, attempted: false, installed: false, installing: false,
   entries: 0, returns: 0, reentrant_entries: 0, windows: [], external_windows: 0, errors: []};
 const returnSites = new Map();
@@ -154,6 +155,21 @@ function armCold(module) {
 }
 
 rpc.exports = {
+  bridgeInstall(config) {
+    if (!settings || settings.enable_pn_backend !== true || pnBridge || retired ||
+        settings.install_at !== 'post-cold-ready') throw new Error('explicit post-cold-ready PN backend required');
+    pnBridge = createPNBridge(config, invoke);
+    return pnBridge.snapshot();
+  },
+  bridgeRetire() {
+    if (!pnBridge) throw new Error('PN bridge missing');
+    return pnBridge.retire();
+  },
+  bridgeSnapshot() {
+    if (!pnBridge) throw new Error('PN bridge missing');
+    return pnBridge.snapshot();
+  },
+  phase(value) { if (pnBridge) pnBridge.phase(value); return true; },
   configure(config) {
     if (settings || config.jni_attach !== 0x17d8ae8 ||
         !config.dex_path.startsWith('/data/user/0/nullsroyale.rel.free/') || !config.dex_path.endsWith('.dex') ||
@@ -175,6 +191,7 @@ rpc.exports = {
       (operation === 'codec-info' || /^codec-(read|state):[01]$/.test(operation) ||
        /^codec-raw:[01]:[A-Za-z0-9+/=]*$/.test(operation) ||
        /^codec-encode:[01]:(key|value):[A-Za-z0-9+/=]*$/.test(operation));
+    if (pnBridge && pnBridge.snapshot().installed && ['uninstall', 'release'].includes(operation)) throw new Error('retire PN bridge before backend');
     if (!settings || (!matrix && !codec && !['install', 'snapshot', 'uninstall', 'files', 'read-stores', 'release'].includes(operation))) throw new Error('invalid command');
     if (operation === 'install' && settings.install_at === 'first-native-bridge') throw new Error('cold install is driven by original bridge only');
     return invoke(operation);

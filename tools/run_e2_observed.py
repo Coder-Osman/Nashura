@@ -44,6 +44,7 @@ def run(config_path, output):
     session = None
     lifecycle_completed = False
     return_observer_installed = False
+    pn_bridge_installed = False
     started = time.time()
     repository = Path(__file__).resolve().parent
 
@@ -80,7 +81,7 @@ def run(config_path, output):
                                               scope='proc task comm snapshot; exited or renamed threads remain unknown'))
 
     def control(text, phase):
-        for name in ('e0', 'e2', 'fmod', 'replacement'):
+        for name in ('e0', 'e2', 'fmod', 'replacement', 'return-observer'):
             if name in scripts:
                 scripts[name].exports_sync.phase(phase)
         beginning = time.monotonic()
@@ -94,7 +95,10 @@ def run(config_path, output):
         return response
 
     def create(name, filename, settings):
-        script = session.create_script((repository / filename).read_text())
+        source = (repository / filename).read_text()
+        if name == 'return-observer' and config.get('pn_bridge'):
+            source = (repository / 'e2_1_pn_bridge.js').read_text() + '\n' + source
+        script = session.create_script(source)
         def message(payload, data):
             messages.append(dict(script=name, payload=payload))
             with (output / 'messages.jsonl').open('a') as target:
@@ -125,6 +129,12 @@ def run(config_path, output):
         for filename in ('e2_1_pn_codec.c', 'e2_1_pn_codec.h', 'e2_1_pn_codec.py', 'e2_1_pn_codec_matrix.py'):
             path = repository / filename
             (source_directory / path.name).write_bytes(path.read_bytes())
+    if config.get('pn_bridge'):
+        if config.get('replacement') or config.get('return_observer', {}).get('install_at') != 'post-cold-ready':
+            raise ValueError('PN bridge experiment requires independent post-cold-ready installation')
+        for filename in ('e2_1_pn_bridge.c', 'e2_1_pn_bridge.h'):
+            path = repository / filename
+            (source_directory / path.name).write_bytes(path.read_bytes())
     try:
         if command('emu', 'avd', 'name').splitlines()[0] != config['avd']:
             raise RuntimeError('AVD ownership mismatch')
@@ -141,7 +151,7 @@ def run(config_path, output):
         session = device.attach(pid)
         observer = json.loads(Path(config['observer_config']).read_text())
         observer.update(capture_backtraces=False, enumerate_threads=False)
-        if config.get('replacement'):
+        if config.get('replacement') or config.get('pn_bridge'):
             observer['functions'] = [entry for entry in observer['functions']
                                      if entry['name'] not in {'PreferenceNativeReadBridge', 'PreferenceNativeWriteBridge'}]
         create('e0', 'e0_dependency_observer.js', observer)
@@ -187,6 +197,9 @@ def run(config_path, output):
             installed = scripts['return-observer'].exports_sync.command('install')
             save('return-observer-install.json', dict(result=installed, phase='after_cold_ready_before_state_create'))
             return_observer_installed = True
+        if config.get('pn_bridge'):
+            save('pn-bridge-install.json', scripts['return-observer'].exports_sync.bridge_install(config['pn_bridge']))
+            pn_bridge_installed = True
         match = json.loads(Path(config['match']).read_text())
         control('configure ' + json.dumps(match, separators=(',', ':')), 'state_create_load')
         control('observe', 'initial_state')
@@ -218,6 +231,33 @@ def run(config_path, output):
         if 'semantics' in scripts:
             save('semantics-terminal-reset.json', scripts['semantics'].exports_sync.batch([
                 dict(case='after_terminal_reset', operation='read', key='PN_POPUP')]))
+            if config.get('pn_bridge_matrix'):
+                from e2_1_pn_bridge_matrix import run_bridge_matrix
+
+                path = repository / 'e2_1_pn_bridge_matrix.py'
+                (source_directory / path.name).write_bytes(path.read_bytes())
+                for name in ('e0', 'e2', 'fmod', 'return-observer'):
+                    if name in scripts:
+                        scripts[name].exports_sync.phase('explicit_post_trajectory_pn_matrix')
+                oracle = scripts['java-oracle'].exports_sync if 'java-oracle' in scripts else None
+
+                def capture_bridge_xml(label, files):
+                    directory = output / ('bridge-xml-' + label)
+                    directory.mkdir(exist_ok=False)
+                    records = []
+                    for index, filename in enumerate(files):
+                        local = directory / ('store-' + str(index) + '.xml')
+                        command('pull', filename, str(local))
+                        records.append(dict(sha256=digest(local), bytes_hex=local.read_bytes().hex()))
+                    return records
+
+                traced_probe(
+                    lambda: run_bridge_matrix(scripts['return-observer'].exports_sync,
+                                             scripts['semantics'].exports_sync, bool(config.get('pn_bridge')),
+                                             save, capture_bridge_xml),
+                    oracle,
+                    lambda: command('pull', config['java_oracle']['trace_path'], str(output / 'java-methods.trace')),
+                    save)
             if config.get('pn_codec'):
                 from e2_1_pn_codec_matrix import run_codec_matrix
 
@@ -269,6 +309,17 @@ def run(config_path, output):
         raise
     finally:
         snapshot_errors = []
+        if pn_bridge_installed:
+            try:
+                observer = scripts['return-observer'].exports_sync
+                observer.bridge_retire()
+                final = observer.bridge_snapshot()
+                save('pn-bridge-final.json', final)
+                if final['errors'] or not final['retired']:
+                    snapshot_errors.append('pn-bridge')
+            except BaseException as failure:
+                save('pn-bridge-cleanup-failure.json', dict(error=str(failure)))
+                snapshot_errors.append('pn-bridge')
         if 'return-observer' in scripts and config.get('return_observer', {}).get('install_at') == 'first-native-bridge':
             try:
                 return_observer_installed = scripts['return-observer'].exports_sync.snapshot()['cold']['installed']
