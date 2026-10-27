@@ -1,0 +1,260 @@
+{
+  "schema": "e2.1f-bounded-summary.v1",
+  "status": "bounded_evidence_verified",
+  "strict_gate": "BLOCKED",
+  "attachment_count": 14708,
+  "runs": [
+    {
+      "run": "baseline-current",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "matrix-1",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "matrix-2",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    }
+  ],
+  "matrices": [
+    {
+      "run": "matrix-1",
+      "cases": 11,
+      "reads": 7,
+      "writes": 4,
+      "raw_entries_restored": true,
+      "priority_and_backfill": "verified for explicit original native bridge matrix",
+      "rows": [
+        {
+          "case": "both-empty",
+          "operation": "read",
+          "commits": {},
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "o-backfill",
+          "operation": "read",
+          "commits": {
+            "p:true": 1
+          },
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "p-only",
+          "operation": "read",
+          "commits": {},
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "conflict",
+          "operation": "read",
+          "commits": {},
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "equal",
+          "operation": "read",
+          "commits": {},
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "unicode-backfill",
+          "operation": "read",
+          "commits": {
+            "p:true": 1
+          },
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "unicode-conflict",
+          "operation": "read",
+          "commits": {},
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "write-conflict",
+          "operation": "write",
+          "commits": {
+            "o:true": 1,
+            "p:true": 1
+          },
+          "equal_state": true,
+          "equal_readback": false
+        },
+        {
+          "case": "write-partial",
+          "operation": "write",
+          "commits": {
+            "p:true": 1
+          },
+          "equal_state": true,
+          "equal_readback": false
+        },
+        {
+          "case": "write-same",
+          "operation": "write",
+          "commits": {},
+          "equal_state": true,
+          "equal_readback": false
+        },
+        {
+          "case": "write-empty",
+          "operation": "write",
+          "commits": {
+            "o:true": 1,
+            "p:true": 1
+          },
+          "equal_state": true,
+          "equal_readback": false
+        }
+      ],
+      "backup_delivery": "unknown",
+      "concurrency_equivalence": "unknown"
+    },
+    {
+      "run": "matrix-2",
+      "cases": 11,
+      "reads": 7,
+      "writes": 4,
+      "raw_entries_restored": true,
+      "priority_and_backfill": "verified for explicit original native bridge matrix",
+      "rows": [
+        {
+          "case": "both-empty",
+          "operation": "read",
+          "commits": {},
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "o-backfill",
+          "operation": "read",
+          "commits": {
+            "p:true": 1
+          },
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "p-only",
+          "operation": "read",
+          "commits": {},
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "conflict",
+          "operation": "read",
+          "commits": {},
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "equal",
+          "operation": "read",
+          "commits": {},
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "unicode-backfill",
+          "operation": "read",
+          "commits": {
+            "p:true": 1
+          },
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "unicode-conflict",
+          "operation": "read",
+          "commits": {},
+          "equal_state": true,
+          "equal_readback": true
+        },
+        {
+          "case": "write-conflict",
+          "operation": "write",
+          "commits": {
+            "o:true": 1,
+            "p:true": 1
+          },
+          "equal_state": true,
+          "equal_readback": false
+        },
+        {
+          "case": "write-partial",
+          "operation": "write",
+          "commits": {
+            "p:true": 1
+          },
+          "equal_state": true,
+          "equal_readback": false
+        },
+        {
+          "case": "write-same",
+          "operation": "write",
+          "commits": {},
+          "equal_state": true,
+          "equal_readback": false
+        },
+        {
+          "case": "write-empty",
+          "operation": "write",
+          "commits": {
+            "o:true": 1,
+            "p:true": 1
+          },
+          "equal_state": true,
+          "equal_readback": false
+        }
+      ],
+      "backup_delivery": "unknown",
+      "concurrency_equivalence": "unknown"
+    }
+  ],
+  "scope": "post-trajectory explicit original bridge; independent logical-state native candidate",
+  "pn_native_replacement": false,
+  "original_storage_format_compatibility": false,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false,
+  "removed_keys": 0,
+  "unresolved": [
+    "native bridge integration and original Cipher/XML storage handoff",
+    "backup delivery",
+    "concurrency equivalence and crash durability",
+    "46-key removability"
+  ],
+  "private_manifest_sha256": "34f4a3effbb2e6cbfef8ab8273557deb1088740a1a9eca1984f7963b34ee9b2c"
+}

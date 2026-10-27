@@ -17,7 +17,26 @@ public interface SharedPreferences {
     String getString(String key, String fallback);
     boolean contains(String key);
     Editor edit();
-    interface Editor { Editor putString(String key, String value); boolean commit(); }
+    interface Editor { Editor putString(String key, String value); Editor remove(String key); boolean commit(); }
+}
+''',
+        'android/util/Base64.java': '''
+package android.util;
+public class Base64 {
+    public static final int NO_WRAP = 2;
+    public static byte[] decode(String value, int flags) { throw new UnsupportedOperationException("unused PN fixture"); }
+}
+''',
+        'org/json/JSONObject.java': '''
+package org.json;
+public class JSONObject {
+    public JSONObject put(String key, Object value) { throw new UnsupportedOperationException("unused PN fixture"); }
+}
+''',
+        'org/json/JSONArray.java': '''
+package org.json;
+public class JSONArray {
+    public JSONArray put(Object value) { throw new UnsupportedOperationException("unused PN fixture"); }
 }
 ''',
         'com/supercell/titan/GameApp.java': '''
@@ -36,6 +55,7 @@ public class GameApp {
         public Editor edit() {
             return new Editor() {
                 public Editor putString(String key, String replacement) { value = replacement; return this; }
+                public Editor remove(String key) { value = null; return this; }
                 public boolean commit() { ++commits; return false; }
             };
         }

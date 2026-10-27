@@ -116,7 +116,7 @@ def run(config_path, output):
     if config.get('return_observer'):
         path = repository / 'E21PreferenceObserver.java'
         (source_directory / path.name).write_bytes(path.read_bytes())
-    if config.get('pn_candidate'):
+    if config.get('pn_candidate') or config.get('pn_matrix'):
         for filename in ('e2_1_pn_store.c', 'e2_1_pn_store.h'):
             path = repository / filename
             (source_directory / path.name).write_bytes(path.read_bytes())
@@ -213,6 +213,14 @@ def run(config_path, output):
         if 'semantics' in scripts:
             save('semantics-terminal-reset.json', scripts['semantics'].exports_sync.batch([
                 dict(case='after_terminal_reset', operation='read', key='PN_POPUP')]))
+            if config.get('pn_matrix'):
+                from e2_1_pn_matrix import run_matrix
+
+                path = repository / 'e2_1_pn_matrix.py'
+                (source_directory / path.name).write_bytes(path.read_bytes())
+                create('pn-matrix-candidate', 'e2_1_pn_matrix_candidate.js', config['pn_matrix'])
+                run_matrix(scripts['return-observer'].exports_sync, scripts['semantics'].exports_sync,
+                           scripts['pn-matrix-candidate'].exports_sync, save)
             if config.get('semantics_cases'):
                 oracle = scripts['java-oracle'].exports_sync if 'java-oracle' in scripts else None
                 traced_probe(

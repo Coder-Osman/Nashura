@@ -1,0 +1,40 @@
+{
+  "schema": "e2.1f-failure-index.v1",
+  "failures": [
+    {
+      "experiment": "verify-initial-check",
+      "exit_code": 1,
+      "reason": "update-list digest included trailing newline, unlike the archived runner identity rule",
+      "resolution": "match the existing runner strip rule while retaining 990-file and before/after identity checks",
+      "raw_evidence_retained": true
+    },
+    {
+      "experiment": "verify-check",
+      "exit_code": 1,
+      "reason": "early baseline runner differed from the final matrix runner",
+      "resolution": "new independent baseline-current run with final runner; source equality checks retained",
+      "raw_evidence_retained": true
+    },
+    {
+      "experiment": "targeted-check",
+      "exit_code": 1,
+      "result": "1 failed, 49 passed",
+      "reason": "same early baseline runner identity mismatch",
+      "resolution": "final v3 manifest binds the new baseline and preserves the earlier attempts",
+      "raw_evidence_retained": true
+    },
+    {
+      "experiment": "strict-gate-recheck",
+      "exit_code": 2,
+      "status": "BLOCKED",
+      "reason": "native bridge integration and complete persistence semantics remain unresolved",
+      "raw_evidence_retained": true
+    }
+  ],
+  "pn_native_replacement": false,
+  "original_storage_format_compatibility": false,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false
+}

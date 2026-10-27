@@ -1,5 +1,24 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-F 原桥PN优先级与回填
+
+最终runner独立基线及matrix-1/matrix-2各3602份快照、9120440bytes、28动作与
+tick3601原生终局一致，snapshot/restore/reset回执一致。实际平台资源事件0、Provider
+失败0、live assets0；原始输入及990个update文件身份保持。
+
+两次独立矩阵各11项：7读/4写；真实原桥p优先、o非空回填p，冲突时p获选，
+同值零commit、单store变化只提交该store。BMP Unicode字节、候选关闭后磁盘逻辑值、
+真实commit窗口与候选receipt一致。两个store原PN raw条目恢复；观测器自身引用退休。
+矩阵与候选均在完整轨迹后执行，未证明native接管战斗桥或原Cipher/XML格式兼容。
+
+14708附件限定验证exit0，50项专项通过；E2全组184 passed/102 skipped、主工程211 passed。
+跳过不算原生通过，测试集合不累加。旧严格门仍BLOCKED/exit2，46键可移除性unknown。
+保留首两次验证失败及首次专项1 failed/49 passed；最终runner补跑基线后通过，
+未放宽源码身份检查。原桥集成、Cipher/XML交接、backup交付、并发等价与崩溃持久化未闭合。
+实例已回收，未进入E2.2/no-VM、Android-free、训练或10×。
+详见E2_1F_PN_PRIORITY_BACKFILL_2026-10-27.md、CODEX_REPLY_2026-10-27_E2_1F.md、
+e2_1f_evidence_summary.json与e2_1f_failure_index.json。
+
 ## 2026-10-27 E2.1-E 独立PN原生候选
 
 新增自有双文件原生存储与窄C ABI。baseline和candidate-3两个独立原版进程各3602快照、

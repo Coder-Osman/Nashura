@@ -168,7 +168,10 @@ rpc.exports = {
     return true;
   },
   command(operation) {
-    if (!settings || !['install', 'snapshot', 'uninstall', 'files', 'read-stores', 'release'].includes(operation)) throw new Error('invalid command');
+    const matrix = settings && settings.enable_pn_matrix === true &&
+      (/^pn-set:[A-Za-z0-9+/=]*:[A-Za-z0-9+/=]*$/.test(operation) ||
+        ['pn-begin', 'pn-state', 'pn-restore'].includes(operation));
+    if (!settings || (!matrix && !['install', 'snapshot', 'uninstall', 'files', 'read-stores', 'release'].includes(operation))) throw new Error('invalid command');
     if (operation === 'install' && settings.install_at === 'first-native-bridge') throw new Error('cold install is driven by original bridge only');
     return invoke(operation);
   },
