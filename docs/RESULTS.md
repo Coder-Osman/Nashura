@@ -1,5 +1,26 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-N：ARM64 Linux ABI 实验准备与静态审计
+
+仅任务分支，源基线82b94be；不修改main或冻结部署。Darwin arm64/macOS15.6，
+Fusion运行实例0，已有VM存在挂起状态而保持原状；未取得live guest uname/网络。
+动态门BLOCKED_ENVIRONMENT，未执行Linux ELF或原版加载，无PURE_LINUX_SMOKE_PASS。
+
+真实匹配libg审计：12个DT_NEEDED、480个符号槽、473个未定义符号、JNI_OnLoad及4个Java导出。
+PT_DYNAMIC恢复符号，纠正旧“缺节表”为有5个section header但无可用动态符号节表。
+214/214运行文件、990/990资源匹配，app8/9缺原APK；候选整包SHA不匹配锁定身份。
+ABI筛选后检查185个ARM64候选库；ARM32同名库不再误报歧义，namespace/版本/relocation仍未知。
+GameStateTick为计数读取器，GameStateStep才是推进入口候选；独立初始化对象图未闭合。
+
+新增ELF/manifest审计、独立ARM64 syscall/thread/TLS/IPC/signal探针、Bionic探针及执行守门器。
+15项合成/工程测试通过，两种探针以-Werror交叉构建exit0；实际Darwin守门exit2且未执行ELF。
+隔离起始tracked snapshot的主工程211通过21.64秒；公开入口exit0，主组794通过/27跳过49.09秒，
+另有23、82、15/3skip、25/4skip、31/3skip、31/2skip、38/3skip、65项，各组不相加。
+新增工具由独立15项覆盖。首次解压TypeError、旧ABI误分类和旧构建保留，不覆写失败输出。
+
+工程实现/构建不代表Bionic运行、LOAD_ONLY、无VM原生生命周期或10×通过。详见
+[阶段回执](../agent-handoff/CODEX_REPLY_2026-10-26_PURE_LINUX.md)及机器可读dependency-report.json。
+
 ## 2026-10-25 整轮执行、独立回收与恢复
 
 完整公开入口退出0：主回归794通过/27跳过108.55秒，阈值23通过9.58秒，

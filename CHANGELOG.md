@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-27：E2.1-N 原版 ELF 审计与 ARM64 Linux 探针
+
+- 新增PT_DYNAMIC/PT_LOAD动态符号审计、manifest/SHA守门和ABI感知依赖候选发现。
+- 新增direct ARM64 Linux syscall/线程/TLS/IPC/signal smoke、Bionic探针及排他输出runner。
+- 15项专项通过，两种探针交叉构建成功；真实Darwin守门exit2，未执行Linux ELF。
+- 核验214个运行文件和990个资源；185个ARM64库仅为静态候选，原APK身份仍缺失。
+- 补齐依赖图、ABI报告、阶段方案和回执，保留旧草稿/失败；纠正tick读取与推进区别。
+- 无可用live guest，状态BLOCKED_ENVIRONMENT；原版加载/生命周期、无VM、10×和训练未运行。
+
 ## 2026-10-25：整轮顺序执行与独立回收恢复
 
 - 固定准备结果、选优报告及执行身份，逐局运行既有worker和独立归档验收器。

@@ -16315,10 +16315,124 @@
       "bytes": 47640,
       "source_sha256": "1089dbdcfcdfe2b5780dad886addcca72eb1d77e362be0e7fd2e6087754b5c68",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/ARM64_LINUX_ABI_FEASIBILITY.md",
+      "sha256": "d4fd142308066008cefff74a249f14105e8b7382a16bd3a85cf23dae6b37f868",
+      "bytes": 4449,
+      "source_sha256": "d4fd142308066008cefff74a249f14105e8b7382a16bd3a85cf23dae6b37f868",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-26_PURE_LINUX.md",
+      "sha256": "0c00443489c9c90f6b4c51b0520e13e53efdb01870436c06a518c82d8a98a0ca",
+      "bytes": 6081,
+      "source_sha256": "0c00443489c9c90f6b4c51b0520e13e53efdb01870436c06a518c82d8a98a0ca",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/DEPENDENCY_MAP.md",
+      "sha256": "f01f740d0209b91f7dfb7e55ef29b5a25bac6eeb7a3fad73189a09cbbc4aabbe",
+      "bytes": 5102,
+      "source_sha256": "f01f740d0209b91f7dfb7e55ef29b5a25bac6eeb7a3fad73189a09cbbc4aabbe",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_ENGINE_AUDIT_2026-10-26.md",
+      "sha256": "494ae348766bcbf294860d6003eea1dbbd0253feec4e9b882ed98134ae02829e",
+      "bytes": 8530,
+      "source_sha256": "6f7be503b9601591c13e8504871779a63985491a9e74f7cfb738724b00f6132b",
+      "transformations": [
+        "Preserve original draft and append 2026-10-27 architecture, ELF and input-identity corrections plus actual continuation evidence."
+      ]
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_ENGINE_PLAN_2026-10-26.md",
+      "sha256": "31a0bf9debce095af5a025462032fb7f43ba1452abfe65dfa5c1e4091193f0c3",
+      "bytes": 3517,
+      "source_sha256": "31a0bf9debce095af5a025462032fb7f43ba1452abfe65dfa5c1e4091193f0c3",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/dependency-report.json",
+      "sha256": "e0e7e95e1449a7576f2f2ba51ab91c6b77ccc46f194c29e3302bb55e9a559a83",
+      "bytes": 34616,
+      "source_sha256": "e0e7e95e1449a7576f2f2ba51ab91c6b77ccc46f194c29e3302bb55e9a559a83",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/arm64_smoke.c",
+      "sha256": "ef2b24167f2f6895cfc8a0f5ad1fc909325901eee5d3c8d0a0da7d99c1e703da",
+      "bytes": 5274,
+      "source_sha256": "ef2b24167f2f6895cfc8a0f5ad1fc909325901eee5d3c8d0a0da7d99c1e703da",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/arm64_start.S",
+      "sha256": "09f1300a1d3d48d4e910b943bda1a08bd660fd1262280eaec1df7c58875fa3ca",
+      "bytes": 444,
+      "source_sha256": "09f1300a1d3d48d4e910b943bda1a08bd660fd1262280eaec1df7c58875fa3ca",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_inputs.py",
+      "sha256": "5aaa70b37e017e287d4fd6e9423dd3903027e42b15a16b563e179f42fde708e6",
+      "bytes": 5275,
+      "source_sha256": "5aaa70b37e017e287d4fd6e9423dd3903027e42b15a16b563e179f42fde708e6",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/bionic_probe.c",
+      "sha256": "ddb405e76e18a437b7823e036809001643e07ff7506d49099adcb313747e2c77",
+      "bytes": 1019,
+      "source_sha256": "ddb405e76e18a437b7823e036809001643e07ff7506d49099adcb313747e2c77",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/elf_audit.py",
+      "sha256": "8b68ffd130ef34b08e22435a7d58c31cd203ef9789c8f0b844980612e0efd042",
+      "bytes": 7601,
+      "source_sha256": "8b68ffd130ef34b08e22435a7d58c31cd203ef9789c8f0b844980612e0efd042",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/run_arm64_smoke.py",
+      "sha256": "86e1856db985f4eeb45e7000b4bea568fb628c6e4edf993ba8c521631ea3f77a",
+      "bytes": 3979,
+      "source_sha256": "86e1856db985f4eeb45e7000b4bea568fb628c6e4edf993ba8c521631ea3f77a",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/run_smoke.py",
+      "sha256": "34be3da31b1cba5c562c6e1659c932240d5488d73ec1a591d2f0eb012cbf9b31",
+      "bytes": 3035,
+      "source_sha256": "34be3da31b1cba5c562c6e1659c932240d5488d73ec1a591d2f0eb012cbf9b31",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/smoke.c",
+      "sha256": "36ceb0492cd09f1da85147d1c5796d23d1529e7f1a47886720e651a193cf920f",
+      "bytes": 3380,
+      "source_sha256": "36ceb0492cd09f1da85147d1c5796d23d1529e7f1a47886720e651a193cf920f",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/start.S",
+      "sha256": "6c469028f6163b576e7fc0648af9e8334929b9eead1cb506ce0e7603ee6a5adc",
+      "bytes": 387,
+      "source_sha256": "6c469028f6163b576e7fc0648af9e8334929b9eead1cb506ce0e7603ee6a5adc",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit.py",
+      "sha256": "9805d8c80191d3e44b0e663fb44ff77b33fd973e7e10e8498251b03cd93b4d23",
+      "bytes": 9386,
+      "source_sha256": "9805d8c80191d3e44b0e663fb44ff77b33fd973e7e10e8498251b03cd93b4d23",
+      "transformations": []
     }
   ],
-  "file_count": 2329,
-  "source_bytes": 33136316,
+  "file_count": 2345,
+  "source_bytes": 33238391,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

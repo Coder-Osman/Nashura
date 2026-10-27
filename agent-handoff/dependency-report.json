@@ -1,0 +1,1100 @@
+{
+  "schema": "nashura-pure-linux-dependency-report.v1",
+  "date": "2026-10-27",
+  "task": "E2.1-N",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "baseline_commit": "82b94be5ae5ceb52f8cee0f5873ec3b8845bb573",
+  "main_unchanged": "0012201830cfbfcbfeb3d9dccd91a855028da869",
+  "status": "BLOCKED_ENVIRONMENT",
+  "first_unresolved_dependency": "No running, verified ARM64 Linux guest session; existing Fusion VM has suspended-state files and was left unchanged.",
+  "host": {
+    "system": "Darwin",
+    "architecture": "arm64",
+    "macos": "15.6",
+    "build": "24G84",
+    "memory_bytes": 38654705664,
+    "available_disk_kib_at_baseline": 170791288,
+    "shell": "zsh",
+    "fusion_running_vm_count": 0,
+    "existing_vm": {
+      "configured_guest": "arm-ubuntu-64",
+      "vcpus": 2,
+      "memory_mib": 6144,
+      "network": "NAT",
+      "suspended_state_files_present": true,
+      "guest_uname": "NOT_RUN",
+      "guest_network": "NOT_RUN",
+      "startup": "NOT_RUN"
+    },
+    "utm": "NOT_FOUND_IN_CHECKED_LOCATIONS",
+    "docker_desktop": "NOT_FOUND_IN_CHECKED_LOCATIONS",
+    "qemu": "NOT_FOUND_IN_PATH_OR_CHECKED_ARTIFACT_LOCATIONS"
+  },
+  "input_identity": {
+    "package": "nullsroyale.rel.free",
+    "apk_version": "15.535.13",
+    "version_code": 150535013,
+    "abi": "arm64-v8a",
+    "expected_apk_sha256": "685c115ee432d5fd2d7be856a58ea0cb029c9c187aa9061f3cd250994dfbcf2a",
+    "original_apk_status": "MISSING_INPUT",
+    "local_candidate_apk": {
+      "sha256": "f1ee6d6146efc8c998843958ae0788e5121c265445c0c7ff5ffa2a5202d7dd9b",
+      "bytes": 794843994,
+      "version_matches": true,
+      "embedded_libg_matches": true,
+      "original_apk_matches": false
+    },
+    "historical_app_manifest_expected_apk_sha256": "01b375e8382d01d2763a5f14c434df05f261c354d490f300c61cc3dab0cf4fcb",
+    "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "libg_bytes": 27554368,
+    "runtime_version": "15.535.86",
+    "runtime_fingerprint_sha256": "e0cb2fb9eb2fdd0df1afcb00df3e3ba61cf25aa8b24e39c17cc391d952a4e339",
+    "runtime_fingerprint_match": true,
+    "manifests": {
+      "app-manifest.json": {
+        "manifest_sha256": "a0ab94c58c8b5bee7a9594a95b0a851ef1f8bea346d62a2b45c3e84793c61ad6",
+        "files": 9,
+        "matching": 8
+      },
+      "runtime-manifest.json": {
+        "manifest_sha256": "cfaa02b87719bba68ac034459fa5da9298e5bf14be3da865cb2b3e128c3327b4",
+        "files": 214,
+        "matching": 214
+      },
+      "resources-manifest.json": {
+        "manifest_sha256": "7a435be60fe6759509824194afa3748537c6cb4e945bdeaf7ae1bd3229cb7a82",
+        "files": 990,
+        "matching": 990
+      }
+    },
+    "resource_scope": "990 runtime-update files declared by the locally prepared resources manifest; not proof of original APK or original encrypted downloads."
+  },
+  "elf": {
+    "status": "STATIC_FOUND",
+    "machine": 183,
+    "elf_class": 64,
+    "endianness": "little",
+    "type": 3,
+    "section_count": 5,
+    "program_header_count": 12,
+    "interpreter": null,
+    "interpreter_note": "Shared library PT_INTERP absent is normal. Bionic executable requests /system/bin/linker64.",
+    "needed": [
+      "libscid_sdk.so",
+      "liblog.so",
+      "libandroid.so",
+      "libEGL.so",
+      "libfmod.so",
+      "libfmodstudio.so",
+      "libdl.so",
+      "libsentry-android.so",
+      "libsentry.so",
+      "libm.so",
+      "libc++_shared.so",
+      "libc.so"
+    ],
+    "dynamic_symbol_count": 480,
+    "undefined_symbols_count": 473,
+    "weak_undefined_symbols": [
+      "__register_atfork",
+      "__fwrite_chk",
+      "__gnu_strerror_r",
+      "stderr",
+      "ZSTD_trace_compress_begin",
+      "ZSTD_trace_compress_end",
+      "ZSTD_trace_decompress_begin",
+      "ZSTD_trace_decompress_end"
+    ],
+    "defined_jni_exports": [
+      "JNI_OnLoad",
+      "Java_com_supercell_titan_usercentrics_UsercentricsSDK_gotConsent",
+      "Java_com_supercell_titan_usercentrics_UsercentricsSDK_gotFailure",
+      "Java_com_supercell_titan_usercentrics_UsercentricsSDK_popupClosed",
+      "Java_com_supercell_titan_usercentrics_UsercentricsSDK_popupShowing"
+    ],
+    "parser": "PT_DYNAMIC/PT_LOAD and GNU hash; ordinary symbol-table tools returned empty/limited output."
+  },
+  "static_needed_candidates": {
+    "status": "STATIC_FOUND",
+    "arm64_libraries_inspected": 185,
+    "missing_names": [],
+    "ambiguous_arm64_names": [],
+    "runtime_binding": "NOT_RUN",
+    "namespace_policy": "UNRESOLVED",
+    "relocation_and_symbol_versions": "UNRESOLVED",
+    "correction": "Initial libstatssocket.so ambiguity included ARM32 and ARM64. ABI-aware filtering removes that false ambiguity; v2 private evidence retained."
+  },
+  "dependencies": [
+    {
+      "name": "JNI_JavaVM",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "symbols": [],
+      "assessment": "JNI_OnLoad and four Java exports exist. JavaVM/JNIEnv calls can use vtables and need not appear as imports. Existing resident source requires JavaVM; independent cold-start requirement is unresolved.",
+      "guest_runtime_observations": [],
+      "proven_battle_required": false
+    },
+    {
+      "name": "AssetManager",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "symbols": [
+        "AAssetManager_fromJava",
+        "AAssetManager_open",
+        "AAsset_close",
+        "AAsset_getLength",
+        "AAsset_getLength64",
+        "AAsset_getRemainingLength64",
+        "AAsset_openFileDescriptor64",
+        "AAsset_read",
+        "AAsset_seek64"
+      ],
+      "assessment": "Nine imported interfaces. Native provider replacement is a candidate; no guest replacement or resource semantics validated in this run.",
+      "guest_runtime_observations": [],
+      "proven_battle_required": false
+    },
+    {
+      "name": "Android_properties_logging",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "symbols": [
+        "__android_log_print",
+        "__android_log_write",
+        "__system_property_get"
+      ],
+      "assessment": "Logging and property adapters need observed contracts; no constant-success/default shim implemented.",
+      "guest_runtime_observations": [],
+      "proven_battle_required": false
+    },
+    {
+      "name": "dynamic_resolution",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "symbols": [
+        "dlclose",
+        "dlerror",
+        "dlopen",
+        "dlsym"
+      ],
+      "assessment": "Resolvers may add dependencies not present in DT_NEEDED; static closure is not runtime closure.",
+      "guest_runtime_observations": [],
+      "proven_battle_required": false
+    },
+    {
+      "name": "threads_TLS",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "symbols": [
+        "pthread_cond_broadcast",
+        "pthread_cond_destroy",
+        "pthread_cond_init",
+        "pthread_cond_signal",
+        "pthread_cond_wait",
+        "pthread_condattr_destroy",
+        "pthread_condattr_init",
+        "pthread_condattr_setclock",
+        "pthread_create",
+        "pthread_detach",
+        "pthread_exit",
+        "pthread_getschedparam",
+        "pthread_getspecific",
+        "pthread_join",
+        "pthread_key_create",
+        "pthread_key_delete",
+        "pthread_mutex_destroy",
+        "pthread_mutex_init",
+        "pthread_mutex_lock",
+        "pthread_mutex_trylock",
+        "pthread_mutex_unlock",
+        "pthread_mutexattr_destroy",
+        "pthread_mutexattr_init",
+        "pthread_mutexattr_settype",
+        "pthread_once",
+        "pthread_rwlock_rdlock",
+        "pthread_rwlock_unlock",
+        "pthread_rwlock_wrlock",
+        "pthread_self",
+        "pthread_setschedparam",
+        "pthread_setspecific",
+        "pthread_sigmask"
+      ],
+      "assessment": "Bionic pthread, key-based TLS and ABI behavior require guest execution. Synthetic raw TPIDR_EL0 test is separate from Bionic C TLS.",
+      "guest_runtime_observations": [],
+      "proven_battle_required": false
+    },
+    {
+      "name": "clock",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "symbols": [
+        "_ZNSt6__ndk111this_thread9sleep_forERKNS_6chrono8durationIxNS_5ratioILl1ELl1000000000EEEEE",
+        "_ZNSt6__ndk118condition_variable15__do_timed_waitERNS_11unique_lockINS_5mutexEEENS_6chrono10time_pointINS5_12system_clockENS5_8durationIxNS_5ratioILl1ELl1000000000EEEEEEE",
+        "_ZNSt6__ndk16chrono12steady_clock3nowEv",
+        "_ZNSt6__ndk16chrono12system_clock3nowEv",
+        "clock_gettime"
+      ],
+      "assessment": "Monotonic/system clocks and game tick advancement are distinct.",
+      "guest_runtime_observations": [],
+      "proven_battle_required": false
+    },
+    {
+      "name": "files",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "symbols": [
+        "__open_2",
+        "fopen",
+        "fseek",
+        "fstat",
+        "ftell",
+        "getenv",
+        "lstat",
+        "open",
+        "opendir",
+        "read",
+        "stat",
+        "write"
+      ],
+      "assessment": "Filesystem namespace and resource path contracts remain unresolved; no private paths published.",
+      "guest_runtime_observations": [],
+      "proven_battle_required": false
+    },
+    {
+      "name": "network",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "symbols": [
+        "bind",
+        "connect",
+        "getaddrinfo",
+        "getsockopt",
+        "poll",
+        "recvfrom",
+        "sendto",
+        "setsockopt",
+        "shutdown",
+        "socket"
+      ],
+      "assessment": "Presence is not proof of battle requirement; no guest network activity measured.",
+      "guest_runtime_observations": [],
+      "proven_battle_required": false
+    },
+    {
+      "name": "EGL_GLES_UI",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "symbols": [
+        "eglChooseConfig",
+        "eglCreateContext",
+        "eglCreateWindowSurface",
+        "eglDestroySurface",
+        "eglGetConfigAttrib",
+        "eglGetConfigs",
+        "eglGetCurrentContext",
+        "eglGetDisplay",
+        "eglGetError",
+        "eglGetProcAddress",
+        "eglInitialize",
+        "eglMakeCurrent",
+        "eglSwapBuffers"
+      ],
+      "assessment": "EGL imports exist. GLES can resolve through eglGetProcAddress/dlsym. UI-free object graph is unverified.",
+      "guest_runtime_observations": [],
+      "proven_battle_required": false
+    }
+  ],
+  "lifecycle": [
+    {
+      "name": "GameStateConstructor",
+      "signature": "void(object*, int32, context*, data*, int32)",
+      "closure_functions": 129,
+      "direct_indirect_calls": 3,
+      "preconditions": [
+        "allocated object",
+        "valid content/catalog and context",
+        "constructor flags"
+      ],
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "guest_execution": "NOT_RUN",
+      "closure_scope": "historical bounded static candidate analysis; unresolved indirect edges excluded"
+    },
+    {
+      "name": "GameStateSetup",
+      "signature": "void(object*, int32)",
+      "preconditions": [
+        "constructed state",
+        "mode",
+        "indirect targets and setup globals"
+      ],
+      "note": "Setup is not synonymous with creation; old E0 phase naming is not runtime evidence here.",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "guest_execution": "NOT_RUN",
+      "closure_scope": "historical bounded static candidate analysis; unresolved indirect edges excluded"
+    },
+    {
+      "name": "GameStateLoad",
+      "signature": "void(object*, input*, context*, data*)",
+      "closure_functions": 1673,
+      "preconditions": [
+        "initialized content",
+        "reader/stream",
+        "valid contexts and ownership"
+      ],
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "guest_execution": "NOT_RUN",
+      "closure_scope": "historical bounded static candidate analysis; unresolved indirect edges excluded"
+    },
+    {
+      "name": "GameStateTick",
+      "signature": "int32(object*)",
+      "bytes": 8,
+      "callers": 113,
+      "callees": 0,
+      "preconditions": [
+        "valid state"
+      ],
+      "note": "Tick counter getter, NOT an advancement function.",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "guest_execution": "NOT_RUN",
+      "closure_scope": "historical bounded static candidate analysis; unresolved indirect edges excluded"
+    },
+    {
+      "name": "GameStateStep",
+      "signature": "void(object*)",
+      "closure_functions": 2313,
+      "preconditions": [
+        "loaded state",
+        "battle manager",
+        "command queue",
+        "content and valid virtual dispatch targets"
+      ],
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "guest_execution": "NOT_RUN",
+      "closure_scope": "historical bounded static candidate analysis; unresolved indirect edges excluded"
+    },
+    {
+      "name": "ReplayBattleControllerLifecycle",
+      "bytes": 2220,
+      "callees": 82,
+      "direct_indirect_calls": 14,
+      "preconditions": [
+        "battle manager",
+        "content runtime",
+        "scene/controller linkage"
+      ],
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "guest_execution": "NOT_RUN",
+      "closure_scope": "historical bounded static candidate analysis; unresolved indirect edges excluded"
+    },
+    {
+      "name": "action_logic_command",
+      "preconditions": [
+        "parser/catalog",
+        "manager and queue",
+        "context",
+        "ownership transfer"
+      ],
+      "note": "Constructing a bare command is insufficient; command validation and application must be measured separately.",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "guest_execution": "NOT_RUN",
+      "closure_scope": "historical bounded static candidate analysis; unresolved indirect edges excluded"
+    },
+    {
+      "name": "StateSnapshot",
+      "bytes": 236,
+      "callees": 12,
+      "direct_indirect_calls": 3,
+      "preconditions": [
+        "stream wrapper",
+        "snapshot service/controller"
+      ],
+      "note": "Compare serialized payload, not pointer-bearing object memory; restore is not memcpy.",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "guest_execution": "NOT_RUN",
+      "closure_scope": "historical bounded static candidate analysis; unresolved indirect edges excluded"
+    },
+    {
+      "name": "reset_destroy",
+      "closure_functions": 218,
+      "direct_indirect_calls": 27,
+      "preconditions": [
+        "command/listener teardown",
+        "content/global lifetime",
+        "pool ownership"
+      ],
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "guest_execution": "NOT_RUN",
+      "closure_scope": "historical bounded static candidate analysis; unresolved indirect edges excluded"
+    },
+    {
+      "name": "NativeReplayRunner",
+      "bytes": 876,
+      "callees": 33,
+      "preconditions": [
+        "reader/controller/global initialization"
+      ],
+      "note": "Historical function-boundary/pcode issues are not declared repaired by this audit.",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "guest_execution": "NOT_RUN",
+      "closure_scope": "historical bounded static candidate analysis; unresolved indirect edges excluded"
+    },
+    {
+      "name": "ReaderRegister",
+      "bytes": 700,
+      "callees": 28,
+      "direct_indirect_calls": 1,
+      "preconditions": [
+        "registration/context"
+      ],
+      "note": "Historical function-boundary issues remain outside this run.",
+      "status": [
+        "STATIC_FOUND",
+        "UNRESOLVED"
+      ],
+      "guest_execution": "NOT_RUN",
+      "closure_scope": "historical bounded static candidate analysis; unresolved indirect edges excluded"
+    }
+  ],
+  "replacement_candidates": [
+    {
+      "name": "resource_provider",
+      "status": "REPLACEABLE_CANDIDATE",
+      "requirement": "Preserve byte, namespace, descriptor, missing-resource and fallback semantics."
+    },
+    {
+      "name": "observed_configuration_contract",
+      "status": "REPLACEABLE_CANDIDATE",
+      "requirement": "Only observed keys and proven read/write contracts; unknowns explicitly fail."
+    },
+    {
+      "name": "logging_and_property_boundary",
+      "status": "REPLACEABLE_CANDIDATE",
+      "requirement": "Observed callers and return/value semantics before implementation."
+    }
+  ],
+  "gates": {
+    "engineering": "UNIT_PASS",
+    "cross_compile": "IMPLEMENTED",
+    "synthetic_guest_smoke": "BLOCKED",
+    "android_bionic_guest_abi": "NOT_RUN",
+    "real_libg_load": "NOT_RUN",
+    "real_libg_lifecycle": "NOT_RUN",
+    "native_verified": false,
+    "load_only": false,
+    "PURE_LINUX_SMOKE_PASS": false,
+    "PURE_LINUX_NATIVE_ENGINE": "BLOCKED",
+    "NATIVE_MATCH_LIFECYCLE_PASS": false,
+    "NATIVE_PARITY_LIMITED_PASS": false,
+    "no_VM": "NOT_RUN",
+    "Android_free": "NOT_RUN",
+    "PERFORMANCE_10X": "NOT_RUN",
+    "training": "NOT_RUN"
+  },
+  "checks": {
+    "specialized_unit_tests": 15,
+    "specialized_unit_exit": 0,
+    "mac_host_guard_exit": 2,
+    "main_engine": {
+      "passed": 211,
+      "exit": 0,
+      "scope": "isolated tracked baseline snapshot"
+    },
+    "public_checks": {
+      "exit": 0,
+      "scope": "isolated tracked baseline snapshot; excludes untracked new tools",
+      "main": {
+        "passed": 794,
+        "skipped": 27
+      },
+      "additional": [
+        {
+          "passed": 23
+        },
+        {
+          "passed": 82
+        },
+        {
+          "passed": 15,
+          "skipped": 3
+        },
+        {
+          "passed": 25,
+          "skipped": 4
+        },
+        {
+          "passed": 31,
+          "skipped": 3
+        },
+        {
+          "passed": 31,
+          "skipped": 2
+        },
+        {
+          "passed": 38,
+          "skipped": 3
+        },
+        {
+          "passed": 65
+        }
+      ],
+      "note": "Overlapping scopes are not added. Missing private native attachments cause explicit skips."
+    },
+    "preserved_failures": [
+      "Initial tar extraction TypeError for unsupported filter argument; retry used validated tracked archive in a new directory.",
+      "Initial ABI-blind candidate report; corrected without overwriting it."
+    ]
+  },
+  "private_evidence": {
+    "directory_id": "pure-linux-20261027-flyxngxb",
+    "publication": "Only hashes and sanitized summaries; no binary, resources, machine configuration or raw disassembly uploaded.",
+    "files": {
+      "input-audit-v3.json": {
+        "sha256": "8cbeace2f7af6051fe2c2bc525958e39f1dd19edceffff85e6fc68281ab9f136",
+        "bytes": 6905771
+      },
+      "input-audit-v2.json": {
+        "sha256": "49de7dddcb69b9e1c630b315ae7a68326b0bc5bc3afb7d618b133762a4c50f91",
+        "bytes": 6889973
+      },
+      "mac-host-guard/report.json": {
+        "sha256": "b355b06849e348795722beb4b7a69facd80cae3e2f43e63328c8b497274a9fd6",
+        "bytes": 455
+      },
+      "arm64-linux-smoke-v2": {
+        "sha256": "ec5634f6829922c6152494e500c0150ebe6bfed1e465050cc08be2ffe75e205f",
+        "bytes": 5368
+      },
+      "bionic-probe-v2": {
+        "sha256": "02dbc40e7ff04eafd633d24b1c8bd69fe88959d9105c5cb8cfe4e78c7a8db9cc",
+        "bytes": 10864
+      },
+      "libg-elf-v2.json": {
+        "sha256": "187ffc38a4ca8e5d6137aaa4853335fe9aafccc519841f7d7312876d4267c377",
+        "bytes": 18117
+      },
+      "linker-elf.json": {
+        "sha256": "b2a2231223b94df0fe5d0d6c81c6b6bb1cacc7b157645e5948a2748a31d84c22",
+        "bytes": 1681
+      },
+      "snapshot-initial-failure.json": {
+        "sha256": "4456d83faed66b83dffce0842e8de142a8759e64ae9337060608d99d39b0853f",
+        "bytes": 160
+      },
+      "arm64-linux-smoke-v3": {
+        "sha256": "2249f3439c240dd6bde1aeb8652a6c1de98a04bb1fdf30f3a9f7054af9b6e8b1",
+        "bytes": 5408
+      }
+    }
+  },
+  "commands": [
+    {
+      "command": [
+        "uname",
+        "-s"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "d4431c5127a04a3695bb810b98d7385b306f1c3617771f50c0e191ad7b954eb2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "baseline-0"
+    },
+    {
+      "command": [
+        "uname",
+        "-m"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "c1669e1d8edca98769c37d494b76442a1d6e5ffffd7b4da1fb63aef8ebaf6f01",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "baseline-1"
+    },
+    {
+      "command": [
+        "sw_vers"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "6a8391d0837bbf6ad932fb857500b6564f483bfbe76774e169326f92e4cba597",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "baseline-2"
+    },
+    {
+      "command": [
+        "sysctl",
+        "-n",
+        "hw.memsize"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e4b19ed1f4c2ac48ddf8e24f615e0c466b1ddb8e77aafdf84d87bea76e37ee55",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "baseline-3"
+    },
+    {
+      "command": [
+        "df",
+        "-k",
+        "$REPO"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "a358569bd3c9a05b69440e9d9c2c163d0258c485b9023e051078c32a4c9c9624",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "baseline-4"
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--short",
+        "--branch"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "917f62cc17fbd2274bd10bae2d3d08ebbac49299123d32b0ea6f36ff80569264",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "baseline-5"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "ea26c46498f6a87ef17d853eafad097673754f8d188ebf52fcd7a599cb0e2e67",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "baseline-6"
+    },
+    {
+      "command": [
+        "git",
+        "branch",
+        "--show-current"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "fbe17c9b4d0fba9ea94d4b5b98ab50401f74dceae661f20d62a8fa90e7366be1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "baseline-7"
+    },
+    {
+      "command": [
+        "git",
+        "log",
+        "-5",
+        "--oneline",
+        "--decorate"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "82f71a9fb110909ca6484be6565ce10731c29bc34afde169c7bdbd15da0084ee",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "baseline-8"
+    },
+    {
+      "command": [
+        "git",
+        "show-ref",
+        "--verify",
+        "refs/remotes/origin/codex/pure-linux-libg-headless-20261026"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "21f90d8a5f7a681ecbd0e979bfe190a9acadd83970c3321125856cccc6a2f971",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "baseline-9"
+    },
+    {
+      "command": [
+        "/Applications/VMware Fusion.app/Contents/Public/vmrun",
+        "list"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "8ab22340e78d095582df0c8f389aefa7083dbbdf8f53c59d6ce8b213800f0805",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "baseline-10"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/pure_linux",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7e9683f0e1f47edc90707d710bf7bb5d73423b5a7ca9646d7a6e8f87f995e5f9",
+      "log": "audit-0"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/pure_linux/elf_audit.py",
+        "--input",
+        "$BASELINE/app-libs/libg.so",
+        "--sha256",
+        "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+        "--output",
+        "$EVIDENCE/libg-elf.json"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "247a9618cd9c5c50d81e0a6dcd33bd0da560dbbd6365051c2e5b60a98e6a8cde",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "audit-1"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/pure_linux/elf_audit.py",
+        "--input",
+        "$BASELINE/sysroot/system/bin/linker64",
+        "--sha256",
+        "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7",
+        "--output",
+        "$EVIDENCE/linker-elf.json"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "0ac0951255ddb101198a5ea88e04949595357c4b6e131a858dca457915121ca4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "audit-2"
+    },
+    {
+      "command": [
+        "$NDK_BIN/clang",
+        "--target=aarch64-linux-gnu",
+        "-fuse-ld=lld",
+        "-nostdlib",
+        "-static",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-stack-protector",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-O2",
+        "tools/pure_linux/arm64_start.S",
+        "tools/pure_linux/arm64_smoke.c",
+        "-o",
+        "$EVIDENCE/arm64-linux-smoke"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "audit-3"
+    },
+    {
+      "command": [
+        "$NDK_BIN/aarch64-linux-android24-clang",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-O2",
+        "tools/pure_linux/bionic_probe.c",
+        "-ldl",
+        "-o",
+        "$EVIDENCE/bionic-probe"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "audit-4"
+    },
+    {
+      "command": [
+        "$NDK_BIN/llvm-readelf",
+        "-h",
+        "-l",
+        "-d",
+        "-Ws",
+        "$BASELINE/app-libs/libg.so"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "36f779e52ff78ad1059f45e45ea9343bbfa23357470eb9de99c4627c91b71590",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "audit-5"
+    },
+    {
+      "command": [
+        "$NDK_BIN/llvm-nm",
+        "-D",
+        "$BASELINE/app-libs/libg.so"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "1263b229deb410bf362e72cee3a52500cf3cee982553308b7fb9ffc746810afc",
+      "log": "audit-6"
+    },
+    {
+      "command": [
+        "$NDK_BIN/llvm-objdump",
+        "-T",
+        "$BASELINE/app-libs/libg.so"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "7ec54e5c7e561202cc72a280d9b5c5e0245afc06b914b1b9ddccf76fad6c06b4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "audit-7"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/pure_linux",
+        "-p",
+        "test_audit.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_log": "final-0.stdout",
+      "stdout_sha256": "7075962eabb3b00ae3f8e96c4e692a009ef88f28b56f57ff362ba91d7f376c16",
+      "stderr_log": "final-0.stderr",
+      "stderr_sha256": "4e9b3579f8923cb099e8e3bc54fd2f939966490d7fd2f7cb3bce79b4ea7c9b79"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/pure_linux/audit_inputs.py",
+        "--baseline",
+        "$BASELINE",
+        "--supported-engine",
+        "firstlight_CR/native_runner/supported_engine.json",
+        "--output",
+        "$EVIDENCE/input-audit-v2.json"
+      ],
+      "exit_code": 0,
+      "stdout_log": "final-1.stdout",
+      "stdout_sha256": "7caa12a224577df1b5fc69b563e630c529361edfce85386bca6bd0ab313709c7",
+      "stderr_log": "final-1.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "$NDK_BIN/aarch64-linux-android24-clang",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-O2",
+        "tools/pure_linux/bionic_probe.c",
+        "-ldl",
+        "-o",
+        "$EVIDENCE/bionic-probe-v2"
+      ],
+      "exit_code": 0,
+      "stdout_log": "final-2.stdout",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_log": "final-2.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/pure_linux/run_arm64_smoke.py",
+        "--elf",
+        "$EVIDENCE/arm64-linux-smoke",
+        "--sha256",
+        "bbdaddebf64c3b662584b6d0a537656165d83570afc91cc9d7c05b7b44fc603b",
+        "--output",
+        "$EVIDENCE/mac-host-guard"
+      ],
+      "exit_code": 2,
+      "stdout_log": "final-3.stdout",
+      "stdout_sha256": "f4c7358db52f213bd82b521483cb5d31b13119e6d127e3736c4f2f9bf50197a6",
+      "stderr_log": "final-3.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/pure_linux",
+        "-p",
+        "test_audit.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_log": "abi-filter-0.stdout",
+      "stdout_sha256": "7075962eabb3b00ae3f8e96c4e692a009ef88f28b56f57ff362ba91d7f376c16",
+      "stderr_log": "abi-filter-0.stderr",
+      "stderr_sha256": "0fdf719d58f227c9e790071dd64abaceb38e6b4fc3979d2515b1b4fc28aeeb2d"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/pure_linux/audit_inputs.py",
+        "--baseline",
+        "$BASELINE",
+        "--supported-engine",
+        "firstlight_CR/native_runner/supported_engine.json",
+        "--output",
+        "$EVIDENCE/input-audit-v3.json"
+      ],
+      "exit_code": 0,
+      "stdout_log": "abi-filter-1.stdout",
+      "stdout_sha256": "0123e91b26cfecff88e3ace63effe6287cb5a56475527ae3c2bdddd4aeaf9125",
+      "stderr_log": "abi-filter-1.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "$NDK_BIN/clang",
+        "--target=aarch64-linux-gnu",
+        "-fuse-ld=lld",
+        "-nostdlib",
+        "-static",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-stack-protector",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-O2",
+        "tools/pure_linux/arm64_start.S",
+        "tools/pure_linux/arm64_smoke.c",
+        "-o",
+        "$EVIDENCE/arm64-linux-smoke-v2"
+      ],
+      "exit_code": 0,
+      "stdout_log": "build-smoke-v2.stdout",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_log": "build-smoke-v2.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "$CHECK_PYTHON",
+        "tools/run_main_engine_checks.py"
+      ],
+      "exit_code": 0,
+      "scope": "isolated tracked snapshot at 82b94be",
+      "stdout_sha256": "e3d7bef6b4453bbcb28018d8594537e31a4e8079c302620050b50cab3026a7c6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "$CHECK_PYTHON",
+        "tools/run_public_checks.py"
+      ],
+      "exit_code": 0,
+      "scope": "isolated tracked snapshot at 82b94be",
+      "stdout_sha256": "bc6e8b1ff5723e00fa4c5e230bb97deefed1e8d44e41a8f23f5d6bb1f3af7029",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "$NDK_BIN/clang",
+        "--target=aarch64-linux-gnu",
+        "-fuse-ld=lld",
+        "-nostdlib",
+        "-static",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-stack-protector",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-O2",
+        "tools/pure_linux/arm64_start.S",
+        "tools/pure_linux/arm64_smoke.c",
+        "-o",
+        "$EVIDENCE/arm64-linux-smoke-v3"
+      ],
+      "exit_code": 0,
+      "stdout_log": "build-smoke-v3.stdout",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_log": "build-smoke-v3.stderr",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "fetch",
+        "origin",
+        "--prune"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "origin",
+        "refs/heads/codex/pure-linux-libg-headless-20261026",
+        "refs/heads/main"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "35a8ad4d2fc624a2e7e0bad13fc70d00c3b0382b3bb1de6c8edbd67583e6c364",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "branch",
+        "-r"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "635f364076c7d2758723b71460404359d053528090fcca34a3e478e7ff7e3aa3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "next_steps": [
+    "Obtain an independent available ARM64 Linux guest session without altering existing suspended VM state.",
+    "Record live guest uname, release, network and identity; execute synthetic syscall/thread/TLS/file/IPC/signal/exit smoke.",
+    "Run Bionic synthetic probe WITHOUT any libg argument; resolve linker namespace/versioning from actual failures.",
+    "Reconfirm matching original APK and resources before isolated real-libg loading; record LOAD_ONLY distinctly.",
+    "Validate content/context/manager creation and GameStateStep lifecycle before parity or throughput."
+  ]
+}

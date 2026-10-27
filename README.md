@@ -4,6 +4,15 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+## 2026-10-27：Apple Silicon → ARM64 Linux 原版引擎审计
+
+任务分支新增匹配 ELF/输入审计及 direct ARM64 Linux、Bionic 探针，15 项专项通过，
+两种探针交叉构建成功。214 个运行文件、990 个资源匹配，静态检查 185 个 ARM64 库。
+当前 **BLOCKED_ENVIRONMENT**：没有已验证运行中的独立 ARM64 Linux guest，既有挂起 VM 保持原状；
+原始锁定 APK 另有身份缺口。guest smoke、真实 libg 加载/生命周期、无 VM 与 10× 均未验证。
+详见 [审计回执](agent-handoff/CODEX_REPLY_2026-10-26_PURE_LINUX.md) 与
+[ABI 实验](agent-handoff/ARM64_LINUX_ABI_FEASIBILITY.md)。以下保留此前阶段记录。
+
 ## 当前状态（2026-10-25）
 
 | 阶段 | 状态 | 尚待完成 |
