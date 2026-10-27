@@ -1,5 +1,25 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-C PN实际commit返回、写失败及不同值交错
+
+六个独立进程各3602快照/9120440bytes、28动作、tick3601终局与snapshot/restore/reset一致；
+post-cold-ready临时双store转发观测器保留原实现，当前源码通过完整局非扰动对照。
+正常变化/空值/恢复写均两次真实commit(true)，同值和读取零commit。
+受控磁盘写失败真实两commit(false)，桥ABI为void、无pending JNI异常；
+原桥及双store同进程读到新值、XML字节未变，恢复权限后提交与保存值恢复通过。
+
+不同值双线程8写8读、6对ART root实际重叠，7次读自身/1次读另一线程值；
+o/p分别7/6次commit(true)，不宣称线性化、双store原子性或一般线程安全。
+ART未知ID/记录均保留，原严格解析器未放宽；新partial只验证已命名root的栈身份。
+22,039附件限定验收exit0、专项50 passed/14.39s；旧严格门重验exit2/BLOCKED。
+主工程211 passed/40.30s，公开主组794 passed/27 skipped；详见本阶段回执。
+
+46键仍保留、可移除性unknown；PN未native替换，自然cold-start返回、持久化失败等价、
+崩溃恢复及Java引用退休仍未闭合。API30 helper复编字节一致，早期失败保留；
+独占实例回收，历史adb身份不变。未进入E2.2、训练或10×。
+见agent-handoff/E2_1C_PN_COMMIT_FAILURE_CONCURRENCY_2026-10-27.md、
+CODEX_REPLY_2026-10-27_E2_1C.md、e2_1c_evidence_summary.json及e2_1c_failure_index.json。
+
 ## 2026-10-27 E2.1-B PN同步提交路径与46键可移除性边界
 
 五个独立原生进程各3602快照/9120440bytes、28动作、终局及snapshot/restore/reset一致。

@@ -43,6 +43,7 @@ def run(config_path, output):
     messages = []
     session = None
     lifecycle_completed = False
+    return_observer_installed = False
     started = time.time()
     repository = Path(__file__).resolve().parent
 
@@ -112,6 +113,9 @@ def run(config_path, output):
     source_directory.mkdir()
     for path in list(repository.glob('e[012]_*.js')) + [Path(__file__), repository / 'e2_config_store.c']:
         (source_directory / path.name).write_bytes(path.read_bytes())
+    if config.get('return_observer'):
+        path = repository / 'E21PreferenceObserver.java'
+        (source_directory / path.name).write_bytes(path.read_bytes())
     try:
         if command('emu', 'avd', 'name').splitlines()[0] != config['avd']:
             raise RuntimeError('AVD ownership mismatch')
@@ -160,6 +164,11 @@ def run(config_path, output):
             create('semantics', 'e2_1_config_probe.js', config['semantics_probe'])
             save('semantics-cold.json', scripts['semantics'].exports_sync.batch([
                 dict(case='after_cold_ready', operation='read', key='PN_POPUP')]))
+        if config.get('return_observer'):
+            create('return-observer', 'e2_1_return_observer.js', config['return_observer'])
+            installed = scripts['return-observer'].exports_sync.command('install')
+            save('return-observer-install.json', dict(result=installed, phase='after_cold_ready_before_state_create'))
+            return_observer_installed = True
         match = json.loads(Path(config['match']).read_text())
         control('configure ' + json.dumps(match, separators=(',', ':')), 'state_create_load')
         control('observe', 'initial_state')
@@ -214,6 +223,15 @@ def run(config_path, output):
         raise
     finally:
         snapshot_errors = []
+        if return_observer_installed:
+            try:
+                observer = scripts['return-observer'].exports_sync
+                (output / 'return-observer-events.tsv').write_text(observer.command('snapshot'))
+                save('return-observer-uninstall.json', dict(result=observer.command('uninstall')))
+                return_observer_installed = False
+            except BaseException as failure:
+                save('return-observer-cleanup-failure.json', dict(error=str(failure)))
+                snapshot_errors.append('return-observer-cleanup')
         for name, script in scripts.items():
             try:
                 save(name + '-final.json', script.exports_sync.snapshot())

@@ -1,0 +1,189 @@
+{
+  "schema": "e2.1c-public-evidence.v1",
+  "status": "bounded_evidence_verified",
+  "strict_gate": "BLOCKED",
+  "private_attachment_count": 22039,
+  "runs": [
+    {
+      "run": "baseline",
+      "forwarding_observer": false,
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "observed",
+      "forwarding_observer": true,
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "diagnostic",
+      "forwarding_observer": false,
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "observed-v2",
+      "forwarding_observer": true,
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "diagnostic-2",
+      "forwarding_observer": false,
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "diagnostic-3",
+      "forwarding_observer": false,
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    }
+  ],
+  "sequential": [
+    {
+      "case": "changed_write",
+      "operation": "write",
+      "commits": {
+        "o:true": 1,
+        "p:true": 1
+      }
+    },
+    {
+      "case": "changed_read",
+      "operation": "read",
+      "commits": {}
+    },
+    {
+      "case": "same_write",
+      "operation": "write",
+      "commits": {}
+    },
+    {
+      "case": "empty_write",
+      "operation": "write",
+      "commits": {
+        "o:true": 1,
+        "p:true": 1
+      }
+    },
+    {
+      "case": "empty_read",
+      "operation": "read",
+      "commits": {}
+    },
+    {
+      "case": "restore",
+      "operation": "write",
+      "commits": {
+        "o:true": 1,
+        "p:true": 1
+      }
+    },
+    {
+      "case": "restored_read",
+      "operation": "read",
+      "commits": {}
+    }
+  ],
+  "failure": {
+    "cases": [
+      {
+        "case": "disk_denied_write",
+        "operation": "write",
+        "commits": {
+          "o:false": 1,
+          "p:false": 1
+        }
+      },
+      {
+        "case": "memory_after_failure",
+        "operation": "read",
+        "commits": {}
+      }
+    ],
+    "delegated_commit_returns": "false in both original stores",
+    "disk_bytes": "unchanged in fault window",
+    "memory_read": "updated in same process",
+    "native_write_error": "void; no pending JNI exception observed",
+    "durability": "not established"
+  },
+  "race": {
+    "workers": 2,
+    "writes": 8,
+    "reads": 8,
+    "overlapping_art_root_pairs": 6,
+    "own_reads": 7,
+    "other_reads": 1,
+    "unknown_reads": 0,
+    "commits": {
+      "o:true": 7,
+      "p:true": 6
+    },
+    "general_thread_safety": "unknown"
+  },
+  "art_coverage": {
+    "exhaustive": false,
+    "unnamed_semantics": "unknown",
+    "failure_unnamed_methods": 6,
+    "race_unnamed_methods": 6,
+    "failure_unnamed_records": 28,
+    "race_unnamed_records": 200,
+    "original_strict_parser": "unchanged; rejects unnamed IDs"
+  },
+  "source_rebuild": "DEX and native helper byte-identical; API 30",
+  "scope": "post-cold-ready PN_POPUP forwarding observation; original Java stores retained",
+  "evidence_access": "private attachments required; public summary is not native revalidation",
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false,
+  "pn_native_replacement": false,
+  "removed_keys": 0,
+  "retained_failed_attempts": 1,
+  "unresolved": [
+    "46-key removability",
+    "natural cold-start commit return values",
+    "native replacement persistence and failure equivalence",
+    "general concurrency and crash durability",
+    "Java reference retirement"
+  ],
+  "private_manifest_sha256": "ce09979fc2cc1fbeae67fa61df8beec03e9e33c38b109bedde75bdd11ce0e196"
+}

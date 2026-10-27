@@ -1,0 +1,67 @@
+{
+  "schema": "e2.1c-public-failure-index.v1",
+  "historical_evidence_preserved": true,
+  "records": [
+    {
+      "id": "fault-mode-stat-format",
+      "stage": "write-failure",
+      "observed": "First diagnostic script used an unquoted stat format; failure was recorded and restoration retained",
+      "exit_code": null,
+      "exit_code_note": "Standalone status not retained in the failure attachment; do not infer success",
+      "attachment_sha256": "14d633acd429628411eda712533ae06ed41d596fae5ff6dd1a7f5c0af2f53486",
+      "resolution": "Quoted format; independent third attempt verified"
+    },
+    {
+      "id": "race-result-overwritten-attempt-1",
+      "stage": "race-archive",
+      "observed": "Final snapshot overwrote the result/before/after race attachment",
+      "exit_code": null,
+      "attachment_sha256": "15793dd19811733923a9a1ed8b45f2d6e6040eeccb84ca0332db0db7ff73f3bd",
+      "resolution": "Preserve failed archive; third attempt has distinct result and snapshot outputs"
+    },
+    {
+      "id": "race-result-overwritten-attempt-2",
+      "stage": "race-archive",
+      "observed": "No script failure recorded, but race result archive remained incomplete and was not accepted",
+      "exit_code": null,
+      "attachment_sha256": "137e325a8e1a445dc7a8ceb0706582e03f21884aa95035d19d8479b964c43a0e",
+      "resolution": "Third independent attempt verified; earlier archive remains rejected"
+    },
+    {
+      "id": "strict-art-unknown-methods",
+      "stage": "method-trace",
+      "observed": "Original strict parser rejected unnamed method IDs in failure and race traces",
+      "exit_code": null,
+      "resolution": "Original parser unchanged; separate partial parser retains opaque identities and explicitly incomplete coverage",
+      "unnamed_method_semantics": "unknown"
+    },
+    {
+      "id": "helper-build-jdk-library",
+      "stage": "source-rebuild-1",
+      "observed": "d8 rejected JDK25 library input with unsupported class major version 69",
+      "exit_code": 1,
+      "commands_sha256": "4b9bfa51287c79c74a4d1f15229f445b37362ec8f44a027a05cb14279c0bb911",
+      "resolution": "Use installed Android API35 library input"
+    },
+    {
+      "id": "helper-build-api-mismatch",
+      "stage": "source-rebuild-2",
+      "observed": "API24 compilation exited zero but DEX and SO bytes differed from API30 observed helpers; comparison assertion failed",
+      "exit_code": 1,
+      "comparison_sha256": "43aa59427d9ff1074d2376349f3960c37d0d8abf2012087949645e1f8b606f5d",
+      "resolution": "Third build uses API30; both observed artifacts byte-identical"
+    },
+    {
+      "id": "strict-gate-unresolved",
+      "stage": "G-E2.1",
+      "observed": "Actual old strict gate recheck remains BLOCKED",
+      "exit_code": 2,
+      "receipt_sha256": "58105bfb230c07808f0a55194c6b949a8915d2c699d71d0ebb34f13d269d30d4",
+      "resolution": "Not resolved; bounded commit evidence is a separate result"
+    }
+  ],
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false
+}
