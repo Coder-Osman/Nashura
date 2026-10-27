@@ -4,6 +4,15 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+## 2026-10-28 E2.1-N：配置候选并发保护与初始化身份审计
+
+配置候选加入进程生命周期租约和线程互斥；两个独立ARM64/Bionic实测均通过，
+各11条进程回执、187项输入SHA不变。8个配置方法静态摘要相同，但初始化方法不同；
+数组载荷相同仍不代表初始化控制流、持久化及backup契约闭合。专项181通过/1条件跳过。
+严格catalog门仍 **BLOCKED**，ResourceManager整体门未通过，GameState及真实Step保持NOT_RUN。
+详见[本轮报告](agent-handoff/PURE_LINUX_CONFIG_CONTRACT_2026-10-28.md)及
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_CONFIG_CONTRACT.md)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：catalog 自然 ready 与配置依赖纠错
 
 真实 Ubuntu ARM64 的两个新子进程均 exit0，原生 loader 自然推进53步，ready由0变1，

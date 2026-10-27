@@ -1,0 +1,631 @@
+{
+  "schema": "nashura.pure-linux-config-contract.v1",
+  "base_commit": "237a448d824a5ab728b861f2993dd1d13932a5fb",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "engine_loaded_this_round": false,
+  "native_lease": {
+    "probe_sha256": "f57def5a979c312d9322994e596e51415db291d00f75e7adb1dce4323e2195e9",
+    "linker_sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7",
+    "runs": [
+      {
+        "id": "v81",
+        "status": "RUNTIME_OBSERVED",
+        "runner_exit_code": 0,
+        "machine": "aarch64",
+        "kernel": "6.8.0-138-generic",
+        "private_result_sha256": "4d9d0f7d157760a975e1ca79ede548f762a9e697ee0135ba39e1dea007cdc2e2",
+        "input_count": 187,
+        "inputs_unchanged": true,
+        "state_sha256": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "initial_state_sha256": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "cases": [
+          {
+            "case": "fresh",
+            "mode": "fresh",
+            "exit_code": 0,
+            "expected_exit_code": 0,
+            "passed": true,
+            "stdout_sha256": "1e25fd134c436ac8b72456b0c8525848e3c1d5dd69536b8be1e0d35d3414feef",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "contender-0",
+            "mode": "restore",
+            "exit_code": 3,
+            "expected_exit_code": 3,
+            "passed": true,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "contender-1",
+            "mode": "restore",
+            "exit_code": 3,
+            "expected_exit_code": 3,
+            "passed": true,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "contender-2",
+            "mode": "restore",
+            "exit_code": 3,
+            "expected_exit_code": 3,
+            "passed": true,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "contender-3",
+            "mode": "restore",
+            "exit_code": 3,
+            "expected_exit_code": 3,
+            "passed": true,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "contender-4",
+            "mode": "restore",
+            "exit_code": 3,
+            "expected_exit_code": 3,
+            "passed": true,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "normal-release",
+            "mode": "hold",
+            "exit_code": 0,
+            "expected_exit_code": 0,
+            "passed": true,
+            "stdout_sha256": "594138970fe2942c8485296805d58571d564db75f45439bbf302717628aae982",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "restore-after-release",
+            "mode": "restore",
+            "exit_code": 0,
+            "expected_exit_code": 0,
+            "passed": true,
+            "stdout_sha256": "4b4554634796e9039779c8500e20ffe8fb5fee6be1a4ca7f87a8238fab187a4f",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "killed-owner",
+            "mode": "hold",
+            "exit_code": -9,
+            "expected_exit_code": -9,
+            "passed": true,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "restore-after-kill",
+            "mode": "restore",
+            "exit_code": 0,
+            "expected_exit_code": 0,
+            "passed": true,
+            "stdout_sha256": "4b4554634796e9039779c8500e20ffe8fb5fee6be1a4ca7f87a8238fab187a4f",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "unknown-rejected",
+            "mode": "unknown",
+            "exit_code": 0,
+            "expected_exit_code": 0,
+            "passed": true,
+            "stdout_sha256": "a2543fc63cc823ca5ec8e2f9a1348478c9cf3979e0df43578d8a0a7aad0c18d2",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "failure": null,
+        "scope": "native configuration candidate; no libg loaded"
+      },
+      {
+        "id": "v82",
+        "status": "RUNTIME_OBSERVED",
+        "runner_exit_code": 0,
+        "machine": "aarch64",
+        "kernel": "6.8.0-138-generic",
+        "private_result_sha256": "9d3b880aa91480543532557d350e805b916d90a8d6af3f636c01a3e27a36b858",
+        "input_count": 187,
+        "inputs_unchanged": true,
+        "state_sha256": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "initial_state_sha256": "dbbac21490473872663920a1f73354cd08b8325559d37ce6452b232cccc3de05",
+        "cases": [
+          {
+            "case": "fresh",
+            "mode": "fresh",
+            "exit_code": 0,
+            "expected_exit_code": 0,
+            "passed": true,
+            "stdout_sha256": "1e25fd134c436ac8b72456b0c8525848e3c1d5dd69536b8be1e0d35d3414feef",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "contender-0",
+            "mode": "restore",
+            "exit_code": 3,
+            "expected_exit_code": 3,
+            "passed": true,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "contender-1",
+            "mode": "restore",
+            "exit_code": 3,
+            "expected_exit_code": 3,
+            "passed": true,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "contender-2",
+            "mode": "restore",
+            "exit_code": 3,
+            "expected_exit_code": 3,
+            "passed": true,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "contender-3",
+            "mode": "restore",
+            "exit_code": 3,
+            "expected_exit_code": 3,
+            "passed": true,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "contender-4",
+            "mode": "restore",
+            "exit_code": 3,
+            "expected_exit_code": 3,
+            "passed": true,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "normal-release",
+            "mode": "hold",
+            "exit_code": 0,
+            "expected_exit_code": 0,
+            "passed": true,
+            "stdout_sha256": "594138970fe2942c8485296805d58571d564db75f45439bbf302717628aae982",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "restore-after-release",
+            "mode": "restore",
+            "exit_code": 0,
+            "expected_exit_code": 0,
+            "passed": true,
+            "stdout_sha256": "4b4554634796e9039779c8500e20ffe8fb5fee6be1a4ca7f87a8238fab187a4f",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "killed-owner",
+            "mode": "hold",
+            "exit_code": -9,
+            "expected_exit_code": -9,
+            "passed": true,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "restore-after-kill",
+            "mode": "restore",
+            "exit_code": 0,
+            "expected_exit_code": 0,
+            "passed": true,
+            "stdout_sha256": "4b4554634796e9039779c8500e20ffe8fb5fee6be1a4ca7f87a8238fab187a4f",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "case": "unknown-rejected",
+            "mode": "unknown",
+            "exit_code": 0,
+            "expected_exit_code": 0,
+            "passed": true,
+            "stdout_sha256": "a2543fc63cc823ca5ec8e2f9a1348478c9cf3979e0df43578d8a0a7aad0c18d2",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "failure": null,
+        "scope": "native configuration candidate; no libg loaded"
+      }
+    ]
+  },
+  "static_audit": {
+    "exit_code": 2,
+    "private_result_sha256": "6f211bff1a2026c522adfa9f02571e25565748befadcc57453dc7a09f8d85924",
+    "report": {
+      "status": "STATIC_FOUND",
+      "methods": [
+        {
+          "method": "c.a.<init>:(Lcom/supercell/titan/GameApp;Ljava/lang/String;Ljava/lang/String;)V",
+          "left": {
+            "sha256": "ede1757207ae8739cf760276a6224c8ae18409cb1b8050bf95123268648e4827",
+            "instructions": 46,
+            "catch_table_present": true
+          },
+          "right": {
+            "sha256": "ede1757207ae8739cf760276a6224c8ae18409cb1b8050bf95123268648e4827",
+            "instructions": 46,
+            "catch_table_present": true
+          },
+          "equal": true
+        },
+        {
+          "method": "c.a.h:(Ljava/lang/String;Ljavax/crypto/Cipher;)Ljava/lang/String;",
+          "left": {
+            "sha256": "1f038afab03678c718f70bd1b95d0d6e7e1302fc633c6154566a6ac4a8f576ee",
+            "instructions": 14,
+            "catch_table_present": true
+          },
+          "right": {
+            "sha256": "1f038afab03678c718f70bd1b95d0d6e7e1302fc633c6154566a6ac4a8f576ee",
+            "instructions": 14,
+            "catch_table_present": true
+          },
+          "equal": true
+        },
+        {
+          "method": "c.a.j:(Ljava/lang/String;)Ljava/lang/String;",
+          "left": {
+            "sha256": "eea04218ce79ed91e502914a1258678b8e687b5478d9073c1f8756f1a613c763",
+            "instructions": 36,
+            "catch_table_present": true
+          },
+          "right": {
+            "sha256": "eea04218ce79ed91e502914a1258678b8e687b5478d9073c1f8756f1a613c763",
+            "instructions": 36,
+            "catch_table_present": true
+          },
+          "equal": true
+        },
+        {
+          "method": "c.a.n:(Ljava/lang/String;Ljava/lang/String;)V",
+          "left": {
+            "sha256": "e9d0b9964a14207ad6e4025839c583abd5e061b9e7643f3c85852c3845aa2e4c",
+            "instructions": 37,
+            "catch_table_present": true
+          },
+          "right": {
+            "sha256": "e9d0b9964a14207ad6e4025839c583abd5e061b9e7643f3c85852c3845aa2e4c",
+            "instructions": 37,
+            "catch_table_present": true
+          },
+          "equal": true
+        },
+        {
+          "method": "com.supercell.titan.GameApp.onCreate:(Landroid/os/Bundle;)V",
+          "left": {
+            "sha256": "04eddd0c8abda555965c705d3fcc9047159a78146db9011cd54d45b2afaff691",
+            "instructions": 304,
+            "catch_table_present": true
+          },
+          "right": {
+            "sha256": "c64ddbfe39788846a70e5044717a72c67ca4ab4bd43e0efba5c96a8fb5c4f534",
+            "instructions": 310,
+            "catch_table_present": true
+          },
+          "equal": false
+        },
+        {
+          "method": "com.supercell.titan.GameApp.requestBackup:()V",
+          "left": {
+            "sha256": "6217843c52a53a60c298346df90a5ff2703d65915a56c344d6a3e40a7ff8e4a4",
+            "instructions": 4,
+            "catch_table_present": true
+          },
+          "right": {
+            "sha256": "6217843c52a53a60c298346df90a5ff2703d65915a56c344d6a3e40a7ff8e4a4",
+            "instructions": 4,
+            "catch_table_present": true
+          },
+          "equal": true
+        },
+        {
+          "method": "com.supercell.titan.ApplicationUtilBase.getKeyValue:(Ljava/lang/String;)Ljava/lang/String;",
+          "left": {
+            "sha256": "df139047f9677da24b8d00a820955a067e47768cd76fbe5028b222aac2ead211",
+            "instructions": 19,
+            "catch_table_present": true
+          },
+          "right": {
+            "sha256": "df139047f9677da24b8d00a820955a067e47768cd76fbe5028b222aac2ead211",
+            "instructions": 19,
+            "catch_table_present": true
+          },
+          "equal": true
+        },
+        {
+          "method": "com.supercell.titan.ApplicationUtilBase.removeKeyValue:(Ljava/lang/String;)V",
+          "left": {
+            "sha256": "91800f876edff4fc606f25fb5eb1a663df13eae53ef619436381f436ded89c7e",
+            "instructions": 3,
+            "catch_table_present": true
+          },
+          "right": {
+            "sha256": "91800f876edff4fc606f25fb5eb1a663df13eae53ef619436381f436ded89c7e",
+            "instructions": 3,
+            "catch_table_present": true
+          },
+          "equal": true
+        },
+        {
+          "method": "com.supercell.titan.ApplicationUtilBase.storeKeyValue:(Ljava/lang/String;Ljava/lang/String;)V",
+          "left": {
+            "sha256": "ac876da76863d97c1e03f683dd807a6becfb99cf397c9629d1e27a8c63852be4",
+            "instructions": 29,
+            "catch_table_present": true
+          },
+          "right": {
+            "sha256": "ac876da76863d97c1e03f683dd807a6becfb99cf397c9629d1e27a8c63852be4",
+            "instructions": 29,
+            "catch_table_present": true
+          },
+          "equal": true
+        }
+      ],
+      "selected_methods_equal": false,
+      "scope": "instructions, literal operands, register metadata and catch tables",
+      "whole_dex_identity_equal": false,
+      "runtime_parity": "NOT_RUN",
+      "uncovered": [
+        "referenced fields and initialization data",
+        "transitive callees",
+        "Android implementation",
+        "persistence and backup side effects"
+      ],
+      "schema": "nashura.preference-method-audit.v2",
+      "inputs": {
+        "left": {
+          "dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+          "dump_sha256": "75ef26a5ceab202be9bb1deb1d1cd372acc2b05ea41ff49ede88f45880f30148",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "exit_code": 0,
+          "input_unchanged": true
+        },
+        "right": {
+          "dex_sha256": "ef1ac708f6e836daa925afc50d3bf3b139213b3a72323a354cc2e9493b50f608",
+          "dump_sha256": "3c74c3960de07504fa6fd1b26b4b6b0bceab3791d5f8a689fd69f0c519adcc6b",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "exit_code": 0,
+          "input_unchanged": true
+        },
+        "dexdump_sha256": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692"
+      },
+      "initialization_prefix": {
+        "left": {
+          "sha256": "051bffec06b8601d460b17a46bb586172722801e3b607cb8bb021dc3d138c0d4",
+          "instructions": 126,
+          "payload_sha256": [
+            "57dd7055198a2f96d2a6c320c993c07b408824c25c177c72c11239af5016ce27"
+          ],
+          "scope": "linear initializer prefix through p assignment, including array bytes",
+          "runtime_parity": "NOT_RUN"
+        },
+        "right": {
+          "sha256": "447ec54af0a3bdef87e8187d217f777b7f150bc1dbb72bf619324d1c79a0aa0c",
+          "instructions": 126,
+          "payload_sha256": [
+            "57dd7055198a2f96d2a6c320c993c07b408824c25c177c72c11239af5016ce27"
+          ],
+          "scope": "linear initializer prefix through p assignment, including array bytes",
+          "runtime_parity": "NOT_RUN"
+        },
+        "equal": false
+      }
+    }
+  },
+  "status": {
+    "candidate_lease": "PASS",
+    "configuration_semantic_parity": "UNRESOLVED",
+    "catalog_ready_pass": false,
+    "resource_manager": "BLOCKED",
+    "gamestate": "NOT_RUN",
+    "step_tick": "NOT_RUN",
+    "full_battle": "NOT_RUN",
+    "android_parity": "NOT_RUN",
+    "performance_10x": "NOT_RUN",
+    "training": "NOT_RUN"
+  },
+  "first_unresolved_dependency": "configuration initialization identity, encrypted persistence/failure semantics and Android backup side effects",
+  "raw_artifacts": "private; intentionally not bundled",
+  "engineering_validation": {
+    "specialized": {
+      "command": [
+        "python3",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tools/pure_linux"
+      ],
+      "exit_code": 0,
+      "passed": 181,
+      "skipped": 1
+    },
+    "regression": [
+      {
+        "run": "v86",
+        "scope": "engineering tests in exclusive source copy; no native engine execution",
+        "checks": [
+          {
+            "name": "main",
+            "command": [
+              "python3",
+              "tools/run_main_engine_checks.py"
+            ],
+            "exit_code": 1,
+            "seconds": 2.16,
+            "stdout_sha256": "c96507e32ab6d5c3c073f01bff6f397216eb0f6662769884f01fe88a5f14a68d",
+            "stderr_sha256": "c10a51403cbeb5511c196e007f2851b2e43611cc106a334cad6b8d23ad659157",
+            "python_version": "3.9 (system; incompatible with existing dataclass slots)",
+            "inner_pytest_exit_code": 2,
+            "collection_errors": 8,
+            "private_log": "v86/main"
+          },
+          {
+            "name": "public",
+            "command": [
+              "python3",
+              "tools/run_public_checks.py"
+            ],
+            "exit_code": 1,
+            "seconds": 2.67,
+            "stdout_sha256": "87dd916ab3a06477408057f7ea2c05f9271c60e6dd30cb623f06b284c063c376",
+            "stderr_sha256": "2683b60510023be64ea46c694b4255063c6a27285353fba9a1cdf976003db5ca",
+            "python_version": "3.9 (system; incompatible with existing dataclass slots)",
+            "inner_pytest_exit_code": 2,
+            "collection_errors": 20,
+            "private_log": "v86/public"
+          }
+        ]
+      },
+      {
+        "run": "v87",
+        "scope": "engineering tests in exclusive source copy; no native engine execution",
+        "checks": [
+          {
+            "name": "main",
+            "command": [
+              "python3.13",
+              "tools/run_main_engine_checks.py"
+            ],
+            "python_version": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 11:23:37) [Clang 14.0.6 ]",
+            "exit_code": 0,
+            "seconds": 21.38,
+            "stdout_sha256": "f8ac7c98887984b2ef7df4f09d73f9ea46da044fce5155924a9508c41779b724",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "private_log": "v87/main"
+          },
+          {
+            "name": "public",
+            "command": [
+              "python3.13",
+              "tools/run_public_checks.py"
+            ],
+            "python_version": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 11:23:37) [Clang 14.0.6 ]",
+            "exit_code": 0,
+            "seconds": 165.82,
+            "stdout_sha256": "38fbdc180c76f8325d6b182c318a2c9dba4c51a79e18519855eabf8e4d9a26cc",
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "private_log": "v87/public"
+          }
+        ]
+      }
+    ],
+    "public_xml": [
+      {
+        "artifact": "checks-affordability.xml",
+        "sha256": "1d7bb8032597152b2f92d219f6e5b74b2d437e9f619100642daf8c36b0e62928",
+        "tests": 23,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      {
+        "artifact": "checks-collection-coordinator.xml",
+        "sha256": "5dd12108eece333cd4fadb9677d6682e127a9e32f73b07ef8d669b6fe90e95ec",
+        "tests": 65,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      },
+      {
+        "artifact": "checks-command-coordinates.xml",
+        "sha256": "0148d8647c1d9ec40af036d97093dfd75df2bf93e0d42024e9f17f858921bc97",
+        "tests": 41,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 3
+      },
+      {
+        "artifact": "checks-dispatch-command.xml",
+        "sha256": "c8b513d32188a87fb3b000091a1edd2e05de5f729df47fa6f6d8e41c138ca564",
+        "tests": 34,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 3
+      },
+      {
+        "artifact": "checks-live-command.xml",
+        "sha256": "ecab8ae2ab6c597f25bcf2fd5580221cfc69df85ebfb82e6871987ef9bf562e5",
+        "tests": 29,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 4
+      },
+      {
+        "artifact": "checks-position-guards.xml",
+        "sha256": "2264497bcc8236cf261c0fac60a04734500fbb1fa1673968a5ee4cf5f330f249",
+        "tests": 18,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 3
+      },
+      {
+        "artifact": "checks-public.xml",
+        "sha256": "3d4a042d8dc0388e6928ecd88d711eb5752a323d7c073bfcdd58b35eb7dfac17",
+        "tests": 821,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 27
+      },
+      {
+        "artifact": "checks-reservation-mapping.xml",
+        "sha256": "badad46510f6c0a40cf0bdc0824fb1a1a6d7305af38670ae180256fd57c46686",
+        "tests": 33,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 2
+      },
+      {
+        "artifact": "checks-selection-timeout.xml",
+        "sha256": "f9d62623ba5f0e1950fab2f3af814a187193ef219ac774953ab3ff5db42c2ab5",
+        "tests": 82,
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0
+      }
+    ],
+    "public_passed": 1104,
+    "public_skipped": 42,
+    "historical_xml_unchanged": true
+  },
+  "publication_checks": [
+    {
+      "name": "gitleaks",
+      "command": [
+        "gitleaks",
+        "dir",
+        ".",
+        "--config",
+        ".gitleaks.toml",
+        "--redact"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "4572628f12b5891686d6a6d70c600c09921b494f85f5f973f7cfae57169ac150"
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

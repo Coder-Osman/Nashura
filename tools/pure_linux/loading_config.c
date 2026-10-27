@@ -3,17 +3,26 @@
 #include <fcntl.h>
 #include <pthread.h>
 #include <stdint.h>
+#include <stdatomic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/file.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
 #define LIMIT 4095
 
 static int directory = -1;
+static int lease = -1;
+static _Atomic pid_t owner;
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 static const char key_name[] = "LOADING_SCREEN_STATE_LABEL";
+
+static int inherited(void) {
+    pid_t recorded = owner;
+    return recorded && recorded != getpid();
+}
 
 typedef struct {
     unsigned char magic[8];
@@ -74,9 +83,22 @@ static int save(const State *state) {
 }
 
 int loading_config_init(const char *path, int fresh) {
-    if (directory >= 0 || !path || (fresh != 0 && fresh != 1)) return -1;
+    if (inherited() || !path || (fresh != 0 && fresh != 1)) return -1;
+    pthread_mutex_lock(&mutex);
+    if (directory >= 0) { pthread_mutex_unlock(&mutex); return -1; }
     directory = open(path, O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC);
-    if (directory < 0) return -1;
+    if (directory < 0) { pthread_mutex_unlock(&mutex); return -1; }
+    lease = openat(directory, "writer-lock", O_RDWR | O_CREAT | O_NOFOLLOW | O_CLOEXEC, 0600);
+    struct stat lease_information;
+    if (lease < 0 || fstat(lease, &lease_information) ||
+        !S_ISREG(lease_information.st_mode) || lease_information.st_nlink != 1 ||
+        flock(lease, LOCK_EX | LOCK_NB)) {
+        if (lease >= 0) close(lease);
+        close(directory);
+        lease = directory = -1;
+        pthread_mutex_unlock(&mutex);
+        return -1;
+    }
     State state = {0};
     int result;
     if (fresh) {
@@ -88,14 +110,24 @@ int loading_config_init(const char *path, int fresh) {
             result = save(&state);
         }
     } else result = load(&state);
-    if (result) { close(directory); directory = -1; }
+    if (result) {
+        close(lease);
+        close(directory);
+        lease = directory = -1;
+    } else owner = getpid();
+    pthread_mutex_unlock(&mutex);
     return result;
 }
 
 int loading_config_finish(void) {
-    if (directory < 0) return -1;
+    if (inherited()) return -1;
+    pthread_mutex_lock(&mutex);
+    if (directory < 0 || owner != getpid()) { pthread_mutex_unlock(&mutex); return -1; }
     int result = close(directory);
-    directory = -1;
+    if (close(lease)) result = -1;
+    lease = directory = -1;
+    owner = 0;
+    pthread_mutex_unlock(&mutex);
     return result;
 }
 
@@ -108,8 +140,9 @@ static void assign(State *state, unsigned int slot, const char *value) {
 }
 
 int loading_config_write(const char *key, const char *value, uint64_t *backups) {
-    if (directory < 0 || !valid(key, value)) return -1;
+    if (inherited() || !valid(key, value)) return -1;
     pthread_mutex_lock(&mutex);
+    if (directory < 0 || owner != getpid()) { pthread_mutex_unlock(&mutex); return -1; }
     State state;
     int result = load(&state);
     int changed = 0;
@@ -129,8 +162,9 @@ int loading_config_write(const char *key, const char *value, uint64_t *backups) 
 }
 
 int loading_config_read(const char *key, char *value, size_t capacity, uint64_t *backups) {
-    if (directory < 0 || !valid(key, NULL) || !value || capacity < LIMIT + 1) return -1;
+    if (inherited() || !valid(key, NULL) || !value || capacity < LIMIT + 1) return -1;
     pthread_mutex_lock(&mutex);
+    if (directory < 0 || owner != getpid()) { pthread_mutex_unlock(&mutex); return -1; }
     State state;
     int result = load(&state);
     if (!result && !state.values[1][0] && state.values[0][0]) {

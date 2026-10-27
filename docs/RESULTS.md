@@ -1,5 +1,17 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：配置候选租约与初始化契约
+
+两个新Ubuntu ARM64/Bionic实验各11条进程回执符合预期：五竞争者被拒绝，正常释放及
+杀死本轮holder后恢复成功；各187个输入SHA不变。仅运行配置候选，没有重新加载libg。
+静态方法审计8/8相同；含onCreate的9方法审计exit2，配置对象前缀的数组载荷相同，
+条件分支目标仍待闭合。新增工具保留寄存器/异常表及真实数组字节，未覆盖载荷显式拒绝。
+专项181通过/1条件跳过；原始失败、历史报告与XML保留。Android加密、分步commit/failure、
+初始化身份及真实backup副作用仍UNRESOLVED，CATALOG_READY_PASS=false、manager BLOCKED，
+GameState/Step/完整局NOT_RUN。完整命令、SHA和发布回归见
+[报告](../agent-handoff/PURE_LINUX_CONFIG_CONTRACT_2026-10-28.md)与
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_CONFIG_CONTRACT.md)。以下为历史状态。
+
 ## 2026-10-28 E2.1-N：自然 catalog 加载与单键配置候选
 
 真实Ubuntu ARM64 v78/v79各wrapper0/child0；loader53步到终态9，ready自然0→1，

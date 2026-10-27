@@ -5,6 +5,7 @@ import shutil
 import struct
 import subprocess
 import sys
+import concurrent.futures
 
 import pytest
 
@@ -147,3 +148,60 @@ def test_missing_restore_input(library, tmp_path):
     backend = configure(library)
     assert backend.loading_config_init(os.fsencode(tmp_path), 0) == -1
     assert not (tmp_path / "state").exists()
+
+
+def test_other_process_rejected_until_owner_finishes(backend, library, tmp_path):
+    script = """
+import ctypes, os, sys
+backend = ctypes.CDLL(sys.argv[1])
+backend.loading_config_init.argtypes = [ctypes.c_char_p, ctypes.c_int]
+result = backend.loading_config_init(os.fsencode(sys.argv[2]), 0)
+if result == 0: assert backend.loading_config_finish() == 0
+raise SystemExit(0 if result == int(sys.argv[3]) else 9)
+"""
+    command = [sys.executable, "-c", script, str(library), str(tmp_path)]
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+        results = list(executor.map(lambda _: subprocess.run(command + ["-1"]).returncode, range(5)))
+    assert results == [0] * 5
+    assert backend.loading_config_finish() == 0
+    assert subprocess.run(command + ["0"]).returncode == 0
+    assert backend.loading_config_init(os.fsencode(tmp_path), 0) == 0
+
+
+@pytest.mark.parametrize("kind", ["symlink", "hardlink", "directory"])
+def test_invalid_lock_rejected(library, tmp_path, kind):
+    lock = tmp_path / "writer-lock"
+    other = tmp_path / "other"
+    other.write_bytes(b"preserved")
+    if kind == "symlink":
+        lock.symlink_to(other)
+    elif kind == "hardlink":
+        os.link(other, lock)
+    else:
+        lock.mkdir()
+    instance = configure(library)
+    assert instance.loading_config_init(os.fsencode(tmp_path), 1) == -1
+    assert other.read_bytes() == b"preserved"
+    assert not (tmp_path / "state").exists()
+
+
+@pytest.mark.skipif(not hasattr(os, "fork"), reason="POSIX fork required")
+def test_fork_child_rejects_inherited_context(backend, tmp_path):
+    assert write(backend, b"datatables-init") == (0, 1)
+    process = os.fork()
+    if process == 0:
+        passed = (read(backend)[0] == -1 and write(backend, b"child")[0] == -1 and
+                  backend.loading_config_finish() == -1 and
+                  backend.loading_config_init(os.fsencode(tmp_path), 0) == -1)
+        os._exit(0 if passed else 9)
+    assert os.waitpid(process, 0)[1] == 0
+    assert read(backend) == (0, b"datatables-init", 1)
+
+
+def test_threaded_writes_are_serialized(backend):
+    values = [str(index).encode() for index in range(64)]
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+        results = list(executor.map(lambda value: write(backend, value), values))
+    assert all(result[0] == 0 for result in results)
+    assert sorted(result[1] for result in results) == list(range(1, 65))
+    assert read(backend)[2] == 64

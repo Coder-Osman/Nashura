@@ -12,7 +12,8 @@ int main(int count, char **arguments) {
     if (count != 3) return 2;
     int fresh = !strcmp(arguments[2], "fresh");
     int unknown = !strcmp(arguments[2], "unknown");
-    if (!fresh && !unknown && strcmp(arguments[2], "restore")) return 2;
+    int hold = !strcmp(arguments[2], "hold");
+    if (!fresh && !unknown && !hold && strcmp(arguments[2], "restore")) return 2;
     if (loading_config_init(arguments[1], fresh)) return 3;
     const char *key = "LOADING_SCREEN_STATE_LABEL";
     char value[4096];
@@ -24,6 +25,11 @@ int main(int count, char **arguments) {
          loading_config_read("UNRECOGNIZED", value, sizeof(value), &backups) != -1)) result = 5;
     if (!result && (loading_config_read(key, value, sizeof(value), &backups) ||
                     strcmp(value, "datatables-init") || backups != 1)) result = 6;
+    if (!result && hold) {
+        puts("LEASE_HELD");
+        fflush(stdout);
+        if (getchar() != 'x') result = 8;
+    }
     int finished = loading_config_finish();
     if (finished) result = 7;
     printf("CONFIG_PROBE\t%s\tresult=%d\tbackups=%" PRIu64 "\tfinish=%d\n",
