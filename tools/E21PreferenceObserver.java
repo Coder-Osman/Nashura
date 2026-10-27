@@ -29,6 +29,60 @@ public final class E21PreferenceObserver {
     private static Method pnReader;
     private static Method pnWriter;
     private static int pnCommands;
+    private static int codecCommands;
+
+    private static String codecCommand(String operation) throws Exception {
+        if (!installed || pnSaved == null || ++codecCommands > 128) {
+            throw new IllegalStateException("bounded captured PN codec experiment required");
+        }
+        if (operation.equals("codec-info")) {
+            JSONArray result = new JSONArray();
+            for (int index = 0; index < 2; ++index) {
+                JSONObject row = new JSONObject().put("store", index);
+                for (String name : new String[]{"a", "b", "c"}) {
+                    Cipher cipher = (Cipher)stores[index].getClass().getField(name).get(stores[index]);
+                    byte[] iv = cipher.getIV();
+                    row.put(name, new JSONObject().put("algorithm", cipher.getAlgorithm())
+                        .put("provider", cipher.getProvider().getName())
+                        .put("iv", iv == null ? "" : Base64.encodeToString(iv, Base64.NO_WRAP)));
+                }
+                row.put("charset", java.nio.charset.Charset.defaultCharset().name());
+                result.put(row);
+            }
+            return result.toString();
+        }
+        String[] parts = operation.split(":", -1);
+        if (parts.length < 2 || !(parts[1].equals("0") || parts[1].equals("1"))) {
+            throw new IllegalArgumentException("explicit PN store required");
+        }
+        int index = Integer.parseInt(parts[1]);
+        if (parts[0].equals("codec-state") && parts.length == 2) {
+            SharedPreferences original = (SharedPreferences)originals[index];
+            return new JSONObject().put("encoded", original.getString(pnKeys[index], null)).toString();
+        }
+        if (parts[0].equals("codec-read") && parts.length == 2) {
+            String value = (String)pnReader.invoke(stores[index], "PN_POPUP");
+            return Base64.encodeToString(value.getBytes("UTF-8"), Base64.NO_WRAP);
+        }
+        if (parts[0].equals("codec-raw") && parts.length == 3 && parts[2].length() <= 8192) {
+            String value = new String(Base64.decode(parts[2], Base64.NO_WRAP), "US-ASCII");
+            if (value.length() > 5500) throw new IllegalArgumentException("bounded raw ciphertext required");
+            if (!((SharedPreferences)originals[index]).edit().putString(pnKeys[index], value).commit()) {
+                throw new IllegalStateException("raw PN setup commit failed");
+            }
+            return "codec-raw-set";
+        }
+        if (parts[0].equals("codec-encode") && parts.length == 4 &&
+                (parts[2].equals("key") || parts[2].equals("value")) && parts[3].length() <= 5500) {
+            String value = new String(Base64.decode(parts[3], Base64.NO_WRAP), "UTF-8");
+            if (value.getBytes("UTF-8").length > 4095) throw new IllegalArgumentException("bounded codec text required");
+            Method encoder = stores[index].getClass().getDeclaredMethod("h", String.class, Cipher.class);
+            encoder.setAccessible(true);
+            Cipher cipher = (Cipher)stores[index].getClass().getField(parts[2].equals("key") ? "c" : "a").get(stores[index]);
+            return (String)encoder.invoke(null, value, cipher);
+        }
+        throw new IllegalArgumentException("unknown bounded codec command");
+    }
 
     private static String pnCommand(String operation) throws Exception {
         if (!installed || ++pnCommands > 80) throw new IllegalStateException("bounded installed PN matrix required");
@@ -181,6 +235,7 @@ public final class E21PreferenceObserver {
     public static synchronized String command(String operation) throws Exception {
         if (released) throw new IllegalStateException("observer references retired");
         if (operation.equals("install")) return install();
+        if (operation.startsWith("codec-")) return codecCommand(operation);
         if (operation.startsWith("pn-")) return pnCommand(operation);
         if (operation.equals("read-stores")) {
             if (!installed) throw new IllegalStateException("not installed");

@@ -171,7 +171,11 @@ rpc.exports = {
     const matrix = settings && settings.enable_pn_matrix === true &&
       (/^pn-set:[A-Za-z0-9+/=]*:[A-Za-z0-9+/=]*$/.test(operation) ||
         ['pn-begin', 'pn-state', 'pn-restore'].includes(operation));
-    if (!settings || (!matrix && !['install', 'snapshot', 'uninstall', 'files', 'read-stores', 'release'].includes(operation))) throw new Error('invalid command');
+    const codec = settings && settings.enable_pn_codec === true &&
+      (operation === 'codec-info' || /^codec-(read|state):[01]$/.test(operation) ||
+       /^codec-raw:[01]:[A-Za-z0-9+/=]*$/.test(operation) ||
+       /^codec-encode:[01]:(key|value):[A-Za-z0-9+/=]*$/.test(operation));
+    if (!settings || (!matrix && !codec && !['install', 'snapshot', 'uninstall', 'files', 'read-stores', 'release'].includes(operation))) throw new Error('invalid command');
     if (operation === 'install' && settings.install_at === 'first-native-bridge') throw new Error('cold install is driven by original bridge only');
     return invoke(operation);
   },

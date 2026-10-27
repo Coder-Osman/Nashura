@@ -1,0 +1,64 @@
+{
+  "schema": "e2.1g-failure-index.v1",
+  "failures": [
+    {
+      "experiment": "codec-1",
+      "exit_code": 1,
+      "reason": "explicit APEX crypto library is not accessible in the app linker namespace; codec open returned -2",
+      "resolution": "use the existing visible system crypto library, preserve namespace protections",
+      "raw_evidence_retained": true
+    },
+    {
+      "experiment": "codec-2",
+      "exit_code": 1,
+      "reason": "same app linker namespace rejection of explicit APEX crypto library",
+      "resolution": "independent later process uses verified existing system crypto library",
+      "raw_evidence_retained": true
+    },
+    {
+      "experiment": "codec-system-1",
+      "exit_code": 1,
+      "reason": "shell android_id differs from app-scoped SSAID; original key oracle rejected the explicit profile",
+      "resolution": "derive the private profile from matching app-scoped input and revalidate against the original oracle",
+      "raw_evidence_retained": true
+    },
+    {
+      "experiment": "codec-system-2",
+      "exit_code": 1,
+      "reason": "same shell/app scope mismatch rejected before the matrix",
+      "resolution": "two new codec-scoped runs completed; native derivation integration remains unresolved",
+      "raw_evidence_retained": true
+    },
+    {
+      "experiment": "release-attempt0",
+      "exit_code": 1,
+      "reason": "historical process identity capture stripped stdout while the release check retained the trailing newline",
+      "resolution": "apply the original normalization, recheck the entire PID/start-time/argv identity before releasing owned resources",
+      "mutations_before_failure": false,
+      "raw_evidence_retained": true
+    },
+    {
+      "experiment": "public-snapshot-before-refresh",
+      "exit_code": 1,
+      "attempts": 2,
+      "reason": "published sources changed in this stage while the source manifest still described the previous stage",
+      "resolution": "refresh only reviewed stage source entries and new files; retain historical report bytes and all other manifest entries",
+      "raw_evidence_retained": true
+    },
+    {
+      "experiment": "strict-gate-recheck",
+      "exit_code": 2,
+      "status": "BLOCKED",
+      "reason": "native PN bridge integration and complete storage semantics remain unresolved",
+      "raw_evidence_retained": true
+    }
+  ],
+  "pn_native_replacement": false,
+  "original_xml_writer_replaced": false,
+  "native_key_derivation_integrated": false,
+  "format_interoperability_scope": "explicit-key bounded ECB/CBC and original store readback",
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false
+}

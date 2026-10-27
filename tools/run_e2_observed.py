@@ -102,8 +102,9 @@ def run(config_path, output):
         script.on('message', message)
         script.load()
         scripts[name] = script
-        script.exports_sync.configure(settings)
+        configured = script.exports_sync.configure(settings)
         print('configured ' + name, flush=True)
+        return configured
 
     save('run-start.json', dict(started=started, config_sha256=digest(config_path),
                                 mode=config.get('mode', 'original'), runner_sha256=digest(__file__)))
@@ -118,6 +119,10 @@ def run(config_path, output):
         (source_directory / path.name).write_bytes(path.read_bytes())
     if config.get('pn_candidate') or config.get('pn_matrix'):
         for filename in ('e2_1_pn_store.c', 'e2_1_pn_store.h'):
+            path = repository / filename
+            (source_directory / path.name).write_bytes(path.read_bytes())
+    if config.get('pn_codec'):
+        for filename in ('e2_1_pn_codec.c', 'e2_1_pn_codec.h', 'e2_1_pn_codec.py', 'e2_1_pn_codec_matrix.py'):
             path = repository / filename
             (source_directory / path.name).write_bytes(path.read_bytes())
     try:
@@ -213,6 +218,22 @@ def run(config_path, output):
         if 'semantics' in scripts:
             save('semantics-terminal-reset.json', scripts['semantics'].exports_sync.batch([
                 dict(case='after_terminal_reset', operation='read', key='PN_POPUP')]))
+            if config.get('pn_codec'):
+                from e2_1_pn_codec_matrix import run_codec_matrix
+
+                def capture_xml(label, files):
+                    directory = output / ('codec-xml-' + label)
+                    directory.mkdir(exist_ok=False)
+                    records = []
+                    for index, filename in enumerate(files):
+                        local = directory / ('store-' + str(index) + '.xml')
+                        command('pull', filename, str(local))
+                        records.append(dict(sha256=digest(local), bytes_hex=local.read_bytes().hex()))
+                    return records
+
+                save('pn-codec-configure.json', create('pn-codec', 'e2_1_pn_codec_probe.js', config['pn_codec']))
+                run_codec_matrix(scripts['return-observer'].exports_sync, scripts['pn-codec'].exports_sync,
+                                 config['pn_codec'], save, capture_xml)
             if config.get('pn_matrix'):
                 from e2_1_pn_matrix import run_matrix
 

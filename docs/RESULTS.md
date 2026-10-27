@@ -1,5 +1,25 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-G 原PN Cipher/XML互操作
+
+最终runner的独立baseline-current与两次codec-scoped进程各3602份原生快照、
+9120440bytes、28动作及tick3601终局一致，snapshot/restore/reset控制回执一致。
+实际平台AssetManager事件0、Provider失败0、live assets0；原始输入和990个update文件
+前后身份保持。矩阵均在完整轨迹后执行，原PN桥与原XML writer保持。
+
+每次双store各10项文本，40组原Java/宿主C/guest C密文比较、80次native变换、
+20次原store读回一致；6项损坏密文由原实现清理，真实commit(true)可追溯。
+原XML逻辑条目恢复，非PN条目逐项不变。使用显式私有profile，只验证本次
+ECB/CBC、UTF-8、Base64及原store互操作范围，未完成native密钥派生或存储交接。
+
+11129附件限定验证exit0，72项专项通过；E2全组222 passed/135 skipped，
+主工程211 passed。跳过不计作原生通过；测试集合重叠，不累加。
+strict gate仍BLOCKED/exit2，46键可移除性unknown。首个缺口为PN战斗桥集成、
+原XML writer交接及native密钥来源契约；backup交付、并发等价和崩溃持久化未闭合。
+独占实例已回收，历史adb保持；未进入E2.2/no-VM、Android-free、训练或10×。
+详见E2_1G_PN_CIPHER_XML_2026-10-27.md、CODEX_REPLY_2026-10-27_E2_1G.md、
+e2_1g_evidence_summary.json及e2_1g_failure_index.json。
+
 ## 2026-10-27 E2.1-F 原桥PN优先级与回填
 
 最终runner独立基线及matrix-1/matrix-2各3602份快照、9120440bytes、28动作与

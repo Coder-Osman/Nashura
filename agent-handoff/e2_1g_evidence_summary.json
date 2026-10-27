@@ -1,0 +1,85 @@
+{
+  "schema": "e2.1g-bounded-summary.v1",
+  "status": "bounded_evidence_verified",
+  "strict_gate": "BLOCKED",
+  "attachment_count": 11129,
+  "runs": [
+    {
+      "run": "baseline-current",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "codec-scoped-1",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    },
+    {
+      "run": "codec-scoped-2",
+      "snapshot_count": 3602,
+      "terminal_tick": 3601,
+      "injected_actions": 28,
+      "total_bytes": 9120440,
+      "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+      "platform_asset_events": 0,
+      "provider_failures": 0,
+      "live_assets": 0
+    }
+  ],
+  "matrices": [
+    {
+      "run": "codec-scoped-1",
+      "texts_per_store": 10,
+      "stores": 2,
+      "cipher_comparisons": 40,
+      "native_transforms": 80,
+      "original_reads": 20,
+      "malformed_cleanup_cases": 6,
+      "xml_restored": true,
+      "format_scope": "explicit-key ECB/CBC bytes and original SharedPreferences reader/writer only",
+      "backup_delivery": "unknown",
+      "original_bridge_replaced": false,
+      "original_xml_writer_replaced": false
+    },
+    {
+      "run": "codec-scoped-2",
+      "texts_per_store": 10,
+      "stores": 2,
+      "cipher_comparisons": 40,
+      "native_transforms": 80,
+      "original_reads": 20,
+      "malformed_cleanup_cases": 6,
+      "xml_restored": true,
+      "format_scope": "explicit-key ECB/CBC bytes and original SharedPreferences reader/writer only",
+      "backup_delivery": "unknown",
+      "original_bridge_replaced": false,
+      "original_xml_writer_replaced": false
+    }
+  ],
+  "pn_native_replacement": false,
+  "original_xml_writer_replaced": false,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false,
+  "removed_keys": 0,
+  "unresolved": [
+    "native PN bridge integration and original XML writer handoff",
+    "backup delivery",
+    "concurrency equivalence and crash durability",
+    "46-key removability"
+  ],
+  "private_manifest_sha256": "d7c56c9807e0424a1abe1e5c12c98db87307cd4cdbbeadddaafecad5f051c88a"
+}
