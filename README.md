@@ -4,6 +4,16 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+## 2026-10-28 E2.1-N：配置文件原语与平台审计
+
+新增真实文件分步写入、bak恢复与异常退出验证；两个新ARM64/Bionic子进程
+各19组/444项通过，187输入未变。离线核验Android30平台10方法，恢复sync和bak错误语义。
+隔离专项409通过/1跳过、主工程211通过、公开九组1,104通过/42跳过；保留248份历史XML。
+本轮未加载libg；XML/map、当前身份及真实backup服务仍未闭合，严格catalog保持 **BLOCKED**，
+GameState与真实Step仍NOT_RUN。工程测试与原生语义分开记录，详见
+[报告](agent-handoff/PURE_LINUX_PREFERENCE_FILES_2026-10-28.md)和
+[机器证据](agent-handoff/pure-linux-preference-files-evidence-20261028.json)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：历史异常恢复与store0字节对照
 
 store1四步padding异常/恢复序列在两份历史原版参考上逐字节匹配；

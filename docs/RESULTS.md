@@ -1,5 +1,17 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：配置文件原语与Android30静态证据
+
+两个新ARM64/Bionic子进程各19组/444项文件检查通过，187受保护输入未变；
+覆盖分步故障、bak恢复、进程退出、exec重启、容量canary及权限/所有权。
+隔离专项409通过/1跳过、主工程211通过、公开九组1,104通过/42跳过；集合不累加。
+10个真实平台方法STATIC_FOUND，发现FileUtils.sync及删除bak的返回值未使用；
+backup实际服务绑定未知，静态空服务分支不等于当前运行证据。
+文件测试采用合成字节，未接入libg；XML/map、当前身份、listener/queue及backup契约未闭合。
+严格catalog仍false，ResourceManager BLOCKED，GameState/真实Step及完整局NOT_RUN。
+命令、独立回归及输入/输出SHA见[报告](../agent-handoff/PURE_LINUX_PREFERENCE_FILES_2026-10-28.md)
+和[机器证据](../agent-handoff/pure-linux-preference-files-evidence-20261028.json)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：历史padding序列与store0参考
 
 v106两份历史原版归档各两个新ARM64/Bionic子进程，四条返回码/长度/字节/canary全匹配：

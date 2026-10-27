@@ -1,0 +1,601 @@
+{
+  "schema": "nashura.pure-linux-preference-files-evidence.v1",
+  "baseline_commit": "506c7fd8551099815072ead66a6d5cb7d3298969",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "scope": "synthetic file primitive and offline Android30 static audit; no libg integration",
+  "environment": {
+    "guest_os": "Ubuntu 22.04.5 ARM64",
+    "machine": "aarch64",
+    "kernel": "6.8.0-138-generic",
+    "runtime": "existing Android30 Bionic linker64 in Linux"
+  },
+  "protected_libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "native": {
+    "log_directory": "private/v111-preference-files-native-_f55g_5y",
+    "result_sha256": "dfa1f28cebad2278393b7807c50f235d6a9cdf0f207ff7f33d771ce56b4baaa4",
+    "preparation_sha256": "c307c91ffa7245e2491b14231820b853344c3ce09c5903b17847a1b01f0bb444",
+    "build": {
+      "command": [
+        "$ANDROID_SDK/ndk/27.3.13750724/toolchains/llvm/prebuilt/darwin-x86_64/bin/aarch64-linux-android30-clang",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fPIE",
+        "-pie",
+        "-pthread",
+        "$REPOSITORY/tools/pure_linux/preference_files.c",
+        "$REPOSITORY/tools/pure_linux/preference_files_probe.c",
+        "-o",
+        "$PRIVATE_EXPERIMENT/v111-preference-files-native-_f55g_5y/probe"
+      ],
+      "exit_code": 0
+    },
+    "job_command": [
+      "/usr/bin/python3",
+      "$GUEST_EXPERIMENT/v111-preference-files-native-_f55g_5y/preference_files_job.py",
+      "--payload",
+      "$PAYLOAD",
+      "--probe",
+      "$GUEST_EXPERIMENT/v111-preference-files-native-_f55g_5y/probe",
+      "--probe-sha256",
+      "df5abf689a2ca71034067102433986f97336ea83b7f4b1a28203d24c067d88d6",
+      "--output",
+      "$GUEST_EXPERIMENT/v111-preference-files-native-_f55g_5y/result"
+    ],
+    "job_exit_code": 0,
+    "probe_sha256": "df5abf689a2ca71034067102433986f97336ea83b7f4b1a28203d24c067d88d6",
+    "source_sha256": {
+      "tools/pure_linux/native_init_job.py": "02059dd5af31ccc7966ed67e4e2dff614a4d496a12282057bfb1086fc6859f80",
+      "tools/pure_linux/elf_audit.py": "8b68ffd130ef34b08e22435a7d58c31cd203ef9789c8f0b844980612e0efd042",
+      "tools/pure_linux/preference_cipher_job.py": "26991daf86d96413c5cad9a01b8adffb2a886b81689be5e5c42ed26e5ee575ba",
+      "tools/pure_linux/preference_files_job.py": "30adf6c95f8dbf78189d8d98e83a80e29df045779154744dae399b1c9f67e9db"
+    },
+    "input_count": 187,
+    "inputs_unchanged": true,
+    "repeat_equal": true,
+    "records": [
+      {
+        "command": [
+          "$PAYLOAD/linker64",
+          "$GUEST_EXPERIMENT/v111-preference-files-native-_f55g_5y/probe",
+          "$GUEST_EXPERIMENT/v111-preference-files-native-_f55g_5y/result/process-0/cases",
+          "$PAYLOAD/linker64"
+        ],
+        "exit_code": 0,
+        "timed_out": false,
+        "assertion_summary": {
+          "scope": "synthetic_file_commit_and_process_crash_only",
+          "libg_loaded": false,
+          "cases": [
+            "two_slots_and_exec_restart",
+            "failure-0",
+            "failure-1",
+            "failure-2",
+            "failure-3",
+            "failure-4",
+            "failure-5",
+            "crash-before-1",
+            "crash-before-2",
+            "crash-before-3",
+            "crash-before-4",
+            "crash-before-5",
+            "crash_after_commit",
+            "restore_failure_preserves_backup",
+            "existing_backup_wins_after_repeated_write",
+            "capacity_and_output_guard",
+            "lock_and_owner",
+            "nonregular_and_oversize_rejected",
+            "directory_and_path_rejected"
+          ],
+          "case_count": 19,
+          "assertions": 444,
+          "status": "PASS"
+        },
+        "stdout_sha256": "0ab1fbd1ce902dc0134552717cce8c54cc98632970dac89a3f9e9e4acc34adf0",
+        "stderr_sha256": "407d690be87accad72bb401420fd6ed915100d20385295e29ceb1d70db49aa07",
+        "evidence_errors": [],
+        "passed": true,
+        "mapped_files": [
+          {
+            "name": "linker64",
+            "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+          },
+          {
+            "name": "probe",
+            "sha256": "df5abf689a2ca71034067102433986f97336ea83b7f4b1a28203d24c067d88d6"
+          },
+          {
+            "name": "[vdso]",
+            "sha256": null
+          },
+          {
+            "name": "libdl.so",
+            "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+          },
+          {
+            "name": "libc.so",
+            "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+          },
+          {
+            "name": "libnetd_client.so",
+            "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+          },
+          {
+            "name": "libc++.so",
+            "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+          },
+          {
+            "name": "libm.so",
+            "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+          }
+        ]
+      },
+      {
+        "command": [
+          "$PAYLOAD/linker64",
+          "$GUEST_EXPERIMENT/v111-preference-files-native-_f55g_5y/probe",
+          "$GUEST_EXPERIMENT/v111-preference-files-native-_f55g_5y/result/process-1/cases",
+          "$PAYLOAD/linker64"
+        ],
+        "exit_code": 0,
+        "timed_out": false,
+        "assertion_summary": {
+          "scope": "synthetic_file_commit_and_process_crash_only",
+          "libg_loaded": false,
+          "cases": [
+            "two_slots_and_exec_restart",
+            "failure-0",
+            "failure-1",
+            "failure-2",
+            "failure-3",
+            "failure-4",
+            "failure-5",
+            "crash-before-1",
+            "crash-before-2",
+            "crash-before-3",
+            "crash-before-4",
+            "crash-before-5",
+            "crash_after_commit",
+            "restore_failure_preserves_backup",
+            "existing_backup_wins_after_repeated_write",
+            "capacity_and_output_guard",
+            "lock_and_owner",
+            "nonregular_and_oversize_rejected",
+            "directory_and_path_rejected"
+          ],
+          "case_count": 19,
+          "assertions": 444,
+          "status": "PASS"
+        },
+        "stdout_sha256": "0ab1fbd1ce902dc0134552717cce8c54cc98632970dac89a3f9e9e4acc34adf0",
+        "stderr_sha256": "407d690be87accad72bb401420fd6ed915100d20385295e29ceb1d70db49aa07",
+        "evidence_errors": [],
+        "passed": true,
+        "mapped_files": [
+          {
+            "name": "linker64",
+            "sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+          },
+          {
+            "name": "probe",
+            "sha256": "df5abf689a2ca71034067102433986f97336ea83b7f4b1a28203d24c067d88d6"
+          },
+          {
+            "name": "[vdso]",
+            "sha256": null
+          },
+          {
+            "name": "libdl.so",
+            "sha256": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4"
+          },
+          {
+            "name": "libc.so",
+            "sha256": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569"
+          },
+          {
+            "name": "libnetd_client.so",
+            "sha256": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c"
+          },
+          {
+            "name": "libc++.so",
+            "sha256": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+          },
+          {
+            "name": "libm.so",
+            "sha256": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e"
+          }
+        ]
+      }
+    ]
+  },
+  "platform": {
+    "log_directory": "private/v112-platform-method-audit-ai4b8e05",
+    "audit_command": {
+      "command": [
+        "$PYTHON",
+        "tools/pure_linux/platform_preference_audit.py",
+        "--dex",
+        "$PRIVATE_EXPERIMENT/v109-framework30-g4cxp61o/classes.dex",
+        "--dex-sha256",
+        "d9dc8dc72be360755bb781effea17568a888adbb48bca40228fd1122384d990c",
+        "--dexdump",
+        "$ANDROID_SDK/build-tools/36.0.0/dexdump",
+        "--dexdump-sha256",
+        "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692",
+        "--output",
+        "$PRIVATE_EXPERIMENT/v112-platform-method-audit-ai4b8e05/audit"
+      ],
+      "exit_code": 0
+    },
+    "report_sha256": "c17b32b36d88afdff2cc043078e2c0361799f057e47573dc74d8be78268f465a",
+    "report": {
+      "schema": "nashura.platform-preference-audit.v1",
+      "status": "STATIC_FOUND",
+      "dex_sha256": "d9dc8dc72be360755bb781effea17568a888adbb48bca40228fd1122384d990c",
+      "dexdump_sha256": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692",
+      "inputs_unchanged": true,
+      "dump_stdout_sha256": "e4464bf214c1aece9ce2ca4b64dce91312303dcd8699952757f4bd8886f394a1",
+      "dump_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "methods": {
+        "android.app.backup.BackupManager.checkServiceBinder:()V": {
+          "sha256": "c681ac67e86040899378926840391328ded1acc14a5d201a783ad3cc2005f73d",
+          "instructions": 10,
+          "catch_table_present": true,
+          "direct_calls": [
+            "Landroid/app/backup/IBackupManager$Stub;.asInterface:(Landroid/os/IBinder;)Landroid/app/backup/IBackupManager;",
+            "Landroid/os/ServiceManager;.getService:(Ljava/lang/String;)Landroid/os/IBinder;"
+          ],
+          "status": "STATIC_FOUND"
+        },
+        "android.app.backup.BackupManager.dataChanged:(Ljava/lang/String;)V": {
+          "sha256": "50c3700c809d69e9b53ccdc6fd3ba1ebc1af8b8ef3cdf1b1724f3042a5fbe258",
+          "instructions": 10,
+          "catch_table_present": true,
+          "direct_calls": [
+            "Landroid/app/backup/BackupManager;.checkServiceBinder:()V",
+            "Landroid/app/backup/IBackupManager;.dataChanged:(Ljava/lang/String;)V",
+            "Landroid/util/Log;.e:(Ljava/lang/String;Ljava/lang/String;)I"
+          ],
+          "status": "STATIC_FOUND"
+        },
+        "android.app.backup.BackupManager.dataChanged:()V": {
+          "sha256": "63a43223607028e3b67212070a1efe00dc8c79453dfc4027bd35801f437f0b0d",
+          "instructions": 13,
+          "catch_table_present": true,
+          "direct_calls": [
+            "Landroid/app/backup/BackupManager;.checkServiceBinder:()V",
+            "Landroid/app/backup/IBackupManager;.dataChanged:(Ljava/lang/String;)V",
+            "Landroid/content/Context;.getPackageName:()Ljava/lang/String;",
+            "Landroid/util/Log;.d:(Ljava/lang/String;Ljava/lang/String;)I"
+          ],
+          "status": "STATIC_FOUND"
+        },
+        "android.app.SharedPreferencesImpl$EditorImpl.commitToMemory:()Landroid/app/SharedPreferencesImpl$MemoryCommitResult;": {
+          "sha256": "2a4c36b215ea35011ee9f04e679a8093a4b08de2ee9590252c7ea5de8e0a46ee",
+          "instructions": 123,
+          "catch_table_present": true,
+          "direct_calls": [
+            "Landroid/app/SharedPreferencesImpl$MemoryCommitResult;.<init>:(JZLjava/util/List;Ljava/util/Set;Ljava/util/Map;Landroid/app/SharedPreferencesImpl$1;)V",
+            "Landroid/app/SharedPreferencesImpl;.access$200:(Landroid/app/SharedPreferencesImpl;)Ljava/lang/Object;",
+            "Landroid/app/SharedPreferencesImpl;.access$300:(Landroid/app/SharedPreferencesImpl;)I",
+            "Landroid/app/SharedPreferencesImpl;.access$308:(Landroid/app/SharedPreferencesImpl;)I",
+            "Landroid/app/SharedPreferencesImpl;.access$400:(Landroid/app/SharedPreferencesImpl;)Ljava/util/Map;",
+            "Landroid/app/SharedPreferencesImpl;.access$402:(Landroid/app/SharedPreferencesImpl;Ljava/util/Map;)Ljava/util/Map;",
+            "Landroid/app/SharedPreferencesImpl;.access$500:(Landroid/app/SharedPreferencesImpl;)Ljava/util/WeakHashMap;",
+            "Landroid/app/SharedPreferencesImpl;.access$600:(Landroid/app/SharedPreferencesImpl;)J",
+            "Landroid/app/SharedPreferencesImpl;.access$608:(Landroid/app/SharedPreferencesImpl;)J",
+            "Ljava/lang/Object;.equals:(Ljava/lang/Object;)Z",
+            "Ljava/util/ArrayList;.<init>:()V",
+            "Ljava/util/HashMap;.<init>:(Ljava/util/Map;)V",
+            "Ljava/util/HashSet;.<init>:(Ljava/util/Collection;)V",
+            "Ljava/util/Iterator;.hasNext:()Z",
+            "Ljava/util/Iterator;.next:()Ljava/lang/Object;",
+            "Ljava/util/List;.add:(Ljava/lang/Object;)Z",
+            "Ljava/util/Map$Entry;.getKey:()Ljava/lang/Object;",
+            "Ljava/util/Map$Entry;.getValue:()Ljava/lang/Object;",
+            "Ljava/util/Map;.clear:()V",
+            "Ljava/util/Map;.containsKey:(Ljava/lang/Object;)Z",
+            "Ljava/util/Map;.entrySet:()Ljava/util/Set;",
+            "Ljava/util/Map;.get:(Ljava/lang/Object;)Ljava/lang/Object;",
+            "Ljava/util/Map;.isEmpty:()Z",
+            "Ljava/util/Map;.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
+            "Ljava/util/Map;.remove:(Ljava/lang/Object;)Ljava/lang/Object;",
+            "Ljava/util/Set;.iterator:()Ljava/util/Iterator;",
+            "Ljava/util/WeakHashMap;.keySet:()Ljava/util/Set;",
+            "Ljava/util/WeakHashMap;.size:()I"
+          ],
+          "status": "STATIC_FOUND"
+        },
+        "android.app.SharedPreferencesImpl$EditorImpl.notifyListeners:(Landroid/app/SharedPreferencesImpl$MemoryCommitResult;)V": {
+          "sha256": "a141273fa37e457cba0c7e464a7fda23462f2052374ce12e7b468ead2709f87c",
+          "instructions": 63,
+          "catch_table_present": true,
+          "direct_calls": [
+            "Landroid/app/-$$Lambda$SharedPreferencesImpl$EditorImpl$3CAjkhzA131V3V-sLfP2uy0FWZ0;.<init>:(Landroid/app/SharedPreferencesImpl$EditorImpl;Landroid/app/SharedPreferencesImpl$MemoryCommitResult;)V",
+            "Landroid/compat/Compatibility;.isChangeEnabled:(J)Z",
+            "Landroid/content/SharedPreferences$OnSharedPreferenceChangeListener;.onSharedPreferenceChanged:(Landroid/content/SharedPreferences;Ljava/lang/String;)V",
+            "Landroid/os/Handler;.post:(Ljava/lang/Runnable;)Z",
+            "Landroid/os/Looper;.getMainLooper:()Landroid/os/Looper;",
+            "Landroid/os/Looper;.myLooper:()Landroid/os/Looper;",
+            "Ljava/util/Iterator;.hasNext:()Z",
+            "Ljava/util/Iterator;.next:()Ljava/lang/Object;",
+            "Ljava/util/List;.get:(I)Ljava/lang/Object;",
+            "Ljava/util/List;.size:()I",
+            "Ljava/util/Set;.iterator:()Ljava/util/Iterator;"
+          ],
+          "status": "STATIC_FOUND"
+        },
+        "android.app.SharedPreferencesImpl$EditorImpl.commit:()Z": {
+          "sha256": "6177bc8fdd7a8702d7fd9aa1d46f38a7af17a2be49a202244f862d4d0d68d200",
+          "instructions": 17,
+          "catch_table_present": true,
+          "direct_calls": [
+            "Landroid/app/SharedPreferencesImpl$EditorImpl;.commitToMemory:()Landroid/app/SharedPreferencesImpl$MemoryCommitResult;",
+            "Landroid/app/SharedPreferencesImpl$EditorImpl;.notifyListeners:(Landroid/app/SharedPreferencesImpl$MemoryCommitResult;)V",
+            "Landroid/app/SharedPreferencesImpl;.access$100:(Landroid/app/SharedPreferencesImpl;Landroid/app/SharedPreferencesImpl$MemoryCommitResult;Ljava/lang/Runnable;)V",
+            "Ljava/util/concurrent/CountDownLatch;.await:()V"
+          ],
+          "status": "STATIC_FOUND"
+        },
+        "android.app.SharedPreferencesImpl.createFileOutputStream:(Ljava/io/File;)Ljava/io/FileOutputStream;": {
+          "sha256": "88418239abaf87116701670cc68920476d5026ad53114dd8ef9f730129b52f84",
+          "instructions": 42,
+          "catch_table_present": true,
+          "direct_calls": [
+            "Landroid/os/FileUtils;.setPermissions:(Ljava/lang/String;III)I",
+            "Landroid/util/Log;.e:(Ljava/lang/String;Ljava/lang/String;)I",
+            "Landroid/util/Log;.e:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I",
+            "Ljava/io/File;.getParentFile:()Ljava/io/File;",
+            "Ljava/io/File;.getPath:()Ljava/lang/String;",
+            "Ljava/io/File;.mkdir:()Z",
+            "Ljava/io/FileOutputStream;.<init>:(Ljava/io/File;)V",
+            "Ljava/lang/StringBuilder;.<init>:()V",
+            "Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;",
+            "Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;",
+            "Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;"
+          ],
+          "status": "STATIC_FOUND"
+        },
+        "android.app.SharedPreferencesImpl.enqueueDiskWrite:(Landroid/app/SharedPreferencesImpl$MemoryCommitResult;Ljava/lang/Runnable;)V": {
+          "sha256": "fc8fb23475aeea9e7a19d29c82b62bf410c6d15a4240342880ae0af766f1116b",
+          "instructions": 29,
+          "catch_table_present": true,
+          "direct_calls": [
+            "Landroid/app/QueuedWork;.queue:(Ljava/lang/Runnable;Z)V",
+            "Landroid/app/SharedPreferencesImpl$2;.<init>:(Landroid/app/SharedPreferencesImpl;Landroid/app/SharedPreferencesImpl$MemoryCommitResult;ZLjava/lang/Runnable;)V",
+            "Ljava/lang/Runnable;.run:()V"
+          ],
+          "status": "STATIC_FOUND"
+        },
+        "android.app.SharedPreferencesImpl.loadFromDisk:()V": {
+          "sha256": "44866f9a74c283b0cec4a12496934f6bc9d58e92243660d2e39de47d62d3b9c7",
+          "instructions": 127,
+          "catch_table_present": true,
+          "direct_calls": [
+            "Landroid/system/Os;.stat:(Ljava/lang/String;)Landroid/system/StructStat;",
+            "Landroid/util/Log;.w:(Ljava/lang/String;Ljava/lang/String;)I",
+            "Landroid/util/Log;.w:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I",
+            "Lcom/android/internal/util/XmlUtils;.readMapXml:(Ljava/io/InputStream;)Ljava/util/HashMap;",
+            "Ljava/io/BufferedInputStream;.<init>:(Ljava/io/InputStream;I)V",
+            "Ljava/io/File;.canRead:()Z",
+            "Ljava/io/File;.delete:()Z",
+            "Ljava/io/File;.exists:()Z",
+            "Ljava/io/File;.getAbsolutePath:()Ljava/lang/String;",
+            "Ljava/io/File;.getPath:()Ljava/lang/String;",
+            "Ljava/io/File;.renameTo:(Ljava/io/File;)Z",
+            "Ljava/io/FileInputStream;.<init>:(Ljava/io/File;)V",
+            "Ljava/lang/Object;.notifyAll:()V",
+            "Ljava/lang/StringBuilder;.<init>:()V",
+            "Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;",
+            "Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;",
+            "Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;",
+            "Ljava/util/HashMap;.<init>:()V",
+            "Llibcore/io/IoUtils;.closeQuietly:(Ljava/lang/AutoCloseable;)V"
+          ],
+          "status": "STATIC_FOUND"
+        },
+        "android.app.SharedPreferencesImpl.writeToFile:(Landroid/app/SharedPreferencesImpl$MemoryCommitResult;Z)V": {
+          "sha256": "b583c9b7fcd40c5922ed7b7ff8098996a5d4b69bce443ee1c58703e62cc5ace4",
+          "instructions": 185,
+          "catch_table_present": true,
+          "direct_calls": [
+            "Landroid/app/ContextImpl;.setFilePermissionsFromMode:(Ljava/lang/String;II)V",
+            "Landroid/app/SharedPreferencesImpl$MemoryCommitResult;.setDiskWriteResult:(ZZ)V",
+            "Landroid/app/SharedPreferencesImpl;.createFileOutputStream:(Ljava/io/File;)Ljava/io/FileOutputStream;",
+            "Landroid/os/FileUtils;.sync:(Ljava/io/FileOutputStream;)Z",
+            "Landroid/system/Os;.stat:(Ljava/lang/String;)Landroid/system/StructStat;",
+            "Landroid/util/Log;.e:(Ljava/lang/String;Ljava/lang/String;)I",
+            "Landroid/util/Log;.w:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I",
+            "Lcom/android/internal/util/ExponentiallyBucketedHistogram;.add:(I)V",
+            "Lcom/android/internal/util/ExponentiallyBucketedHistogram;.log:(Ljava/lang/String;Ljava/lang/CharSequence;)V",
+            "Lcom/android/internal/util/XmlUtils;.writeMapXml:(Ljava/util/Map;Ljava/io/OutputStream;)V",
+            "Ljava/io/File;.delete:()Z",
+            "Ljava/io/File;.exists:()Z",
+            "Ljava/io/File;.getPath:()Ljava/lang/String;",
+            "Ljava/io/File;.renameTo:(Ljava/io/File;)Z",
+            "Ljava/io/FileOutputStream;.close:()V",
+            "Ljava/lang/StringBuilder;.<init>:()V",
+            "Ljava/lang/StringBuilder;.append:(Ljava/lang/Object;)Ljava/lang/StringBuilder;",
+            "Ljava/lang/StringBuilder;.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;",
+            "Ljava/lang/StringBuilder;.toString:()Ljava/lang/String;",
+            "Ljava/lang/System;.currentTimeMillis:()J"
+          ],
+          "status": "STATIC_FOUND"
+        }
+      },
+      "scope": "selected method bodies, register metadata, catch tables and direct invoke operands",
+      "runtime_parity": "NOT_RUN",
+      "backup_service_binding": "UNRESOLVED",
+      "transitive_callees": "UNRESOLVED",
+      "catalog_ready_pass": false
+    },
+    "system_image_sha256": "b8a505ecfc13629aee537f7fa9dcafa0d8d66802a06707f40dac69591e46f70f",
+    "framework_jar_sha256": "c17a2b45ae03bad051528fc1a9487a5c320b43b2fd4bf11c9b615cfda2ffe633",
+    "services_jar_sha256": "c6992cdc2a3e23d5aeb6ab77e7a7f6889cfcf5c262c6ed86825e6fcbf601681d"
+  },
+  "history": [
+    {
+      "label": "v109-first-two-extractions",
+      "status": "BLOCKED",
+      "reason": "later vdex symlink rejected; directories preserved, narrowed to two jars"
+    },
+    {
+      "label": "v110-host",
+      "build_exit_code": 0,
+      "probe_exit_code": 0,
+      "cases": 18,
+      "parent_assertions": 402
+    },
+    {
+      "label": "v111-first-native",
+      "cases_per_child": 18,
+      "parent_assertions_per_child": 402,
+      "child_exit_codes": [
+        0,
+        0
+      ],
+      "result_sha256": "572eaa1de49a97d5fe2f7357bd38055ccc176e740c099dbc5c592f368bb8e09e"
+    },
+    {
+      "label": "v112-initial-unit",
+      "failed": 1,
+      "passed": 8,
+      "reason": "unrelated modified UTF8 before selected metadata boundary",
+      "raw_log_separately_archived": false
+    }
+  ],
+  "gates": {
+    "file_primitive": "RUNTIME_OBSERVED",
+    "android_file_parity": "NOT_RUN",
+    "xml_map_semantics": "UNRESOLVED",
+    "current_identity": "UNRESOLVED",
+    "backup_service": "UNRESOLVED",
+    "libg_integration": "NOT_RUN",
+    "CATALOG_READY_PASS": false,
+    "resource_manager": "BLOCKED",
+    "GameState": "NOT_RUN",
+    "GameStateStep": "NOT_RUN",
+    "full_battle": "NOT_RUN",
+    "android_tick_parity": "NOT_RUN",
+    "no_JavaVM_lifecycle": "NOT_RUN",
+    "Android_free": "NOT_RUN",
+    "PERFORMANCE_10X_PASS": false,
+    "training": "NOT_RUN"
+  },
+  "next_dependency": "current loading write: identity, XML/map, listeners/queue and backup service contract",
+  "regression": {
+    "snapshot_isolated": true,
+    "commands": {
+      "pure_linux": {
+        "command": [
+          "$PYTHON",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/pure_linux",
+          "--junitxml=$PRIVATE_EXPERIMENT/v113-public-regression-m0_nsf7t/pure-linux.xml"
+        ],
+        "exit_code": 0,
+        "seconds": 5.19,
+        "stdout_sha256": "60579bcb39e7e16ad9aa3070a7d486597e9ef644ab7003e98bd86f707734d594",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "main_engine": {
+        "command": [
+          "$PYTHON",
+          "tools/run_main_engine_checks.py"
+        ],
+        "exit_code": 0,
+        "seconds": 22.3,
+        "stdout_sha256": "7105520f2dbc06fefda889eaf014355116aba879cc659efa7d49abb2c708e03f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "public": {
+        "command": [
+          "$PYTHON",
+          "tools/run_public_checks.py"
+        ],
+        "exit_code": 0,
+        "seconds": 165.884,
+        "stdout_sha256": "606ba25cf06e02a61302ca2c6917c494601069151565415711e7caa9b6ec55f4",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "xml": {
+      "pure-linux.xml": {
+        "tests": 410,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1,
+        "sha256": "1efa8c1664b77250ee14eeb5293fa147045590701ca26b5cd0777a96f2d7fd02"
+      },
+      "checks-affordability.xml": {
+        "tests": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "sha256": "514f52d783d2ad43e1443c416c864a1a7f9f029e51b89c25dcda7c13be25d9a5"
+      },
+      "checks-collection-coordinator.xml": {
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "sha256": "6565cb1cd35baa49a33ea1d3970731ace2b76e7506202ae05dd9b7079ec65e22"
+      },
+      "checks-command-coordinates.xml": {
+        "tests": 41,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "sha256": "484d378cb6966c52515cf27c8b236e932b2b52eca89dae00f3d32c0dcb4d1708"
+      },
+      "checks-dispatch-command.xml": {
+        "tests": 34,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "sha256": "1e01f4f5dd750787c578d2a1f8d0a12856cd090725e2ee1e03ce69041024a360"
+      },
+      "checks-live-command.xml": {
+        "tests": 29,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 4,
+        "sha256": "5f1cb6157d68c2b3500195d51159dbfc9a4bbcf2fb96bf0b96e8605cd672b5d8"
+      },
+      "checks-position-guards.xml": {
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "sha256": "c3912952c51e808724b2e93b88f0300586b7986d219fc6b0a675e8fc5451612d"
+      },
+      "checks-public.xml": {
+        "tests": 821,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 27,
+        "sha256": "aef85eba861d33874df9eedb5e71642a91663e1dd6ce0fc67d531d9660e91f9d"
+      },
+      "checks-reservation-mapping.xml": {
+        "tests": 33,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2,
+        "sha256": "89e215f9a419fbc018f25fd13aa09b1fd663e57d96cfe4ca38ddf68fcaeabbe4"
+      },
+      "checks-selection-timeout.xml": {
+        "tests": 82,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "sha256": "7d768b684f0af628501eb9f0333453fade390340207c8194182cb3a950c241b0"
+      }
+    },
+    "results_sha256": "1388a2625e3a4e126561c5103204ddcd828e667e3373dada065cd85c9f67e486"
+  }
+}
