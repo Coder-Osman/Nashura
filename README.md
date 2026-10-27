@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-28 E2.1-N：Backup callback 服务端语义
+
+历史客户端 ART trace 重分析观察到23次 `requestBackup` 正常返回；匹配 Android 30
+服务端 DEX 的11个方法静态调用图显示权限/用户检查、handler入队、journal写入和
+备份job调度路径。客户端 Binder 调用是同步事务。参数和返回值未捕获，服务端未运行，
+所以真实交付及callback完整契约仍 **UNRESOLVED**；严格 catalog 门保持关闭，
+ResourceManager BLOCKED，GameState与真实Step仍 NOT_RUN。详见
+[报告](agent-handoff/PURE_LINUX_BACKUP_SEMANTICS_2026-10-28.md)、
+[机器证据](agent-handoff/pure-linux-backup-semantics-evidence-20261028.json)及
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_SEMANTICS.md)。
+
 面向实时、部分可观测对战的 FAIR 搜索、自博弈与策略迭代研究工程。
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。

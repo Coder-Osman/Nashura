@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N Backup callback 服务端静态路径
+
+- 新增Android backup服务端DEX的SHA绑定、有界调用摘要器；11个真实方法只输出调用边和控制流类别，不输出指令。
+- 新增摘要器边界单测3项；服务端摘要、ART trace与方法专项测试复验共49项通过，真实services DEX反汇编命令exit0、输入身份未变。
+- 在新隔离目录重分析既有ART trace：23个requestBackup scope、2线程、正常返回且scope平衡；不代表本轮Android运行。
+- 发现服务端静态权限/用户检查、handler、journal与KeyValueBackupJob路径；实际Binder交付及返回语义仍未观测。
+- 严格catalog仍BLOCKED，ResourceManager BLOCKED，GameState/真实Step/完整局未运行；无训练或10×实验。
+
 ## 2026-10-28：E2.1-N双槽持久化及真实服务查询边界
 
 - 新增 15 份源码/测试，修改 provider job 及测试；严格绑定材料/XML 身份，拒绝与旧候选混用。

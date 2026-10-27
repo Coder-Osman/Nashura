@@ -1,5 +1,16 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：Backup callback 服务端语义调查
+
+对历史 ART trace 在独立目录重分析：835,263条记录，23个 `requestBackup` scope、
+2个线程，均正常返回；参数/返回值未采集。匹配 Android 30 服务端 DEX 的11个方法
+为STATIC_FOUND，调用边覆盖用户/权限检查、handler入队、journal和job调度；不是
+服务端动态投递证据。客户端Binder事务静态 flags=0。服务交付与callback结果仍UNRESOLVED，
+严格catalog门=false、ResourceManager BLOCKED、GameState/真实Step NOT_RUN。
+49项服务端摘要、ART trace与方法审计专项测试通过。详见[报告](../agent-handoff/PURE_LINUX_BACKUP_SEMANTICS_2026-10-28.md)、
+[机器证据](../agent-handoff/pure-linux-backup-semantics-evidence-20261028.json)和
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_SEMANTICS.md)。
+
 ## 2026-10-28 E2.1-N：双槽配置接入与 backup 动态边界
 
 v116 独立后端两 child 各 48 条历史参考一致、两槽持久化及重开通过，未加载 libg。

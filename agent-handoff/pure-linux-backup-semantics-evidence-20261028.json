@@ -1,0 +1,88 @@
+{
+  "schema": "nashura.pure-linux-backup-semantics-evidence.v1",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "base_head": "a49b1ffda7dcc63045cc73ec90d7dfc7eb6599b0",
+  "status": "BLOCKED_BACKUP_DELIVERY_UNRESOLVED",
+  "platform_archive": {
+    "sha256": "c6992cdc2a3e23d5aeb6ab77e7a7f6889cfcf5c262c6ed86825e6fcbf601681d",
+    "dexdump_sha256": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692",
+    "inputs_unchanged": true
+  },
+  "service_dex": {
+    "sha256": "66b315411f05fe53c5fb9f0e144857cef26dfce79927b004cb0e5a057a347a0a",
+    "dexdump_exit_code": 0,
+    "stderr_empty": true,
+    "selected_methods": 11,
+    "status": "STATIC_FOUND",
+    "call_path_summary": [
+      "BackupManagerService performs user/caller service lookup and dispatches to UserBackupManagerService",
+      "service path consults user readiness before dataChanged delivery",
+      "UserBackupManagerService resolves backup targets and posts handler work",
+      "dataChangedImpl records requests, writes a journal, and schedules KeyValueBackupJob",
+      "journal path uses RandomAccessFile length/seek/write/close operations"
+    ],
+    "runtime_service_execution": "NOT_RUN"
+  },
+  "client_art_trace": {
+    "sha256": "01bc15eba14b2ba50b0b5cb66763f1be1ecf4e35265d832f672607264dbf52d2",
+    "status": "RUNTIME_OBSERVED",
+    "records": 835263,
+    "request_backup_scopes": 23,
+    "threads": 2,
+    "normal_returns": 23,
+    "scope_stacks_balanced": true,
+    "scoped_unknown_records": 0,
+    "arguments_and_return_values": "NOT_RECORDED",
+    "service_delivery": "UNRESOLVED"
+  },
+  "client_dex": {
+    "binder_transaction": {
+      "status": "STATIC_FOUND",
+      "code": 2,
+      "flags": 0,
+      "synchronous": true,
+      "request_reply_parcels_distinct": true
+    },
+    "result": "STATIC_FOUND; runtime arguments and remote service effect unobserved"
+  },
+  "outputs": {
+    "service_audit_sha256": "4e0c5f8798f80a82b89ae582269b36d331cbe2a3917d6e22ff3dc69c9f09564b",
+    "trace_reanalysis_sha256": "82cd3fdb3a25f2d0874e1c4fba198e61d53077160ad431f3a59f3dfd0f85aacb"
+  },
+  "linux_guest_binder_probe": {
+    "status": "BLOCKED",
+    "kernel": "6.8.0-138-generic",
+    "attempts": 2,
+    "phases_observed": [
+      "before_binder_load",
+      "after_binder_load",
+      "before_check_service"
+    ],
+    "exit_code_each": -6,
+    "stderr_observation": "Binder driver /dev/binder could not be opened; SIGABRT",
+    "lookup_result": "UNRESOLVED",
+    "backup_contract": "UNRESOLVED",
+    "libg_lifecycle_exercised": false,
+    "inputs_unchanged": true,
+    "stage_results_sha256": "a02c473c92f5a9e24582fc92749e32ab0e6d922129499702bb46380bc5a7c207",
+    "stdout_sha256_each": "b62d6c0f1a4d73b26ac149c558a77585c2306e107af1ba4e41b4468aad344dcb",
+    "stderr_sha256": [
+      "47f72c55bf0069c8d9f0e90023a12139ec2cdde3043a3b68fa3bedb19d35e43b",
+      "4f969857796c4641ade2745253f6c5389880b6876467ba150eb6a1a2e8cdebd9"
+    ],
+    "interpretation": "Binder open failure before checkService returned; not evidence that the service is absent"
+  },
+  "tests": {
+    "command": "python3 -m pytest -q -p no:cacheprovider tools/pure_linux/test_backup_server_audit.py tools/pure_linux/test_backup_trace_audit.py tools/pure_linux/test_backup_method_audit.py",
+    "exit_code": 0,
+    "passed": 49
+  },
+  "strict_gates": {
+    "catalog_ready_pass": false,
+    "resource_manager": "BLOCKED",
+    "gamestate": "NOT_RUN",
+    "gamestate_step": "NOT_RUN",
+    "full_match": "NOT_RUN"
+  },
+  "private_artifacts": "Original DEX dumps, ART trace and raw experiment logs remain outside the repository."
+}
