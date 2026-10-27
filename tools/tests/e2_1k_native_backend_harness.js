@@ -22,9 +22,11 @@ class Pointer {
   isNull() { return false; }
 }
 
-function fixture(failure) {
+function fixture(failure, mode = 'present-ciphertext-v1') {
   const operations = [], buffers = [];
   let closes = 0;
+  let streamOpens = 0, streamCloses = 0;
+  const streamCalls = [0, 0], plain = [false, false];
   const keys = [Buffer.alloc(32, 1), Buffer.alloc(32, 2)], iv = Buffer.alloc(16, 3);
   const encrypt = (store, mode, text) => {
     const cipher = crypto.createCipheriv(mode ? 'aes-256-cbc' : 'aes-256-ecb', keys[store], mode ? iv : null);
@@ -32,6 +34,20 @@ function fixture(failure) {
   };
   const raw = [encrypt(0, 1, 'earlier'), encrypt(1, 1, 'preferred')];
   const functions = {
+    e21_stream_open(library, key, keyLength, vector, vectorLength, output) {
+      const store = streamOpens++;
+      if (failure === 'stream-open-' + store) return -2;
+      const handle = new Pointer(Buffer.alloc(1)); handle.store = store;
+      output.writePointer(handle); return 0;
+    },
+    e21_stream_close() { streamCloses++; },
+    e21_stream_decode(handle, input, inputLength, output, capacity, length) {
+      streamCalls[handle.store]++;
+      if (failure === 'stream-status') return -3;
+      if (failure === 'stream-partial') { length.writeU64(1); return -4; }
+      return functions.e21_codec_transform(handle, 1, 0, new Pointer(keys[handle.store]), 32,
+        new Pointer(iv), 16, input, inputLength, output, capacity, length);
+    },
     e21_pn_derive(library, identity, identityLength, packageName, packageLength, table, tableCount, material,
       materialLength, outputKeys, capacity, outputIv) {
       assert.equal(identity.readUtf8String(), '0123456789abcdef');
@@ -72,7 +88,12 @@ function fixture(failure) {
     if (operation.startsWith('native-get:')) {
       const store = Number(operation.split(':')[1]);
       if (failure === 'reentrant') backend.read(store);
-      return JSON.stringify({present: failure !== 'missing', plain_present: failure === 'legacy', encoded: raw[store]});
+      return JSON.stringify({present: failure !== 'missing' && raw[store] !== null,
+        plain_present: failure === 'legacy' || plain[store], encoded: raw[store]});
+    }
+    if (operation.startsWith('native-remove:')) {
+      raw[Number(operation.split(':')[1])] = null;
+      return JSON.stringify({commit: failure !== 'remove-commit'});
     }
     if (operation.startsWith('native-put:')) {
       const parts = operation.split(':'); raw[Number(parts[1])] = parts[2];
@@ -83,10 +104,11 @@ function fixture(failure) {
   };
   vm.createContext(context);
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../e2_1_pn_native_backend.js'), 'utf8'), context);
-  const config = {mode: 'present-ciphertext-v1', package: 'fixture.app', crypto_library: '/fixture/crypto',
+  const config = {mode, package: 'fixture.app', crypto_library: '/fixture/crypto',
     table: new Array(24).fill(1), iv_source: new Array(16).fill(2)};
   const backend = context.createPNNativeBackend(config, invoke, {getExportByName: name => name});
-  return {backend, raw, encrypt, operations, config, context, buffers, closes: () => closes};
+  return {backend, raw, plain, encrypt, operations, config, context, buffers, functions,
+    streamCalls, streamOpens: () => streamOpens, streamCloses: () => streamCloses, closes: () => closes};
 }
 
 {
@@ -141,3 +163,4 @@ for (const bytes of [Buffer.alloc(0), Buffer.from([0xff]), Buffer.from([0])]) {
   }
 }
 console.log('Native PN backend engineering fixture passed; not native evidence');
+module.exports = {fixture};

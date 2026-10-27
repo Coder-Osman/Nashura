@@ -67,6 +67,10 @@ public final class E21PreferenceObserver {
             return new JSONObject().put("present", present).put("plain_present", preferences.contains("PN_POPUP"))
                 .put("encoded", present ? preferences.getString(nativeKeys[index], null) : JSONObject.NULL).toString();
         }
+        if (parts[0].equals("native-remove") && parts.length == 2) {
+            boolean committed = preferences.edit().remove(nativeKeys[index]).commit();
+            return new JSONObject().put("commit", committed).toString();
+        }
         if (parts[0].equals("native-put") && parts.length == 3 && parts[2].length() <= 5464 &&
                 parts[2].length() > 0 && parts[2].matches("[A-Za-z0-9+/]+={0,2}")) {
             byte[] bytes = Base64.decode(parts[2], Base64.NO_WRAP);

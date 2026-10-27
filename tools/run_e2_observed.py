@@ -48,6 +48,31 @@ def traced_probe(operation, oracle, collect, save):
                 raise
 
 
+def post_edge_lifecycle(control, pull, save, match, actions):
+    control('configure ' + json.dumps(match, separators=(',', ':')), 'post_edge_state_create_load')
+    control('observe', 'post_edge_initial_state')
+    initial = control('snapshot-create', 'post_edge_snapshot_create')
+    control('step 21', 'post_edge_snapshot_branch')
+    first = control('snapshot-create', 'post_edge_snapshot_create')
+    control('restore ' + str(initial['handle']), 'post_edge_restore')
+    control('step 21', 'post_edge_snapshot_branch_replay')
+    second = control('snapshot-create', 'post_edge_snapshot_create')
+    if (first['digest'], first['bytes']) != (second['digest'], second['bytes']):
+        raise RuntimeError('post-edge snapshot branch replay mismatch')
+    for snapshot in (initial, first, second):
+        control('release-snapshot ' + str(snapshot['handle']), 'post_edge_snapshot_release')
+    control('reset', 'post_edge_reset')
+    control('observe', 'post_edge_after_reset')
+    result = control('standalone-trace 10000 ' + actions, 'post_edge_full_trace')
+    save('post-edge-trace.json', result)
+    if not result['finalized'] or result['injected'] != 28 or result['queue_count'] != 0:
+        raise RuntimeError('incomplete post-edge native trace')
+    pull(result['snapshot_directory'])
+    control('observe', 'post_edge_terminal')
+    control('reset', 'post_edge_terminal_reset_destroy')
+    control('observe', 'post_edge_final_reset_state')
+
+
 def run(config_path, output):
     import frida
 
@@ -133,6 +158,8 @@ def run(config_path, output):
     save('source-identity.json', {path.name: digest(path) for path in repository.glob('e[012]_*.js')})
     source_directory = output / 'sources'
     source_directory.mkdir()
+    if config.get('pn_post_edge_lifecycle') and not config.get('pn_edge_matrix'):
+        raise ValueError('post-edge lifecycle requires an explicit PN edge matrix')
     for path in list(repository.glob('e[012]_*.js')) + [Path(__file__), repository / 'e2_config_store.c']:
         (source_directory / path.name).write_bytes(path.read_bytes())
     if config.get('return_observer'):
@@ -177,6 +204,10 @@ def run(config_path, output):
             for filename in ('e2_1_pn_derive.c', 'e2_1_pn_derive.h', 'e2_1_pn_codec.c', 'e2_1_pn_codec.h'):
                 path = repository / filename
                 (source_directory / path.name).write_bytes(path.read_bytes())
+            if config['pn_bridge']['codec_backend'].get('mode') == 'persistent-pn-edges-v1':
+                for filename in ('e2_1_pn_stream.c', 'e2_1_pn_stream.h'):
+                    path = repository / filename
+                    (source_directory / path.name).write_bytes(path.read_bytes())
     try:
         if command('emu', 'avd', 'name').splitlines()[0] != config['avd']:
             raise RuntimeError('AVD ownership mismatch')
@@ -317,6 +348,10 @@ def run(config_path, output):
                                 bool(config.get('pn_bridge')), save, capture_edge_xml,
                                 config.get('pn_edge_cases'), config.get('pn_cipher_state', False),
                                 config.get('pn_direct_cipher', False), stream)
+                if config.get('pn_post_edge_lifecycle'):
+                    post_edge_lifecycle(control,
+                                        lambda remote: command('pull', remote, str(output / 'post-edge-snapshots')),
+                                        save, match, config['actions_name'])
             if config.get('pn_bridge_matrix'):
                 from e2_1_pn_bridge_matrix import run_bridge_matrix
 

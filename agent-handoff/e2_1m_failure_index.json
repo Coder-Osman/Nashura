@@ -1,0 +1,94 @@
+{
+  "schema": "e2.1m-failure-index.v1",
+  "scope": "sanitized metadata; original logs retained privately",
+  "failures": [
+    {
+      "id": "original-edges",
+      "exit_code": 1,
+      "seconds": 3.7583275828510523,
+      "reason": "existing audit output collision",
+      "stdout_sha256": "210fe5662efaff5dee0fdf9f0c037dc348b66642ab807b66eef873e06e630321",
+      "attempt_sha256": "4af0553627d8a422f4941e68b78070b4a519423aa1730a41cb195a04d7b01898",
+      "retry": {
+        "id": "original-edges-retry1",
+        "exit_code": 0,
+        "seconds": 113.37405779212713
+      },
+      "resolution": "independent output and attempt; original failure preserved"
+    },
+    {
+      "id": "original-malformed-first",
+      "exit_code": 1,
+      "seconds": 3.1464187502861023,
+      "reason": "existing audit output collision",
+      "stdout_sha256": "210fe5662efaff5dee0fdf9f0c037dc348b66642ab807b66eef873e06e630321",
+      "attempt_sha256": "8af7ac1e583d991f5325549f030d87d2a17d28d5c01bcb2b73e96c8793591442",
+      "retry": {
+        "id": "original-malformed-first-retry1",
+        "exit_code": 0,
+        "seconds": 78.58092854218557
+      },
+      "resolution": "independent output and attempt; original failure preserved"
+    },
+    {
+      "id": "original-padding-first",
+      "exit_code": 1,
+      "seconds": 3.114621415734291,
+      "reason": "existing audit output collision",
+      "stdout_sha256": "210fe5662efaff5dee0fdf9f0c037dc348b66642ab807b66eef873e06e630321",
+      "attempt_sha256": "48df48cd353cc42155c9893419bcc8ec4f4d3b030f319ed578e5545c7daafb98",
+      "retry": {
+        "id": "original-padding-first-retry1",
+        "exit_code": 0,
+        "seconds": 125.9029460833408
+      },
+      "resolution": "independent output and attempt; original failure preserved"
+    },
+    {
+      "id": "original-padding-state",
+      "exit_code": 1,
+      "seconds": 3.1888196249492466,
+      "reason": "existing audit output collision",
+      "stdout_sha256": "210fe5662efaff5dee0fdf9f0c037dc348b66642ab807b66eef873e06e630321",
+      "attempt_sha256": "afb22aa62bc96790ef9fb9387d6bb8eef932f0304d9ad3094504938a8b7b0de3",
+      "retry": {
+        "id": "original-padding-state-retry1",
+        "exit_code": 0,
+        "seconds": 86.22470545908436
+      },
+      "resolution": "independent output and attempt; original failure preserved"
+    },
+    {
+      "id": "original-short-state",
+      "exit_code": 1,
+      "seconds": 3.082274208776653,
+      "reason": "existing audit output collision",
+      "stdout_sha256": "210fe5662efaff5dee0fdf9f0c037dc348b66642ab807b66eef873e06e630321",
+      "attempt_sha256": "c9d24f3f883799d5e73414b87e837651c7555be6eb366e781721cf16aa3d5128",
+      "retry": {
+        "id": "original-short-state-retry1",
+        "exit_code": 0,
+        "seconds": 125.78417762508616
+      },
+      "resolution": "independent output and attempt; original failure preserved"
+    },
+    {
+      "id": "replacement-padding-first",
+      "exit_code": 1,
+      "seconds": 24.420998458750546,
+      "reason": "semantics-cold external probe overlaps Mainloop backend; bounded serial contract rejects reentry; abort",
+      "stdout_sha256": "87278314ee6d9643fc4d54937b4f15b8dd6c58b8bc9200ea6176b27edaedc66c",
+      "attempt_sha256": "b04d9ba2af3c39d4d720f2bae7da419ed14546b981444bd324624ef36dfea695",
+      "retry": {
+        "id": "replacement-padding-first-retry1",
+        "exit_code": 0,
+        "seconds": 74.20917745772749
+      },
+      "resolution": "independent retry passed; concurrency equivalence remains unknown"
+    }
+  ],
+  "failed_evidence_overwritten": false,
+  "concurrency_equivalence": "unknown",
+  "strict_gate": "BLOCKED",
+  "no_vm_verified": false
+}

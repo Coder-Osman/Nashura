@@ -164,7 +164,8 @@ function createPNBridge(config, invoke, lifecycle, preloadedLibrary) {
       return true;
     },
     snapshot() {
-      return {schema: nativeBackend ? 'e2.1k-cold-pn-codec-bridge.v1' :
+      return {schema: nativeBackend ? (config.codec_backend.mode === 'persistent-pn-edges-v1'
+        ? 'e2.1m-cold-pn-persistent-bridge.v1' : 'e2.1k-cold-pn-codec-bridge.v1') :
         (coldInstall ? 'e2.1i-cold-pn-bridge.v1' : 'e2.1h-pn-bridge.v1'), installed, retired, events, errors, fallbacks,
         retained_allocations: retained.length,
         native_backend: nativeBackend ? nativeBackend.snapshot() : null,

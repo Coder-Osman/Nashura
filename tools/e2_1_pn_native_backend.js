@@ -1,7 +1,8 @@
 'use strict';
 
 function createPNNativeBackend(config, invoke, library) {
-  if (Process.arch !== 'arm64' || !library || config.mode !== 'present-ciphertext-v1' ||
+  const persistent = config.mode === 'persistent-pn-edges-v1';
+  if (Process.arch !== 'arm64' || !library || (!persistent && config.mode !== 'present-ciphertext-v1') ||
       typeof config.crypto_library !== 'string' || !config.crypto_library.startsWith('/') ||
       !Array.isArray(config.table) || config.table.length !== 24 ||
       config.table.some(value => !Number.isInteger(value) || value < -2147483648 || value > 2147483647) ||
@@ -17,12 +18,22 @@ function createPNNativeBackend(config, invoke, library) {
   const transform = new NativeFunction(library.getExportByName('e21_codec_transform'), 'int',
     ['pointer', 'int', 'int', 'pointer', 'ulong', 'pointer', 'ulong', 'pointer', 'ulong', 'pointer', 'ulong', 'pointer']);
   const close = new NativeFunction(library.getExportByName('e21_codec_close'), 'void', ['pointer']);
+  const stream = persistent ? {
+    open: new NativeFunction(library.getExportByName('e21_stream_open'), 'int',
+      ['pointer', 'pointer', 'ulong', 'pointer', 'ulong', 'pointer']),
+    decode: new NativeFunction(library.getExportByName('e21_stream_decode'), 'int',
+      ['pointer', 'pointer', 'ulong', 'pointer', 'ulong', 'pointer']),
+    close: new NativeFunction(library.getExportByName('e21_stream_close'), 'void', ['pointer'])
+  } : null;
+  const decoders = [];
   const keys = Memory.alloc(64), iv = Memory.alloc(16);
   keys.writeByteArray(new Array(64).fill(0));
   iv.writeByteArray(new Array(16).fill(0));
   const events = [], errors = [];
   let context = null, started = false, ready = false, bound = false, retired = false, busy = false;
   let derivations = 0, transforms = 0;
+  const decoderCalls = [0, 0];
+  const decoderFailures = [0, 0];
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
   const encode = bytes => {
     let result = '';
@@ -63,6 +74,27 @@ function createPNNativeBackend(config, invoke, library) {
     if (status !== 0 || amount > 4112) throw new Error('native PN codec failed: ' + status);
     return Array.from(new Uint8Array(output.readByteArray(amount)));
   };
+  const remove = store => {
+    const result = JSON.parse(invoke('native-remove:' + store));
+    if (result.commit !== true) throw new Error('original XML remove commit returned false; partial effects retained');
+  };
+  const decrypt = (store, bytes) => {
+    const input = Memory.alloc(Math.max(1, bytes.length));
+    if (bytes.length) input.writeByteArray(bytes);
+    const output = Memory.alloc(4128), length = Memory.alloc(8);
+    length.writeU64(0);
+    const status = stream.decode(decoders[store], input, bytes.length, output, 4128, length);
+    transforms++;
+    decoderCalls[store]++;
+    const amount = length.readU64().toNumber();
+    if (amount > 4112 || (status !== 0 && amount !== 0)) throw new Error('persistent decoder output contract differs');
+    if (status === -4) {
+      decoderFailures[store]++;
+      return null;
+    }
+    if (status !== 0) throw new Error('persistent decoder failed outside observed crypto contract: ' + status);
+    return Array.from(new Uint8Array(output.readByteArray(amount)));
+  };
   const initialize = () => {
     if (ready) return;
     if (started || retired) throw new Error('PN native initialization already failed or retired');
@@ -85,6 +117,15 @@ function createPNNativeBackend(config, invoke, library) {
     const opened = open(Memory.allocUtf8String(config.crypto_library), output);
     if (opened !== 0 || output.readPointer().isNull()) throw new Error('native PN codec open failed: ' + opened);
     context = output.readPointer();
+    if (persistent) {
+      for (let store = 0; store < 2; store++) {
+        const destination = Memory.alloc(Process.pointerSize);
+        destination.writePointer(ptr(0));
+        const opened = stream.open(Memory.allocUtf8String(config.crypto_library), keys.add(store * 32), 32, iv, 16, destination);
+        if (opened !== 0 || destination.readPointer().isNull()) throw new Error('persistent decoder open failed: ' + opened);
+        decoders.push(destination.readPointer());
+      }
+    }
     const encodedKeys = [0, 1].map(store => encode(crypt(store, 0, 1, [80, 78, 95, 80, 79, 80, 85, 80])));
     if (invoke('native-bind:' + encodedKeys.join(':')) !== 'native-bound\t2') throw new Error('PN raw bind receipt differs');
     bound = true;
@@ -112,10 +153,19 @@ function createPNNativeBackend(config, invoke, library) {
     read(store) {
       return call('read', store, () => {
         const raw = JSON.parse(invoke('native-get:' + store));
-        if (raw.present !== true || raw.plain_present !== false) {
+        if (typeof raw.present !== 'boolean' || typeof raw.plain_present !== 'boolean') {
+          throw new Error('raw PN entry shape differs');
+        }
+        if (persistent && !raw.present) return [];
+        if (!persistent && (raw.present !== true || raw.plain_present !== false)) {
           throw new Error('missing or legacy PN entry outside present-ciphertext contract');
         }
-        const bytes = crypt(store, 1, 0, decode(raw.encoded));
+        const input = persistent && raw.encoded === '%%%' ? [] : decode(raw.encoded);
+        const bytes = persistent ? decrypt(store, input) : crypt(store, 1, 0, input);
+        if (persistent && (bytes === null || bytes.length === 0)) {
+          remove(store);
+          return [];
+        }
         if (!bytes.length || bytes.length > 4095 || bytes.includes(0)) throw new Error('empty or binary PN outside contract; raw entry preserved');
         const text = Memory.alloc(bytes.length + 1);
         text.writeByteArray(bytes.concat([0]));
@@ -127,6 +177,10 @@ function createPNNativeBackend(config, invoke, library) {
     write(store, text) {
       return call('write', store, () => {
         const bytes = Array.from(unescape(encodeURIComponent(text)), value => value.charCodeAt(0));
+        if (persistent && !bytes.length) {
+          remove(store);
+          return;
+        }
         if (!bytes.length || bytes.length > 4095 || bytes.includes(0)) throw new Error('empty or binary PN write outside contract');
         const encoded = encode(crypt(store, 1, 1, bytes));
         const result = JSON.parse(invoke('native-put:' + store + ':' + encoded));
@@ -139,6 +193,8 @@ function createPNNativeBackend(config, invoke, library) {
         if (bound && invoke('native-unbind') !== 'native-unbound\t2') throw new Error('PN raw unbind receipt differs');
         bound = false;
       } finally {
+        if (stream) decoders.forEach(decoder => stream.close(decoder));
+        decoders.length = 0;
         if (context) close(context);
         context = null;
         keys.writeByteArray(new Array(64).fill(0));
@@ -149,9 +205,12 @@ function createPNNativeBackend(config, invoke, library) {
       return true;
     },
     snapshot() {
-      return {schema: 'e2.1k-natural-pn-native-codec.v1', started, ready, retired, derivations, transforms, events, errors,
+      return {schema: persistent ? 'e2.1m-natural-pn-persistent-codec.v1' : 'e2.1k-natural-pn-native-codec.v1',
+        started, ready, retired, derivations, transforms, events, errors,
+        mode: config.mode, decoder_calls: decoderCalls.slice(), decoder_failures: decoderFailures.slice(),
         xml_backend: 'original SharedPreferences', original_store_constructors: 'retained',
-        unsupported: ['missing', 'legacy-plain', 'empty', 'malformed', 'commit-false-equivalence', 'concurrency'],
+        unsupported: persistent ? ['unobserved-base64', 'binary-or-invalid-utf8', 'commit-false-equivalence', 'concurrency']
+          : ['missing', 'legacy-plain', 'empty', 'malformed', 'commit-false-equivalence', 'concurrency'],
         no_vm_verified: false, strict_gate: 'BLOCKED'};
     }
   };

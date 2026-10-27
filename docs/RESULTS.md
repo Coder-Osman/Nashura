@@ -1,5 +1,20 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1-M 自然PN持久替换与异常后完整轨迹
+
+将已观测持久Cipher状态/清理/回退接入自然PN替换，保留Java身份/store/XML/backup/VM。
+五组对照十独立进程，异常前后共二十完整轨迹各3602快照、9120440bytes、28动作、
+tick3601终局全字节一致；前后各17项非status回执一致。异常矩阵后先按条目语义
+恢复存储，再保留解密状态运行第二局；不是未恢复损坏存储的完整局证明。
+19/2/3/3/4行矩阵的原生返回、raw变化、commit和XML语义匹配；自然归因独立核验。
+平台资源事件/Provider failures/live_assets均0，原输入/990update身份及复编字节保持。
+73183附件限定验证exit0；专项48 passed，E2回归356 passed/350 skipped，集合不累加。
+显式Java释放工程测试1 passed；保留五次审计路径冲突、一并发重入abort和成功retry。
+每替换133非PN fallback，46键移除0、并发等价unknown；strict仍BLOCKED，整体CLI未重跑。
+成功run游戏进程已释放，专用AVD/adb保留；无no-VM、Android-free、训练或10×声明。
+详见E2_1M_PN_PERSISTENT_REPLACEMENT_2026-10-27.md、CODEX_REPLY_2026-10-27_E2_1M.md、
+e2_1m_evidence_summary.json及e2_1m_failure_index.json。
+
 ## 2026-10-27 E2.1-L PN异常语义与持久解密状态
 
 九独立原版进程各3602快照、9120440bytes、28动作、tick3601终局全字节一致。
