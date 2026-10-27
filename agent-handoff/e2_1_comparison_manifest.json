@@ -1,0 +1,475 @@
+{
+  "schema": "e2.1-public-comparison.v1",
+  "runs": [
+    {
+      "run": "original-1",
+      "mode": "original",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 58933,
+      "exhaustive_jni_arguments_verified": false
+    },
+    {
+      "run": "matrix-2-original",
+      "mode": "original",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 44659,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 17,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "mode": "shadow",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 42185,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 17,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      },
+      "fallback_calls_including_probes": 116,
+      "explicit_missing_probe_fallbacks": 1,
+      "targeted_reads": 32,
+      "targeted_writes": 4
+    },
+    {
+      "run": "matrix-4-replacement",
+      "mode": "replacement",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 46212,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 17,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      },
+      "fallback_calls_including_probes": 116,
+      "explicit_missing_probe_fallbacks": 1,
+      "targeted_reads": 32,
+      "targeted_writes": 4
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "mode": "strict-targeted",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 42307,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 16,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      },
+      "fallback_calls_including_probes": 115,
+      "explicit_missing_probe_fallbacks": 0,
+      "targeted_reads": 32,
+      "targeted_writes": 4
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "mode": "original",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 41484,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 13,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      }
+    },
+    {
+      "run": "matrix-8-empty-cold",
+      "mode": "original",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 42345,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 4,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      }
+    },
+    {
+      "run": "matrix-9-malformed-cold",
+      "mode": "original",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 41387,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 6,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      }
+    },
+    {
+      "run": "matrix-10-missing-cold",
+      "mode": "original",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 53044,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 5,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      }
+    }
+  ],
+  "initializer_observations": [
+    {
+      "target": "libg.so+0x12dfed4",
+      "labels": [
+        "FileSystemBootstrap"
+      ],
+      "phase": "cold_ready_wait",
+      "caller": "libg.so+0x13a3f94",
+      "thread": 17357,
+      "count": 1,
+      "first_sequence": 326,
+      "native_scopes": [
+        "FileSystemBootstrap"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0x12e157c",
+      "labels": [
+        "ProviderBootstrap"
+      ],
+      "phase": "cold_ready_wait",
+      "caller": "libg.so+0x13a3f9c",
+      "thread": 17357,
+      "count": 1,
+      "first_sequence": 328,
+      "native_scopes": [
+        "ProviderBootstrap"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0x12e166c",
+      "labels": [
+        "APKProviderRegister"
+      ],
+      "phase": "cold_ready_wait",
+      "caller": "libg.so+0x13a4004",
+      "thread": 17357,
+      "count": 1,
+      "first_sequence": 330,
+      "native_scopes": [
+        "APKProviderRegister"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0x11919d4",
+      "labels": [
+        "ReaderRegister"
+      ],
+      "phase": "cold_ready_wait",
+      "caller": "libg.so+0x756d14",
+      "thread": 17357,
+      "count": 1,
+      "first_sequence": 600,
+      "native_scopes": [
+        "ReaderRegister"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0x11b4b30",
+      "labels": [
+        "SCDBOpen"
+      ],
+      "phase": "resources",
+      "caller": "libg.so+0x757648",
+      "thread": 17357,
+      "count": 1,
+      "first_sequence": 621,
+      "native_scopes": [
+        "SCDBOpen"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0x827ecc",
+      "labels": [
+        "GameConfigurationInit"
+      ],
+      "phase": "cold_ready_wait",
+      "caller": "libg.so+0x756f18",
+      "thread": 17357,
+      "count": 1,
+      "first_sequence": 629,
+      "native_scopes": [
+        "GameConfigurationInit"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0x76cee4",
+      "labels": [
+        "GamePreinit"
+      ],
+      "phase": "preinit",
+      "caller": "libg.so+0x756f1c",
+      "thread": 17357,
+      "count": 1,
+      "first_sequence": 630,
+      "native_scopes": [
+        "GamePreinit"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0x757774",
+      "labels": [
+        "GamePreinitConfigure"
+      ],
+      "phase": "preinit",
+      "caller": "libg.so+0x756f24",
+      "thread": 17357,
+      "count": 1,
+      "first_sequence": 714,
+      "native_scopes": [
+        "GamePreinit",
+        "GamePreinitConfigure"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0x8001a4",
+      "labels": [
+        "ContentBootstrap"
+      ],
+      "phase": "resources",
+      "caller": "libg.so+0x756f94",
+      "thread": 17357,
+      "count": 1,
+      "first_sequence": 883,
+      "native_scopes": [
+        "GamePreinit",
+        "ContentBootstrap"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0xe1bdcc",
+      "labels": [
+        "TableLoadBatch"
+      ],
+      "phase": "resources",
+      "caller": "libg.so+0xc834d0",
+      "thread": 17357,
+      "count": 5,
+      "first_sequence": 2385,
+      "native_scopes": [
+        "GamePreinit",
+        "TableLoadBatch"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0xc84370",
+      "labels": [
+        "StateMaskStage"
+      ],
+      "phase": "cold_ready_wait",
+      "caller": "libg.so+0xc83648",
+      "thread": 17357,
+      "count": 1,
+      "first_sequence": 2394,
+      "native_scopes": [
+        "GamePreinit",
+        "StateMaskStage"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0xdccee0",
+      "labels": [
+        "IDRegistration"
+      ],
+      "phase": "cold_ready_wait",
+      "caller": "libg.so+0xc844f4",
+      "thread": 17357,
+      "count": 1,
+      "first_sequence": 2395,
+      "native_scopes": [
+        "GamePreinit",
+        "IDRegistration"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0x1060ba8",
+      "labels": [
+        "GameStateConstructor"
+      ],
+      "phase": "state_create",
+      "caller": "libcrprobe.so+0x55c2c",
+      "thread": 17563,
+      "count": 1,
+      "first_sequence": 2530,
+      "native_scopes": [
+        "GameStateConstructor"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0x1060ba8",
+      "labels": [
+        "GameStateConstructor"
+      ],
+      "phase": "state_create",
+      "caller": "libcrprobe.so+0x55c2c",
+      "thread": 17563,
+      "count": 1,
+      "first_sequence": 2952,
+      "native_scopes": [
+        "GameStateConstructor"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    },
+    {
+      "target": "libg.so+0x1060ba8",
+      "labels": [
+        "GameStateConstructor"
+      ],
+      "phase": "state_create",
+      "caller": "libcrprobe.so+0x55c2c",
+      "thread": 17563,
+      "count": 1,
+      "first_sequence": 3238,
+      "native_scopes": [
+        "GameStateConstructor"
+      ],
+      "attribution": "same-thread instrumented native scope"
+    }
+  ],
+  "initializer_contract": "entry/order/caller observed; size/alignment/ownership/failure cleanup unknown",
+  "hook_gaps": [
+    {
+      "label": "manager_b0.slot1",
+      "target": "libg.so+0x1060ba4",
+      "count": null,
+      "status": "uncovered"
+    },
+    {
+      "label": "command.slot2",
+      "target": "libg.so+0xd3132c",
+      "count": null,
+      "status": "uncovered"
+    }
+  ],
+  "private_attachment_count": 36418,
+  "private_manifest_identity": {
+    "bytes": 4287495,
+    "sha256": "953866ccfce30e6207074e796a91960c54e2a942e01b1c0f01b57db01cae0654"
+  },
+  "evidence_scope": "fresh Android/JavaVM processes, fixed native trajectory only",
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false
+}

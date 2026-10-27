@@ -1,0 +1,296 @@
+{
+  "schema": "e2.1-gate.v1",
+  "status": "blocked",
+  "exit_code": 2,
+  "verifier_scope": "bounded 32-key evidence and probe checks; unresolved semantics fail closed",
+  "bounded_native_comparisons": "passed",
+  "runs": [
+    {
+      "run": "original-1",
+      "mode": "original",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 58933,
+      "exhaustive_jni_arguments_verified": false
+    },
+    {
+      "run": "matrix-2-original",
+      "mode": "original",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 44659,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 17,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "mode": "shadow",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 42185,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 17,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      },
+      "fallback_calls_including_probes": 116,
+      "explicit_missing_probe_fallbacks": 1,
+      "targeted_reads": 32,
+      "targeted_writes": 4
+    },
+    {
+      "run": "matrix-4-replacement",
+      "mode": "replacement",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 46212,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 17,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      },
+      "fallback_calls_including_probes": 116,
+      "explicit_missing_probe_fallbacks": 1,
+      "targeted_reads": 32,
+      "targeted_writes": 4
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "mode": "strict-targeted",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 42307,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 16,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      },
+      "fallback_calls_including_probes": 115,
+      "explicit_missing_probe_fallbacks": 0,
+      "targeted_reads": 32,
+      "targeted_writes": 4
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "mode": "original",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 41484,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 13,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      }
+    },
+    {
+      "run": "matrix-8-empty-cold",
+      "mode": "original",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 42345,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 4,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      }
+    },
+    {
+      "run": "matrix-9-malformed-cold",
+      "mode": "original",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 41387,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 6,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      }
+    },
+    {
+      "run": "matrix-10-missing-cold",
+      "mode": "original",
+      "comparison": {
+        "schema": "e0-snapshot-comparison.v1",
+        "status": "passed",
+        "comparison": "complete stock serialized bytes; no field normalization",
+        "snapshot_count": 3602,
+        "terminal_tick": 3601,
+        "injected_actions": 28,
+        "total_bytes": 9120440,
+        "trajectory_sha256": "0854eaeda7747e27b1d860268a76f87cc184ad1c5d14e97d4d027e49155441f5",
+        "training_admissible": false,
+        "vm_framework_free_verified": false
+      },
+      "jni_samples_beyond_per_bucket_limit": 53044,
+      "exhaustive_jni_arguments_verified": false,
+      "bridge_semantics": {
+        "cases": 5,
+        "reset_observation": "stable",
+        "pn_native_replacement": false
+      }
+    }
+  ],
+  "required_unreplaced_count": 46,
+  "required_unreplaced": [
+    "PN_POPUP",
+    "Pass_STAGE27",
+    "Pass_PROD",
+    "Pass_INTEGRATION4",
+    "Pass_CONTENT_STAGE",
+    "Pass_DEV",
+    "Pass_INTEGRATION_EXT_1",
+    "Pass_INTEGRATION_EXT_2",
+    "Pass_INTEGRATION_EXT_3",
+    "Pass_BRANCH_STAGE",
+    "Pass_INTEGRATION_EXT_4",
+    "Pass_INTEGRATION_CN",
+    "Pass_STAGE_CN",
+    "Pass_STAGE_GOV_CN",
+    "Pass_PROD_CN",
+    "Pass_INTEGRATION_EXT_5",
+    "Pass_INTEGRATION_EXT_6",
+    "Pass_INTEGRATION_EXT_7",
+    "Pass_INTEGRATION_EXT_8",
+    "Pass_INTEGRATION_EXT_9",
+    "Pass_INTEGRATION_EXT_10",
+    "Pass_INTEGRATION_LOC_TEST",
+    "Pass_INTEGRATION_AUTO_TEST",
+    "Pass_INTEGRATION_EXT_11",
+    "Pass_INTEGRATION_EXT_12",
+    "Pass_INTEGRATION_EXT_13",
+    "Pass_INTEGRATION_EXT_14",
+    "Pass_INTEGRATION_EXT_15",
+    "Pass_INTEGRATION_TITAN_LATEST",
+    "Pass_INTEGRATION_TITAN_DEV",
+    "Pass_INTEGRATION_EXT_16",
+    "Pass_INTEGRATION_EXT_17",
+    "Pass_INTEGRATION_EXT_18",
+    "CachedLocation",
+    "GameSCIDSocial",
+    "INSTALL_ID",
+    "SCID_PROD_ACCOUNTS",
+    "SCID_PROD_DEBUG_FAIL_ALL_API_CALLS",
+    "SCID_PROD_CURRENT_ACCOUNT_SUPERCELL_ID",
+    "SCID_PROD_CURRENT_ACCOUNT_EMAIL",
+    "ClanChatLastReadH",
+    "SCID_PROD_HAS_USED_SUPERCELL_ACCOUNT",
+    "titan.installevent",
+    "LOADING_SCREEN_STATE_COUNT",
+    "LOADING_SCREEN_STATE_LABEL",
+    "Lng"
+  ],
+  "reasons": [
+    "required excluded keys still use original JNI fallback",
+    "PN_POPUP native persistence and commit semantics not implemented",
+    "game error/exception, concurrent access and Java reference retirement unclosed",
+    "initialization object sizes, ownership and failure cleanup incomplete"
+  ],
+  "string_component_lifecycle": "verified for seven owned native strings only",
+  "pn_original_cold_chain": {
+    "original_cold_transitions": 3,
+    "top_raw_exists_remove": "verified",
+    "native_persistence_verified": false,
+    "commit_timing": "unknown",
+    "repeated_constructor": "not tested"
+  },
+  "unknown_key_negative": "verified",
+  "attachment_count": 36418,
+  "no_vm_verified": false,
+  "android_free_verified": false,
+  "training_admissible": false,
+  "tenfold_speedup_verified": false,
+  "private_manifest_identity": {
+    "bytes": 4287495,
+    "sha256": "953866ccfce30e6207074e796a91960c54e2a942e01b1c0f01b57db01cae0654"
+  }
+}

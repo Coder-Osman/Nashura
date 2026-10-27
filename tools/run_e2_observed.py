@@ -135,6 +135,10 @@ def run(config_path, output):
             raise RuntimeError('cold ready not reached')
         save('cold-ready.json', status)
         thread_inventory(pid, 'cold-ready')
+        if config.get('semantics_probe'):
+            create('semantics', 'e2_1_config_probe.js', config['semantics_probe'])
+            save('semantics-cold.json', scripts['semantics'].exports_sync.batch([
+                dict(case='after_cold_ready', operation='read', key='PN_POPUP')]))
         match = json.loads(Path(config['match']).read_text())
         control('configure ' + json.dumps(match, separators=(',', ':')), 'state_create_load')
         control('observe', 'initial_state')
@@ -150,6 +154,9 @@ def run(config_path, output):
             control('release-snapshot ' + str(snapshot['handle']), 'snapshot_release')
         control('reset', 'reset')
         control('observe', 'after_reset')
+        if 'semantics' in scripts:
+            save('semantics-reset.json', scripts['semantics'].exports_sync.batch([
+                dict(case='after_reset', operation='read', key='PN_POPUP')]))
         thread_inventory(pid, 'before-trace')
         result = control('standalone-trace 10000 ' + config['actions_name'], 'full_trace')
         save('trace.json', result)
@@ -160,6 +167,14 @@ def run(config_path, output):
         control('reset', 'terminal_reset_destroy')
         control('observe', 'final_reset_state')
         thread_inventory(pid, 'after-trace')
+        if 'semantics' in scripts:
+            save('semantics-terminal-reset.json', scripts['semantics'].exports_sync.batch([
+                dict(case='after_terminal_reset', operation='read', key='PN_POPUP')]))
+            if config.get('semantics_cases'):
+                save('semantics-cases.json', scripts['semantics'].exports_sync.batch(config['semantics_cases']))
+        if config.get('string_lifecycle_probe'):
+            create('string-lifecycle', 'e2_1_string_lifecycle.js', config['string_lifecycle_probe'])
+            save('string-lifecycle.json', scripts['string-lifecycle'].exports_sync.run())
         (output / 'threads-final.txt').write_text(command('shell', 'ps', '-T', '-p', str(pid), '-o', 'TID,NAME,WCHAN'))
         save('identity-after.json', identity())
         command('pull', resource['audit_path'], str(output / 'provider-audit.tsv'))

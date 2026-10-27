@@ -4,6 +4,12 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+2026-10-27 E2.1续验：46键/99次自然fallback账本完成，九次独立原生进程各3602快照一致；
+PN原桥冷启动转换、reset与七个自有字符串析构补验通过。PN仍原JNI，46键仍required；
+commit/apply、并发、异常、配置释放与初始化对象ABI未闭合，严格门CLI退出2。
+未启动E2.2、训练或吞吐实验。见[E2.1报告](agent-handoff/E2_1_CONFIGURATION_SEMANTICS_2026-10-27.md)。
+以下E2/E1文字为历史阶段记录，不扩大本轮结论。
+
 2026-10-27 E2续验：32键native配置替换的固定原生完整轨迹通过；
 original/shadow/三次replacement/两次strict-targeted及最终线程补验均3602快照一致。
 目标fallback0，但46个排除键仍有99次原路径fallback；默认/异常/重复初始化等

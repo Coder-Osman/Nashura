@@ -1,5 +1,20 @@
 # 阶段成果与证据索引
 
+## 2026-10-27 E2.1配置语义限定续验
+
+46个排除键与99次历史自然fallback已逐项建账，全部required、尚未新增replacement。
+九个成功独立进程各3602快照/9120440bytes、28动作及17个非轮询控制响应一致。
+PN原桥空值/malformed/缺键的三次fresh-process转换、保存值恢复、顶层exists/remove通过；
+七个自有EngineString16析构/free通过。正常probe线程ExceptionCheck前后false。
+PN仍走原JNI；commit/apply、并发、异常、配置释放、Java引用退休及初始化对象ABI未知。
+真实strict缺键负向exit1；G-E2.1真实CLI exit2，限定对照passed不代表全门通过。
+
+真实附件E2.1测试33通过/9.13s；旧附件回归37通过/8.67s；主工程211通过/32.36s；
+公开主组794通过/27跳过和八专项通过；四JS语法检查通过。测试集合有重叠，不相加。
+独占原生实例、AVD、adb、Frida及监听器已回收，旧adb身份不变。
+未进入E2.2/E2.3，不宣称无VM/Android-free/10×或训练准入。
+详见agent-handoff/E2_1_CONFIGURATION_SEMANTICS_2026-10-27.md及e2_1_*.json。
+
 ## 2026-10-27 E2配置JNI局部替换与未闭合严格门
 
 32键固定轨迹替换通过：original/shadow/三次replacement/两次strict-targeted，

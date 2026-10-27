@@ -1,0 +1,1688 @@
+{
+  "schema": "e2.1-public-semantics.v1",
+  "rows": [
+    {
+      "run": "matrix-2-original",
+      "case": "after_cold_ready",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "44cb730c420480a0477b505ae68af508fb90f96cf0ec54c6ad16949dd427f13a"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "after_reset",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "44cb730c420480a0477b505ae68af508fb90f96cf0ec54c6ad16949dd427f13a"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "after_terminal_reset",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "44cb730c420480a0477b505ae68af508fb90f96cf0ec54c6ad16949dd427f13a"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "missing_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "normal_repeat",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "44cb730c420480a0477b505ae68af508fb90f96cf0ec54c6ad16949dd427f13a"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "empty_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "empty_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "malformed_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 7,
+        "sha256": "9a19b7d49e4d7d6b8500f2ea808f8a6aef5c11edf76526ba585b5fcadcc6e4bd"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "malformed_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 7,
+        "sha256": "9a19b7d49e4d7d6b8500f2ea808f8a6aef5c11edf76526ba585b5fcadcc6e4bd"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "utf8_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 7,
+        "sha256": "1f2527fc20ff91099644cbc51e8b495f474543133bb19b0ae387f0f0149ed522"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "utf8_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 7,
+        "sha256": "1f2527fc20ff91099644cbc51e8b495f474543133bb19b0ae387f0f0149ed522"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "shortest_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 1,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "shortest_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "boundary_4095_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 4095,
+        "sha256": "deffa2b8b74b214c6f9b3fc3897854f5c1d7ab973da346509026a1032a4ece54"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "boundary_4095_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 4095,
+        "sha256": "deffa2b8b74b214c6f9b3fc3897854f5c1d7ab973da346509026a1032a4ece54"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "restore_original",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 2,
+        "sha256": "44cb730c420480a0477b505ae68af508fb90f96cf0ec54c6ad16949dd427f13a"
+      }
+    },
+    {
+      "run": "matrix-2-original",
+      "case": "restored_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 8005,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "44cb730c420480a0477b505ae68af508fb90f96cf0ec54c6ad16949dd427f13a"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "after_cold_ready",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "71ee45a3c0db9a9865f7313dd3372cf60dca6479d46261f3542eb9346e4a04d6"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "after_reset",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "71ee45a3c0db9a9865f7313dd3372cf60dca6479d46261f3542eb9346e4a04d6"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "after_terminal_reset",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "71ee45a3c0db9a9865f7313dd3372cf60dca6479d46261f3542eb9346e4a04d6"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "missing_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "normal_repeat",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "71ee45a3c0db9a9865f7313dd3372cf60dca6479d46261f3542eb9346e4a04d6"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "empty_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "empty_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "malformed_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 7,
+        "sha256": "9a19b7d49e4d7d6b8500f2ea808f8a6aef5c11edf76526ba585b5fcadcc6e4bd"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "malformed_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 7,
+        "sha256": "9a19b7d49e4d7d6b8500f2ea808f8a6aef5c11edf76526ba585b5fcadcc6e4bd"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "utf8_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 7,
+        "sha256": "1f2527fc20ff91099644cbc51e8b495f474543133bb19b0ae387f0f0149ed522"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "utf8_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 7,
+        "sha256": "1f2527fc20ff91099644cbc51e8b495f474543133bb19b0ae387f0f0149ed522"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "shortest_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 1,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "shortest_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "boundary_4095_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 4095,
+        "sha256": "deffa2b8b74b214c6f9b3fc3897854f5c1d7ab973da346509026a1032a4ece54"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "boundary_4095_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 4095,
+        "sha256": "deffa2b8b74b214c6f9b3fc3897854f5c1d7ab973da346509026a1032a4ece54"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "restore_original",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 2,
+        "sha256": "71ee45a3c0db9a9865f7313dd3372cf60dca6479d46261f3542eb9346e4a04d6"
+      }
+    },
+    {
+      "run": "matrix-3-shadow",
+      "case": "restored_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 10613,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "71ee45a3c0db9a9865f7313dd3372cf60dca6479d46261f3542eb9346e4a04d6"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "after_cold_ready",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "811786ad1ae74adfdd20dd0372abaaebc6246e343aebd01da0bfc4c02bf0106c"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "after_reset",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "811786ad1ae74adfdd20dd0372abaaebc6246e343aebd01da0bfc4c02bf0106c"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "after_terminal_reset",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "811786ad1ae74adfdd20dd0372abaaebc6246e343aebd01da0bfc4c02bf0106c"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "missing_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "normal_repeat",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "811786ad1ae74adfdd20dd0372abaaebc6246e343aebd01da0bfc4c02bf0106c"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "empty_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "empty_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "malformed_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 7,
+        "sha256": "9a19b7d49e4d7d6b8500f2ea808f8a6aef5c11edf76526ba585b5fcadcc6e4bd"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "malformed_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 7,
+        "sha256": "9a19b7d49e4d7d6b8500f2ea808f8a6aef5c11edf76526ba585b5fcadcc6e4bd"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "utf8_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 7,
+        "sha256": "1f2527fc20ff91099644cbc51e8b495f474543133bb19b0ae387f0f0149ed522"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "utf8_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 7,
+        "sha256": "1f2527fc20ff91099644cbc51e8b495f474543133bb19b0ae387f0f0149ed522"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "shortest_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 1,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "shortest_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "boundary_4095_write",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 4095,
+        "sha256": "deffa2b8b74b214c6f9b3fc3897854f5c1d7ab973da346509026a1032a4ece54"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "boundary_4095_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 4095,
+        "sha256": "deffa2b8b74b214c6f9b3fc3897854f5c1d7ab973da346509026a1032a4ece54"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "restore_original",
+      "operation": "write",
+      "entry": "unknown",
+      "entry_offset": 21018548,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 2,
+        "sha256": "811786ad1ae74adfdd20dd0372abaaebc6246e343aebd01da0bfc4c02bf0106c"
+      }
+    },
+    {
+      "run": "matrix-4-replacement",
+      "case": "restored_read",
+      "operation": "read",
+      "entry": "unknown",
+      "entry_offset": 21022348,
+      "thread": 13176,
+      "exception_state": "unknown; no pending-exception query injected",
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "811786ad1ae74adfdd20dd0372abaaebc6246e343aebd01da0bfc4c02bf0106c"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "after_cold_ready",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "31489056e0916d59fe3add79e63f095af3ffb81604691f21cad442a85c7be617"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "after_reset",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "31489056e0916d59fe3add79e63f095af3ffb81604691f21cad442a85c7be617"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "after_terminal_reset",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "31489056e0916d59fe3add79e63f095af3ffb81604691f21cad442a85c7be617"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "normal_repeat",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "31489056e0916d59fe3add79e63f095af3ffb81604691f21cad442a85c7be617"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "empty_write",
+      "operation": "write",
+      "entry": "write_bridge",
+      "entry_offset": 21018548,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "empty_read",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "malformed_write",
+      "operation": "write",
+      "entry": "write_bridge",
+      "entry_offset": 21018548,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 7,
+        "sha256": "9a19b7d49e4d7d6b8500f2ea808f8a6aef5c11edf76526ba585b5fcadcc6e4bd"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "malformed_read",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 7,
+        "sha256": "9a19b7d49e4d7d6b8500f2ea808f8a6aef5c11edf76526ba585b5fcadcc6e4bd"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "utf8_write",
+      "operation": "write",
+      "entry": "write_bridge",
+      "entry_offset": 21018548,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 7,
+        "sha256": "1f2527fc20ff91099644cbc51e8b495f474543133bb19b0ae387f0f0149ed522"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "utf8_read",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 7,
+        "sha256": "1f2527fc20ff91099644cbc51e8b495f474543133bb19b0ae387f0f0149ed522"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "shortest_write",
+      "operation": "write",
+      "entry": "write_bridge",
+      "entry_offset": 21018548,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 1,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "shortest_read",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "boundary_4095_write",
+      "operation": "write",
+      "entry": "write_bridge",
+      "entry_offset": 21018548,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 4095,
+        "sha256": "deffa2b8b74b214c6f9b3fc3897854f5c1d7ab973da346509026a1032a4ece54"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "boundary_4095_read",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 4095,
+        "sha256": "deffa2b8b74b214c6f9b3fc3897854f5c1d7ab973da346509026a1032a4ece54"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "restore_original",
+      "operation": "write",
+      "entry": "write_bridge",
+      "entry_offset": 21018548,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 2,
+        "sha256": "31489056e0916d59fe3add79e63f095af3ffb81604691f21cad442a85c7be617"
+      }
+    },
+    {
+      "run": "matrix-6-strict-lifecycle",
+      "case": "restored_read",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 17337,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "31489056e0916d59fe3add79e63f095af3ffb81604691f21cad442a85c7be617"
+      }
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "after_cold_ready",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+      }
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "after_reset",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+      }
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "after_terminal_reset",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "98010bd9270f9b100b6214a21754fd33bdc8d41b2bc9f9dd16ff54d3c34ffd71"
+      }
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "missing_exists",
+      "operation": "exists",
+      "entry": "exists_bridge",
+      "entry_offset": 20529584,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "boolean_result": false
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "top_write",
+      "operation": "write",
+      "entry": "preference_write",
+      "entry_offset": 20529820,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 3,
+        "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      }
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "top_exists",
+      "operation": "exists",
+      "entry": "exists_bridge",
+      "entry_offset": 20529584,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "boolean_result": true
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "top_read",
+      "operation": "read",
+      "entry": "preference_read",
+      "entry_offset": 20529452,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 3,
+        "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      }
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "bridge_read",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 3,
+        "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+      }
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "remove_candidate",
+      "operation": "delete",
+      "entry": "delete_bridge",
+      "entry_offset": 20529724,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "removed_exists",
+      "operation": "exists",
+      "entry": "exists_bridge",
+      "entry_offset": 20529584,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "boolean_result": false
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "removed_read",
+      "operation": "read",
+      "entry": "preference_read",
+      "entry_offset": 20529452,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "removed_bridge_read",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-7-prepare-empty",
+      "case": "prepare_empty",
+      "operation": "write",
+      "entry": "write_bridge",
+      "entry_offset": 21018548,
+      "thread": 19902,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-8-empty-cold",
+      "case": "after_cold_ready",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 22485,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "run": "matrix-8-empty-cold",
+      "case": "after_reset",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 22485,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "run": "matrix-8-empty-cold",
+      "case": "after_terminal_reset",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 22485,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "run": "matrix-8-empty-cold",
+      "case": "prepare_malformed",
+      "operation": "write",
+      "entry": "write_bridge",
+      "entry_offset": 21018548,
+      "thread": 22485,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 7,
+        "sha256": "9a19b7d49e4d7d6b8500f2ea808f8a6aef5c11edf76526ba585b5fcadcc6e4bd"
+      }
+    },
+    {
+      "run": "matrix-9-malformed-cold",
+      "case": "after_cold_ready",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 25034,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "run": "matrix-9-malformed-cold",
+      "case": "after_reset",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 25034,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "run": "matrix-9-malformed-cold",
+      "case": "after_terminal_reset",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 25034,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "run": "matrix-9-malformed-cold",
+      "case": "prepare_missing",
+      "operation": "delete",
+      "entry": "delete_bridge",
+      "entry_offset": 20529724,
+      "thread": 25034,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false
+    },
+    {
+      "run": "matrix-9-malformed-cold",
+      "case": "missing_verified",
+      "operation": "exists",
+      "entry": "exists_bridge",
+      "entry_offset": 20529584,
+      "thread": 25034,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "boolean_result": false
+    },
+    {
+      "run": "matrix-9-malformed-cold",
+      "case": "missing_bridge_read",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 25034,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "run": "matrix-10-missing-cold",
+      "case": "after_cold_ready",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 27593,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "run": "matrix-10-missing-cold",
+      "case": "after_reset",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 27593,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "run": "matrix-10-missing-cold",
+      "case": "after_terminal_reset",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 27593,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 1,
+        "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+      }
+    },
+    {
+      "run": "matrix-10-missing-cold",
+      "case": "restore_saved",
+      "operation": "write",
+      "entry": "write_bridge",
+      "entry_offset": 21018548,
+      "thread": 27593,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "input_summary": {
+        "bytes": 2,
+        "sha256": "811786ad1ae74adfdd20dd0372abaaebc6246e343aebd01da0bfc4c02bf0106c"
+      }
+    },
+    {
+      "run": "matrix-10-missing-cold",
+      "case": "restored_bridge_read",
+      "operation": "read",
+      "entry": "read_bridge",
+      "entry_offset": 21022348,
+      "thread": 27593,
+      "exception_state": {
+        "before": false,
+        "after": false,
+        "source": "explicit JNIEnv.ExceptionCheck on probe thread"
+      },
+      "error_status": "unknown; original bridge exposes no typed error",
+      "pn_native_replacement": false,
+      "output_summary": {
+        "bytes": 2,
+        "sha256": "811786ad1ae74adfdd20dd0372abaaebc6246e343aebd01da0bfc4c02bf0106c"
+      }
+    }
+  ],
+  "values_redacted": true,
+  "pn_original_cold_chain": {
+    "original_cold_transitions": 3,
+    "top_raw_exists_remove": "verified",
+    "native_persistence_verified": false,
+    "commit_timing": "unknown",
+    "repeated_constructor": "not tested"
+  },
+  "original_bridge_scope": "probe-induced raw/top calls; PN remains original JNI fallback",
+  "string_lifecycle": {
+    "schema": "e2.1-string-lifecycle.v1",
+    "rows": [
+      {
+        "case": "empty",
+        "length": 0,
+        "heap": false,
+        "frees_observed": 0,
+        "expected_frees": 0,
+        "status": "verified"
+      },
+      {
+        "case": "inline_one",
+        "length": 1,
+        "heap": false,
+        "frees_observed": 0,
+        "expected_frees": 0,
+        "status": "verified"
+      },
+      {
+        "case": "inline_seven",
+        "length": 7,
+        "heap": false,
+        "frees_observed": 0,
+        "expected_frees": 0,
+        "status": "verified"
+      },
+      {
+        "case": "heap_eight",
+        "length": 8,
+        "heap": true,
+        "frees_observed": 1,
+        "expected_frees": 1,
+        "status": "verified"
+      },
+      {
+        "case": "utf8_inline",
+        "length": 7,
+        "heap": false,
+        "frees_observed": 0,
+        "expected_frees": 0,
+        "status": "verified"
+      },
+      {
+        "case": "utf8_heap",
+        "length": 10,
+        "heap": true,
+        "frees_observed": 1,
+        "expected_frees": 1,
+        "status": "verified"
+      },
+      {
+        "case": "heap_4095",
+        "length": 4095,
+        "heap": true,
+        "frees_observed": 1,
+        "expected_frees": 1,
+        "status": "verified"
+      }
+    ],
+    "events": [
+      {
+        "case": "heap_eight",
+        "event": "libc.free",
+        "thread": 17337
+      },
+      {
+        "case": "utf8_heap",
+        "event": "libc.free",
+        "thread": 17337
+      },
+      {
+        "case": "heap_4095",
+        "event": "libc.free",
+        "thread": 17337
+      }
+    ],
+    "scope": "own EngineString16 objects only; no Java reference retirement claim",
+    "use_after_free": "not invoked; retired objects are invalid",
+    "java_reference_lifecycle": "unknown"
+  },
+  "unknown": [
+    "commit/apply timing",
+    "concurrent read/write",
+    "repeated configuration constructor",
+    "Java reference retirement",
+    "configuration store close/free",
+    "exception-triggered cleanup",
+    "arrays/objects/MUTF-8",
+    "true maximum value length and overflow; 4095 is probe bound"
+  ],
+  "no_vm_verified": false,
+  "training_admissible": false
+}
