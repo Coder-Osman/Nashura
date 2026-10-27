@@ -4,6 +4,16 @@
 
 本仓库保存工程源码、冻结规范、独立实现版本与阶段性验证成果。现阶段重点是基础正确性和迁移验收；正式训练尚未启动。
 
+## 2026-10-28 E2.1-N：有界初始化图与分步配置语义
+
+真实DEX初始化有界图142节点/15分支相同；完整onCreate仍不同。
+新增显式后端C候选，恢复双store、分步commit、异常及backup调用顺序。
+当前/历史DEX各4,522例有界差分零差异，保留首次252例差异；
+两个ARM64/Bionic候选子进程exit0，未加载libg，外部接口仍为合成边界。
+真实密码、平台存储及backup契约仍UNRESOLVED，严格catalog门 **BLOCKED**，
+GameState与真实Step保持NOT_RUN。详见[报告](agent-handoff/PURE_LINUX_PREFERENCE_SEMANTICS_2026-10-28.md)
+及[回执](agent-handoff/CODEX_REPLY_2026-10-28_PREFERENCE_SEMANTICS.md)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：配置候选并发保护与初始化身份审计
 
 配置候选加入进程生命周期租约和线程互斥；两个独立ARM64/Bionic实测均通过，

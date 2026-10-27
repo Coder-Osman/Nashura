@@ -1,5 +1,19 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：初始化图与配置控制流差分
+
+真实当前/历史DEX的有界初始化图142节点、15分支相同，8个配置方法摘要相同，
+完整onCreate不同及历史失败保留。恢复显式C后端上的分步读写/commit/异常契约。
+v89首次4,522例有252差异；修正Python adapter的解密异常映射后，v90/v92及新v93
+当前/历史各4,522例零差异。外部codec/storage/backup为共享合成边界，不代表ART等价。
+v91两个ARM64/Bionic候选子进程exit0，15故障边界/8场景组、187项输入未变，未加载libg。
+历史PN持久Cipher状态及限定串行证据只读审查，不冒作当前loading键动态验证。
+密码、平台存储/backup及传递初始化仍UNRESOLVED，严格catalog/manager门BLOCKED，
+GameState/Step/完整局NOT_RUN。命令、SHA及独立工程回归见
+[报告](../agent-handoff/PURE_LINUX_PREFERENCE_SEMANTICS_2026-10-28.md)、
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_PREFERENCE_SEMANTICS.md)及
+[机器证据](../agent-handoff/pure-linux-preference-semantics-evidence-20261028.json)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：配置候选租约与初始化契约
 
 两个新Ubuntu ARM64/Bionic实验各11条进程回执符合预期：五竞争者被拒绝，正常释放及

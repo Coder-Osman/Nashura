@@ -1,0 +1,563 @@
+{
+  "schema": "nashura.pure-linux-preference-semantics.v1",
+  "date": "2026-10-28",
+  "baseline_commit": "0a5f8fac037691c1587554a5c002275cd243e15a",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "scope": "Bounded initializer graph, DEX control-flow differential with shared synthetic boundaries, and C candidate on ARM64/Bionic. No new libg execution.",
+  "initializer": {
+    "status": "STATIC_FOUND",
+    "output_sha256": "b06dbc653a2b2fb142e8e44d39c33083d4c974f17e1af32adfe02b7ea148c861",
+    "receipt_sha256": "00f94a63848fc80c752a157a1bac2581e0d2236e9ec09b2e70287a1f8c7df087",
+    "exit_code": 0,
+    "inputs": {
+      "left": {
+        "dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+        "dump_sha256": "75ef26a5ceab202be9bb1deb1d1cd372acc2b05ea41ff49ede88f45880f30148",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "input_unchanged": true
+      },
+      "right": {
+        "dex_sha256": "ef1ac708f6e836daa925afc50d3bf3b139213b3a72323a354cc2e9493b50f608",
+        "dump_sha256": "3c74c3960de07504fa6fd1b26b4b6b0bceab3791d5f8a689fd69f0c519adcc6b",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "input_unchanged": true
+      },
+      "dexdump_sha256": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692"
+    },
+    "helpers_equal": true,
+    "full_initializer_equal": false,
+    "graph": {
+      "left": {
+        "sha256": "a3953d78b813fbe1acf11cce103ddc80c89703e1f5831a3781fa5d18e5cce39d",
+        "reachable_nodes": 142,
+        "resolved_branches": 15,
+        "terminals": {
+          "initialized": 1,
+          "return": 1,
+          "throw": 0
+        },
+        "payload_sha256": [
+          "57dd7055198a2f96d2a6c320c993c07b408824c25c177c72c11239af5016ce27"
+        ],
+        "status": "STATIC_FOUND",
+        "scope": "entry to p assignment plus complete reachable bypass paths; no catch handlers",
+        "runtime_parity": "NOT_RUN"
+      },
+      "right": {
+        "sha256": "a3953d78b813fbe1acf11cce103ddc80c89703e1f5831a3781fa5d18e5cce39d",
+        "reachable_nodes": 142,
+        "resolved_branches": 15,
+        "terminals": {
+          "initialized": 1,
+          "return": 1,
+          "throw": 0
+        },
+        "payload_sha256": [
+          "57dd7055198a2f96d2a6c320c993c07b408824c25c177c72c11239af5016ce27"
+        ],
+        "status": "STATIC_FOUND",
+        "scope": "entry to p assignment plus complete reachable bypass paths; no catch handlers",
+        "runtime_parity": "NOT_RUN"
+      },
+      "equal": true
+    },
+    "uncovered": [
+      "runtime device and package inputs",
+      "transitive external callees",
+      "cold-start continuation after p assignment",
+      "persistence and backup"
+    ]
+  },
+  "differentials": [
+    {
+      "id": "v89-first-failure",
+      "exit_code": 2,
+      "output_sha256": "09c97d595d5ccc3a53121414e150ae70ec2fcde0e0ec2acc1dde5553a1503652",
+      "receipt_sha256": "2049315f533f37141eb1f09ce3e6a851c6edeed9e270820302b0e1f17876c797",
+      "cases": 4522,
+      "mismatches": 252,
+      "coverage": [
+        {
+          "method": "c.a.j:(Ljava/lang/String;)Ljava/lang/String;",
+          "visited_instructions": 36,
+          "total_instructions": 36
+        },
+        {
+          "method": "c.a.n:(Ljava/lang/String;Ljava/lang/String;)V",
+          "visited_instructions": 37,
+          "total_instructions": 37
+        },
+        {
+          "method": "com.supercell.titan.ApplicationUtilBase.getKeyValue:(Ljava/lang/String;)Ljava/lang/String;",
+          "visited_instructions": 19,
+          "total_instructions": 19
+        },
+        {
+          "method": "com.supercell.titan.ApplicationUtilBase.storeKeyValue:(Ljava/lang/String;Ljava/lang/String;)V",
+          "visited_instructions": 29,
+          "total_instructions": 29
+        }
+      ],
+      "scope": "DEX control flow with shared synthetic codec/storage/backup boundaries; not ART execution",
+      "inputs": {
+        "dex": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+        "dexdump": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692",
+        "native-library": "90694effbbf76f2e616ea216c7a540b11237a7aecb50d5a6a0856e9fe8115ce8"
+      },
+      "dump_sha256": "75ef26a5ceab202be9bb1deb1d1cd372acc2b05ea41ff49ede88f45880f30148",
+      "inputs_unchanged": true,
+      "android_runtime_parity": "NOT_RUN",
+      "catalog_gate": false
+    },
+    {
+      "id": "v90-current-corrected-adapter",
+      "exit_code": 0,
+      "output_sha256": "422ab26c0db23270ca1efee6db24a3ebad44dcb1c873f8d1712a4e44f81ac7d4",
+      "receipt_sha256": "a84c150d7de887a2f4082083eef41e077e3dc3349fb167b47709d28687dd5e7c",
+      "cases": 4522,
+      "mismatches": 0,
+      "coverage": [
+        {
+          "method": "c.a.j:(Ljava/lang/String;)Ljava/lang/String;",
+          "visited_instructions": 36,
+          "total_instructions": 36
+        },
+        {
+          "method": "c.a.n:(Ljava/lang/String;Ljava/lang/String;)V",
+          "visited_instructions": 37,
+          "total_instructions": 37
+        },
+        {
+          "method": "com.supercell.titan.ApplicationUtilBase.getKeyValue:(Ljava/lang/String;)Ljava/lang/String;",
+          "visited_instructions": 19,
+          "total_instructions": 19
+        },
+        {
+          "method": "com.supercell.titan.ApplicationUtilBase.storeKeyValue:(Ljava/lang/String;Ljava/lang/String;)V",
+          "visited_instructions": 29,
+          "total_instructions": 29
+        }
+      ],
+      "scope": "DEX control flow with shared synthetic codec/storage/backup boundaries; not ART execution",
+      "inputs": {
+        "dex": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+        "dexdump": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692",
+        "native-library": "90694effbbf76f2e616ea216c7a540b11237a7aecb50d5a6a0856e9fe8115ce8"
+      },
+      "dump_sha256": "75ef26a5ceab202be9bb1deb1d1cd372acc2b05ea41ff49ede88f45880f30148",
+      "inputs_unchanged": true,
+      "android_runtime_parity": "NOT_RUN",
+      "catalog_gate": false
+    },
+    {
+      "id": "v92-historical",
+      "exit_code": 0,
+      "output_sha256": "d4ad7e8942ed59f34e574b07c4a7e5dad6c6d01b0e1cb100233cd0e80f286a00",
+      "receipt_sha256": "005d3715ea5c7d0a2d0adfb2f57ab23cabeb65325c9c7f4b89bb2d4522098627",
+      "cases": 4522,
+      "mismatches": 0,
+      "coverage": [
+        {
+          "method": "c.a.j:(Ljava/lang/String;)Ljava/lang/String;",
+          "visited_instructions": 36,
+          "total_instructions": 36
+        },
+        {
+          "method": "c.a.n:(Ljava/lang/String;Ljava/lang/String;)V",
+          "visited_instructions": 37,
+          "total_instructions": 37
+        },
+        {
+          "method": "com.supercell.titan.ApplicationUtilBase.getKeyValue:(Ljava/lang/String;)Ljava/lang/String;",
+          "visited_instructions": 19,
+          "total_instructions": 19
+        },
+        {
+          "method": "com.supercell.titan.ApplicationUtilBase.storeKeyValue:(Ljava/lang/String;Ljava/lang/String;)V",
+          "visited_instructions": 29,
+          "total_instructions": 29
+        }
+      ],
+      "scope": "DEX control flow with shared synthetic codec/storage/backup boundaries; not ART execution",
+      "inputs": {
+        "dex": "ef1ac708f6e836daa925afc50d3bf3b139213b3a72323a354cc2e9493b50f608",
+        "dexdump": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692",
+        "native-library": "90694effbbf76f2e616ea216c7a540b11237a7aecb50d5a6a0856e9fe8115ce8"
+      },
+      "dump_sha256": "3c74c3960de07504fa6fd1b26b4b6b0bceab3791d5f8a689fd69f0c519adcc6b",
+      "inputs_unchanged": true,
+      "android_runtime_parity": "NOT_RUN",
+      "catalog_gate": false
+    }
+  ],
+  "native_candidate": {
+    "id": "v91",
+    "status": "RUNTIME_OBSERVED",
+    "guest": "Ubuntu 22.04.5 ARM64, matching Android linker64/Bionic",
+    "output_sha256": "ae1500fd6833ef6f50508e79c672ba2ac269ad6beed30135ccfc3c92163e44da",
+    "build_receipt_sha256": "9abf025f442a0202c0bcead1e611a1d41b11fad612dca833f6a11faa9552d2ec",
+    "build_and_host_exit_codes": [
+      0,
+      0,
+      0
+    ],
+    "machine": "aarch64",
+    "kernel": "6.8.0-138-generic",
+    "probe_sha256": "100be4061e854c6d8457c3dec650810c9c403bd0a61382a25b67aef16280f0e1",
+    "probe_unchanged": true,
+    "inputs_unchanged": true,
+    "scope": "synthetic backend with C semantic candidate under Bionic; no libg loaded",
+    "android_runtime_parity": "NOT_RUN",
+    "catalog_ready_pass": false,
+    "input_count": 187,
+    "input_manifest_sha256": "0bc190b1238910ad77a1cda51bd309b9b03ef883fd101e9f6764c740a4ac4d78",
+    "records": [
+      {
+        "exit_code": 0,
+        "timed_out": false,
+        "elapsed_seconds": 0.0023138609976740554,
+        "stdout_sha256": "5abfad38f49eee0c21ab7bb23bf58fc8ccaf835f8d79d141eeab8e76ea67bd33",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "assertion_summary": {
+          "status": "PASS",
+          "scope": "synthetic_backend_only",
+          "failure_boundaries": 15,
+          "scenario_groups": 8,
+          "libg_loaded": false
+        },
+        "passed": true
+      },
+      {
+        "exit_code": 0,
+        "timed_out": false,
+        "elapsed_seconds": 0.0018005120000452735,
+        "stdout_sha256": "5abfad38f49eee0c21ab7bb23bf58fc8ccaf835f8d79d141eeab8e76ea67bd33",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "assertion_summary": {
+          "status": "PASS",
+          "scope": "synthetic_backend_only",
+          "failure_boundaries": 15,
+          "scenario_groups": 8,
+          "libg_loaded": false
+        },
+        "passed": true
+      }
+    ],
+    "actual_loaded_libraries": "NOT_OBSERVED",
+    "linker_sha256": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+  },
+  "fresh_recheck": {
+    "id": "v93",
+    "build_exit_code": 0,
+    "build_receipt_sha256": "25d84bdb8a4d2c72b6e7acd31e65438c55f8c0f5668e07dee2b5342b8296a00e",
+    "c_library_sha256": "2a68d60f9c0d9ea2ecdcec3ee92962bd042a294dbe7011f34af211428fa0e521",
+    "records": [
+      {
+        "id": "current",
+        "exit_code": 0,
+        "output_sha256": "3b7b754aee95701db7494424048cf06f256dc1eb1079b441154605dd6599d304",
+        "receipt_sha256": "1080d7849ccf1f6ab5f57d5fd3c57b8c952e4852cc8ecfa24fcb17eeab77e3ca",
+        "inputs": {
+          "dex": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+          "dexdump": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692",
+          "native-library": "2a68d60f9c0d9ea2ecdcec3ee92962bd042a294dbe7011f34af211428fa0e521"
+        },
+        "cases": 4522,
+        "mismatches": 0,
+        "coverage": [
+          {
+            "method": "c.a.j:(Ljava/lang/String;)Ljava/lang/String;",
+            "visited_instructions": 36,
+            "total_instructions": 36
+          },
+          {
+            "method": "c.a.n:(Ljava/lang/String;Ljava/lang/String;)V",
+            "visited_instructions": 37,
+            "total_instructions": 37
+          },
+          {
+            "method": "com.supercell.titan.ApplicationUtilBase.getKeyValue:(Ljava/lang/String;)Ljava/lang/String;",
+            "visited_instructions": 19,
+            "total_instructions": 19
+          },
+          {
+            "method": "com.supercell.titan.ApplicationUtilBase.storeKeyValue:(Ljava/lang/String;Ljava/lang/String;)V",
+            "visited_instructions": 29,
+            "total_instructions": 29
+          }
+        ],
+        "inputs_unchanged": true,
+        "dump_sha256": "75ef26a5ceab202be9bb1deb1d1cd372acc2b05ea41ff49ede88f45880f30148"
+      },
+      {
+        "id": "historical",
+        "exit_code": 0,
+        "output_sha256": "a1a188287605f5452e54f7708d7cb7c334d0345c39cda673f95f3dbd1cdea7b0",
+        "receipt_sha256": "330af5caf33744cb9b1cb46b4dbdd9ec9e9ca9bd669261f03fda8f48161d7cdc",
+        "inputs": {
+          "dex": "ef1ac708f6e836daa925afc50d3bf3b139213b3a72323a354cc2e9493b50f608",
+          "dexdump": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692",
+          "native-library": "2a68d60f9c0d9ea2ecdcec3ee92962bd042a294dbe7011f34af211428fa0e521"
+        },
+        "cases": 4522,
+        "mismatches": 0,
+        "coverage": [
+          {
+            "method": "c.a.j:(Ljava/lang/String;)Ljava/lang/String;",
+            "visited_instructions": 36,
+            "total_instructions": 36
+          },
+          {
+            "method": "c.a.n:(Ljava/lang/String;Ljava/lang/String;)V",
+            "visited_instructions": 37,
+            "total_instructions": 37
+          },
+          {
+            "method": "com.supercell.titan.ApplicationUtilBase.getKeyValue:(Ljava/lang/String;)Ljava/lang/String;",
+            "visited_instructions": 19,
+            "total_instructions": 19
+          },
+          {
+            "method": "com.supercell.titan.ApplicationUtilBase.storeKeyValue:(Ljava/lang/String;Ljava/lang/String;)V",
+            "visited_instructions": 29,
+            "total_instructions": 29
+          }
+        ],
+        "inputs_unchanged": true,
+        "dump_sha256": "3c74c3960de07504fa6fd1b26b4b6b0bceab3791d5f8a689fd69f0c519adcc6b"
+      }
+    ],
+    "initializer": {
+      "exit_code": 0,
+      "output_sha256": "b06dbc653a2b2fb142e8e44d39c33083d4c974f17e1af32adfe02b7ea148c861",
+      "receipt_sha256": "a5740632563200967f841dbc603ff66699e6ff01a9816c767a58609be2408221",
+      "same_graph_as_v88": true
+    }
+  },
+  "historical_pn_review": {
+    "source_commit": "4d4bfbd721ab3686db66777717fce49b9cee33d1",
+    "status": "STATIC_FOUND",
+    "current_key_runtime_transfer": "NOT_PROVEN",
+    "reviewed_reports": [
+      {
+        "path": "agent-handoff/E2_1K_NATURAL_PN_NATIVE_CODEC_2026-10-27.md",
+        "sha256": "d6c3edf69c9a78bd32ac333874882da2c5d035bfee9ccbc372ab9f4024b32f33"
+      },
+      {
+        "path": "agent-handoff/E2_1L_PN_EDGE_PERSISTENT_CIPHER_2026-10-27.md",
+        "sha256": "b3e32c4fe6f31feb3753de0ced8845a058ede40895cf96eeae7a7e7787c474f7"
+      },
+      {
+        "path": "agent-handoff/E2_1M_PN_PERSISTENT_REPLACEMENT_2026-10-27.md",
+        "sha256": "8e166790282e0c3d0710b8cc45d34cbe4694e086e7538ec1ce996630ea1fc514"
+      },
+      {
+        "path": "agent-handoff/E2_1N_PN_CONCURRENCY_2026-10-27.md",
+        "sha256": "cb02cbca570c86ae5ff00b0553dd323e66a3dd8275a6f953eed9efccac8b6d6a"
+      }
+    ],
+    "finding": "Persistent Cipher failure state affects subsequent calls. Success-only reinitialization differs from unconditional reset or permanent poison. Historical PN runtime results do not verify the current loading key, identity, storage or backup."
+  },
+  "unresolved": [
+    "Current runtime identity and complete transitive initialization",
+    "Real AES/Base64/UTF-8 and persistent Cipher error state for current key",
+    "Android storage memory/disk, commit failure, XML and crash semantics",
+    "Actual backup request side effects and failures",
+    "Concurrent Android equivalence and current-key native integration"
+  ],
+  "gates": {
+    "catalog_ready_pass": false,
+    "resource_manager": "BLOCKED",
+    "gamestate": "NOT_RUN",
+    "empty_reset_step": "NOT_RUN",
+    "actions_full_battle_android_parity": "NOT_RUN",
+    "no_javavm_lifecycle": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "tenfold_performance": "NOT_RUN",
+    "training": "NOT_RUN"
+  },
+  "next_blocker": "Configuration platform contract; neither APK nor guest is missing.",
+  "source_files": [
+    {
+      "path": "tools/pure_linux/preference_contract.c",
+      "sha256": "caaaa2ffefd32b12bad51759415c7ec488021f17f26fc0bcc8121946faa2a7a7"
+    },
+    {
+      "path": "tools/pure_linux/preference_contract.h",
+      "sha256": "b3ef1a1b00b837aec01645978c7465d23d7eac2cbcdf8a2189e6dfe411454fb4"
+    },
+    {
+      "path": "tools/pure_linux/preference_contract_job.py",
+      "sha256": "0d815f8f6be576c6f4fce49ceb054d3297f427a8db7bc71a88fefc068fae42e9"
+    },
+    {
+      "path": "tools/pure_linux/preference_contract_probe.c",
+      "sha256": "1b4fd5c6fecbfced848027db50deb0ff7d8853f7f3b75916fdf6947f3d86673e"
+    },
+    {
+      "path": "tools/pure_linux/preference_dex_vm.py",
+      "sha256": "bd88776c1ea692bb50421793a7fa2ceb08acd6fcd0c799954648ae7580f5b27f"
+    },
+    {
+      "path": "tools/pure_linux/preference_differential.py",
+      "sha256": "fb204d83347c811194b025a635f6e696569fa81c038753f40039a0bea3ff507b"
+    },
+    {
+      "path": "tools/pure_linux/preference_initializer_audit.py",
+      "sha256": "da3c483eea7b4c4b3723da69b44bdecd116251605bc2f57917581aaae9a485f4"
+    },
+    {
+      "path": "tools/pure_linux/preference_model.py",
+      "sha256": "f89eb7db3799d2c44d7f8d4bab43906444936f0aea4316edf4e4c7822b38227b"
+    },
+    {
+      "path": "tools/pure_linux/test_preference_contract.py",
+      "sha256": "7fc2adc0fb43256e6b3cb39904617981b2dc516e888251eaf7b9a0a273dbd2e4"
+    },
+    {
+      "path": "tools/pure_linux/test_preference_contract_job.py",
+      "sha256": "848f41b321fbbbef36dc97388e6c931f13da8e50855770792a2d56f00b04e9a4"
+    },
+    {
+      "path": "tools/pure_linux/test_preference_dex_vm.py",
+      "sha256": "be3c374a8f2718c49f175a1b4f25f7a6e042be8cc1ddb171e586bbeafdeb0152"
+    },
+    {
+      "path": "tools/pure_linux/test_preference_initializer_audit.py",
+      "sha256": "a81b2cab2cffa97e540ebce14a8eda0111ef9e8deefb723ad1b7f4b68d5106b5"
+    }
+  ],
+  "regression": {
+    "main": {
+      "command": [
+        "python3.13",
+        "tools/run_main_engine_checks.py"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "a882c1f99786b4e48945a836de86662b2599632e5287b83fc655ba6b0ab63623",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "passed": 211
+    },
+    "public": {
+      "command": [
+        "python3.13",
+        "tools/run_public_checks.py"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "b2cea93008fc71ec5a63571cc15ac1572844f87297028712ab980546d44b135f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pure_linux": {
+      "command": [
+        "python3.13",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tools/pure_linux"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "bfff91510cd475470e8ed2ec7bfab87cbc3b6910f5766d182406437bdf3e7c50",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "passed": 216,
+      "skipped": 1
+    },
+    "historical_xml": {
+      "count": 250,
+      "unchanged": true,
+      "manifest_sha256": "7461717e7805ff41f84fb216925faefff6fa04f188b5cff78f6983b0b6f116bf"
+    },
+    "public_xml": [
+      {
+        "name": "checks-public.xml",
+        "sha256": "b7afffb2c024513110340ee6a4ae2ca3d93f78e0ee39ef451b06e099b3168413",
+        "tests": 821,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 27
+      },
+      {
+        "name": "checks-affordability.xml",
+        "sha256": "cd2707b496559e78823738afc4bea0e8b77bac47542281af7ba1862be9758bb8",
+        "tests": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "checks-selection-timeout.xml",
+        "sha256": "3b6ceaf891e9641cf5c503273b949d09dcc87ab18654947760c69a72f981ef02",
+        "tests": 82,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "checks-position-guards.xml",
+        "sha256": "c35139b9f50915e320d39c7b1b0adf79dafe300877020d3f0bf01a98f4fe6bba",
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3
+      },
+      {
+        "name": "checks-live-command.xml",
+        "sha256": "09b92a89994d597bb1b93408b4c546d79ebdbd6649603d370e32618b9f9ef266",
+        "tests": 29,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 4
+      },
+      {
+        "name": "checks-dispatch-command.xml",
+        "sha256": "e190682d167ff27304adf66601efa038898e65e6f1050f2f0f5214c41ac13680",
+        "tests": 34,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3
+      },
+      {
+        "name": "checks-reservation-mapping.xml",
+        "sha256": "e760ebf4847a41c409738ab1b0e6b0b0cfc44f9009648554cd45d873a5d89d48",
+        "tests": 33,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2
+      },
+      {
+        "name": "checks-command-coordinates.xml",
+        "sha256": "d170c9e6d5e21ce5e299024fa82fdf5d5fc17c6a2d5afaa79e82a8fabe4986d0",
+        "tests": 41,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3
+      },
+      {
+        "name": "checks-collection-coordinator.xml",
+        "sha256": "e3998f3ad3c283ae9b0b706cac7cccc4c28d74624c1e2ab34bf61535c8d11934",
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ],
+    "public_totals": {
+      "tests": 1146,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 42
+    },
+    "environment": "Existing Python 3.13.5 on Darwin ARM64; independent repository copy; no dependency installation."
+  },
+  "publication_cleanup": {
+    "path": "tools/pure_linux/preference_model.py",
+    "before_sha256": "92daf585e6488bb596e96425a02b436c8930a0ea0fd45afd49c063a9373132c3",
+    "after_sha256": "f89eb7db3799d2c44d7f8d4bab43906444936f0aea4316edf4e4c7822b38227b",
+    "change": "Remove extra blank lines at EOF only; regression records above refer to pre-cleanup bytes.",
+    "initial_cached_diff_check_exit_code": 2
+  }
+}
