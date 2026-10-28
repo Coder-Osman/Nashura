@@ -1,5 +1,10 @@
 # 变更记录
 
+## 2026-10-29：catalog 批量参数与资源路径
+
+- 实测两侧5次批量调用参数一致，已观察597个 `csv_logic/` 请求路径集合一致。
+- Android update为908项、Linux历史输入990项；解析与完整catalog仍未验收。
+
 ## 2026-10-29：catalog 差异槽对象字段对照
 
 - 真实独立 Android/Linux 对照17槽的对象偏移字段，Linux 2,078项为 Android 子集。

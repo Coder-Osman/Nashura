@@ -54,7 +54,8 @@ class Observe(gdb.Breakpoint):
             address = self.row["base"] + slot["offset"]
             event.setdefault("pointer_slots", {})[slot["name"]] = int.from_bytes(
                 gdb.selected_inferior().read_memory(address, 8).tobytes(), "little")
-        Returned(event)
+        if not self.row.get("site_only", False):
+            Returned(event)
         return False
 
 
@@ -105,6 +106,9 @@ try:
         row = {"name": target["name"], "module": target["module"],
                "offset": target["offset"], "calls": 0, "armed": False,
                "base": base, "pointer_slots": target.get("pointer_slots", [])}
+        row["site_only"] = target.get("site_only", False)
+        if type(row["site_only"]) is not bool:
+            raise RuntimeError("site_only must be boolean")
         row["string_arguments"] = target.get("string_arguments", [])
         record["targets"].append(row)
         protected = json.loads(os.environ.get("NASHURA_GDB_GUARD_RANGES", "{}"))

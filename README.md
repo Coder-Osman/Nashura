@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-10-29：catalog 批量参数与资源路径
+
+Android 和 Linux 真实进程各5次批量调用参数一致，已观察597个 `csv_logic/` 请求
+路径集合一致；update 输入和解析内容仍未对齐。详见[报告](agent-handoff/PURE_LINUX_CATALOG_BATCH_TRACE_2026-10-29.md)。
+
 ## 2026-10-29：catalog 差异槽对象字段对照
 
 17个差异槽的 Linux 2,078个字段值均包含于 Android 对应槽，Android 额外1,457个；
