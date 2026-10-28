@@ -10194,8 +10194,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "f71cc59d670844b08f883bec537dc7dc768744c8b56200ae833af2be697a689a",
-      "bytes": 41067,
+      "sha256": "615777b277c2fde3256add327207c1c7050f6ffbfc965b2cbd6e86ad3c4b4f6e",
+      "bytes": 41638,
       "source_sha256": "c008f55f17031af6abae22b02af32e87d0c8c9d3cbc1a7c54fc4f73bdf72e3a7",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10205,13 +10205,14 @@
         "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
         "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
         "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
-        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate"
+        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
+        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "ab106729a1680fd1c152edb0811ae9ae82428260b7992849cea1fb9e5e629eae",
-      "bytes": 72845,
+      "sha256": "101b95f194b855efbfa9af5f2be4668a3da259511411aa02c353b5c4505560d4",
+      "bytes": 73740,
       "source_sha256": "7956b3b23c44bda14bd02a13c725f93621bc473669cff1644c882afc3de0d310",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10221,7 +10222,8 @@
         "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
         "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
         "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
-        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate"
+        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
+        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate"
       ]
     },
     {
@@ -16633,8 +16635,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "cc833b389407788fb8fb81ebdbd5e7c7878a424872f16dfb34b69ccf537283c6",
-      "bytes": 40499,
+      "sha256": "2c2b7d199be0a45eac9cdfa4d044d77eb8bbe2edbfcf15fc7aa32cad9d414b15",
+      "bytes": 41295,
       "source_sha256": "268a62062b889a6cc7bd8034c306e2937b73840ef1d6e918fee39525ef232472",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -16644,7 +16646,8 @@
         "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
         "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
         "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
-        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate"
+        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
+        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate"
       ]
     },
     {
@@ -17880,10 +17883,73 @@
       "bytes": 1717,
       "source_sha256": "3526aa597e017bf32fdebbf7e5657b53b03fdc023de35f4c67c9ca485ab1819e",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_retry_fixture/AndroidManifest.xml",
+      "sha256": "b6314341fa7c02e7182a651a18e39e8aaa99fb7173876383d12808598cb7a4fc",
+      "bytes": 596,
+      "source_sha256": "b6314341fa7c02e7182a651a18e39e8aaa99fb7173876383d12808598cb7a4fc",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_retry_fixture/RetryReceiver.java",
+      "sha256": "5d1de846ab98efc87eccad0b204769ac30ef358ee4249572dc8fcb4fecfcb711",
+      "bytes": 2008,
+      "source_sha256": "5d1de846ab98efc87eccad0b204769ac30ef358ee4249572dc8fcb4fecfcb711",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_retry_fixture/RetryBackupAgent.java",
+      "sha256": "dd095c9eab55cba9ae255699cde95d5f727176d3fd5f7f0f0009125f8b54c98d",
+      "bytes": 1685,
+      "source_sha256": "dd095c9eab55cba9ae255699cde95d5f727176d3fd5f7f0f0009125f8b54c98d",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/run_backup_retry.py",
+      "sha256": "20e5b0cf4edb47c96af648ffbe440c6b750bed3844f55b601f7d31d79fab8288",
+      "bytes": 6890,
+      "source_sha256": "20e5b0cf4edb47c96af648ffbe440c6b750bed3844f55b601f7d31d79fab8288",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_retry_audit.py",
+      "sha256": "ebd5f753ac1e5543fcbe9922c449fcbe5c05ea7930984b03b9ad0936d1806edf",
+      "bytes": 17202,
+      "source_sha256": "ebd5f753ac1e5543fcbe9922c449fcbe5c05ea7930984b03b9ad0936d1806edf",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_backup_retry.py",
+      "sha256": "a57b9c4a86fc065c0b4b293d071d6a666d4d3bc50a3ce1603ac090c2afa770d0",
+      "bytes": 16002,
+      "source_sha256": "a57b9c4a86fc065c0b4b293d071d6a666d4d3bc50a3ce1603ac090c2afa770d0",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_BACKUP_RETRY_2026-10-28.md",
+      "sha256": "61354d64ce4b7af2d5d323090439904d7914a8b5f3b197c51438f4f5dd8d59f0",
+      "bytes": 6804,
+      "source_sha256": "61354d64ce4b7af2d5d323090439904d7914a8b5f3b197c51438f4f5dd8d59f0",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_RETRY.md",
+      "sha256": "0cb11c8479c141551aece741963fd7ece810b06449ddcb69eeb17f1492188b93",
+      "bytes": 1654,
+      "source_sha256": "0cb11c8479c141551aece741963fd7ece810b06449ddcb69eeb17f1492188b93",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-backup-retry-evidence-20261028.json",
+      "sha256": "c6070055d0621ad2d96248dccd4caf5723321fdb053254aa3dd95aebcf808fda",
+      "bytes": 24617,
+      "source_sha256": "c6070055d0621ad2d96248dccd4caf5723321fdb053254aa3dd95aebcf808fda",
+      "transformations": []
     }
   ],
-  "file_count": 2548,
-  "source_bytes": 35089620,
+  "file_count": 2557,
+  "source_bytes": 35169340,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

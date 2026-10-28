@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-28：真实 Backup 失败重排与重试
+
+专用Android实例中，一次自有store/request后agent抛真实IOException并重排；
+没有追加请求的第二次消费成功。73份命令归档审计通过，XML保持215bytes，
+成功transport231bytes、state72bytes；日志流259bytes。v1缺失文件退出码缺陷如实保留，
+v2修正使用远端状态，未重复真实写入。新增47项工具测试，隔离专项857/1、主工程211、
+公开1104/42均exit0。专用5582已关闭；Linux Backup绑定与严格catalog仍BLOCKED。
+详见[报告](agent-handoff/PURE_LINUX_BACKUP_RETRY_2026-10-28.md)、
+[证据](agent-handoff/pure-linux-backup-retry-evidence-20261028.json)和
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_RETRY.md)。以下保留历史状态。
+
 ## 2026-10-28：非空 Backup 与真实队列消费
 
 自有Android fixture一次非空备份成功后目标仍pending；随后一次队列消费清除目标。

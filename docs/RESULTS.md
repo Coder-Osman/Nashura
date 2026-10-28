@@ -1,5 +1,17 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：真实 agent 失败、重排与重试
+
+一次自有store/request，真实IOException后目标pending保持且进入新journal；
+第二次bmgr run成功消费，无追加请求，目标pending/journal消失。XML215bytes不变，
+成功流259bytes、transport231bytes、state72bytes；头与删除方法次数UNKNOWN。
+73份命令归档通过严格离线审计；v1采集缺陷、首次负例失败保留。
+新增47项测试，隔离专项857通过/1跳过、主工程211通过、公开1104通过/42跳过，均exit0。
+专用5582已关闭；Linux Backup binding及CATALOG_READY_PASS仍BLOCKED，后续对象图NOT_RUN。
+详见[报告](../agent-handoff/PURE_LINUX_BACKUP_RETRY_2026-10-28.md)、
+[证据](../agent-handoff/pure-linux-backup-retry-evidence-20261028.json)及
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_RETRY.md)。以下保留历史记录。
+
 ## 2026-10-28 E2.1-N：非空 Backup 与队列消费
 
 自有fixture实际非增量备份261bytes日志流、233bytes落盘；目标仍pending。

@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.nashura.backupretry">
+    <uses-sdk android:minSdkVersion="30" android:targetSdkVersion="30" />
+    <application android:label="Nashura Backup Retry" android:allowBackup="true" android:backupAgent=".RetryBackupAgent" android:fullBackupOnly="false">
+        <receiver android:name=".RetryReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="org.nashura.backupretry.STORE_AND_REQUEST" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

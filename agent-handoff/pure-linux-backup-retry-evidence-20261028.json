@@ -1,0 +1,619 @@
+{
+  "schema": "nashura.pure-linux-backup-retry-evidence.v1",
+  "date": "2026-10-28",
+  "baseline_commit": "5d1a34679e36207568190a583e316201d51558f6",
+  "delivery_commit": "containing commit; avoids self-reference",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "status": "RUNTIME_OBSERVED_LIMITED",
+  "private_archive_root": "/private/tmp/nashura-backup-retry-20261028-822z3c8y",
+  "publication_scope": "sanitized summaries and hashes only; no raw device files, APK, keys, token or trace",
+  "environment": {
+    "avd": "nashura-e2-backup-contract-api30",
+    "serial": "emulator-5582",
+    "fingerprint": "google/sdk_gphone_arm64/emulator_arm64:11/RSR1.240422.006/12134477:userdebug/dev-keys",
+    "system_server": {
+      "boot_id": "5a9abfef-bd24-440c-99ab-cca36959699f",
+      "pid": 475,
+      "starttime": 1181,
+      "cmdline": "system_server"
+    },
+    "identity_preserved": true,
+    "fixture_apk_sha256": "b1739585e5c2194572002b32074545bc34e31a7036be5bf7cd9874e355521037",
+    "services_jar_sha256": "c6992cdc2a3e23d5aeb6ab77e7a7f6889cfcf5c262c6ed86825e6fcbf601681d",
+    "game_installed": false,
+    "java_vm": "retained",
+    "transport": "com.android.localtransport/.LocalTransport",
+    "real_game_inputs_reverified_this_round": false,
+    "host_start_archive": {
+      "private_archive": "environment.json",
+      "sha256": "3b119e1fabe016d91d6f2fdb7472765baa712ef9577e129cdf9cecbbfd5d3f96",
+      "bytes": 432
+    }
+  },
+  "source_files": [
+    {
+      "path": "tools/pure_linux/backup_retry_fixture/AndroidManifest.xml",
+      "sha256": "b6314341fa7c02e7182a651a18e39e8aaa99fb7173876383d12808598cb7a4fc",
+      "bytes": 596
+    },
+    {
+      "path": "tools/pure_linux/backup_retry_fixture/RetryReceiver.java",
+      "sha256": "5d1de846ab98efc87eccad0b204769ac30ef358ee4249572dc8fcb4fecfcb711",
+      "bytes": 2008
+    },
+    {
+      "path": "tools/pure_linux/backup_retry_fixture/RetryBackupAgent.java",
+      "sha256": "dd095c9eab55cba9ae255699cde95d5f727176d3fd5f7f0f0009125f8b54c98d",
+      "bytes": 1685
+    },
+    {
+      "path": "tools/pure_linux/run_backup_retry.py",
+      "sha256": "20e5b0cf4edb47c96af648ffbe440c6b750bed3844f55b601f7d31d79fab8288",
+      "bytes": 6890
+    },
+    {
+      "path": "tools/pure_linux/backup_retry_audit.py",
+      "sha256": "ebd5f753ac1e5543fcbe9922c449fcbe5c05ea7930984b03b9ad0936d1806edf",
+      "bytes": 17202
+    },
+    {
+      "path": "tools/pure_linux/test_backup_retry.py",
+      "sha256": "a57b9c4a86fc065c0b4b293d071d6a666d4d3bc50a3ce1603ac090c2afa770d0",
+      "bytes": 16002
+    }
+  ],
+  "runtime": {
+    "schema": "nashura.backup-retry-audit.v1",
+    "status": "RUNTIME_OBSERVED_LIMITED",
+    "pending": [
+      false,
+      true,
+      true,
+      false
+    ],
+    "journal_target_counts": [
+      0,
+      1,
+      1,
+      0
+    ],
+    "agent_events": [
+      {
+        "time": "10-28 17:38:44.541",
+        "pid": 5466,
+        "tid": 5466,
+        "event": "STORE_RETURN",
+        "state_bytes": null
+      },
+      {
+        "time": "10-28 17:38:44.541",
+        "pid": 5466,
+        "tid": 5466,
+        "event": "REQUEST_RETURN",
+        "state_bytes": null
+      },
+      {
+        "time": "10-28 17:38:45.323",
+        "pid": 5466,
+        "tid": 5484,
+        "event": "AGENT_ENTER",
+        "state_bytes": null
+      },
+      {
+        "time": "10-28 17:38:45.324",
+        "pid": 5466,
+        "tid": 5484,
+        "event": "AGENT_FAIL",
+        "state_bytes": null
+      },
+      {
+        "time": "10-28 17:38:53.652",
+        "pid": 5466,
+        "tid": 5483,
+        "event": "AGENT_ENTER",
+        "state_bytes": null
+      },
+      {
+        "time": "10-28 17:38:53.652",
+        "pid": 5466,
+        "tid": 5483,
+        "event": "AGENT_RETURN",
+        "state_bytes": 72
+      }
+    ],
+    "worker_windows": [
+      {
+        "pid": 475,
+        "tid": 5535,
+        "start": "10-28 17:38:45.322",
+        "end": "10-28 17:38:45.346"
+      },
+      {
+        "pid": 475,
+        "tid": 5715,
+        "start": "10-28 17:38:53.652",
+        "end": "10-28 17:38:53.676"
+      }
+    ],
+    "stream_bytes": 259,
+    "xml_bytes": 215,
+    "transport_bytes": 231,
+    "state_bytes": 72,
+    "file_capture_mode": "legacy_exec_out_diagnostics_with_shell_T_followup",
+    "transport_header_semantics": "UNKNOWN",
+    "journal_delete_method_count": "UNKNOWN",
+    "failure_scope": "owned_agent_IOException_only",
+    "natural_job_expiry": "NOT_RUN",
+    "task_exception_and_crash_recovery": "NOT_RUN",
+    "linux_backup_binding": "UNRESOLVED",
+    "catalog_ready_pass": false,
+    "run_sha256": "4044bead361397deea6a66521f4b565300b5cc3dd08e2569de38328f1fad8c54",
+    "followup_sha256": "187d8b780dced68b8f5a9cfaadfe8c5cefc78e947b525062bac551271b2f96e0",
+    "command_archives_verified": 73,
+    "apk_sha256": "b1739585e5c2194572002b32074545bc34e31a7036be5bf7cd9874e355521037",
+    "platform_sha256": "c6992cdc2a3e23d5aeb6ab77e7a7f6889cfcf5c262c6ed86825e6fcbf601681d",
+    "fingerprint": "google/sdk_gphone_arm64/emulator_arm64:11/RSR1.240422.006/12134477:userdebug/dev-keys"
+  },
+  "coverage": {
+    "pending_total": [
+      4,
+      5,
+      3,
+      2
+    ],
+    "worker_coverage": "LOG_ONLY_NOT_METHOD_COUNTS",
+    "followup_identity": "AVD, no-game and system PID checked; no separate boot/starttime capture",
+    "main_run_and_pre_shutdown_identity": "boot_id, PID, starttime and cmdline matched",
+    "game_configuration_store_this_round": 0,
+    "owned_fixture_store_requests": 1,
+    "queue_runs": {
+      "prelude": 1,
+      "failure": 1,
+      "retry": 1
+    },
+    "additional_request_between_failure_and_retry": 0
+  },
+  "runner_versions": {
+    "actually_executed": {
+      "schema": "nashura.backup-retry-run.v1",
+      "source": {
+        "private_archive": "runner-v1.py",
+        "sha256": "92f5791fd45e7b4b5a313bc804e26fc1a32b4899845bf832c77c59481077a3ee",
+        "bytes": 6728
+      },
+      "missing_file_interpretation": "exact cat missing diagnostic only; host exit0 does not prove remote success"
+    },
+    "published_v2": {
+      "schema": "nashura.backup-retry-run.v2",
+      "capture": "adb shell -T cat with remote exit status",
+      "validation": "synthetic command replay and rejection tests only; not re-run against real store"
+    }
+  },
+  "commands": {
+    "build": {
+      "record": {
+        "private_archive": "build/commands.json",
+        "sha256": "218f72d0b6c359a1eabcd313be6ec8124421cc79bc7013482d0ba5ab570e7c63",
+        "bytes": 4506
+      },
+      "command_count": 7,
+      "exit_codes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "exact_argv": "private record only; includes signing configuration"
+    },
+    "fixture_runner": {
+      "command": "python tools/pure_linux/run_backup_retry.py --adb ADB --serial emulator-5582 --apk PRIVATE_APK --apk-sha256 APK_SHA --platform-sha256 PLATFORM_SHA --token PRIVATE_TOKEN --output EXCLUSIVE_OUTPUT",
+      "executed_source": "private runner-v1.py; published same-name script is v2",
+      "result": {
+        "private_archive": "observe/result.json",
+        "sha256": "4044bead361397deea6a66521f4b565300b5cc3dd08e2569de38328f1fad8c54",
+        "bytes": 24549
+      },
+      "command_count": 65,
+      "all_child_host_exit_codes": [
+        0
+      ],
+      "outer_exit_code": "NOT_SEPARATELY_ARCHIVED; completed result and child exits preserved",
+      "stdout_stderr": "observe/command-NNN.stdout and .stderr; 65 pairs checked by audit"
+    },
+    "followup": {
+      "record": {
+        "private_archive": "file-followup/result.json",
+        "sha256": "187d8b780dced68b8f5a9cfaadfe8c5cefc78e947b525062bac551271b2f96e0",
+        "bytes": 2575
+      },
+      "read_only": true,
+      "exit_codes": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "stdout_stderr": "file-followup/command-NNN.stdout and .stderr; 8 pairs checked by audit"
+    },
+    "offline_audit": {
+      "argv": [
+        "/opt/anaconda3/bin/python3",
+        "tools/pure_linux/backup_retry_audit.py",
+        "--run",
+        "/private/tmp/nashura-backup-retry-20261028-822z3c8y/observe/result.json",
+        "--run-sha256",
+        "4044bead361397deea6a66521f4b565300b5cc3dd08e2569de38328f1fad8c54",
+        "--followup",
+        "/private/tmp/nashura-backup-retry-20261028-822z3c8y/file-followup/result.json",
+        "--followup-sha256",
+        "187d8b780dced68b8f5a9cfaadfe8c5cefc78e947b525062bac551271b2f96e0",
+        "--output",
+        "/private/tmp/nashura-backup-retry-20261028-822z3c8y/audit-03.json"
+      ],
+      "exit_code": 0,
+      "command_record": {
+        "private_archive": "audit-03-command.json",
+        "sha256": "2acf9c7eddd5bdcb8044bbe1bd59318880a54140b875d75e371648d821ac854d",
+        "bytes": 589
+      },
+      "output": {
+        "private_archive": "audit-03.json",
+        "sha256": "218cfd3e31d1a1eb42894e213f92e7b13fc1e16232b1006ffd986b1e91e70e70",
+        "bytes": 2309
+      },
+      "stdout": {
+        "private_archive": "audit-03.stdout",
+        "sha256": "618af2b9ae6c0121f6178aabe2fb6941e8efb9cf442042deede02b60dda3a19a",
+        "bytes": 68
+      },
+      "stderr": {
+        "private_archive": "audit-03.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    }
+  },
+  "static_analysis": {
+    "status": "STATIC_FOUND",
+    "record": {
+      "private_archive": "static-selection.json",
+      "sha256": "37eb01e7c8871e5f2755e008db48c9dc4140316f6e3b15a247cfc55ded302bd0",
+      "bytes": 6501
+    },
+    "dex_sha256": "66b315411f05fe53c5fb9f0e144857cef26dfce79927b004cb0e5a057a347a0a",
+    "dump_sha256": "88b8396fea3c5f786aee3f44b6dba41767d0ccbe2a65839ada57c6708adc3e4a",
+    "methods": {
+      "com.android.server.backup.keyvalue.KeyValueBackupTask.finishTask:(I)V": {
+        "sha256": "5c5aa11cadea05238173bf80c3280654aa010069143ae6c68e8a46074c6f0d79",
+        "instructions": 106,
+        "catch_table_present": true,
+        "direct_calls": [
+          "Landroid/os/ConditionVariable;.open:()V",
+          "Lcom/android/internal/backup/IBackupTransport;.getCurrentRestoreSet:()J",
+          "Lcom/android/internal/backup/IBackupTransport;.name:()Ljava/lang/String;",
+          "Lcom/android/server/backup/DataChangedJournal;.delete:()Z",
+          "Lcom/android/server/backup/UserBackupManagerService$BackupWakeLock;.release:()V",
+          "Lcom/android/server/backup/UserBackupManagerService;.dataChangedImpl:(Ljava/lang/String;)V",
+          "Lcom/android/server/backup/UserBackupManagerService;.getCurrentToken:()J",
+          "Lcom/android/server/backup/UserBackupManagerService;.getWakelock:()Lcom/android/server/backup/UserBackupManagerService$BackupWakeLock;",
+          "Lcom/android/server/backup/UserBackupManagerService;.setBackupRunning:(Z)V",
+          "Lcom/android/server/backup/UserBackupManagerService;.setCurrentToken:(J)V",
+          "Lcom/android/server/backup/UserBackupManagerService;.writeRestoreTokens:()V",
+          "Lcom/android/server/backup/fullbackup/PerformFullTransportBackupTask;.unregisterTask:()V",
+          "Lcom/android/server/backup/internal/OnTaskFinishedListener;.onFinished:(Ljava/lang/String;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onBackupFinished:(I)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onJournalDeleteFailed:(Lcom/android/server/backup/DataChangedJournal;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onPendingInitializeTransportError:(Ljava/lang/Exception;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onSetCurrentTokenError:(Ljava/lang/Exception;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onStartFullBackup:(Ljava/util/List;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onTaskFinished:()V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onTransportNotInitialized:(Ljava/lang/String;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.getBackupFinishedStatus:(ZI)I",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.triggerTransportInitializationLocked:()V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.unregisterTask:()V",
+          "Lcom/android/server/backup/transport/TransportClient;.connectOrThrow:(Ljava/lang/String;)Lcom/android/internal/backup/IBackupTransport;",
+          "Ljava/lang/Thread;.<init>:(Ljava/lang/Runnable;Ljava/lang/String;)V",
+          "Ljava/lang/Thread;.start:()V",
+          "Ljava/util/Iterator;.hasNext:()Z",
+          "Ljava/util/Iterator;.next:()Ljava/lang/Object;",
+          "Ljava/util/List;.isEmpty:()Z",
+          "Ljava/util/List;.iterator:()Ljava/util/Iterator;"
+        ],
+        "status": "STATIC_FOUND"
+      },
+      "com.android.server.backup.keyvalue.KeyValueBackupTask.revertTask:()V": {
+        "sha256": "9a92548cb64e9542638e0a6f39a0d72d90cf292e694aac2b23905240c528a5d7",
+        "instructions": 38,
+        "catch_table_present": true,
+        "direct_calls": [
+          "Lcom/android/internal/backup/IBackupTransport;.requestBackupTime:()J",
+          "Lcom/android/server/backup/KeyValueBackupJob;.schedule:(ILandroid/content/Context;JLcom/android/server/backup/BackupManagerConstants;)V",
+          "Lcom/android/server/backup/UserBackupManagerService;.dataChangedImpl:(Ljava/lang/String;)V",
+          "Lcom/android/server/backup/UserBackupManagerService;.getConstants:()Lcom/android/server/backup/BackupManagerConstants;",
+          "Lcom/android/server/backup/UserBackupManagerService;.getContext:()Landroid/content/Context;",
+          "Lcom/android/server/backup/UserBackupManagerService;.getUserId:()I",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onRevertTask:()V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onTransportRequestBackupTimeError:(Ljava/lang/Exception;)V",
+          "Lcom/android/server/backup/transport/TransportClient;.connectOrThrow:(Ljava/lang/String;)Lcom/android/internal/backup/IBackupTransport;",
+          "Ljava/util/Iterator;.hasNext:()Z",
+          "Ljava/util/Iterator;.next:()Ljava/lang/Object;",
+          "Ljava/util/List;.iterator:()Ljava/util/Iterator;"
+        ],
+        "status": "STATIC_FOUND"
+      },
+      "com.android.server.backup.keyvalue.KeyValueBackupTask.run:()V": {
+        "sha256": "a9b4739012ac34db03305f52d0de010c26b77afaa36f3ef679339573852d351b",
+        "instructions": 51,
+        "catch_table_present": true,
+        "direct_calls": [
+          "Landroid/os/Process;.setThreadPriority:(I)V",
+          "Lcom/android/server/backup/UserBackupManagerService;.dataChangedImpl:(Ljava/lang/String;)V",
+          "Lcom/android/server/backup/UserBackupManagerService;.resetBackupState:(Ljava/io/File;)V",
+          "Lcom/android/server/backup/keyvalue/AgentException;.isTransitory:()Z",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.backupPackage:(Ljava/lang/String;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.backupPm:()V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.finishTask:(I)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.informTransportOfUnchangedApps:(Ljava/util/Set;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.revertTask:()V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.setSuccessState:(Ljava/lang/String;Z)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.startTask:()V",
+          "Lcom/android/server/backup/keyvalue/TaskException;.getStatus:()I",
+          "Lcom/android/server/backup/keyvalue/TaskException;.isStateCompromised:()Z",
+          "Ljava/lang/String;.equals:(Ljava/lang/Object;)Z",
+          "Ljava/util/HashSet;.<init>:()V",
+          "Ljava/util/List;.isEmpty:()Z",
+          "Ljava/util/List;.remove:(I)Ljava/lang/Object;",
+          "Ljava/util/Set;.add:(Ljava/lang/Object;)Z"
+        ],
+        "status": "STATIC_FOUND"
+      }
+    },
+    "runtime_method_counts": "UNKNOWN",
+    "transitive_callees": "UNRESOLVED",
+    "catalog_ready_pass": false
+  },
+  "validation": {
+    "isolated_copy": true,
+    "commands": [
+      {
+        "argv": [
+          "/opt/anaconda3/bin/python3",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/pure_linux"
+        ],
+        "exit_code": 0,
+        "seconds": 10.844,
+        "stdout_sha256": "c54ccffa516f8b4449de098ccbbfc2e7f5bb8796bd74ed36ed2e8f375f61049c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "cwd": "PRIVATE_RUN/validation-v1/source",
+        "stdout": {
+          "private_archive": "validation-v1/command-0.stdout",
+          "sha256": "c54ccffa516f8b4449de098ccbbfc2e7f5bb8796bd74ed36ed2e8f375f61049c",
+          "bytes": 992
+        },
+        "stderr": {
+          "private_archive": "validation-v1/command-0.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      {
+        "argv": [
+          "/opt/anaconda3/bin/python3",
+          "tools/run_main_engine_checks.py"
+        ],
+        "exit_code": 0,
+        "seconds": 33.898,
+        "stdout_sha256": "2ed58c68f6cd77ba9287ff40d22ecb873ce95c66787cb6557262912fdaadfd2d",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "cwd": "PRIVATE_RUN/validation-v1/source",
+        "stdout": {
+          "private_archive": "validation-v1/command-1.stdout",
+          "sha256": "2ed58c68f6cd77ba9287ff40d22ecb873ce95c66787cb6557262912fdaadfd2d",
+          "bytes": 261
+        },
+        "stderr": {
+          "private_archive": "validation-v1/command-1.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      {
+        "argv": [
+          "/opt/anaconda3/bin/python3",
+          "tools/run_public_checks.py"
+        ],
+        "exit_code": 0,
+        "seconds": 243.361,
+        "stdout_sha256": "38188f575237b068775d3c47abb78e8cbb98fc1c28ea940eac1b47cbd0b47157",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "cwd": "PRIVATE_RUN/validation-v1/source",
+        "stdout": {
+          "private_archive": "validation-v1/command-2.stdout",
+          "sha256": "38188f575237b068775d3c47abb78e8cbb98fc1c28ea940eac1b47cbd0b47157",
+          "bytes": 3171
+        },
+        "stderr": {
+          "private_archive": "validation-v1/command-2.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    ],
+    "command_archive": {
+      "private_archive": "validation-v1/commands.json",
+      "sha256": "059a43f4a6a26e4b81152865a2adec912129b19a13523c4cb8a4bb9e43633d1c",
+      "bytes": 1039
+    },
+    "new_tool_tests": 47,
+    "pure_linux": {
+      "passed": 857,
+      "skipped": 1
+    },
+    "main_engine": {
+      "passed": 211
+    },
+    "public_nine_groups": {
+      "passed": 1104,
+      "skipped": 42
+    },
+    "sets_not_additive": true,
+    "original_xml": {
+      "files": 253,
+      "unchanged": true,
+      "record": {
+        "private_archive": "validation-v1/original-xml.json",
+        "sha256": "f698738923df1a6261c8bd5c42c981382377f0249f34fa755736b97717b33025",
+        "bytes": 36897
+      }
+    },
+    "source_validation_copy": {
+      "files": 6,
+      "all_sha256_equal": true
+    }
+  },
+  "release": {
+    "pre_shutdown_commands": {
+      "private_archive": "release-instance/commands.json",
+      "sha256": "f8eb1d21be4c2478a3de006346f9662c0c25e1257bedeab09022112350e040a2",
+      "bytes": 1435
+    },
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "identity_before_shutdown": {
+      "private_archive": "release-instance/identity-before-shutdown.json",
+      "sha256": "5759bb2fc9f7fb6ed718861cd3af80235fe1a783562a7af6acd14c2d7377b3c5",
+      "bytes": 120
+    },
+    "host_after": {
+      "private_archive": "release-instance/host-after.json",
+      "sha256": "76c1bd4592b1ced4fa5d0027ebd0a2cce9d99859310f2bc707a0af9fc6aea79e",
+      "bytes": 194
+    },
+    "host_after_exit_code": 1,
+    "host_after_meaning": "owned emulator PID 27690 no longer exists",
+    "devices_after": {
+      "private_archive": "release-instance/devices-after.json",
+      "sha256": "7e66f9289f625a988e940aa9e0f651307ebe98277c88cf3b806dff042f6cde0f",
+      "bytes": 194
+    },
+    "devices_after_exit_code": 0,
+    "verified_remaining_serials": [
+      "emulator-5580"
+    ],
+    "protected_after": {
+      "private_archive": "release-instance/protected-after.json",
+      "sha256": "97af5040bd121a5663a41bfb35208ba7777c2664ffbcd6bcaddf70e975038b81",
+      "bytes": 194
+    },
+    "protected_after_exit_code": 0,
+    "protected_5580_and_ubuntu": "not stopped or modified"
+  },
+  "failures_retained": [
+    {
+      "stage": "v1 file capture",
+      "reason": "adb exec-out cat lost remote missing-file exit status; exact diagnostics and read-only shell -T followup retained",
+      "archive": {
+        "private_archive": "observe/result.json",
+        "sha256": "4044bead361397deea6a66521f4b565300b5cc3dd08e2569de38328f1fad8c54",
+        "bytes": 24549
+      }
+    },
+    {
+      "stage": "initial negative test",
+      "exit_code": 1,
+      "reason": "changing both agent enter and return thread preserved a valid trajectory; test corrected to change enter only",
+      "record": {
+        "private_archive": "tests-initial.json",
+        "sha256": "01782841c71ee4175c0578099921758048eba889f7f06db8869828abd3579ad6",
+        "bytes": 108
+      },
+      "stdout": {
+        "private_archive": "tests-initial.stdout",
+        "sha256": "17d5a67c352bd694364487d3bfb2c64a9cd2dfe76e25439b9af9ad3f793d1458",
+        "bytes": 4093
+      },
+      "stderr": {
+        "private_archive": "tests-initial.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    }
+  ],
+  "gates": {
+    "linux_backup_binding": "UNRESOLVED",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "game_state": "NOT_RUN",
+    "game_state_step": "NOT_RUN",
+    "native_match": "NOT_RUN",
+    "no_vm": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "first_unresolved_dependency": "Linux Backup side-effect ownership, persistent queue and error propagation binding to the real loading-key configuration bridge",
+  "next_step": "Bind only evidenced codec/dual-slot/commit/journal semantics to Linux; retain unresolved_backup for uncovered behavior, then retry natural catalog in a fresh libg subprocess",
+  "publication_checks": {
+    "stage": "pre-staging checks; repeated after final manifest update",
+    "command_record": {
+      "private_archive": "publication-checks/commands.json",
+      "sha256": "4c4594436dd5fcec5f184b281baa8a30d2b05613fd6d4d1ff7461de22daec1d6",
+      "bytes": 987
+    },
+    "commands": [
+      {
+        "argv": [
+          "/opt/anaconda3/bin/python3",
+          "tools/check_public_snapshot.py"
+        ],
+        "exit_code": 0,
+        "seconds": 0.542,
+        "stdout_sha256": "35d45d2f4c37ec98a0ae025b4c1b07d8f226bb3bb5d975e2a8211fc6e7c3dfd8",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/opt/homebrew/bin/gitleaks",
+          "dir",
+          ".",
+          "--config",
+          ".gitleaks.toml",
+          "--redact"
+        ],
+        "exit_code": 0,
+        "seconds": 3.658,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "351ab4b368b969225ee15d069ade91fc05d54487688e17f991d55e9a72dcd21c"
+      },
+      {
+        "argv": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exit_code": 0,
+        "seconds": 0.024,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "source_files_verified": 2557,
+    "credentials_result": "no leaks found",
+    "source_manifest_history": "preserved original source SHA and transformation history; added one change description per maintained document",
+    "staging_commit_push": "performed after this evidence; final SHA and remote verification in delivery response"
+  }
+}
