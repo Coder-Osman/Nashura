@@ -1,0 +1,22 @@
+{
+  "schema": "nashura.catalog-update-public-evidence.v1",
+  "base_commit": "6165b5d64a176842829e1c0d4a73a6546e20c5b9",
+  "status": "PASS_LIMITED",
+  "e1_inventory_before_and_after_sha256": "411aa1c884c90366e4cae2600d13e886aebe000af282847eb494d65d7d62a942",
+  "e1_semantics_sha256": "eecd21e95109b2866fdfeb2696c623968edca3d096ac99825a5398a0ca022e99",
+  "loader_result_sha256": "caad1b680c3a52efb00d49ed8e7762d77e474f5600df788e8ac684006d093014",
+  "loader_trace_sha256": "0a34bb830c6e805de966479b0cb8276b7a8b6068d76cd440b32c8c6b758ca071",
+  "loader_stderr_sha256": "d17169692bc04fada60abc7fe686c1ac4abbdcd58589e89ceaa7edf22d45b875",
+  "comparison_sha256": "8983b1bf148dc576da1dae7613936bb00174999ee84a48f758032de045456854",
+  "tool_sha256": "e44089a55101f8315f12a265a814ea0c99eb2f590d813806908797cf0a3817e8",
+  "comparison_exit": 0,
+  "tests": {"passed": 999, "skipped": 1, "exit": 0},
+  "android_files": 990,
+  "linux_files": 990,
+  "sha_mismatches": 0,
+  "loader_opened_paths": 131,
+  "opened_sha_mismatches": 0,
+  "mapped_bytes_consumed": "UNKNOWN",
+  "catalog_cell_comparison": "NOT_RUN",
+  "catalog_ready_pass": false
+}

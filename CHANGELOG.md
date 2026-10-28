@@ -1,5 +1,10 @@
 # 变更记录
 
+## 2026-10-28：Android 与 Linux update 资源身份
+
+- 比较 E1 历史与 Linux loader 的990项 update 清单及131个实际打开路径，SHA全部一致。
+- 本结果限定文件身份；catalog 表值、Backup 与严格门仍未验收。
+
 ## 2026-10-28：历史 Android 与 Linux loader 的 APK 资源身份
 
 - 匹配历史 E1 APK，逐项核验两 APK 的9,829资源字节及 Linux 619暂存资源清单。
