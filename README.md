@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-28：真实 Backup journal 追加的 ARM64 Linux 局部对照
+
+隔离Android两个真实框架进程与Linux/Bionic两个比较进程均exit0；8条追加84bytes、
+另进程重开后9条94bytes逐字节一致。写前/写后fsync已观测，异常边界分别列明。
+新增44项工具测试通过，全量专项689通过/1跳过、主工程211通过；不累计重叠集合。
+结果为JOURNAL_APPEND_PARITY_LIMITED，尚未绑定Backup服务，严格catalog仍BLOCKED；
+本轮未加载libg或推进GameState。详见
+[报告](agent-handoff/PURE_LINUX_BACKUP_JOURNAL_RUNTIME_2026-10-28.md)、
+[证据](agent-handoff/pure-linux-backup-journal-runtime-evidence-20261028.json)及
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_JOURNAL.md)。以下保留历史状态。
+
 ## 2026-10-28：Backup 被动分支观察与 journal/scheduler 边界
 
 隔离AVD的45秒被动窗口未捕获目标自然请求，结果NOT_OBSERVED；六hook完整安装，

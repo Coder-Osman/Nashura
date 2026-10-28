@@ -1,5 +1,17 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：真实 journal 追加与重开局部一致
+
+真实Android DataChangedJournal与ARM64 Linux/Bionic helper逐步比较：8条84bytes、
+跨进程重开9条94bytes完全一致；两环境各两个进程exit0。写前/写后fsync有真实trace，
+无断电持久化结论。异常用例输入差别、真实平台范围及合成故障注入边界单列。
+专项689通过/1跳过，主工程211通过；公开回归与发布检查结果见本轮机器证据。
+未重复游戏store或主动Backup，未触及服务pending，不重新加载libg。
+Linux服务绑定及CATALOG_READY_PASS仍BLOCKED，GameState/真实Step/完整局NOT_RUN。
+详见[报告](../agent-handoff/PURE_LINUX_BACKUP_JOURNAL_RUNTIME_2026-10-28.md)、
+[证据](../agent-handoff/pure-linux-backup-journal-runtime-evidence-20261028.json)及
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_JOURNAL.md)。以下保留历史记录。
+
 ## 2026-10-28 E2.1-N：Backup 自然分支与 journal/scheduler 静态边界
 
 45.006588917秒真实被动窗口：目标入口0、事件0、丢事件0、观察错误0；六hook已安装，

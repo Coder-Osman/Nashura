@@ -1,0 +1,445 @@
+{
+  "schema": "nashura.pure-linux-backup-journal-runtime.v1",
+  "baseline_commit": "952cbd8c17b4cb8e926583d091055cde6efddc52",
+  "delivery_commit": "containing_commit",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "status": "JOURNAL_APPEND_PARITY_LIMITED",
+  "private_evidence_root": "/private/tmp/nashura-journal-runtime-20261028-ea_t_4m4",
+  "environment": {
+    "host": {
+      "os": "Darwin",
+      "architecture": "arm64",
+      "macos": "15.6",
+      "memory_bytes": 38654705664
+    },
+    "android": {
+      "serial": "emulator-5580",
+      "api": 30,
+      "abi": "arm64-v8a",
+      "fingerprint": "google/sdk_gphone_arm64/emulator_arm64:11/RSR1.240422.006/12134477:userdebug/dev-keys",
+      "services_jar_sha256": "c6992cdc2a3e23d5aeb6ab77e7a7f6889cfcf5c262c6ed86825e6fcbf601681d",
+      "framework_class": "com.android.server.backup.DataChangedJournal",
+      "processes": [
+        {
+          "phase": "prepare",
+          "pid": 8469,
+          "exit_code": 0
+        },
+        {
+          "phase": "reopen",
+          "pid": 8492,
+          "exit_code": 0
+        }
+      ],
+      "existing_system_server_pid": 522,
+      "existing_game_pid": 6901,
+      "existing_processes_restarted": false
+    },
+    "guest": {
+      "os": "Linux",
+      "architecture": "aarch64",
+      "kernel": "6.8.0-138-generic",
+      "runtime_sha256": {
+        "linker64": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7",
+        "libc.so": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569",
+        "libdl.so": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4",
+        "libm.so": "42b2bb8acfd29440f8b0adcabac9a152be517b937334aa8d5dbb5eb7e4a5d82e",
+        "libnetd_client.so": "3737b3a8f9122f0fbec3513d010daf77109d149ccfe37bebd2dc6255f05d740c",
+        "libc++.so": "e9215107e52e11c3471f4c8ebfc8807bb7d4c6769ea3782d65fdc829c0cfdbf6"
+      },
+      "full_maps_reaudit": false
+    }
+  },
+  "source_sha256": {
+    "tools/pure_linux/BackupJournalProbe.java": "b42d59b594039c6c69282f3ffe647b3026e2c950f741a8f174f1284cac0b2439",
+    "tools/pure_linux/backup_journal.c": "ecc5aa1ee4998c21e4aec037513776d4cceefab5b097d7052f6ef75d6b7f4ce0",
+    "tools/pure_linux/backup_journal.h": "6cf71d562a40b12d5703d82bd1fbbdec327d908e55bdb546aa20c5a0fa14e444",
+    "tools/pure_linux/backup_journal_compare.py": "9e304dc4e1fb24ab8910e2406e7faf75ee95c20a5983dab93a7cfaf037ac9759",
+    "tools/pure_linux/backup_journal_contract.py": "33382cbb865908444311011f88ca30463b81ef215a02a60f6975e32b111cdc65",
+    "tools/pure_linux/backup_journal_fault_fixture.c": "6c2c7a1cad0d01266c00d9e07e0c49b648791a313d8726e0b8560524d0f1689c",
+    "tools/pure_linux/backup_journal_probe.c": "7a061b9259f51eccca5532b07af4ef70cefc5bafa8208d690a6ba5868d567b4a",
+    "tools/pure_linux/test_backup_journal.py": "93daeda54adfad73d691e6d4297b0d48778d96964b2d525821d4b3b8a9633269",
+    "tools/pure_linux/test_backup_journal_compare.py": "481711b90eff2bd3843c41f4e7f9db93230f24f117957e3b91720be786e2e520",
+    "tools/pure_linux/test_backup_journal_contract.py": "b9f32aaeda5f58a005e2b1147ffd433f251cd908d20b589c8d2116a5e3fd335a"
+  },
+  "private_artifacts": {
+    "prepare.stdout": {
+      "sha256": "553c3f05c6ab519d39d8becc12f8b9e32d5d6029dc7390ef647df0d80d4fb1de",
+      "bytes": 1963
+    },
+    "prepare.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "prepare.strace": {
+      "sha256": "e17ff1de833bd5e73be0798edca10fbd6984f7307c2113549661a72a0b1318a4",
+      "bytes": 75510
+    },
+    "reopen.stdout": {
+      "sha256": "93c520e0cbacd1785702138f4ff825bed92ae6922b09ae952c3897fa2acf149a",
+      "bytes": 430
+    },
+    "reopen.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "reopen.strace": {
+      "sha256": "1654d50678b481c8b9dfeff05725f07eda6c6e329cbba966412df7b9c4460656",
+      "bytes": 67118
+    },
+    "linux-driver-v3.json": {
+      "sha256": "0898c4f0c7621f3c060abdd6cafe1f60fed6210eb9434ac20404224f4c65a9fe",
+      "bytes": 1843
+    },
+    "linux-prepare-v3.json": {
+      "sha256": "41a0d29bf3213bb0c4287f3696299ac7bba2db125a7b445aec0eb68b558954c9",
+      "bytes": 1017
+    },
+    "linux-reopen-v3.json": {
+      "sha256": "9a9fcee45ac55f2066d96d33a5b79192f822ed4afd3d651331f875fd4e4673d5",
+      "bytes": 831
+    },
+    "linux-prepare-v3.strace": {
+      "sha256": "cfd3fbecee6a96135eb6c96f4127e466b85ce80e832f2a89e1f5a0157b49b761",
+      "bytes": 64945
+    },
+    "linux-reopen-v3.strace": {
+      "sha256": "29630a1d62f3fcb506bf359ad3ba764635917c465dfff5502e73f46e46f8b6cf",
+      "bytes": 29919
+    },
+    "guest_driver.py": {
+      "sha256": "cf05aeffa7507839be25dd552a6c86ed18de2b2809d74a6723bfb5438a3aec66",
+      "bytes": 1448
+    },
+    "runtime-sha256.txt": {
+      "sha256": "5295d36afaf482660e2448b6dd920261cfa171162c4013c0e199fdbd7560e7c6",
+      "bytes": 723
+    },
+    "journal-probe": {
+      "sha256": "273b0755343cc3fae0d66ad64f78bb9afff6ed24dfccd6484120ef2389b06439",
+      "bytes": 9456
+    },
+    "classes/BackupJournalProbe.class": {
+      "sha256": "0398e1d15b7452919698b790e49d743a28e2dfab18d40b788213688efdf452a6",
+      "bytes": 8032
+    },
+    "dex/classes.dex": {
+      "sha256": "5ed5c00cf4a3a45f6b292bdadae73695c2612534f65463caa1651bfe812a71cf",
+      "bytes": 8428
+    },
+    "linux-prepare.json": {
+      "sha256": "3d6bad9503b9858a49a15d0c4ab6c5b8aeaa8be5ae10ffc41dee736e8b64d55e",
+      "bytes": 801
+    },
+    "linux-reopen.json": {
+      "sha256": "4644b3d5f005cebdec7fcb8453b049e623fb30589c7f939ca5afa253b13ef53c",
+      "bytes": 621
+    },
+    "linux-prepare.stderr": {
+      "sha256": "f16a22f799a4d97e8fe77c5d5dc46ea3dcd3343556e0a02a04c310d110e0a088",
+      "bytes": 942
+    },
+    "linux-reopen.stderr": {
+      "sha256": "818f754a6447f67ddba809782804737024353f1d9e950e381d5f416b3b7d57f1",
+      "bytes": 477
+    },
+    "linux-prepare.strace": {
+      "sha256": "734d724660207d07375709f860813c94f568861540684549604399534bd200bc",
+      "bytes": 56141
+    },
+    "linux-reopen.strace": {
+      "sha256": "5358d6edc6f76cf0990f2054145b77609269bd05de5cbd09b5aa515be3a2e973",
+      "bytes": 53518
+    },
+    "linux-prepare-v2.json": {
+      "sha256": "3ea25d179c9c11003b7fdf48c753e9ff56bee65a645710a5313dabbdd08ccfbd",
+      "bytes": 1017
+    },
+    "linux-reopen-v2.json": {
+      "sha256": "d5629e0dbbdf633d738e5fa6f90c004f9941c351d85b6b43198872383c441cbc",
+      "bytes": 831
+    },
+    "linux-prepare-v2.exit": {
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    },
+    "linux-reopen-v2.exit": {
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "bytes": 1
+    }
+  },
+  "linux_commands": [
+    {
+      "phase": "prepare",
+      "command": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "160",
+        "-e",
+        "trace=openat,write,lseek,fsync,close",
+        "-o",
+        "/tmp/nashura-journal-ea_t_4m4/prepare-v3.strace",
+        "python3",
+        "/tmp/nashura-journal-ea_t_4m4/compare-v2.py",
+        "--probe",
+        "/tmp/nashura-journal-ea_t_4m4/journal-probe",
+        "--linker",
+        "/tmp/nashura-user-apk-20261027-xE1hhMr8/linker64",
+        "--android-log",
+        "/tmp/nashura-journal-ea_t_4m4/android-prepare.stdout",
+        "--directory",
+        "/tmp/nashura-journal-ea_t_4m4/store-v3",
+        "--output",
+        "/tmp/nashura-journal-ea_t_4m4/prepare-v3.json",
+        "--phase",
+        "prepare"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "phase": "reopen",
+      "command": [
+        "strace",
+        "-f",
+        "-qq",
+        "-s",
+        "160",
+        "-e",
+        "trace=openat,write,lseek,fsync,close",
+        "-o",
+        "/tmp/nashura-journal-ea_t_4m4/reopen-v3.strace",
+        "python3",
+        "/tmp/nashura-journal-ea_t_4m4/compare-v2.py",
+        "--probe",
+        "/tmp/nashura-journal-ea_t_4m4/journal-probe",
+        "--linker",
+        "/tmp/nashura-user-apk-20261027-xE1hhMr8/linker64",
+        "--android-log",
+        "/tmp/nashura-journal-ea_t_4m4/android-reopen.stdout",
+        "--directory",
+        "/tmp/nashura-journal-ea_t_4m4/store-v3",
+        "--output",
+        "/tmp/nashura-journal-ea_t_4m4/reopen-v3.json",
+        "--phase",
+        "reopen"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "native_comparisons": [
+    {
+      "schema": "nashura.backup-journal-comparison.v1",
+      "phase": "prepare",
+      "os": "Linux",
+      "machine": "aarch64",
+      "kernel": "6.8.0-138-generic",
+      "pid": 4541,
+      "libg_loaded": false,
+      "backup_binding_pass": false,
+      "catalog_ready_pass": false,
+      "status": "JOURNAL_APPEND_PARITY_LIMITED",
+      "inputs": {
+        "implementation": "273b0755343cc3fae0d66ad64f78bb9afff6ed24dfccd6484120ef2389b06439",
+        "android_log": "553c3f05c6ab519d39d8becc12f8b9e32d5d6029dc7390ef647df0d80d4fb1de",
+        "comparison_script": "9e304dc4e1fb24ab8910e2406e7faf75ee95c20a5983dab93a7cfaf037ac9759",
+        "linker": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+      },
+      "checks": [
+        "append-0",
+        "append-1",
+        "append-2",
+        "append-3",
+        "append-4",
+        "append-5",
+        "append-6",
+        "append-7",
+        "overflow-preserved",
+        "missing-parent",
+        "file-parent",
+        "directory-journal"
+      ],
+      "journal_sha256": "5f56c6f93bdfae34f99757554e2017e19435c20cd072e0d67e839fa583d81242",
+      "journal_bytes": 84
+    },
+    {
+      "schema": "nashura.backup-journal-comparison.v1",
+      "phase": "reopen",
+      "os": "Linux",
+      "machine": "aarch64",
+      "kernel": "6.8.0-138-generic",
+      "pid": 4557,
+      "libg_loaded": false,
+      "backup_binding_pass": false,
+      "catalog_ready_pass": false,
+      "status": "JOURNAL_APPEND_PARITY_LIMITED",
+      "inputs": {
+        "implementation": "273b0755343cc3fae0d66ad64f78bb9afff6ed24dfccd6484120ef2389b06439",
+        "android_log": "93c520e0cbacd1785702138f4ff825bed92ae6922b09ae952c3897fa2acf149a",
+        "comparison_script": "9e304dc4e1fb24ab8910e2406e7faf75ee95c20a5983dab93a7cfaf037ac9759",
+        "linker": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+      },
+      "checks": [
+        "cross-process-reopen-append"
+      ],
+      "journal_sha256": "7daa695e11315526d903c722e194be833581b205db6122a9b4aaa27ca1299725",
+      "journal_bytes": 94
+    }
+  ],
+  "syscall_observations": {
+    "classification": "RUNTIME_OBSERVED",
+    "append_open_flags": [
+      "O_RDWR",
+      "O_CREAT"
+    ],
+    "observed_o_sync": false,
+    "successful_write_sequence": [
+      "open",
+      "fsync",
+      "seek_end",
+      "write",
+      "fsync",
+      "close"
+    ],
+    "android_append_opens": {
+      "prepare_success": 8,
+      "prepare_overflow": 1,
+      "reopen": 1
+    },
+    "linux_append_opens": {
+      "prepare_success": 8,
+      "prepare_overflow": 1,
+      "reopen": 1
+    },
+    "temporary_creation_counted_as_append": false,
+    "power_loss_durability": "NOT_RUN"
+  },
+  "scope_limits": [
+    "Android framework class with owned test strings; not a game configuration transaction",
+    "Android overflow: 65536 ASCII; Linux overflow: 21846 Chinese characters; different inputs",
+    "Exception classes and errno verified only for listed cases, not whole-domain equivalence",
+    "Linux helper has no temporary-name creation, service lock, pending queue, journal ownership or scheduler binding",
+    "No service delivery or persistence under power loss evidence",
+    "No libg load or engine/resource identity recheck this phase"
+  ],
+  "failure_history": [
+    {
+      "phase": "linux_initial",
+      "status": "FAILED",
+      "cause": "Android linker received non-absolute probe path; prepare failed, dependent reopen failed",
+      "retained": true
+    },
+    {
+      "phase": "linux_v2",
+      "status": "INSUFFICIENT_EXIT_EVIDENCE",
+      "cause": "comparison JSON passed but program exit records incomplete",
+      "retained": true
+    },
+    {
+      "phase": "linux_v3",
+      "status": "JOURNAL_APPEND_PARITY_LIMITED",
+      "exit_codes": [
+        0,
+        0
+      ],
+      "source": "subprocess returncode, not vmrun returncode"
+    },
+    {
+      "phase": "guest_environment_initial",
+      "status": "TOOL_FAILURE",
+      "cause": "FileNotFound in environment check; not engine failure",
+      "retained": true
+    }
+  ],
+  "engineering_tests": [
+    {
+      "command": [
+        "/opt/anaconda3/bin/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tools/pure_linux"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 10.798408031463623,
+      "stdout_sha256": "a9340bec11521fb88e901d5dd8dd7246b7f23b65bfcfaf406ac60a0d2d560fcc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "passed": 689,
+      "skipped": 1,
+      "log_path": "/private/tmp/nashura-journal-runtime-20261028-ea_t_4m4/specialist-checks.stdout",
+      "scope": "engineering_only"
+    },
+    {
+      "command": [
+        "/opt/anaconda3/bin/python3",
+        "tools/run_main_engine_checks.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 39.261900186538696,
+      "stdout_sha256": "787258fa53c09374b8c14124ae633f570a58f00e18d01a943169354910286bdd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "passed": 211,
+      "skipped": 0,
+      "log_path": "/private/tmp/nashura-journal-runtime-20261028-ea_t_4m4/main-checks.stdout",
+      "scope": "engineering_only"
+    },
+    {
+      "command": [
+        "/opt/anaconda3/bin/python3",
+        "tools/run_public_checks.py"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 247.83753538131714,
+      "stdout_sha256": "4ebe2c801f8c9e099394aa6420869315d8985e2b3c8a89c5c78e630939e8322c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "passed": 1104,
+      "skipped": 42,
+      "log_path": "/private/tmp/nashura-journal-runtime-20261028-ea_t_4m4/public-checks.stdout",
+      "scope": "engineering_only"
+    }
+  ],
+  "tracked_xml_preservation": {
+    "checked": 248,
+    "changed": [],
+    "comparison": "byte-for-byte against HEAD; tests ran in isolated source copy"
+  },
+  "gates": {
+    "journal_append_parity_limited": true,
+    "backup_service_binding_pass": false,
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate_constructor_setup_load": "NOT_RUN",
+    "empty_battle_reset": "NOT_RUN",
+    "gamestate_step": "NOT_RUN",
+    "no_java_vm_cold_start": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "complete_battle": "NOT_RUN",
+    "training": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "release": {
+    "fetch_retry": {
+      "command": [
+        "git",
+        "fetch",
+        "origin",
+        "--prune"
+      ],
+      "exit_code": null,
+      "timeout_seconds": 30,
+      "status": "NETWORK_TIMEOUT",
+      "duration_seconds": 30.00318694114685
+    },
+    "github_connector": "HTTP 401 token_revoked; no remote modification",
+    "remote_freshness": "UNVERIFIED",
+    "push": "pending bounded attempt after commit"
+  },
+  "next_unique_blocker": "Loading-key Backup service side-effect contract and Linux binding; journal append alone is insufficient; unresolved_backup remains explicit failure"
+}

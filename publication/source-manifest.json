@@ -10194,26 +10194,28 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "e3cf6c24bce9ee0ed9dfda169a95e67a6bb042d3cf99e70aa12cb6291c4fc0bc",
-      "bytes": 38701,
+      "sha256": "b8eae2465a655c9fc488ca89b8b3e714d62c32092f5d9e22d4955809ccaead45",
+      "bytes": 39323,
       "source_sha256": "c008f55f17031af6abae22b02af32e87d0c8c9d3cbc1a7c54fc4f73bdf72e3a7",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
         "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved",
-        "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved"
+        "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
+        "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "c161942b6967e45043a6f7e57bfd6c96118d0e3c64321a7e6096b93e61daa679",
-      "bytes": 69169,
+      "sha256": "1c8ac663c62b336e3dc077b1c31422490c0738cf3e2db196ab6bd80077938e62",
+      "bytes": 70097,
       "source_sha256": "7956b3b23c44bda14bd02a13c725f93621bc473669cff1644c882afc3de0d310",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
         "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved",
-        "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved"
+        "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
+        "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary"
       ]
     },
     {
@@ -16625,14 +16627,15 @@
     },
     {
       "path": "README.md",
-      "sha256": "5e09d7f35a267fb3e43730fc87a24e0dae710e6f88ec6bce2518221e6926eb04",
-      "bytes": 37421,
+      "sha256": "4e12c87425dee22ef61d7e6eda38617cbee8a017e2943791685dec23c40a2d25",
+      "bytes": 38209,
       "source_sha256": "268a62062b889a6cc7bd8034c306e2937b73840ef1d6e918fee39525ef232472",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
         "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved",
-        "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved"
+        "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
+        "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary"
       ]
     },
     {
@@ -17595,10 +17598,87 @@
       "bytes": 1999,
       "source_sha256": "d4ce4958304f06e04e55b8ca447e8a59ac1c4d125cda2212faadc128149bfa4c",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/BackupJournalProbe.java",
+      "sha256": "b42d59b594039c6c69282f3ffe647b3026e2c950f741a8f174f1284cac0b2439",
+      "bytes": 7386,
+      "source_sha256": "b42d59b594039c6c69282f3ffe647b3026e2c950f741a8f174f1284cac0b2439",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_journal.c",
+      "sha256": "ecc5aa1ee4998c21e4aec037513776d4cceefab5b097d7052f6ef75d6b7f4ce0",
+      "bytes": 2424,
+      "source_sha256": "ecc5aa1ee4998c21e4aec037513776d4cceefab5b097d7052f6ef75d6b7f4ce0",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_journal.h",
+      "sha256": "6cf71d562a40b12d5703d82bd1fbbdec327d908e55bdb546aa20c5a0fa14e444",
+      "bytes": 204,
+      "source_sha256": "6cf71d562a40b12d5703d82bd1fbbdec327d908e55bdb546aa20c5a0fa14e444",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_journal_compare.py",
+      "sha256": "9e304dc4e1fb24ab8910e2406e7faf75ee95c20a5983dab93a7cfaf037ac9759",
+      "bytes": 7975,
+      "source_sha256": "9e304dc4e1fb24ab8910e2406e7faf75ee95c20a5983dab93a7cfaf037ac9759",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_journal_fault_fixture.c",
+      "sha256": "6c2c7a1cad0d01266c00d9e07e0c49b648791a313d8726e0b8560524d0f1689c",
+      "bytes": 2017,
+      "source_sha256": "6c2c7a1cad0d01266c00d9e07e0c49b648791a313d8726e0b8560524d0f1689c",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_journal_probe.c",
+      "sha256": "7a061b9259f51eccca5532b07af4ef70cefc5bafa8208d690a6ba5868d567b4a",
+      "bytes": 1077,
+      "source_sha256": "7a061b9259f51eccca5532b07af4ef70cefc5bafa8208d690a6ba5868d567b4a",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_backup_journal.py",
+      "sha256": "93daeda54adfad73d691e6d4297b0d48778d96964b2d525821d4b3b8a9633269",
+      "bytes": 6214,
+      "source_sha256": "93daeda54adfad73d691e6d4297b0d48778d96964b2d525821d4b3b8a9633269",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_backup_journal_compare.py",
+      "sha256": "481711b90eff2bd3843c41f4e7f9db93230f24f117957e3b91720be786e2e520",
+      "bytes": 6638,
+      "source_sha256": "481711b90eff2bd3843c41f4e7f9db93230f24f117957e3b91720be786e2e520",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_BACKUP_JOURNAL_RUNTIME_2026-10-28.md",
+      "sha256": "2f7ccb92df335ffdd63642551c6ffd7e7f078c4a2a3c029902cb70a46de6a6e4",
+      "bytes": 7191,
+      "source_sha256": "2f7ccb92df335ffdd63642551c6ffd7e7f078c4a2a3c029902cb70a46de6a6e4",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-backup-journal-runtime-evidence-20261028.json",
+      "sha256": "933be6402e48c1a2bd4ed7f19bba23bc7e54742d5f293fe0448725cbb80529ee",
+      "bytes": 15823,
+      "source_sha256": "933be6402e48c1a2bd4ed7f19bba23bc7e54742d5f293fe0448725cbb80529ee",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_JOURNAL.md",
+      "sha256": "654a4576955e3868ca735d4c6f416389fbb8bc10f6e57c732a97125ec400c000",
+      "bytes": 2504,
+      "source_sha256": "654a4576955e3868ca735d4c6f416389fbb8bc10f6e57c732a97125ec400c000",
+      "transformations": []
     }
   ],
-  "file_count": 2509,
-  "source_bytes": 34623972,
+  "file_count": 2520,
+  "source_bytes": 34840026,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

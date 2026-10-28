@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N 真实 Backup journal 跨环境局部对照
+
+- 新增真实平台journal探针、UTF-16/modified UTF-8 C追加器、独占输出比较器及44项工具测试。
+- Android真实框架与ARM64 Linux/Bionic两阶段均exit0；84/94bytes及各次追加字节一致。
+- 实测rws写前/写后fsync，明确异常输入差别和断电/调度/服务绑定未覆盖。
+- 保留首轮路径失败、v2退出码归档缺口；最终v3记录真实子进程退出码，不采用vmrun返回替代。
+- 专项689通过/1跳过、主工程211通过；严格catalog仍BLOCKED，未加载libg或推进对象图。
+
 ## 2026-10-28：E2.1-N Backup 被动观察与 journal/scheduler 契约
 
 - 新增只处理自然请求的同线程/对象身份探针及SHA、boot/starttime、六hook覆盖绑定runner。
