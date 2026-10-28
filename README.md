@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-28：loading 观察器修复与真实只读链路
+
+定位旧观察器的作用域过滤漏洞：此前commit零计数应标为未覆盖，不代表没有落盘。
+修复嵌套作用域、跨线程磁盘对象关联及事务恢复入口；真实只读探针观察到
+`getKeyValue → c.a.j → contains`，同时确认三组偏好文件映射。专项549通过/1跳过，
+主工程211通过；异步归因仅单测验证，修复后真实store尚未运行。
+严格`CATALOG_READY_PASS`仍BLOCKED，后续对象图未启动。详见
+[报告](agent-handoff/PURE_LINUX_LOADING_STORE_PATHS_2026-10-28.md)、
+[机器证据](agent-handoff/pure-linux-loading-store-paths-evidence-20261028.json)与
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_LOADING_SCOPE.md)。以下保留历史记录。
+
 ## 2026-10-28：受控 loading 写入事务回归
 
 在隔离 Android 30 ARM64 AVD 上完成一次用户批准的 `LOADING_SCREEN_STATE_LABEL`

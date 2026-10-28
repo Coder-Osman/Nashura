@@ -1,0 +1,218 @@
+{
+  "schema": "nashura.pure-linux-loading-store-paths.v2",
+  "date": "2026-10-28",
+  "base_head": "92d211e406d84234586786817a9600b63b08dd22",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "scope": "READ_ONLY_PREFERENCE_PATHS_AND_OBSERVER_SCOPE_REPAIR",
+  "environment": {
+    "device": "emulator-5580",
+    "api": 30,
+    "abi": "arm64-v8a",
+    "game_pid": 6901,
+    "proc_cmdline": "nullsroyale.rel.free",
+    "frida_display_label": "Null’s Royale",
+    "frida_version": "16.7.19",
+    "process_restarted": false,
+    "app_data_cleared": false,
+    "configuration_changed": false
+  },
+  "mapping": {
+    "c": {
+      "class": "android.app.SharedPreferencesImpl",
+      "mFile": "/data/user/0/nullsroyale.rel.free/shared_prefs/localPrefs.xml",
+      "mBackupFile": "/data/user/0/nullsroyale.rel.free/shared_prefs/localPrefs.xml.bak",
+      "literal_loading_key_present": false,
+      "file_exists": false,
+      "status": "RUNTIME_OBSERVED"
+    },
+    "o": {
+      "class": "android.app.SharedPreferencesImpl",
+      "mFile": "/data/user/0/nullsroyale.rel.free/shared_prefs/storage.xml",
+      "mBackupFile": "/data/user/0/nullsroyale.rel.free/shared_prefs/storage.xml.bak",
+      "literal_loading_key_present": false,
+      "file_exists": true,
+      "size_bytes": 65,
+      "mtime_device_local": "2026-10-28 10:23",
+      "sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+      "backup_file_exists": false,
+      "status": "RUNTIME_OBSERVED"
+    },
+    "p": {
+      "class": "android.app.SharedPreferencesImpl",
+      "mFile": "/data/user/0/nullsroyale.rel.free/shared_prefs/storage_new.xml",
+      "mBackupFile": "/data/user/0/nullsroyale.rel.free/shared_prefs/storage_new.xml.bak",
+      "literal_loading_key_present": false,
+      "file_exists": true,
+      "size_bytes": 65,
+      "mtime_device_local": "2026-10-28 10:23",
+      "sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+      "backup_file_exists": false,
+      "status": "RUNTIME_OBSERVED"
+    }
+  },
+  "commands": [
+    {
+      "command": "node --check tools/pure_linux/preferences_paths_readonly.js",
+      "exit_code": 0
+    },
+    {
+      "command": "/opt/anaconda3/bin/python3 -m py_compile tools/pure_linux/run_loading_store_once.py tools/pure_linux/run_preferences_paths_readonly.py",
+      "exit_code": 0
+    },
+    {
+      "command": "/tmp/nashura-frida-16.7.19-venv/bin/python tools/pure_linux/run_preferences_paths_readonly.py --script tools/pure_linux/preferences_paths_readonly.js --output /private/tmp/nashura-loading-scope-final-20261028-sLK5i5/preferences.json --pid 6901 --adb $HOME/Library/Android/sdk/platform-tools/adb --serial emulator-5580",
+      "exit_code": 0,
+      "output_sha256": "f007e0238473ab2f04142a152e43b67d35c3a7c1f152ca735535ace194471b1b"
+    },
+    {
+      "command": "/opt/anaconda3/bin/python3 -m pytest -q -p no:cacheprovider tools/pure_linux",
+      "exit_code": 0,
+      "passed": 549,
+      "skipped": 1,
+      "duration_seconds": 6.31
+    },
+    {
+      "command": "git show HEAD:tools/pure_linux/backup_runtime_observer.js | node tools/pure_linux/backup_observer_scope_fixture.cjs /dev/stdin nested",
+      "executed_head": "92d211e406d84234586786817a9600b63b08dd22",
+      "exit_code": 1,
+      "expected_failure": true,
+      "assertion": "nested c.a.n enter count: 0 !== 1",
+      "status": "UNIT_REGRESSION_REPRODUCED"
+    },
+    {
+      "command": "/tmp/nashura-frida-16.7.19-venv/bin/python tools/pure_linux/run_loading_store_once.py --observer tools/pure_linux/backup_runtime_observer.js --output /private/tmp/nashura-loading-scope-final-20261028-sLK5i5/frida-events.jsonl --game-pid 6901 --system-server-pid 522 --adb $HOME/Library/Android/sdk/platform-tools/adb --serial emulator-5580 --observe-only",
+      "exit_code": 0,
+      "output_sha256": "ef7914608566a3151ff14eb197307ed62644aacfe48be3f8cd8f9c74264057fa",
+      "rows": 50,
+      "status": "RUNTIME_OBSERVED"
+    },
+    {
+      "command": "/opt/anaconda3/bin/python3 tools/run_main_engine_checks.py",
+      "exit_code": 0,
+      "passed": 211,
+      "duration_seconds": 22.45
+    },
+    {
+      "command": "/opt/anaconda3/bin/python3 tools/check_public_snapshot.py",
+      "exit_code": 0,
+      "source_files_verified": 2477,
+      "stage": "before_public_document_updates_not_final"
+    },
+    {
+      "command": "/opt/anaconda3/bin/python3 tools/check_public_snapshot.py",
+      "exit_code": 1,
+      "stage": "after_public_document_updates_before_manifest_refresh",
+      "failure": "source manifest mismatch: CHANGELOG.md"
+    },
+    {
+      "command": "/opt/anaconda3/bin/python3 tools/run_public_checks.py",
+      "working_directory": "/private/tmp/nashura-loading-scope-checks-20261028-1k_p0w35/snapshot",
+      "exit_code": 0,
+      "passed": 1104,
+      "skipped": 42,
+      "duration_seconds": 171.98,
+      "log": "/private/tmp/nashura-loading-scope-checks-20261028-1k_p0w35/public-checks.log",
+      "log_sha256": "f48abe2cec7a46c9081e0d388219b52242913dc06c4dd13767b3b04410663de1",
+      "scope": "exact_source_copy_isolated_to_preserve_historical_xml"
+    },
+    {
+      "command": "gitleaks dir . --config .gitleaks.toml --redact",
+      "exit_code": 0,
+      "result": "no leaks found",
+      "log": "/private/tmp/nashura-loading-scope-checks-20261028-1k_p0w35/gitleaks.log"
+    },
+    {
+      "command": "verify tool hashes and tracked XML against baseline HEAD",
+      "exit_code": 0,
+      "tool_hashes_verified": 7,
+      "historical_xml_preserved": 248
+    },
+    {
+      "command": "adb -s emulator-5580 shell su 0 ls -lZ <six mFile/mBackupFile paths>",
+      "exit_code": 1,
+      "note": "Expected missing localPrefs.xml and three absent .bak paths; storage.xml and storage_new.xml listed successfully."
+    },
+    {
+      "command": "adb -s emulator-5580 shell su 0 sha256sum <six mFile/mBackupFile paths>",
+      "exit_code": 1,
+      "note": "Both existing storage files hashed successfully; absent files were reported by sha256sum."
+    }
+  ],
+  "tool_sha256": {
+    "tools/pure_linux/preferences_paths_readonly.js": "7d6c9adb9de6b93146038671fb0cf82d5a2030bca1d1208a85111719b79c6e4f",
+    "tools/pure_linux/run_preferences_paths_readonly.py": "86158c21c2549cea7476a18d17db35f0f16791de0ecbefdeb2ecb0a4586760bf",
+    "tools/pure_linux/backup_runtime_observer.js": "fe4323bf9c2d0afaa87fc10121ba8ad0068dbf36fd768de5eba87ea4fe987013",
+    "tools/pure_linux/run_loading_store_once.py": "b9010dc25ccba2cc1184fb849dc9e575d22c8fc4bcf3783535e63fb6d6eb6874",
+    "tools/pure_linux/backup_observer_scope_fixture.cjs": "8b6b5942e7883cf5e6131e98db85f1df7dca5b5bc910481f5fd19dd3f26beca8",
+    "tools/pure_linux/test_backup_observer_scope.py": "9494467cf6a1a5159c5372e5d2fbb6d7f4dea87203ce5486f98d75aea22fc4c2",
+    "tools/pure_linux/test_loading_store_transaction.py": "259b1742e3935a36d027fe213ebb8fc6344178b5d632763e092a0f2cd031c0e6"
+  },
+  "old_observer_correction": {
+    "status": "UNCOVERED_BY_SCOPE_FILTER",
+    "source_sha256": "b88a8b0a7ef2c24c5fee9cd4c5808401fca0fefd6da348f56e5e18eb693bcdda",
+    "prior_transaction_log_sha256": "88850b74401a1c2771c9fd871b330a0943094d35d90a8c10cc5d9c3e7771265f",
+    "cause": "Matching storeKeyValue was logged but only a package argument opened the thread scope; nested encoded-key and parameterless commit calls could be filtered.",
+    "absence_of_commit_proven": false,
+    "intermediate_disk_write_excluded_by_equal_final_hash": false,
+    "historical_evidence_modified": false
+  },
+  "repaired_observer": {
+    "nested_scope_and_finally_restore": "UNIT_PASS",
+    "async_java_object_identity_attribution": "UNIT_PASS",
+    "real_async_disk_write_attribution": "NOT_RUN",
+    "association_capacity": 256,
+    "unknown_events_explicit": true,
+    "controlled_store_repeated": false,
+    "target_transaction_unit_cases": 10,
+    "observer_mock_scenarios": 8,
+    "read_only_runtime": {
+      "hook_installed": 33,
+      "observer_ready": 2,
+      "getKeyValue_enter": 1,
+      "c_a_j_enter": 2,
+      "contains_enter": 2,
+      "call_throw": 0,
+      "observer_error": 0,
+      "hook_unavailable": 0,
+      "method_unavailable": 0,
+      "private_log": "/private/tmp/nashura-loading-scope-final-20261028-sLK5i5/frida-events.jsonl",
+      "private_log_sha256": "ef7914608566a3151ff14eb197307ed62644aacfe48be3f8cd8f9c74264057fa",
+      "earlier_read_only_log_sha256": "c320b83f97845c089a554b93834b23e07867be06e97b5fef1e23396b72030a57"
+    }
+  },
+  "limitations": [
+    "literal key presence does not establish absence of encoded key",
+    "prior same-process readback does not establish disk persistence",
+    "prior commit zero counts were not covered by the old scope filter",
+    "equal restored file hashes do not exclude intermediate persistence",
+    "this phase invoked no store, commit or backup request; their absence is not evidence of no dependency",
+    "async disk attribution is mock tested only",
+    "file metadata was collected earlier in this phase, not atomically with the final read-only probe",
+    "engine and resource identity was not rehashed in this read-only phase",
+    "no process restart or cross-process readback in this phase"
+  ],
+  "gates": {
+    "shared_preferences_commit_disk_semantics": "UNRESOLVED",
+    "old_commit_count_coverage": "UNCOVERED_BY_SCOPE_FILTER",
+    "repaired_observer_real_store": "NOT_RUN",
+    "backup_journal_semantics": "UNRESOLVED",
+    "cross_process_restore": "NOT_RUN",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "gamestate_step": "NOT_RUN",
+    "no_java_vm": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "performance_10x": "NOT_RUN",
+    "formal_training": "NOT_RUN"
+  },
+  "publication_validation": {
+    "snapshot_command": "/opt/anaconda3/bin/python3 tools/check_public_snapshot.py",
+    "initial_document_update_exit_code": 1,
+    "manifest_repair": "Preserve exported source hashes and register repository-maintained public changes; include the ten reviewed phase source/evidence files.",
+    "final_source_files_verified": 2487,
+    "final_snapshot_exit_code": 0,
+    "historical_xml_preserved": 248
+  },
+  "next_blocker": "Need a new explicit one-time approval before another controlled store/restore transaction that can observe encoded key and platform disk commit; meanwhile static analysis can continue."
+}

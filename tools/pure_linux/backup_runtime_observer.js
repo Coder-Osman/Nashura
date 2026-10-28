@@ -1,7 +1,9 @@
 'use strict';
 
 const targetPackage = 'nullsroyale.rel.free';
-const activePackageThreads = new Set();
+const activePackageThreads = new Map();
+let nextScopeId = 0;
+let pendingDiskCommits = null;
 
 function safeValue(value) {
   if (value === null || value === undefined) return value;
@@ -40,6 +42,15 @@ function stack() {
   }
 }
 
+function observe(phase, operation) {
+  try {
+    return operation();
+  } catch (error) {
+    emit('observer_error', { phase: phase, error: String(error), coverage: 'UNKNOWN' });
+    return null;
+  }
+}
+
 function hookMethods(className, methodName, filter, trackPackageScope, observeAll) {
   let target;
   try {
@@ -69,28 +80,66 @@ function hookMethods(className, methodName, filter, trackPackageScope, observeAl
       const threadId = Process.getCurrentThreadId();
       const identity = className + '.' + methodName + '(' + signature.join(',') + ')';
       const matches = filter ? filter(values) : false;
-      const isEntry = trackPackageScope && values.indexOf(targetPackage) !== -1;
-      if (isEntry) activePackageThreads.add(threadId);
-      const inScope = activePackageThreads.has(threadId);
-      if (!observeAll && !matches && !inScope && !isEntry) return method.apply(this, args);
+      const previousScope = activePackageThreads.get(threadId);
+      let scope = previousScope;
+      const diskOperation = className === 'android.app.SharedPreferencesImpl' &&
+        (methodName === 'enqueueDiskWrite' || methodName === 'writeToFile');
+      if (!scope && diskOperation && args[0] && pendingDiskCommits !== null) {
+        const scopeId = observe('lookup_disk_commit', function () {
+          return pendingDiskCommits.get(args[0]);
+        });
+        if (scopeId !== null) scope = { scopeId: String(scopeId),
+          attribution: 'memory_commit_result_identity' };
+      }
+      if (!scope && trackPackageScope && (matches || values.indexOf(targetPackage) !== -1)) {
+        scope = { scopeId: String(++nextScopeId), attribution: 'matched_entry',
+          origin: identity };
+      }
+      if (!observeAll && !matches && !scope) {
+        if (methodName === 'writeToFile' && diskOperation) {
+          emit('unattributed_disk_write', { method: identity,
+            coverage: 'UNTRACKED_MEMORY_COMMIT_RESULT' });
+        }
+        return method.apply(this, args);
+      }
+      if (scope) activePackageThreads.set(threadId, scope);
 
       emit('call_enter', { method: identity, overloadIndex: overloadIndex,
-        args: values, packageScope: inScope || isEntry || matches,
+        args: values, packageScope: Boolean(scope), scope: scope || null,
         observeAll: observeAll === true,
         receiver: safeValue(this), stack: stack() });
       try {
         const result = method.apply(this, args);
+        if (scope && methodName === 'commitToMemory' && result && pendingDiskCommits !== null) {
+          observe('link_disk_commit', function () {
+            if (pendingDiskCommits.size() < 256) {
+              pendingDiskCommits.put(result, Java.use('java.lang.String').$new(scope.scopeId));
+              emit('disk_commit_linked', { scope: scope,
+                association: 'java.util.IdentityHashMap' });
+            } else {
+              emit('disk_commit_untracked', { scope: scope, reason: 'association_limit' });
+            }
+          });
+        }
         emit('call_return', { method: identity, result: safeValue(result),
-          packageScope: inScope || isEntry || matches,
+          packageScope: Boolean(scope), scope: scope || null,
           observeAll: observeAll === true });
         return result;
       } catch (error) {
         emit('call_throw', { method: identity, error: String(error),
-          packageScope: inScope || isEntry || matches,
+          packageScope: Boolean(scope), scope: scope || null,
           observeAll: observeAll === true });
         throw error;
       } finally {
-        if (isEntry) activePackageThreads.delete(threadId);
+        if (scope && diskOperation && methodName === 'writeToFile' && args[0] &&
+            pendingDiskCommits !== null) {
+          observe('release_disk_commit', function () {
+            pendingDiskCommits.remove(args[0]);
+            emit('disk_commit_released', { scope: scope });
+          });
+        }
+        if (previousScope) activePackageThreads.set(threadId, previousScope);
+        else activePackageThreads.delete(threadId);
       }
     };
     emit('hook_installed', { className: className, methodName: methodName,
@@ -135,10 +184,14 @@ Java.perform(function () {
     }, false);
     hookMethods('com.android.server.backup.KeyValueBackupJob', 'schedule', null, false, true);
   } else {
+    pendingDiskCommits = Java.use('java.util.IdentityHashMap').$new();
     hookMethods('com.supercell.titan.GameApp', 'requestBackup', function () {
       return true;
     }, true);
     hookMethods('com.supercell.titan.ApplicationUtilBase', 'storeKeyValue', function (values) {
+      return values.indexOf('LOADING_SCREEN_STATE_LABEL') !== -1;
+    }, true);
+    hookMethods('com.supercell.titan.ApplicationUtilBase', 'getKeyValue', function (values) {
       return values.indexOf('LOADING_SCREEN_STATE_LABEL') !== -1;
     }, true);
     hookMethods('c.a', 'j', null, true);

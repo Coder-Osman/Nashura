@@ -4,10 +4,9 @@
 import argparse
 import json
 import subprocess
+import threading
 import time
 from pathlib import Path
-
-import frida
 
 
 def adb(adb, serial, *args):
@@ -23,7 +22,52 @@ def message_payload(record):
     return message.get("payload", {})
 
 
+def checked_read(exports, key, expected=None):
+    result = exports.readkey(key)
+    if result.get("key") != key or not isinstance(result.get("value"), str):
+        raise RuntimeError("readback has no restorable string value")
+    if expected is not None and result["value"] != expected:
+        raise RuntimeError("readback does not match expected value")
+    return result
+
+
+def store_and_restore(exports, key, value, restore_value, record, snapshot, wait):
+    initial = checked_read(exports, key)
+    record({"phase": "read_initial", "result": initial})
+    original = initial["value"]
+    if restore_value is not None and restore_value != original:
+        raise RuntimeError("restore value differs from observed initial value")
+    if value == original:
+        raise RuntimeError("test value equals initial value")
+    snapshot("before_target_store")
+    try:
+        record({"phase": "target_store_attempt"})
+        result = exports.triggerstore(key, value)
+        record({"phase": "target_store_return", "result": result})
+        wait(5)
+        snapshot("after_target_store")
+        result = checked_read(exports, key, value)
+        record({"phase": "read_after_target_store", "result": result})
+    except BaseException as error:
+        record({"phase": "target_store_error", "error": str(error)})
+        raise
+    finally:
+        try:
+            result = exports.triggerstore(key, original)
+            wait(5)
+            restored = checked_read(exports, key, original)
+            record({"phase": "restore_store_return", "result": result})
+            record({"phase": "read_after_restore", "result": restored})
+            snapshot("after_restore_store")
+        except BaseException as error:
+            record({"phase": "restore_failed", "error": str(error),
+                    "manual_recovery_required": True})
+            raise
+
+
 def main():
+    import frida
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--observer", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
@@ -33,8 +77,10 @@ def main():
     parser.add_argument("--serial", default="emulator-5580")
     parser.add_argument("--key", default="LOADING_SCREEN_STATE_LABEL")
     parser.add_argument("--value", default="datatables-init")
-    parser.add_argument("--restore-value", default="")
-    parser.add_argument("--observe-only", action="store_true")
+    parser.add_argument("--restore-value")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--observe-only", action="store_true")
+    mode.add_argument("--execute-store", action="store_true")
     args = parser.parse_args()
 
     if args.output.exists():
@@ -42,7 +88,7 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
 
     source = args.observer.read_text(encoding="utf-8")
-    device = frida.get_usb_device(timeout=15)
+    device = frida.get_device(args.serial, timeout=15)
     processes = {process.pid: process.name for process in device.enumerate_processes()}
     if processes.get(args.system_server_pid) != "system_server":
         raise SystemExit("system_server PID/name mismatch: %r" %
@@ -62,43 +108,51 @@ def main():
     records = []
     sessions = []
     scripts = []
+    output = args.output.open("x", encoding="utf-8")
+    record_lock = threading.RLock()
+
+    def record(item):
+        with record_lock:
+            item = {"host_received_ms": int(time.time() * 1000), **item}
+            records.append(item)
+            output.write(json.dumps(item, sort_keys=True) + "\n")
+            output.flush()
 
     def on_message(pid, message, data):
-        record = {"host_received_ms": int(time.time() * 1000),
-                  "target_pid": pid, "message": message}
+        item = {"target_pid": pid, "message": message}
         if data:
-            record["data_bytes"] = len(data)
-        records.append(record)
-        print(json.dumps(record, sort_keys=True), flush=True)
+            item["data_bytes"] = len(data)
+        record(item)
 
     def snapshot(label):
         try:
-            output = adb(args.adb, args.serial, "shell", "dumpsys", "backup")
-            records.append({"host_received_ms": int(time.time() * 1000),
-                            "phase": label, "backup_dump": output})
+            backup_dump = adb(args.adb, args.serial, "shell", "dumpsys", "backup")
+            record({"phase": label, "backup_dump": backup_dump})
         except subprocess.CalledProcessError as error:
-            records.append({"host_received_ms": int(time.time() * 1000),
-                            "phase": label, "backup_dump_error": error.output})
+            record({"phase": label, "backup_dump_error": error.output})
+            raise
 
     try:
         snapshot("before_attach")
         for pid in (args.system_server_pid, args.game_pid):
             session = device.attach(pid)
+            sessions.append(session)
             script = session.create_script(source)
             script.on("message", lambda message, data, pid=pid:
                       on_message(pid, message, data))
             script.load()
-            sessions.append(session)
             scripts.append(script)
 
         deadline = time.time() + 15
         required = {
             args.game_pid: {
                 "com.supercell.titan.ApplicationUtilBase.storeKeyValue",
+                "com.supercell.titan.ApplicationUtilBase.getKeyValue",
                 "c.a.n",
                 "android.app.SharedPreferencesImpl$EditorImpl.commitToMemory",
                 "android.app.SharedPreferencesImpl$EditorImpl.commit",
                 "android.app.SharedPreferencesImpl.enqueueDiskWrite",
+                "android.app.SharedPreferencesImpl.writeToFile",
             },
             args.system_server_pid: {
                 "com.android.server.backup.UserBackupManagerService.dataChangedImpl",
@@ -109,16 +163,18 @@ def main():
         while time.time() < deadline:
             ready_by_pid = {}
             hooks_by_pid = {}
-            for record in records:
-                payload = message_payload(record)
+            with record_lock:
+                observed = list(records)
+            for item in observed:
+                payload = message_payload(item)
                 if not payload:
                     continue
                 if payload.get("event") == "observer_ready":
-                    ready_by_pid[record["target_pid"]] = payload.get("details", {})
+                    ready_by_pid[item["target_pid"]] = payload.get("details", {})
                 if payload.get("event") == "hook_installed":
                     details = payload.get("details", {})
                     name = details.get("className") + "." + details.get("methodName")
-                    hooks_by_pid.setdefault(record["target_pid"], set()).add(name)
+                    hooks_by_pid.setdefault(item["target_pid"], set()).add(name)
             if (len(ready_by_pid) == 2 and all(
                     required[pid].issubset(hooks_by_pid.get(pid, set()))
                     for pid in required)):
@@ -127,45 +183,25 @@ def main():
         else:
             raise RuntimeError("observers did not become ready with commit hooks")
 
-        records.append({"host_received_ms": int(time.time() * 1000),
-                        "phase": "identity", "app": ready_by_pid[args.game_pid],
-                        "system_server": ready_by_pid[args.system_server_pid]})
-        initial = scripts[1].exports_sync.readkey(args.key)
-        records.append({"host_received_ms": int(time.time() * 1000),
-                        "phase": "read_initial", "result": initial})
-        if args.observe_only:
-            records.append({"host_received_ms": int(time.time() * 1000),
-                            "phase": "observe_only", "side_effects": False})
+        record({"phase": "identity", "app": ready_by_pid[args.game_pid],
+                "system_server": ready_by_pid[args.system_server_pid]})
+        if not args.execute_store:
+            initial = checked_read(scripts[1].exports_sync, args.key)
+            record({"phase": "read_initial", "result": initial})
+            record({"phase": "observe_only", "store_invoked": False})
             return
-        snapshot("before_target_store")
-
-        target_result = scripts[1].exports_sync.triggerstore(args.key, args.value)
-        records.append({"host_received_ms": int(time.time() * 1000),
-                        "phase": "target_store_return", "result": target_result})
-        time.sleep(5)
-        snapshot("after_target_store")
-        target_read = scripts[1].exports_sync.readkey(args.key)
-        records.append({"host_received_ms": int(time.time() * 1000),
-                        "phase": "read_after_target_store", "result": target_read})
-
-        restore_result = scripts[1].exports_sync.triggerstore(args.key, args.restore_value)
-        records.append({"host_received_ms": int(time.time() * 1000),
-                        "phase": "restore_store_return", "result": restore_result})
-        time.sleep(5)
-        snapshot("after_restore_store")
-        restored = scripts[1].exports_sync.readkey(args.key)
-        records.append({"host_received_ms": int(time.time() * 1000),
-                        "phase": "read_after_restore", "result": restored})
+        store_and_restore(scripts[1].exports_sync, args.key, args.value,
+                          args.restore_value, record, snapshot, time.sleep)
+    except BaseException as error:
+        record({"phase": "experiment_error", "error": str(error)})
+        raise
     finally:
         for session in reversed(sessions):
             try:
                 session.detach()
             except Exception as error:
-                records.append({"host_received_ms": int(time.time() * 1000),
-                                "detach_error": str(error)})
-        args.output.write_text(
-            "\n".join(json.dumps(item, sort_keys=True) for item in records) + "\n",
-            encoding="utf-8")
+                record({"detach_error": str(error)})
+        output.close()
 
 
 if __name__ == "__main__":

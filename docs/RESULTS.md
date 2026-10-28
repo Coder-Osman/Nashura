@@ -1,5 +1,18 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：loading 路径映射与计数作用域修复
+
+旧观察器对匹配的store入口没有建立线程作用域，内部编码键及无参commit可能被过滤；
+旧fixture预期exit1复现，新8个JS mock与10个Python恢复用例通过。
+修复后真实只读轮50条记录，getKeyValue/c.a.j/contains分别进入1/2/2次，无观察异常。
+GameApp.c/o/p分别指向localPrefs/storage/storage_new；字面键false不证明编码键不存在，
+恢复后的文件哈希相同也不排除中间落盘。旧记录保持原字节。
+专项549通过/1跳过、主工程211通过；修复后store、跨进程恢复及真实异步归因NOT_RUN。
+严格catalog仍BLOCKED，ResourceManager/GameState/Step与训练未启动。
+详见[报告](../agent-handoff/PURE_LINUX_LOADING_STORE_PATHS_2026-10-28.md)、
+[机器证据](../agent-handoff/pure-linux-loading-store-paths-evidence-20261028.json)及
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_LOADING_SCOPE.md)。以下保留历史记录。
+
 ## 2026-10-28 E2.1-N：受控 loading 写入事务
 
 隔离 Android 30 ARM64 AVD 上完成一次真实配置写入并恢复原值；观察到客户端
