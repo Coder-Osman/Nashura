@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N 真实 Backup JobService 回调
+
+- 新增四hook观察器、SHA/实例绑定runner、严格离线审计及48项工具测试。
+- 自有应用一次请求与一次受控job执行，10事件且原方法返回；0bytes和worker覆盖缺口单列。
+- 保留首次11hook准备期system_server崩溃，具体原因未知；补充四方法真实DEX静态边界。
+- 独立副本专项773/1、主工程211、公开九组1104/42均exit0，251份原历史XML未变。
+- 专用实例已关闭，Linux Backup绑定及严格catalog仍BLOCKED，后续对象图未启动。
+
 ## 2026-10-28：E2.1-N Backup 服务分支动态闭合
 
 - 新增自有测试应用、八hook观察器、SHA/进程/AVD绑定runner和严格离线审计，36项新测试。

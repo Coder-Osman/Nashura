@@ -1,5 +1,18 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：JobService 回调实际交付边界
+
+真实JobScheduler受控提前执行已排队job，捕获onStartJob→backupNow→cancel六条实验事件；
+包含准备共10事件，零drop/error/active，原回调返回false不等于异步工作完成。
+工作线程日志显示agent调用与pass结束，但0bytes不证明非空transport上传；
+worker插桩、journal删除、失败路径与Linux服务绑定仍未闭合。
+首轮system_server崩溃及未知原因保留；专用5582已关闭，旧实例和VM保留。
+新增48项工具测试，隔离专项773通过/1跳过、主工程211通过、公开1104通过/42跳过，
+三组均exit0，251份历史XML逐SHA未变。严格catalog仍BLOCKED，后续对象图NOT_RUN。
+详见[报告](../agent-handoff/PURE_LINUX_BACKUP_DELIVERY_2026-10-28.md)、
+[证据](../agent-handoff/pure-linux-backup-delivery-evidence-20261028.json)及
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_DELIVERY.md)。以下保留历史记录。
+
 ## 2026-10-28 E2.1-N：Backup 服务正常分支真实观察
 
 自有应用两个真实Binder请求覆盖首次pending入队/journal追加与重复去重；

@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-28：真实 Backup JobService 回调与交付边界
+
+专用ARM64实例中，自有应用一次请求后受控提前执行真实job，观察到
+onStartJob→backupNow→cancel原方法返回；10事件、零drop/error/active。
+工作线程仅日志覆盖且本次0bytes，非空transport、journal删除及失败路径仍未知。
+首轮观察器崩溃证据保留，专用实例已关闭；Linux Backup绑定与严格catalog仍BLOCKED。
+专项773通过/1跳过、主工程211通过、公开1104通过/42跳过，均exit0；详见
+[报告](agent-handoff/PURE_LINUX_BACKUP_DELIVERY_2026-10-28.md)、
+[证据](agent-handoff/pure-linux-backup-delivery-evidence-20261028.json)及
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_DELIVERY.md)。以下保留历史状态。
+
 ## 2026-10-28：真实 Backup 服务首次入队与重复请求分支
 
 专用 Android ARM64 实例中，自有应用首次请求写 journal、重复请求跳过 journal；

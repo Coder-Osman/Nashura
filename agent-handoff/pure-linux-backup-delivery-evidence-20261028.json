@@ -1,0 +1,489 @@
+{
+  "schema": "nashura.pure-linux-backup-delivery-evidence.v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "baseline_commit": "a43620d533e433127057d947347e2238931813e7",
+  "delivery_commit": "commit containing this file; no self-referential SHA",
+  "status": "RUNTIME_OBSERVED_LIMITED",
+  "scope": "Owned Android framework fixture only; not a real game transaction or Linux binding",
+  "environment": {
+    "avd": "nashura-e2-backup-contract-api30",
+    "serial": "emulator-5582",
+    "fingerprint": "google/sdk_gphone_arm64/emulator_arm64:11/RSR1.240422.006/12134477:userdebug/dev-keys",
+    "abi": "arm64-v8a",
+    "frida": "16.7.19",
+    "python_tests": "3.13.5",
+    "runtime_python": "3.9",
+    "identity_stable": {
+      "pid": 4840,
+      "starttime": 71416,
+      "boot_id": "93d037dc-3b2a-4dec-b3f1-45830a8fdcf2"
+    },
+    "fixture_apk_sha256": "d6286d14c826c74d53f4ad416ef7112b57109925f2fd19bf4d376b70f1c1208a",
+    "services_jar_sha256": "c6992cdc2a3e23d5aeb6ab77e7a7f6889cfcf5c262c6ed86825e6fcbf601681d",
+    "services_dex_sha256": "66b315411f05fe53c5fb9f0e144857cef26dfce79927b004cb0e5a057a347a0a",
+    "final_apk_and_services_sha_equal": true,
+    "game_installed": false,
+    "shutdown": "emulator-5582 closed after identity recheck; host PID 16708 absent; emulator-5580 PID 78756 preserved"
+  },
+  "runtime": {
+    "trigger": "controlled_forced_JobScheduler_not_natural_expiry",
+    "requests_issued": 1,
+    "forced_jobs_issued": 1,
+    "stores_issued": 0,
+    "commands": 13,
+    "command_exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "job_id": 52417896,
+    "user_id": 0,
+    "queued_min_latency_ms": 14416727,
+    "prelude_events": 4,
+    "experimental_events": 6,
+    "total_events": 10,
+    "dropped": 0,
+    "observation_errors": 0,
+    "active_scopes": 0,
+    "thread": 4840,
+    "chain": [
+      "onStartJob enter",
+      "backupNow enter",
+      "cancel enter",
+      "cancel return",
+      "backupNow return",
+      "onStartJob return false"
+    ],
+    "pending": [
+      false,
+      true,
+      false
+    ],
+    "scheduled_during_callback": [
+      true,
+      false
+    ],
+    "scheduled_after_worker": true,
+    "job_latency_after_worker_ms": 14659337,
+    "clear_hook_entries": 0,
+    "clear_direct_call_coverage": "UNKNOWN",
+    "worker": {
+      "status": "LOG_OBSERVED_LIMITED",
+      "thread": 9519,
+      "payload_bytes": 0,
+      "strong_cross_thread_causal_token": "NOT_CAPTURED",
+      "sequence": [
+        "Starting target package",
+        "agentConnected",
+        "Invoking agent",
+        "fixture helper",
+        "backup_package target 0",
+        "K/V pass finished"
+      ]
+    },
+    "audit": {
+      "schema": "nashura.backup-delivery-audit.v1",
+      "status": "RUNTIME_OBSERVED_LIMITED",
+      "trigger": "controlled_forced_JobScheduler_not_natural_expiry",
+      "source": "owned fixture, not a game store transaction",
+      "events": 10,
+      "experimental_events": 6,
+      "job_id": 52417896,
+      "callback_result": false,
+      "callback_result_meaning": "JobService returned; asynchronous backup completion not implied",
+      "clear_hook_entries": 0,
+      "clear_direct_call_coverage": "UNKNOWN",
+      "worker_coverage": "UNINSTRUMENTED_AFTER_OBSERVER_CRASH",
+      "target_pending_after": false,
+      "transport_payload_parity": "UNKNOWN",
+      "journal_deletion": "UNKNOWN",
+      "scheduler_failure": "UNKNOWN",
+      "linux_backup_binding": "UNRESOLVED",
+      "catalog_ready_pass": false,
+      "input_sha256": "e9079d7ff63d8b55cdf4b0eb93a9824f1f3ae2568bf53406a1b9325e2b43c0a6",
+      "command_archives_verified": 13
+    }
+  },
+  "failures": [
+    {
+      "attempt": "v1",
+      "exit_code": 1,
+      "requests_issued": 0,
+      "status": "OBSERVER_CRASH",
+      "stage": "preparation bmgr run",
+      "installed_hooks": 11,
+      "signal": "SIGSEGV SEGV_ACCERR",
+      "crash_thread": "key-value-backu",
+      "old_system_server_pid": 471,
+      "new_pid": 4840,
+      "root_cause": "UNKNOWN; not attributed to a specific hook or game engine"
+    },
+    {
+      "stage": "initial frida daemon setup",
+      "status": "TIMEOUT",
+      "detail": "outer wait timed out; daemon later observed alive; setup archive has first five commands only"
+    },
+    {
+      "stage": "read-only selected-method inspection",
+      "exit_code": 1,
+      "detail": "str decoded again; corrected read-only invocation exited 0; no runtime effect"
+    }
+  ],
+  "static": {
+    "schema": "nashura.backup-delivery-static-selection.v1",
+    "dex_sha256": "66b315411f05fe53c5fb9f0e144857cef26dfce79927b004cb0e5a057a347a0a",
+    "dump_sha256": "88b8396fea3c5f786aee3f44b6dba41767d0ccbe2a65839ada57c6708adc3e4a",
+    "methods": {
+      "com.android.server.backup.keyvalue.KeyValueBackupTask.sendDataToTransport:()I": {
+        "sha256": "3607d5fcf7cc0a964fb59e28ad2ec21ed0cbc4655359b88b9e3fa3dcabeb5838",
+        "instructions": 35,
+        "catch_table_present": true,
+        "direct_calls": [
+          "Landroid/os/ParcelFileDescriptor;.getFileDescriptor:()Ljava/io/FileDescriptor;",
+          "Lcom/android/internal/util/Preconditions;.checkState:(Z)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.checkBackupData:(Landroid/content/pm/ApplicationInfo;Ljava/io/File;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.handleTransportStatus:(ILjava/lang/String;J)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.transportPerformBackup:(Landroid/content/pm/PackageInfo;Ljava/io/File;Z)I",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.writeWidgetPayloadIfAppropriate:(Ljava/io/FileDescriptor;Ljava/lang/String;)V",
+          "Ljava/io/File;.length:()J"
+        ],
+        "status": "STATIC_FOUND"
+      },
+      "com.android.server.backup.keyvalue.KeyValueBackupTask.sendDataToTransport:(Landroid/content/pm/PackageInfo;)I": {
+        "sha256": "31a1bb69da6c057144fffc3ccfc7a8cb72afcf0692c95fdebc859a496882e5d6",
+        "instructions": 10,
+        "catch_table_present": true,
+        "direct_calls": [
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onAgentDataError:(Ljava/lang/String;Ljava/io/IOException;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.sendDataToTransport:()I",
+          "Lcom/android/server/backup/keyvalue/TaskException;.causedBy:(Ljava/lang/Exception;)Lcom/android/server/backup/keyvalue/TaskException;"
+        ],
+        "status": "STATIC_FOUND"
+      },
+      "com.android.server.backup.keyvalue.KeyValueBackupTask.transportPerformBackup:(Landroid/content/pm/PackageInfo;Ljava/io/File;Z)I": {
+        "sha256": "bc2083ffad6719c5782d72699fbd6bffba19965f5bbbdde047d60deba1589eb6",
+        "instructions": 63,
+        "catch_table_present": true,
+        "direct_calls": [
+          "Landroid/os/ParcelFileDescriptor;.close:()V",
+          "Landroid/os/ParcelFileDescriptor;.open:(Ljava/io/File;I)Landroid/os/ParcelFileDescriptor;",
+          "Lcom/android/internal/backup/IBackupTransport;.finishBackup:()I",
+          "Lcom/android/internal/backup/IBackupTransport;.name:()Ljava/lang/String;",
+          "Lcom/android/internal/backup/IBackupTransport;.performBackup:(Landroid/content/pm/PackageInfo;Landroid/os/ParcelFileDescriptor;I)I",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onEmptyData:(Landroid/content/pm/PackageInfo;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onPackageBackupNonIncrementalAndNonIncrementalRequired:(Ljava/lang/String;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onPackageBackupTransportError:(Ljava/lang/String;Ljava/lang/Exception;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onTransportNotInitialized:(Ljava/lang/String;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onTransportPerformBackup:(Ljava/lang/String;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.getPerformBackupFlags:(ZZ)I",
+          "Lcom/android/server/backup/keyvalue/TaskException;.causedBy:(Ljava/lang/Exception;)Lcom/android/server/backup/keyvalue/TaskException;",
+          "Lcom/android/server/backup/keyvalue/TaskException;.create:()Lcom/android/server/backup/keyvalue/TaskException;",
+          "Lcom/android/server/backup/transport/TransportClient;.connectOrThrow:(Ljava/lang/String;)Lcom/android/internal/backup/IBackupTransport;",
+          "Ljava/io/File;.length:()J",
+          "Ljava/lang/Throwable;.addSuppressed:(Ljava/lang/Throwable;)V"
+        ],
+        "status": "STATIC_FOUND"
+      },
+      "com.android.server.backup.keyvalue.KeyValueBackupTask.finishTask:(I)V": {
+        "sha256": "5c5aa11cadea05238173bf80c3280654aa010069143ae6c68e8a46074c6f0d79",
+        "instructions": 106,
+        "catch_table_present": true,
+        "direct_calls": [
+          "Landroid/os/ConditionVariable;.open:()V",
+          "Lcom/android/internal/backup/IBackupTransport;.getCurrentRestoreSet:()J",
+          "Lcom/android/internal/backup/IBackupTransport;.name:()Ljava/lang/String;",
+          "Lcom/android/server/backup/DataChangedJournal;.delete:()Z",
+          "Lcom/android/server/backup/UserBackupManagerService$BackupWakeLock;.release:()V",
+          "Lcom/android/server/backup/UserBackupManagerService;.dataChangedImpl:(Ljava/lang/String;)V",
+          "Lcom/android/server/backup/UserBackupManagerService;.getCurrentToken:()J",
+          "Lcom/android/server/backup/UserBackupManagerService;.getWakelock:()Lcom/android/server/backup/UserBackupManagerService$BackupWakeLock;",
+          "Lcom/android/server/backup/UserBackupManagerService;.setBackupRunning:(Z)V",
+          "Lcom/android/server/backup/UserBackupManagerService;.setCurrentToken:(J)V",
+          "Lcom/android/server/backup/UserBackupManagerService;.writeRestoreTokens:()V",
+          "Lcom/android/server/backup/fullbackup/PerformFullTransportBackupTask;.unregisterTask:()V",
+          "Lcom/android/server/backup/internal/OnTaskFinishedListener;.onFinished:(Ljava/lang/String;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onBackupFinished:(I)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onJournalDeleteFailed:(Lcom/android/server/backup/DataChangedJournal;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onPendingInitializeTransportError:(Ljava/lang/Exception;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onSetCurrentTokenError:(Ljava/lang/Exception;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onStartFullBackup:(Ljava/util/List;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onTaskFinished:()V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupReporter;.onTransportNotInitialized:(Ljava/lang/String;)V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.getBackupFinishedStatus:(ZI)I",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.triggerTransportInitializationLocked:()V",
+          "Lcom/android/server/backup/keyvalue/KeyValueBackupTask;.unregisterTask:()V",
+          "Lcom/android/server/backup/transport/TransportClient;.connectOrThrow:(Ljava/lang/String;)Lcom/android/internal/backup/IBackupTransport;",
+          "Ljava/lang/Thread;.<init>:(Ljava/lang/Runnable;Ljava/lang/String;)V",
+          "Ljava/lang/Thread;.start:()V",
+          "Ljava/util/Iterator;.hasNext:()Z",
+          "Ljava/util/Iterator;.next:()Ljava/lang/Object;",
+          "Ljava/util/List;.isEmpty:()Z",
+          "Ljava/util/List;.iterator:()Ljava/util/Iterator;"
+        ],
+        "status": "STATIC_FOUND"
+      }
+    },
+    "scope": "static bounded methods only; transitive callees and runtime branches not proven",
+    "catalog_ready_pass": false,
+    "dexdump_sha256": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692",
+    "interpretation": [
+      {
+        "status": "STATIC_FOUND",
+        "finding": "transportPerformBackup returns 0 for file.length <= 0 before transport connection/performBackup/finishBackup"
+      },
+      {
+        "status": "STATIC_FOUND",
+        "finding": "nonempty branch opens descriptor, connects transport, performs backup; status 0 calls finishBackup"
+      },
+      {
+        "status": "STATIC_FOUND",
+        "finding": "sendDataToTransport checks data and widget payload; saved-state length selects nonincremental mode"
+      },
+      {
+        "status": "STATIC_FOUND",
+        "finding": "finishTask may requeue packages, delete journal, update restore token, clear backupRunning, initialize transport or launch full backup"
+      }
+    ],
+    "runtime_transport_call_counts": "NOT_CAPTURED",
+    "transitive_semantic_closure": "UNRESOLVED"
+  },
+  "sources": {
+    "tools/pure_linux/backup_delivery_audit.py": {
+      "sha256": "bc7dafe8783505abaf2f3457640cdb413060eb261e3c1dbd52337e9f812f7fb5",
+      "bytes": 10130,
+      "test_copy_equal": true
+    },
+    "tools/pure_linux/backup_delivery_observer.js": {
+      "sha256": "6260cc61c890ec6bd723a30b6d581b4a612bf6e29730126fb91cebc2a52b87a8",
+      "bytes": 6721,
+      "test_copy_equal": true
+    },
+    "tools/pure_linux/backup_delivery_scope.cjs": {
+      "sha256": "20ff28369365f10b735787c6e53251843717dff172a1b025c8db19297833ba63",
+      "bytes": 5320,
+      "test_copy_equal": true
+    },
+    "tools/pure_linux/run_backup_delivery.py": {
+      "sha256": "4556733a134d3aa4d359a95e6f97d54843a2ab1dfa6ce66c483072e3dd84bc93",
+      "bytes": 9541,
+      "test_copy_equal": true
+    },
+    "tools/pure_linux/test_backup_delivery.py": {
+      "sha256": "0ff3d2a7343fe1f5c2444a005b78e5af048875d85a6daef24d294b1737b0470b",
+      "bytes": 11711,
+      "test_copy_equal": true
+    }
+  },
+  "private_artifacts": {
+    "root": "/private/tmp/nashura-backup-delivery-20261028-zvu3qb7w",
+    "files": {
+      "observe-v1/result.json": {
+        "sha256": "adc7fdc3476227356ee160a1ec51da68739433ff59035becb76611908f3e3c26",
+        "bytes": 5451
+      },
+      "observe-v1/observer.js": {
+        "sha256": "320819a7f241fe1d97c2ae78448a5ad2b9fc6db8100f2704d13d1eecbea99a7a",
+        "bytes": 8716
+      },
+      "run-v1-command.json": {
+        "sha256": "b49d58bcfc887414d3d80fbdafe374584c98e05849efc920a38900210bfc9734",
+        "bytes": 672
+      },
+      "run-v1-exit.json": {
+        "sha256": "5cc319f54b05a38799195a491c303aa686eab7caccfdbbf1e8b8c07405cb7392",
+        "bytes": 17
+      },
+      "v1-crash.log": {
+        "sha256": "66c35759d309fb5687b06b22e295f77d3e7d3529abb0746863cf97f71621249d",
+        "bytes": 2842
+      },
+      "v1-logcat.log": {
+        "sha256": "127aba22e502d16ac234f749cdcf028c614c8fa2dc41db5059a6dfff7555e41d",
+        "bytes": 219291
+      },
+      "observe-v2/result.json": {
+        "sha256": "e9079d7ff63d8b55cdf4b0eb93a9824f1f3ae2568bf53406a1b9325e2b43c0a6",
+        "bytes": 19006
+      },
+      "observe-v2/observer.js": {
+        "sha256": "6260cc61c890ec6bd723a30b6d581b4a612bf6e29730126fb91cebc2a52b87a8",
+        "bytes": 6721
+      },
+      "observe-v2/audit-v2.json": {
+        "sha256": "c73789e7191141c166e3290b326b041b60f6dce70579ecc3c0d9fdfd5b8355df",
+        "bytes": 869
+      },
+      "run-v2-command.json": {
+        "sha256": "0bb6cd1888a3ae932041ad85f2526e736d4e98957f7f64b0e3e796f773264eaf",
+        "bytes": 673
+      },
+      "run-v2-exit.json": {
+        "sha256": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+        "bytes": 17
+      },
+      "run-v2.stdout": {
+        "sha256": "3a666b855bce183c8ceb0ae4e7d4fb430e9692c441a21e57c9b7648ad9bd1007",
+        "bytes": 76
+      },
+      "run-v2.stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "observe-v2/command-11.stdout": {
+        "sha256": "42260ad06da0227e40a57252364b81d9c353fd66f1b1616b24b6a58d65b1cdc5",
+        "bytes": 10616
+      },
+      "observe-v2/command-12.stdout": {
+        "sha256": "162e0d4e0d06a51a59fd653a0f9b4181a05e1e8f7adb6a6e71e55b0f16e898a0",
+        "bytes": 288530
+      },
+      "setup.json": {
+        "sha256": "169359d26c888ab9dd2c49319b0a5cece658ca4baaebf8fb1488448b73acc676",
+        "bytes": 1675
+      },
+      "transport-static-selection.json": {
+        "sha256": "c4ea55d909f392706c4f290a77d015575469cff285eece0b0f25956d4d454548",
+        "bytes": 7214
+      },
+      "cleanup/commands.json": {
+        "sha256": "9470768a39cfb3de1ec805e4b25fccfd85fd4167f1462b670c1ac3f93bf5f561",
+        "bytes": 2710
+      },
+      "cleanup/result.json": {
+        "sha256": "a157f1c54773be7531bc8d698ba8db851ba1d601f84e19c585a7ee96200b95ee",
+        "bytes": 247
+      }
+    },
+    "publication_policy": "SHA and redacted summaries only; no original traces, binary or resource bytes"
+  },
+  "commands": {
+    "runtime_argv": "run-v2-command.json retained privately; SHA above",
+    "audit": "python tools/pure_linux/backup_delivery_audit.py --input \"$PRIVATE_RUN/observe-v2/result.json\" --input-sha256 e9079d7ff63d8b55cdf4b0eb93a9824f1f3ae2568bf53406a1b9325e2b43c0a6 --output \"$PRIVATE_RUN/observe-v2/audit-v2.json\"",
+    "audit_exit_code": 0,
+    "unit": "python -m pytest -q -p no:cacheprovider tools/pure_linux/test_backup_delivery.py",
+    "unit_exit_code": 0,
+    "unit_passed": 48,
+    "syntax": [
+      {
+        "command": "node --check tools/pure_linux/backup_delivery_observer.js",
+        "exit_code": 0
+      },
+      {
+        "command": "node --check tools/pure_linux/backup_delivery_scope.cjs",
+        "exit_code": 0
+      }
+    ],
+    "static": "platform_preference_audit.summarize(existing services.dump, SHA-checked services.dex, four explicitly selected methods)",
+    "static_exit_code": 0
+  },
+  "regression": {
+    "status": "PASS",
+    "private_root": "/var/folders/lp/8k7p59jx541088kgj4tw001c0000gn/T/nashura-backup-delivery-checks-20261028-tcll4pca",
+    "commands": [
+      {
+        "command": [
+          "/opt/anaconda3/bin/python3",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/pure_linux"
+        ],
+        "exit_code": 0,
+        "seconds": 11.381473707966506,
+        "stdout_sha256": "b95169a203f89c4ef34ca879d8f16c2356359fbbdb075183abbc04f7aa126261",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/opt/anaconda3/bin/python3",
+          "tools/run_main_engine_checks.py"
+        ],
+        "exit_code": 0,
+        "seconds": 32.576071792282164,
+        "stdout_sha256": "5a3c82987da5c231d9aa87355514eb4c657ce89351daf71e774568028e42a4aa",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/opt/anaconda3/bin/python3",
+          "tools/run_public_checks.py"
+        ],
+        "exit_code": 0,
+        "seconds": 238.0828742091544,
+        "stdout_sha256": "82d9e51ab5d6a9b6107cc7244339047e9f9c4b5e1326560bacf8efc749c2351e",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "original_xml_files": 251,
+    "original_xml_unchanged": true,
+    "results": [
+      {
+        "suite": "tools/pure_linux",
+        "passed": 773,
+        "skipped": 1
+      },
+      {
+        "suite": "main_engine",
+        "passed": 211,
+        "skipped": 0
+      },
+      {
+        "suite": "public_nine_groups",
+        "passed": 1104,
+        "skipped": 42
+      }
+    ],
+    "test_sources_equal": true
+  },
+  "gates": {
+    "limited_callback_observation": "RUNTIME_OBSERVED_LIMITED",
+    "worker_instrumentation": "UNCOVERED",
+    "nonempty_transport_payload": "UNKNOWN",
+    "journal_deletion": "UNKNOWN",
+    "scheduler_failure": "UNKNOWN",
+    "linux_backup_binding": "UNRESOLVED",
+    "catalog_ready_pass": false,
+    "ResourceManager": "BLOCKED",
+    "GameState": "NOT_RUN",
+    "GameStateStep": "NOT_RUN",
+    "no_VM": "NOT_RUN",
+    "full_battle": "NOT_RUN",
+    "training": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "next_unique_blocker": "Linux Backup side-effect contract and ownership not bound; worker completion/journal lifecycle and failure branches remain unverified. Keep preference_store_hook unresolved_backup fail-closed.",
+  "publication_checks": [
+    {
+      "command": "/opt/anaconda3/bin/python3 tools/check_public_snapshot.py",
+      "exit_code": 0,
+      "source_files_verified": 2539
+    },
+    {
+      "command": "/opt/homebrew/bin/gitleaks dir . --config .gitleaks.toml --redact --no-banner",
+      "exit_code": 0,
+      "result": "no leaks found"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    },
+    {
+      "command": "git fetch origin --prune",
+      "exit_code": 0,
+      "branch_divergence_before_commit": "0 0"
+    }
+  ]
+}

@@ -10194,8 +10194,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "3529232774018353674f48bfca385b589ca123b115eec80e08b4c15a4e7c00f3",
-      "bytes": 39953,
+      "sha256": "fdc7f4b39747c4963e6dbdcc6fb23ca7329b910b2c574ff457247ec76e7ff60d",
+      "bytes": 40537,
       "source_sha256": "c008f55f17031af6abae22b02af32e87d0c8c9d3cbc1a7c54fc4f73bdf72e3a7",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10203,13 +10203,14 @@
         "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved",
         "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
         "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
-        "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate"
+        "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
+        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "6b82586469795129687f9b26cde6c1488091eff0d47f55f1e58881c4852fc312",
-      "bytes": 71025,
+      "sha256": "5234ddd6b33d7c51c6b080e84b502f86f4693bd9548dcd58a48e36f0c0c7d6aa",
+      "bytes": 72027,
       "source_sha256": "7956b3b23c44bda14bd02a13c725f93621bc473669cff1644c882afc3de0d310",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10217,7 +10218,8 @@
         "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved",
         "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
         "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
-        "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate"
+        "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
+        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate"
       ]
     },
     {
@@ -16629,8 +16631,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "804b8dea4aa4b0a436da32b31a2c82c18a1df1c1a7c7ba788e2c963c4542bb2b",
-      "bytes": 39008,
+      "sha256": "58ab0ce537b4744e0cedb2e6dab5554a02adb07db7f1797587dd05c511d48870",
+      "bytes": 39793,
       "source_sha256": "268a62062b889a6cc7bd8034c306e2937b73840ef1d6e918fee39525ef232472",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -16638,7 +16640,8 @@
         "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved",
         "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
         "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
-        "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate"
+        "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
+        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate"
       ]
     },
     {
@@ -17755,10 +17758,66 @@
       "bytes": 10866,
       "source_sha256": "267e0d040a2d0e19bc8ae4f54de454639f2909700f9bea1e0b754adf0d3701dc",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_BACKUP_DELIVERY_2026-10-28.md",
+      "sha256": "929d3a79fc015af1982cd8bfeb402d09b63db876934120f86bcadb2f077b2a09",
+      "bytes": 8496,
+      "source_sha256": "929d3a79fc015af1982cd8bfeb402d09b63db876934120f86bcadb2f077b2a09",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_DELIVERY.md",
+      "sha256": "62b0cb3539b915f19dff6ec18f9e8f2139454c450a885aaaf6c037a7d8d7af46",
+      "bytes": 1913,
+      "source_sha256": "62b0cb3539b915f19dff6ec18f9e8f2139454c450a885aaaf6c037a7d8d7af46",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-backup-delivery-evidence-20261028.json",
+      "sha256": "f9c81dad0974d6176340519ec399c8efa7a49593db2abff0bfa849ea4764f102",
+      "bytes": 20990,
+      "source_sha256": "f9c81dad0974d6176340519ec399c8efa7a49593db2abff0bfa849ea4764f102",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_delivery_observer.js",
+      "sha256": "6260cc61c890ec6bd723a30b6d581b4a612bf6e29730126fb91cebc2a52b87a8",
+      "bytes": 6721,
+      "source_sha256": "6260cc61c890ec6bd723a30b6d581b4a612bf6e29730126fb91cebc2a52b87a8",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/run_backup_delivery.py",
+      "sha256": "4556733a134d3aa4d359a95e6f97d54843a2ab1dfa6ce66c483072e3dd84bc93",
+      "bytes": 9541,
+      "source_sha256": "4556733a134d3aa4d359a95e6f97d54843a2ab1dfa6ce66c483072e3dd84bc93",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_delivery_audit.py",
+      "sha256": "bc7dafe8783505abaf2f3457640cdb413060eb261e3c1dbd52337e9f812f7fb5",
+      "bytes": 10130,
+      "source_sha256": "bc7dafe8783505abaf2f3457640cdb413060eb261e3c1dbd52337e9f812f7fb5",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_delivery_scope.cjs",
+      "sha256": "20ff28369365f10b735787c6e53251843717dff172a1b025c8db19297833ba63",
+      "bytes": 5320,
+      "source_sha256": "20ff28369365f10b735787c6e53251843717dff172a1b025c8db19297833ba63",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_backup_delivery.py",
+      "sha256": "0ff3d2a7343fe1f5c2444a005b78e5af048875d85a6daef24d294b1737b0470b",
+      "bytes": 11711,
+      "source_sha256": "0ff3d2a7343fe1f5c2444a005b78e5af048875d85a6daef24d294b1737b0470b",
+      "transformations": []
     }
   ],
-  "file_count": 2531,
-  "source_bytes": 34943783,
+  "file_count": 2539,
+  "source_bytes": 35020976,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
