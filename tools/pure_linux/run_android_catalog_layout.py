@@ -9,6 +9,14 @@ import subprocess
 import time
 
 from provider_job import ENGINE_SHA, entry_guards
+from compare_catalog_update_assets import parse_inventory
+
+
+def update_inventory(adb_output):
+    rows = sorted(adb_output.splitlines())
+    if not rows:
+        raise ValueError("empty update inventory")
+    return rows
 
 
 def main():
@@ -21,9 +29,19 @@ def main():
     parser.add_argument("--frida-address", required=True)
     parser.add_argument("--control-port", type=int, required=True)
     parser.add_argument("--owned-pid", type=int, help="Process already created by this isolated experiment")
+    parser.add_argument("--update-reference", type=Path)
+    parser.add_argument("--update-reference-sha256")
+    parser.add_argument("--recover-spawn-timeout", action="store_true")
     args = parser.parse_args()
     if args.serial != "emulator-5630":
         raise ValueError("dedicated experiment serial required")
+    if bool(args.update_reference) != bool(args.update_reference_sha256):
+        raise ValueError("update reference and identity required together")
+    reference = None
+    if args.update_reference:
+        if hashlib.sha256(args.update_reference.read_bytes()).hexdigest() != args.update_reference_sha256:
+            raise ValueError("update reference identity mismatch")
+        reference = parse_inventory(args.update_reference)
     guard = entry_guards(args.engine)["CONTEXT_GET"]
     args.output.mkdir(mode=0o700, exist_ok=False)
     report = {"schema": "nashura.android-catalog-layout-capture.v1", "status": "FAILED",
@@ -54,6 +72,13 @@ def main():
         if [item.split()[0] for item in identities] != [
                 "f1ee6d6146efc8c998843958ae0788e5121c265445c0c7ff5ffa2a5202d7dd9b", ENGINE_SHA]:
             raise ValueError("installed identity mismatch")
+        if reference is not None:
+            rows = update_inventory(adb("shell", "cd /data/user/0/nullsroyale.rel.free/update && find . -type f -exec sha256sum {} \\;"))
+            (args.output / "update-before.json").write_text(json.dumps(rows))
+            if parse_inventory(args.output / "update-before.json") != reference:
+                raise ValueError("update inventory before capture differs")
+            report["update_reference_sha256"] = args.update_reference_sha256
+            report["update_count"] = len(rows)
         device = frida.get_device_manager().add_remote_device(args.frida_address)
         existing = subprocess.run([str(args.adb), "-s", args.serial, "shell", "pidof",
                                    "nullsroyale.rel.free:engine0"], capture_output=True)
@@ -64,12 +89,21 @@ def main():
         else:
             if existing.returncode == 0:
                 raise ValueError("existing engine process")
-            pid = device.spawn("nullsroyale.rel.free", activity="com.supercell.clashroyale.Engine0App")
+            try:
+                pid = device.spawn("nullsroyale.rel.free", activity="com.supercell.clashroyale.Engine0App")
+            except frida.TimedOutError:
+                if not args.recover_spawn_timeout:
+                    raise
+                report["spawn_timed_out"] = True
+                observed = adb("shell", "pidof", "nullsroyale.rel.free:engine0")
+                if not observed.isdigit():
+                    raise ValueError("timed-out spawn did not yield one engine PID")
+                pid = int(observed)
         report["owned_pid"] = pid
         session = device.attach(pid)
         script = session.create_script(args.script.read_text())
         script.load()
-        if args.owned_pid is None:
+        if args.owned_pid is None and not report.get("spawn_timed_out"):
             device.resume(pid)
         deadline = time.monotonic() + 90
         status = None
@@ -92,15 +126,26 @@ def main():
         if first != second:
             raise ValueError("catalog layout changed between snapshots")
         report["layout"] = first
+        if reference is not None:
+            rows = update_inventory(adb("shell", "cd /data/user/0/nullsroyale.rel.free/update && find . -type f -exec sha256sum {} \\;"))
+            (args.output / "update-after.json").write_text(json.dumps(rows))
+            if parse_inventory(args.output / "update-after.json") != reference:
+                raise ValueError("update inventory after capture differs")
+            report["update_verified"] = True
         report["status"] = "RUNTIME_OBSERVED_LIMITED"
+    except BaseException as error:
+        report["error"] = type(error).__name__ + ": " + str(error)
+        raise
     finally:
-        if session is not None:
-            session.detach()
-        if pid is not None and device is not None:
-            device.kill(pid)
-        with (args.output / "result.json").open("x") as stream:
-            json.dump(report, stream, indent=2)
-            stream.write("\n")
+        try:
+            if session is not None:
+                session.detach()
+            if pid is not None and device is not None:
+                device.kill(pid)
+        finally:
+            with (args.output / "result.json").open("x") as stream:
+                json.dump(report, stream, indent=2)
+                stream.write("\n")
 
 
 if __name__ == "__main__":

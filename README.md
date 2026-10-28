@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-10-28：Android catalog 采集期间 update 清单变化
+
+两次独立启动前后分别为990和908项，布局重复但严格清单门均拒收；删除原因未知。
+详见[报告](agent-handoff/PURE_LINUX_CATALOG_UPDATE_DRIFT_2026-10-28.md)。
+
 ## 2026-10-28：Android 与 Linux catalog 行数差异
 
 真实运行观察到162个相同表槽，但Android 25,810行、Linux 24,353行，17槽不同。

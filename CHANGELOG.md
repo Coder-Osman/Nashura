@@ -1,5 +1,10 @@
 # 变更记录
 
+## 2026-10-28：Android catalog 采集期间 update 清单变化
+
+- 两次独立运行复现990变908，82项删除；严格清单门拒收，保留布局与失败证据。
+- 删除项不在已观测 Linux loader 的131个 update 打开路径中，因果及调用来源未知。
+
 ## 2026-10-28：Android 与 Linux catalog 布局差异
 
 - 隔离 Android 真实进程只读采集并与既有 Linux loader 对照；162槽相同、17槽行数不同。

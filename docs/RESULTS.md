@@ -1,5 +1,10 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：Android update 清单变化
+
+两次启动复现990项变908项，表布局重复；两次均未通过身份门。详见
+[报告](../agent-handoff/PURE_LINUX_CATALOG_UPDATE_DRIFT_2026-10-28.md)。
+
 ## 2026-10-28 E2.1-N：catalog 实际布局差异
 
 Android 和 Linux 各162槽，17槽行数不同，合计分别25,810和24,353；根因未确定。
