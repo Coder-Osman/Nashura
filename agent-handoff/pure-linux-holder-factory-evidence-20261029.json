@@ -1,0 +1,23 @@
+{
+  "schema": "nashura.pure-linux-holder-factory.v1",
+  "baseline_commit": "25e6b35",
+  "status": "RUNTIME_OBSERVED_LIMITED",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "warmup_result_sha256": "a28910beee493048d3b763c588c4972ed88c35d24d44764f816494a5a572964b",
+  "stable_result_sha256": "d7b8c2549548de2d23d0ec3cbe3149cd484071d623d7c304655dde045f749f01",
+  "script_sha256": "732e6b244450689bc3c94d48ce4d3a66cc960ea5cdde8b8d954247f0811b0af2",
+  "audit_sha256": "2b9c86169f58368dc33e1f303287bf95c0bb6c3081368ea8106adc972a320d08",
+  "update_inventory_sha256": "47d4ad200eafff21ea1538132e2bb629526efd87e495d72baf3acb9d95f9e2bc",
+  "update_count": 908,
+  "allocator_vtable_offset": "0x18bf798",
+  "setup_caller": "0x139e330",
+  "owner_init_argument_matches_setup": true,
+  "linux_allocator_identity": "UNKNOWN",
+  "linux_holder_setup": "NOT_RUN",
+  "catalog_ready_pass": false,
+  "configuration_contract": "UNRESOLVED",
+  "backup_equivalence": "UNRESOLVED",
+  "resource_manager": "NOT_RUN",
+  "game_state": "NOT_RUN",
+  "step_tick": "NOT_RUN"
+}

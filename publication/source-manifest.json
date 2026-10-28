@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "ea57fa7015b1a7a6db178c4eb34e5d2d0327d92e3d19947fe6e054bf9e29cd2d",
-      "bytes": 39049,
-      "source_sha256": "ea57fa7015b1a7a6db178c4eb34e5d2d0327d92e3d19947fe6e054bf9e29cd2d",
+      "sha256": "732e6b244450689bc3c94d48ce4d3a66cc960ea5cdde8b8d954247f0811b0af2",
+      "bytes": 42058,
+      "source_sha256": "732e6b244450689bc3c94d48ce4d3a66cc960ea5cdde8b8d954247f0811b0af2",
       "transformations": []
     },
     {
@@ -19345,10 +19345,45 @@
       "bytes": 679,
       "source_sha256": "bf56203d5857b849ed1b4d05f2b515ffc6e6cbc4c32246cdf2657a37683604ef",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_holder_factory.py",
+      "sha256": "8aca4cbe1df46d6b4e58b3b300cbbf7dbe9583a8cb67035fa8395d9b4d059fe9",
+      "bytes": 3106,
+      "source_sha256": "8aca4cbe1df46d6b4e58b3b300cbbf7dbe9583a8cb67035fa8395d9b4d059fe9",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_holder_factory.py",
+      "sha256": "e4fd8a1c7f8a43fcb913ad52bf57ea821f73f6eb2dee7655a177c0da628017dc",
+      "bytes": 1780,
+      "source_sha256": "e4fd8a1c7f8a43fcb913ad52bf57ea821f73f6eb2dee7655a177c0da628017dc",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_HOLDER_FACTORY_2026-10-29.md",
+      "sha256": "f665d51e5c9fde7f4790ff9a20c348b6084438e06cf18f64013b8c4a03d5fbaf",
+      "bytes": 2508,
+      "source_sha256": "f665d51e5c9fde7f4790ff9a20c348b6084438e06cf18f64013b8c4a03d5fbaf",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-holder-factory-evidence-20261029.json",
+      "sha256": "35a3ed2ea52cc5fe19a54379073263f0ee14532703d90f12deda93fecb1d67a6",
+      "bytes": 1086,
+      "source_sha256": "35a3ed2ea52cc5fe19a54379073263f0ee14532703d90f12deda93fecb1d67a6",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_HOLDER_FACTORY.md",
+      "sha256": "6698058e9902149df2821fdf6f306bf4b6e5dc296fd6f2b954b2610ea651a3d4",
+      "bytes": 652,
+      "source_sha256": "6698058e9902149df2821fdf6f306bf4b6e5dc296fd6f2b954b2610ea651a3d4",
+      "transformations": []
     }
   ],
-  "file_count": 2753,
-  "source_bytes": 35894025,
+  "file_count": 2758,
+  "source_bytes": 35906166,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

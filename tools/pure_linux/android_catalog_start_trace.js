@@ -29,6 +29,8 @@ const engineOwnerConstructorScopes = new Map();
 const engineOwnerGetterScopes = new Map();
 const engineOwnerGetterResults = new Map();
 const engineOwnerGetterHolders = new Map();
+const engineOwnerHolderSetups = new Map();
+const engineOwnerHolderFactories = new Map();
 const engineOwnerInitScopes = new Map();
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
 function record(event) {
@@ -144,6 +146,47 @@ function collectPath(module, history, args, returnAddress) {
 function observe(module) {
   if (module.name !== 'libg.so') return;
   if (includeBatchPhases) {
+    attach(module, 0x13a3d14, 'owner_holder_factory_candidate', {
+      onEnter: function (args) {
+        this.allocator = args[0].and(ptr('0x00ffffffffffffff'));
+        this.output = this.context.x8.and(ptr('0x00ffffffffffffff'));
+        this.factoryId = ++nextCall;
+        this.factoryThread = Process.getCurrentThreadId();
+      },
+      onLeave: function () {
+        try {
+          const holder = this.output.readPointer().and(ptr('0x00ffffffffffffff'));
+          const allocator = holder.add(8).readPointer().and(ptr('0x00ffffffffffffff'));
+          const table = this.allocator.readPointer().and(ptr('0x00ffffffffffffff'));
+          const tableModule = Process.findModuleByAddress(table);
+          const tableOffset = tableModule && tableModule.name === module.name ? table.sub(module.base).toString() : null;
+          engineOwnerHolderFactories.set(holder.toString(), {id: this.factoryId, allocator: this.allocator});
+          record({kind: 'owner_holder_factory_return', id: this.factoryId, holder_nonnull: !holder.isNull(),
+                  allocator_nonnull: !this.allocator.isNull(), allocator_matches_holder: allocator.equals(this.allocator),
+                  allocator_vtable_module: tableModule ? tableModule.name : null, allocator_vtable_offset: tableOffset});
+        } catch (error) { errors.push('owner holder factory observation: ' + String(error)); }
+      }
+    });
+    attach(module, 0x13a3e3c, 'owner_holder_setup_candidate', {
+      onEnter: function (args) {
+        this.holder = args[0].and(ptr('0x00ffffffffffffff'));
+        this.holderThread = Process.getCurrentThreadId();
+        this.setupId = ++nextCall;
+        const caller = this.returnAddress.and(ptr('0x00ffffffffffffff'));
+        const factory = engineOwnerHolderFactories.get(this.holder.toString()) || null;
+        const allocator = this.holder.add(8).readPointer().and(ptr('0x00ffffffffffffff'));
+        const label = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
+          ? caller.sub(module.base).toString() : 'external';
+        record({kind: 'owner_holder_setup_enter', id: this.setupId, caller: label,
+                factory_id: factory && factory.allocator.equals(allocator) ? factory.id : null,
+                slot_before_nonnull: !this.holder.add(0x20).readPointer().isNull()});
+      },
+      onLeave: function () {
+        const field = this.holder.add(0x20).readPointer().and(ptr('0x00ffffffffffffff'));
+        engineOwnerHolderSetups.set(this.holder.toString(), {id: this.setupId, field: field, thread: this.holderThread});
+        record({kind: 'owner_holder_setup_return', id: this.setupId, slot_after_nonnull: !field.isNull()});
+      }
+    });
     attach(module, 0x7557d0, 'engine_owner_getter_candidate', {
       onEnter: function () {
         this.ownerThread = Process.getCurrentThreadId();
@@ -222,6 +265,7 @@ function observe(module) {
         this.initId = ++nextCall;
         const ctor = engineOwnerConstructors.get(this.initOwner.toString()) || null;
         const getterHolder = engineOwnerGetterHolders.get(this.initOwner.toString()) || ptr(0);
+        const holderSetup = engineOwnerHolderSetups.get(getterHolder.toString()) || null;
         const holderRange = getterHolder.isNull() ? null : Process.findRangeByAddress(getterHolder);
         let argumentMatchesGetterHolderField = null;
         if (holderRange && holderRange.protection.includes('r') &&
@@ -251,6 +295,7 @@ function observe(module) {
                 argument_vtable: argumentVtable, argument_readable: !!argumentRange && argumentRange.protection.includes('r'),
                 argument_first_word_mapped: argumentFirstWordMapped, argument_first_word_module: argumentFirstWordModule,
                 argument_matches_getter_holder_field: argumentMatchesGetterHolderField,
+                holder_setup_id: holderSetup && holderSetup.field.equals(this.initArgument) ? holderSetup.id : null,
                 argument_matches_slot_before: previousSlot.equals(this.initArgument)});
       },
       onLeave: function () {
