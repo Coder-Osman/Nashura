@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N Backup 被动观察与 journal/scheduler 契约
+
+- 新增只处理自然请求的同线程/对象身份探针及SHA、boot/starttime、六hook覆盖绑定runner。
+- 真实45秒窗口NOT_OBSERVED；零事件不解释为依赖不存在，不重复store、Backup或重启。
+- 新增六个精确DEX方法的人工审阅契约绑定，明确吞IOException及schedule去重/结果忽略。
+- 新增43项工具边界测试通过；保留Linux副作用绑定和严格catalog的BLOCKED状态。
+
 ## 2026-10-28：E2.1-N Backup pending 去重契约
 
 - 新增只读目标队列探针、独占0600 runner、精确方法SHA绑定的人工审阅契约及25项边界测试。

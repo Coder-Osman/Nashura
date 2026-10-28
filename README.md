@@ -1,5 +1,15 @@
 # Nashura
 
+## 2026-10-28：Backup 被动分支观察与 journal/scheduler 边界
+
+隔离AVD的45秒被动窗口未捕获目标自然请求，结果NOT_OBSERVED；六hook完整安装，
+无报告丢事件或观察错误，进程身份一致。真实DEX六方法静态审阅确认journal吞IOException、
+schedule可能去重返回且忽略底层提交结果；方法返回不等于持久化或交付成功。
+新增43项工具测试通过，Linux Backup绑定及严格catalog仍BLOCKED。详见
+[报告](agent-handoff/PURE_LINUX_BACKUP_BRANCH_OBSERVATION_2026-10-28.md)、
+[机器证据](agent-handoff/pure-linux-backup-branch-observation-evidence-20261028.json)及
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_BRANCH.md)。以下保留历史状态。
+
 ## 2026-10-28：Backup pending 去重分支与只读队列
 
 真实 Android 只读队列检查确认目标包已有 pending 请求且属于 participants；匹配服务端

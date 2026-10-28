@@ -1,5 +1,17 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：Backup 自然分支与 journal/scheduler 静态边界
+
+45.006588917秒真实被动窗口：目标入口0、事件0、丢事件0、观察错误0；六hook已安装，
+boot/starttime前后一致，结果NOT_OBSERVED。历史put返回保持未知，没有重复store或主动请求。
+六个精确DEX方法的人工审阅绑定新增工具：journal IOException清空引用并正常返回，
+schedule按user去重且忽略JobScheduler返回，因此正常返回不足以证明持久化或交付。
+43项新增工具测试通过；完整回归和SHA见本轮机器证据。Linux实际Backup绑定及严格catalog
+仍BLOCKED，后续对象图未运行。详见
+[报告](../agent-handoff/PURE_LINUX_BACKUP_BRANCH_OBSERVATION_2026-10-28.md)、
+[机器证据](../agent-handoff/pure-linux-backup-branch-observation-evidence-20261028.json)及
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_BRANCH.md)。以下保留历史记录。
+
 ## 2026-10-28 E2.1-N：Backup 队列去重语义
 
 同隔离Android实例两轮只读检查各两次采样：目标已在pending、属于participants、journal对象存在。

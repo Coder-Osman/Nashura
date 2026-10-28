@@ -1,0 +1,335 @@
+{
+  "schema": "nashura.backup-branch-observation-evidence.v1",
+  "base_commit": "f756ba02eed7d684399d4e4bcc2084e642bf5514",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "delivery_commit": "containing commit; no self-referential hash",
+  "scope": "passive Android Backup observation and offline exact-DEX manual review binding",
+  "environment": {
+    "host_os": "Darwin",
+    "host_arch": "arm64",
+    "host_version": "15.6",
+    "android_api": 30,
+    "android_abi": "arm64-v8a",
+    "avd": "nashura-e2-backup-api30",
+    "serial": "emulator-5580",
+    "system_server_pid": 522,
+    "system_server_starttime": 1230,
+    "boot_id_sha256": "4f7731e6c24517de684b642ea43c34052ab6435fc4bbfd5149c60e8d42f1ec71",
+    "process_identity_unchanged": true,
+    "game_pid_readonly_recheck": 6901
+  },
+  "runtime": {
+    "status": "NOT_OBSERVED",
+    "command": [
+      "/tmp/nashura-frida-16.7.19-venv/bin/python",
+      "tools/pure_linux/run_backup_branch_passive.py",
+      "--adb",
+      "/Users/gujiga/Library/Android/sdk/platform-tools/adb",
+      "--serial",
+      "emulator-5580",
+      "--pid",
+      "522",
+      "--script",
+      "tools/pure_linux/backup_branch_observer.js",
+      "--script-sha256",
+      "1551ceb9d8a472e52428f6fb7acb33b5f336d626e7cde61c9541928e5913888e",
+      "--seconds",
+      "45",
+      "--output",
+      "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/passive-first.json"
+    ],
+    "exit_code": 0,
+    "observed_seconds": 45.006588917,
+    "hooks": [
+      "java.util.HashMap.put(java.lang.Object,java.lang.Object)",
+      "com.android.server.backup.UserBackupManagerService.dataChangedImpl(java.lang.String,java.util.HashSet)",
+      "com.android.server.backup.UserBackupManagerService.writeToJournalLocked(java.lang.String)",
+      "com.android.server.backup.DataChangedJournal.addPackage(java.lang.String)",
+      "com.android.server.backup.KeyValueBackupJob.schedule(int,android.content.Context,long,com.android.server.backup.BackupManagerConstants)",
+      "com.android.server.backup.KeyValueBackupJob.schedule(int,android.content.Context,com.android.server.backup.BackupManagerConstants)"
+    ],
+    "natural_entries": 0,
+    "events": 0,
+    "dropped": 0,
+    "active_scopes": 0,
+    "observation_errors": 0,
+    "detach_error": null,
+    "requests_issued": 0,
+    "stores_issued": 0,
+    "historical_put_branch": "UNRESOLVED",
+    "observer_trajectory_parity": "NOT_RUN",
+    "zero_events_proves_absence": false
+  },
+  "static_review": {
+    "command": [
+      "/opt/anaconda3/bin/python3",
+      "tools/pure_linux/backup_journal_contract.py",
+      "--dump",
+      "/private/tmp/nashura-backup-queue-20261028-8KeLJO/static-contract/dexdump.stdout",
+      "--dump-sha256",
+      "88b8396fea3c5f786aee3f44b6dba41767d0ccbe2a65839ada57c6708adc3e4a",
+      "--dex",
+      "/private/tmp/nashura-backup-queue-20261028-8KeLJO/services.dex",
+      "--dex-sha256",
+      "66b315411f05fe53c5fb9f0e144857cef26dfce79927b004cb0e5a057a347a0a",
+      "--output",
+      "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/journal-contract.json"
+    ],
+    "exit_code": 0,
+    "schema": "nashura.backup-journal-contract.v1",
+    "dump_sha256": "88b8396fea3c5f786aee3f44b6dba41767d0ccbe2a65839ada57c6708adc3e4a",
+    "dex_sha256": "66b315411f05fe53c5fb9f0e144857cef26dfce79927b004cb0e5a057a347a0a",
+    "review": {
+      "status": "STATIC_FOUND",
+      "methods": {
+        "com.android.server.backup.DataChangedJournal.<init>:(Ljava/io/File;)V": {
+          "sha256": "74c3fbf35636a0206a1ad7757d312d8fa1c1b73e9ad58d6e84525968789d5c7a",
+          "instructions": 3,
+          "catch_table_present": true
+        },
+        "com.android.server.backup.DataChangedJournal.newJournal:(Ljava/io/File;)Lcom/android/server/backup/DataChangedJournal;": {
+          "sha256": "7e09c126ce8ba353cacbdea5d343d335c25223dad59085c5f7c722ac429e441b",
+          "instructions": 7,
+          "catch_table_present": true
+        },
+        "com.android.server.backup.DataChangedJournal.addPackage:(Ljava/lang/String;)V": {
+          "sha256": "a239350ca1a2e5fbd4f36c443f6fb5c5fb6caff65124dc9cb7dd6eda189b79eb",
+          "instructions": 16,
+          "catch_table_present": true
+        },
+        "com.android.server.backup.KeyValueBackupJob.schedule:(ILandroid/content/Context;JLcom/android/server/backup/BackupManagerConstants;)V": {
+          "sha256": "58ee0c6dfa7cd43ea3e9fd2d1df9a2e5aa56cb18d9d5841f5e626f7186339831",
+          "instructions": 102,
+          "catch_table_present": true
+        },
+        "com.android.server.backup.KeyValueBackupJob.schedule:(ILandroid/content/Context;Lcom/android/server/backup/BackupManagerConstants;)V": {
+          "sha256": "df4ccc8cc7d77efde81584e60974963f814316398e94e8460fbca16d01dad4d4",
+          "instructions": 3,
+          "catch_table_present": true
+        },
+        "com.android.server.backup.UserBackupManagerService.writeToJournalLocked:(Ljava/lang/String;)V": {
+          "sha256": "c2623709294f9e408811711737f53a667890360debd75b76b4db7ba7878e62f2",
+          "instructions": 27,
+          "catch_table_present": true
+        }
+      },
+      "basis": "manual control-flow review of exact normalized methods and catch tables",
+      "automatic_semantic_inference": false,
+      "journal": {
+        "constructor": "Object constructor, then retain supplied File as mFile",
+        "new": "File.createTempFile with journal prefix, null suffix and supplied directory",
+        "append": "RandomAccessFile rws; length; seek to length; writeUTF(package); close",
+        "append_failure": "close on protected failure; suppress secondary close exception; rethrow",
+        "service_write": "create and retain journal if null, then addPackage",
+        "service_ioexception": "log error, clear mJournal, return normally",
+        "other_exception": "not caught by the service IOException handler",
+        "normal_return_proves_durability": false
+      },
+      "scheduler": {
+        "wrapper": "three-argument overload delegates with delay zero",
+        "deduplication": "class monitor; existing per-user scheduled flag returns before job submission",
+        "constants": [
+          "interval",
+          "fuzz",
+          "network type",
+          "charging"
+        ],
+        "delay": "positive explicit delay, otherwise interval plus Random.nextInt((int)fuzz)",
+        "job": "minimum latency, network, charging, deadline and transient userId extras",
+        "deadline_ms": 86400000,
+        "submit": "Context jobscheduler service; JobScheduler.schedule(JobInfo)",
+        "submission_result": "integer return ignored",
+        "after_normal_submission_return": "set per-user scheduled flag and wall-clock next time",
+        "exceptions": "monitor cleanup and rethrow; later bookkeeping not guaranteed",
+        "normal_return_proves_acceptance_or_delivery": false
+      },
+      "unresolved": [
+        "actual historical queue branch",
+        "journal write runtime coverage",
+        "RandomAccessFile and file creation transitive semantics",
+        "fsync and crash durability",
+        "actual scheduler acceptance and delivery",
+        "Linux Backup binding",
+        "full configuration exception domain"
+      ],
+      "runtime_parity": "NOT_RUN",
+      "catalog_ready_pass": false
+    },
+    "inputs_unchanged": true
+  },
+  "tests": {
+    "targeted": {
+      "command": [
+        "/opt/anaconda3/bin/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tools/pure_linux/test_backup_branch_passive.py",
+        "tools/pure_linux/test_backup_journal_contract.py"
+      ],
+      "passed": 43,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    "pure_linux": {
+      "command": [
+        "/opt/anaconda3/bin/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tools/pure_linux"
+      ],
+      "cwd": "/private/tmp/nashura-backup-branch-check-20261028-xsn5hpcr",
+      "exit_code": 0,
+      "passed": 645,
+      "skipped": 1
+    },
+    "main": {
+      "command": [
+        "/opt/anaconda3/bin/python3",
+        "tools/run_main_engine_checks.py"
+      ],
+      "cwd": "/private/tmp/nashura-backup-branch-check-20261028-xsn5hpcr",
+      "exit_code": 0,
+      "passed": 211,
+      "skipped": 0
+    },
+    "public": {
+      "command": [
+        "/opt/anaconda3/bin/python3",
+        "tools/run_public_checks.py"
+      ],
+      "cwd": "/private/tmp/nashura-backup-branch-check-20261028-xsn5hpcr",
+      "exit_code": 0,
+      "groups": 9,
+      "passed": 1104,
+      "skipped": 42
+    },
+    "sets_overlap_do_not_add": true,
+    "new_files_match_test_copy": true,
+    "historical_xml_count": 250,
+    "historical_xml_unchanged": true
+  },
+  "private_outputs": [
+    {
+      "path": "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/passive-first.json",
+      "sha256": "4bccb625b94ddd4d3c5ced58db78fa3550376e32d8664663680795776935d0b3",
+      "bytes": 1717
+    },
+    {
+      "path": "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/passive-first.log",
+      "sha256": "d44ea6e322492fd9860a2e23963f2385e0f140223f5ba16b8e2afbef22825460",
+      "bytes": 56
+    },
+    {
+      "path": "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/journal-contract.json",
+      "sha256": "baff6e687202edd3ea20f109faa3a0e507d332b2cdd7cd1623ea703ec186aa0f",
+      "bytes": 4048
+    },
+    {
+      "path": "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/targeted-tests.log",
+      "sha256": "717346e1659429f1c6fed29f293e1a0539ecb02d3f34ccc27abf589226eafb58",
+      "bytes": 99
+    },
+    {
+      "path": "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/full-pure-linux-tests.log",
+      "sha256": "aa06e0293405d7c56c7cde9c294fbb1cc64eb31595e1f0823d41199843515857",
+      "bytes": 751
+    },
+    {
+      "path": "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/main-checks.log",
+      "sha256": "c8169a0a4bf261f70293b6d97ec7557631a41c457ce3a19c42ae58df2c214c0a",
+      "bytes": 261
+    },
+    {
+      "path": "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/public-checks.log",
+      "sha256": "06e21f48dc9a595e33f955b94fb581d8a562a854963739c7862d0c46d0ce036d",
+      "bytes": 3045
+    },
+    {
+      "path": "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/full-pure-linux-tests-command.json",
+      "sha256": "0a47466368653b0bc83a8731041ef696d01b56c00096d8ecc721ec68ec087671",
+      "bytes": 236
+    },
+    {
+      "path": "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/main-checks-command.json",
+      "sha256": "fdf4240d3c70b46b826660c6d0976abc03fbb74d7fe9c3d7ad1658e32edf0b98",
+      "bytes": 183
+    },
+    {
+      "path": "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/public-checks-command.json",
+      "sha256": "2edf5a48e9560012ae74b753ec41fd55ef0eb30de638d58227a91fbe55ea5045",
+      "bytes": 178
+    },
+    {
+      "path": "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/validation-context.json",
+      "sha256": "e9eb38747e7b942bedd635d9ff8560d18638f9638f56ae8fd6d00449dcbdc9b1",
+      "bytes": 36956
+    },
+    {
+      "path": "/private/tmp/nashura-backup-passive-20261028-Xy7rrt/all-xml-before.json",
+      "sha256": "cd6c565a49953e2246a6fd1294e27ac600ada85d0044d0cb7d66fbd3fc9069cd",
+      "bytes": 36508
+    }
+  ],
+  "source_outputs": [
+    {
+      "path": "/Users/gujiga/Documents/ChatGPT/CR/Nashura/tools/pure_linux/backup_branch_observer.js",
+      "sha256": "1551ceb9d8a472e52428f6fb7acb33b5f336d626e7cde61c9541928e5913888e",
+      "bytes": 6187
+    },
+    {
+      "path": "/Users/gujiga/Documents/ChatGPT/CR/Nashura/tools/pure_linux/run_backup_branch_passive.py",
+      "sha256": "d2916e8e93a8fd65e7fdf1871bcf8a3c0da54a614b3d9af4a73a232dfcba631c",
+      "bytes": 6204
+    },
+    {
+      "path": "/Users/gujiga/Documents/ChatGPT/CR/Nashura/tools/pure_linux/backup_branch_fixture.cjs",
+      "sha256": "bc15335a35bfea4b8428456e1fe9d4d2d6bc0370746e379573e05d7956fa91c2",
+      "bytes": 8042
+    },
+    {
+      "path": "/Users/gujiga/Documents/ChatGPT/CR/Nashura/tools/pure_linux/test_backup_branch_passive.py",
+      "sha256": "d8754bb5175260f9d7797ccae87c3bfee87b466e9c54cf757d2a69490ab2c551",
+      "bytes": 6695
+    },
+    {
+      "path": "/Users/gujiga/Documents/ChatGPT/CR/Nashura/tools/pure_linux/backup_journal_contract.py",
+      "sha256": "33382cbb865908444311011f88ca30463b81ef215a02a60f6975e32b111cdc65",
+      "bytes": 5279
+    },
+    {
+      "path": "/Users/gujiga/Documents/ChatGPT/CR/Nashura/tools/pure_linux/test_backup_journal_contract.py",
+      "sha256": "b9f32aaeda5f58a005e2b1147ffd433f251cd908d20b589c8d2116a5e3fd335a",
+      "bytes": 4073
+    }
+  ],
+  "gates": {
+    "catalog_ready_pass": false,
+    "linux_backup_binding": "UNRESOLVED",
+    "full_configuration_exception_domain": "UNRESOLVED",
+    "journal_durability_and_delivery": "UNRESOLVED",
+    "cross_process_recovery": "NOT_RUN",
+    "libg_reloaded_this_stage": false,
+    "full_engine_and_resource_identity_rechecked": "NOT_RUN",
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "step_tick": "NOT_RUN",
+    "no_vm": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "training": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "first_unresolved_dependency": "loading configuration Backup side effects and Linux binding",
+  "next_minimal_experiment": "audit exact File/RandomAccessFile/JobScheduler transitive contracts, then implement only evidenced Linux binding and rerun natural catalog in a new libg subprocess",
+  "preserved_boundaries": [
+    "prior controlled store and restore already completed; not repeated",
+    "no new active Backup request, pending clear, process restart, or component installation",
+    "main and frozen workloads unchanged",
+    "raw private DEX, disassembly, resources and logs remain local"
+  ]
+}
