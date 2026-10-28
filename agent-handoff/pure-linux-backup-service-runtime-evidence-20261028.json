@@ -1,0 +1,1095 @@
+{
+  "schema": "nashura.pure-linux-backup-service-runtime.v1",
+  "baseline_commit": "85ed2498d70aa7d3a3ed1cdfe79027710f45cb9e",
+  "delivery_commit": "containing_commit",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "status": "RUNTIME_OBSERVED_LIMITED",
+  "private_evidence_root": "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a",
+  "environment": {
+    "host": {
+      "os": "Darwin",
+      "architecture": "arm64",
+      "macos": "15.6",
+      "memory_bytes": 38654705664
+    },
+    "android": {
+      "serial": "emulator-5582",
+      "avd": "nashura-e2-backup-contract-api30",
+      "fingerprint": "google/sdk_gphone_arm64/emulator_arm64:11/RSR1.240422.006/12134477:userdebug/dev-keys",
+      "identity_before": {
+        "boot_id": "69ca10cb-fe2c-4b07-a429-26a64368bf94",
+        "pid": 486,
+        "starttime": 1170,
+        "cmdline": "system_server"
+      },
+      "identity_after": {
+        "boot_id": "69ca10cb-fe2c-4b07-a429-26a64368bf94",
+        "pid": 486,
+        "starttime": 1170,
+        "cmdline": "system_server"
+      },
+      "hooks": [
+        "com.android.server.backup.UserBackupManagerService.dataChanged(java.lang.String)",
+        "java.util.HashMap.put(java.lang.Object,java.lang.Object)",
+        "com.android.server.backup.UserBackupManagerService.dataChangedImpl(java.lang.String,java.util.HashSet)",
+        "com.android.server.backup.UserBackupManagerService.writeToJournalLocked(java.lang.String)",
+        "com.android.server.backup.DataChangedJournal.addPackage(java.lang.String)",
+        "com.android.server.backup.KeyValueBackupJob.schedule(int,android.content.Context,long,com.android.server.backup.BackupManagerConstants)",
+        "com.android.server.backup.KeyValueBackupJob.schedule(int,android.content.Context,com.android.server.backup.BackupManagerConstants)",
+        "android.app.JobSchedulerImpl.schedule(android.app.job.JobInfo)"
+      ]
+    },
+    "tools": {
+      "frida": "16.7.19",
+      "jdk": "25",
+      "android_build_tools": "36.0.0",
+      "compile_api": 35,
+      "min_api": 30
+    },
+    "services_identity": {
+      "jar_sha256": "c6992cdc2a3e23d5aeb6ab77e7a7f6889cfcf5c262c6ed86825e6fcbf601681d",
+      "dex_sha256": "66b315411f05fe53c5fb9f0e144857cef26dfce79927b004cb0e5a057a347a0a",
+      "classification": "historical matching API30 inputs; no fresh pull this phase"
+    }
+  },
+  "source_sha256": {
+    "tools/pure_linux/backup_fixture/AndroidManifest.xml": "2a0e68f8de903b6624a5b6ee96999d5aa0ec0617fc9ff97d8da9d2f07c79f4dc",
+    "tools/pure_linux/backup_fixture/ProbeBackupAgent.java": "18245795e00480f3174c3f51eb473ca1cb92d6dbef4aa827c841c84529e2cbc8",
+    "tools/pure_linux/backup_fixture/ProbeReceiver.java": "e5fa0e9aaa3b042b79547a186411eee5941d5941b9f8d739f1e32c53c77453ed",
+    "tools/pure_linux/backup_fixture_audit.py": "5a8c7af78ad8b58570b605ec3dc725a105db92162c1d167487acbace1e75c3fc",
+    "tools/pure_linux/backup_fixture_observer.js": "75f1a8707d9fa07b1f20f7025f09ce1d6ba6d985a6a61f4f7e9456185ecfa4e3",
+    "tools/pure_linux/backup_fixture_scope.cjs": "18722bc39c06f450b6f1f5b9f2911a71b81a007e9d008b8eb63bb048166bab24",
+    "tools/pure_linux/run_backup_fixture.py": "7559911cef5cc9f78d7ba27ceb08a4b24757e9135ea11b258628d788add36788",
+    "tools/pure_linux/test_backup_fixture.py": "267e0d040a2d0e19bc8ae4f54de454639f2909700f9bea1e0b754adf0d3701dc"
+  },
+  "private_artifacts": {
+    "build/0.json": {
+      "sha256": "cd6f4e3c908ecd7c8e27c34ef2b8649d1114cb2a8803c74b8b4fd6fe77cc1b66",
+      "bytes": 554
+    },
+    "build/1.json": {
+      "sha256": "194666d95d965eff37bb2d084f7fb01219e24b5e6e43ce50a939dd82d2cd10e8",
+      "bytes": 573
+    },
+    "build/2.json": {
+      "sha256": "bc004a5da231a5969f5a45ec3fc5975f95c3cc8ca401f620483f62b56ef4c835",
+      "bytes": 424
+    },
+    "build/3.json": {
+      "sha256": "00e14797b4cbb16bb56bb7cfe87a1983e8bde874d5c5786e07fa55a8f53c219b",
+      "bytes": 223
+    },
+    "build/4.json": {
+      "sha256": "3efed2f747ae0071e8ee220118e3e296c2707c8b637f06779741621a5d2fb09f",
+      "bytes": 438
+    },
+    "build/5.json": {
+      "sha256": "6fd8255b6a61506598a78e66855c82a8ff11f107ca1de472e2a6d0c7c9ff7eb1",
+      "bytes": 451
+    },
+    "build/6.json": {
+      "sha256": "f11520779a543858fc0915d673c8f8598a2decbfabac73a99a0c8b3b3b7853da",
+      "bytes": 211
+    },
+    "emulator-command.json": {
+      "sha256": "029b9a6c288c09faf995a9b89c34b8ca1cc4d3379b6c3bfe5e73e2e38da7f1ee",
+      "bytes": 375
+    },
+    "fetch.json": {
+      "sha256": "d80b2aee39f5418257c5000c4f2c8bc98c53d86d73d060ff30f9d8b6709cc723",
+      "bytes": 295
+    },
+    "observe-v1/result.json": {
+      "sha256": "450f5585976fd10f50029d628aa7b6e86e0360b83592a4fb1dd079f0a90c2849",
+      "bytes": 2876
+    },
+    "observe-v2/result.json": {
+      "sha256": "5954fc7779b2eb23bc594fd60964d6d700100e6d5573aaea22f690cdfc920ce3",
+      "bytes": 3258
+    },
+    "observe-v3/result.json": {
+      "sha256": "7ea37da69b4396a6e75f3b03c872835ba2e0a81fee57e2e0d052025f602a82e7",
+      "bytes": 15345
+    },
+    "observe-v4/result.json": {
+      "sha256": "d14ff20fd7a3d9f5a0a6a2984a91490ae49ae50f4efa800191fd223d875f2ebb",
+      "bytes": 8809
+    },
+    "observe-v5/result.json": {
+      "sha256": "d521f815efd7c42af5ea933dabd1061d97b54e450932e808af1f4a196946561c",
+      "bytes": 11751
+    },
+    "observe-v6/audit-command.json": {
+      "sha256": "604ba19759f6a3b5ddea209a1d358a4f4fab55bcfa6262d8b8cf0697c256fb7b",
+      "bytes": 585
+    },
+    "observe-v6/audit-v2-command.json": {
+      "sha256": "f5f74a8544a1a842a7bcbccc6e60239e584f9ed5078cdfd8573261ea479497c0",
+      "bytes": 632
+    },
+    "observe-v6/audit-v2.json": {
+      "sha256": "fff35ada5bd774e675cc8a4c607af16c7bebc8edddf7492ff1788819a897f71c",
+      "bytes": 598
+    },
+    "observe-v6/audit.json": {
+      "sha256": "fff35ada5bd774e675cc8a4c607af16c7bebc8edddf7492ff1788819a897f71c",
+      "bytes": 598
+    },
+    "observe-v6/journal-0.bin": {
+      "sha256": "8a1e572961b01639d4daabdf50df9e42ad5b40e83474e0248ef0467c35fdf6fa",
+      "bytes": 95
+    },
+    "observe-v6/journal-boundaries.json": {
+      "sha256": "d3c7ee474bbd3ecffe1a9f2d0e48cf3d58ff1d40fadaa51bf080f1d679086bf1",
+      "bytes": 275
+    },
+    "observe-v6/result.json": {
+      "sha256": "7d1b4ccafb67880d2a9b2130f9c873b356cb92d60f29203e428c787c624c6d15",
+      "bytes": 37220
+    },
+    "shutdown.json": {
+      "sha256": "344b165331fa1ee2f5ff0ae589854200e43c2a5c035f0ff879025391b908fdd5",
+      "bytes": 1709
+    },
+    "v4-journal-preserved.bin": {
+      "sha256": "48296c87c2ad4482426f32f00aa1d5708f027ed663596e71a747e6ceab7ef480",
+      "bytes": 871
+    },
+    "observe-v6/audit-v2.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/audit-v2.stdout": {
+      "sha256": "c156d65d5b27289d129b7cf57638e2bcc9348a0cf1b7996dc0d9450b2edd6672",
+      "bytes": 526
+    },
+    "observe-v6/audit.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/audit.stdout": {
+      "sha256": "c156d65d5b27289d129b7cf57638e2bcc9348a0cf1b7996dc0d9450b2edd6672",
+      "bytes": 526
+    },
+    "observe-v6/backup_fixture_observer.js": {
+      "sha256": "75f1a8707d9fa07b1f20f7025f09ce1d6ba6d985a6a61f4f7e9456185ecfa4e3",
+      "bytes": 10517
+    },
+    "observe-v6/command-00.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/command-00.stdout": {
+      "sha256": "0ba7a67a6bae8227c8d442e0333ff8b0ff553dac3838fb5882c41fd5c7e1955f",
+      "bytes": 38
+    },
+    "observe-v6/command-01.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/command-01.stdout": {
+      "sha256": "157573a124cd50183a80f82187b13816cb2ba9a2a1075996d61fb042dc7b24f1",
+      "bytes": 86
+    },
+    "observe-v6/command-02.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/command-02.stdout": {
+      "sha256": "bf5de45de3045c6332ff0b72a900d8bc7fc3b83ad8e8d069e4c5fbe6ef78d115",
+      "bytes": 34
+    },
+    "observe-v6/command-03.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/command-03.stdout": {
+      "sha256": "572cb85628ce9a2f165ce8063c4b08effa771fd1f10d07abf064370cd934b1f6",
+      "bytes": 105
+    },
+    "observe-v6/command-04.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/command-04.stdout": {
+      "sha256": "d6286d14c826c74d53f4ad416ef7112b57109925f2fd19bf4d376b70f1c1208a",
+      "bytes": 8533
+    },
+    "observe-v6/command-05.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/command-05.stdout": {
+      "sha256": "77caa145d66c1cbcaba6818d21efbf9828d3ec619e8b0b90a6b3861acc98be36",
+      "bytes": 169
+    },
+    "observe-v6/command-06.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/command-06.stdout": {
+      "sha256": "5985d79785cfd399984d307d638fcffd8a04a7181889c5e7e2ef9e9f02930b85",
+      "bytes": 116
+    },
+    "observe-v6/command-07.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/command-07.stdout": {
+      "sha256": "413daf9f90aed37dc0e126ef54e5010b9e1139306c38aed76caf06f93dbe6c5f",
+      "bytes": 27
+    },
+    "observe-v6/command-08.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/command-08.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/command-09.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/command-09.stdout": {
+      "sha256": "b7c64cb77b1f0f0f8385ad85149b702adf6d30c3b6d7a5e39b9d4bd4d4d5c5ad",
+      "bytes": 176
+    },
+    "observe-v6/command-10.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "observe-v6/command-10.stdout": {
+      "sha256": "b7c64cb77b1f0f0f8385ad85149b702adf6d30c3b6d7a5e39b9d4bd4d4d5c5ad",
+      "bytes": 176
+    },
+    "observe-v6/run_backup_fixture.py": {
+      "sha256": "7559911cef5cc9f78d7ba27ceb08a4b24757e9135ea11b258628d788add36788",
+      "bytes": 10842
+    },
+    "build/fixture.apk": {
+      "sha256": "d6286d14c826c74d53f4ad416ef7112b57109925f2fd19bf4d376b70f1c1208a",
+      "bytes": 8533
+    }
+  },
+  "build": [
+    {
+      "record": "build/0.json",
+      "command": [
+        "/Library/Java/JavaVirtualMachines/jdk-25.jdk/Contents/Home/bin/javac",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-classpath",
+        "/Users/gujiga/Library/Android/sdk/platforms/android-35/android.jar",
+        "-d",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/build/classes",
+        "/Users/gujiga/Documents/ChatGPT/CR/Nashura/tools/pure_linux/backup_fixture/ProbeReceiver.java",
+        "/Users/gujiga/Documents/ChatGPT/CR/Nashura/tools/pure_linux/backup_fixture/ProbeBackupAgent.java"
+      ],
+      "exit_code": 0
+    },
+    {
+      "record": "build/1.json",
+      "command": [
+        "/Users/gujiga/Library/Android/sdk/build-tools/36.0.0/d8",
+        "--min-api",
+        "30",
+        "--lib",
+        "/Users/gujiga/Library/Android/sdk/platforms/android-35/android.jar",
+        "--output",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/build/dex",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/build/classes/org/nashura/backupfixture/ProbeReceiver.class",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/build/classes/org/nashura/backupfixture/ProbeBackupAgent.class"
+      ],
+      "exit_code": 0
+    },
+    {
+      "record": "build/2.json",
+      "command": [
+        "/Users/gujiga/Library/Android/sdk/build-tools/36.0.0/aapt",
+        "package",
+        "-f",
+        "-M",
+        "/Users/gujiga/Documents/ChatGPT/CR/Nashura/tools/pure_linux/backup_fixture/AndroidManifest.xml",
+        "-I",
+        "/Users/gujiga/Library/Android/sdk/platforms/android-35/android.jar",
+        "-F",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/build/unsigned.apk"
+      ],
+      "exit_code": 0
+    },
+    {
+      "record": "build/3.json",
+      "command": [
+        "/Users/gujiga/Library/Android/sdk/build-tools/36.0.0/aapt",
+        "add",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/build/unsigned.apk",
+        "classes.dex"
+      ],
+      "exit_code": 0
+    },
+    {
+      "record": "build/4.json",
+      "command": [
+        "/Library/Java/JavaVirtualMachines/jdk-25.jdk/Contents/Home/bin/keytool",
+        "-genkeypair",
+        "-keystore",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/build/fixture.keystore",
+        "-storepass",
+        "[REDACTED_TEST_KEY_PASSWORD]",
+        "-keypass",
+        "[REDACTED_TEST_KEY_PASSWORD]",
+        "-alias",
+        "fixture",
+        "-dname",
+        "CN=Nashura Local Fixture",
+        "-keyalg",
+        "RSA",
+        "-validity",
+        "30"
+      ],
+      "exit_code": 0
+    },
+    {
+      "record": "build/5.json",
+      "command": [
+        "/Users/gujiga/Library/Android/sdk/build-tools/36.0.0/apksigner",
+        "sign",
+        "--ks",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/build/fixture.keystore",
+        "--ks-pass",
+        "[REDACTED_TEST_KEY_PASSWORD]",
+        "--out",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/build/fixture.apk",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/build/unsigned.apk"
+      ],
+      "exit_code": 0
+    },
+    {
+      "record": "build/6.json",
+      "command": [
+        "/Users/gujiga/Library/Android/sdk/build-tools/36.0.0/apksigner",
+        "verify",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/build/fixture.apk"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "build_transformations": [
+    "Test-only keystore passwords redacted from build/4.json and build/5.json command arrays; original records and signing material remain private."
+  ],
+  "runtime_commands": {
+    "adb_base": [
+      "/Users/gujiga/Library/Android/sdk/platform-tools/adb",
+      "-s",
+      "emulator-5582"
+    ],
+    "operations": [
+      {
+        "arguments": [
+          "emu",
+          "avd",
+          "name"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "0ba7a67a6bae8227c8d442e0333ff8b0ff553dac3838fb5882c41fd5c7e1955f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "getprop",
+          "ro.build.fingerprint"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "157573a124cd50183a80f82187b13816cb2ba9a2a1075996d61fb042dc7b24f1",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "org.nashura.backupfixture"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "bf5de45de3045c6332ff0b72a900d8bc7fc3b83ad8e8d069e4c5fbe6ef78d115",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "pm",
+          "path",
+          "org.nashura.backupfixture"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "572cb85628ce9a2f165ce8063c4b08effa771fd1f10d07abf064370cd934b1f6",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "exec-out",
+          "cat",
+          "/data/app/~~GSpXMIeVpjw3QfnVgjwBRg==/org.nashura.backupfixture-iuGdOomrTePfDt7AljYvzw==/base.apk"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "d6286d14c826c74d53f4ad416ef7112b57109925f2fd19bf4d376b70f1c1208a",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "bmgr",
+          "list",
+          "transports"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "77caa145d66c1cbcaba6818d21efbf9828d3ec619e8b0b90a6b3861acc98be36",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "bmgr",
+          "transport",
+          "com.android.localtransport/.LocalTransport"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "5985d79785cfd399984d307d638fcffd8a04a7181889c5e7e2ef9e9f02930b85",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "bmgr",
+          "enable",
+          "true"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "413daf9f90aed37dc0e126ef54e5010b9e1139306c38aed76caf06f93dbe6c5f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "bmgr",
+          "run"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "am",
+          "broadcast",
+          "--include-stopped-packages",
+          "-n",
+          "org.nashura.backupfixture/.ProbeReceiver",
+          "-a",
+          "org.nashura.backupfixture.REQUEST"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "b7c64cb77b1f0f0f8385ad85149b702adf6d30c3b6d7a5e39b9d4bd4d4d5c5ad",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "am",
+          "broadcast",
+          "--include-stopped-packages",
+          "-n",
+          "org.nashura.backupfixture/.ProbeReceiver",
+          "-a",
+          "org.nashura.backupfixture.REQUEST"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "b7c64cb77b1f0f0f8385ad85149b702adf6d30c3b6d7a5e39b9d4bd4d4d5c5ad",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "runner_equivalent_command": [
+      "/private/tmp/nashura-frida-16.7.19-venv/bin/python",
+      "tools/pure_linux/run_backup_fixture.py",
+      "--adb",
+      "/Users/gujiga/Library/Android/sdk/platform-tools/adb",
+      "--serial",
+      "emulator-5582",
+      "--pid",
+      "486",
+      "--script",
+      "tools/pure_linux/backup_fixture_observer.js",
+      "--script-sha256",
+      "75f1a8707d9fa07b1f20f7025f09ce1d6ba6d985a6a61f4f7e9456185ecfa4e3",
+      "--apk",
+      "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/build/fixture.apk",
+      "--apk-sha256",
+      "d6286d14c826c74d53f4ad416ef7112b57109925f2fd19bf4d376b70f1c1208a",
+      "--output",
+      "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/observe-v6",
+      "--issue-fixture-requests",
+      "--reuse-fixture",
+      "--prepare-local-backup"
+    ],
+    "runner_command_archive": "Reconstructed equivalent from stored runner inputs; original outer shell/wrapper argv not archived.",
+    "runner_exit_code": 0,
+    "audit": {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "tools/pure_linux/backup_fixture_audit.py",
+        "--input",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/observe-v6/result.json",
+        "--input-sha256",
+        "7d1b4ccafb67880d2a9b2130f9c873b356cb92d60f29203e428c787c624c6d15",
+        "--output",
+        "/private/tmp/nashura-backup-service-runtime-20261028-D5BDqv5a/observe-v6/audit-v2.json"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "c156d65d5b27289d129b7cf57638e2bcc9348a0cf1b7996dc0d9450b2edd6672",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "observations": {
+    "status": "RUNTIME_OBSERVED_REQUIRES_REVIEW",
+    "commands": [
+      {
+        "arguments": [
+          "emu",
+          "avd",
+          "name"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "0ba7a67a6bae8227c8d442e0333ff8b0ff553dac3838fb5882c41fd5c7e1955f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "getprop",
+          "ro.build.fingerprint"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "157573a124cd50183a80f82187b13816cb2ba9a2a1075996d61fb042dc7b24f1",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "org.nashura.backupfixture"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "bf5de45de3045c6332ff0b72a900d8bc7fc3b83ad8e8d069e4c5fbe6ef78d115",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "pm",
+          "path",
+          "org.nashura.backupfixture"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "572cb85628ce9a2f165ce8063c4b08effa771fd1f10d07abf064370cd934b1f6",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "exec-out",
+          "cat",
+          "/data/app/~~GSpXMIeVpjw3QfnVgjwBRg==/org.nashura.backupfixture-iuGdOomrTePfDt7AljYvzw==/base.apk"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "d6286d14c826c74d53f4ad416ef7112b57109925f2fd19bf4d376b70f1c1208a",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "bmgr",
+          "list",
+          "transports"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "77caa145d66c1cbcaba6818d21efbf9828d3ec619e8b0b90a6b3861acc98be36",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "bmgr",
+          "transport",
+          "com.android.localtransport/.LocalTransport"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "5985d79785cfd399984d307d638fcffd8a04a7181889c5e7e2ef9e9f02930b85",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "bmgr",
+          "enable",
+          "true"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "413daf9f90aed37dc0e126ef54e5010b9e1139306c38aed76caf06f93dbe6c5f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "bmgr",
+          "run"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "am",
+          "broadcast",
+          "--include-stopped-packages",
+          "-n",
+          "org.nashura.backupfixture/.ProbeReceiver",
+          "-a",
+          "org.nashura.backupfixture.REQUEST"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "b7c64cb77b1f0f0f8385ad85149b702adf6d30c3b6d7a5e39b9d4bd4d4d5c5ad",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "arguments": [
+          "shell",
+          "am",
+          "broadcast",
+          "--include-stopped-packages",
+          "-n",
+          "org.nashura.backupfixture/.ProbeReceiver",
+          "-a",
+          "org.nashura.backupfixture.REQUEST"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "b7c64cb77b1f0f0f8385ad85149b702adf6d30c3b6d7a5e39b9d4bd4d4d5c5ad",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "event_count": 24,
+    "counters": {
+      "entries": 2,
+      "platformScopes": 2,
+      "dropped": 0,
+      "observationErrors": 0,
+      "activeScopes": 0
+    },
+    "after_prepare": {
+      "service": {
+        "targetPending": false,
+        "pendingCount": 1,
+        "journalPath": "/data/backup/pending/journal1054415350051613034.tmp"
+      },
+      "scheduled": true
+    },
+    "independent_platform_job": {
+      "origin": "KeyValueBackupTask.run -> dataChangedImpl -> KeyValueBackupJob.schedule",
+      "scope": "platform-1",
+      "thread": 7976,
+      "before_scheduled": false,
+      "after_scheduled": true,
+      "id": 52417896,
+      "min_latency_ms": 14506750,
+      "max_delay_ms": 86400000,
+      "charging": true,
+      "network_capabilities": [
+        "INTERNET",
+        "NOT_RESTRICTED",
+        "TRUSTED",
+        "VALIDATED"
+      ],
+      "submit_result": 1,
+      "fixture_request_attribution": false,
+      "job_delivery": "UNKNOWN"
+    },
+    "fixture": {
+      "uid": 10166,
+      "binder_requests": 2,
+      "branches": [
+        "first_enqueue_journal",
+        "duplicate_no_journal"
+      ],
+      "journal_calls": [
+        1,
+        0
+      ],
+      "scheduled_during_requests": [
+        true,
+        true
+      ],
+      "new_job_submitted_by_fixture": false,
+      "binder_to_handler_causal_binding": "UNKNOWN; time-window order only"
+    },
+    "audit": {
+      "schema": "nashura.backup-fixture-audit.v1",
+      "status": "RUNTIME_OBSERVED_LIMITED",
+      "source": "owned test application; not historical game transaction",
+      "branches": [
+        "first_enqueue_journal",
+        "duplicate_no_journal"
+      ],
+      "binder_requests": 2,
+      "platform_accepted_jobs": [
+        {
+          "id": 52417896,
+          "minLatency": 14506750,
+          "maxDelay": 86400000,
+          "charging": true
+        }
+      ],
+      "job_delivery": "UNKNOWN",
+      "linux_backup_binding": "UNRESOLVED",
+      "catalog_ready_pass": false,
+      "input_sha256": "7d1b4ccafb67880d2a9b2130f9c873b356cb92d60f29203e428c787c624c6d15"
+    },
+    "journal": {
+      "status": "LENGTH_BOUNDARIES_VERIFIED",
+      "journal_sha256": "8a1e572961b01639d4daabdf50df9e42ad5b40e83474e0248ef0467c35fdf6fa",
+      "bytes": 95,
+      "records": 3,
+      "target_exact_records": 1,
+      "complete_boundaries": true,
+      "general_modified_utf8_decoder_verified": false
+    }
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "FAILED",
+      "requests_issued": 0,
+      "error": "adb fixture operation failed: 2",
+      "script_sha256": "b6d97e9ae5733582acf4c3261689d1986df0fc20dbe17a461f40cadf78e2270a",
+      "apk_sha256": "d6286d14c826c74d53f4ad416ef7112b57109925f2fd19bf4d376b70f1c1208a",
+      "exit_code": 1,
+      "retained": true
+    },
+    {
+      "attempt": 2,
+      "status": "FAILED",
+      "requests_issued": 0,
+      "error": "fixture install did not report Success",
+      "script_sha256": "b6d97e9ae5733582acf4c3261689d1986df0fc20dbe17a461f40cadf78e2270a",
+      "apk_sha256": "d6286d14c826c74d53f4ad416ef7112b57109925f2fd19bf4d376b70f1c1208a",
+      "exit_code": 1,
+      "retained": true
+    },
+    {
+      "attempt": 3,
+      "status": "RUNTIME_OBSERVED_REQUIRES_REVIEW",
+      "requests_issued": 2,
+      "error": null,
+      "script_sha256": "b6d97e9ae5733582acf4c3261689d1986df0fc20dbe17a461f40cadf78e2270a",
+      "apk_sha256": "d6286d14c826c74d53f4ad416ef7112b57109925f2fd19bf4d376b70f1c1208a",
+      "exit_code": 0,
+      "retained": true
+    },
+    {
+      "attempt": 4,
+      "status": "FAILED",
+      "requests_issued": 0,
+      "error": "normal local Backup pass did not drain fixture and job",
+      "script_sha256": "9e3548beef468bdf09912d9345783d6a54a6ab2195f1853ba53b38f98ec0370e",
+      "apk_sha256": "d6286d14c826c74d53f4ad416ef7112b57109925f2fd19bf4d376b70f1c1208a",
+      "exit_code": 1,
+      "retained": true
+    },
+    {
+      "attempt": 5,
+      "status": "FAILED",
+      "requests_issued": 1,
+      "error": "fixture entry count mismatch",
+      "script_sha256": "75f1a8707d9fa07b1f20f7025f09ce1d6ba6d985a6a61f4f7e9456185ecfa4e3",
+      "apk_sha256": "d6286d14c826c74d53f4ad416ef7112b57109925f2fd19bf4d376b70f1c1208a",
+      "exit_code": 1,
+      "retained": true
+    },
+    {
+      "attempt": 6,
+      "status": "RUNTIME_OBSERVED_REQUIRES_REVIEW",
+      "requests_issued": 2,
+      "error": null,
+      "script_sha256": "75f1a8707d9fa07b1f20f7025f09ce1d6ba6d985a6a61f4f7e9456185ecfa4e3",
+      "apk_sha256": "d6286d14c826c74d53f4ad416ef7112b57109925f2fd19bf4d376b70f1c1208a",
+      "exit_code": 0,
+      "retained": true
+    }
+  ],
+  "failure_interpretation": [
+    "v1 pm path/list handling; no fixture requests",
+    "v2 installation returned Success but incremental-output recognition failed; no fixture requests",
+    "v3 duplicate branches only; not first-enqueue coverage",
+    "v4 pending=false AND scheduled=false prerequisite too strict; no explicit fixture requests",
+    "v5 transient active-scope snapshot failed premature entry count; one explicit fixture request, incomplete window",
+    "v6 final quiescent coverage accepted by separate audit"
+  ],
+  "engineering_tests": [
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tools/pure_linux"
+      ],
+      "cwd": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/source",
+      "exit_code": 1,
+      "elapsed_seconds": 10.152726833000001,
+      "stdout_sha256": "1384d75208082140bf578e09b828dea61414e5c7a33f4f173160b86e33397438",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_path": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/specialist.stdout",
+      "summaries": [
+        "16 failed, 709 passed, 1 skipped in 9.88s"
+      ],
+      "scope": "engineering_only"
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "tools/run_main_engine_checks.py"
+      ],
+      "cwd": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/source",
+      "exit_code": 1,
+      "elapsed_seconds": 3.254465959,
+      "stdout_sha256": "bf33524181774e5476b2260fb83127cc58abaf4d1aa4d43b050a80b195e9d63c",
+      "stderr_sha256": "04498b09fa1ff7c0d6a4fe9137fb1e43435d0673007cd8e5fb7ab0522de1d743",
+      "log_path": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/main.stdout",
+      "summaries": [
+        "!!!!!!!!!!!!!!!!!!! Interrupted: 8 errors during collection !!!!!!!!!!!!!!!!!!!!",
+        "8 errors in 2.70s"
+      ],
+      "scope": "engineering_only"
+    },
+    {
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "tools/run_public_checks.py"
+      ],
+      "cwd": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/source",
+      "exit_code": 1,
+      "elapsed_seconds": 4.549604625,
+      "stdout_sha256": "9669e341410da24d1c0c5700b61fd41d07007e9c76d77d8cb2ded7b05e2efde7",
+      "stderr_sha256": "0f4e0ef8ff023d9180feb276068b651df68eec04e7e9313861152f037605aed3",
+      "log_path": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/public.stdout",
+      "summaries": [
+        "!!!!!!!!!!!!!!!!!!! Interrupted: 20 errors during collection !!!!!!!!!!!!!!!!!!!",
+        "20 errors in 4.04s"
+      ],
+      "scope": "engineering_only"
+    },
+    {
+      "command": [
+        "/opt/anaconda3/bin/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tools/pure_linux"
+      ],
+      "cwd": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/source",
+      "exit_code": 0,
+      "elapsed_seconds": 10.464642792008817,
+      "stdout_sha256": "79515970e736665768acf6d0d25674f028cc6e829170113a0b147973d5d0d6dc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_path": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/specialist-v2.stdout",
+      "summaries": [
+        "725 passed, 1 skipped in 9.86s"
+      ],
+      "scope": "engineering_only"
+    },
+    {
+      "command": [
+        "/opt/anaconda3/bin/python3",
+        "tools/run_main_engine_checks.py"
+      ],
+      "cwd": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/source",
+      "exit_code": 0,
+      "elapsed_seconds": 34.31062662508339,
+      "stdout_sha256": "b6aa73b4c755cbc34f1c661ae9157fabf9f42142a470ad825a08b5a86f56a03f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_path": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/main-v2.stdout",
+      "summaries": [
+        "211 passed in 33.74s"
+      ],
+      "scope": "engineering_only"
+    },
+    {
+      "command": [
+        "/opt/anaconda3/bin/python3",
+        "tools/run_public_checks.py"
+      ],
+      "cwd": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/source",
+      "exit_code": 0,
+      "elapsed_seconds": 247.40998820820823,
+      "stdout_sha256": "84d4cd23e4cc8a82994481b30fd818d6a6bd4fda71ebc1222c521e669f6c2d71",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_path": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/public-v2.stdout",
+      "summaries": [
+        "794 passed, 27 skipped in 73.86s (0:01:13)",
+        "23 passed in 6.85s",
+        "82 passed in 124.14s (0:02:04)",
+        "15 passed, 3 skipped in 0.19s",
+        "25 passed, 4 skipped in 1.41s",
+        "31 passed, 3 skipped in 1.37s",
+        "31 passed, 2 skipped in 1.40s",
+        "38 passed, 3 skipped in 3.15s",
+        "65 passed in 29.87s"
+      ],
+      "scope": "engineering_only"
+    }
+  ],
+  "testing_notes": {
+    "first_interpreter": "Python3.9, missing cryptography and unsupported dataclass slots; all initial failures retained",
+    "final_interpreter": "/opt/anaconda3/bin/python3 (3.13.5)",
+    "final": {
+      "new_tool_cases": 36,
+      "specialist": {
+        "passed": 725,
+        "skipped": 1
+      },
+      "main": {
+        "passed": 211,
+        "skipped": 0
+      },
+      "public": {
+        "passed": 1104,
+        "skipped": 42
+      }
+    },
+    "overlapping_suites_not_added": true,
+    "tested_sources_match": true,
+    "isolated_source": "/private/tmp/nashura-backup-service-checks-20261028-_rj95b9g/source"
+  },
+  "tracked_xml_preservation": {
+    "checked": 248,
+    "changed": []
+  },
+  "cleanup": {
+    "avd": "nashura-e2-backup-contract-api30",
+    "game_installed": false,
+    "commands": [
+      {
+        "command": [
+          "/Users/gujiga/Library/Android/sdk/platform-tools/adb",
+          "-s",
+          "emulator-5582",
+          "emu",
+          "avd",
+          "name"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "0ba7a67a6bae8227c8d442e0333ff8b0ff553dac3838fb5882c41fd5c7e1955f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/Users/gujiga/Library/Android/sdk/platform-tools/adb",
+          "-s",
+          "emulator-5582",
+          "shell",
+          "pm",
+          "list",
+          "packages",
+          "nullsroyale.rel.free"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/Users/gujiga/Library/Android/sdk/platform-tools/adb",
+          "-s",
+          "emulator-5582",
+          "shell",
+          "dumpsys",
+          "backup"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "19954b82e4f70851fd48c7d6fd5a06a1ee2c1f0ec4fcb6497734c9a2fe25d13a",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/Users/gujiga/Library/Android/sdk/platform-tools/adb",
+          "-s",
+          "emulator-5582",
+          "emu",
+          "kill"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "c8688fc34ee1d36f2e975dad0607555ba84d8951ccb39e69b7ab7a5d159ec81f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "scope_limits": [
+    "Owned Android application and real framework service; not a historical game configuration transaction.",
+    "No uninstrumented/instrumented end-to-end game trajectory comparison this phase.",
+    "Mock wrapper tests preserve one original call, return/exception and thread scopes; not native game parity.",
+    "No strong causal bridge from Binder request to asynchronous handler; per-thread scopes only.",
+    "Journal parser checks 2-byte lengths and exact ASCII target bytes; general modified UTF-8 decoding not verified.",
+    "Observed job acceptance is not job delivery, transport success or persistence under power loss.",
+    "v1-v4 observer/runner original snapshots not fully archived; version SHA recorded, archival gap retained.",
+    "Game input, APK, libg, update resources and runtime were not re-audited or loaded this phase.",
+    "Linux Backup binding remains unresolved; unresolved_backup still returns -1."
+  ],
+  "gates": {
+    "backup_service_observation_limited": true,
+    "backup_service_binding_pass": false,
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate_constructor_setup_load": "NOT_RUN",
+    "empty_battle_reset": "NOT_RUN",
+    "gamestate_step": "NOT_RUN",
+    "no_java_vm_cold_start": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "complete_battle": "NOT_RUN",
+    "training": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "release": {
+    "publication_checks": {
+      "snapshot": {"exit_code": 0, "source_files_verified": 2531},
+      "gitleaks": {"exit_code": 0, "result": "no leaks found"},
+      "git_diff_check": {"exit_code": 0},
+      "manifest_generation_initial_failure": "Invalid JSON generated during publication preparation; repaired and revalidated; historical source identities preserved."
+    },
+    "fetch": {
+      "command": [
+        "git",
+        "fetch",
+        "origin",
+        "--prune"
+      ],
+      "exit_code": null,
+      "timeout_seconds": 40,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "remote_freshness": "UNVERIFIED",
+    "push": "Pending bounded attempt after local commit; final result recorded separately."
+  },
+  "next_unique_blocker": "Explicit Linux Backup service side-effect binding: pending/journal ownership and scheduler failure/lifecycle/delivery contract. No success stub. Only then rerun real libg natural catalog initialization."
+}

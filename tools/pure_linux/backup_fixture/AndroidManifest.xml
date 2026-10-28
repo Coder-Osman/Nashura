@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.nashura.backupfixture">
+    <uses-sdk android:minSdkVersion="30" android:targetSdkVersion="30" />
+    <application android:label="Nashura Backup Fixture" android:allowBackup="true" android:backupAgent=".ProbeBackupAgent" android:fullBackupOnly="false">
+        <receiver android:name=".ProbeReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="org.nashura.backupfixture.REQUEST" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

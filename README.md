@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-28：真实 Backup 服务首次入队与重复请求分支
+
+专用 Android ARM64 实例中，自有应用首次请求写 journal、重复请求跳过 journal；
+另捕获独立平台作用域的 JobScheduler 提交返回1，交付仍 UNKNOWN，不混同应用因果。
+八hook、24事件、零丢失/观察错误；专项725通过/1跳过、主工程211通过、
+公开1104通过/42跳过。Linux Backup绑定及严格catalog仍BLOCKED，GameState未运行。
+专用5582实例已关闭；旧实例、VM与冻结任务保留。详见
+[报告](agent-handoff/PURE_LINUX_BACKUP_SERVICE_RUNTIME_2026-10-28.md)、
+[证据](agent-handoff/pure-linux-backup-service-runtime-evidence-20261028.json)及
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_SERVICE.md)。以下保留历史状态。
+
 ## 2026-10-28：真实 Backup journal 追加的 ARM64 Linux 局部对照
 
 隔离Android两个真实框架进程与Linux/Bionic两个比较进程均exit0；8条追加84bytes、

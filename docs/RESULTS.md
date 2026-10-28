@@ -1,5 +1,17 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：Backup 服务正常分支真实观察
+
+自有应用两个真实Binder请求覆盖首次pending入队/journal追加与重复去重；
+同线程scope区分独立平台job提交，返回1不代表交付，跨线程强因果仍UNKNOWN。
+八hook/24事件、零drop/error/active；journal95bytes、三条长度边界、目标一条。
+新增36项工具测试；专项725通过/1跳过、主工程211通过、公开1104通过/42跳过。
+六轮失败/覆盖不足记录保留，旧解释器失败单列，测试源码与提交源码一致。
+专用AVD已关闭。Linux Backup绑定及CATALOG_READY_PASS仍BLOCKED；后续对象图NOT_RUN。
+详见[报告](../agent-handoff/PURE_LINUX_BACKUP_SERVICE_RUNTIME_2026-10-28.md)、
+[证据](../agent-handoff/pure-linux-backup-service-runtime-evidence-20261028.json)及
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_SERVICE.md)。以下保留历史记录。
+
 ## 2026-10-28 E2.1-N：真实 journal 追加与重开局部一致
 
 真实Android DataChangedJournal与ARM64 Linux/Bionic helper逐步比较：8条84bytes、

@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N Backup 服务分支动态闭合
+
+- 新增自有测试应用、八hook观察器、SHA/进程/AVD绑定runner和严格离线审计，36项新测试。
+- 实测首次入队写journal、重复请求不写；独立平台JobScheduler提交被接受，交付保持UNKNOWN。
+- 六次尝试、瞬时scope误判和旧解释器失败分别保留；最终专项725/1、主工程211、公开1104/42。
+- 专用5582实例确认归属后关闭，原游戏实例/VM保留；Linux服务绑定与严格catalog仍BLOCKED。
+- 本轮未加载libg或推进GameState，不把真实Android服务观察写成无VM引擎成功。
+
 ## 2026-10-28：E2.1-N 真实 Backup journal 跨环境局部对照
 
 - 新增真实平台journal探针、UTF-16/modified UTF-8 C追加器、独占输出比较器及44项工具测试。
