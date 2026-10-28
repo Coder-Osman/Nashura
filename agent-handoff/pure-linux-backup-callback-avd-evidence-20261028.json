@@ -1,0 +1,73 @@
+{
+  "schema": "nashura-pure-linux-backup-callback-avd-evidence-v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "base_head": "6f3b176ead650eb2304ebf815529cbddd5bfb07b",
+  "scope": "isolated Android 30 ARM64 AVD cold-start observation only",
+  "authorization": "user explicitly allowed starting isolated astral-api30 AVD for callback validation",
+  "environment": {
+    "avd": "astral-api30",
+    "serial": "emulator-5554",
+    "android_release": "11",
+    "api": 30,
+    "abi": "arm64-v8a",
+    "boot_completed": true,
+    "backup_manager_initial_state": "disabled",
+    "backup_manager_final_state": "disabled",
+    "other_avd_touched": false
+  },
+  "package": {
+    "name": "nullsroyale.rel.free",
+    "version_name": "15.535.13",
+    "version_code": 150535013,
+    "allow_backup": true,
+    "resolved_activity": "nullsroyale.rel.free/com.supercell.clashroyale.GameApp",
+    "device_base_apk_sha256": "f1ee6d6146efc8c998843958ae0788e5121c265445c0c7ff5ffa2a5202d7dd9b",
+    "provided_apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "identity_match": false
+  },
+  "experiment": {
+    "initial_component_attempt": {
+      "command": "adb -s emulator-5554 shell am start -W -n com.supercell.clashroyale.GameApp",
+      "result": "IllegalArgumentException: Bad component name",
+      "app_started": false
+    },
+    "cold_launch": {
+      "command": "adb -s emulator-5554 shell am start -W -n nullsroyale.rel.free/com.supercell.clashroyale.GameApp",
+      "exit_code": 0,
+      "status": "ok",
+      "launch_state": "COLD",
+      "pid": 4568,
+      "observation_seconds": 45
+    },
+    "backup_request_observed": false,
+    "data_changed_observed": false,
+    "backup_queue_delta": false,
+    "preexisting_target_pending_request": true,
+    "backup_settings_modified": false,
+    "app_data_modified_by_test": false,
+    "bmgr_backupnow_used": false,
+    "cleanup": {
+      "app_force_stopped": true,
+      "avd_shutdown": true,
+      "serial_absent_after_shutdown": true
+    }
+  },
+  "private_output_directory": "/tmp/nashura-backup-callback-20261028-073239",
+  "private_outputs": {
+    "launch-corrected.txt": "24947613d00c899bda22167a4b3d0a817f360f21c28c4f607408c6a2b6691a0f",
+    "backup-prelaunch.txt": "61afce8318dd7b82a788fb7b5d23baecb3ad4a9bd9340d05c857dfa850c9b39b",
+    "backup-postlaunch.txt": "1ccadbafe7f47d4e4ac0d27bbbfb1c9c540e8d22c97750689cfdd4f0432875cc",
+    "activity-postlaunch.txt": "a82de52218cc3f2926010ed90f2574ad871d2b9fcab2caaa52d4889156cbcfa8",
+    "logcat-postlaunch.txt": "b0226c8d776bcfa3b82b0faa2a4183b68d88072ac2be1fbf59c21c65b0d3965d"
+  },
+  "status": {
+    "callback_semantics": "UNRESOLVED",
+    "catalog_strict_gate": "BLOCKED",
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "no_vm": "NOT_RUN"
+  },
+  "next_blocker": "No attributable requestBackup was triggered; installed APK identity differs from the specified APK and BackupManager is disabled."
+}
