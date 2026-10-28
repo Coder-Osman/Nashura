@@ -1,0 +1,21 @@
+{
+  "schema": "nashura.pure-linux-finish-lookup-key.v1",
+  "baseline_commit": "3c1dd7ffb890ecab7de284d62ca893f9a782ca34",
+  "status": "RUNTIME_OBSERVED_LIMITED",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "android_result_sha256": "f7cc97ac2337d52bfab64376feabab1ef3ef3aa33a118ab2388156502929bef5",
+  "linux_result_sha256": "9d604ac0c5114957b88c725ab6ddb923fc455e6ca982f30aec813efd0a088385",
+  "linux_observation_sha256": "977293563ebc96960fa3845763a01c217801765f988aec1eb6bc1e6ba910d80c",
+  "audit_sha256": "519c77b19ce07e04c4437c7d47bfacf569e0058ddd112459bbf7db34daa06066",
+  "rejected_string_layout_observation_sha256": "6404d31872f04e814fef01c36f130c00555e16115c6a5e6e76b90a2e61f0444d",
+  "matched_update_files": 908,
+  "key_length": 30,
+  "key_sha256": "b225b5fac2af40343261e33611854570a0f109ce2458c8beeff21d06b4be66f1",
+  "key_bytes_match": true,
+  "android_lookup_nonnull": true,
+  "linux_lookup_nonnull": false,
+  "catalog_ready_pass": false,
+  "backup_equivalence": "UNRESOLVED",
+  "game_state": "NOT_RUN",
+  "step_tick": "NOT_RUN"
+}

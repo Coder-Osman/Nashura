@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-10-29：完成函数查询键
+
+双端候选查询的30字节键一致，Android返回非空、Linux返回空；查询容器及填充来源
+待查。详见[报告](agent-handoff/PURE_LINUX_FINISH_LOOKUP_KEY_2026-10-29.md)。
+
 ## 2026-10-29：catalog 完成函数候选查询
 
 两侧 context 槽非空；同一候选查询 Android 返回非空、Linux 返回空。查询输入及

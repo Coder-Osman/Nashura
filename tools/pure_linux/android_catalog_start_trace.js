@@ -39,6 +39,16 @@ function engineString(p) {
     return value !== null && value.length === length ? value : null;
   } catch (_) { return null; }
 }
+function nativeString16(p) {
+  try {
+    const object = p.and(ptr('0x00ffffffffffffff'));
+    const length = object.add(4).readS32();
+    if (length < 0 || length > 1024) return null;
+    const data = length < 8 ? object.add(8) : object.add(8).readPointer().and(ptr('0x00ffffffffffffff'));
+    const value = boundedString(data);
+    return value !== null && value.length === length ? value : null;
+  } catch (_) { return null; }
+}
 function tableCounts(context) {
   function readable(value, size) {
     const address = value.and(ptr('0x00ffffffffffffff'));
@@ -83,9 +93,13 @@ function observe(module) {
         }
         if (includeBatchPhases) {
           attach(module, 0x1207ffc, 'finish_lookup', {
-            onEnter: function () { this.observerBatch = finishScopes.get(Process.getCurrentThreadId()) || null; },
+            onEnter: function (args) {
+              this.observerBatch = finishScopes.get(Process.getCurrentThreadId()) || null;
+              if (this.observerBatch) this.observerKey = nativeString16(args[1]);
+            },
             onLeave: function (value) {
-              if (this.observerBatch) record({kind: 'finish_lookup', batch: this.observerBatch, nonnull: !value.isNull()});
+              if (this.observerBatch) record({kind: 'finish_lookup', batch: this.observerBatch,
+                                               nonnull: !value.isNull(), key: this.observerKey});
             }
           });
           for (const [label, offset] of [['finish_a', 0xe1c290], ['finish_b', 0xdcd238]]) {
