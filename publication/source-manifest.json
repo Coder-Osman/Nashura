@@ -10194,9 +10194,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "c813c800f5cbded47a3aac03e514eea5ab0f1deb82b696430b66c61874a61010",
-      "bytes": 48681,
-      "source_sha256": "c813c800f5cbded47a3aac03e514eea5ab0f1deb82b696430b66c61874a61010",
+      "sha256": "7b321611a8d88254118da330da04f5024890b4c173915d338df2a54d66b762a1",
+      "bytes": 48913,
+      "source_sha256": "7b321611a8d88254118da330da04f5024890b4c173915d338df2a54d66b762a1",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -10216,9 +10216,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "51bd2da20515971fb71f83ccc57d920202fb8d78fcaf3ee3060f86705ffd0c2e",
-      "bytes": 81876,
-      "source_sha256": "51bd2da20515971fb71f83ccc57d920202fb8d78fcaf3ee3060f86705ffd0c2e",
+      "sha256": "611aee588d0d90670d35ee7001def5d609609a70b2832584c7ab32e5abf60e27",
+      "bytes": 82092,
+      "source_sha256": "611aee588d0d90670d35ee7001def5d609609a70b2832584c7ab32e5abf60e27",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -16645,9 +16645,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "0de31bc19f4cc1d222f96470292a554ea5269a000f5365ea5b214de90add0115",
-      "bytes": 49338,
-      "source_sha256": "0de31bc19f4cc1d222f96470292a554ea5269a000f5365ea5b214de90add0115",
+      "sha256": "384ac38c652fae933761d3376b3ef5bce8f1d9c4d63e7ebc0be60025e4ec3c8d",
+      "bytes": 49594,
+      "source_sha256": "384ac38c652fae933761d3376b3ef5bce8f1d9c4d63e7ebc0be60025e4ec3c8d",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -16800,9 +16800,9 @@
     },
     {
       "path": "tools/pure_linux/native_init_gdb.py",
-      "sha256": "52a18638cd6208a6e146d58efc69bd7a25dd5dfa37e206d0f9824a3d0162a865",
-      "bytes": 8925,
-      "source_sha256": "52a18638cd6208a6e146d58efc69bd7a25dd5dfa37e206d0f9824a3d0162a865",
+      "sha256": "66ab8104a4fea435070b520e41bb2d4bc97d4bdca1ae59d3f893fde7697e9508",
+      "bytes": 9495,
+      "source_sha256": "66ab8104a4fea435070b520e41bb2d4bc97d4bdca1ae59d3f893fde7697e9508",
       "transformations": []
     },
     {
@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "8b4d7c36e0731328ae4817f3fe419c447d821073b1cfa9316a2fee2acf45a31e",
-      "bytes": 8203,
-      "source_sha256": "8b4d7c36e0731328ae4817f3fe419c447d821073b1cfa9316a2fee2acf45a31e",
+      "sha256": "14b666609494802c3275f2b7d9aeb701d8f803fe9d17ef51f6e577df635223fc",
+      "bytes": 9756,
+      "source_sha256": "14b666609494802c3275f2b7d9aeb701d8f803fe9d17ef51f6e577df635223fc",
       "transformations": []
     },
     {
@@ -18778,10 +18778,45 @@
       "bytes": 977,
       "source_sha256": "5505bcba123fd4eb398e00cc0e790a2358d2630b760cb9ce650cc25ba712a352",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_finish_lookup.py",
+      "sha256": "b6fce64f60af81b823c1d1ee979ab33f89c10b74b91b9e6eb5c687f0ad96232c",
+      "bytes": 7580,
+      "source_sha256": "b6fce64f60af81b823c1d1ee979ab33f89c10b74b91b9e6eb5c687f0ad96232c",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_finish_lookup.py",
+      "sha256": "b4ddb39c244962314748ecb14b2b8e98eb44cd03e6c30995de4a9e9bd4c49e35",
+      "bytes": 2276,
+      "source_sha256": "b4ddb39c244962314748ecb14b2b8e98eb44cd03e6c30995de4a9e9bd4c49e35",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_FINISH_LOOKUP_2026-10-29.md",
+      "sha256": "0e5e2af0f3c0c1dd5140e1c0a6ef39a1210d01a48577ddc0e7204f29f56699dc",
+      "bytes": 4943,
+      "source_sha256": "0e5e2af0f3c0c1dd5140e1c0a6ef39a1210d01a48577ddc0e7204f29f56699dc",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_FINISH_LOOKUP.md",
+      "sha256": "2ec2cd25161d47f1ba20df28414609af4bc65cb160957262126dced2fc97b06d",
+      "bytes": 614,
+      "source_sha256": "2ec2cd25161d47f1ba20df28414609af4bc65cb160957262126dced2fc97b06d",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-finish-lookup-evidence-20261029.json",
+      "sha256": "8ad09efa5d96fbc7d8d8548d0a5ccc405e304aeeb995065e1c8df8214b2bd492",
+      "bytes": 1130,
+      "source_sha256": "8ad09efa5d96fbc7d8d8548d0a5ccc405e304aeeb995065e1c8df8214b2bd492",
+      "transformations": []
     }
   ],
-  "file_count": 2672,
-  "source_bytes": 35675428,
+  "file_count": 2677,
+  "source_bytes": 35694798,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

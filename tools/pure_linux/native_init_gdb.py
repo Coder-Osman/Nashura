@@ -51,6 +51,12 @@ class Observe(gdb.Breakpoint):
         if counts_register:
             event["table_counts_before"] = snapshot_table_counts(gdb.selected_inferior().read_memory,
                                                                    int(frame.read_register(counts_register)))
+        if self.row.get("context_slot_b60"):
+            context = int(frame.read_register("x0")) & ((1 << 56) - 1)
+            slot = bytes(gdb.selected_inferior().read_memory(context + 0xb60, 8))
+            if len(slot) != 8:
+                raise ValueError("short context slot read")
+            event["context_slot_b60_nonnull"] = int.from_bytes(slot, "little") != 0
         for specification in self.row.get("string_arguments", []):
             register = specification["register"]
             if register not in {"x%d" % index for index in range(8)}:
@@ -147,6 +153,9 @@ try:
         row["scope"] = target.get("scope")
         row["scope_start"] = target.get("scope_start")
         row["table_counts_register"] = target.get("table_counts_register")
+        row["context_slot_b60"] = target.get("context_slot_b60", False)
+        if type(row["context_slot_b60"]) is not bool:
+            raise RuntimeError("context slot profile must be boolean")
         if row["table_counts_register"] not in (None, "x0") or (row["table_counts_register"] and row["site_only"]):
             raise RuntimeError("table count observation requires x0 and a return breakpoint")
         if row["scope"] and row["scope"] not in scope_names:

@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-10-29：catalog 完成函数候选查询
+
+两侧 context 槽非空；同一候选查询 Android 返回非空、Linux 返回空。查询输入及
+初始化来源仍待核验。详见[报告](agent-handoff/PURE_LINUX_FINISH_LOOKUP_2026-10-29.md)。
+
 ## 2026-10-29：catalog 完成调用边界
 
 第5批候选 `finish_a` 进入时17槽计数一致，返回时出现1,417行差异；内部原因

@@ -7,6 +7,7 @@ let includeBatchCounts = false;
 let includeBatchPhases = false;
 const scopes = new Map();
 const batchScopes = new Map();
+const finishScopes = new Map();
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
 function record(event) {
   if (events.length >= 30000) { lost++; return; }
@@ -81,14 +82,35 @@ function observe(module) {
           });
         }
         if (includeBatchPhases) {
+          attach(module, 0x1207ffc, 'finish_lookup', {
+            onEnter: function () { this.observerBatch = finishScopes.get(Process.getCurrentThreadId()) || null; },
+            onLeave: function (value) {
+              if (this.observerBatch) record({kind: 'finish_lookup', batch: this.observerBatch, nonnull: !value.isNull()});
+            }
+          });
           for (const [label, offset] of [['finish_a', 0xe1c290], ['finish_b', 0xdcd238]]) {
             attach(module, offset, label, {
               onEnter: function (args) {
                 this.observerBatch = batchScopes.get(Process.getCurrentThreadId()) || null;
                 if (!this.observerBatch) return;
                 this.observerContext = args[0];
+                this.observerThread = Process.getCurrentThreadId();
+                if (label === 'finish_a') {
+                  if (finishScopes.has(this.observerThread)) errors.push('nested finish scope');
+                  finishScopes.set(this.observerThread, this.observerBatch);
+                }
                 const event = {kind: 'batch_phase', phase: label, edge: 'before', batch: this.observerBatch};
-                try { event.tableCounts = tableCounts(this.observerContext); }
+                try {
+                  event.tableCounts = tableCounts(this.observerContext);
+                  if (label === 'finish_a') {
+                    const root = this.observerContext.and(ptr('0x00ffffffffffffff'));
+                    const slot = root.add(0xb60);
+                    const range = Process.findRangeByAddress(slot);
+                    if (!range || !range.protection.includes('r') || slot.add(8).compare(range.base.add(range.size)) > 0)
+                      throw new Error('context slot unreadable');
+                    event.contextSlotB60Nonnull = !slot.readPointer().isNull();
+                  }
+                }
                 catch (error) { errors.push(label + ' before: ' + String(error)); }
                 record(event);
               },
@@ -97,6 +119,10 @@ function observe(module) {
                 const event = {kind: 'batch_phase', phase: label, edge: 'after', batch: this.observerBatch};
                 try { event.tableCounts = tableCounts(this.observerContext); }
                 catch (error) { errors.push(label + ' after: ' + String(error)); }
+                if (label === 'finish_a') {
+                  if (finishScopes.get(this.observerThread) !== this.observerBatch) errors.push('finish scope mismatch');
+                  finishScopes.delete(this.observerThread);
+                }
                 record(event);
               }
             });
@@ -176,5 +202,5 @@ rpc.exports = {
     return {coverage: coverage, errors: errors};
   },
   snapshot: function () { return {events: events, coverage: coverage, errors: errors, lost: lost,
-    activeScopes: scopes.size, activeBatchScopes: batchScopes.size}; }
+    activeScopes: scopes.size, activeBatchScopes: batchScopes.size, activeFinishScopes: finishScopes.size}; }
 };
