@@ -14,7 +14,7 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def compare(android, linux, allow_inner=False):
+def compare(android, linux, allow_inner=False, allow_first=False):
     trace = android["trace"]
     starts = [event for event in trace["events"] if event.get("kind") == "table_batch"]
     ends = [event for event in trace["events"] if event.get("kind") == "table_batch_end"]
@@ -35,19 +35,21 @@ def compare(android, linux, allow_inner=False):
                 "finish_a": (0xe1c290, 1, "table_batch", "finish_a"),
                 "finish_lookup": (0x1207ffc, 1, "finish_a", "finish_lookup" if allow_inner else None)}
     if allow_inner:
-        expected["lookup_inner"] = (0x11ae1fc, 1, "finish_lookup", None)
+        expected["lookup_inner"] = (0x11ae1fc, 1, "finish_lookup", "lookup_inner" if allow_first else None)
+    if allow_first:
+        expected["first_lookup_result"] = (0x11ae300, 1, "lookup_inner", None)
     if set(targets) != set(expected) or linux.get("exit_code") != 0 or linux.get("error") or linux.get("active_scopes") != 0:
         raise ValueError("Linux observer incomplete")
     for name, (offset, calls, scope, start) in expected.items():
         row = targets[name]
         if (row.get("module") != "libg.so" or row.get("offset") != offset or row.get("calls") != calls or
                 row.get("scope") != scope or row.get("scope_start") != start or row.get("armed") is not True or
-                row.get("site_only") is not False):
+                row.get("site_only") is not (allow_first and name == "first_lookup_result")):
             raise ValueError("Linux target coverage mismatch")
     if targets["finish_a"].get("context_slot_b60") is not True:
         raise ValueError("Linux context observation not enabled")
     events = linux["events"]
-    expected_events = ["table_batch"] * 5 + ["finish_a", "finish_lookup"] + (["lookup_inner"] if allow_inner else [])
+    expected_events = ["table_batch"] * 5 + ["finish_a", "finish_lookup"] + (["lookup_inner"] if allow_inner else []) + (["first_lookup_result"] if allow_first else [])
     if [row.get("name") for row in events] != expected_events:
         raise ValueError("Linux observation sequence mismatch")
     finish, query = events[5:7]
@@ -66,7 +68,7 @@ def compare(android, linux, allow_inner=False):
             "linux_rows_after": sum(max(0, x) for x in after_l.values())}
 
 
-def audit(paths, identities, allow_inner=False):
+def audit(paths, identities, allow_inner=False, allow_first=False):
     if any(sha(path) != identities[name] for name, path in paths.items()):
         raise ValueError("input identity mismatch")
     android = json.loads(paths["android"].read_text())
@@ -80,10 +82,12 @@ def audit(paths, identities, allow_inner=False):
             android.get("resume") != "returned" or android.get("spawn_gate", {}).get("disabled") is not True or
             trace.get("errors") != [] or trace.get("lost") != 0 or trace.get("activeScopes") != 0 or
             trace.get("activeBatchScopes") != 0 or trace.get("activeFinishScopes") != 0 or
-            (allow_inner and trace.get("activeLookupScopes") != 0)):
+            (allow_inner and trace.get("activeLookupScopes") != 0) or
+            (allow_first and trace.get("activeInnerScopes") != 0)):
         raise ValueError("Android capture incomplete")
     coverage = {row["label"]: row["installed"] for row in trace["coverage"]}
     labels = ("table_batch", "finish_a", "finish_lookup") + (("lookup_inner",) if allow_inner else ())
+    labels += (("first_lookup_result",) if allow_first else ())
     if not all(coverage.get(name) is True for name in labels):
         raise ValueError("Android hook coverage incomplete")
     for label in ("before", "after"):
@@ -100,7 +104,7 @@ def audit(paths, identities, allow_inner=False):
             ("inputs_unchanged", "resources_unchanged", "auxiliary_unchanged", "probe_unchanged"))):
         raise ValueError("Linux capture incomplete")
     return {"schema": "nashura.finish-lookup.v1", "status": "RUNTIME_OBSERVED_LIMITED", "input_sha256": identities,
-            "matched_update_files": len(inventory), "comparison": compare(android, linux, allow_inner), "catalog_ready_pass": False,
+            "matched_update_files": len(inventory), "comparison": compare(android, linux, allow_inner, allow_first), "catalog_ready_pass": False,
             "limitations": ["pointer identity and pointed-to contents not compared", "query key and initialization source unknown",
                             "function return difference alone does not prove causation", "separate runtimes and processes"]}
 

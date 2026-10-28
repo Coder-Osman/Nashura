@@ -9,6 +9,7 @@ const scopes = new Map();
 const batchScopes = new Map();
 const finishScopes = new Map();
 const lookupScopes = new Map();
+const innerScopes = new Map();
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
 function record(event) {
   if (events.length >= 30000) { lost++; return; }
@@ -105,9 +106,38 @@ function observe(module) {
         }
         if (includeBatchPhases) {
           attach(module, 0x11ae1fc, 'lookup_inner', {
-            onEnter: function () { this.observerBatch = lookupScopes.get(Process.getCurrentThreadId()) || null; },
+            onEnter: function (args) {
+              this.observerThread = Process.getCurrentThreadId();
+              this.observerBatch = lookupScopes.get(this.observerThread) || null;
+              if (this.observerBatch) {
+                if (innerScopes.has(this.observerThread)) errors.push('nested inner scope');
+                innerScopes.set(this.observerThread, this.observerBatch);
+                try {
+                  const object = args[0].and(ptr('0x00ffffffffffffff'));
+                  this.tree = {root_nonnull: !object.add(0x100).readPointer().isNull(),
+                               size_word: object.add(0x108).readU64().toString()};
+                } catch (error) { errors.push('lookup tree: ' + String(error)); }
+              }
+            },
             onLeave: function (value) {
-              if (this.observerBatch) record({kind: 'lookup_inner', batch: this.observerBatch, nonnull: !value.isNull()});
+              if (this.observerBatch) {
+                record({kind: 'lookup_inner', batch: this.observerBatch, nonnull: !value.isNull(), tree: this.tree});
+                if (innerScopes.get(this.observerThread) !== this.observerBatch) errors.push('inner scope mismatch');
+                innerScopes.delete(this.observerThread);
+              }
+            }
+          });
+          attach(module, 0x11b20f0, 'first_lookup_result', {
+            onEnter: function (args) {
+              this.observerBatch = innerScopes.get(Process.getCurrentThreadId()) || null;
+              if (this.observerBatch) this.sentinel = args[0].and(ptr('0x00ffffffffffffff')).add(8);
+            },
+            onLeave: function (value) {
+              if (!this.observerBatch) return;
+              const result = value.and(ptr('0x00ffffffffffffff'));
+              if (result.isNull()) { errors.push('null first lookup result'); return; }
+              record({kind: 'first_lookup_result', batch: this.observerBatch,
+                      found: !result.equals(this.sentinel)});
             }
           });
           attach(module, 0x1207ffc, 'finish_lookup', {
@@ -246,5 +276,5 @@ rpc.exports = {
   },
   snapshot: function () { return {events: events, coverage: coverage, errors: errors, lost: lost,
     activeScopes: scopes.size, activeBatchScopes: batchScopes.size, activeFinishScopes: finishScopes.size,
-    activeLookupScopes: lookupScopes.size}; }
+    activeLookupScopes: lookupScopes.size, activeInnerScopes: innerScopes.size}; }
 };

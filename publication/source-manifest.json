@@ -16800,9 +16800,9 @@
     },
     {
       "path": "tools/pure_linux/native_init_gdb.py",
-      "sha256": "59ba13cc0a8d33a6e7ab7bc4e8f8309d270280a0c6840733905f81644bf6ea15",
-      "bytes": 9974,
-      "source_sha256": "59ba13cc0a8d33a6e7ab7bc4e8f8309d270280a0c6840733905f81644bf6ea15",
+      "sha256": "68b7a61081ac25f4d1bf42fa01658584785a05a7d233ce43778900546e193fcc",
+      "bytes": 10770,
+      "source_sha256": "68b7a61081ac25f4d1bf42fa01658584785a05a7d233ce43778900546e193fcc",
       "transformations": []
     },
     {
@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "8030a5d0df1ffa929ee74f963ccf7704690f4355895c591023d54551e2ff644d",
-      "bytes": 12015,
-      "source_sha256": "8030a5d0df1ffa929ee74f963ccf7704690f4355895c591023d54551e2ff644d",
+      "sha256": "636dc7347aa84fff70688bedbac921e422f5e7a445793ac0bca961d037f17f52",
+      "bytes": 13683,
+      "source_sha256": "636dc7347aa84fff70688bedbac921e422f5e7a445793ac0bca961d037f17f52",
       "transformations": []
     },
     {
@@ -18781,9 +18781,9 @@
     },
     {
       "path": "tools/pure_linux/audit_finish_lookup.py",
-      "sha256": "8b0a8b905083711d34df520966ea56f7c757b570a1339c0974a0a1e009c7d501",
-      "bytes": 7977,
-      "source_sha256": "8b0a8b905083711d34df520966ea56f7c757b570a1339c0974a0a1e009c7d501",
+      "sha256": "c3fb0f0b3b9b919d999b77eee5a461d1f41f09bec928c78afa87208e902cc8d4",
+      "bytes": 8388,
+      "source_sha256": "c3fb0f0b3b9b919d999b77eee5a461d1f41f09bec928c78afa87208e902cc8d4",
       "transformations": []
     },
     {
@@ -18897,10 +18897,66 @@
       "bytes": 1193,
       "source_sha256": "27a6a4dcac42de261d8e57bcd568c2138e81887e618c0d2b7d47564775c78a72",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_first_lookup.py",
+      "sha256": "adf56632083b559b418fbb44c478f738eb529f8129f1c96bdafbfce3f03239fb",
+      "bytes": 3902,
+      "source_sha256": "adf56632083b559b418fbb44c478f738eb529f8129f1c96bdafbfce3f03239fb",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/first_lookup_observation.py",
+      "sha256": "3ea02eb03a3462f65b27aad074c9c18a4437cb85e8d29905554282fe822cc98c",
+      "bytes": 938,
+      "source_sha256": "3ea02eb03a3462f65b27aad074c9c18a4437cb85e8d29905554282fe822cc98c",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/first_lookup_targets.json",
+      "sha256": "acc63ead15f274e616e018af1d3d54c42bf6caf782e2c727e7c0b2d56a894d59",
+      "bytes": 1158,
+      "source_sha256": "acc63ead15f274e616e018af1d3d54c42bf6caf782e2c727e7c0b2d56a894d59",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_first_lookup.py",
+      "sha256": "b07b83fe4f42353c2f695d9879c8e0689c24d647ec62f2a4a3264667c5e6dca2",
+      "bytes": 1520,
+      "source_sha256": "b07b83fe4f42353c2f695d9879c8e0689c24d647ec62f2a4a3264667c5e6dca2",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_first_lookup_observation.py",
+      "sha256": "0d0d2e7a74e6788fbb79ca1d052a5b10ff6d8edf7c7d85bc27a6140f458369e1",
+      "bytes": 670,
+      "source_sha256": "0d0d2e7a74e6788fbb79ca1d052a5b10ff6d8edf7c7d85bc27a6140f458369e1",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_FIRST_LOOKUP.md",
+      "sha256": "93f9d32eb4cbdb888a9fe40923c9c8687f30d2eeda9680db6622616732aafadd",
+      "bytes": 770,
+      "source_sha256": "93f9d32eb4cbdb888a9fe40923c9c8687f30d2eeda9680db6622616732aafadd",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_FIRST_LOOKUP_2026-10-29.md",
+      "sha256": "b41f011f0d6616ab03e6765c04eedb0ca69e32069989ae408a19d0d4b2be6496",
+      "bytes": 4672,
+      "source_sha256": "b41f011f0d6616ab03e6765c04eedb0ca69e32069989ae408a19d0d4b2be6496",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-first-lookup-evidence-20261029.json",
+      "sha256": "da4309464fbdf1d286c3f245e615f90c4fe33c4a3618dca148d7935f4a834e1c",
+      "bytes": 1481,
+      "source_sha256": "da4309464fbdf1d286c3f245e615f90c4fe33c4a3618dca148d7935f4a834e1c",
+      "transformations": []
     }
   ],
-  "file_count": 2689,
-  "source_bytes": 35720864,
+  "file_count": 2697,
+  "source_bytes": 35738850,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

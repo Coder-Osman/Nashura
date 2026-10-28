@@ -16,6 +16,7 @@ from observed_string import read_string
 from native_observation_scopes import ObservationScopes
 from catalog_table_counts import snapshot as snapshot_table_counts
 from lookup_input_observation import observe as observe_lookup_input
+from first_lookup_observation import tree as observe_first_tree, found as observe_first_found
 
 
 targets = json.loads(Path(os.environ["NASHURA_GDB_TARGETS"]).read_text())
@@ -61,6 +62,12 @@ class Observe(gdb.Breakpoint):
         if self.row.get("lookup_input"):
             event["lookup_input"] = observe_lookup_input(gdb.selected_inferior().read_memory,
                                                           int(frame.read_register("x0")))
+        if self.row.get("first_lookup_tree"):
+            event["first_lookup_tree"] = observe_first_tree(gdb.selected_inferior().read_memory,
+                                                             int(frame.read_register("x0")))
+        if self.row.get("first_lookup_result"):
+            event["first_lookup_found"] = observe_first_found(int(frame.read_register("x19")),
+                                                               int(frame.read_register("x0")))
         for specification in self.row.get("string_arguments", []):
             register = specification["register"]
             if register not in {"x%d" % index for index in range(8)}:
@@ -161,6 +168,10 @@ try:
         row["lookup_input"] = target.get("lookup_input", False)
         if type(row["lookup_input"]) is not bool:
             raise RuntimeError("lookup input profile must be boolean")
+        for name in ("first_lookup_tree", "first_lookup_result"):
+            row[name] = target.get(name, False)
+            if type(row[name]) is not bool:
+                raise RuntimeError(name + " profile must be boolean")
         if type(row["context_slot_b60"]) is not bool:
             raise RuntimeError("context slot profile must be boolean")
         if row["table_counts_register"] not in (None, "x0") or (row["table_counts_register"] and row["site_only"]):
