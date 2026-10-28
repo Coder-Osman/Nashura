@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "40a084383c1c37001891a5dcceaea13d2fde5ed1013e194a998d01b50c72e176",
-      "bytes": 31002,
-      "source_sha256": "40a084383c1c37001891a5dcceaea13d2fde5ed1013e194a998d01b50c72e176",
+      "sha256": "2035d071568368150bcad613912bf9043029afc87932d319cb6aa9a7db04b1fe",
+      "bytes": 33921,
+      "source_sha256": "2035d071568368150bcad613912bf9043029afc87932d319cb6aa9a7db04b1fe",
       "transformations": []
     },
     {
@@ -19191,10 +19191,45 @@
       "bytes": 1547,
       "source_sha256": "04c4201159bd1a1de02b2aece60464613ddc0c994d644073d3ad524f1ee344ef",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_owner_constructor.py",
+      "sha256": "b8d524455ee43c998b3536a79821ad68ce250e324611e3531c1c020753878d0b",
+      "bytes": 3502,
+      "source_sha256": "b8d524455ee43c998b3536a79821ad68ce250e324611e3531c1c020753878d0b",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_owner_constructor.py",
+      "sha256": "ee66ae3fee14bf8055a3c327a6d74d3c2f7a13c9db6feb8614b52d33b02bae20",
+      "bytes": 1961,
+      "source_sha256": "ee66ae3fee14bf8055a3c327a6d74d3c2f7a13c9db6feb8614b52d33b02bae20",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_OWNER_CONSTRUCTOR_2026-10-29.md",
+      "sha256": "4656602fcc13026616299bc6a77f252dcf099550974dca930c9c888c3943da5e",
+      "bytes": 3292,
+      "source_sha256": "4656602fcc13026616299bc6a77f252dcf099550974dca930c9c888c3943da5e",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-owner-constructor-evidence-20261029.json",
+      "sha256": "10c4febcbe098795057d9ad6b5aa37d710d4e034238110a1505b01883736c509",
+      "bytes": 1232,
+      "source_sha256": "10c4febcbe098795057d9ad6b5aa37d710d4e034238110a1505b01883736c509",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_OWNER_CONSTRUCTOR.md",
+      "sha256": "ca8746d37bbf947d85c71c590d6c31d51807e9c0722d217e8044ef46435b5284",
+      "bytes": 685,
+      "source_sha256": "ca8746d37bbf947d85c71c590d6c31d51807e9c0722d217e8044ef46435b5284",
+      "transformations": []
     }
   ],
-  "file_count": 2731,
-  "source_bytes": 35829537,
+  "file_count": 2736,
+  "source_bytes": 35843128,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

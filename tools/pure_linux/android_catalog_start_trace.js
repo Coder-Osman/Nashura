@@ -24,6 +24,9 @@ const dbConstructors = new Map();
 const dbFactoryScopes = new Map();
 const engineDbScopes = new Map();
 let engineDbOwner = null;
+const engineOwnerConstructors = new Map();
+const engineOwnerGetterScopes = new Map();
+const engineOwnerGetterResults = new Map();
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
 function record(event) {
   if (events.length >= 30000) { lost++; return; }
@@ -138,6 +141,51 @@ function collectPath(module, history, args, returnAddress) {
 function observe(module) {
   if (module.name !== 'libg.so') return;
   if (includeBatchPhases) {
+    attach(module, 0x7557d0, 'engine_owner_getter_candidate', {
+      onEnter: function () {
+        this.ownerThread = Process.getCurrentThreadId();
+        const caller = this.returnAddress.and(ptr('0x00ffffffffffffff'));
+        const label = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
+          ? caller.sub(module.base).toString() : 'external';
+        this.getter = {id: ++nextCall, caller: label, thread: this.ownerThread};
+        const stack = engineOwnerGetterScopes.get(this.ownerThread) || [];
+        stack.push(this.getter);
+        engineOwnerGetterScopes.set(this.ownerThread, stack);
+      },
+      onLeave: function (retval) {
+        const stack = engineOwnerGetterScopes.get(this.ownerThread);
+        if (!stack || stack.pop() !== this.getter) errors.push('owner getter scope mismatch');
+        if (stack && stack.length === 0) engineOwnerGetterScopes.delete(this.ownerThread);
+        const result = retval.and(ptr('0x00ffffffffffffff'));
+        if (!result.isNull()) engineOwnerGetterResults.set(result.toString(), {...this.getter});
+      }
+    });
+    attach(module, 0x755a98, 'engine_owner_constructor_candidate', {
+      onEnter: function (args) {
+        this.owner = args[0].and(ptr('0x00ffffffffffffff'));
+        this.ownerKey = this.owner.toString();
+        this.ownerThread = Process.getCurrentThreadId();
+        const caller = this.returnAddress.and(ptr('0x00ffffffffffffff'));
+        const label = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
+          ? caller.sub(module.base).toString() : 'external';
+        const previous = engineOwnerConstructors.get(this.ownerKey);
+        const stack = engineOwnerGetterScopes.get(this.ownerThread) || [];
+        const row = {id: ++nextCall, caller: label, thread: this.ownerThread, returned: false,
+                     vtable_matches: null, prior_address_observations: previous ? previous.prior_address_observations + 1 : 0,
+                     getter_parent: stack.length ? {...stack[stack.length - 1]} : null};
+        engineOwnerConstructors.set(this.ownerKey, row);
+        this.ownerRow = row;
+      },
+      onLeave: function () {
+        this.ownerRow.returned = true;
+        try {
+          this.ownerRow.vtable_matches = this.owner.readPointer().and(ptr('0x00ffffffffffffff'))
+            .equals(module.base.add(0x17ea568));
+        } catch (e) {
+          errors.push('owner constructor vtable read failed: ' + e);
+        }
+      }
+    });
     attach(module, 0x75760c, 'engine_db_init_candidate', {
       onEnter: function (args) {
         this.dbThread = Process.getCurrentThreadId();
@@ -149,6 +197,8 @@ function observe(module) {
         const table = this.owner.readPointer().and(ptr('0x00ffffffffffffff'));
         const tableModule = Process.findModuleByAddress(table);
         const vtable = tableModule && tableModule.name === module.name ? table.sub(module.base).toString() : 'external';
+        const ctor = engineOwnerConstructors.get(this.owner.toString()) || null;
+        const getter = engineOwnerGetterResults.get(this.owner.toString()) || null;
         const references = {};
         for (const [name, address] of [['root', root], ['context', context]]) {
           const range = address.isNull() ? null : Process.findRangeByAddress(address);
@@ -174,7 +224,8 @@ function observe(module) {
         record({kind: 'engine_db_init_enter', id: this.call, caller: label,
                 owner_is_root: this.owner.equals(root), owner_is_context: this.owner.equals(context),
                 root_nonnull: !root.isNull(), context_nonnull: !context.isNull(),
-                owner_vtable: vtable, owner_references: references,
+                owner_vtable: vtable, owner_references: references, owner_constructor: ctor ? {...ctor} : null,
+                owner_getter: getter ? {...getter} : null,
                 slot_before_nonnull: !this.owner.add(0x3f0).readPointer().isNull()});
       },
       onLeave: function () {
