@@ -1,5 +1,10 @@
 # 变更记录
 
+## 2026-10-28：Android E1 与 Linux 资源局部对照
+
+- SHA 绑定 Android 历史归档与真实 Linux libg 的24项文件路由及操作对照，独立复核通过。
+- 补充证据篡改拒收测试；专项981通过/1跳过。完整 catalog 和 Backup 仍未验收。
+
 ## 2026-10-28：E2.1-N 真实 libg 资源路由矩阵
 
 - 新增13例合成资源矩阵和SHA绑定独立验收，使用 ARM64 Linux 的真实 libg 与现有backend。

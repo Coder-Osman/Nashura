@@ -249,6 +249,7 @@ def main():
     parser.add_argument("--update-root", type=Path, required=True)
     parser.add_argument("--resource-name")
     parser.add_argument("--expected-resource-sha256")
+    parser.add_argument("--resource-exercise", action="store_true")
     parser.add_argument("--disk-namespace", choices=["data:", "asset:"])
     parser.add_argument("--catalog-mode", choices=["inspect", "list", "preload", "load", "loader", "loader-construct"])
     parser.add_argument("--data-path", help="Logical native provider root; inventory remains limited to --data-root")
@@ -276,6 +277,8 @@ def main():
     arguments = parser.parse_args()
     if bool(arguments.resource_name) != bool(arguments.expected_resource_sha256):
         parser.error("resource name and expected digest must be paired")
+    if arguments.resource_exercise and not arguments.resource_name:
+        parser.error("resource exercise requires a resource name")
     asset_arguments = [arguments.asset_root, arguments.asset_index, arguments.asset_index_sha256,
                        arguments.asset_backend, arguments.asset_backend_sha256]
     if any(asset_arguments) and not all(asset_arguments):
@@ -354,6 +357,8 @@ def main():
         environment["NASHURA_INSPECT_PARSED_TABLES"] = "1"
     if arguments.resource_name:
         environment["NASHURA_RESOURCE_NAME"] = arguments.resource_name
+    if arguments.resource_exercise:
+        environment["NASHURA_RESOURCE_EXERCISE"] = "1"
     if arguments.disk_namespace:
         environment["NASHURA_DISK_NAMESPACE"] = arguments.disk_namespace
     if arguments.catalog_mode:

@@ -1,5 +1,11 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：Android 与 Linux 资源局部对照
+
+24个独立真实引擎资源案例与历史 Android E1 归档的字节和文件操作匹配，独立
+校验通过；不代表 FMOD、完整 catalog 或 Backup 等价。专项981通过/1跳过。
+详见[报告](../agent-handoff/PURE_LINUX_E1_PAIRED_RESOURCE_2026-10-28.md)。
+
 ## 2026-10-28 E2.1-N：真实 libg 合成资源路由矩阵
 
 ARM64 Linux 原生引擎对13例合成 APK/update 冲突、缺失和回退按既有 E1 对应规则

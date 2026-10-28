@@ -81,6 +81,33 @@ static int describe(uintptr_t manager, size_t slot, const char *name) {
     return 1;
 }
 
+static void resource_exercise(void *file, const uintptr_t *entries, int valid, int64_t length) {
+    if (!getenv("NASHURA_RESOURCE_EXERCISE")) return;
+    int64_t details[24];
+    for (size_t index = 0; index < 24; ++index) details[index] = -1;
+    details[0] = file != NULL;
+    int status = -1;
+    if (file) details[1] = valid;
+    if (file && valid) {
+        details[2] = length;
+        if (length >= 0 && length < INT64_MAX) {
+            int64_t offsets[] = {0, length, length + 1, -1, length ? length - 1 : 0};
+            unsigned char byte;
+            for (size_t index = 0; index < 5; ++index) {
+                size_t begin = 3 + index * 4;
+                details[begin] = ((int64_t (*)(void *, int64_t))(base + entries[2]))(file, offsets[index]);
+                details[begin + 1] = ((int64_t (*)(void *))(base + entries[3]))(file);
+                details[begin + 2] = ((int (*)(void *))(base + entries[6]))(file);
+                details[begin + 3] = ((int64_t (*)(void *, void *, int))(base + entries[1]))(file, &byte, 1);
+            }
+            status = 0;
+        } else status = -2;
+    }
+    printf("RESOURCE_EXERCISE\t%d", status);
+    for (size_t index = 0; index < 24; ++index) printf("\t%" PRId64, details[index]);
+    putchar('\n');
+}
+
 static int read_resource(uintptr_t manager) {
     const char *name = getenv("NASHURA_RESOURCE_NAME");
     if (!name) return 0;
@@ -94,6 +121,7 @@ static int read_resource(uintptr_t manager) {
     if (!string_valid(&path)) return 59;
     string_release(&path);
     if (!file) {
+        resource_exercise(NULL, NULL, 0, 0);
         puts("RESOURCE_MISSING\t1");
         return 60;
     }
@@ -119,6 +147,7 @@ static int read_resource(uintptr_t manager) {
     puts("RESOURCE_FILE_VTABLE\t1");
     int valid = ((int (*)(void *))(base + entries[5]))(file);
     if (!valid) {
+        resource_exercise(file, entries, 0, 0);
         puts("RESOURCE_INVALID_FILE\t1");
         puts("PHASE\tresource_close_enter");
         ((void (*)(void *))(base + entries[0]))(file);
@@ -149,6 +178,10 @@ static int read_resource(uintptr_t manager) {
     int64_t reread = ((int64_t (*)(void *, void *, int))(base + entries[1]))(file, &extra, 1);
     printf("RESOURCE_SEMANTICS\t%" PRId64 "\t%" PRId64 "\t%d\t%" PRId64 "\t%" PRId64 "\t%d\n",
            eof, end, at_end, beginning, reread, extra == bytes[0]);
+    if (getenv("NASHURA_RESOURCE_EXERCISE")) {
+        if (((int64_t (*)(void *, int64_t))(base + entries[2]))(file, 0) != 0) return 66;
+        resource_exercise(file, entries, valid, length);
+    }
     puts("PHASE\tresource_close_enter");
     ((void (*)(void *))(base + entries[0]))(file);
     puts("PHASE\tresource_close_return");

@@ -53,7 +53,7 @@ def create_stage(root, removed):
     return assets, update, index, manifest
 
 
-def run_case(case, ordinal, root, stage, payload, probe, backend):
+def run_case(case, ordinal, root, stage, payload, probe, backend, exercise=False):
     stage_name, path, expected_kind, content = case
     assets, update, index, manifest = stage
     output = root / f"case-{ordinal:02d}"
@@ -66,6 +66,8 @@ def run_case(case, ordinal, root, stage, payload, probe, backend):
                "--asset-index-sha256", digest(index), "--asset-backend", str(backend),
                "--asset-backend-sha256", digest(backend), "--resource-name", path,
                "--expected-resource-sha256", expected_hash, "--timeout", "55"]
+    if exercise:
+        command.append("--resource-exercise")
     try:
         process = subprocess.run(command, capture_output=True, timeout=90)
         wrapper_exit, timed_out = process.returncode, False
@@ -81,6 +83,15 @@ def run_case(case, ordinal, root, stage, payload, probe, backend):
     result = json.loads(result_path.read_text())
     stdout = (output / "stdout.log").read_text()
     lines = stdout.splitlines()
+    exercises = [line.split("\t")[1:] for line in lines if line.startswith("RESOURCE_EXERCISE\t")]
+    exercise_status = None
+    exercise_values = None
+    if exercise and len(exercises) == 1 and len(exercises[0]) == 25:
+        try:
+            exercise_status = int(exercises[0][0])
+            exercise_values = [int(value) for value in exercises[0][1:]]
+        except ValueError:
+            pass
     kinds = [line.split("\t", 1)[1] for line in lines if line.startswith("RESOURCE_FILE_KIND\t")]
     missing = [line for line in lines if line == "RESOURCE_MISSING\t1"]
     identity = (result["inputs_unchanged"] and result["resources_unchanged"] and
@@ -104,12 +115,15 @@ def run_case(case, ordinal, root, stage, payload, probe, backend):
                   result["resource_observations"]["complete"] and
                   "NATIVE_ASSET_FINISH_RESULT\t0" in lines)
         actual_kind = kinds[0] if len(kinds) == 1 else "unknown"
+    if exercise:
+        passed = passed and exercise_status == (-1 if expected_kind == "missing" else 0) and exercise_values is not None
     return {"case": ordinal, "stage": stage_name, "path": path, "expected": expected_kind,
             "actual": actual_kind, "expected_sha256": expected_hash if content is not None else None,
             "resource_sha256": resource_hash, "native_exit": result["exit_code"],
             "wrapper_exit": wrapper_exit, "timed_out": timed_out, "passed": bool(passed),
             "result_sha256": digest(result_path), "stdout_sha256": digest(output / "stdout.log"),
             "stderr_sha256": digest(output / "stderr.log"),
+            "exercise_status": exercise_status, "exercise_values": exercise_values,
             "cleanup_scope": "provider_and_asset_finish"}
 
 

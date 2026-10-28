@@ -1,5 +1,11 @@
 # Nashura
 
+## 2026-10-28：Android E1 与 Linux 资源局部对照
+
+历史 Android 归档与真实 ARM64 Linux libg 的24个案例在字节及文件操作上匹配；
+独立身份校验通过，专项981通过/1跳过。严格 catalog 与 Backup 仍未通过。
+详见[报告](agent-handoff/PURE_LINUX_E1_PAIRED_RESOURCE_2026-10-28.md)。
+
 ## 2026-10-28：Linux 原生资源路由矩阵
 
 真实 ARM64 Linux libg 对13个合成 APK/update 冲突、缺失和回退案例按 E1 对应路由
