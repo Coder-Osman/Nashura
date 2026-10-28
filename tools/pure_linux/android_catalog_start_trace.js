@@ -14,6 +14,9 @@ const insertionHistory = new Map();
 const populationHistory = new Map();
 const allocationHistory = new Map();
 const pathCreationHistory = new Map();
+const pathSourceHistory = new Map();
+const sourceLoaderScopes = new Map();
+const sourceParentHistory = new Map();
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
 function record(event) {
   if (events.length >= 30000) { lost++; return; }
@@ -95,40 +98,71 @@ function attach(module, offset, label, callbacks) {
     coverage.push({label: label, installed: true});
   } catch (error) { coverage.push({label: label, installed: false}); errors.push(label + ': ' + String(error)); }
 }
+function collectPath(module, history, args, returnAddress) {
+  const mask = ptr('0x00ffffffffffffff');
+  const owner = args[0].and(mask).readPointer().and(mask);
+  if (owner.isNull()) throw new Error('null path owner');
+  const key = owner.toString();
+  if (!history.has(key)) {
+    if (history.size >= 8192) throw new Error('path owner limit');
+    history.set(key, new Map());
+  }
+  const items = history.get(key);
+  const string = args[1].and(mask);
+  const header = string.readU8();
+  const length = (header & 1) ? string.add(8).readU64().toNumber() : header >>> 1;
+  if (length > 4096) throw new Error('path length limit');
+  const bytes = (header & 1) ? string.add(16).readPointer().and(mask) : string.add(1);
+  const data = new Uint8Array(bytes.readByteArray(length + 1));
+  if (data.length !== length + 1 || data[length] !== 0) throw new Error('path terminator missing');
+  const caller = returnAddress.and(mask);
+  const label = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
+    ? caller.sub(module.base).toString() : 'external';
+  const hex = Array.from(data.slice(0, length), byte => byte.toString(16).padStart(2, '0')).join('');
+  const identity = label + ':' + hex;
+  if (!items.has(identity)) {
+    if (items.size >= 32768) throw new Error('unique path history limit');
+    items.set(identity, {caller: label, bytes_hex: hex, calls: 0, returns: 0});
+  }
+  const item = items.get(identity);
+  item.calls++;
+  return item;
+}
 function observe(module) {
   if (module.name !== 'libg.so') return;
   if (includeBatchPhases) {
-    attach(module, 0x11afc60, 'path_creation_candidate', {
+    attach(module, 0x11b4248, 'source_loader_candidate', {
+      onEnter: function () {
+        this.observerThread = Process.getCurrentThreadId();
+        if (sourceLoaderScopes.has(this.observerThread)) errors.push('nested source loader');
+        const caller = this.returnAddress.and(ptr('0x00ffffffffffffff'));
+        this.label = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
+          ? caller.sub(module.base).toString() : 'external';
+        sourceLoaderScopes.set(this.observerThread, this.label);
+      },
+      onLeave: function () {
+        if (sourceLoaderScopes.get(this.observerThread) !== this.label) errors.push('source loader scope mismatch');
+        sourceLoaderScopes.delete(this.observerThread);
+      }
+    });
+    attach(module, 0x11b0820, 'path_source_candidate', {
       onEnter: function (args) {
         try {
-          const mask = ptr('0x00ffffffffffffff');
-          const owner = args[0].and(mask).readPointer().and(mask);
-          if (owner.isNull()) throw new Error('null path owner');
-          const key = owner.toString();
-          if (!pathCreationHistory.has(key)) {
-            if (pathCreationHistory.size >= 8192) throw new Error('path owner limit');
-            pathCreationHistory.set(key, new Map());
-          }
-          const items = pathCreationHistory.get(key);
-          const string = args[1].and(mask);
-          const header = string.readU8();
-          const length = (header & 1) ? string.add(8).readU64().toNumber() : header >>> 1;
-          if (length > 4096) throw new Error('path length limit');
-          const bytes = (header & 1) ? string.add(16).readPointer().and(mask) : string.add(1);
-          const data = new Uint8Array(bytes.readByteArray(length + 1));
-          if (data.length !== length + 1 || data[length] !== 0) throw new Error('path terminator missing');
-          const caller = this.returnAddress.and(mask);
-          const label = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
-            ? caller.sub(module.base).toString() : 'external';
-          const hex = Array.from(data.slice(0, length), byte => byte.toString(16).padStart(2, '0')).join('');
-          const identity = label + ':' + hex;
-          if (!items.has(identity)) {
-            if (items.size >= 8192) throw new Error('unique path history limit');
-            items.set(identity, {caller: label, bytes_hex: hex, calls: 0, returns: 0});
-          }
-          this.pathItem = items.get(identity);
-          this.pathItem.calls++;
-        } catch (error) { errors.push('path creation: ' + String(error)); }
+          this.pathItem = collectPath(module, pathSourceHistory, args, this.returnAddress);
+          const owner = args[0].and(ptr('0x00ffffffffffffff')).readPointer().and(ptr('0x00ffffffffffffff')).toString();
+          const parent = sourceLoaderScopes.get(Process.getCurrentThreadId()) || 'unobserved';
+          if (!sourceParentHistory.has(owner)) sourceParentHistory.set(owner, {});
+          const counts = sourceParentHistory.get(owner);
+          counts[parent] = (counts[parent] || 0) + 1;
+        }
+        catch (error) { errors.push('path source: ' + String(error)); }
+      },
+      onLeave: function () { if (this.pathItem) this.pathItem.returns++; }
+    });
+    attach(module, 0x11afc60, 'path_creation_candidate', {
+      onEnter: function (args) {
+        try { this.pathItem = collectPath(module, pathCreationHistory, args, this.returnAddress); }
+        catch (error) { errors.push('path creation: ' + String(error)); }
       },
       onLeave: function () { if (this.pathItem) this.pathItem.returns++; }
     });
@@ -206,6 +240,8 @@ function observe(module) {
                   const population = populationHistory.get(object.toString());
                   const allocation = allocationHistory.get(object.toString());
                   const paths = pathCreationHistory.get(object.toString());
+                  const sourcePaths = pathSourceHistory.get(object.toString());
+                  const sourceParents = sourceParentHistory.get(object.toString());
                   this.tree = {root_nonnull: !object.add(0x100).readPointer().isNull(),
                                size_word: object.add(0x108).readU64().toString(),
                                prior_insertion: insertion ? JSON.parse(JSON.stringify(insertion))
@@ -214,7 +250,9 @@ function observe(module) {
                                  : {calls: 0, returns: 0, callers: {}},
                                prior_allocation: allocation ? JSON.parse(JSON.stringify(allocation))
                                  : {calls: 0, returns: 0, callers: {}},
-                               prior_paths: paths ? Array.from(paths.values(), item => ({...item})) : []};
+                               prior_paths: paths ? Array.from(paths.values(), item => ({...item})) : [],
+                               prior_source_paths: sourcePaths ? Array.from(sourcePaths.values(), item => ({...item})) : [],
+                               source_parents: sourceParents ? {...sourceParents} : {}};
                 } catch (error) { errors.push('lookup tree: ' + String(error)); }
               }
             },
@@ -375,5 +413,6 @@ rpc.exports = {
   },
   snapshot: function () { return {events: events, coverage: coverage, errors: errors, lost: lost,
     activeScopes: scopes.size, activeBatchScopes: batchScopes.size, activeFinishScopes: finishScopes.size,
-    activeLookupScopes: lookupScopes.size, activeInnerScopes: innerScopes.size}; }
+    activeLookupScopes: lookupScopes.size, activeInnerScopes: innerScopes.size,
+    activeSourceLoaderScopes: sourceLoaderScopes.size}; }
 };

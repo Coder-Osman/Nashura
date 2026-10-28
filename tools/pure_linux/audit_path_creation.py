@@ -8,7 +8,7 @@ from audit_first_lookup import audit as audit_first
 
 
 def summarize(rows, key):
-    if not isinstance(rows, list) or not isinstance(key, bytes) or not key or len(rows) > 8192:
+    if not isinstance(rows, list) or not isinstance(key, bytes) or not key or len(rows) > 32768:
         raise ValueError("path history or lookup key invalid")
     seen, callers = set(), {}
     calls = returns = prefix_calls = exact_calls = prefix_unique = 0
