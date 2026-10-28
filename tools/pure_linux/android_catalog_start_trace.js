@@ -25,6 +25,7 @@ const dbFactoryScopes = new Map();
 const engineDbScopes = new Map();
 let engineDbOwner = null;
 const engineOwnerConstructors = new Map();
+const engineOwnerConstructorScopes = new Map();
 const engineOwnerGetterScopes = new Map();
 const engineOwnerGetterResults = new Map();
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
@@ -175,6 +176,9 @@ function observe(module) {
                      getter_parent: stack.length ? {...stack[stack.length - 1]} : null};
         engineOwnerConstructors.set(this.ownerKey, row);
         this.ownerRow = row;
+        const constructorStack = engineOwnerConstructorScopes.get(this.ownerThread) || [];
+        constructorStack.push(row.id);
+        engineOwnerConstructorScopes.set(this.ownerThread, constructorStack);
       },
       onLeave: function () {
         this.ownerRow.returned = true;
@@ -184,6 +188,24 @@ function observe(module) {
         } catch (e) {
           errors.push('owner constructor vtable read failed: ' + e);
         }
+        const stack = engineOwnerConstructorScopes.get(this.ownerThread);
+        if (!stack || stack.pop() !== this.ownerRow.id) errors.push('owner constructor scope mismatch');
+        if (stack && stack.length === 0) engineOwnerConstructorScopes.delete(this.ownerThread);
+      }
+    });
+    attach(module, 0x140cc8c, 'app_version_wrapper_candidate', {
+      onEnter: function () {
+        const thread = Process.getCurrentThreadId();
+        const stack = engineOwnerConstructorScopes.get(thread) || [];
+        if (!stack.length) return;
+        this.ownerParent = stack[stack.length - 1];
+        this.output = this.context.x8.and(ptr('0x00ffffffffffffff'));
+      },
+      onLeave: function () {
+        if (!this.ownerParent) return;
+        const value = nativeString16(this.output);
+        if (value === null) errors.push('app version result unreadable');
+        record({kind: 'app_version_wrapper', owner_constructor_id: this.ownerParent, value: value});
       }
     });
     attach(module, 0x75760c, 'engine_db_init_candidate', {

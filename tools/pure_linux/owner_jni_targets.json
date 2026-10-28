@@ -1,0 +1,5 @@
+[
+  {"name":"owner_constructor","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":7690904},
+  {"name":"jni_method_candidate","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":21017168,"site_only":true,"string_arguments":[{"register":"x0","encoding":"indirect-cstring","limit":256}]},
+  {"name":"jni_environment_candidate","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":25004776,"site_only":true}
+]

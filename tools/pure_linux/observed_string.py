@@ -1,6 +1,34 @@
 """Bounded reads of version-identified native strings for private GDB evidence."""
 
 
+def read_indirect_cstring(read_memory, address, offset=0, limit=256):
+    if not isinstance(offset, int) or offset < 0 or offset > 4096:
+        raise ValueError("invalid pointer offset")
+    if not isinstance(limit, int) or not 0 < limit <= 4096:
+        raise ValueError("invalid observation limit")
+    address &= 0x00ffffffffffffff
+    if not address:
+        raise ValueError("null pointer container")
+    raw = bytes(read_memory(address + offset, 8))
+    if len(raw) != 8:
+        raise ValueError("short pointer read")
+    pointer = int.from_bytes(raw, "little") & 0x00ffffffffffffff
+    if not pointer:
+        raise ValueError("null string pointer")
+    data = bytearray()
+    for index in range(limit + 1):
+        value = bytes(read_memory(pointer + index, 1))
+        if len(value) != 1:
+            raise ValueError("short string read")
+        if value == b"\x00":
+            return {"encoding": "indirect-cstring", "length": len(data), "bytes_hex": data.hex(),
+                    "terminated": True}
+        if index == limit:
+            break
+        data.extend(value)
+    raise ValueError("string outside observation bounds")
+
+
 def read_string(read_memory, address, encoding, limit=4096):
     if encoding not in {"engine-string16", "libcxx-string24"}:
         raise ValueError("unsupported string encoding")

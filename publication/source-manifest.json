@@ -16800,9 +16800,9 @@
     },
     {
       "path": "tools/pure_linux/native_init_gdb.py",
-      "sha256": "68b7a61081ac25f4d1bf42fa01658584785a05a7d233ce43778900546e193fcc",
-      "bytes": 10770,
-      "source_sha256": "68b7a61081ac25f4d1bf42fa01658584785a05a7d233ce43778900546e193fcc",
+      "sha256": "1e1bd894726c7390454d4a5966bf844ea712be626210109a92cbd2b90a25bf7d",
+      "bytes": 11183,
+      "source_sha256": "1e1bd894726c7390454d4a5966bf844ea712be626210109a92cbd2b90a25bf7d",
       "transformations": []
     },
     {
@@ -16821,9 +16821,9 @@
     },
     {
       "path": "tools/pure_linux/observed_string.py",
-      "sha256": "a67b0a73b786fb6867ccab023af9fda24b904e11cceff29e575baedc03720e0b",
-      "bytes": 1622,
-      "source_sha256": "a67b0a73b786fb6867ccab023af9fda24b904e11cceff29e575baedc03720e0b",
+      "sha256": "fb344151dab58f651471e9e3c7e53bb22a0a26e5f8494ef8bc048ad08993666d",
+      "bytes": 2771,
+      "source_sha256": "fb344151dab58f651471e9e3c7e53bb22a0a26e5f8494ef8bc048ad08993666d",
       "transformations": []
     },
     {
@@ -17087,9 +17087,9 @@
     },
     {
       "path": "tools/pure_linux/provider_job.py",
-      "sha256": "fee4e24f0acdc32c1938b17d31f5ba8e6f0c7430f1c7dd5f972e87894e2aa30a",
-      "bytes": 32125,
-      "source_sha256": "fee4e24f0acdc32c1938b17d31f5ba8e6f0c7430f1c7dd5f972e87894e2aa30a",
+      "sha256": "691b53bb3d0e50e873a62873ae24ff46298595b733fc421a289068c6be807081",
+      "bytes": 32873,
+      "source_sha256": "691b53bb3d0e50e873a62873ae24ff46298595b733fc421a289068c6be807081",
       "transformations": [
         "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
         "2026-10-28: correct encrypted preference key counting and document bounded native recheck"
@@ -17097,9 +17097,9 @@
     },
     {
       "path": "tools/pure_linux/provider_probe.c",
-      "sha256": "0978ea99cafc259dc34af6c959795730e01bd4fa2faf53b857e2c33afe907f08",
-      "bytes": 28685,
-      "source_sha256": "0978ea99cafc259dc34af6c959795730e01bd4fa2faf53b857e2c33afe907f08",
+      "sha256": "ee2e9196c013b3986dc2d83eca5169b323fe0314b6719def2323b9cb79309ab3",
+      "bytes": 30925,
+      "source_sha256": "ee2e9196c013b3986dc2d83eca5169b323fe0314b6719def2323b9cb79309ab3",
       "transformations": []
     },
     {
@@ -17209,9 +17209,9 @@
     },
     {
       "path": "tools/pure_linux/test_observed_string.py",
-      "sha256": "8b4862eef438de8f1c5d995dc5dae214a04cb7c03dc98c2da7ca705e55dff67b",
-      "bytes": 2928,
-      "source_sha256": "8b4862eef438de8f1c5d995dc5dae214a04cb7c03dc98c2da7ca705e55dff67b",
+      "sha256": "ed6bc957294140ade03c056ca35bc4e5b35946f363b9c987bb05340e0673599b",
+      "bytes": 3568,
+      "source_sha256": "ed6bc957294140ade03c056ca35bc4e5b35946f363b9c987bb05340e0673599b",
       "transformations": []
     },
     {
@@ -17384,9 +17384,9 @@
     },
     {
       "path": "tools/pure_linux/test_provider_job.py",
-      "sha256": "c89db4ed9752412b118d4cd001e6415bae208c9e439b82ab48652d64152f2301",
-      "bytes": 14286,
-      "source_sha256": "c89db4ed9752412b118d4cd001e6415bae208c9e439b82ab48652d64152f2301",
+      "sha256": "e9e31f83b1ebbcf7203cc37f16b4cf40f3d14fe6b24dffd67685024bd69bf485",
+      "bytes": 15027,
+      "source_sha256": "e9e31f83b1ebbcf7203cc37f16b4cf40f3d14fe6b24dffd67685024bd69bf485",
       "transformations": []
     },
     {
@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "2035d071568368150bcad613912bf9043029afc87932d319cb6aa9a7db04b1fe",
-      "bytes": 33921,
-      "source_sha256": "2035d071568368150bcad613912bf9043029afc87932d319cb6aa9a7db04b1fe",
+      "sha256": "06a5e58a7c571fce6ce7d0a31bc65cbe37d2727b41bd0632682b418d59c30696",
+      "bytes": 35145,
+      "source_sha256": "06a5e58a7c571fce6ce7d0a31bc65cbe37d2727b41bd0632682b418d59c30696",
       "transformations": []
     },
     {
@@ -19268,10 +19268,52 @@
       "bytes": 666,
       "source_sha256": "5442588fec153efcce4366b71de47c338f4d0eb075de2874a62776518173f3d3",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/owner_jni_targets.json",
+      "sha256": "24f6c60da055118ae2c2d9d75dd66206de7e3ac4c8df9aa7213131810ac7da80",
+      "bytes": 563,
+      "source_sha256": "24f6c60da055118ae2c2d9d75dd66206de7e3ac4c8df9aa7213131810ac7da80",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_owner_app_version.py",
+      "sha256": "dce7df0f18e980864c343fdaac34795ac918273aa5890453327ddbcc23ca02a3",
+      "bytes": 5115,
+      "source_sha256": "dce7df0f18e980864c343fdaac34795ac918273aa5890453327ddbcc23ca02a3",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_owner_app_version.py",
+      "sha256": "275ce79100b217f38faf2cc309818c96847c6d660b1745687dbe937ef4bdc900",
+      "bytes": 2546,
+      "source_sha256": "275ce79100b217f38faf2cc309818c96847c6d660b1745687dbe937ef4bdc900",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_OWNER_APP_VERSION_2026-10-29.md",
+      "sha256": "f22e1a82801804c8f83524dcce24138c157519e76e60dcd016ba64100da56b99",
+      "bytes": 4685,
+      "source_sha256": "f22e1a82801804c8f83524dcce24138c157519e76e60dcd016ba64100da56b99",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-owner-app-version-evidence-20261029.json",
+      "sha256": "525276b9adcbbf336bdb1af1590be13b5eea2ad5cdb297006cf5db4fa7ee4b62",
+      "bytes": 1470,
+      "source_sha256": "525276b9adcbbf336bdb1af1590be13b5eea2ad5cdb297006cf5db4fa7ee4b62",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_OWNER_APP_VERSION.md",
+      "sha256": "54327989838cea64cf4855ff36ac919c794b834faa1460b0d936b314c4365e74",
+      "bytes": 722,
+      "source_sha256": "54327989838cea64cf4855ff36ac919c794b834faa1460b0d936b314c4365e74",
+      "transformations": []
     }
   ],
-  "file_count": 2742,
-  "source_bytes": 35858147,
+  "file_count": 2748,
+  "source_bytes": 35880403,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

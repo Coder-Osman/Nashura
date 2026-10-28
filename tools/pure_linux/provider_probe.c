@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/mman.h>
 #include <sys/syscall.h>
 #include <unistd.h>
 
@@ -34,6 +35,49 @@ static int guard(const char *name, uintptr_t offset) {
     }
     return memcmp((void *)(base + offset), bytes, sizeof(bytes)) == 0;
 }
+
+#if defined(__aarch64__)
+__attribute__((noinline, used)) void app_version_return(void *output) {
+    const char *version = getenv("NASHURA_APP_VERSION");
+    if (!output || !version || strcmp(version, "15.535.13")) _exit(98);
+    ((void (*)(void *, const char *))(base + 0x138a810))(output, version);
+    uintptr_t object = (uintptr_t)output & UINT64_C(0x00ffffffffffffff);
+    if (!is_readable(object, 16)) _exit(98);
+    int32_t length;
+    memcpy(&length, (void *)(object + 4), sizeof(length));
+    if (length != (int32_t)strlen(version)) _exit(98);
+    uintptr_t contents = length < 8 ? object + 8 : pointer_at(object + 8);
+    contents &= UINT64_C(0x00ffffffffffffff);
+    if (!is_readable(contents, (size_t)length + 1) || memcmp((void *)contents, version, (size_t)length + 1)) _exit(98);
+    puts("APP_VERSION_BRIDGE_RETURN\tverified_package_version_candidate");
+}
+
+__attribute__((naked, noinline)) static void app_version_entry(void) {
+    __asm__ volatile("mov x0, x8\n\tb app_version_return");
+}
+
+static int install_app_version(void) {
+    if (!guard("NASHURA_APP_VERSION_WRAPPER_GUARD", 0x140cc8c) ||
+        !guard("NASHURA_APP_VERSION_STRING_GUARD", 0x138a810)) return 0;
+    uintptr_t target = base + 0x140cc8c, replacement = (uintptr_t)app_version_entry;
+    uint32_t instructions[] = {0x58000050, 0xd61f0200};
+    unsigned char patch[16];
+    memcpy(patch, instructions, sizeof(instructions));
+    memcpy(patch + sizeof(instructions), &replacement, sizeof(replacement));
+    long page = sysconf(_SC_PAGESIZE);
+    if (page <= 0) return 0;
+    uintptr_t start = target & ~((uintptr_t)page - 1);
+    size_t length = ((target + sizeof(patch) + page - 1) & ~((uintptr_t)page - 1)) - start;
+    if (mprotect((void *)start, length, PROT_READ | PROT_WRITE)) return 0;
+    memcpy((void *)target, patch, sizeof(patch));
+    __builtin___clear_cache((char *)target, (char *)(target + sizeof(patch)));
+    if (mprotect((void *)start, length, PROT_READ | PROT_EXEC)) return 0;
+    puts("APP_VERSION_BRIDGE_INSTALLED\tverified_package_version_candidate");
+    return 1;
+}
+#else
+static int install_app_version(void) { return 0; }
+#endif
 
 static int string_valid(const GuardedString *value) {
     return value->before[0] == canary && value->before[1] == canary &&
@@ -547,6 +591,7 @@ int native_provider_probe(uintptr_t engine, int (*readable)(uintptr_t, size_t)) 
     printf("PROVIDER_CONTENT_READY\t%u\n", *(unsigned char *)(context + 0x6e8));
     int resource_status = 0;
     if (getenv("NASHURA_OWNER_GETTER_ONLY")) {
+        if (getenv("NASHURA_APP_VERSION") && !install_app_version()) return 98;
         if (!guard("NASHURA_OWNER_GETTER_GUARD", 0x7557d0) ||
             !is_readable(base + 0x1997cf0, sizeof(uintptr_t))) return 96;
         printf("OWNER_SLOT_BEFORE_NONNULL\t%d\n", pointer_at(base + 0x1997cf0) != 0);

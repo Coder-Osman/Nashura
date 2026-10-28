@@ -48,6 +48,18 @@ def test_owner_getter_only_rejects_combined_operations(extra):
     assert "must not initialize factory, catalog, or a resource" in result.stderr
 
 
+@pytest.mark.parametrize("flags", [["--app-version", "15.535.13"],
+                                   ["--owner-getter-only", "--app-version", "1.0"]])
+def test_app_version_requires_bounded_owner_and_observed_identity(flags):
+    script = Path(__file__).with_name("provider_job.py")
+    result = subprocess.run([sys.executable, str(script), "--payload", "unused", "--probe", "unused",
+                             "--output", "unused", "--mode", "both", "--data-root", "unused",
+                             "--update-root", "unused", "--resource-manifest", "unused", *flags],
+                            capture_output=True, text=True)
+    assert result.returncode == 2
+    assert "requires the observed package version" in result.stderr
+
+
 def test_preference_write_counts_do_not_guess_encrypted_key_membership(tmp_path):
     empty = tmp_path / "empty.xml"
     with_key = tmp_path / "with-key.xml"

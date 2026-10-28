@@ -12,7 +12,7 @@ import gdb
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from observed_string import read_string
+from observed_string import read_indirect_cstring, read_string
 from native_observation_scopes import ObservationScopes
 from catalog_table_counts import snapshot as snapshot_table_counts
 from lookup_input_observation import observe as observe_lookup_input
@@ -73,9 +73,14 @@ class Observe(gdb.Breakpoint):
             if register not in {"x%d" % index for index in range(8)}:
                 raise ValueError("unsupported observation register")
             try:
-                value = read_string(gdb.selected_inferior().read_memory,
-                                    int(frame.read_register(register)),
-                                    specification["encoding"], specification.get("limit", 4096))
+                if specification["encoding"] == "indirect-cstring":
+                    value = read_indirect_cstring(gdb.selected_inferior().read_memory,
+                                                  int(frame.read_register(register)),
+                                                  specification.get("offset", 0), specification.get("limit", 256))
+                else:
+                    value = read_string(gdb.selected_inferior().read_memory,
+                                        int(frame.read_register(register)),
+                                        specification["encoding"], specification.get("limit", 4096))
             except Exception as error:
                 value = {"error": str(error)}
             event.setdefault("strings", {})[register] = value

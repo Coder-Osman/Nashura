@@ -1,6 +1,6 @@
 import pytest
 
-from observed_string import read_string
+from observed_string import read_indirect_cstring, read_string
 
 
 def memory_image(encoding, content, inline, tagged=False):
@@ -69,3 +69,17 @@ def test_reject_invalid_object_and_terminator():
         read_string(read, address, "unknown")
     with pytest.raises(ValueError, match="limit"):
         read_string(read, address, "engine-string16", 100000)
+
+
+def test_indirect_cstring_bounds_and_tagged_pointer():
+    memory = bytearray(1024)
+    memory[128:136] = (512 | (0xab << 56)).to_bytes(8, "little")
+    memory[512:516] = b"abc\0"
+    read = lambda start, count: memory[start:start + count]
+    assert read_indirect_cstring(read, 128, limit=3)["bytes_hex"] == "616263"
+    with pytest.raises(ValueError, match="bounds"):
+        read_indirect_cstring(read, 128, limit=2)
+    with pytest.raises(ValueError, match="null"):
+        read_indirect_cstring(read, 136)
+    with pytest.raises(ValueError, match="offset"):
+        read_indirect_cstring(read, 128, offset=-1)
