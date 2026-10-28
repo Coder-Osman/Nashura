@@ -16800,9 +16800,9 @@
     },
     {
       "path": "tools/pure_linux/native_init_gdb.py",
-      "sha256": "66ab8104a4fea435070b520e41bb2d4bc97d4bdca1ae59d3f893fde7697e9508",
-      "bytes": 9495,
-      "source_sha256": "66ab8104a4fea435070b520e41bb2d4bc97d4bdca1ae59d3f893fde7697e9508",
+      "sha256": "59ba13cc0a8d33a6e7ab7bc4e8f8309d270280a0c6840733905f81644bf6ea15",
+      "bytes": 9974,
+      "source_sha256": "59ba13cc0a8d33a6e7ab7bc4e8f8309d270280a0c6840733905f81644bf6ea15",
       "transformations": []
     },
     {
@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "ce8b94c61128d06728f279be63c446ed95bbe5175590e6542f2901a40b4a9fa0",
-      "bytes": 10369,
-      "source_sha256": "ce8b94c61128d06728f279be63c446ed95bbe5175590e6542f2901a40b4a9fa0",
+      "sha256": "8030a5d0df1ffa929ee74f963ccf7704690f4355895c591023d54551e2ff644d",
+      "bytes": 12015,
+      "source_sha256": "8030a5d0df1ffa929ee74f963ccf7704690f4355895c591023d54551e2ff644d",
       "transformations": []
     },
     {
@@ -18781,9 +18781,9 @@
     },
     {
       "path": "tools/pure_linux/audit_finish_lookup.py",
-      "sha256": "b6fce64f60af81b823c1d1ee979ab33f89c10b74b91b9e6eb5c687f0ad96232c",
-      "bytes": 7580,
-      "source_sha256": "b6fce64f60af81b823c1d1ee979ab33f89c10b74b91b9e6eb5c687f0ad96232c",
+      "sha256": "8b0a8b905083711d34df520966ea56f7c757b570a1339c0974a0a1e009c7d501",
+      "bytes": 7977,
+      "source_sha256": "8b0a8b905083711d34df520966ea56f7c757b570a1339c0974a0a1e009c7d501",
       "transformations": []
     },
     {
@@ -18848,10 +18848,59 @@
       "bytes": 1088,
       "source_sha256": "780c44e7956b8bdcb7dc0291a9236aac15bf4dea4bffeedd3a115f2ba13a0f61",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_lookup_inner.py",
+      "sha256": "654949d6515f0a43c4330758ad250481185da5dc4c90152af7db0e83ec41eb49",
+      "bytes": 3583,
+      "source_sha256": "654949d6515f0a43c4330758ad250481185da5dc4c90152af7db0e83ec41eb49",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/lookup_input_observation.py",
+      "sha256": "bc052fcc146c84aaeb86d4812dafce1e23af1e292be96d24fb1e15de09df2e36",
+      "bytes": 724,
+      "source_sha256": "bc052fcc146c84aaeb86d4812dafce1e23af1e292be96d24fb1e15de09df2e36",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_lookup_inner.py",
+      "sha256": "07dfced4ae5576df2d17ed9a91f49cbcd9b1b1d8266f510e095eb22953ec6680",
+      "bytes": 2307,
+      "source_sha256": "07dfced4ae5576df2d17ed9a91f49cbcd9b1b1d8266f510e095eb22953ec6680",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_lookup_input_observation.py",
+      "sha256": "6aa1658735fa8da6cc2a36d181d581414aa91fc7428aeb150effed59953d3b06",
+      "bytes": 773,
+      "source_sha256": "6aa1658735fa8da6cc2a36d181d581414aa91fc7428aeb150effed59953d3b06",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_INNER_LOOKUP.md",
+      "sha256": "a7994e5944769b8d84bb8e567a03e883f3e8fca181a8caf7020bc830eef18065",
+      "bytes": 832,
+      "source_sha256": "a7994e5944769b8d84bb8e567a03e883f3e8fca181a8caf7020bc830eef18065",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_INNER_LOOKUP_2026-10-29.md",
+      "sha256": "93f1ef7386f6b12c402e8ce55ab49fb23deb57f93858f1e58edb92e38c98a69a",
+      "bytes": 2986,
+      "source_sha256": "93f1ef7386f6b12c402e8ce55ab49fb23deb57f93858f1e58edb92e38c98a69a",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-inner-lookup-evidence-20261029.json",
+      "sha256": "27a6a4dcac42de261d8e57bcd568c2138e81887e618c0d2b7d47564775c78a72",
+      "bytes": 1193,
+      "source_sha256": "27a6a4dcac42de261d8e57bcd568c2138e81887e618c0d2b7d47564775c78a72",
+      "transformations": []
     }
   ],
-  "file_count": 2682,
-  "source_bytes": 35705944,
+  "file_count": 2689,
+  "source_bytes": 35720864,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

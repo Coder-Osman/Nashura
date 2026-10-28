@@ -8,6 +8,7 @@ let includeBatchPhases = false;
 const scopes = new Map();
 const batchScopes = new Map();
 const finishScopes = new Map();
+const lookupScopes = new Map();
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
 function record(event) {
   if (events.length >= 30000) { lost++; return; }
@@ -48,6 +49,17 @@ function nativeString16(p) {
     const value = boundedString(data);
     return value !== null && value.length === length ? value : null;
   } catch (_) { return null; }
+}
+function lookupInput(p) {
+  function readPointer(address) {
+    const clean = address.and(ptr('0x00ffffffffffffff'));
+    const range = Process.findRangeByAddress(clean);
+    if (clean.isNull() || !range || !range.protection.includes('r') ||
+        clean.add(8).compare(range.base.add(range.size)) > 0) throw new Error('lookup input unreadable');
+    return clean.readPointer().and(ptr('0x00ffffffffffffff'));
+  }
+  const first = readPointer(p);
+  return {first_nonnull: !first.isNull(), nested_nonnull: first.isNull() ? null : !readPointer(first.add(8)).isNull()};
 }
 function tableCounts(context) {
   function readable(value, size) {
@@ -92,14 +104,31 @@ function observe(module) {
           });
         }
         if (includeBatchPhases) {
+          attach(module, 0x11ae1fc, 'lookup_inner', {
+            onEnter: function () { this.observerBatch = lookupScopes.get(Process.getCurrentThreadId()) || null; },
+            onLeave: function (value) {
+              if (this.observerBatch) record({kind: 'lookup_inner', batch: this.observerBatch, nonnull: !value.isNull()});
+            }
+          });
           attach(module, 0x1207ffc, 'finish_lookup', {
             onEnter: function (args) {
               this.observerBatch = finishScopes.get(Process.getCurrentThreadId()) || null;
-              if (this.observerBatch) this.observerKey = nativeString16(args[1]);
+              if (this.observerBatch) {
+                this.observerThread = Process.getCurrentThreadId();
+                if (lookupScopes.has(this.observerThread)) errors.push('nested lookup scope');
+                lookupScopes.set(this.observerThread, this.observerBatch);
+                this.observerKey = nativeString16(args[1]);
+                try { this.observerInput = lookupInput(args[0]); }
+                catch (error) { errors.push('lookup input: ' + String(error)); }
+              }
             },
             onLeave: function (value) {
-              if (this.observerBatch) record({kind: 'finish_lookup', batch: this.observerBatch,
-                                               nonnull: !value.isNull(), key: this.observerKey});
+              if (this.observerBatch) {
+                record({kind: 'finish_lookup', batch: this.observerBatch,
+                        nonnull: !value.isNull(), key: this.observerKey, lookupInput: this.observerInput});
+                if (lookupScopes.get(this.observerThread) !== this.observerBatch) errors.push('lookup scope mismatch');
+                lookupScopes.delete(this.observerThread);
+              }
             }
           });
           for (const [label, offset] of [['finish_a', 0xe1c290], ['finish_b', 0xdcd238]]) {
@@ -216,5 +245,6 @@ rpc.exports = {
     return {coverage: coverage, errors: errors};
   },
   snapshot: function () { return {events: events, coverage: coverage, errors: errors, lost: lost,
-    activeScopes: scopes.size, activeBatchScopes: batchScopes.size, activeFinishScopes: finishScopes.size}; }
+    activeScopes: scopes.size, activeBatchScopes: batchScopes.size, activeFinishScopes: finishScopes.size,
+    activeLookupScopes: lookupScopes.size}; }
 };
