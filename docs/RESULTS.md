@@ -1,5 +1,10 @@
 # 阶段成果与证据索引
 
+## 2026-10-29 E2.1-N：catalog 资源对象类型
+
+独立 Android/Linux 观察的597条逻辑路径类别对应；不是字节或解析等价。
+详见[报告](../agent-handoff/PURE_LINUX_CATALOG_RESOURCE_SELECTION_2026-10-29.md)。
+
 ## 2026-10-29 E2.1-N：catalog 启动参数
 
 两侧真实进程5组批量参数及597项逻辑资源请求路径集合一致；内容和输入差异待查。

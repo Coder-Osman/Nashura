@@ -2,6 +2,8 @@
 
 const events = [], coverage = [], errors = [];
 let lost = 0;
+let nextCall = 0;
+const scopes = new Map();
 function record(event) {
   if (events.length >= 30000) { lost++; return; }
   event.sequence = events.length;
@@ -56,9 +58,24 @@ function observe(module) {
   attach(module, 0x12e03e4, 'filesystem_open', {
     onEnter: function (args) {
       this.path = engineString(args[1]);
+      this.threadId = Process.getCurrentThreadId();
+      this.callId = ++nextCall;
+      this.parent = scopes.get(this.threadId) || null;
+      scopes.set(this.threadId, this.callId);
     },
     onLeave: function (value) {
-      record({kind: 'filesystem_open', path: this.path, nonnull: !value.isNull()});
+      let vtable = null;
+      if (!value.isNull()) {
+        try {
+          const table = value.and(ptr('0x00ffffffffffffff')).readPointer().and(ptr('0x00ffffffffffffff'));
+          const owner = Process.findModuleByAddress(table);
+          vtable = owner && owner.name === 'libg.so' ? table.sub(owner.base).toString() : 'external';
+        } catch (_) { vtable = 'unreadable'; }
+      }
+      record({kind: 'filesystem_open', path: this.path, nonnull: !value.isNull(), vtable: vtable,
+        call: this.callId, parent: this.parent});
+      if (scopes.get(this.threadId) !== this.callId) errors.push('filesystem scope mismatch');
+      if (this.parent) scopes.set(this.threadId, this.parent); else scopes.delete(this.threadId);
     }
   });
   record({kind: 'engine_hooks_ready'});
@@ -70,11 +87,14 @@ rpc.exports = {
     if (android) {
       const open = android.findExportByName('AAssetManager_open');
       if (open) {
-        Interceptor.attach(open, {onEnter: function (args) { record({kind: 'asset_open', path: boundedString(args[1])}); }});
+        Interceptor.attach(open, {
+          onEnter: function (args) { this.path = boundedString(args[1]); this.parent = scopes.get(Process.getCurrentThreadId()) || null; },
+          onLeave: function (value) { record({kind: 'asset_open', path: this.path, parent: this.parent, nonnull: !value.isNull()}); }
+        });
         coverage.push({label: 'asset_open', installed: true});
       }
     }
     return {coverage: coverage, errors: errors};
   },
-  snapshot: function () { return {events: events, coverage: coverage, errors: errors, lost: lost}; }
+  snapshot: function () { return {events: events, coverage: coverage, errors: errors, lost: lost, activeScopes: scopes.size}; }
 };

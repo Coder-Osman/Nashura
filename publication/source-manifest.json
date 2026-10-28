@@ -10194,9 +10194,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "c706cc93c169f4bccd3030373e88e6ce514b11bbb2a2e7828d6ae5571c8b234e",
-      "bytes": 47256,
-      "source_sha256": "c706cc93c169f4bccd3030373e88e6ce514b11bbb2a2e7828d6ae5571c8b234e",
+      "sha256": "2407299515fd7f1cfd9148f2e2ab47ca47fc8184eca63af8b770b2b17b740d6d",
+      "bytes": 47508,
+      "source_sha256": "2407299515fd7f1cfd9148f2e2ab47ca47fc8184eca63af8b770b2b17b740d6d",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -10216,9 +10216,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "1c7127cfd7a42c824180a56dcfddae9629696d2800f532931c5075eed98f76a6",
-      "bytes": 80567,
-      "source_sha256": "1c7127cfd7a42c824180a56dcfddae9629696d2800f532931c5075eed98f76a6",
+      "sha256": "2ff5029f71a295cc3fc8d1b4394d19fff57a86c434cc3b9aafe4873971525fb1",
+      "bytes": 80801,
+      "source_sha256": "2ff5029f71a295cc3fc8d1b4394d19fff57a86c434cc3b9aafe4873971525fb1",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -16645,9 +16645,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "541551e8ff2c8f201f329bd9a1941f70a9fe53afdaf92e94d6c89a2ed9a3de07",
-      "bytes": 47732,
-      "source_sha256": "541551e8ff2c8f201f329bd9a1941f70a9fe53afdaf92e94d6c89a2ed9a3de07",
+      "sha256": "6ff988cd6771e848c45cc3b60e7ddae83cf7647c797a435c3fcfbe10eae081c4",
+      "bytes": 48038,
+      "source_sha256": "6ff988cd6771e848c45cc3b60e7ddae83cf7647c797a435c3fcfbe10eae081c4",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "62d8c6429051734987e646c743408da1463f63ad79f5f8beddeed7c7ee9c7de8",
-      "bytes": 3053,
-      "source_sha256": "62d8c6429051734987e646c743408da1463f63ad79f5f8beddeed7c7ee9c7de8",
+      "sha256": "60ad34c927083efc24565a400389161a821669b068b9634008b548c7cab6f215",
+      "bytes": 4153,
+      "source_sha256": "60ad34c927083efc24565a400389161a821669b068b9634008b548c7cab6f215",
       "transformations": []
     },
     {
@@ -18540,10 +18540,38 @@
       "bytes": 969,
       "source_sha256": "1d408f066c6bc948daf6f52814768947ec2b9838c9b14c90c9922bf244231d47",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_catalog_resource_selection.py",
+      "sha256": "a30944477af7b871ea8d49f86bf8a0501905ffb4418a9226b771e6b40a3b2127",
+      "bytes": 5567,
+      "source_sha256": "a30944477af7b871ea8d49f86bf8a0501905ffb4418a9226b771e6b40a3b2127",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_catalog_resource_selection.py",
+      "sha256": "3e7077df5926667d0e824e3ad53f35d289bc27be6b519c2a6e58f36481a864e0",
+      "bytes": 1188,
+      "source_sha256": "3e7077df5926667d0e824e3ad53f35d289bc27be6b519c2a6e58f36481a864e0",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_CATALOG_RESOURCE_SELECTION_2026-10-29.md",
+      "sha256": "470bdf9f816b0436c0736ee1863f407e9c62761642e81ec5daa0e68e1c3c2f5d",
+      "bytes": 3432,
+      "source_sha256": "470bdf9f816b0436c0736ee1863f407e9c62761642e81ec5daa0e68e1c3c2f5d",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-catalog-resource-selection-evidence-20261029.json",
+      "sha256": "2d1cda9954637ca11c0c46072be70dbc4b6cb90d768446ee67611379ff696e5b",
+      "bytes": 984,
+      "source_sha256": "2d1cda9954637ca11c0c46072be70dbc4b6cb90d768446ee67611379ff696e5b",
+      "transformations": []
     }
   ],
-  "file_count": 2638,
-  "source_bytes": 35554205,
+  "file_count": 2642,
+  "source_bytes": 35567268,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

@@ -1,0 +1,22 @@
+{
+  "schema": "nashura.catalog-resource-selection-public-evidence.v1",
+  "base_commit": "505b635b484a0939dba2155901dd67306e77cc7d",
+  "status": "RUNTIME_OBSERVED_LIMITED",
+  "android_result_sha256": "5c2909e439b0fc2fe6559889772de9532f42eb9189b806a8ecf29c8f9f6d4960",
+  "linux_result_sha256": "caad1b680c3a52efb00d49ed8e7762d77e474f5600df788e8ac684006d093014",
+  "linux_trace_sha256": "0a34bb830c6e805de966479b0cb8276b7a8b6068d76cd440b32c8c6b758ca071",
+  "audit_sha256": "653b2ab029c7b1474a880ed7ebac52776e63cb7e44a5a101958b460cb9effb6d",
+  "android_exit": 0,
+  "audit_exit": 0,
+  "logical_paths": 597,
+  "apk_object_and_linux_apk_open": 230,
+  "disk_object_and_linux_update_open": 116,
+  "null_and_linux_apk_absent": 251,
+  "classification_mismatch": 0,
+  "android_update_before": 990,
+  "android_update_after": 908,
+  "apk_wrapper_validity": "NOT_OBSERVED",
+  "request_causality": "NOT_VERIFIED",
+  "catalog_ready_pass": false,
+  "tests": {"passed": 1006, "skipped": 1, "exit": 0}
+}

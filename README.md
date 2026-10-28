@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-10-29：catalog 逻辑资源对象类型
+
+独立 Android/Linux 观察中597条逻辑路径的 APK、update 和缺失类别对应；Android
+update 清单在采集期间变化，字节及解析等价尚未验证。详见[报告](agent-handoff/PURE_LINUX_CATALOG_RESOURCE_SELECTION_2026-10-29.md)。
+
 ## 2026-10-29：catalog 批量参数与资源路径
 
 Android 和 Linux 真实进程各5次批量调用参数一致，已观察597个 `csv_logic/` 请求
