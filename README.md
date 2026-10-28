@@ -1,5 +1,12 @@
 # Nashura
 
+## 2026-10-28：非空偏好编码键与真实 libg 复核
+
+修正非空偏好表使用明文键统计的缺陷，按绑定材料逐槽计算编码键；缺少材料或加密库时保持未知。
+真实 ARM64 Linux libg 对已有目标键的双槽运行 native exit 0，条目数均为 1，loader
+观察到 ready 和162张表布局；严格 wrapper exit 1。专项957通过/1跳过；Backup等价、
+完整资源语义和严格catalog仍未闭合。详见[报告](agent-handoff/PURE_LINUX_NONEMPTY_PREFERENCE_RECHECK_2026-10-28.md)。
+
 ## 2026-10-28：受控配置写入与原值恢复复核
 
 隔离 API 30 ARM64 AVD 中，真实配置值从 `server-login` 写入测试值后恢复，并经只读

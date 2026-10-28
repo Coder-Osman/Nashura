@@ -10194,8 +10194,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "f20944ffedbd570bfd1183c80e486532dfa2af2596bfb8d4448b1a2b9d0e994f",
-      "bytes": 43630,
+      "sha256": "3220de691a570a1ef8d68f7d494063cc83e882f47d4515e593c8bdfbf5fc2116",
+      "bytes": 44120,
       "source_sha256": "c008f55f17031af6abae22b02af32e87d0c8c9d3cbc1a7c54fc4f73bdf72e3a7",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10208,13 +10208,14 @@
         "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
         "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate",
         "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
-        "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED."
+        "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED.",
+        "2026-10-28: correct encrypted preference key counting and document bounded native recheck"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "7bf1767d06828460559c3bfdc3fbd0ff51fd0cab1eb6c8eb15e518fde8c9cc97",
-      "bytes": 76783,
+      "sha256": "7b0ba681dd0ece811dcd0905cb863f49c13fdaa6dfef9e424a93c71e7df08ac3",
+      "bytes": 77448,
       "source_sha256": "7956b3b23c44bda14bd02a13c725f93621bc473669cff1644c882afc3de0d310",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10227,7 +10228,8 @@
         "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
         "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate",
         "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
-        "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED."
+        "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED.",
+        "2026-10-28: correct encrypted preference key counting and document bounded native recheck"
       ]
     },
     {
@@ -16639,8 +16641,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "b38d12bc66e81ce8acb9b8d27264e0233044373a2bea20372fcd36bb44dff7d6",
-      "bytes": 43773,
+      "sha256": "f5f949a6b8b59b24209dea0bc5692f58cf10c1523eda4a1f32215b3bb58c5de9",
+      "bytes": 44309,
       "source_sha256": "268a62062b889a6cc7bd8034c306e2937b73840ef1d6e918fee39525ef232472",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -16653,7 +16655,8 @@
         "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
         "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate",
         "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
-        "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED."
+        "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED.",
+        "2026-10-28: correct encrypted preference key counting and document bounded native recheck"
       ]
     },
     {
@@ -17078,11 +17081,12 @@
     },
     {
       "path": "tools/pure_linux/provider_job.py",
-      "sha256": "e73553099b8cea00c45824a3db6d0f720ea6113c78e7d9d16a1eb24033073f5e",
-      "bytes": 29511,
+      "sha256": "a82bd2066fc44a199a6042424208bdce6d114a09f4d2285bd57d452dac630aa3",
+      "bytes": 30461,
       "source_sha256": "1729742ef0e5cff2f5534cf747db7853ba2185c3731a763226064f87e88c1eaa",
       "transformations": [
-        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED."
+        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
+        "2026-10-28: correct encrypted preference key counting and document bounded native recheck"
       ]
     },
     {
@@ -17304,9 +17308,9 @@
     },
     {
       "path": "tools/pure_linux/test_preference_hook_evidence.py",
-      "sha256": "94c17afc85e6dfa4664cb7d1e11870a7446a819c08e43b8f412e921e44f5acf8",
-      "source_sha256": "94c17afc85e6dfa4664cb7d1e11870a7446a819c08e43b8f412e921e44f5acf8",
-      "bytes": 1997,
+      "sha256": "027c1339682326ae9c38b21b6fcbbfcbd448ed458204cfcabe4d91ea0909f077",
+      "source_sha256": "027c1339682326ae9c38b21b6fcbbfcbd448ed458204cfcabe4d91ea0909f077",
+      "bytes": 2263,
       "transformations": []
     },
     {
@@ -17374,9 +17378,9 @@
     },
     {
       "path": "tools/pure_linux/test_provider_job.py",
-      "sha256": "422e267df188b9c6be68f9b3040d37f3954df7746f9137c49769b5ea8aa4f9d1",
-      "bytes": 12060,
-      "source_sha256": "422e267df188b9c6be68f9b3040d37f3954df7746f9137c49769b5ea8aa4f9d1",
+      "sha256": "3ad854283cd84e8e191cbfbe63a8775b90bb39255707216158785aadfc21a327",
+      "bytes": 13472,
+      "source_sha256": "3ad854283cd84e8e191cbfbe63a8775b90bb39255707216158785aadfc21a327",
       "transformations": []
     },
     {
@@ -17992,9 +17996,9 @@
     },
     {
       "path": "tools/pure_linux/test_native_backup_evidence.py",
-      "sha256": "97167ea13ef00522d2f8649b4155dc4e1b0b615275957644ea8fdf6870aea23f",
-      "bytes": 2479,
-      "source_sha256": "97167ea13ef00522d2f8649b4155dc4e1b0b615275957644ea8fdf6870aea23f",
+      "sha256": "d71b92dca777cc778de0208c78070d639175132c9bdfe77b1c31a83f751bbf94",
+      "bytes": 2739,
+      "source_sha256": "d71b92dca777cc778de0208c78070d639175132c9bdfe77b1c31a83f751bbf94",
       "transformations": []
     },
     {
@@ -18145,10 +18149,31 @@
       "bytes": 5886,
       "source_sha256": "ae225b2753e70f4851190a0551550cb3368259dd36f25cb0f931846e2c1649e6",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_NONEMPTY_PREFERENCE_RECHECK_2026-10-28.md",
+      "sha256": "5eed152fc2225e19c473d366c01252511a9fb8985b768424830eb0573b5f4826",
+      "bytes": 4974,
+      "source_sha256": "5eed152fc2225e19c473d366c01252511a9fb8985b768424830eb0573b5f4826",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-nonempty-preference-recheck-evidence-20261028.json",
+      "sha256": "ea6568cc73f08626fff307b41693699996355c6f37c0416cd08ef6cc0c7c53a1",
+      "bytes": 3556,
+      "source_sha256": "ea6568cc73f08626fff307b41693699996355c6f37c0416cd08ef6cc0c7c53a1",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-28_NONEMPTY_PREFERENCE.md",
+      "sha256": "997680bca5ee55f1c06a148715e42a13eaeec59557da993836f49bf9f60c6632",
+      "bytes": 1341,
+      "source_sha256": "997680bca5ee55f1c06a148715e42a13eaeec59557da993836f49bf9f60c6632",
+      "transformations": []
     }
   ],
-  "file_count": 2583,
-  "source_bytes": 35351745,
+  "file_count": 2586,
+  "source_bytes": 35366195,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

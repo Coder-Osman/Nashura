@@ -25,6 +25,12 @@ def test_enqueue_observation_never_claims_delivery_or_strict_parity():
     assert not observations(logs(), "")["hook_bound"]
 
 
+def test_unknown_nonempty_key_membership_cannot_validate_enqueue():
+    result = native_queue_observations(logs(), "", expected_entries=(None, None))
+    assert result["write_summary"]["entries"] == [12, 12]
+    assert not result["bounded_enqueue_observed"]
+
+
 @pytest.mark.parametrize("old,new", [
     ('"result": 0', '"result": false'),
     ('"commits": 2', '"commits": 0'),

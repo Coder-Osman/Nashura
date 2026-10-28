@@ -1,5 +1,6 @@
 """Identity-bound provider and catalog experiments; no battle calls or ready writes."""
 import argparse
+import base64
 from parsed_tables import observations as parsed_table_observations
 import json
 import os
@@ -124,9 +125,11 @@ def resource_inventory(roots):
     return observed
 
 
-def preference_write_entry_counts(paths, key="LOADING_SCREEN_STATE_LABEL"):
+def preference_write_entry_counts(paths, material=None):
+    if material is not None and len(material) != 80:
+        raise ValueError("preference material must contain two keys and one IV")
     counts = []
-    for path in paths:
+    for slot, path in enumerate(paths):
         root = ET.fromstring(path.read_bytes())
         if root.tag != "map" or root.attrib:
             raise ValueError("preference XML root must be a plain map")
@@ -137,7 +140,22 @@ def preference_write_entry_counts(paths, key="LOADING_SCREEN_STATE_LABEL"):
             keys.append(child.attrib["name"])
         if len(keys) != len(set(keys)):
             raise ValueError("duplicate preference key")
-        counts.append(len(set(keys) | {key}))
+        if not keys:
+            counts.append(1)
+        elif material is None or slot >= 2:
+            counts.append(None)
+        else:
+            try:
+                from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+            except ImportError:
+                counts.append(None)
+                continue
+            plaintext = b"LOADING_SCREEN_STATE_LABEL"
+            padding = 16 - len(plaintext) % 16
+            encryptor = Cipher(algorithms.AES(material[slot * 32:slot * 32 + 32]), modes.ECB()).encryptor()
+            encoded = base64.b64encode(encryptor.update(plaintext + bytes([padding]) * padding) +
+                                       encryptor.finalize()).decode("ascii")
+            counts.append(len(keys) + int(encoded not in keys))
     return tuple(counts)
 
 
@@ -305,7 +323,8 @@ def main():
                 raise ValueError(name + " identity mismatch")
             extras[name] = (path, expected)
         preference_counts = preference_write_entry_counts(
-            [extras["preference_xml" + str(slot)][0] for slot in range(2)])
+            [extras["preference_xml" + str(slot)][0] for slot in range(2)],
+            extras["preference_material"][0].read_bytes())
     output = arguments.output.resolve()
     output.mkdir(exist_ok=False)
     environment = {key: value for key, value in os.environ.items()

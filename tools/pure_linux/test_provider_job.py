@@ -1,4 +1,5 @@
 import json
+import builtins
 import hashlib
 import os
 from pathlib import Path
@@ -35,14 +36,43 @@ def test_registration_release_and_identity():
     assert registration_observations(registration_log(), "both")["complete"]
 
 
-def test_preference_write_counts_follow_existing_key_state(tmp_path):
+def test_preference_write_counts_do_not_guess_encrypted_key_membership(tmp_path):
     empty = tmp_path / "empty.xml"
     with_key = tmp_path / "with-key.xml"
     without_key = tmp_path / "without-key.xml"
     empty.write_text("<?xml version='1.0' encoding='utf-8' standalone='yes' ?>\n<map />\n")
     with_key.write_text('<map><string name="LOADING_SCREEN_STATE_LABEL">old</string></map>')
     without_key.write_text('<map><string name="unrelated">v</string></map>')
-    assert preference_write_entry_counts([empty, with_key, without_key]) == (1, 1, 2)
+    assert preference_write_entry_counts([empty, with_key, without_key]) == (1, None, None)
+
+
+def test_preference_write_counts_use_slot_specific_encoded_keys(tmp_path):
+    pytest.importorskip("cryptography")
+    slot0 = tmp_path / "slot0.xml"
+    slot1 = tmp_path / "slot1.xml"
+    encoded0 = "XOpqo9BudP8nB24ZAwzcpQ2SnScCWbFbYCS6GCIBgHo="
+    encoded1 = "hFXs6K1TwQF04TqGjUy1cdmVLbd43iwzc7gXqcJilWw="
+    slot0.write_text(f'<map><string name="{encoded0}">old</string></map>')
+    slot1.write_text(f'<map><string name="{encoded1}">old</string></map>')
+    material = bytes(32) + bytes([1]) * 32 + bytes(16)
+    assert preference_write_entry_counts([slot0, slot1], material) == (1, 1)
+    assert preference_write_entry_counts([slot1, slot0], material) == (2, 2)
+    with pytest.raises(ValueError, match="preference material"):
+        preference_write_entry_counts([slot0, slot1], material[:-1])
+
+
+def test_preference_write_counts_stay_unknown_without_crypto(tmp_path, monkeypatch):
+    slot = tmp_path / "slot.xml"
+    slot.write_text('<map><string name="encrypted">old</string></map>')
+    original_import = builtins.__import__
+
+    def missing_crypto(name, *args, **kwargs):
+        if name.startswith("cryptography"):
+            raise ImportError("cryptography unavailable")
+        return original_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(builtins, "__import__", missing_crypto)
+    assert preference_write_entry_counts([slot], bytes(80)) == (None,)
 
 
 def test_preference_entry_counts_reject_malformed_xml(tmp_path):

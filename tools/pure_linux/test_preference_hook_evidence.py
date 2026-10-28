@@ -45,3 +45,9 @@ def test_duplicate_evidence_rejected():
     assert not observations(stdout + "\n" + stdout, stderr)["persistence_before_unresolved_backup_observed"]
     assert not observations(stdout, stderr + "\n" + stderr)["persistence_before_unresolved_backup_observed"]
     assert not observations("", "")["persistence_before_unresolved_backup_observed"]
+
+
+def test_unknown_nonempty_key_membership_does_not_validate_counts():
+    result = observations(*logs(), expected_entries=(None, None))
+    assert result["write_summary"]["entries"] == [12, 12]
+    assert not result["persistence_before_unresolved_backup_observed"]

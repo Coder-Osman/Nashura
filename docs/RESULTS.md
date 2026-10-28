@@ -1,5 +1,14 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：已有编码键的真实 libg 配置写入
+
+修复非空偏好 XML 的键计数：使用绑定材料逐槽 AES 编码，不以明文键估算。
+已有 Android/Bionic 对照 XML 与真实 ARM64 Linux libg 重跑，双槽实际与预期均1项，
+两个commit、一次候选入队，native exit0；严格wrapper exit1。自然loader ready，
+162张表/24,353行仅为布局观察，Backup等价和catalog严格门仍未通过。
+专项957通过/1跳过；详见[报告](../agent-handoff/PURE_LINUX_NONEMPTY_PREFERENCE_RECHECK_2026-10-28.md)
+及[机器证据](../agent-handoff/pure-linux-nonempty-preference-recheck-evidence-20261028.json)。
+
 ## 2026-10-28 E2.1-N：受控配置 store/restore 运行时复核
 
 隔离 Android 30 ARM64 AVD 中观察到配置值从 `server-login` 写入测试值并恢复；
