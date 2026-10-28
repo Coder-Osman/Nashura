@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-10-29：Linux catalog 批次内入口观测
+
+Linux 真实引擎的 5 次批次及 313 次候选 getter 调用均记录返回；Android 附加超时，
+跨平台对照和严格 catalog 门仍未通过。详见[报告](agent-handoff/PURE_LINUX_CATALOG_SCOPED_ENTRY_TRACE_2026-10-29.md)。
+
 ## 2026-10-29：catalog 逻辑资源对象类型
 
 独立 Android/Linux 观察中597条逻辑路径的 APK、update 和缺失类别对应；Android

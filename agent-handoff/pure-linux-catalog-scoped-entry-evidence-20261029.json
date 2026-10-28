@@ -1,0 +1,38 @@
+{
+  "schema": "nashura.pure-linux-catalog-scoped-entry.v1",
+  "baseline_commit": "1a528261becaa9aad2b2ba4f42cacd5fff8c7c43",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "linux": {
+    "status": "RUNTIME_OBSERVED_LIMITED",
+    "wrapper_exit": 0,
+    "native_exit": 0,
+    "timed_out": false,
+    "batch_calls": 5,
+    "entry_type_calls": 158,
+    "entry_id_calls": 155,
+    "unreturned_calls": 0,
+    "active_scopes": 0,
+    "observed_threads": 1,
+    "input_identity_unchanged": true,
+    "resource_identity_unchanged": true,
+    "table_slots": 162,
+    "table_rows": 24353,
+    "observation_sha256": "934b9e49f3bfee2626e4389cba73b0251776fb1e3f527084c5a979c852d82873",
+    "result_sha256": "43749c059a0392173a685f581c6a96f81cf56ee7dcb17be67d799b53474447e7",
+    "prior_timeout_result_sha256": "34ddb00b0df04e5a1d1deb591b3b8da3310518aabf1ec8cfaac0cd5f0bef70ec"
+  },
+  "android": {
+    "status": "BLOCKED_ATTACH_TIMEOUT",
+    "attempts_with_attach_timeout": 2,
+    "attempt_rejected_existing_process": 1,
+    "cross_platform_comparison": "UNKNOWN",
+    "failure_result_sha256": [
+      "1e0d27c67bcf5711eac8de82a3e88c57ef2cf14cbc3e1cdf3f04b9194f2620fe",
+      "bf0d4819280a2ab6a3169029983593c3b65bc463fd21978e80d0d100f6f7230a"
+    ]
+  },
+  "catalog_ready_pass": false,
+  "game_state": "NOT_RUN",
+  "step_tick": "NOT_RUN",
+  "backup_equivalence": "UNRESOLVED"
+}

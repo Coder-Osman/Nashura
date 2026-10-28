@@ -4,6 +4,7 @@ const events = [], coverage = [], errors = [];
 let lost = 0;
 let nextCall = 0;
 const scopes = new Map();
+const batchScopes = new Map();
 function record(event) {
   if (events.length >= 30000) { lost++; return; }
   event.sequence = events.length;
@@ -46,12 +47,26 @@ function observe(module) {
   if (module.name !== 'libg.so') return;
   attach(module, 0xe1bdcc, 'table_batch', {
     onEnter: function (args) {
+      this.threadId = Process.getCurrentThreadId();
+      this.batchCall = ++nextCall;
+      if (batchScopes.has(this.threadId)) errors.push('nested batch');
+      batchScopes.set(this.threadId, this.batchCall);
       let listCount = null;
       try { listCount = args[1].and(ptr('0x00ffffffffffffff')).add(12).readS32(); } catch (_) {}
-      record({kind: 'table_batch', args: [2, 3, 4, 5, 6].map(i => args[i].toUInt32()), listCount: listCount,
+      record({kind: 'table_batch', call: this.batchCall, args: [2, 3, 4, 5, 6].map(i => args[i].toUInt32()), listCount: listCount,
         caller: this.returnAddress.sub(module.base).toString()});
+    },
+    onLeave: function () {
+      if (batchScopes.get(this.threadId) !== this.batchCall) errors.push('batch scope mismatch');
+      batchScopes.delete(this.threadId);
     }
   });
+  for (const [label, offset] of [['entry_type', 0xdcb6fc], ['entry_id', 0xdcb474]]) {
+    attach(module, offset, label, {
+      onEnter: function () { this.batch = batchScopes.get(Process.getCurrentThreadId()) || null; },
+      onLeave: function (value) { if (this.batch) record({kind: label, batch: this.batch, value: value.toUInt32()}); }
+    });
+  }
   attach(module, 0xdcd364, 'postprocess', {
     onEnter: function () { record({kind: 'postprocess', caller: this.returnAddress.sub(module.base).toString()}); }
   });
@@ -96,5 +111,6 @@ rpc.exports = {
     }
     return {coverage: coverage, errors: errors};
   },
-  snapshot: function () { return {events: events, coverage: coverage, errors: errors, lost: lost, activeScopes: scopes.size}; }
+  snapshot: function () { return {events: events, coverage: coverage, errors: errors, lost: lost,
+    activeScopes: scopes.size, activeBatchScopes: batchScopes.size}; }
 };

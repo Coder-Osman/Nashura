@@ -1,5 +1,10 @@
 # 阶段成果与证据索引
 
+## 2026-10-29 E2.1-N：catalog 批次内入口
+
+Linux 完成限定 getter 观测；Android 附加超时，跨平台比较未知。详见
+[报告](../agent-handoff/PURE_LINUX_CATALOG_SCOPED_ENTRY_TRACE_2026-10-29.md)。
+
 ## 2026-10-29 E2.1-N：catalog 资源对象类型
 
 独立 Android/Linux 观察的597条逻辑路径类别对应；不是字节或解析等价。

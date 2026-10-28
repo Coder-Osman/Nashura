@@ -13,6 +13,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from observed_string import read_string
+from native_observation_scopes import ObservationScopes
 
 
 targets = json.loads(Path(os.environ["NASHURA_GDB_TARGETS"]).read_text())
@@ -22,6 +23,8 @@ if output.exists():
 record = {"coverage": "explicit addresses after load marker only",
           "constructors_covered": False, "events": [], "targets": [],
           "exit_code": None, "stop": None}
+scopes = ObservationScopes()
+scope_breakpoints = {}
 
 
 class Observe(gdb.Breakpoint):
@@ -30,9 +33,13 @@ class Observe(gdb.Breakpoint):
         self.row = row
 
     def stop(self):
-        self.row["calls"] += 1
         frame = gdb.newest_frame()
         thread = gdb.selected_thread()
+        thread_id = tuple(thread.ptid)
+        scope = self.row.get("scope")
+        if scope and not scopes.contains(scope, thread_id):
+            return False
+        self.row["calls"] += 1
         event = {"name": self.row["name"], "thread": list(thread.ptid),
                                   "pc": int(frame.read_register("pc")),
                                   "lr": int(frame.read_register("x30")),
@@ -54,23 +61,34 @@ class Observe(gdb.Breakpoint):
             address = self.row["base"] + slot["offset"]
             event.setdefault("pointer_slots", {})[slot["name"]] = int.from_bytes(
                 gdb.selected_inferior().read_memory(address, 8).tobytes(), "little")
+        scope_start = self.row.get("scope_start")
+        if scope_start:
+            scopes.enter(scope_start, thread_id)
+            for breakpoint in scope_breakpoints[scope_start]:
+                breakpoint.enabled = True
         if not self.row.get("site_only", False):
-            Returned(event)
+            Returned(event, scope_start)
         return False
 
 
 class Returned(gdb.Breakpoint):
-    def __init__(self, event):
+    def __init__(self, event, scope_start=None):
         super().__init__("*0x%x" % event["lr"], internal=True)
         self.event = event
         self.thread_id = gdb.selected_thread().ptid
         self.stack = int(gdb.newest_frame().read_register("sp"))
+        self.scope_start = scope_start
 
     def stop(self):
         frame = gdb.newest_frame()
         if gdb.selected_thread().ptid != self.thread_id or int(frame.read_register("sp")) != self.stack:
             return False
         self.event["return_x0"] = int(frame.read_register("x0"))
+        if self.scope_start:
+            scopes.leave(self.scope_start, tuple(self.thread_id))
+            if not scopes.any(self.scope_start):
+                for breakpoint in scope_breakpoints[self.scope_start]:
+                    breakpoint.enabled = False
         self.enabled = False
         return False
 
@@ -96,6 +114,13 @@ try:
             continue
         start = int(fields[0].split("-")[0], 16)
         mappings.append((Path(fields[5]), start - int(fields[2], 16)))
+    names = [target.get("name") for target in targets]
+    if len(names) != len(set(names)):
+        raise RuntimeError("duplicate observation target")
+    scope_names = {target["scope_start"] for target in targets if target.get("scope_start")}
+    if len(scope_names) != sum(bool(target.get("scope_start")) for target in targets):
+        raise RuntimeError("duplicate scope start")
+    scope_breakpoints = {name: [] for name in scope_names}
     for target in targets:
         matches = {(path, base) for path, base in mappings if path.name == target["module"]}
         if len(matches) != 1:
@@ -110,11 +135,20 @@ try:
         if type(row["site_only"]) is not bool:
             raise RuntimeError("site_only must be boolean")
         row["string_arguments"] = target.get("string_arguments", [])
+        row["scope"] = target.get("scope")
+        row["scope_start"] = target.get("scope_start")
+        if row["scope"] and row["scope"] not in scope_names:
+            raise RuntimeError("unknown observation scope")
+        if row["scope_start"] and row["site_only"]:
+            raise RuntimeError("scope start requires a return breakpoint")
         record["targets"].append(row)
         protected = json.loads(os.environ.get("NASHURA_GDB_GUARD_RANGES", "{}"))
         if any(start <= target["offset"] < start + 16 for start in protected.get(target["module"], [])):
             raise RuntimeError("breakpoint overlaps guarded entry bytes")
-        Observe(row, base + target["offset"])
+        breakpoint = Observe(row, base + target["offset"])
+        if row["scope"]:
+            breakpoint.enabled = False
+            scope_breakpoints[row["scope"]].append(breakpoint)
         row["armed"] = True
     gdb.execute("handle SIGSTOP nostop noprint nopass")
     gdb.execute("signal 0")
@@ -127,6 +161,7 @@ try:
 except Exception as error:
     record["error"] = str(error)
 finally:
+    record["active_scopes"] = len(scopes.active)
     if gdb.selected_inferior().pid and gdb.selected_inferior().pid == int(os.environ.get("NASHURA_GDB_OWNED_PID", "0")):
         gdb.execute("kill")
     with output.open("x") as stream:
