@@ -1,0 +1,175 @@
+{
+  "schema": "nashura.pure-linux-fixed-probe-recheck.v1",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "baseline_commit": "cdc5fae77aa3ed5f1ac4eaeebebb07be8226792d",
+  "status": "RUNTIME_OBSERVED_LIMITED",
+  "overall_gate": {
+    "configuration_contract_pass": false,
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "step_tick": "NOT_RUN",
+    "full_battle": "NOT_RUN",
+    "android_parity": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "environment": {
+    "host": "Apple Silicon macOS",
+    "guest_machine": "aarch64",
+    "guest_kernel": "6.8.0-138-generic",
+    "runtime": "existing Android API30 linker64/Bionic",
+    "android_emulator_started": false,
+    "game_process_started": false
+  },
+  "input_identity": {
+    "apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "probe_sha256": "a5640e59f07b5c2511450c5bebc92bc4c1d898da9c685aeb94cb09e7317b817d",
+    "material_sha256": "e2d80e03f4beffe43301c91704a7a9b51141be2e89038a0754c5be7b98390883",
+    "xml0_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+    "xml1_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+    "resource_manifest_sha256": "47a96c006f5d56f25e6e350a26eab2dbef0b8dfb17fe33124188c85dc27fb108",
+    "asset_index_sha256": "cc7fedcfb2a43a3cc8aae9afb586114915bfc69ae461d92420de349550772916",
+    "asset_backend_sha256": "905fb58cc33ed308107d433c6c1f9cfd57f6b6e121ff5e77dd1896176e11ea84",
+    "all_inputs_unchanged_after_runs": true,
+    "all_resource_inventories_unchanged": true
+  },
+  "audit_fix": {
+    "source": "tools/pure_linux/provider_job.py",
+    "source_sha256": "e73553099b8cea00c45824a3db6d0f720ea6113c78e7d9d16a1eb24033073f5e",
+    "test_source_sha256": "422e267df188b9c6be68f9b3040d37f3954df7746f9137c49769b5ea8aa4f9d1",
+    "expected_counter": "initial unique XML keys union LOADING_SCREEN_STATE_LABEL",
+    "pre_fix_expected": [0, 0],
+    "observed_write_counts": [1, 1],
+    "post_fix_expected": [1, 1],
+    "duplicate_or_non_string_xml": "explicit failure"
+  },
+  "runs": {
+    "default_corrected_expectation": {
+      "native_exit": 96,
+      "provider_wrapper_exit": 1,
+      "timed_out": false,
+      "elapsed_seconds": 6.4269732929969905,
+      "input_identity_unchanged": true,
+      "hook_bound": true,
+      "write_summary": {
+        "result": -1,
+        "commits": 2,
+        "disk_writes": 2,
+        "false_commits": 0,
+        "backup_requests": 1,
+        "backup_failures": 1,
+        "decode_exceptions": 0,
+        "entries": [1, 1]
+      },
+      "catalog_loader_completed": false,
+      "catalog_ready_pass": false,
+      "result_sha256": "60edbfabedbe34609d5ca95cc4e0b521630d6da277a76fc60a744428615bb06f",
+      "stdout_sha256": "8b9eae5cf89505d5298419c5ce8e3feaf48ad1d5f8502da423d00adbfc73caf4",
+      "stderr_sha256": "cc160ed7c9dd65df621f1c1b4e028cd64b5e3f29c3d668e87371ae4855590254"
+    },
+    "candidate_stale_counter_attempt": {
+      "native_exit": 0,
+      "provider_wrapper_exit": 1,
+      "timed_out": false,
+      "elapsed_seconds": 15.338344464995316,
+      "input_identity_unchanged": true,
+      "candidate_hook_bound": true,
+      "observed_write_counts": [1, 1],
+      "stale_counter_expected": [0, 0],
+      "bounded_enqueue_observed": false,
+      "queue_consumer_exit": 0,
+      "catalog_ready_observed": true,
+      "parsed_tables": [162, 24353],
+      "result_sha256": "8d924e09d6fb60ecb475ab90c115b6426c24c8f40f499cbd9c85de84ff60f3de",
+      "stdout_sha256": "9a66731cb7d6c11da14bfb7a1ab3af425e8de6ecfdc57138a7c1f7c877615ba1",
+      "wrapper_exit_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "default_recheck": {
+      "native_exit": 96,
+      "provider_wrapper_exit": 1,
+      "timed_out": false,
+      "elapsed_seconds": 6.4269732929969905,
+      "input_identity_unchanged": true,
+      "write_summary": {
+        "result": -1,
+        "commits": 2,
+        "disk_writes": 2,
+        "backup_requests": 1,
+        "backup_failures": 1,
+        "entries": [1, 1]
+      },
+      "result_sha256": "60edbfabedbe34609d5ca95cc4e0b521630d6da277a76fc60a744428615bb06f",
+      "stdout_sha256": "8b9eae5cf89505d5298419c5ce8e3feaf48ad1d5f8502da423a9d10adbfc73caf4"
+    },
+    "candidate_corrected_counter_recheck": {
+      "native_exit": 0,
+      "provider_wrapper_exit": 1,
+      "timed_out": false,
+      "elapsed_seconds": 15.693170696991729,
+      "input_identity_unchanged": true,
+      "candidate_hook_bound": true,
+      "write_summary": {
+        "result": 0,
+        "commits": 2,
+        "disk_writes": 2,
+        "false_commits": 0,
+        "backup_requests": 1,
+        "backup_failures": 0,
+        "decode_exceptions": 0,
+        "entries": [1, 1]
+      },
+      "queue": {
+        "created": true,
+        "result": 0,
+        "delivery": "PENDING",
+        "android_parity": "NOT_VERIFIED"
+      },
+      "queue_consumer_exit": 0,
+      "consumer_receipt_sha256": "a152c88d4a328b25d128ae236b9b104beadc26cf54e73666981ce715ef69dcf8",
+      "catalog": {
+        "loader_completed": true,
+        "ready_observed": true,
+        "ready_transition": "0->1",
+        "catalog_table_load_complete_marker": false,
+        "strict_catalog_ready_pass": false
+      },
+      "parsed_tables": {
+        "complete": true,
+        "tables": 162,
+        "rows": 24353,
+        "layout_sha256": "8ff1043b9d3544dbd6cbefae576025845e1f5f6e8cb9a78a931428eb5de36f89",
+        "cell_semantics_verified": false
+      },
+      "resources_unchanged": true,
+      "result_sha256": "2daf8e26814ae77304ed27d2f7dbc79600b22df46f559c171e072c116bcf440a",
+      "stdout_sha256": "e23bd4badc497bde340f03855dbaa53f1525f9e7c12c82a5f621f08a4152f074",
+      "stderr_sha256": "3c0b476f6eada56ac65591a3c294ea5763ece12f7a3bf49a415a9d09f10f5a1c",
+      "syscall_trace_sha256": "7c667c4508d70a44e2ffa10835c1da6ed7b9bbb2a0cdb3238f280b8c5e26f108"
+    }
+  },
+  "preserved_obsolete_processes": {
+    "description": "two paused native-probe processes stopped after pid/start/cwd/fd inspection; their logs were retained",
+    "process_stdout_sha256": [
+      "713d9d158b94310891c9ebedb0b202e76ff35675d366f501c7feb608897a0d58",
+      "bc37f6622d9c2e6c893ec135c0bf48ccf792b205ac97ec67408051e9e422ead5"
+    ],
+    "process_stderr_sha256": [
+      "f43fd652b4b90dd0eab74086b61a766dcee6ea0d776443dd65ebec7fe2de29db",
+      "0a3f77791309828b191737eaa2e46972749e8c1bf7e56b8a5f1e88712404226e"
+    ],
+    "experiment_outputs_deleted": false
+  },
+  "verification": {
+    "focused_tests_command": "/opt/anaconda3/bin/python3 -m pytest -q -p no:cacheprovider tools/pure_linux/test_provider_job.py tools/pure_linux/test_preference_hook_evidence.py",
+    "focused_tests_result": "60 passed, 1 skipped",
+    "full_tests_command": "/opt/anaconda3/bin/python3 -m pytest -q -p no:cacheprovider tools/pure_linux",
+    "full_tests_result": "953 passed, 1 skipped in 10.15s",
+    "git_diff_check": "PASS_BEFORE_FINAL_DOCS",
+    "android_emulator": "NOT_STARTED",
+    "formal_training": "NOT_RUN"
+  },
+  "next_dependency": "strict configuration/Android Backup behavior and full catalog resource semantics",
+  "evidence_scope": "real libg natural loader and bounded native filesystem queue candidate; no GameState or battle lifecycle"
+}

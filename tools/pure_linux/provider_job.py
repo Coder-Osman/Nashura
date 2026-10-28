@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import shutil
 import sys
+import xml.etree.ElementTree as ET
 
 from preference_hook_evidence import observations as preference_observations
 from preference_hook_evidence import native_queue_observations
@@ -121,6 +122,23 @@ def resource_inventory(roots):
                 entries[str(path.relative_to(root))] = digest(path)
         observed[label] = entries
     return observed
+
+
+def preference_write_entry_counts(paths, key="LOADING_SCREEN_STATE_LABEL"):
+    counts = []
+    for path in paths:
+        root = ET.fromstring(path.read_bytes())
+        if root.tag != "map" or root.attrib:
+            raise ValueError("preference XML root must be a plain map")
+        keys = []
+        for child in root:
+            if child.tag != "string" or set(child.attrib) != {"name"} or len(child):
+                raise ValueError("preference XML entries must be strings")
+            keys.append(child.attrib["name"])
+        if len(keys) != len(set(keys)):
+            raise ValueError("duplicate preference key")
+        counts.append(len(set(keys) | {key}))
+    return tuple(counts)
 
 
 def strace_launch(inferior, output, environment, resource_trace=False):
@@ -286,6 +304,8 @@ def main():
             if digest(path) != expected:
                 raise ValueError(name + " identity mismatch")
             extras[name] = (path, expected)
+        preference_counts = preference_write_entry_counts(
+            [extras["preference_xml" + str(slot)][0] for slot in range(2)])
     output = arguments.output.resolve()
     output.mkdir(exist_ok=False)
     environment = {key: value for key, value in os.environ.items()
@@ -356,8 +376,9 @@ def main():
         after = None
         postcheck_errors.append("input identity: " + str(error))
     text = (output / "stdout.log").read_text(errors="replace")
-    preference = preference_observations(text, (output / "stderr.log").read_text(errors="replace")) if all(preference_arguments) else None
-    backup_candidate = native_queue_observations(text, (output / "stderr.log").read_text(errors="replace")) if arguments.native_backup_queue else None
+    stderr_text = (output / "stderr.log").read_text(errors="replace")
+    preference = preference_observations(text, stderr_text, preference_counts) if all(preference_arguments) else None
+    backup_candidate = native_queue_observations(text, stderr_text, preference_counts) if arguments.native_backup_queue else None
     observations = registration_observations(text, arguments.mode)
     try:
         resources_after = resource_inventory(roots)

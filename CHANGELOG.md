@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N 真实配置受控写入与恢复复核
+
+- 在既有隔离 API 30 ARM64 AVD 中执行一次 `LOADING_SCREEN_STATE_LABEL` 写入并恢复原值；后续只读复核仍为原值。
+- 目标与恢复各完成两个槽写入；4次同步 commit 均返回true，观察到完整 SharedPreferences 磁盘调用链。
+- 两次 Backup 请求到达服务端数据变更和 job 调度；目标包原已pending，journal写入未观测，队列数保持30。
+- 保留首次Frida attach失败；只启动AVD中既有Frida server。原始日志保持本机私有，AVD已关闭。
+- 专项953/1、主工程211、公开回归1104/42、清单2583项及gitleaks均通过；偏好文件分阶段字节、跨进程恢复、Backup等价性和严格catalog仍未闭合。
+
 ## 2026-10-28：E2.1-N 当前材料绑定及真实事务字节对照
 
 - 新增只读材料/Cipher捕获、局部Bionic重放、跨批次SHA审计及51项工具测试。

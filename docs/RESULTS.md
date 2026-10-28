@@ -1,5 +1,19 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：受控配置 store/restore 运行时复核
+
+隔离 Android 30 ARM64 AVD 中观察到配置值从 `server-login` 写入测试值并恢复；
+后续只读复核仍为原值。两轮各有两个槽写入，四次 commit 均true，且观察到
+`commitToMemory → enqueueDiskWrite → writeToFile → createFileOutputStream`。
+两次 Backup 请求进入服务端 `dataChangedImpl` 和 `KeyValueBackupJob.schedule`。
+目标包此前已在30项pending队列中，计数未变，journal写入未观察；不证明本次journal
+分支、交付、跨进程恢复或文件字节恢复。专项953通过/1跳过、主工程211通过、
+公开回归1104通过/42跳过、清单2583项及gitleaks均通过，均exit0。
+严格 `CATALOG_READY_PASS` 仍false，ResourceManager/GameState/真实Step均NOT_RUN。
+详见[报告](../agent-handoff/PURE_LINUX_CONTROLLED_STORE_RECHECK_2026-10-28.md)、
+[机器证据](../agent-handoff/pure-linux-controlled-store-recheck-evidence-20261028.json)及
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_CONTROLLED_STORE.md)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：当前身份与单事务逐字节一致
 
 只读捕获两次一致，当前材料绑定到原Android事务与三个真实libg子进程。

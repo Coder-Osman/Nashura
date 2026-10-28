@@ -1,0 +1,148 @@
+{
+  "schema": "nashura.pure-linux-controlled-store-recheck.v1",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "baseline_commit": "cdc5fae77aa3ed5f1ac4eaeebebb07be8226792d",
+  "status": "CONTROLLED_STORE_RESTORE_RUNTIME_PASS_LIMITED",
+  "scope": "one controlled store and restore in an existing isolated Android 30 ARM64 AVD",
+  "environment": {
+    "avd": "nashura-e2-backup-api30",
+    "serial": "emulator-5580",
+    "api": 30,
+    "android_release": "11",
+    "abi": "arm64-v8a",
+    "boot": "cold; configured default_boot snapshot was absent",
+    "game_package": "nullsroyale.rel.free",
+    "game_version_name": "15.535.13",
+    "game_version_code": 150535013,
+    "installed_apk_sha256": "NOT_CAPTURED",
+    "game_pid": 4833,
+    "system_server_pid": 503,
+    "avd_config_sha256_before": "67e43b0ccaa7b80b3fec363308b1fb51e6c93ce5bde2d7e24dfe01a644e3c37c",
+    "avd_config_sha256_after": "67e43b0ccaa7b80b3fec363308b1fb51e6c93ce5bde2d7e24dfe01a644e3c37c",
+    "avd_stopped_after_experiment": true,
+    "adb_devices_after": []
+  },
+  "tools": {
+    "frida_host_version": "16.7.19",
+    "frida_device_version": "16.7.19",
+    "frida_device_binary_sha256": "4eebf1fbc66ff54aba9a9124c2ef8b32b566616388c60e2caa65148a529d826a",
+    "observer_sha256": "fe4323bf9c2d0afaa87fc10121ba8ad0068dbf36fd768de5eba87ea4fe987013",
+    "runner_sha256": "aacae07aa2725153a4294e4d4e3579d356d7c8150050a97115072306b2540a81"
+  },
+  "attempts": [
+    {
+      "name": "initial_attach_without_running_frida_server",
+      "exit_code": 1,
+      "failure": "Frida ServerNotRunningError during attach",
+      "store_invoked": false,
+      "trace_sha256": "65897464d00af6e3a2bfa57bd3929a317cd1db953b27d21d36e8ebbf0ab6e998"
+    },
+    {
+      "name": "read_only_preflight",
+      "exit_code": 0,
+      "store_invoked": false,
+      "trace_sha256": "18d7b1397ec614d3d4ead1506a50ba79c882e1061289339afd39625b6f4fe0d5"
+    },
+    {
+      "name": "controlled_store_and_restore",
+      "exit_code": 0,
+      "store_invoked": true,
+      "trace_sha256": "4847b0093f91e4ef3ed114fa895104a90e0f7c9cd953189b90c4b9ba40981d5d",
+      "balanced_call_scopes": 83,
+      "hook_install_events": 33,
+      "unique_installed_methods": 29,
+      "initial_value": "server-login",
+      "target_value": "nashura-controlled-store-20261028",
+      "restored_value": "server-login",
+      "target_readback_pass": true,
+      "restore_readback_pass": true,
+      "transactions": [
+        {
+          "kind": "target",
+          "c_a_n_slot_writers": 2,
+          "editor_commit_calls": 2,
+          "editor_commit_true": 2,
+          "commit_to_memory_calls": 2,
+          "enqueue_disk_write_calls": 2,
+          "write_to_file_calls": 2,
+          "create_file_output_stream_calls": 2,
+          "request_backup_calls": 1,
+          "binder_proxy_data_changed_calls": 1
+        },
+        {
+          "kind": "restore",
+          "c_a_n_slot_writers": 2,
+          "editor_commit_calls": 2,
+          "editor_commit_true": 2,
+          "commit_to_memory_calls": 2,
+          "enqueue_disk_write_calls": 2,
+          "write_to_file_calls": 2,
+          "create_file_output_stream_calls": 2,
+          "request_backup_calls": 1,
+          "binder_proxy_data_changed_calls": 1
+        }
+      ],
+      "server_data_changed_impl_calls": 2,
+      "server_key_value_backup_job_schedule_calls": 2,
+      "server_write_to_journal_locked_calls": 0,
+      "server_journal_status": "NOT_OBSERVED_IN_THIS_CALL"
+    },
+    {
+      "name": "post_restore_read_only_recheck",
+      "exit_code": 0,
+      "store_invoked": false,
+      "observed_value": "server-login",
+      "trace_sha256": "5480881bb695edb667f072f6fb866a6c5664520afbd0d360cb503dab9b529614"
+    }
+  ],
+  "backup_queue": {
+    "pending_key_value_count_before_attach": 30,
+    "pending_key_value_count_before_target_store": 30,
+    "pending_key_value_count_after_target_store": 30,
+    "pending_key_value_count_after_restore": 30,
+    "target_package_already_pending": true,
+    "backup_running": false,
+    "journal_side_effect_attribution": "UNRESOLVED"
+  },
+  "artifact_handling": {
+    "raw_traces_published": false,
+    "raw_trace_mode": "0600",
+    "preference_file_snapshots": "NOT_CAPTURED",
+    "post_restore_file_hashes": "PRIVATE_LOCAL_ONLY",
+    "cross_process_restore": "NOT_RUN"
+  },
+  "verification": {
+    "focused_controlled_store_trace_audit": "PASS_LIMITED; 83 call scopes balanced, four slot commits true, no observer/restore errors",
+    "pure_linux_command": "/opt/anaconda3/bin/python3 -m pytest -q -p no:cacheprovider tools/pure_linux",
+    "pure_linux_exit_code": 0,
+    "pure_linux_passed": 953,
+    "pure_linux_skipped": 1,
+    "main_command": "/opt/anaconda3/bin/python3 tools/run_main_engine_checks.py",
+    "main_exit_code": 0,
+    "main_passed": 211,
+    "public_command": "/opt/anaconda3/bin/python3 tools/run_public_checks.py",
+    "public_exit_code": 0,
+    "public_passed": 1104,
+    "public_skipped": 42,
+    "source_manifest_exit_code": 0,
+    "source_manifest_files": 2583,
+    "gitleaks_exit_code": 0,
+    "gitleaks_result": "no leaks found",
+    "git_diff_check": "PASS"
+  },
+  "gates": {
+    "configuration_platform_storage_semantics": "UNRESOLVED",
+    "backup_linux_equivalence": "UNRESOLVED",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "gamestate_step": "NOT_RUN",
+    "full_battle": "NOT_RUN",
+    "no_java_vm": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "performance_10x": "NOT_RUN",
+    "formal_training": "NOT_RUN"
+  },
+  "next_blocker": "The target package was already pending, so this transaction did not identify the journal new-entry versus duplicate branch; app-private file bytes were not captured at pre/target/restore stages.",
+  "evidence_scope": "real Android app and system_server calls; not a Linux native callback equivalence or catalog readiness result"
+}

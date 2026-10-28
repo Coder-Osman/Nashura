@@ -1,5 +1,17 @@
 # Nashura
 
+## 2026-10-28：受控配置写入与原值恢复复核
+
+隔离 API 30 ARM64 AVD 中，真实配置值从 `server-login` 写入测试值后恢复，并经只读
+复核保持原值；双槽四次 commit 均成功，Backup 请求进入服务端数据变更与 job 调度。
+目标包原本就在 30 项 pending 队列中，本窗口未观察 journal 写入，且未采集偏好文件
+的写前/中间态字节，因此不宣称跨进程恢复、Backup 交付或 Linux 等价。全量专项
+`953 passed, 1 skipped`，主工程 `211 passed`，公开回归 `1,104 passed, 42 skipped`；
+严格 `CATALOG_READY_PASS` 仍 BLOCKED，GameState/Step 未运行。
+详见[报告](agent-handoff/PURE_LINUX_CONTROLLED_STORE_RECHECK_2026-10-28.md)、
+[证据](agent-handoff/pure-linux-controlled-store-recheck-evidence-20261028.json)及
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_CONTROLLED_STORE.md)。
+
 ## 2026-10-28：当前配置身份与单事务字节对照
 
 当前Android材料与真实libg三进程身份已绑定；一次受控store后恢复原值，

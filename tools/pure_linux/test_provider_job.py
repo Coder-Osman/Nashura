@@ -8,7 +8,8 @@ import sys
 
 import pytest
 
-from provider_job import catalog_observations, registration_observations, resource_inventory, resource_observations, strace_launch
+from provider_job import (catalog_observations, preference_write_entry_counts, registration_observations,
+                          resource_inventory, resource_observations, strace_launch)
 
 
 def registration_log():
@@ -32,6 +33,23 @@ def catalog_log():
 
 def test_registration_release_and_identity():
     assert registration_observations(registration_log(), "both")["complete"]
+
+
+def test_preference_write_counts_follow_existing_key_state(tmp_path):
+    empty = tmp_path / "empty.xml"
+    with_key = tmp_path / "with-key.xml"
+    without_key = tmp_path / "without-key.xml"
+    empty.write_text("<?xml version='1.0' encoding='utf-8' standalone='yes' ?>\n<map />\n")
+    with_key.write_text('<map><string name="LOADING_SCREEN_STATE_LABEL">old</string></map>')
+    without_key.write_text('<map><string name="unrelated">v</string></map>')
+    assert preference_write_entry_counts([empty, with_key, without_key]) == (1, 1, 2)
+
+
+def test_preference_entry_counts_reject_malformed_xml(tmp_path):
+    malformed = tmp_path / "malformed.xml"
+    malformed.write_text("<map><string name=\"k\">v</string><string name=\"k\">x</string></map>")
+    with pytest.raises(ValueError):
+        preference_write_entry_counts([malformed])
 
 
 @pytest.mark.parametrize("damage", [
