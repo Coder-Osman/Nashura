@@ -271,6 +271,7 @@ def main():
         parser.add_argument("--" + name, type=Path)
         parser.add_argument("--" + name + "-sha256")
     parser.add_argument("--inspect-parsed-tables", action="store_true")
+    parser.add_argument("--inspect-row-ids", action="store_true")
     parser.add_argument("--expected-preload-requests", type=int, default=368,
                         help="Explicit observation profile, bound to the resource manifest; not a semantic gate")
     parser.add_argument("--timeout", type=int, default=55)
@@ -279,6 +280,8 @@ def main():
         parser.error("resource name and expected digest must be paired")
     if arguments.resource_exercise and not arguments.resource_name:
         parser.error("resource exercise requires a resource name")
+    if arguments.inspect_row_ids and not arguments.inspect_parsed_tables:
+        parser.error("row identity observation requires parsed tables")
     asset_arguments = [arguments.asset_root, arguments.asset_index, arguments.asset_index_sha256,
                        arguments.asset_backend, arguments.asset_backend_sha256]
     if any(asset_arguments) and not all(asset_arguments):
@@ -355,6 +358,8 @@ def main():
         if arguments.catalog_mode not in {"loader", "loader-construct"}:
             parser.error("parsed table observation requires a loader experiment")
         environment["NASHURA_INSPECT_PARSED_TABLES"] = "1"
+    if arguments.inspect_row_ids:
+        environment["NASHURA_INSPECT_ROW_IDS"] = "1"
     if arguments.resource_name:
         environment["NASHURA_RESOURCE_NAME"] = arguments.resource_name
     if arguments.resource_exercise:

@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-10-29：catalog 差异槽对象字段对照
+
+17个差异槽的 Linux 2,078个字段值均包含于 Android 对应槽，Android 额外1,457个；
+Android 清单门仍失败，字段语义未完全确认。详见[报告](agent-handoff/PURE_LINUX_CATALOG_ROW_FIELD_2026-10-29.md)。
+
 ## 2026-10-28：Android catalog 采集期间 update 清单变化
 
 两次独立启动前后分别为990和908项，布局重复但严格清单门均拒收；删除原因未知。

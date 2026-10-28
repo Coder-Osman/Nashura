@@ -1,5 +1,10 @@
 # 变更记录
 
+## 2026-10-29：catalog 差异槽对象字段对照
+
+- 真实独立 Android/Linux 对照17槽的对象偏移字段，Linux 2,078项为 Android 子集。
+- Android update 清单变化导致采集门失败，字段语义、根因与严格 catalog 仍未闭合。
+
 ## 2026-10-28：Android catalog 采集期间 update 清单变化
 
 - 两次独立运行复现990变908，82项删除；严格清单门拒收，保留布局与失败证据。

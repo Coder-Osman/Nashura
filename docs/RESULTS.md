@@ -1,5 +1,10 @@
 # 阶段成果与证据索引
 
+## 2026-10-29 E2.1-N：catalog 行对象字段差异
+
+17槽 Linux 的2,078项字段均包含于 Android 对应槽；Android 多1,457项。输入门和
+字段完整语义仍未验收。详见[报告](../agent-handoff/PURE_LINUX_CATALOG_ROW_FIELD_2026-10-29.md)。
+
 ## 2026-10-28 E2.1-N：Android update 清单变化
 
 两次启动复现990项变908项，表布局重复；两次均未通过身份门。详见

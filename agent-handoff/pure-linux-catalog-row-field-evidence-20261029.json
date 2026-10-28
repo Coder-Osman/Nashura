@@ -1,0 +1,23 @@
+{
+  "schema": "nashura.catalog-row-field-public-evidence.v1",
+  "base_commit": "451d00e",
+  "status": "RUNTIME_OBSERVED_LIMITED",
+  "android_result_sha256": "d139c73d0f3bee4caa11b54dd8e6519d98343f52b86f36960c9eae8d91e35bc5",
+  "linux_result_sha256": "923b6963913e5900a140350eacbde83bb5550656e52e3922150b1df76c8ba7d1",
+  "linux_stdout_sha256": "2355a71752bd13facf1c98ba924dd0fcec6a41bcd25d2e67e645e9002c6e9fe6",
+  "comparison_sha256": "ca3fa17a0076b2add170fcf95a69148a6fc7c41e9b602aadda4f158788f0d021",
+  "android_runner_exit": 1,
+  "linux_wrapper_exit": 1,
+  "linux_native_exit": 0,
+  "comparison_exit": 0,
+  "slots": 17,
+  "android_values": 3535,
+  "linux_values": 2078,
+  "android_only": 1457,
+  "linux_only": 0,
+  "duplicates": 0,
+  "field_semantics_all_types": "UNKNOWN",
+  "android_update_identity": "CHANGED_DURING_CAPTURE",
+  "catalog_ready_pass": false,
+  "tests": {"passed": 1002, "skipped": 1, "exit": 0}
+}

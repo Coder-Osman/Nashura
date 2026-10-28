@@ -249,6 +249,8 @@ static int load_catalog(uintptr_t context, uintptr_t list, int32_t count) {
 }
 
 static int inspect_parsed_tables(uintptr_t context, const char *phase) {
+    static const unsigned int observed_slots[] = {9, 10, 22, 34, 35, 123, 133, 166, 173,
+                                                   179, 187, 189, 191, 205, 212, 213, 214};
     if (!guard("NASHURA_CONTEXT_GET_GUARD", 0xdccb88) ||
         !guard("NASHURA_TABLE_CTOR_GUARD", 0xdc76ac) ||
         !guard("NASHURA_CSV_GET_GUARD", 0x12101d4) ||
@@ -269,10 +271,19 @@ static int inspect_parsed_tables(uintptr_t context, const char *phase) {
             capacity < count || capacity > 1000000 ||
             (count && !is_readable(rows, (size_t)count * sizeof(uintptr_t)))) return 109;
         unsigned int nonnull_rows = 0;
+        int inspect_ids = 0;
+        for (size_t slot = 0; slot < sizeof(observed_slots) / sizeof(observed_slots[0]); ++slot)
+            if (index == observed_slots[slot]) inspect_ids = 1;
         for (int32_t row = 0; row < count; ++row) {
             uintptr_t value;
             memcpy(&value, (void *)(rows + (size_t)row * sizeof(uintptr_t)), sizeof(value));
             nonnull_rows += value != 0;
+            if (value && inspect_ids && getenv("NASHURA_INSPECT_ROW_IDS") && !strcmp(phase, "after")) {
+                if (!is_readable(value, 0x44)) return 112;
+                uint32_t id;
+                memcpy(&id, (void *)(value + 0x40), sizeof(id));
+                printf("PARSED_ROW_ID\t%zu\t%d\t%" PRIu32 "\n", index, row, id);
+            }
         }
         int32_t csv_rows = -1, csv_columns = -1;
         uintptr_t csv = pointer_at(object + 0x88);

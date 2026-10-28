@@ -32,6 +32,7 @@ def main():
     parser.add_argument("--update-reference", type=Path)
     parser.add_argument("--update-reference-sha256")
     parser.add_argument("--recover-spawn-timeout", action="store_true")
+    parser.add_argument("--inspect-row-ids", action="store_true")
     args = parser.parse_args()
     if args.serial != "emulator-5630":
         raise ValueError("dedicated experiment serial required")
@@ -121,8 +122,8 @@ def main():
             raise ValueError("cold-ready state not observed")
         if adb("shell", "pidof", "nullsroyale.rel.free:engine0") != str(pid):
             raise ValueError("owned engine identity changed")
-        first = script.exports_sync.snapshot(status["contentContext"], guard)
-        second = script.exports_sync.snapshot(status["contentContext"], guard)
+        first = script.exports_sync.snapshot(status["contentContext"], guard, args.inspect_row_ids)
+        second = script.exports_sync.snapshot(status["contentContext"], guard, args.inspect_row_ids)
         if first != second:
             raise ValueError("catalog layout changed between snapshots")
         report["layout"] = first

@@ -15,12 +15,13 @@ function hex(bytes) {
 }
 
 rpc.exports = {
-  snapshot: function (context, expectedGuard) {
+  snapshot: function (context, expectedGuard, includeRows) {
     const module = Process.getModuleByName('libg.so');
     if (Process.arch !== 'arm64' || hex(module.base.add(0xdccb88).readByteArray(16)) !== expectedGuard)
       throw new Error('engine entry guard mismatch');
     const root = readable(context, 219 * 8);
-    const tables = [];
+    const tables = [], rowIds = [];
+    const observedSlots = new Set([9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214]);
     let total = 0;
     for (let index = 0; index < 219; index++) {
       let object = root.add(index * 8).readPointer();
@@ -33,7 +34,13 @@ rpc.exports = {
       let nonnull = 0;
       if (count) {
         const rows = readable(object.add(0x30).readPointer(), count * 8);
-        for (let row = 0; row < count; row++) if (!rows.add(row * 8).readPointer().isNull()) nonnull++;
+        for (let row = 0; row < count; row++) {
+          const value = rows.add(row * 8).readPointer();
+          if (!value.isNull()) {
+            nonnull++;
+            if (includeRows && observedSlots.has(index)) rowIds.push([index, row, readable(value, 0x44).add(0x40).readU32()]);
+          }
+        }
       }
       let csvRows = -1, csvColumns = -1;
       const csv = object.add(0x88).readPointer();
@@ -47,7 +54,7 @@ rpc.exports = {
       tables.push([index, count, capacity, nonnull, csvRows, csvColumns]);
       total += count;
     }
-    return {schema: 'nashura.android-catalog-layout.v1', tables: tables, totalRows: total,
+    return {schema: 'nashura.android-catalog-layout.v1', tables: tables, totalRows: total, rowIds: includeRows ? rowIds : null,
       coverage: 'row counts and csv dimensions, not cell contents', catalogReadyPass: false};
   }
 };

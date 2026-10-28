@@ -10194,9 +10194,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "ed327175c9c87b91ed10b41212818763de75cf19daed35688d48f19a7cf50e99",
-      "bytes": 46746,
-      "source_sha256": "ed327175c9c87b91ed10b41212818763de75cf19daed35688d48f19a7cf50e99",
+      "sha256": "d8d57047c3cf854beea3ac82eb1dfc92db3a251e7da8bb9182a7bdfe8d13a682",
+      "bytes": 47008,
+      "source_sha256": "d8d57047c3cf854beea3ac82eb1dfc92db3a251e7da8bb9182a7bdfe8d13a682",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -10216,9 +10216,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "4a74e4be7492e18092565d00cecad8be0dc56026a2f12f2ba87aa74706ffb9b0",
-      "bytes": 80063,
-      "source_sha256": "4a74e4be7492e18092565d00cecad8be0dc56026a2f12f2ba87aa74706ffb9b0",
+      "sha256": "fd8de831b3c2d515741b0625d0092572c997602461be4d75920b79afcdcc04f4",
+      "bytes": 80327,
+      "source_sha256": "fd8de831b3c2d515741b0625d0092572c997602461be4d75920b79afcdcc04f4",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -16645,9 +16645,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "69379dae10e1be5cbe20c4edff251aee4be942eac65ece3ee1e76d5b598cf6d7",
-      "bytes": 47147,
-      "source_sha256": "69379dae10e1be5cbe20c4edff251aee4be942eac65ece3ee1e76d5b598cf6d7",
+      "sha256": "fbe06073bc0135b04b8e693986cb7485e795e40fbe37ea9d2c1c51d38af4589b",
+      "bytes": 47436,
+      "source_sha256": "fbe06073bc0135b04b8e693986cb7485e795e40fbe37ea9d2c1c51d38af4589b",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -17087,9 +17087,9 @@
     },
     {
       "path": "tools/pure_linux/provider_job.py",
-      "sha256": "dd59eb8ce96eba81b5a64c140a802808776b63f4fbb808bcab890b3bd213c8a7",
-      "bytes": 30755,
-      "source_sha256": "dd59eb8ce96eba81b5a64c140a802808776b63f4fbb808bcab890b3bd213c8a7",
+      "sha256": "3e9c0b5bb1c139ac1de9a7ff4cad42eabcf66995db1ab373ff74e8234cbe2152",
+      "bytes": 31054,
+      "source_sha256": "3e9c0b5bb1c139ac1de9a7ff4cad42eabcf66995db1ab373ff74e8234cbe2152",
       "transformations": [
         "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
         "2026-10-28: correct encrypted preference key counting and document bounded native recheck"
@@ -17097,9 +17097,9 @@
     },
     {
       "path": "tools/pure_linux/provider_probe.c",
-      "sha256": "f12513c12c3cc2d2b7a93896d1cbb6ea42009c9d4f57ae3430eec1519b1fa106",
-      "bytes": 27129,
-      "source_sha256": "f12513c12c3cc2d2b7a93896d1cbb6ea42009c9d4f57ae3430eec1519b1fa106",
+      "sha256": "ded77b75df323c865ad0464a67daeb3855fe953af171957fcbc097e6930428a2",
+      "bytes": 27852,
+      "source_sha256": "ded77b75df323c865ad0464a67daeb3855fe953af171957fcbc097e6930428a2",
       "transformations": []
     },
     {
@@ -18403,16 +18403,16 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_layout.js",
-      "sha256": "fe8b1233b2e1e2d9e3b50ae097703dd6f7ff04115314a7c254572cffe0eacbca",
-      "bytes": 2426,
-      "source_sha256": "fe8b1233b2e1e2d9e3b50ae097703dd6f7ff04115314a7c254572cffe0eacbca",
+      "sha256": "21b3a111ac932e4f24d6b95bfda31d866af563feaa6b3e4853c431eaabb7b81d",
+      "bytes": 2811,
+      "source_sha256": "21b3a111ac932e4f24d6b95bfda31d866af563feaa6b3e4853c431eaabb7b81d",
       "transformations": []
     },
     {
       "path": "tools/pure_linux/run_android_catalog_layout.py",
-      "sha256": "7c403368f16eaf7f8ad282487da3968601cc56fd29f74f52353df6c3be18d43f",
-      "bytes": 7359,
-      "source_sha256": "7c403368f16eaf7f8ad282487da3968601cc56fd29f74f52353df6c3be18d43f",
+      "sha256": "3f2b54f3146fbd04ba6ff3adaea0441dfc11542caf11aa4922a495d58ad3064b",
+      "bytes": 7469,
+      "source_sha256": "3f2b54f3146fbd04ba6ff3adaea0441dfc11542caf11aa4922a495d58ad3064b",
       "transformations": []
     },
     {
@@ -18470,10 +18470,38 @@
       "bytes": 1005,
       "source_sha256": "fc5b9f1fbe6ade6f4fe2510528e07bcf875cb81f88b793a0c6e9dd5c542544fc",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/compare_catalog_row_fields.py",
+      "sha256": "aaa8f79e6d974a2f883537c0f39abd6de469aee4cebd4908290dae0820cc2967",
+      "bytes": 4546,
+      "source_sha256": "aaa8f79e6d974a2f883537c0f39abd6de469aee4cebd4908290dae0820cc2967",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_compare_catalog_row_fields.py",
+      "sha256": "a7c7c91922e34977905b8f90da69c06f3ffb60e4704d7aca90454dda94f2eb64",
+      "bytes": 440,
+      "source_sha256": "a7c7c91922e34977905b8f90da69c06f3ffb60e4704d7aca90454dda94f2eb64",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_CATALOG_ROW_FIELD_2026-10-29.md",
+      "sha256": "75e346ff62fe342d206f98c2fbf53c6fa07b10972eaec4cc86acfda30c622217",
+      "bytes": 4743,
+      "source_sha256": "75e346ff62fe342d206f98c2fbf53c6fa07b10972eaec4cc86acfda30c622217",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-catalog-row-field-evidence-20261029.json",
+      "sha256": "3f2121596031bc8de3b077e42bfc005458555f1f24de734b31d35f02c8002039",
+      "bytes": 917,
+      "source_sha256": "3f2121596031bc8de3b077e42bfc005458555f1f24de734b31d35f02c8002039",
+      "transformations": []
     }
   ],
-  "file_count": 2628,
-  "source_bytes": 35514557,
+  "file_count": 2632,
+  "source_bytes": 35527535,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
