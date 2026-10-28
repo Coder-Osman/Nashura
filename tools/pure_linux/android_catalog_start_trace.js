@@ -23,6 +23,7 @@ const dbInitScopes = new Map();
 const dbConstructors = new Map();
 const dbFactoryScopes = new Map();
 const engineDbScopes = new Map();
+let engineDbOwner = null;
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
 function record(event) {
   if (events.length >= 30000) { lost++; return; }
@@ -141,9 +142,30 @@ function observe(module) {
       onEnter: function (args) {
         this.dbThread = Process.getCurrentThreadId();
         this.owner = args[0].and(ptr('0x00ffffffffffffff'));
+        engineDbOwner = this.owner;
         this.call = ++nextCall;
         const root = module.base.add(0x19ad878).readPointer().and(ptr('0x00ffffffffffffff'));
         const context = root.isNull() ? ptr(0) : root.add(0x20).readPointer().and(ptr('0x00ffffffffffffff'));
+        const table = this.owner.readPointer().and(ptr('0x00ffffffffffffff'));
+        const tableModule = Process.findModuleByAddress(table);
+        const vtable = tableModule && tableModule.name === module.name ? table.sub(module.base).toString() : 'external';
+        const references = {};
+        for (const [name, address] of [['root', root], ['context', context]]) {
+          const range = address.isNull() ? null : Process.findRangeByAddress(address);
+          if (!range || !range.protection.includes('r') || address.add(0x1000).compare(range.base.add(range.size)) > 0) {
+            references[name] = null;
+          } else {
+            references[name] = Memory.scanSync(address, 0x1000, this.owner.toMatchPattern())
+              .filter(hit => hit.address.sub(address).toInt32() % 8 === 0)
+              .map(hit => hit.address.sub(address).toString());
+          }
+        }
+        references.globals = [];
+        for (const range of module.enumerateRanges('rw-')) {
+          const hits = Memory.scanSync(range.base, range.size, this.owner.toMatchPattern());
+          references.globals.push(...hits.filter(hit => hit.address.sub(module.base).toInt32() % 8 === 0)
+            .map(hit => hit.address.sub(module.base).toString()));
+        }
         const caller = this.returnAddress.and(ptr('0x00ffffffffffffff'));
         const label = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
           ? caller.sub(module.base).toString() : 'external';
@@ -151,6 +173,8 @@ function observe(module) {
         engineDbScopes.set(this.dbThread, this.call);
         record({kind: 'engine_db_init_enter', id: this.call, caller: label,
                 owner_is_root: this.owner.equals(root), owner_is_context: this.owner.equals(context),
+                root_nonnull: !root.isNull(), context_nonnull: !context.isNull(),
+                owner_vtable: vtable, owner_references: references,
                 slot_before_nonnull: !this.owner.add(0x3f0).readPointer().isNull()});
       },
       onLeave: function () {
@@ -432,6 +456,14 @@ function observe(module) {
                     if (!range || !range.protection.includes('r') || slot.add(8).compare(range.base.add(range.size)) > 0)
                       throw new Error('context slot unreadable');
                     event.contextSlotB60Nonnull = !slot.readPointer().isNull();
+                    if (engineDbOwner) {
+                      const content = module.base.add(0x19ad878).readPointer().and(ptr('0x00ffffffffffffff'));
+                      const currentContext = content.isNull() ? ptr(0) : content.add(0x20).readPointer().and(ptr('0x00ffffffffffffff'));
+                      event.owner_matches_later_root = engineDbOwner.equals(content);
+                      event.owner_matches_later_context = engineDbOwner.equals(currentContext);
+                      event.later_root_nonnull = !content.isNull();
+                      event.later_context_nonnull = !currentContext.isNull();
+                    }
                   }
                 }
                 catch (error) { errors.push(label + ' before: ' + String(error)); }
