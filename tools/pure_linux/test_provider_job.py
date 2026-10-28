@@ -36,6 +36,18 @@ def test_registration_release_and_identity():
     assert registration_observations(registration_log(), "both")["complete"]
 
 
+@pytest.mark.parametrize("extra", [["--catalog-mode", "loader"], ["--factory-mode", "register"],
+                                  ["--resource-name", "x", "--expected-resource-sha256", "0" * 64]])
+def test_owner_getter_only_rejects_combined_operations(extra):
+    script = Path(__file__).with_name("provider_job.py")
+    result = subprocess.run([sys.executable, str(script), "--payload", "unused", "--probe", "unused",
+                             "--output", "unused", "--mode", "both", "--data-root", "unused",
+                             "--update-root", "unused", "--resource-manifest", "unused",
+                             "--owner-getter-only", *extra], capture_output=True, text=True)
+    assert result.returncode == 2
+    assert "must not initialize factory, catalog, or a resource" in result.stderr
+
+
 def test_preference_write_counts_do_not_guess_encrypted_key_membership(tmp_path):
     empty = tmp_path / "empty.xml"
     with_key = tmp_path / "with-key.xml"

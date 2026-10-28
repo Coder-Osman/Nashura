@@ -1,0 +1,4 @@
+[
+  {"name":"owner_constructor","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":7690904},
+  {"name":"engine_database_init","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":7697932}
+]

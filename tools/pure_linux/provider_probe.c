@@ -545,14 +545,30 @@ int native_provider_probe(uintptr_t engine, int (*readable)(uintptr_t, size_t)) 
     uintptr_t context = pointer_at(root + 0x20);
     if (!is_readable(context + 0x6e8, 1)) return 55;
     printf("PROVIDER_CONTENT_READY\t%u\n", *(unsigned char *)(context + 0x6e8));
+    int resource_status = 0;
+    if (getenv("NASHURA_OWNER_GETTER_ONLY")) {
+        if (!guard("NASHURA_OWNER_GETTER_GUARD", 0x7557d0) ||
+            !is_readable(base + 0x1997cf0, sizeof(uintptr_t))) return 96;
+        printf("OWNER_SLOT_BEFORE_NONNULL\t%d\n", pointer_at(base + 0x1997cf0) != 0);
+        puts("PHASE\towner_getter_enter");
+        uintptr_t owner = (uintptr_t)((void *(*)(void))(base + 0x7557d0))();
+        puts("PHASE\towner_getter_return");
+        int readable = is_readable(owner, 0x530);
+        printf("OWNER_GETTER_RESULT\t%d\t%d\t%d\n", owner != 0, readable,
+               owner != 0 && owner == pointer_at(base + 0x1997cf0));
+        if (!owner || !readable) return 97;
+        printf("OWNER_VTABLE_MATCH\t%d\n", pointer_at(owner) == base + 0x17ea568);
+        goto release_provider;
+    }
     int factory_status = prepare_factory();
     if (factory_status) return factory_status;
-    int resource_status = read_resource(manager);
+    resource_status = read_resource(manager);
     if (resource_status && resource_status != 60) return resource_status;
     if (!resource_status) {
         int catalog_status = inspect_catalog(context);
         if (catalog_status) return catalog_status;
     }
+release_provider:
     puts("PHASE\tprovider_release_enter");
     ((void (*)(void *))(base + 0x12e157c))((void *)manager);
     puts("PHASE\tprovider_release_return");

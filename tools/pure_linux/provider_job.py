@@ -47,6 +47,7 @@ ENTRY_GUARDS = {
     "CONTEXT_GET": (0xdccb88, "bfb80a9c1f22429f8fca1b05a763abedc72565dcfb45c039a1407d49941859b6"),
     "TABLE_CTOR": (0xdc76ac, "678076dcebd45809617481c463e518663dfe5db67a9313fc0309b7a2a11fdb61"),
     "CSV_GET": (0x12101d4, "a5b69ec0fdb9b5118edacf3e9e32c76e87982c7b15007c0ab769ffa1ca13982d"),
+    "OWNER_GETTER": (0x7557d0, "0d608b10262186b18f47bbec627b72bb2a345da5f8697cc041d7a7c63c163b60"),
 }
 
 
@@ -264,6 +265,8 @@ def main():
     parser.add_argument("--asset-backend", type=Path)
     parser.add_argument("--asset-backend-sha256")
     parser.add_argument("--observe-targets", type=Path)
+    parser.add_argument("--owner-getter-only", action="store_true",
+                        help="Call the observed owner getter and stop before catalog or factory initialization")
     parser.add_argument("--loading-config-candidate", action="store_true")
     parser.add_argument("--native-backup-queue", action="store_true",
                         help="Explicit native filesystem candidate; never implies Android backup parity")
@@ -280,6 +283,8 @@ def main():
         parser.error("resource name and expected digest must be paired")
     if arguments.resource_exercise and not arguments.resource_name:
         parser.error("resource exercise requires a resource name")
+    if arguments.owner_getter_only and (arguments.catalog_mode or arguments.factory_mode or arguments.resource_name):
+        parser.error("owner getter experiment must not initialize factory, catalog, or a resource")
     if arguments.inspect_row_ids and not arguments.inspect_parsed_tables:
         parser.error("row identity observation requires parsed tables")
     asset_arguments = [arguments.asset_root, arguments.asset_index, arguments.asset_index_sha256,
@@ -370,6 +375,8 @@ def main():
         environment["NASHURA_CATALOG_MODE"] = arguments.catalog_mode
     if arguments.search_root:
         environment.update(NASHURA_SEARCH_PROVIDER="1", NASHURA_SEARCH_PATH=str(arguments.search_root.resolve()))
+    if arguments.owner_getter_only:
+        environment["NASHURA_OWNER_GETTER_ONLY"] = "1"
     if arguments.factory_mode:
         environment["NASHURA_FACTORY_MODE"] = arguments.factory_mode
     if all(asset_arguments):
@@ -441,6 +448,11 @@ def main():
     generic_return = ([row for row in text.splitlines() if row.startswith("PHASE\tgeneric_register_return")] ==
                       ["PHASE\tgeneric_register_return\t" + arguments.disk_namespace]) if arguments.disk_namespace else None
     passed = passed and (generic_return is not False) and (backend_binding is not False) and (candidate_bound is not False) and catalog["complete"] and auxiliary_unchanged and not postcheck_errors
+    if arguments.owner_getter_only:
+        lines = text.splitlines()
+        passed = passed and all(lines.count(line) == 1 for line in (
+            "PHASE\towner_getter_enter", "PHASE\towner_getter_return",
+            "OWNER_SLOT_BEFORE_NONNULL\t0", "OWNER_GETTER_RESULT\t1\t1\t1", "OWNER_VTABLE_MATCH\t1"))
     if preference is not None:
         passed = passed and preference["configuration_contract_pass"]
     if arguments.observe_targets:
@@ -471,11 +483,14 @@ def main():
                    "preference_current_runtime_identity": "UNRESOLVED" if all(preference_arguments) else None,
                    "preference_backup_service": "UNRESOLVED" if all(preference_arguments) else None,
                    "native_backup_queue_candidate": arguments.native_backup_queue,
+                   "owner_getter_only": arguments.owner_getter_only,
                    "native_backup_candidate_observations": backup_candidate,
                    "native_backup_android_parity": "NOT_VERIFIED" if arguments.native_backup_queue else None,
                    "outputs": {path.name: digest(path) for path in output.iterdir() if path.is_file()}})
     if not result["probe_unchanged"]:
         result["status"] = "BLOCKED"
+    elif passed and arguments.owner_getter_only:
+        result["status"] = "OWNER_GETTER_OBSERVED"
     elif passed and arguments.catalog_mode:
         result["status"] = "CATALOG_" + arguments.catalog_mode.upper().replace("-", "_") + "_OBSERVED"
     (output / "result.json").write_text(json.dumps(result, indent=2) + "\n")

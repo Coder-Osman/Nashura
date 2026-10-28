@@ -17087,9 +17087,9 @@
     },
     {
       "path": "tools/pure_linux/provider_job.py",
-      "sha256": "3e9c0b5bb1c139ac1de9a7ff4cad42eabcf66995db1ab373ff74e8234cbe2152",
-      "bytes": 31054,
-      "source_sha256": "3e9c0b5bb1c139ac1de9a7ff4cad42eabcf66995db1ab373ff74e8234cbe2152",
+      "sha256": "fee4e24f0acdc32c1938b17d31f5ba8e6f0c7430f1c7dd5f972e87894e2aa30a",
+      "bytes": 32125,
+      "source_sha256": "fee4e24f0acdc32c1938b17d31f5ba8e6f0c7430f1c7dd5f972e87894e2aa30a",
       "transformations": [
         "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
         "2026-10-28: correct encrypted preference key counting and document bounded native recheck"
@@ -17097,9 +17097,9 @@
     },
     {
       "path": "tools/pure_linux/provider_probe.c",
-      "sha256": "ded77b75df323c865ad0464a67daeb3855fe953af171957fcbc097e6930428a2",
-      "bytes": 27852,
-      "source_sha256": "ded77b75df323c865ad0464a67daeb3855fe953af171957fcbc097e6930428a2",
+      "sha256": "0978ea99cafc259dc34af6c959795730e01bd4fa2faf53b857e2c33afe907f08",
+      "bytes": 28685,
+      "source_sha256": "0978ea99cafc259dc34af6c959795730e01bd4fa2faf53b857e2c33afe907f08",
       "transformations": []
     },
     {
@@ -17384,9 +17384,9 @@
     },
     {
       "path": "tools/pure_linux/test_provider_job.py",
-      "sha256": "3ad854283cd84e8e191cbfbe63a8775b90bb39255707216158785aadfc21a327",
-      "bytes": 13472,
-      "source_sha256": "3ad854283cd84e8e191cbfbe63a8775b90bb39255707216158785aadfc21a327",
+      "sha256": "c89db4ed9752412b118d4cd001e6415bae208c9e439b82ab48652d64152f2301",
+      "bytes": 14286,
+      "source_sha256": "c89db4ed9752412b118d4cd001e6415bae208c9e439b82ab48652d64152f2301",
       "transformations": []
     },
     {
@@ -19226,10 +19226,52 @@
       "bytes": 685,
       "source_sha256": "ca8746d37bbf947d85c71c590d6c31d51807e9c0722d217e8044ef46435b5284",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/owner_getter_targets.json",
+      "sha256": "2eb3c5ba4f52febe0036876874d348f5b09759664314e84456059dc78ba7dddf",
+      "bytes": 294,
+      "source_sha256": "2eb3c5ba4f52febe0036876874d348f5b09759664314e84456059dc78ba7dddf",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_linux_owner_failure.py",
+      "sha256": "c3dc9de80bd4a1e82584d14287bc4d64fb97a209d59d73e19c28cccf2bd8000a",
+      "bytes": 4064,
+      "source_sha256": "c3dc9de80bd4a1e82584d14287bc4d64fb97a209d59d73e19c28cccf2bd8000a",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_linux_owner_failure.py",
+      "sha256": "17a69f3ca45d5103e980d18273be5747fe8f8610892e5e1109c730d8b6fd02f9",
+      "bytes": 1697,
+      "source_sha256": "17a69f3ca45d5103e980d18273be5747fe8f8610892e5e1109c730d8b6fd02f9",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_OWNER_GETTER_2026-10-29.md",
+      "sha256": "9582afbf365bae584450e7b02f66f134f19a3a65d30a943c7810dc0cdfdc3944",
+      "bytes": 4154,
+      "source_sha256": "9582afbf365bae584450e7b02f66f134f19a3a65d30a943c7810dc0cdfdc3944",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-owner-getter-evidence-20261029.json",
+      "sha256": "a97ef8630250bdee9073e56993dc9e4dfd51317ed13ccac897f4010213ad8f19",
+      "bytes": 1426,
+      "source_sha256": "a97ef8630250bdee9073e56993dc9e4dfd51317ed13ccac897f4010213ad8f19",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_OWNER_GETTER.md",
+      "sha256": "5442588fec153efcce4366b71de47c338f4d0eb075de2874a62776518173f3d3",
+      "bytes": 666,
+      "source_sha256": "5442588fec153efcce4366b71de47c338f4d0eb075de2874a62776518173f3d3",
+      "transformations": []
     }
   ],
-  "file_count": 2736,
-  "source_bytes": 35843128,
+  "file_count": 2742,
+  "source_bytes": 35858147,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
