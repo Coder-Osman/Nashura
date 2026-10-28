@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "d721834068962c5dd395cd3ed974ae4eb6172b7d33e2e389a196c6b73b0bf8b3",
-      "bytes": 24967,
-      "source_sha256": "d721834068962c5dd395cd3ed974ae4eb6172b7d33e2e389a196c6b73b0bf8b3",
+      "sha256": "2faef07f8672ed82c8074fb5259f92b2a5efe0678e2c3ab40a399e79a30951e1",
+      "bytes": 28887,
+      "source_sha256": "2faef07f8672ed82c8074fb5259f92b2a5efe0678e2c3ab40a399e79a30951e1",
       "transformations": []
     },
     {
@@ -19121,10 +19121,45 @@
       "bytes": 1603,
       "source_sha256": "0e82887e92482a059baabda14f34373a69ad92e1e0d693ed9457a39fa5cdd2fd",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_database_factory.py",
+      "sha256": "c3482df668f0a1c05725e0cbeeb0e189efff88b4a743dbf41e6a827639ef4951",
+      "bytes": 4724,
+      "source_sha256": "c3482df668f0a1c05725e0cbeeb0e189efff88b4a743dbf41e6a827639ef4951",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_database_factory.py",
+      "sha256": "d30535efc64b0008cb0462d4d87ef5b62c17da76bb523b6c3105c87c046ebdda",
+      "bytes": 1944,
+      "source_sha256": "d30535efc64b0008cb0462d4d87ef5b62c17da76bb523b6c3105c87c046ebdda",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_DATABASE_FACTORY.md",
+      "sha256": "f104903e237797f02b9bdc4d848eb40f45d1411cd21aefa3588d6dd476494cae",
+      "bytes": 781,
+      "source_sha256": "f104903e237797f02b9bdc4d848eb40f45d1411cd21aefa3588d6dd476494cae",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_DATABASE_FACTORY_2026-10-29.md",
+      "sha256": "24e6113b6fc831fb03bde20d91b6acd1be353706dcf79314146476c4cb904453",
+      "bytes": 3551,
+      "source_sha256": "24e6113b6fc831fb03bde20d91b6acd1be353706dcf79314146476c4cb904453",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-database-factory-evidence-20261029.json",
+      "sha256": "91e70a1ca982b3a5cb1a69b805d92ffe3013a453793855908e615692aae0ef80",
+      "bytes": 1400,
+      "source_sha256": "91e70a1ca982b3a5cb1a69b805d92ffe3013a453793855908e615692aae0ef80",
+      "transformations": []
     }
   ],
-  "file_count": 2721,
-  "source_bytes": 35800475,
+  "file_count": 2726,
+  "source_bytes": 35816795,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

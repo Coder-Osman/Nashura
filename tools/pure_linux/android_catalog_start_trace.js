@@ -21,6 +21,8 @@ const sourceDbHistory = new Map();
 const dbCtorScopes = new Map();
 const dbInitScopes = new Map();
 const dbConstructors = new Map();
+const dbFactoryScopes = new Map();
+const engineDbScopes = new Map();
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
 function record(event) {
   if (events.length >= 30000) { lost++; return; }
@@ -135,6 +137,50 @@ function collectPath(module, history, args, returnAddress) {
 function observe(module) {
   if (module.name !== 'libg.so') return;
   if (includeBatchPhases) {
+    attach(module, 0x75760c, 'engine_db_init_candidate', {
+      onEnter: function (args) {
+        this.dbThread = Process.getCurrentThreadId();
+        this.owner = args[0].and(ptr('0x00ffffffffffffff'));
+        this.call = ++nextCall;
+        const root = module.base.add(0x19ad878).readPointer().and(ptr('0x00ffffffffffffff'));
+        const context = root.isNull() ? ptr(0) : root.add(0x20).readPointer().and(ptr('0x00ffffffffffffff'));
+        const caller = this.returnAddress.and(ptr('0x00ffffffffffffff'));
+        const label = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
+          ? caller.sub(module.base).toString() : 'external';
+        if (engineDbScopes.has(this.dbThread)) errors.push('nested engine database init');
+        engineDbScopes.set(this.dbThread, this.call);
+        record({kind: 'engine_db_init_enter', id: this.call, caller: label,
+                owner_is_root: this.owner.equals(root), owner_is_context: this.owner.equals(context),
+                slot_before_nonnull: !this.owner.add(0x3f0).readPointer().isNull()});
+      },
+      onLeave: function () {
+        record({kind: 'engine_db_init_return', id: this.call,
+                slot_after_nonnull: !this.owner.add(0x3f0).readPointer().isNull()});
+        if (engineDbScopes.get(this.dbThread) !== this.call) errors.push('engine database init scope mismatch');
+        engineDbScopes.delete(this.dbThread);
+      }
+    });
+    attach(module, 0x11b4b30, 'database_factory_candidate', {
+      onEnter: function (args) {
+        this.dbThread = Process.getCurrentThreadId();
+        this.dbPath = boundedString(args[1].and(ptr('0x00ffffffffffffff')));
+        if (this.dbPath !== 'assets.scdb') return;
+        this.dbCall = ++nextCall;
+        this.engineParent = engineDbScopes.get(this.dbThread) || null;
+        this.dbOutput = this.context.x8.and(ptr('0x00ffffffffffffff'));
+        this.dbCaller = this.returnAddress.sub(module.base).toString();
+        if (dbFactoryScopes.has(this.dbThread)) errors.push('nested database factory');
+        dbFactoryScopes.set(this.dbThread, this.dbCall);
+      },
+      onLeave: function () {
+        if (!this.dbCall) return;
+        try { record({kind: 'database_factory', id: this.dbCall, caller: this.dbCaller, engine_parent: this.engineParent,
+                      result_nonnull: !this.dbOutput.readPointer().isNull()}); }
+        catch (error) { errors.push('database factory output: ' + String(error)); }
+        if (dbFactoryScopes.get(this.dbThread) !== this.dbCall) errors.push('database factory scope mismatch');
+        dbFactoryScopes.delete(this.dbThread);
+      }
+    });
     attach(module, 0x11b4df4, 'database_constructor_candidate', {
       onEnter: function (args) {
         this.observerDbThread = Process.getCurrentThreadId();
@@ -142,12 +188,13 @@ function observe(module) {
         this.objectKey = this.object.toString();
         this.callId = ++nextCall;
         this.path = engineString(args[2]);
+        this.factoryParent = dbFactoryScopes.get(this.observerDbThread) || null;
         if (dbCtorScopes.has(this.observerDbThread)) errors.push('nested database constructor');
         dbCtorScopes.set(this.observerDbThread, this.callId);
       },
       onLeave: function () {
         try {
-          const state = {id: this.callId, path: this.path,
+          const state = {id: this.callId, path: this.path, factory_parent: this.factoryParent,
                          reader_nonnull: !this.object.add(0x70).readPointer().isNull()};
           dbConstructors.set(this.objectKey, state);
           record({kind: 'database_constructor', ...state});
@@ -439,6 +486,7 @@ function observe(module) {
       this.path = engineString(args[1]);
       this.observerThreadId = Process.getCurrentThreadId();
       this.callId = ++nextCall;
+      this.databaseParent = dbCtorScopes.get(this.observerThreadId) || null;
       this.parent = scopes.get(this.observerThreadId) || null;
       scopes.set(this.observerThreadId, this.callId);
     },
@@ -452,7 +500,7 @@ function observe(module) {
         } catch (_) { vtable = 'unreadable'; }
       }
       record({kind: 'filesystem_open', path: this.path, nonnull: !value.isNull(), vtable: vtable,
-        call: this.callId, parent: this.parent});
+        call: this.callId, parent: this.parent, database_parent: this.databaseParent});
       if (scopes.get(this.observerThreadId) !== this.callId) errors.push('filesystem scope mismatch');
       if (this.parent) scopes.set(this.observerThreadId, this.parent); else scopes.delete(this.observerThreadId);
     }
@@ -464,6 +512,24 @@ rpc.exports = {
     includeBatchCounts = batchCounts === true;
     includeBatchPhases = batchPhases === true;
     Process.attachModuleObserver({onAdded: observe});
+    if (includeBatchPhases) {
+      const libc = Process.findModuleByName('libc.so');
+      for (const name of ['open', 'openat']) {
+        const entry = libc && libc.findExportByName(name);
+        if (!entry) { coverage.push({label: 'libc_' + name, installed: false}); continue; }
+        Interceptor.attach(entry, {
+          onEnter: function (args) {
+            this.dbParent = dbCtorScopes.get(Process.getCurrentThreadId()) || null;
+            if (this.dbParent) this.dbPath = boundedString(args[name === 'open' ? 0 : 1]);
+          },
+          onLeave: function (value) {
+            if (this.dbParent) record({kind: 'database_libc_open', api: name, parent: this.dbParent,
+                                       path: this.dbPath, fd: value.toInt32()});
+          }
+        });
+        coverage.push({label: 'libc_' + name, installed: true});
+      }
+    }
     const android = Process.findModuleByName('libandroid.so');
     if (android) {
       const open = android.findExportByName('AAssetManager_open');
@@ -481,5 +547,6 @@ rpc.exports = {
     activeScopes: scopes.size, activeBatchScopes: batchScopes.size, activeFinishScopes: finishScopes.size,
     activeLookupScopes: lookupScopes.size, activeInnerScopes: innerScopes.size,
     activeSourceLoaderScopes: sourceLoaderScopes.size, activeDbCtorScopes: dbCtorScopes.size,
-    activeDbInitScopes: dbInitScopes.size}; }
+    activeDbInitScopes: dbInitScopes.size, activeDbFactoryScopes: dbFactoryScopes.size,
+    activeEngineDbScopes: engineDbScopes.size}; }
 };
