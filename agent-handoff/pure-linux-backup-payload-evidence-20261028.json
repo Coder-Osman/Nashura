@@ -1,0 +1,454 @@
+{
+  "schema": "nashura.pure-linux-backup-payload-evidence.v1",
+  "date": "2026-10-28",
+  "baseline_commit": "0ad2e5a04fe3abd6eb7e977184418cf5170b4c9d",
+  "delivery_commit": "containing commit; avoids self-reference",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "status": "RUNTIME_OBSERVED_LIMITED",
+  "private_archive_root": "/private/tmp/nashura-backup-payload-20261028-f72_knpi",
+  "publication_scope": "sanitized summaries and hashes only; no raw device files, APK, keys, token or trace",
+  "environment": {
+    "avd": "nashura-e2-backup-contract-api30",
+    "serial": "emulator-5582",
+    "fingerprint": "google/sdk_gphone_arm64/emulator_arm64:11/RSR1.240422.006/12134477:userdebug/dev-keys",
+    "system_server": {
+      "boot_id": "7ba17bf9-b9a0-47a9-b7d5-08d9bf0daab2",
+      "pid": 470,
+      "starttime": 1131,
+      "cmdline": "system_server"
+    },
+    "identity_preserved": true,
+    "fixture_apk_sha256": "fd8106ccb065255550498ba2b36e9323ac9db7cfb7535d93c6362dce431e7d5a",
+    "services_jar_sha256": "c6992cdc2a3e23d5aeb6ab77e7a7f6889cfcf5c262c6ed86825e6fcbf601681d",
+    "game_installed": false,
+    "java_vm": "retained",
+    "transport": "com.android.localtransport/.LocalTransport",
+    "real_game_inputs_reverified_this_round": false
+  },
+  "source_files": [
+    {
+      "path": "tools/pure_linux/backup_payload_fixture/AndroidManifest.xml",
+      "sha256": "7bead4b517c50edf618951b591fe01ab33e316404e041fe5e762ec3c54dc0724",
+      "bytes": 606
+    },
+    {
+      "path": "tools/pure_linux/backup_payload_fixture/PayloadBackupAgent.java",
+      "sha256": "b461fd73f3a3d2f0304ffd778bf47991e8a7e2d7ae5fc5ed5a80d3ad070565b4",
+      "bytes": 1161
+    },
+    {
+      "path": "tools/pure_linux/backup_payload_fixture/PayloadReceiver.java",
+      "sha256": "1334b09ff958eebad4b6c582273b2d41a04d6a1b2e9b8a422022fcd821924e2d",
+      "bytes": 1665
+    },
+    {
+      "path": "tools/pure_linux/run_backup_payload.py",
+      "sha256": "285c22887c9488599e99aae0aee21ade09b4f052de9fded8170404164dd935e0",
+      "bytes": 6712
+    },
+    {
+      "path": "tools/pure_linux/backup_payload_audit.py",
+      "sha256": "3643c927dd859a298a95756848c8a5f60f3afac2620d6d93a64070e344230629",
+      "bytes": 21992
+    },
+    {
+      "path": "tools/pure_linux/test_backup_payload.py",
+      "sha256": "dca666ae5fdc29b1dcb15f721f81b20a67c54f8308dbcdef356f5df1a074dede",
+      "bytes": 13338
+    }
+  ],
+  "runtime": {
+    "schema": "nashura.backup-payload-audit.v1",
+    "status": "RUNTIME_OBSERVED_LIMITED",
+    "source": "owned Android fixture, not game or Linux runtime",
+    "token_sha256": "2aca4bf014e4899d25638a023d62b57202b8dd558b78aac1265ed67228711924",
+    "direct_worker": {
+      "pid": 470,
+      "tid": 5454,
+      "stream_bytes": 261,
+      "coverage": "LOG_ONLY_NOT_METHOD_COUNTS"
+    },
+    "drain_worker": {
+      "pid": 470,
+      "tid": 5679,
+      "stream_bytes": 0,
+      "coverage": "LOG_ONLY_NOT_METHOD_COUNTS"
+    },
+    "token_events": 6,
+    "files": {
+      "transport": {
+        "sha256": "53fa7d30d699bfe8ea237ecbd9a333fc16b175bc999308b5ca59ed80dd7e778f",
+        "bytes": 233,
+        "unchanged": true
+      },
+      "xml": {
+        "sha256": "e5090209b25b5ee56aa0ae86ace51e8166a73c261cd31da4cda058f6a85725ce",
+        "bytes": 217,
+        "unchanged": true
+      },
+      "state": {
+        "sha256": "e636bf4a636e2bf194b778552bd57e4ea24ba1a884d5f51806220e8db09161b8",
+        "bytes": 72,
+        "unchanged": true
+      }
+    },
+    "direct_backup_left_pending": true,
+    "after_queue_drain_pending": false,
+    "target_journal_disappeared": true,
+    "surviving_journals": 4,
+    "surviving_target_entries": 0,
+    "transport_xml_offset_observed": 16,
+    "transport_header_semantics": "UNKNOWN",
+    "journal_delete_method_count": "UNKNOWN",
+    "natural_job_expiry": "NOT_RUN",
+    "failure_paths": "NOT_RUN",
+    "linux_backup_binding": "UNRESOLVED",
+    "catalog_ready_pass": false,
+    "input_sha256": {
+      "run": "a3ebc1066dfb6ebe287d8f6ef9e601464ad49b492e497a5cc0852bf50b45318d",
+      "drain_commands": "d1f9caa89d5904232eb8238f84afa20dc39b4d62418f0dfb1bafb8837a373229",
+      "followup": "d4e680951613e2491e1b7cba1c41d2d52512b70cba8b1ae4802f3b16fb1b8e7d"
+    },
+    "command_archives_verified": 56
+  },
+  "commands": {
+    "fixture_runner": {
+      "command": "python tools/pure_linux/run_backup_payload.py --adb ADB --serial emulator-5582 --apk PRIVATE_APK --apk-sha256 APK_SHA --platform-sha256 PLATFORM_SHA --token PRIVATE_TOKEN --output EXCLUSIVE_OUTPUT",
+      "exact_private_argv": {
+        "private_archive": "run-command.json",
+        "sha256": "d61c3f9ce51016da46d9c9631aee93542016484ad4f88403031a6c3e5d51a476",
+        "bytes": 1219
+      },
+      "result": {
+        "private_archive": "observe/result.json",
+        "sha256": "a3ebc1066dfb6ebe287d8f6ef9e601464ad49b492e497a5cc0852bf50b45318d",
+        "bytes": 8755
+      },
+      "command_count": 22,
+      "command_exit_codes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "outer_exit_code": "NOT_SEPARATELY_ARCHIVED; runner result and child exits preserved"
+    },
+    "queue_drain": {
+      "mutation_argv": [
+        "adb",
+        "-s",
+        "emulator-5582",
+        "shell",
+        "bmgr",
+        "run"
+      ],
+      "archives": {
+        "private_archive": "drain/commands.json",
+        "sha256": "d1f9caa89d5904232eb8238f84afa20dc39b4d62418f0dfb1bafb8837a373229",
+        "bytes": 5779
+      },
+      "exit_codes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "additional_store": 0,
+      "additional_backupnow": 0
+    },
+    "followup": {
+      "read_only": true,
+      "archives": {
+        "private_archive": "journal-followup/result.json",
+        "sha256": "d4e680951613e2491e1b7cba1c41d2d52512b70cba8b1ae4802f3b16fb1b8e7d",
+        "bytes": 6730
+      },
+      "exit_codes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "offline_audit": {
+      "argv": [
+        "/opt/anaconda3/bin/python3",
+        "tools/pure_linux/backup_payload_audit.py",
+        "--run",
+        "/private/tmp/nashura-backup-payload-20261028-f72_knpi/observe/result.json",
+        "--run-sha256",
+        "a3ebc1066dfb6ebe287d8f6ef9e601464ad49b492e497a5cc0852bf50b45318d",
+        "--drain",
+        "/private/tmp/nashura-backup-payload-20261028-f72_knpi/drain/commands.json",
+        "--drain-sha256",
+        "d1f9caa89d5904232eb8238f84afa20dc39b4d62418f0dfb1bafb8837a373229",
+        "--followup",
+        "/private/tmp/nashura-backup-payload-20261028-f72_knpi/journal-followup/result.json",
+        "--followup-sha256",
+        "d4e680951613e2491e1b7cba1c41d2d52512b70cba8b1ae4802f3b16fb1b8e7d",
+        "--output",
+        "/private/tmp/nashura-backup-payload-20261028-f72_knpi/audit-v4.json"
+      ],
+      "exit_code": 0,
+      "command_record": {
+        "private_archive": "audit-v4-command.json",
+        "sha256": "d2134eb15c9a9f630a954394d25b89628983f0ad0bc69c021d06133657529fa5",
+        "bytes": 791
+      },
+      "output": {
+        "private_archive": "audit-v4.json",
+        "sha256": "cbba285418522b87cc1c6e7fc584bec81e504df9b46153968a3a8558d786cc81",
+        "bytes": 1732
+      },
+      "stdout": {
+        "private_archive": "audit-v4.stdout",
+        "sha256": "0755637cb36fda8cebf23fdcd7fbb080dc4c9c87f88ac344e383ce5ac3d2ec62",
+        "bytes": 1542
+      },
+      "stderr": {
+        "private_archive": "audit-v4.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "build": {
+      "initial": {
+        "private_archive": "build/commands.json",
+        "sha256": "9eb1f7fe9ffd019d24719b1111df2dc46202ad856936b66f44a41fb601d1ea05",
+        "bytes": 2435
+      },
+      "initial_exit_codes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "corrected": {
+        "private_archive": "build-v2/commands.json",
+        "sha256": "c7cf77751d2d045c83ade823e707652ccfe6692b994aa8e93473dd4cf9c8b362",
+        "bytes": 4584
+      },
+      "corrected_exit_codes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "validation": {
+    "isolated_copy": true,
+    "commands": [
+      {
+        "argv": [
+          "/opt/anaconda3/bin/python3",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/pure_linux"
+        ],
+        "cwd": "PRIVATE_RUN/validation-v1/source",
+        "exit_code": 0,
+        "seconds": 11.004,
+        "stdout_sha256": "701376d1d95ebabd05a5a53bd4e139db8977c6fd4ad5cdcd1b4bdd18bf7e910c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/opt/anaconda3/bin/python3",
+          "tools/run_main_engine_checks.py"
+        ],
+        "cwd": "PRIVATE_RUN/validation-v1/source",
+        "exit_code": 0,
+        "seconds": 32.714,
+        "stdout_sha256": "ffcd2a57cdf7eb9399cd435d54ad1d74af5f839009afa4f2478be45f0b31819d",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "argv": [
+          "/opt/anaconda3/bin/python3",
+          "tools/run_public_checks.py"
+        ],
+        "cwd": "PRIVATE_RUN/validation-v1/source",
+        "exit_code": 0,
+        "seconds": 239.764,
+        "stdout_sha256": "f5de12fc4ebf51fb1df4d04df1367a3869c339bfa34146f116a394af03580500",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "command_archive": {
+      "private_archive": "validation-v1/commands.json",
+      "sha256": "f0be49309b281e9b8e9856d87d40a8ba8e26ed9850295c2d133c2ff7080a03d6",
+      "bytes": 1307
+    },
+    "pure_linux": {
+      "passed": 810,
+      "skipped": 1
+    },
+    "main_engine": {
+      "passed": 211
+    },
+    "public_nine_groups": {
+      "passed": 1104,
+      "skipped": 42
+    },
+    "sets_not_additive": true,
+    "original_xml": {
+      "files": 252,
+      "unchanged": true
+    }
+  },
+  "release": {
+    "pre_shutdown_commands": {
+      "private_archive": "release-instance/commands.json",
+      "sha256": "86a90933af06dea6c3bb75ffd296ad77f0ccac0a5dc1975aa6cb69b20a295b73",
+      "bytes": 2093
+    },
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "host_after": {
+      "private_archive": "release-instance/host-after.json",
+      "sha256": "226ab4530110d5cd223b41606755fb4b1e9ef218fb1929c9717b7917783ce20e",
+      "bytes": 79
+    },
+    "host_after_exit_code": 1,
+    "host_after_meaning": "owned emulator PID no longer exists",
+    "devices_after": {
+      "private_archive": "release-instance/devices-after.json",
+      "sha256": "4598e45b6debff1df7c93bd5bffcdb2383d0580f117e365aebec161acbf4b27d",
+      "bytes": 100
+    },
+    "devices_after_exit_code": 0,
+    "verified_remaining_serials": [
+      "emulator-5580"
+    ],
+    "protected_5580_and_ubuntu": "not stopped or modified"
+  },
+  "failures_retained": [
+    {
+      "stage": "initial build",
+      "exit_code": 1,
+      "reason": "premature class glob, no classes.dex at aapt stage"
+    },
+    {
+      "stage": "audit v2",
+      "exit_code": 1,
+      "reason": "installed APK path regex omitted tilde; tool output retained, no separate exit archive",
+      "old_evidence_preserved": true
+    }
+  ],
+  "gates": {
+    "linux_backup_binding": "UNRESOLVED",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "game_state": "NOT_RUN",
+    "game_state_step": "NOT_RUN",
+    "native_match": "NOT_RUN",
+    "no_vm": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "first_unresolved_dependency": "Linux Backup side-effect ownership and binding, including failure/requeue semantics",
+  "next_step": "Audit actual failure/requeue and journal ownership boundaries before defining and binding Linux contract; retain fail-closed unresolved_backup",
+  "publication_checks": {
+    "source_manifest": {
+      "argv": [
+        "/opt/anaconda3/bin/python3",
+        "tools/check_public_snapshot.py"
+      ],
+      "exit_code": 0,
+      "source_files_verified": 2548
+    },
+    "credentials": {
+      "argv": [
+        "/opt/homebrew/bin/gitleaks",
+        "dir",
+        ".",
+        "--config",
+        ".gitleaks.toml",
+        "--redact"
+      ],
+      "exit_code": 0,
+      "result": "no leaks found"
+    },
+    "whitespace": {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    "origin_before_commit": {
+      "argv": [
+        "git",
+        "rev-list",
+        "--left-right",
+        "--count",
+        "HEAD...origin/codex/pure-linux-libg-headless-20261026"
+      ],
+      "exit_code": 0,
+      "left": 0,
+      "right": 0
+    },
+    "source_validation_copy": {
+      "files": 6,
+      "all_sha256_equal": true
+    },
+    "staging_commit_push": "performed after this evidence; final SHA and remote verification are in delivery response"
+  }
+}

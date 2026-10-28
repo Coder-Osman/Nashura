@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.nashura.backuppayload">
+    <uses-sdk android:minSdkVersion="30" android:targetSdkVersion="30" />
+    <application android:label="Nashura Backup Payload" android:allowBackup="true" android:backupAgent=".PayloadBackupAgent" android:fullBackupOnly="false">
+        <receiver android:name=".PayloadReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="org.nashura.backuppayload.STORE_AND_REQUEST" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

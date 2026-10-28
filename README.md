@@ -1,5 +1,15 @@
 # Nashura
 
+## 2026-10-28：非空 Backup 与真实队列消费
+
+自有Android fixture一次非空备份成功后目标仍pending；随后一次队列消费清除目标。
+transport233bytes、XML217bytes、state72bytes前后一致，四份存活journal不含目标。
+新增37项测试；专项810通过/1跳过、主工程211通过、公开1104通过/42跳过。
+专用5582已关闭，Linux Backup绑定及严格catalog仍BLOCKED；失败路径与header语义未闭合。
+详见[报告](agent-handoff/PURE_LINUX_BACKUP_PAYLOAD_2026-10-28.md)、
+[证据](agent-handoff/pure-linux-backup-payload-evidence-20261028.json)及
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_PAYLOAD.md)。以下保留历史状态。
+
 ## 2026-10-28：真实 Backup JobService 回调与交付边界
 
 专用ARM64实例中，自有应用一次请求后受控提前执行真实job，观察到

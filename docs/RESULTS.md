@@ -1,5 +1,16 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：非空 Backup 与队列消费
+
+自有fixture实际非增量备份261bytes日志流、233bytes落盘；目标仍pending。
+仅一次后续bmgr run消费队列，目标消失，原journal不再列出，四份存活journal目标0。
+XML217bytes、state72bytes和transport在消费前后逐字节一致；header与删除方法计数未知。
+新增37项工程测试；隔离专项810/1、主工程211、公开1104/42，三组exit0，252份原XML未变。
+专用5582已关闭；Linux绑定与严格catalog仍BLOCKED，后续对象图未运行。
+详见[报告](../agent-handoff/PURE_LINUX_BACKUP_PAYLOAD_2026-10-28.md)、
+[证据](../agent-handoff/pure-linux-backup-payload-evidence-20261028.json)及
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_PAYLOAD.md)。以下保留历史记录。
+
 ## 2026-10-28 E2.1-N：JobService 回调实际交付边界
 
 真实JobScheduler受控提前执行已排队job，捕获onStartJob→backupNow→cancel六条实验事件；

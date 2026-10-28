@@ -10194,8 +10194,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "fdc7f4b39747c4963e6dbdcc6fb23ca7329b910b2c574ff457247ec76e7ff60d",
-      "bytes": 40537,
+      "sha256": "f71cc59d670844b08f883bec537dc7dc768744c8b56200ae833af2be697a689a",
+      "bytes": 41067,
       "source_sha256": "c008f55f17031af6abae22b02af32e87d0c8c9d3cbc1a7c54fc4f73bdf72e3a7",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10204,13 +10204,14 @@
         "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
         "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
         "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
-        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate"
+        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
+        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "5234ddd6b33d7c51c6b080e84b502f86f4693bd9548dcd58a48e36f0c0c7d6aa",
-      "bytes": 72027,
+      "sha256": "ab106729a1680fd1c152edb0811ae9ae82428260b7992849cea1fb9e5e629eae",
+      "bytes": 72845,
       "source_sha256": "7956b3b23c44bda14bd02a13c725f93621bc473669cff1644c882afc3de0d310",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10219,7 +10220,8 @@
         "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
         "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
         "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
-        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate"
+        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
+        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate"
       ]
     },
     {
@@ -16631,8 +16633,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "58ab0ce537b4744e0cedb2e6dab5554a02adb07db7f1797587dd05c511d48870",
-      "bytes": 39793,
+      "sha256": "cc833b389407788fb8fb81ebdbd5e7c7878a424872f16dfb34b69ccf537283c6",
+      "bytes": 40499,
       "source_sha256": "268a62062b889a6cc7bd8034c306e2937b73840ef1d6e918fee39525ef232472",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -16641,7 +16643,8 @@
         "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
         "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
         "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
-        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate"
+        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
+        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate"
       ]
     },
     {
@@ -17814,10 +17817,73 @@
       "bytes": 11711,
       "source_sha256": "0ff3d2a7343fe1f5c2444a005b78e5af048875d85a6daef24d294b1737b0470b",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_payload_fixture/AndroidManifest.xml",
+      "sha256": "7bead4b517c50edf618951b591fe01ab33e316404e041fe5e762ec3c54dc0724",
+      "bytes": 606,
+      "source_sha256": "7bead4b517c50edf618951b591fe01ab33e316404e041fe5e762ec3c54dc0724",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_payload_fixture/PayloadReceiver.java",
+      "sha256": "1334b09ff958eebad4b6c582273b2d41a04d6a1b2e9b8a422022fcd821924e2d",
+      "bytes": 1665,
+      "source_sha256": "1334b09ff958eebad4b6c582273b2d41a04d6a1b2e9b8a422022fcd821924e2d",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_payload_fixture/PayloadBackupAgent.java",
+      "sha256": "b461fd73f3a3d2f0304ffd778bf47991e8a7e2d7ae5fc5ed5a80d3ad070565b4",
+      "bytes": 1161,
+      "source_sha256": "b461fd73f3a3d2f0304ffd778bf47991e8a7e2d7ae5fc5ed5a80d3ad070565b4",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/run_backup_payload.py",
+      "sha256": "285c22887c9488599e99aae0aee21ade09b4f052de9fded8170404164dd935e0",
+      "bytes": 6712,
+      "source_sha256": "285c22887c9488599e99aae0aee21ade09b4f052de9fded8170404164dd935e0",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_payload_audit.py",
+      "sha256": "3643c927dd859a298a95756848c8a5f60f3afac2620d6d93a64070e344230629",
+      "bytes": 21992,
+      "source_sha256": "3643c927dd859a298a95756848c8a5f60f3afac2620d6d93a64070e344230629",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_backup_payload.py",
+      "sha256": "dca666ae5fdc29b1dcb15f721f81b20a67c54f8308dbcdef356f5df1a074dede",
+      "bytes": 13338,
+      "source_sha256": "dca666ae5fdc29b1dcb15f721f81b20a67c54f8308dbcdef356f5df1a074dede",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_BACKUP_PAYLOAD_2026-10-28.md",
+      "sha256": "bcaa36b735887cdd16ac83a2669d9184270a3fe982404b10052c940b48d3c2e2",
+      "bytes": 5968,
+      "source_sha256": "bcaa36b735887cdd16ac83a2669d9184270a3fe982404b10052c940b48d3c2e2",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-backup-payload-evidence-20261028.json",
+      "sha256": "586ed47d246aacec137eaec0910b8efa20a87341e498b61defaf901085756857",
+      "bytes": 13431,
+      "source_sha256": "586ed47d246aacec137eaec0910b8efa20a87341e498b61defaf901085756857",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_PAYLOAD.md",
+      "sha256": "3526aa597e017bf32fdebbf7e5657b53b03fdc023de35f4c67c9ca485ab1819e",
+      "bytes": 1717,
+      "source_sha256": "3526aa597e017bf32fdebbf7e5657b53b03fdc023de35f4c67c9ca485ab1819e",
+      "transformations": []
     }
   ],
-  "file_count": 2539,
-  "source_bytes": 35020976,
+  "file_count": 2548,
+  "source_bytes": 35089620,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
