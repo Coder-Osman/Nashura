@@ -50,6 +50,9 @@ ENTRY_GUARDS = {
     "OWNER_GETTER": (0x7557d0, "0d608b10262186b18f47bbec627b72bb2a345da5f8697cc041d7a7c63c163b60"),
     "APP_VERSION_WRAPPER": (0x140cc8c, "d44c0cc818e6bbac2db216c3f7beaae643e11e57accf313cb69c10d61869538d"),
     "APP_VERSION_STRING": (0x138a810, "678076dcebd45809617481c463e518663dfe5db67a9313fc0309b7a2a11fdb61"),
+    "ALLOCATOR_CTOR": (0x1237348, "be805a3ff84960c4b362d3dc82bace8374a12544f1902a5bb37800664031a5e1"),
+    "ALLOCATOR_ALLOC": (0x1237358, "72ef53a0b6174b8b36fb1b45f6789d0165a39f4719b5bde8bf20f5c24f581eda"),
+    "ALLOCATOR_FREE": (0x12373a4, "4582f74d263c1fb89fb1b2f5773cd3b243570010ae7699f124d2bbcf54d25fd5"),
 }
 
 
@@ -269,6 +272,7 @@ def main():
     parser.add_argument("--observe-targets", type=Path)
     parser.add_argument("--owner-getter-only", action="store_true",
                         help="Call the observed owner getter and stop before catalog or factory initialization")
+    parser.add_argument("--allocator-only", action="store_true", help="Exercise the observed native allocator only")
     parser.add_argument("--app-version", help="Explicit verified package version for the bounded owner experiment")
     parser.add_argument("--loading-config-candidate", action="store_true")
     parser.add_argument("--native-backup-queue", action="store_true",
@@ -288,6 +292,8 @@ def main():
         parser.error("resource exercise requires a resource name")
     if arguments.owner_getter_only and (arguments.catalog_mode or arguments.factory_mode or arguments.resource_name):
         parser.error("owner getter experiment must not initialize factory, catalog, or a resource")
+    if arguments.allocator_only and (arguments.owner_getter_only or arguments.catalog_mode or arguments.factory_mode or arguments.resource_name):
+        parser.error("allocator experiment must not run owner, factory, catalog, or a resource")
     if arguments.app_version is not None and (not arguments.owner_getter_only or arguments.app_version != "15.535.13"):
         parser.error("app version requires the observed package version and owner getter experiment")
     if arguments.inspect_row_ids and not arguments.inspect_parsed_tables:
@@ -382,6 +388,8 @@ def main():
         environment.update(NASHURA_SEARCH_PROVIDER="1", NASHURA_SEARCH_PATH=str(arguments.search_root.resolve()))
     if arguments.owner_getter_only:
         environment["NASHURA_OWNER_GETTER_ONLY"] = "1"
+    if arguments.allocator_only:
+        environment["NASHURA_ALLOCATOR_ONLY"] = "1"
     if arguments.app_version is not None:
         environment["NASHURA_APP_VERSION"] = arguments.app_version
     if arguments.factory_mode:
@@ -460,6 +468,11 @@ def main():
         passed = passed and all(lines.count(line) == 1 for line in (
             "PHASE\towner_getter_enter", "PHASE\towner_getter_return",
             "OWNER_SLOT_BEFORE_NONNULL\t0", "OWNER_GETTER_RESULT\t1\t1\t1", "OWNER_VTABLE_MATCH\t1"))
+    if arguments.allocator_only:
+        lines = text.splitlines()
+        passed = passed and all(lines.count(line) == 1 for line in (
+            "ALLOCATOR_CONSTRUCTOR\t1", "ALLOCATOR_ALLOCATION\t1", "ALLOCATOR_RELEASE\t1",
+            "ALLOCATOR_INVALID_REJECTED\t1"))
     if preference is not None:
         passed = passed and preference["configuration_contract_pass"]
     if arguments.observe_targets:
@@ -491,12 +504,15 @@ def main():
                    "preference_backup_service": "UNRESOLVED" if all(preference_arguments) else None,
                    "native_backup_queue_candidate": arguments.native_backup_queue,
                    "owner_getter_only": arguments.owner_getter_only,
+                   "allocator_only": arguments.allocator_only,
                    "app_version_bridge_candidate": arguments.app_version is not None,
                    "native_backup_candidate_observations": backup_candidate,
                    "native_backup_android_parity": "NOT_VERIFIED" if arguments.native_backup_queue else None,
                    "outputs": {path.name: digest(path) for path in output.iterdir() if path.is_file()}})
     if not result["probe_unchanged"]:
         result["status"] = "BLOCKED"
+    elif passed and arguments.allocator_only:
+        result["status"] = "ALLOCATOR_ONLY_OBSERVED"
     elif passed and arguments.owner_getter_only:
         result["status"] = "OWNER_GETTER_OBSERVED"
     elif passed and arguments.catalog_mode:

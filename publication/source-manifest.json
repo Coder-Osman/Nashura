@@ -17087,9 +17087,9 @@
     },
     {
       "path": "tools/pure_linux/provider_job.py",
-      "sha256": "691b53bb3d0e50e873a62873ae24ff46298595b733fc421a289068c6be807081",
-      "bytes": 32873,
-      "source_sha256": "691b53bb3d0e50e873a62873ae24ff46298595b733fc421a289068c6be807081",
+      "sha256": "a406342feede1c6e1840964d1ae530379342781c6f1911a9893f703829f72f0c",
+      "bytes": 34063,
+      "source_sha256": "a406342feede1c6e1840964d1ae530379342781c6f1911a9893f703829f72f0c",
       "transformations": [
         "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
         "2026-10-28: correct encrypted preference key counting and document bounded native recheck"
@@ -17097,9 +17097,9 @@
     },
     {
       "path": "tools/pure_linux/provider_probe.c",
-      "sha256": "ee2e9196c013b3986dc2d83eca5169b323fe0314b6719def2323b9cb79309ab3",
-      "bytes": 30925,
-      "source_sha256": "ee2e9196c013b3986dc2d83eca5169b323fe0314b6719def2323b9cb79309ab3",
+      "sha256": "63a63deded285f1f62bc5d9e5f66ca019f62bfc1d8102f70637c27c0d6dba876",
+      "bytes": 32917,
+      "source_sha256": "63a63deded285f1f62bc5d9e5f66ca019f62bfc1d8102f70637c27c0d6dba876",
       "transformations": []
     },
     {
@@ -17384,9 +17384,9 @@
     },
     {
       "path": "tools/pure_linux/test_provider_job.py",
-      "sha256": "e9e31f83b1ebbcf7203cc37f16b4cf40f3d14fe6b24dffd67685024bd69bf485",
-      "bytes": 15027,
-      "source_sha256": "e9e31f83b1ebbcf7203cc37f16b4cf40f3d14fe6b24dffd67685024bd69bf485",
+      "sha256": "9bbf015327b1a3c318556002de0556fd35415cdd7bffafe0c1f29724eb5a43ad",
+      "bytes": 15767,
+      "source_sha256": "9bbf015327b1a3c318556002de0556fd35415cdd7bffafe0c1f29724eb5a43ad",
       "transformations": []
     },
     {
@@ -19415,10 +19415,45 @@
       "bytes": 619,
       "source_sha256": "4297781b8b0a4c206042c04a958d3b2a3daa289a78793b9e9df069c68afcba8b",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_linux_allocator.py",
+      "sha256": "b15595f666c1bf6ed1c83abd1012fed21e63700815457c37aec0d30fb59fc70e",
+      "bytes": 2661,
+      "source_sha256": "b15595f666c1bf6ed1c83abd1012fed21e63700815457c37aec0d30fb59fc70e",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_linux_allocator.py",
+      "sha256": "c311729abb7aecfe9b076b453b9c00eadc523b09db6299448e2369a26ad7c25c",
+      "bytes": 1237,
+      "source_sha256": "c311729abb7aecfe9b076b453b9c00eadc523b09db6299448e2369a26ad7c25c",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_NATIVE_ALLOCATOR_2026-10-29.md",
+      "sha256": "d97de1e193dce4edf94a62806c54748ef2a16f23b205b097ba8d043b3e4b9bcd",
+      "bytes": 3062,
+      "source_sha256": "d97de1e193dce4edf94a62806c54748ef2a16f23b205b097ba8d043b3e4b9bcd",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-native-allocator-evidence-20261029.json",
+      "sha256": "a68b80dbe094d01bc629fa79c3f723ce6a190ca075eb5b1abfd35628d2b5d0ff",
+      "bytes": 1163,
+      "source_sha256": "a68b80dbe094d01bc629fa79c3f723ce6a190ca075eb5b1abfd35628d2b5d0ff",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_NATIVE_ALLOCATOR.md",
+      "sha256": "53c5e585e7a85f37633eac34c52cfddea3c32db130f0d09c70c3d8f821a70fe9",
+      "bytes": 673,
+      "source_sha256": "53c5e585e7a85f37633eac34c52cfddea3c32db130f0d09c70c3d8f821a70fe9",
+      "transformations": []
     }
   ],
-  "file_count": 2763,
-  "source_bytes": 35916695,
+  "file_count": 2768,
+  "source_bytes": 35929413,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

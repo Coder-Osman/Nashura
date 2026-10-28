@@ -36,6 +36,36 @@ static int guard(const char *name, uintptr_t offset) {
     return memcmp((void *)(base + offset), bytes, sizeof(bytes)) == 0;
 }
 
+static int exercise_allocator(void) {
+    if (!guard("NASHURA_ALLOCATOR_CTOR_GUARD", 0x1237348) ||
+        !guard("NASHURA_ALLOCATOR_ALLOC_GUARD", 0x1237358) ||
+        !guard("NASHURA_ALLOCATOR_FREE_GUARD", 0x12373a4)) return 0;
+    const char *name = (const char *)(base + 0x2ba51e);
+    if (!is_readable((uintptr_t)name, sizeof("AndroidMainAllocator")) ||
+        memcmp(name, "AndroidMainAllocator", sizeof("AndroidMainAllocator"))) return 0;
+    struct { uint64_t before; uintptr_t object[2]; uint64_t after; } holder = {canary, {0, 0}, canary};
+    ((void (*)(void *, const char *))(base + 0x1237348))(holder.object, name);
+    uintptr_t table = holder.object[0] & UINT64_C(0x00ffffffffffffff);
+    if (holder.before != canary || holder.after != canary || table != base + 0x18bf798 ||
+        holder.object[1] != (uintptr_t)name || !is_readable(table, 16) ||
+        pointer_at(table) != base + 0x1237358 || pointer_at(table + 8) != base + 0x12373a4) return 0;
+    puts("ALLOCATOR_CONSTRUCTOR\t1");
+    void *block = ((void *(*)(void *, size_t, size_t))pointer_at(table))(holder.object, 64, 8);
+    uintptr_t address = (uintptr_t)block & UINT64_C(0x00ffffffffffffff);
+    if (!block || address % 8 || !is_readable(address, 64)) return 0;
+    memset(block, 0x5a, 64);
+    for (size_t i = 0; i < 64; ++i) if (((unsigned char *)block)[i] != 0x5a) return 0;
+    puts("ALLOCATOR_ALLOCATION\t1");
+    ((void (*)(void *, void *))pointer_at(table + 8))(holder.object, block);
+    if (holder.before != canary || holder.after != canary) return 0;
+    puts("ALLOCATOR_RELEASE\t1");
+    if (((void *(*)(void *, size_t, size_t))pointer_at(table))(holder.object, 64, 12) != NULL ||
+        ((void *(*)(void *, size_t, size_t))pointer_at(table))(holder.object, UINT64_C(0x100000000), 8) != NULL)
+        return 0;
+    puts("ALLOCATOR_INVALID_REJECTED\t1");
+    return 1;
+}
+
 #if defined(__aarch64__)
 __attribute__((noinline, used)) void app_version_return(void *output) {
     const char *version = getenv("NASHURA_APP_VERSION");
@@ -590,6 +620,10 @@ int native_provider_probe(uintptr_t engine, int (*readable)(uintptr_t, size_t)) 
     if (!is_readable(context + 0x6e8, 1)) return 55;
     printf("PROVIDER_CONTENT_READY\t%u\n", *(unsigned char *)(context + 0x6e8));
     int resource_status = 0;
+    if (getenv("NASHURA_ALLOCATOR_ONLY")) {
+        if (!exercise_allocator()) return 99;
+        goto release_provider;
+    }
     if (getenv("NASHURA_OWNER_GETTER_ONLY")) {
         if (getenv("NASHURA_APP_VERSION") && !install_app_version()) return 98;
         if (!guard("NASHURA_OWNER_GETTER_GUARD", 0x7557d0) ||
