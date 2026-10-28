@@ -10194,17 +10194,23 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "38a71837dcd7d2ec9813b3c4b025565f1679cbc700c047f67c7f4514c9eafb70",
-      "bytes": 37105,
+      "sha256": "e536235cf14134da05a5e8278d44ecc09cfa1f472d5f4b4663f7e10adf0ac639",
+      "bytes": 37678,
       "source_sha256": "c008f55f17031af6abae22b02af32e87d0c8c9d3cbc1a7c54fc4f73bdf72e3a7",
-      "transformations": ["2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved"]
+      "transformations": [
+        "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
+        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved"
+      ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "20b1c8d8b9a430cdb533d9de2b2ced05d2a198833b9b4474644e0d42a52a12e7",
-      "bytes": 66133,
+      "sha256": "235a792364d6a694cdcaf3035320df95c9e94734e43c8fc3269b0e0ce43dafe3",
+      "bytes": 67202,
       "source_sha256": "7956b3b23c44bda14bd02a13c725f93621bc473669cff1644c882afc3de0d310",
-      "transformations": ["2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved"]
+      "transformations": [
+        "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
+        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved"
+      ]
     },
     {
       "path": "firstlight_CR/.clang-format",
@@ -16615,10 +16621,13 @@
     },
     {
       "path": "README.md",
-      "sha256": "c285396643c6e612569bd85bbce00b5c8d10e37329c2529e82b54ec30a93f221",
-      "bytes": 35085,
+      "sha256": "f6f73d31d3477e0c43c88751c900a1492688d07c17a246fe252a2272d2722705",
+      "bytes": 35882,
       "source_sha256": "268a62062b889a6cc7bd8034c306e2937b73840ef1d6e918fee39525ef232472",
-      "transformations": ["2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved"]
+      "transformations": [
+        "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
+        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved"
+      ]
     },
     {
       "path": "tools/pure_linux/arm64_smoke.c",
@@ -17385,10 +17394,12 @@
     },
     {
       "path": "tools/pure_linux/run_loading_store_once.py",
-      "sha256": "b9010dc25ccba2cc1184fb849dc9e575d22c8fc4bcf3783535e63fb6d6eb6874",
-      "bytes": 8473,
+      "sha256": "aacae07aa2725153a4294e4d4e3579d356d7c8150050a97115072306b2540a81",
+      "bytes": 9994,
       "source_sha256": "b9010dc25ccba2cc1184fb849dc9e575d22c8fc4bcf3783535e63fb6d6eb6874",
-      "transformations": []
+      "transformations": [
+        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved"
+      ]
     },
     {
       "path": "tools/pure_linux/backup_observer_scope_fixture.cjs",
@@ -17424,9 +17435,44 @@
       "bytes": 3690,
       "source_sha256": "259b1742e3935a36d027fe213ebb8fc6344178b5d632763e092a0f2cd031c0e6",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/loading_store_audit.py",
+      "sha256": "1e58814061b38a9b3aab026cf7551542621bb5493450ca817c45140ef83b1ef0",
+      "bytes": 12707,
+      "source_sha256": "1e58814061b38a9b3aab026cf7551542621bb5493450ca817c45140ef83b1ef0",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_loading_store_audit.py",
+      "sha256": "bc7990a9871fc601bf3fd9d27d0dc815b21d60e6f2028481a9584a79a0fa5653",
+      "bytes": 8990,
+      "source_sha256": "bc7990a9871fc601bf3fd9d27d0dc815b21d60e6f2028481a9584a79a0fa5653",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_LOADING_DISK_TRANSACTION_2026-10-28.md",
+      "sha256": "343ecb851b01182eadc18e08048aeca404ca03fbe3b2eea95b46807162de3d15",
+      "bytes": 6758,
+      "source_sha256": "343ecb851b01182eadc18e08048aeca404ca03fbe3b2eea95b46807162de3d15",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-28_LOADING_DISK.md",
+      "sha256": "d4beed58632eeb4738a594e6a3f22197f7de52816070b9c0d3e5c4eda8b8e05f",
+      "bytes": 1635,
+      "source_sha256": "d4beed58632eeb4738a594e6a3f22197f7de52816070b9c0d3e5c4eda8b8e05f",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-loading-disk-transaction-evidence-20261028.json",
+      "sha256": "5fb00a623b3ac4b6a19298478b3692b3cf3745c6b66e3afc9b7e044445d9ee9d",
+      "bytes": 13512,
+      "source_sha256": "5fb00a623b3ac4b6a19298478b3692b3cf3745c6b66e3afc9b7e044445d9ee9d",
+      "transformations": []
     }
   ],
-  "file_count": 2487,
+  "file_count": 2492,
   "source_bytes": 34623972,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,

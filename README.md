@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-28：loading 双槽真实同步提交与恢复
+
+隔离 Android 实验确认四次同步 commit 均返回 true；目标写入和恢复都按
+storage/storage_new 顺序执行，最终两个 XML 与写前逐字节相同，Backup 位于双槽提交后。
+新增只读离线审计器；独立副本专项577通过/1跳过，主工程211通过，公开回归1104通过/42跳过。
+fsync、journal、跨进程恢复及Linux Backup绑定仍未闭合，严格catalog保持BLOCKED；
+ResourceManager/GameState/Step未运行。详见
+[报告](agent-handoff/PURE_LINUX_LOADING_DISK_TRANSACTION_2026-10-28.md)、
+[机器证据](agent-handoff/pure-linux-loading-disk-transaction-evidence-20261028.json)及
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_LOADING_DISK.md)。以下保留历史状态。
+
 ## 2026-10-28：loading 观察器修复与真实只读链路
 
 定位旧观察器的作用域过滤漏洞：此前commit零计数应标为未覆盖，不代表没有落盘。

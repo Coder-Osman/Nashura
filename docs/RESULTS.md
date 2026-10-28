@@ -1,5 +1,19 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：loading 双槽真实磁盘事务
+
+一次受控目标写入/恢复观测到4条同步commit完整链，返回均true；两槽最终XML
+逐字节恢复，目标编辑与中间XML吻合，Backup均在双槽提交后触发。
+251条原始记录留私有；新增SHA绑定离线审计器及28项synthetic审计器测试。
+独立副本专项577通过/1跳过、主工程211通过、公开九组1104通过/42跳过，均exit0；
+原工作树250份XML保持不变，集合不累加；完整发布检查见本轮机器证据。
+fsync为UNCOVERED，journal本窗口未观测、真实异步归因和跨进程恢复NOT_RUN；
+引擎前后完整身份未采集，Linux Backup binding和严格catalog仍BLOCKED。
+未推进ResourceManager/GameState/Step、训练或性能测试。详见
+[报告](../agent-handoff/PURE_LINUX_LOADING_DISK_TRANSACTION_2026-10-28.md)、
+[机器证据](../agent-handoff/pure-linux-loading-disk-transaction-evidence-20261028.json)及
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_LOADING_DISK.md)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：loading 路径映射与计数作用域修复
 
 旧观察器对匹配的store入口没有建立线程作用域，内部编码键及无参commit可能被过滤；

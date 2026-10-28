@@ -1,0 +1,364 @@
+{
+  "schema": "nashura.pure-linux-loading-disk-transaction.v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "base_head": "e03179773349fe41e8de5e6fc0606291be4f9688",
+  "classification": "RUNTIME_OBSERVED",
+  "scope": "one user-approved real Android store and restore; offline verification only afterwards",
+  "environment": {
+    "host_os": "macOS 15.6",
+    "host_arch": "arm64",
+    "host_memory_bytes": 38654705664,
+    "runtime": "Android 30 arm64-v8a",
+    "serial": "emulator-5580",
+    "recorded_game_pid": 6901,
+    "recorded_system_server_pid": 522,
+    "pid_scope": "recorded transaction, not current process identity",
+    "vm_retained": true
+  },
+  "identity_boundary": {
+    "historical_libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "engine_and_resources_pre_post": "NOT_CAPTURED_THIS_TRANSACTION",
+    "historical_reference_is_current_identity_proof": false
+  },
+  "transaction": {
+    "runner_exit_code": 0,
+    "key": "LOADING_SCREEN_STATE_LABEL",
+    "initial_value": "",
+    "target_value": "datatables-init",
+    "restored_value": "",
+    "script_writes": 2,
+    "meaning": "one target store plus its restoration",
+    "raw_trace": {
+      "private_path": "/private/tmp/nashura-loading-controlled-20261028-99okjE/frida-events.jsonl",
+      "sha256": "c941e31ed0cc915b241cd789d670dab38e27199822efad5bc1947a2c20938b58",
+      "bytes": 194550
+    },
+    "strict_audit": {
+      "private_path": "/private/tmp/nashura-loading-controlled-20261028-99okjE/disk-audit-strict.json",
+      "exit_code": 0,
+      "sha256": "f4e6672ca1f9fe49d0aaa8236376889529c200d6fb4475914c2fc35c9b3a598e",
+      "bytes": 5027
+    },
+    "audit": {
+      "schema": "nashura.loading-store-disk-audit.v1",
+      "status": "RUNTIME_OBSERVED",
+      "scope": "one recorded Android store/restore; no Linux equivalence gate",
+      "trace_sha256": "c941e31ed0cc915b241cd789d670dab38e27199822efad5bc1947a2c20938b58",
+      "records": 251,
+      "counts": {
+        "android.app.SharedPreferencesImpl$EditorImpl.commit": 4,
+        "android.app.SharedPreferencesImpl$EditorImpl.commitToMemory": 4,
+        "android.app.SharedPreferencesImpl$EditorImpl.putString": 2,
+        "android.app.SharedPreferencesImpl$EditorImpl.remove": 2,
+        "android.app.SharedPreferencesImpl.contains": 13,
+        "android.app.SharedPreferencesImpl.createFileOutputStream": 4,
+        "android.app.SharedPreferencesImpl.edit": 4,
+        "android.app.SharedPreferencesImpl.enqueueDiskWrite": 4,
+        "android.app.SharedPreferencesImpl.getString": 3,
+        "android.app.SharedPreferencesImpl.writeToFile": 4,
+        "android.app.backup.BackupManager.dataChanged": 2,
+        "android.app.backup.IBackupManager$Stub$Proxy.dataChanged": 2,
+        "c.a.j": 9,
+        "c.a.n": 4,
+        "com.android.server.backup.BackupManagerService.dataChanged": 4,
+        "com.android.server.backup.BackupManagerService.dataChangedForUser": 2,
+        "com.android.server.backup.BackupManagerService.isUserReadyForBackup": 5,
+        "com.android.server.backup.KeyValueBackupJob.schedule": 2,
+        "com.android.server.backup.UserBackupManagerService.dataChanged": 2,
+        "com.android.server.backup.UserBackupManagerService.dataChangedImpl": 2,
+        "com.android.server.backup.UserBackupManagerService.dataChangedTargets": 2,
+        "com.supercell.titan.ApplicationUtilBase.getKeyValue": 3,
+        "com.supercell.titan.ApplicationUtilBase.storeKeyValue": 2,
+        "com.supercell.titan.GameApp.requestBackup": 2
+      },
+      "commits": [
+        {
+          "transaction": "target",
+          "slot": "storage.xml",
+          "operation": "putString",
+          "commit_return": true,
+          "write_to_file_returned": true,
+          "xml_sha256": "f75951c5d2103bfb954404d1419c8a74744d38d3d9fd241dccf97e30c86c1b9d"
+        },
+        {
+          "transaction": "target",
+          "slot": "storage_new.xml",
+          "operation": "putString",
+          "commit_return": true,
+          "write_to_file_returned": true,
+          "xml_sha256": "a3f8ab679b55cb4426bf19275238b3c4097448e199e436ab95734a5457a80ece"
+        },
+        {
+          "transaction": "restore",
+          "slot": "storage.xml",
+          "operation": "remove",
+          "commit_return": true,
+          "write_to_file_returned": true,
+          "xml_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793"
+        },
+        {
+          "transaction": "restore",
+          "slot": "storage_new.xml",
+          "operation": "remove",
+          "commit_return": true,
+          "write_to_file_returned": true,
+          "xml_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793"
+        }
+      ],
+      "snapshots": [
+        {
+          "stage": "before_attach",
+          "slot": "storage.xml",
+          "bytes": 65,
+          "sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+          "backup": "ABSENT"
+        },
+        {
+          "stage": "before_attach",
+          "slot": "storage_new.xml",
+          "bytes": 65,
+          "sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+          "backup": "ABSENT"
+        },
+        {
+          "stage": "before_target_store",
+          "slot": "storage.xml",
+          "bytes": 65,
+          "sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+          "backup": "ABSENT"
+        },
+        {
+          "stage": "before_target_store",
+          "slot": "storage_new.xml",
+          "bytes": 65,
+          "sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+          "backup": "ABSENT"
+        },
+        {
+          "stage": "after_target_store",
+          "slot": "storage.xml",
+          "bytes": 168,
+          "sha256": "f75951c5d2103bfb954404d1419c8a74744d38d3d9fd241dccf97e30c86c1b9d",
+          "backup": "ABSENT"
+        },
+        {
+          "stage": "after_target_store",
+          "slot": "storage_new.xml",
+          "bytes": 168,
+          "sha256": "a3f8ab679b55cb4426bf19275238b3c4097448e199e436ab95734a5457a80ece",
+          "backup": "ABSENT"
+        },
+        {
+          "stage": "after_restore_store",
+          "slot": "storage.xml",
+          "bytes": 65,
+          "sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+          "backup": "ABSENT"
+        },
+        {
+          "stage": "after_restore_store",
+          "slot": "storage_new.xml",
+          "bytes": 65,
+          "sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+          "backup": "ABSENT"
+        }
+      ],
+      "api_value_restored": true,
+      "xml_bytes_restored": true,
+      "two_slot_order": [
+        "storage.xml",
+        "storage_new.xml"
+      ],
+      "backup_order": "after both synchronous commits",
+      "cross_process_attribution": "temporal correlation only; no Binder transaction IDs",
+      "journal": "NOT_OBSERVED_IN_THIS_WINDOW",
+      "fsync": "UNCOVERED",
+      "cross_process_recovery": "NOT_RUN",
+      "async_disk_attribution": "NOT_RUN",
+      "engine_identity_pre_post": "NOT_CAPTURED_THIS_TRANSACTION",
+      "linux_backup_binding": "UNRESOLVED",
+      "catalog_ready_pass": false
+    }
+  },
+  "artifacts": {
+    "tools/pure_linux/run_loading_store_once.py": {
+      "sha256": "aacae07aa2725153a4294e4d4e3579d356d7c8150050a97115072306b2540a81",
+      "bytes": 9994
+    },
+    "tools/pure_linux/loading_store_audit.py": {
+      "sha256": "1e58814061b38a9b3aab026cf7551542621bb5493450ca817c45140ef83b1ef0",
+      "bytes": 12707
+    },
+    "tools/pure_linux/test_loading_store_audit.py": {
+      "sha256": "bc7990a9871fc601bf3fd9d27d0dc815b21d60e6f2028481a9584a79a0fa5653",
+      "bytes": 8990
+    },
+    "tools/pure_linux/backup_runtime_observer.js": {
+      "sha256": "fe4323bf9c2d0afaa87fc10121ba8ad0068dbf36fd768de5eba87ea4fe987013",
+      "bytes": 12291
+    }
+  },
+  "checks": {
+    "isolated_directory": "/private/tmp/nashura-loading-disk-checks-20261028-f4sye2yk",
+    "engineering_only": true,
+    "pure_linux": {
+      "command": "/opt/anaconda3/bin/python3 -m pytest -q -p no:cacheprovider tools/pure_linux",
+      "exit_code": 0,
+      "passed": 577,
+      "skipped": 1,
+      "duration_seconds": 5.58,
+      "log": {
+        "private_path": "/private/tmp/nashura-loading-disk-checks-20261028-f4sye2yk/pure-linux-tests.log",
+        "sha256": "4e18c0f1a69f720fd5813308e814001319d12f6866ede9292941d695789a4c9b",
+        "bytes": 751
+      }
+    },
+    "main_engine": {
+      "command": "/opt/anaconda3/bin/python3 tools/run_main_engine_checks.py",
+      "exit_code": 0,
+      "passed": 211,
+      "duration_seconds": 22.21,
+      "log": {
+        "private_path": "/private/tmp/nashura-loading-disk-checks-20261028-f4sye2yk/main-engine-tests.log",
+        "sha256": "20590276c17cdfdd757dfafafa6cfdb662edee2fbdb9cb3187f82a524db78967",
+        "bytes": 261
+      }
+    },
+    "public": {
+      "command": "/opt/anaconda3/bin/python3 tools/run_public_checks.py",
+      "exit_code": 0,
+      "passed": 1104,
+      "skipped": 42,
+      "failures": 0,
+      "errors": 0,
+      "groups": [
+        {
+          "name": "checks-public.xml",
+          "tests": 821,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 27,
+          "sha256": "871271712ffd2da6bde78e119986ae5d7c9dc8a8e5100d3a6c61132cbfd72895",
+          "bytes": 161846
+        },
+        {
+          "name": "checks-affordability.xml",
+          "tests": 23,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "sha256": "138a8f1d4de592624dffbb35cca43f78b6ea06a63f8e480f6bb94f6a77402191",
+          "bytes": 4340
+        },
+        {
+          "name": "checks-selection-timeout.xml",
+          "tests": 82,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "sha256": "63286f404f08f57cb8ca8529bbe63addecf8d8325209e5acdf164798137a2084",
+          "bytes": 14580
+        },
+        {
+          "name": "checks-position-guards.xml",
+          "tests": 18,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 3,
+          "sha256": "2b09ab5d0865e40c6695ef1968d0ec66d0c2914b34fbe23e67dc5a9082bb241e",
+          "bytes": 4313
+        },
+        {
+          "name": "checks-live-command.xml",
+          "tests": 29,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 4,
+          "sha256": "bbe37f990f8c275fe3a3ed8c6996df1aad59b85dd02c92672bfb87ebc5d9ba04",
+          "bytes": 6462
+        },
+        {
+          "name": "checks-dispatch-command.xml",
+          "tests": 34,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 3,
+          "sha256": "468d9bb368ff7945ffb0abdb7a68b849daa30e5b14a0ff5bdd12f6733c9151a4",
+          "bytes": 6475
+        },
+        {
+          "name": "checks-reservation-mapping.xml",
+          "tests": 33,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 2,
+          "sha256": "556d35fba79e92f7014ef5e35da88ac5c6c4e6d2e03ff6bc6f9e98bca712252f",
+          "bytes": 6429
+        },
+        {
+          "name": "checks-command-coordinates.xml",
+          "tests": 41,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 3,
+          "sha256": "a5d3768aab744cedbc8c3b0f1ec988f0ec6a5af6db4c602558dc3322b4420111",
+          "bytes": 8253
+        },
+        {
+          "name": "checks-collection-coordinator.xml",
+          "tests": 65,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "sha256": "adf2cfd01d5899060b37992fa661e57a0aefe1f503956326b5e1ebfaf0bae215",
+          "bytes": 12024
+        }
+      ],
+      "log": {
+        "private_path": "/private/tmp/nashura-loading-disk-checks-20261028-f4sye2yk/public-tests.log",
+        "sha256": "6ee45042b0819ee5687024a7012c2071f6259985ecae98f4908404139c52640b",
+        "bytes": 3097
+      }
+    },
+    "original_xml_files_unchanged": 250,
+    "historical_xml_policy": "checks ran in new source copy; original XML files untouched"
+  },
+  "gates": {
+    "configuration_contract": "UNRESOLVED",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "gamestate_step": "NOT_RUN",
+    "native_match": "NOT_RUN",
+    "no_java_vm": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "training": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "next_blocker": "Close current runtime codec/storage/Backup contract, especially explicit Linux Backup binding failure, before strict catalog revalidation.",
+  "publication_checks": {
+    "snapshot": {
+      "command": "/opt/anaconda3/bin/python3 tools/check_public_snapshot.py",
+      "exit_code": 0,
+      "source_files_verified": 2492
+    },
+    "gitleaks": {
+      "command": "/opt/homebrew/bin/gitleaks dir . --config .gitleaks.toml --redact",
+      "exit_code": 0,
+      "result": "no leaks found",
+      "private_log": "/private/tmp/nashura-loading-disk-checks-20261028-f4sye2yk/gitleaks.log",
+      "log_sha256": "05c0f0306dd0788455909c3cb136068c9c5a09be9c2dc0eac76fc11448c25033"
+    },
+    "whitespace": {
+      "command": "git diff --check",
+      "exit_code": 0
+    },
+    "fetch": {
+      "command": "git -c http.version=HTTP/1.1 -c http.lowSpeedLimit=1 -c http.lowSpeedTime=20 fetch origin --prune",
+      "exit_code": 0,
+      "initial_http2_attempt": "FAILED_HTTP2_FRAMING_LAYER",
+      "remote_branch_before_publish": "92d211e406d84234586786817a9600b63b08dd22"
+    }
+  }
+}

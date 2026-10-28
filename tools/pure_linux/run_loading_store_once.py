@@ -2,7 +2,9 @@
 """Observe one isolated loading-key store transaction and restore its value."""
 
 import argparse
+import hashlib
 import json
+import shlex
 import subprocess
 import threading
 import time
@@ -20,6 +22,30 @@ def message_payload(record):
     if message.get("type") != "send":
         return None
     return message.get("payload", {})
+
+
+def capture_preference_file(adb_path, serial, remote_path, destination):
+    exists = subprocess.run(
+        [str(adb_path), "-s", serial, "shell",
+         "if [ -f " + shlex.quote(remote_path) + " ]; then echo present; "
+         "elif [ -e " + shlex.quote(remote_path) + " ]; then echo nonregular; "
+         "else echo absent; fi"],
+        check=True, capture_output=True, text=True, timeout=15,
+    ).stdout.strip()
+    if exists == "absent":
+        return {"remote_path": remote_path, "state": "ABSENT"}
+    if exists != "present":
+        raise RuntimeError("preference snapshot is not a regular file")
+    content = subprocess.run(
+        [str(adb_path), "-s", serial, "exec-out", "cat " + shlex.quote(remote_path)],
+        check=True, capture_output=True, timeout=15,
+    ).stdout
+    with destination.open("xb") as output:
+        destination.chmod(0o600)
+        output.write(content)
+    return {"remote_path": remote_path, "state": "CAPTURED",
+            "private_path": str(destination), "bytes": len(content),
+            "sha256": hashlib.sha256(content).hexdigest()}
 
 
 def checked_read(exports, key, expected=None):
@@ -78,6 +104,7 @@ def main():
     parser.add_argument("--key", default="LOADING_SCREEN_STATE_LABEL")
     parser.add_argument("--value", default="datatables-init")
     parser.add_argument("--restore-value")
+    parser.add_argument("--preference-file", action="append", default=[])
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--observe-only", action="store_true")
     mode.add_argument("--execute-store", action="store_true")
@@ -128,6 +155,10 @@ def main():
         try:
             backup_dump = adb(args.adb, args.serial, "shell", "dumpsys", "backup")
             record({"phase": label, "backup_dump": backup_dump})
+            for index, remote_path in enumerate(args.preference_file):
+                destination = args.output.parent / (label + "-preference-%d.xml" % index)
+                result = capture_preference_file(args.adb, args.serial, remote_path, destination)
+                record({"phase": label, "preference_file": result})
         except subprocess.CalledProcessError as error:
             record({"phase": label, "backup_dump_error": error.output})
             raise

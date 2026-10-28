@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N loading 双槽磁盘事务
+
+- 增加四阶段只读文件捕获、独占0600输出及SHA绑定离线审计，新增28项审计器测试。
+- 真实Android一次目标写入与恢复，4次同步commit均true；双槽XML逐字节恢复，Backup顺序通过。
+- 原始XML及trace留私有，历史失败与遗漏原样保留；跨进程因果归因保持未知。
+- 独立副本专项577通过/1跳过、主工程211通过；严格catalog及Linux Backup绑定仍BLOCKED。
+- 未推进ResourceManager、GameState、Step、正式训练或10×实验。
+
 ## 2026-10-28：E2.1-N loading 观察器作用域修复
 
 - 修复匹配入口未打开作用域的漏记，嵌套与异常恢复父作用域；新增MemoryCommitResult对象身份关联。
