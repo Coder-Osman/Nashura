@@ -14,7 +14,7 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def compare(android, linux, allow_inner=False, allow_first=False, allow_population=False):
+def compare(android, linux, allow_inner=False, allow_first=False, allow_population=False, allow_path=False):
     trace = android["trace"]
     starts = [event for event in trace["events"] if event.get("kind") == "table_batch"]
     ends = [event for event in trace["events"] if event.get("kind") == "table_batch_end"]
@@ -42,6 +42,8 @@ def compare(android, linux, allow_inner=False, allow_first=False, allow_populati
         expected["tree_insert_candidate"] = (0x11b2250, 0, None, None)
         expected["tree_population_candidate"] = (0x11aebb0, 0, None, None)
         expected["tree_node_candidate"] = (0x11b0084, 0, None, None)
+    if allow_path:
+        expected["path_creation_candidate"] = (0x11afc60, 0, None, None)
     if set(targets) != set(expected) or linux.get("exit_code") != 0 or linux.get("error") or linux.get("active_scopes") != 0:
         raise ValueError("Linux observer incomplete")
     for name, (offset, calls, scope, start) in expected.items():
@@ -72,7 +74,7 @@ def compare(android, linux, allow_inner=False, allow_first=False, allow_populati
             "linux_rows_after": sum(max(0, x) for x in after_l.values())}
 
 
-def audit(paths, identities, allow_inner=False, allow_first=False, allow_population=False):
+def audit(paths, identities, allow_inner=False, allow_first=False, allow_population=False, allow_path=False):
     if any(sha(path) != identities[name] for name, path in paths.items()):
         raise ValueError("input identity mismatch")
     android = json.loads(paths["android"].read_text())
@@ -93,6 +95,7 @@ def audit(paths, identities, allow_inner=False, allow_first=False, allow_populat
     labels = ("table_batch", "finish_a", "finish_lookup") + (("lookup_inner",) if allow_inner else ())
     labels += (("first_lookup_result",) if allow_first else ())
     labels += (("tree_insert_candidate", "tree_population_candidate", "tree_node_candidate") if allow_population else ())
+    labels += (("path_creation_candidate",) if allow_path else ())
     if not all(coverage.get(name) is True for name in labels):
         raise ValueError("Android hook coverage incomplete")
     for label in ("before", "after"):
@@ -109,7 +112,7 @@ def audit(paths, identities, allow_inner=False, allow_first=False, allow_populat
             ("inputs_unchanged", "resources_unchanged", "auxiliary_unchanged", "probe_unchanged"))):
         raise ValueError("Linux capture incomplete")
     return {"schema": "nashura.finish-lookup.v1", "status": "RUNTIME_OBSERVED_LIMITED", "input_sha256": identities,
-            "matched_update_files": len(inventory), "comparison": compare(android, linux, allow_inner, allow_first, allow_population), "catalog_ready_pass": False,
+            "matched_update_files": len(inventory), "comparison": compare(android, linux, allow_inner, allow_first, allow_population, allow_path), "catalog_ready_pass": False,
             "limitations": ["pointer identity and pointed-to contents not compared", "query key and initialization source unknown",
                             "function return difference alone does not prove causation", "separate runtimes and processes"]}
 

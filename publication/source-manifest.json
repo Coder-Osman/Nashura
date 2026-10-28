@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "24cc55df523842004c537462975c98d73bb1a5c7b32b726d066c7cc8d9f0c8f5",
-      "bytes": 17268,
-      "source_sha256": "24cc55df523842004c537462975c98d73bb1a5c7b32b726d066c7cc8d9f0c8f5",
+      "sha256": "68c0b24efc30a0a51a4a29ad42fd82a1e6bc7b71ff8b4c0bb37a3e54f1a0279e",
+      "bytes": 19441,
+      "source_sha256": "68c0b24efc30a0a51a4a29ad42fd82a1e6bc7b71ff8b4c0bb37a3e54f1a0279e",
       "transformations": []
     },
     {
@@ -18781,9 +18781,9 @@
     },
     {
       "path": "tools/pure_linux/audit_finish_lookup.py",
-      "sha256": "97f98f025a8f154494a7f1c05e268e282ebc6f1d82ef1a5d26de6789671e6ff6",
-      "bytes": 8816,
-      "source_sha256": "97f98f025a8f154494a7f1c05e268e282ebc6f1d82ef1a5d26de6789671e6ff6",
+      "sha256": "34e50002e611191262897e0f8b3bf5e041bc7604e1d22a0362f7f179f5ef1260",
+      "bytes": 9023,
+      "source_sha256": "34e50002e611191262897e0f8b3bf5e041bc7604e1d22a0362f7f179f5ef1260",
       "transformations": []
     },
     {
@@ -18900,9 +18900,9 @@
     },
     {
       "path": "tools/pure_linux/audit_first_lookup.py",
-      "sha256": "ed540af29a8f7f60b6daaf353a9df26389779636b40aa4bcd3e41bbcd8dff7c6",
-      "bytes": 3961,
-      "source_sha256": "ed540af29a8f7f60b6daaf353a9df26389779636b40aa4bcd3e41bbcd8dff7c6",
+      "sha256": "98126b8499716a4641c72fc45634ac1d3f025c04042267c1228de16425cb5993",
+      "bytes": 4002,
+      "source_sha256": "98126b8499716a4641c72fc45634ac1d3f025c04042267c1228de16425cb5993",
       "transformations": []
     },
     {
@@ -18995,10 +18995,52 @@
       "bytes": 1341,
       "source_sha256": "0cda70ee11415f92d03e4bfb537be4ad0d9e192c4852b2b221d2bf9bdb76f89e",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_path_creation.py",
+      "sha256": "03d4f038586ef86205a89a753f177daab65b3345bd7222c478b135f05c7b4534",
+      "bytes": 4010,
+      "source_sha256": "03d4f038586ef86205a89a753f177daab65b3345bd7222c478b135f05c7b4534",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/path_creation_targets.json",
+      "sha256": "ae590a40f689e40d0576f4c2c1be082ff770dec9f6d8800cdd13650c5730e06a",
+      "bytes": 1390,
+      "source_sha256": "ae590a40f689e40d0576f4c2c1be082ff770dec9f6d8800cdd13650c5730e06a",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_path_creation.py",
+      "sha256": "9519f6ebb78dacf729259ec6e6cfbe8752287274328b311b853d88fd4951171c",
+      "bytes": 1085,
+      "source_sha256": "9519f6ebb78dacf729259ec6e6cfbe8752287274328b311b853d88fd4951171c",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_PATH_CREATION.md",
+      "sha256": "25f8b60a2bf917a888d7faa4f2e1f047b20694291b120c993976717b4c8212bf",
+      "bytes": 849,
+      "source_sha256": "25f8b60a2bf917a888d7faa4f2e1f047b20694291b120c993976717b4c8212bf",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_PATH_CREATION_2026-10-29.md",
+      "sha256": "c277f2c4ef0af2e6c6b0891e28fe32f4d5ae80e59baa95ebc1b164ea80d7a463",
+      "bytes": 3359,
+      "source_sha256": "c277f2c4ef0af2e6c6b0891e28fe32f4d5ae80e59baa95ebc1b164ea80d7a463",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-path-creation-evidence-20261029.json",
+      "sha256": "ee6ba4d96c9c765bff0e9452243263d3e745646da9c4d2c7c44cd76e65fb823c",
+      "bytes": 1485,
+      "source_sha256": "ee6ba4d96c9c765bff0e9452243263d3e745646da9c4d2c7c44cd76e65fb823c",
+      "transformations": []
     }
   ],
-  "file_count": 2703,
-  "source_bytes": 35753893,
+  "file_count": 2709,
+  "source_bytes": 35768492,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
