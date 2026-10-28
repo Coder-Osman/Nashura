@@ -3,8 +3,10 @@
 const events = [], coverage = [], errors = [];
 let lost = 0;
 let nextCall = 0;
+let includeBatchCounts = false;
 const scopes = new Map();
 const batchScopes = new Map();
+const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
 function record(event) {
   if (events.length >= 30000) { lost++; return; }
   event.sequence = events.length;
@@ -35,6 +37,27 @@ function engineString(p) {
     return value !== null && value.length === length ? value : null;
   } catch (_) { return null; }
 }
+function tableCounts(context) {
+  function readable(value, size) {
+    const address = value.and(ptr('0x00ffffffffffffff'));
+    const range = Process.findRangeByAddress(address);
+    if (address.isNull() || !range || !range.protection.includes('r') ||
+        address.add(size).compare(range.base.add(range.size)) > 0) throw new Error('unreadable catalog memory');
+    return address;
+  }
+  const root = readable(context, 219 * 8);
+  return observedSlots.map(slot => {
+    const object = root.add(slot * 8).readPointer();
+    if (object.isNull()) return [slot, -1];
+    const table = readable(object, 0x90);
+    const capacity = table.add(0x38).readS32(), count = table.add(0x3c).readS32();
+    const owner = table.add(0x78).readPointer().and(ptr('0x00ffffffffffffff'));
+    const kind = table.add(0x84).readS32();
+    if (!owner.equals(root) || kind !== slot || count < 0 || capacity < count || capacity > 1000000)
+      throw new Error('catalog table invariant failed');
+    return [slot, count];
+  });
+}
 function attach(module, offset, label, callbacks) {
   try {
     const address = module.base.add(offset);
@@ -63,10 +86,22 @@ function observe(module) {
       batchScopes.set(this.observerThreadId, this.batchCall);
       let listCount = null;
       try { listCount = args[1].and(ptr('0x00ffffffffffffff')).add(12).readS32(); } catch (_) {}
-      record({kind: 'table_batch', call: this.batchCall, args: [2, 3, 4, 5, 6].map(i => args[i].toUInt32()), listCount: listCount,
-        caller: this.returnAddress.sub(module.base).toString()});
+      const event = {kind: 'table_batch', call: this.batchCall, args: [2, 3, 4, 5, 6].map(i => args[i].toUInt32()), listCount: listCount,
+        caller: this.returnAddress.sub(module.base).toString()};
+      if (includeBatchCounts) {
+        this.countsContext = args[0];
+        try { event.tableCounts = tableCounts(this.countsContext); }
+        catch (error) { errors.push('batch before: ' + String(error)); }
+      }
+      record(event);
     },
     onLeave: function () {
+      if (includeBatchCounts) {
+        const event = {kind: 'table_batch_end', call: this.batchCall};
+        try { event.tableCounts = tableCounts(this.countsContext); }
+        catch (error) { errors.push('batch after: ' + String(error)); }
+        record(event);
+      }
       if (batchScopes.get(this.observerThreadId) !== this.batchCall) errors.push('batch scope mismatch');
       batchScopes.delete(this.observerThreadId);
     }
@@ -100,7 +135,8 @@ function observe(module) {
   record({kind: 'engine_hooks_ready'});
 }
 rpc.exports = {
-  install: function () {
+  install: function (batchCounts) {
+    includeBatchCounts = batchCounts === true;
     Process.attachModuleObserver({onAdded: observe});
     const android = Process.findModuleByName('libandroid.so');
     if (android) {

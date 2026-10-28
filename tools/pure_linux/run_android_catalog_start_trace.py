@@ -22,6 +22,7 @@ def main():
     parser.add_argument("--expected-batches", type=int, default=0)
     parser.add_argument("--layout-script", type=Path)
     parser.add_argument("--inspect-row-ids", action="store_true")
+    parser.add_argument("--batch-table-counts", action="store_true")
     args = parser.parse_args()
     if args.expected_batches < 0:
         parser.error("expected-batches must be nonnegative")
@@ -137,7 +138,7 @@ def main():
 
         script.on("message", on_message)
         script.load()
-        report["installation"] = script.exports_sync.install()
+        report["installation"] = script.exports_sync.install(args.batch_table_counts)
         try:
             device.resume(pid)
             report["resume"] = "returned"

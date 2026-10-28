@@ -14,6 +14,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from observed_string import read_string
 from native_observation_scopes import ObservationScopes
+from catalog_table_counts import snapshot as snapshot_table_counts
 
 
 targets = json.loads(Path(os.environ["NASHURA_GDB_TARGETS"]).read_text())
@@ -46,6 +47,10 @@ class Observe(gdb.Breakpoint):
                                   "arguments": [int(frame.read_register("x%d" % index))
                                                 for index in range(8)]}
         record["events"].append(event)
+        counts_register = self.row.get("table_counts_register")
+        if counts_register:
+            event["table_counts_before"] = snapshot_table_counts(gdb.selected_inferior().read_memory,
+                                                                   int(frame.read_register(counts_register)))
         for specification in self.row.get("string_arguments", []):
             register = specification["register"]
             if register not in {"x%d" % index for index in range(8)}:
@@ -67,23 +72,27 @@ class Observe(gdb.Breakpoint):
             for breakpoint in scope_breakpoints[scope_start]:
                 breakpoint.enabled = True
         if not self.row.get("site_only", False):
-            Returned(event, scope_start)
+            Returned(event, scope_start, counts_register)
         return False
 
 
 class Returned(gdb.Breakpoint):
-    def __init__(self, event, scope_start=None):
+    def __init__(self, event, scope_start=None, counts_register=None):
         super().__init__("*0x%x" % event["lr"], internal=True)
         self.event = event
         self.thread_id = gdb.selected_thread().ptid
         self.stack = int(gdb.newest_frame().read_register("sp"))
         self.scope_start = scope_start
+        self.counts_context = event["arguments"][0] if counts_register else None
 
     def stop(self):
         frame = gdb.newest_frame()
         if gdb.selected_thread().ptid != self.thread_id or int(frame.read_register("sp")) != self.stack:
             return False
         self.event["return_x0"] = int(frame.read_register("x0"))
+        if self.counts_context is not None:
+            self.event["table_counts_after"] = snapshot_table_counts(gdb.selected_inferior().read_memory,
+                                                                      self.counts_context)
         if self.scope_start:
             scopes.leave(self.scope_start, tuple(self.thread_id))
             if not scopes.any(self.scope_start):
@@ -137,6 +146,9 @@ try:
         row["string_arguments"] = target.get("string_arguments", [])
         row["scope"] = target.get("scope")
         row["scope_start"] = target.get("scope_start")
+        row["table_counts_register"] = target.get("table_counts_register")
+        if row["table_counts_register"] not in (None, "x0") or (row["table_counts_register"] and row["site_only"]):
+            raise RuntimeError("table count observation requires x0 and a return breakpoint")
         if row["scope"] and row["scope"] not in scope_names:
             raise RuntimeError("unknown observation scope")
         if row["scope_start"] and row["site_only"]:

@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-10-29：catalog 差异的批次边界
+
+17个差异槽在前4批及第5批入口计数一致；第5批返回时首次出现1,417行差异。
+详见[报告](agent-handoff/PURE_LINUX_CATALOG_BATCH_BOUNDARIES_2026-10-29.md)。
+
 ## 2026-10-29：对齐 update 后的 catalog 布局
 
 两侧均使用相同 908 项 update 后，17 槽、1,457 行差异仍在；Linux 990→908
