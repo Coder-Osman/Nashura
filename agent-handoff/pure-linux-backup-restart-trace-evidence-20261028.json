@@ -1,0 +1,67 @@
+{
+  "schema": "nashura.pure-linux-backup-restart-trace.v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "base_head": "850c3673df6cd0fa5fde6919593562d9f0fd9919",
+  "scope": "permitted force-stop and relaunch of the existing game process on the isolated API 30 ARM64 AVD; passive binder_driver trace",
+  "device": {
+    "serial": "emulator-5580",
+    "android_api": 30,
+    "abi": "arm64-v8a",
+    "game_package": "nullsroyale.rel.free",
+    "game_pid_before": "6276",
+    "game_pid_after": "6377",
+    "system_server_pid": "522",
+    "other_avd_touched": false,
+    "app_data_cleared": false,
+    "avd_configuration_changed": false,
+    "package_installed_or_replaced": false
+  },
+  "experiment": {
+    "trace_category": "binder_driver",
+    "trace_bytes": 1027458,
+    "trace_lines": 7063,
+    "binder_transaction_events": 2352,
+    "game_process_transaction_events": 63,
+    "game_to_system_server_events": 43,
+    "interface_or_parcel_arguments_decoded": false,
+    "backup_callback_attributed": false,
+    "backup_enabled_before_and_after": true,
+    "pending_key_value_before": 30,
+    "pending_key_value_after": 30,
+    "target_package_pending_before_and_after": true,
+    "queue_change_attributable_to_restart": false,
+    "filtered_callback_log_observed": false
+  },
+  "private_outputs": {
+    "directory": "/tmp/nashura-backup-restart-trace-20261028-uFTv8f",
+    "trace_sha256": "b26c4e7c116f4f1dec250753276d5169b560c89b773706f1c8ace5cd287a6cf7",
+    "backup_before_sha256": "d761783a625742fe81a8fdfb4314b06a9b59959715845ae14669c2e974df6d8e",
+    "backup_after_sha256": "010eb20e3d63b5a573b6fe3b735b73d5bee085a5d2d958a92032dc61e604bcdc",
+    "filtered_logcat_sha256": "bf9813bd775aa102a79ce17d98bf9147b549fdbc417ca8945792bbf9e6f15622",
+    "raw_outputs_published": false
+  },
+  "configuration_and_catalog": {
+    "candidate_identity": "isolated_native_candidate_no_android_backup_parity",
+    "candidate_real_libg_exit_code": 96,
+    "verified_full_configuration_implementation_available": false,
+    "real_catalog_rerun": "NOT_RUN",
+    "catalog_ready_pass": false,
+    "first_unresolved_dependency": "LOADING_SCREEN_STATE_LABEL configuration persistence and attributable Backup service semantics",
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "gamestate_step": "NOT_RUN"
+  },
+  "status": {
+    "avd_restart": "RUNTIME_OBSERVED",
+    "binder_transport": "RUNTIME_OBSERVED_LIMITED",
+    "backup_service_delivery_and_side_effects": "UNRESOLVED",
+    "configuration_contract": "BLOCKED",
+    "catalog_gate": "BLOCKED",
+    "android_free": "NOT_RUN",
+    "full_battle": "NOT_RUN",
+    "performance_10x": "NOT_RUN",
+    "training": "NOT_RUN"
+  },
+  "interpretation_limit": "Binder process IDs and transaction counts do not identify the Backup interface, parameters, service-side authorization outcome, synchronous result, or side effect. Stable pending queue count does not prove callback execution or absence."
+}

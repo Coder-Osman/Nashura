@@ -8,6 +8,12 @@ function safeValue(value) {
   const kind = typeof value;
   if (kind === 'string' || kind === 'number' || kind === 'boolean') return value;
   try {
+    if (value.$className === 'java.io.File' || value.getClass().getName().toString() === 'java.io.File') {
+      return { className: 'java.io.File', path: String(value.getPath()) };
+    }
+  } catch (_) {
+  }
+  try {
     return { className: value.$className || value.getClass().getName().toString() };
   } catch (_) {
     return { kind: kind };
@@ -34,7 +40,7 @@ function stack() {
   }
 }
 
-function hookMethods(className, methodName, filter, trackPackageScope) {
+function hookMethods(className, methodName, filter, trackPackageScope, observeAll) {
   let target;
   try {
     target = Java.use(className);
@@ -66,18 +72,22 @@ function hookMethods(className, methodName, filter, trackPackageScope) {
       const isEntry = trackPackageScope && values.indexOf(targetPackage) !== -1;
       if (isEntry) activePackageThreads.add(threadId);
       const inScope = activePackageThreads.has(threadId);
-      if (!matches && !inScope && !isEntry) return method.apply(this, args);
+      if (!observeAll && !matches && !inScope && !isEntry) return method.apply(this, args);
 
       emit('call_enter', { method: identity, overloadIndex: overloadIndex,
-        args: values, packageScope: inScope || isEntry || matches, stack: stack() });
+        args: values, packageScope: inScope || isEntry || matches,
+        observeAll: observeAll === true,
+        receiver: safeValue(this), stack: stack() });
       try {
         const result = method.apply(this, args);
         emit('call_return', { method: identity, result: safeValue(result),
-          packageScope: inScope || isEntry || matches });
+          packageScope: inScope || isEntry || matches,
+          observeAll: observeAll === true });
         return result;
       } catch (error) {
         emit('call_throw', { method: identity, error: String(error),
-          packageScope: inScope || isEntry || matches });
+          packageScope: inScope || isEntry || matches,
+          observeAll: observeAll === true });
         throw error;
       } finally {
         if (isEntry) activePackageThreads.delete(threadId);
@@ -123,7 +133,7 @@ Java.perform(function () {
     hookMethods('com.android.server.backup.DataChangedJournal', 'addPackage', function (values) {
       return values.indexOf(targetPackage) !== -1;
     }, false);
-    hookMethods('com.android.server.backup.KeyValueBackupJob', 'schedule', null, false);
+    hookMethods('com.android.server.backup.KeyValueBackupJob', 'schedule', null, false, true);
   } else {
     hookMethods('com.supercell.titan.GameApp', 'requestBackup', function () {
       return true;
@@ -131,9 +141,28 @@ Java.perform(function () {
     hookMethods('com.supercell.titan.ApplicationUtilBase', 'storeKeyValue', function (values) {
       return values.indexOf('LOADING_SCREEN_STATE_LABEL') !== -1;
     }, true);
+    hookMethods('c.a', 'j', null, true);
+    hookMethods('c.a', 'n', null, true);
     hookMethods('android.app.SharedPreferencesImpl$EditorImpl', 'putString', function (values) {
       return values.indexOf('LOADING_SCREEN_STATE_LABEL') !== -1;
     }, true);
+    hookMethods('android.app.SharedPreferencesImpl$EditorImpl', 'remove', function (values) {
+      return values.indexOf('LOADING_SCREEN_STATE_LABEL') !== -1;
+    }, true);
+    hookMethods('android.app.SharedPreferencesImpl$EditorImpl', 'apply', null, true);
+    hookMethods('android.app.SharedPreferencesImpl$EditorImpl', 'commitToMemory', null, true);
+    hookMethods('android.app.SharedPreferencesImpl$EditorImpl', 'commit', null, true);
+    hookMethods('android.app.SharedPreferencesImpl', 'edit', null, true);
+    hookMethods('android.app.SharedPreferencesImpl', 'contains', function (values) {
+      return values.indexOf('LOADING_SCREEN_STATE_LABEL') !== -1;
+    }, true);
+    hookMethods('android.app.SharedPreferencesImpl', 'getString', function (values) {
+      return values.indexOf('LOADING_SCREEN_STATE_LABEL') !== -1;
+    }, true);
+    hookMethods('android.app.SharedPreferencesImpl', 'enqueueDiskWrite', null, true);
+    hookMethods('android.app.SharedPreferencesImpl', 'writeToFile', null, true);
+    hookMethods('android.app.SharedPreferencesImpl', 'loadFromDisk', null, true);
+    hookMethods('android.app.SharedPreferencesImpl', 'createFileOutputStream', null, true);
     hookMethods('android.app.backup.BackupManager', 'dataChanged', function (values) {
       return values.indexOf(targetPackage) !== -1;
     }, false);
@@ -163,6 +192,43 @@ rpc.exports = {
           resolve({ invoked: true, invocation: 'instance' });
         } catch (error) {
           emit('manual_requestBackup_error', { error: String(error) });
+          reject(String(error));
+        }
+      });
+    });
+  },
+  triggerstore: function (key, value) {
+    return new Promise(function (resolve, reject) {
+      Java.perform(function () {
+        try {
+          const applicationUtil = Java.use('com.supercell.titan.ApplicationUtilBase');
+          const keyText = String(key);
+          const valueText = String(value);
+          emit('manual_storeKeyValue_begin', { key: keyText, value: valueText,
+            method: 'com.supercell.titan.ApplicationUtilBase.storeKeyValue' });
+          applicationUtil.storeKeyValue(keyText, valueText);
+          emit('manual_storeKeyValue_return', { key: keyText, value: valueText,
+            method: 'com.supercell.titan.ApplicationUtilBase.storeKeyValue' });
+          resolve({ invoked: true, key: keyText, value: valueText });
+        } catch (error) {
+          emit('manual_storeKeyValue_error', { error: String(error), key: String(key) });
+          reject(String(error));
+        }
+      });
+    });
+  },
+  readkey: function (key) {
+    return new Promise(function (resolve, reject) {
+      Java.perform(function () {
+        try {
+          const applicationUtil = Java.use('com.supercell.titan.ApplicationUtilBase');
+          const keyText = String(key);
+          const value = applicationUtil.getKeyValue(keyText);
+          const valueText = value === null || value === undefined ? null : String(value);
+          emit('manual_getKeyValue_return', { key: keyText, value: valueText });
+          resolve({ key: keyText, value: valueText });
+        } catch (error) {
+          emit('manual_getKeyValue_error', { error: String(error), key: String(key) });
           reject(String(error));
         }
       });

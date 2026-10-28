@@ -1,0 +1,86 @@
+{
+  "schema": "nashura.pure-linux-backup-passive-trace.v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "base_head": "850c3673df6cd0fa5fde6919593562d9f0fd9919",
+  "scope": "five-second passive binder_driver trace on the existing isolated API 30 ARM64 AVD",
+  "device": {
+    "serial": "emulator-5580",
+    "android_api": 30,
+    "abi": "arm64-v8a",
+    "game_package": "nullsroyale.rel.free",
+    "game_pid_before_and_after": "5751",
+    "system_server_pid": "522",
+    "other_avd_touched": false
+  },
+  "experiment": {
+    "trace_category": "binder_driver",
+    "trace_window_seconds": 5,
+    "binder_transactions": 89,
+    "game_process_transaction_lines": 0,
+    "backup_named_trace_lines": 0,
+    "backup_state_read_only": true,
+    "backup_enabled_at_capture": true,
+    "pending_key_value_count": 30,
+    "target_package_pending_at_capture": true,
+    "pending_item_attributable_to_capture": false,
+    "app_restarted_or_stopped": false,
+    "app_data_changed": false,
+    "backup_request_initiated": false,
+    "avd_configuration_changed": false,
+    "trace_stopped_after_capture": true
+  },
+  "outputs": {
+    "trace_private_path": "/tmp/nashura-binder-passive-20261028-RvGgb3/binder-trace.txt",
+    "trace_bytes": 39681,
+    "trace_sha256": "648c9e7b62a9eab2cd0e9cc1aaa29991922f66f4fb5892be3d6ddf32fc7414d8",
+    "backup_state_sha256": "0c740e67c96d4735705c7fe3d9258e5deff00c3fba76ff0596d56431481a5ec4",
+    "pid_file_sha256": "32f43336cb252e361c2bb51f0249e7e7db7b4aa114fe964002529bdb7648dc4e",
+    "raw_outputs_published": false
+  },
+  "commands": [
+    {
+      "command": "adb -s emulator-5580 shell atrace --async_start -b 4096 binder_driver",
+      "exit_code": 0
+    },
+    {
+      "command": "sleep 5",
+      "exit_code": 0
+    },
+    {
+      "command": "adb -s emulator-5580 shell atrace --async_dump binder_driver",
+      "exit_code": 0
+    },
+    {
+      "command": "adb -s emulator-5580 shell atrace --async_stop binder_driver",
+      "exit_code": 0
+    },
+    {
+      "command": "adb -s emulator-5580 shell pidof nullsroyale.rel.free",
+      "exit_code": 0
+    },
+    {
+      "command": "adb -s emulator-5580 shell dumpsys backup",
+      "exit_code": 0
+    }
+  ],
+  "regression": {
+    "command": "python3 -m pytest -q -p no:cacheprovider tools/pure_linux/test_preference_codec.py tools/pure_linux/test_preference_contract.py tools/pure_linux/test_preference_store.py tools/pure_linux/test_preference_sequence_job.py tools/pure_linux/test_preference_sequence_capsule.py tools/pure_linux/test_backup_server_audit.py tools/pure_linux/test_backup_trace_audit.py tools/pure_linux/test_backup_method_audit.py",
+    "exit_code": 0,
+    "passed": 141,
+    "failed": 0,
+    "duration_seconds": 1.74,
+    "scope_limit": "Candidate and audit-tool tests only; not Android platform or real libg semantic equivalence."
+  },
+  "status": {
+    "passive_capture": "RUNTIME_OBSERVED_LIMITED",
+    "target_callback": "NOT_OBSERVED",
+    "service_delivery_and_side_effects": "UNRESOLVED",
+    "configuration_contract": "BLOCKED",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "gamestate_step": "NOT_RUN"
+  },
+  "interpretation_limit": "The passive window did not include the game's Binder transactions. This does not establish callback absence or service-side semantics."
+}

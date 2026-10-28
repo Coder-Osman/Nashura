@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-28：受控 loading 写入事务回归
+
+在隔离 Android 30 ARM64 AVD 上完成一次用户批准的 `LOADING_SCREEN_STATE_LABEL`
+写入与原值恢复：客户端和 `system_server` 的 Backup 请求链实际可见，最终值恢复为空。
+跨进程磁盘提交、journal、双槽身份和 Backup 交付仍未闭合，因此
+`CATALOG_READY_PASS=false`，ResourceManager/GameState/真实 `GameStateStep` 保持
+`NOT_RUN`。全量 `tools/pure_linux` 回归为 `531 passed, 1 skipped`，退出码 0；该
+结果仅是工程测试，不代表原生生命周期或 no-VM 通过。详见
+[本轮回执](agent-handoff/CODEX_REPLY_2026-10-28_LOADING_STORE.md)和
+[机器证据](agent-handoff/pure-linux-loading-store-transaction-evidence-20261028.json)。
+
 ## 2026-10-28 E2.1-N：Backup callback 服务端语义
 
 历史客户端 ART trace 重分析观察到23次 `requestBackup` 正常返回；匹配 Android 30

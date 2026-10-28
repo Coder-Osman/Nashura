@@ -1,0 +1,62 @@
+{
+  "schema": "nashura.pure-linux-backup-observer-recovery.v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "head": "850c3673df6cd0fa5fde6919593562d9f0fd9919",
+  "device": {
+    "active_avd": "nashura-e2-backup-api30",
+    "serial": "emulator-5580",
+    "game_pid": 6377,
+    "system_server_pid": 522,
+    "backup_manager_enabled": true,
+    "active_avd_changed": false
+  },
+  "frida": {
+    "host_17_24_3_device_enumeration_exit_code": 0,
+    "host_17_24_3_attach_system_server_exit_code": 1,
+    "attach_error": "unable to connect to remote frida-server: closed",
+    "server_17_24_3_sha256": "e187642b952189a9d5b69d2e787ee4dbe39df8dc15e7c42be09fa517cfd79e16",
+    "server_crash": "frida_sigchain_compat_validate_signal assertion",
+    "host_16_7_19_install_exit_code": 0,
+    "host_wheel_sha256": "17637bbe519d653a36f89d90d6eab5ad3f18c06302c8f5a3534df6ee9d8ea542",
+    "official_server_download_exit_code": 28,
+    "download_bytes": 0,
+    "interrupted_retry_exit_code": 130,
+    "observer_hook_run": "NOT_RUN"
+  },
+  "observer_script": {
+    "path": "tools/pure_linux/backup_runtime_observer.js",
+    "sha256": "5f9107af22b420e34462ecd81bdb748a49eafd8ce1cc0b6a6e58d5b4db1b0d27",
+    "node_check_exit_code": 0
+  },
+  "idle_avd_cleanup": {
+    "avd": "e2-1l-only",
+    "serial": "emulator-5686",
+    "precheck": "launcher_foreground_no_game_or_nashura_process",
+    "adb_server_port": 5064,
+    "emu_kill_exit_code": 0,
+    "qemu_pid": 77796,
+    "qemu_stopped": true,
+    "orphaned_netsimd_pid": 77821,
+    "orphaned_netsimd_preserved": true
+  },
+  "tests": {
+    "command": "node --check tools/pure_linux/backup_runtime_observer.js && python3 -m pytest -q -p no:cacheprovider tools/pure_linux/test_backup_server_audit.py tools/pure_linux/test_backup_trace_audit.py tools/pure_linux/test_backup_method_audit.py tools/pure_linux/test_preference_contract.py tools/pure_linux/test_preference_store.py && git diff --check",
+    "exit_code": 0,
+    "pytest_passed": 74,
+    "pytest_failed": 0
+  },
+  "status": {
+    "backup_callback_runtime_observation": "NOT_RUN",
+    "backup_service_delivery_and_side_effects": "UNRESOLVED",
+    "configuration_contract": "BLOCKED",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "gamestate_step": "NOT_RUN",
+    "no_java_vm": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "interpretation_limit": "Test success is limited to observer syntax and offline audit tools. Frida hooks did not run, so no callback was observed or excluded."
+}

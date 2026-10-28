@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N 受控 loading 配置事务
+
+- 新增隔离 AVD 的一次真实写入/恢复 runner 与 Frida 观察扩展，记录文件对象和完整存储调用边。
+- 观察到客户端 Backup 请求、Binder 服务调用、异步数据变更和 job 调度；保留 pending 队列原有成员事实。
+- 事务最终值恢复为空；commit、journal、磁盘落盘、双槽及跨进程恢复仍未闭合，严格 catalog 门保持 BLOCKED。
+- 全量 `tools/pure_linux` 回归 `531 passed, 1 skipped`，exit 0；未启动 ResourceManager、GameState、训练或性能实验。
+
 ## 2026-10-28：E2.1-N Backup callback 服务端静态路径
 
 - 新增Android backup服务端DEX的SHA绑定、有界调用摘要器；11个真实方法只输出调用边和控制流类别，不输出指令。

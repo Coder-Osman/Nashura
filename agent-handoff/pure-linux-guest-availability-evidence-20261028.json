@@ -1,0 +1,118 @@
+{
+  "schema": "nashura.pure-linux-guest-availability-evidence.v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "repository_head_at_check": "6f3b176ead650eb2304ebf815529cbddd5bfb07b",
+  "status": "BLOCKED_RUNTIME_ENVIRONMENT",
+  "environment": {
+    "guest_architecture": "aarch64",
+    "guest_kernel": "6.8.0-138-generic",
+    "root_available_bytes": 1100648448,
+    "binder_device": false,
+    "vndbinder_device": false,
+    "binder_kernel_module_file": true,
+    "binder_kernel_module_loaded": false,
+    "binderfs_mounted": false,
+    "android_servicemanager_running": false,
+    "vm_started_by_this_check": false
+  },
+  "followup_environment_check": {
+    "date": "2026-10-28",
+    "command_scope": "read-only guest kernel/module/service inspection and host Android SDK image path scan",
+    "guest_output_sha256": "a6d2781dd2f45808fae961510983df02abdcc2d4882aecdc0adf92d24c63d0af",
+    "android_home_configured": false,
+    "android_sdk_root_configured": false,
+    "configured_system_images_found": false,
+    "scan_depth_limited": true,
+    "interpretation": "historical shallow scan did not cover the default SDK image path; superseded by host_android_image_recheck",
+    "module_loaded_or_system_changed": false,
+    "emulator_started": false
+  },
+  "latest_readonly_recheck": {
+    "date": "2026-10-28",
+    "command_scope": "vmrun runScriptInGuest read-only check of architecture, Binder nodes, binderfs, loaded module, and service processes; output copied to host and temporary files removed",
+    "exit_code": 0,
+    "guest_output_sha256": "2404486d3b894fc4c5155b3f514e4bf819bdae68633c5b10666764ca72890ef7",
+    "guest_architecture": "aarch64",
+    "binder_device": false,
+    "vndbinder_device": false,
+    "binderfs_mounted": false,
+    "binder_kernel_module_loaded": false,
+    "android_servicemanager_process_observed": false,
+    "vm_was_already_running": true,
+    "vm_started_or_reconfigured": false,
+    "existing_probe_processes_touched": false
+  },
+  "host_android_image_recheck": {
+    "date": "2026-10-28",
+    "command_scope": "read-only default SDK image inventory, AVD config inspection, process listing, and adb device listing",
+    "sdk_default_path_present": true,
+    "android_home_configured": false,
+    "android_sdk_root_configured": false,
+    "installed_images": [
+      {
+        "api": 29,
+        "tag": "google_apis",
+        "abi": "arm64-v8a",
+        "system_image_present": true
+      },
+      {
+        "api": 30,
+        "tag": "google_apis",
+        "abi": "arm64-v8a",
+        "system_image_present": true,
+        "system_img_sha256": "b8a505ecfc13629aee537f7fa9dcafa0d8d66802a06707f40dac69591e46f70f",
+        "vendor_img_sha256": "1953bc61224565d08deac8624502b676b30712fd8bd6c7ee95e415a1d8015a09",
+        "ramdisk_img_sha256": "b2453dcc78aaf99a521eb05b34f3b3d774d781b4283874ca72ecd174f2013930"
+      }
+    ],
+    "api30_avd_config": {
+      "name": "astral-api30",
+      "target": "android-30",
+      "abi": "arm64-v8a",
+      "tag": "google_apis"
+    },
+    "adb_devices": [],
+    "emulator_process_observed": false,
+    "emulator_started": false,
+    "fusion_running_vm_count": 1,
+    "fusion_vm_role": "existing Ubuntu 22.04.5 ARM64 guest",
+    "interpretation": "installed host image only; Binder service runtime and callback delivery remain unverified"
+  },
+  "existing_processes": [
+    {
+      "pid": 2569,
+      "binary_role": "existing linker64 native probe v27",
+      "state": "T (stopped)",
+      "parent_pid": 1,
+      "tracer_pid": 0,
+      "elapsed_at_check": "07:26:36",
+      "action_taken": "none"
+    },
+    {
+      "pid": 2595,
+      "binary_role": "existing linker64 native probe v29",
+      "state": "T (stopped)",
+      "parent_pid": 1,
+      "tracer_pid": 0,
+      "elapsed_at_check": "07:19:26",
+      "action_taken": "none"
+    }
+  ],
+  "tests": {
+    "command": "/opt/anaconda3/bin/python3 -m pytest -q -p no:cacheprovider tools/pure_linux",
+    "exit_code": 0,
+    "passed": 531,
+    "skipped": 1,
+    "failed": 0,
+    "scope": "engineering unit/integration tests only; no new native lifecycle run"
+  },
+  "catalog_ready_pass": false,
+  "resource_manager": "NOT_RUN",
+  "gamestate_lifecycle": "NOT_RUN",
+  "full_battle": "NOT_RUN",
+  "android_tick_parity": "NOT_RUN",
+  "android_free": "NOT_RUN",
+  "performance_target": "NOT_RUN",
+  "private_paths_or_payloads_published": false
+}

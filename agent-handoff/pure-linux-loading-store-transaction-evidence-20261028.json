@@ -1,0 +1,103 @@
+{
+  "schema": "nashura.pure-linux-loading-store-transaction.v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "base_head": "f96ba3ce15ffdcaa2b4b8aa7cb1a0c997d005fb3",
+  "classification": "USER_APPROVED_ONE_CONTROLLED_STORE_AND_RESTORE",
+  "experiment": {
+    "device_serial": "emulator-5580",
+    "api": 30,
+    "abi": "arm64-v8a",
+    "game_pid": 6901,
+    "game_cmdline": "nullsroyale.rel.free",
+    "system_server_pid": 522,
+    "system_server_cmdline": "system_server",
+    "process_restarted": false,
+    "app_data_cleared": false,
+    "avd_configuration_changed": false,
+    "key": "LOADING_SCREEN_STATE_LABEL",
+    "initial_value": "",
+    "target_value": "datatables-init",
+    "restore_value": "",
+    "final_value": "",
+    "runner_exit_code": 0,
+    "frida_version": "16.7.19"
+  },
+  "identity": {
+    "game_uid": 10166,
+    "system_server_uid": 1000,
+    "game_process_name": "nullsroyale.rel.free",
+    "system_server_process_name": null,
+    "identity_result": "RUNTIME_OBSERVED"
+  },
+  "observations": {
+    "store_key_read_initial": "RUNTIME_OBSERVED",
+    "target_store_return": "RUNTIME_OBSERVED",
+    "target_value_readback": "RUNTIME_OBSERVED",
+    "restore_store_return": "RUNTIME_OBSERVED",
+    "restored_value_readback": "RUNTIME_OBSERVED",
+    "client_requestBackup": 2,
+    "client_binder_proxy_dataChanged": 2,
+    "server_BackupManagerService_dataChanged": 2,
+    "server_dataChangedForUser": 2,
+    "server_isUserReadyForBackup": 5,
+    "server_UserBackupManagerService_dataChanged": 2,
+    "server_dataChangedTargets": 2,
+    "server_dataChangedImpl": 2,
+    "server_KeyValueBackupJob_schedule": 2,
+    "server_writeToJournalLocked": "NOT_OBSERVED_IN_THIS_CALL",
+    "server_DataChangedJournal_addPackage": "NOT_OBSERVED_IN_THIS_CALL",
+    "shared_preferences_contains": 2,
+    "shared_preferences_commit_and_disk_write": "NOT_OBSERVED_IN_THIS_CALL",
+    "direct_c_a_n_entry": "NOT_OBSERVED_IN_THIS_CALL",
+    "direct_c_a_j_entry": "NOT_OBSERVED_IN_THIS_CALL"
+  },
+  "backup_snapshots": {
+    "pending_key_value_before_attach": 30,
+    "pending_key_value_before_target_store": 30,
+    "pending_key_value_after_target_store": 30,
+    "pending_key_value_after_restore_store": 30,
+    "target_preexisted_in_pending_queue": true,
+    "backup_running_in_snapshots": false,
+    "interpretation": "Existing pending membership prevents attribution of queue cardinality or journal behavior to this transaction."
+  },
+  "artifacts": {
+    "observer": {
+      "path": "tools/pure_linux/backup_runtime_observer.js",
+      "sha256": "b88a8b0a7ef2c24c5fee9cd4c5808401fca0fefd6da348f56e5e18eb693bcdda",
+      "syntax_command": "node --check tools/pure_linux/backup_runtime_observer.js",
+      "syntax_exit_code": 0
+    },
+    "runner": {
+      "path": "tools/pure_linux/run_loading_store_once.py",
+      "sha256": "6fc06c025dad61f4881a9ea3e3260ef463445fb1c9de9138c65b7a211b6acd30",
+      "compile_command": "python3 -m py_compile tools/pure_linux/run_loading_store_once.py",
+      "compile_exit_code": 0
+    },
+    "raw_jsonl": {
+      "private_path": "/private/tmp/nashura-loading-store-transaction-20261028-102313/frida-events.jsonl",
+      "sha256": "88850b74401a1c2771c9fd871b330a0943094d35d90a8c10cc5d9c3e7771265f",
+      "lines": 105
+    }
+  },
+  "gates": {
+    "configuration_platform_storage_semantics": "UNRESOLVED",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "gamestate_step": "NOT_RUN",
+    "no_java_vm": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "performance_10x": "NOT_RUN",
+    "formal_training": "NOT_RUN"
+  },
+  "tests": {
+    "command": "/opt/anaconda3/bin/python3 -m pytest -q -p no:cacheprovider tools/pure_linux",
+    "exit_code": 0,
+    "passed": 531,
+    "skipped": 1,
+    "duration_seconds": 5.15,
+    "scope": "engineering regression only"
+  },
+  "next_blocker": "Close real platform preference commit/disk and journal semantics, including cross-process persistence and dual-slot identity, before strict catalog revalidation."
+}

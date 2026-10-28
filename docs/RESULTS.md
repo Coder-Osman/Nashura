@@ -1,5 +1,16 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：受控 loading 写入事务
+
+隔离 Android 30 ARM64 AVD 上完成一次真实配置写入并恢复原值；观察到客户端
+`requestBackup`、Binder `dataChanged`、服务端异步 `dataChangedImpl` 与 job 调度各两次。
+pending 队列原已包含目标包，未将队列数量变化误作 journal 证据。跨进程磁盘提交、
+journal、双槽身份和 Backup 交付仍 `UNRESOLVED`，严格 `CATALOG_READY_PASS=false`，
+ResourceManager/GameState/真实 Step 为 `NOT_RUN`。全量专项回归 `531 passed, 1 skipped`，
+exit 0；工程回归不替代原生生命周期证据。详见[回执](../agent-handoff/CODEX_REPLY_2026-10-28_LOADING_STORE.md)、
+[报告](../agent-handoff/PURE_LINUX_LOADING_STORE_TRANSACTION_2026-10-28.md)和
+[机器证据](../agent-handoff/pure-linux-loading-store-transaction-evidence-20261028.json)。
+
 ## 2026-10-28 E2.1-N：Backup callback 服务端语义调查
 
 对历史 ART trace 在独立目录重分析：835,263条记录，23个 `requestBackup` scope、
