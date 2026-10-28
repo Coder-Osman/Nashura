@@ -20,10 +20,14 @@ def main():
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--spawn-gate", action="store_true")
     parser.add_argument("--expected-batches", type=int, default=0)
+    parser.add_argument("--layout-script", type=Path)
+    parser.add_argument("--inspect-row-ids", action="store_true")
     args = parser.parse_args()
     if args.expected_batches < 0:
         parser.error("expected-batches must be nonnegative")
-    entry_guards(args.engine)
+    if args.inspect_row_ids and not args.layout_script:
+        parser.error("inspect-row-ids requires layout-script")
+    guards = entry_guards(args.engine)
     args.output.mkdir(mode=0o700, exist_ok=False)
     report = {"schema": "nashura.android-catalog-start-trace.v1", "status": "FAILED", "catalog_ready_pass": False,
               "engine_sha256": ENGINE_SHA, "script_sha256": hashlib.sha256(args.script.read_bytes()).hexdigest(),
@@ -170,6 +174,20 @@ def main():
             if time.monotonic() >= deadline:
                 raise ValueError("expected completed batch observations not reached")
             time.sleep(0.25)
+        if args.layout_script:
+            if not status.get("contentReady") or not status.get("contentContext"):
+                raise ValueError("published content context unavailable")
+            report["layout_script_sha256"] = hashlib.sha256(args.layout_script.read_bytes()).hexdigest()
+            layout_script = session.create_script(args.layout_script.read_text())
+            layout_script.on("message", on_message)
+            layout_script.load()
+            first = layout_script.exports_sync.snapshot(status["contentContext"], guards["CONTEXT_GET"],
+                                                        args.inspect_row_ids)
+            second = layout_script.exports_sync.snapshot(status["contentContext"], guards["CONTEXT_GET"],
+                                                         args.inspect_row_ids)
+            if first != second:
+                raise ValueError("catalog layout changed between snapshots")
+            report["layout"] = first
         capture_update("after")
         report["update_unchanged"] = report["update_before"]["sha256"] == report["update_after"]["sha256"]
         report["status"] = "RUNTIME_OBSERVED_REQUIRES_AUDIT"

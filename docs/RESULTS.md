@@ -1,5 +1,10 @@
 # 阶段成果与证据索引
 
+## 2026-10-29 E2.1-N：匹配 update 的 catalog 布局
+
+Android 与 Linux 清单均为相同 908 项时仍有 1,457 行差异。详见
+[报告](../agent-handoff/PURE_LINUX_MATCHED_UPDATE_LAYOUT_2026-10-29.md)。
+
 ## 2026-10-29 E2.1-N：catalog 批次返回序列
 
 Android/Linux 5 批次的 313 次 getter 返回序列一致；旧观察器回调异常已修复并

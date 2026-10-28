@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-10-29：对齐 update 后的 catalog 布局
+
+两侧均使用相同 908 项 update 后，17 槽、1,457 行差异仍在；Linux 990→908
+的已覆盖布局和行字段不变。详见[报告](agent-handoff/PURE_LINUX_MATCHED_UPDATE_LAYOUT_2026-10-29.md)。
+
 ## 2026-10-29：catalog 批次返回序列对照
 
 修复 Android 回调异常后，两侧 5 个批次的 313 次 getter 返回序列一致；update
