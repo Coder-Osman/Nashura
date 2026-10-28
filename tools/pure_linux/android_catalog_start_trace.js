@@ -4,6 +4,7 @@ const events = [], coverage = [], errors = [];
 let lost = 0;
 let nextCall = 0;
 let includeBatchCounts = false;
+let includeBatchPhases = false;
 const scopes = new Map();
 const batchScopes = new Map();
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
@@ -79,6 +80,28 @@ function observe(module) {
             onLeave: function (value) { if (this.batch) record({kind: label, batch: this.batch, value: value.toUInt32()}); }
           });
         }
+        if (includeBatchPhases) {
+          for (const [label, offset] of [['finish_a', 0xe1c290], ['finish_b', 0xdcd238]]) {
+            attach(module, offset, label, {
+              onEnter: function (args) {
+                this.observerBatch = batchScopes.get(Process.getCurrentThreadId()) || null;
+                if (!this.observerBatch) return;
+                this.observerContext = args[0];
+                const event = {kind: 'batch_phase', phase: label, edge: 'before', batch: this.observerBatch};
+                try { event.tableCounts = tableCounts(this.observerContext); }
+                catch (error) { errors.push(label + ' before: ' + String(error)); }
+                record(event);
+              },
+              onLeave: function () {
+                if (!this.observerBatch) return;
+                const event = {kind: 'batch_phase', phase: label, edge: 'after', batch: this.observerBatch};
+                try { event.tableCounts = tableCounts(this.observerContext); }
+                catch (error) { errors.push(label + ' after: ' + String(error)); }
+                record(event);
+              }
+            });
+          }
+        }
       }
       this.observerThreadId = Process.getCurrentThreadId();
       this.batchCall = ++nextCall;
@@ -135,8 +158,9 @@ function observe(module) {
   record({kind: 'engine_hooks_ready'});
 }
 rpc.exports = {
-  install: function (batchCounts) {
+  install: function (batchCounts, batchPhases) {
     includeBatchCounts = batchCounts === true;
+    includeBatchPhases = batchPhases === true;
     Process.attachModuleObserver({onAdded: observe});
     const android = Process.findModuleByName('libandroid.so');
     if (android) {

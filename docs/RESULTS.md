@@ -1,5 +1,10 @@
 # 阶段成果与证据索引
 
+## 2026-10-29 E2.1-N：catalog 完成调用
+
+17槽的1,417行差异出现在 `finish_a` 调用区间。详见
+[报告](../agent-handoff/PURE_LINUX_CATALOG_FINISH_PHASES_2026-10-29.md)。
+
 ## 2026-10-29 E2.1-N：catalog 差异批次边界
 
 前4批与第5批入口一致，第5批返回出现1,417行差异。详见

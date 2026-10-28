@@ -1,0 +1,19 @@
+{
+  "schema": "nashura.pure-linux-catalog-finish-phases.v1",
+  "baseline_commit": "5e3e7dc6107e9123fe8799234495798cc5bfeb7e",
+  "status": "RUNTIME_OBSERVED_LIMITED",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "android_result_sha256": "645b135a3b5a0bd20af423ea952ff1d1440275452d489e519790c82785bbc177",
+  "linux_result_sha256": "5004e55303a730b70711e6c9d55f064822e1506c52dd2b636078c11f26948f24",
+  "linux_observation_sha256": "5e95b73a57a05cff507c11a7a00938a00783e74a43c97169b050794635cebcda",
+  "audit_sha256": "cd2ada8f8c279bf23211f965e657781b838217304e7d6afec3376d49ecefda6a",
+  "matched_update_files": 908,
+  "observed_slots": 17,
+  "finish_a_before": {"android_rows": 1950, "linux_rows": 1950},
+  "finish_a_after": {"android_rows": 3367, "linux_rows": 1950},
+  "finish_b_changed_selected_counts": false,
+  "catalog_ready_pass": false,
+  "backup_equivalence": "UNRESOLVED",
+  "game_state": "NOT_RUN",
+  "step_tick": "NOT_RUN"
+}

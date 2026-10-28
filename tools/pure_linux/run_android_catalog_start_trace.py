@@ -23,11 +23,14 @@ def main():
     parser.add_argument("--layout-script", type=Path)
     parser.add_argument("--inspect-row-ids", action="store_true")
     parser.add_argument("--batch-table-counts", action="store_true")
+    parser.add_argument("--batch-phase-counts", action="store_true")
     args = parser.parse_args()
     if args.expected_batches < 0:
         parser.error("expected-batches must be nonnegative")
     if args.inspect_row_ids and not args.layout_script:
         parser.error("inspect-row-ids requires layout-script")
+    if args.batch_phase_counts and not args.batch_table_counts:
+        parser.error("batch-phase-counts requires batch-table-counts")
     guards = entry_guards(args.engine)
     args.output.mkdir(mode=0o700, exist_ok=False)
     report = {"schema": "nashura.android-catalog-start-trace.v1", "status": "FAILED", "catalog_ready_pass": False,
@@ -138,7 +141,7 @@ def main():
 
         script.on("message", on_message)
         script.load()
-        report["installation"] = script.exports_sync.install(args.batch_table_counts)
+        report["installation"] = script.exports_sync.install(args.batch_table_counts, args.batch_phase_counts)
         try:
             device.resume(pid)
             report["resume"] = "returned"

@@ -10194,9 +10194,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "43373981048c752f953574b38367650d3aed4ef94ce167eb8798ec8e93f95dea",
-      "bytes": 48453,
-      "source_sha256": "43373981048c752f953574b38367650d3aed4ef94ce167eb8798ec8e93f95dea",
+      "sha256": "c813c800f5cbded47a3aac03e514eea5ab0f1deb82b696430b66c61874a61010",
+      "bytes": 48681,
+      "source_sha256": "c813c800f5cbded47a3aac03e514eea5ab0f1deb82b696430b66c61874a61010",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -10216,9 +10216,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "114f63da596a9b200b4c642a5a4bf5578e65128f31119f3492cc4c54e8c65d52",
-      "bytes": 81688,
-      "source_sha256": "114f63da596a9b200b4c642a5a4bf5578e65128f31119f3492cc4c54e8c65d52",
+      "sha256": "51bd2da20515971fb71f83ccc57d920202fb8d78fcaf3ee3060f86705ffd0c2e",
+      "bytes": 81876,
+      "source_sha256": "51bd2da20515971fb71f83ccc57d920202fb8d78fcaf3ee3060f86705ffd0c2e",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -16645,9 +16645,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "405ab0a4dda3ce033c8e4705f8950dfa505cc7bb416180b05e0c64d8e05d9fe4",
-      "bytes": 49099,
-      "source_sha256": "405ab0a4dda3ce033c8e4705f8950dfa505cc7bb416180b05e0c64d8e05d9fe4",
+      "sha256": "0de31bc19f4cc1d222f96470292a554ea5269a000f5365ea5b214de90add0115",
+      "bytes": 49338,
+      "source_sha256": "0de31bc19f4cc1d222f96470292a554ea5269a000f5365ea5b214de90add0115",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -18501,16 +18501,16 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "3f0d5d326d30317dd0ce2e802c8a0048c51e4ce28cf5abe4c603a92d79f41f62",
-      "bytes": 6948,
-      "source_sha256": "3f0d5d326d30317dd0ce2e802c8a0048c51e4ce28cf5abe4c603a92d79f41f62",
+      "sha256": "8b4d7c36e0731328ae4817f3fe419c447d821073b1cfa9316a2fee2acf45a31e",
+      "bytes": 8203,
+      "source_sha256": "8b4d7c36e0731328ae4817f3fe419c447d821073b1cfa9316a2fee2acf45a31e",
       "transformations": []
     },
     {
       "path": "tools/pure_linux/run_android_catalog_start_trace.py",
-      "sha256": "d01d00c0aaa0a1c5a2559f45c705da2d4547177448c6a793e433cca829b0406a",
-      "bytes": 12031,
-      "source_sha256": "d01d00c0aaa0a1c5a2559f45c705da2d4547177448c6a793e433cca829b0406a",
+      "sha256": "93578dc236d3ed12b56928534129fdc720082510ed507f914c3a20210c48a78a",
+      "bytes": 12260,
+      "source_sha256": "93578dc236d3ed12b56928534129fdc720082510ed507f914c3a20210c48a78a",
       "transformations": []
     },
     {
@@ -18743,10 +18743,45 @@
       "bytes": 1091,
       "source_sha256": "bf0acf7c745be6a26aa80505785a94d632e1ac13dfb321fe470bbf29aa3247cf",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_catalog_finish_phases.py",
+      "sha256": "4d9554b8a41eabe37370a683dcc5646f9cf369650c8c0c6e08f0d49a039ecfa6",
+      "bytes": 8202,
+      "source_sha256": "4d9554b8a41eabe37370a683dcc5646f9cf369650c8c0c6e08f0d49a039ecfa6",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_catalog_finish_phases.py",
+      "sha256": "bb79703346eb9119de8baf92c96e28dfd37dc058ca029f08462bae65934612f7",
+      "bytes": 2518,
+      "source_sha256": "bb79703346eb9119de8baf92c96e28dfd37dc058ca029f08462bae65934612f7",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_CATALOG_FINISH_PHASES_2026-10-29.md",
+      "sha256": "0c454355601fe113087093c3067e305a81fa517df35411bab1cd38533f480fe3",
+      "bytes": 4636,
+      "source_sha256": "0c454355601fe113087093c3067e305a81fa517df35411bab1cd38533f480fe3",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_CATALOG_FINISH_PHASES.md",
+      "sha256": "cbd51a45503d672506c427379143c6efb0613cd7e9e76d48e3677af660441883",
+      "bytes": 627,
+      "source_sha256": "cbd51a45503d672506c427379143c6efb0613cd7e9e76d48e3677af660441883",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-catalog-finish-phases-evidence-20261029.json",
+      "sha256": "5505bcba123fd4eb398e00cc0e790a2358d2630b760cb9ce650cc25ba712a352",
+      "bytes": 977,
+      "source_sha256": "5505bcba123fd4eb398e00cc0e790a2358d2630b760cb9ce650cc25ba712a352",
+      "transformations": []
     }
   ],
-  "file_count": 2667,
-  "source_bytes": 35656329,
+  "file_count": 2672,
+  "source_bytes": 35675428,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
