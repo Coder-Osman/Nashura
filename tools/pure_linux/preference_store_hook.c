@@ -2,6 +2,7 @@
 #include "preference_codec.h"
 #include "preference_store.h"
 #include "mapped_files.h"
+#include "native_backup_queue.h"
 
 #include <inttypes.h>
 #include <stdint.h>
@@ -15,18 +16,27 @@
 static PreferenceCodecs *codecs;
 static PreferenceStore *store;
 static PreferenceBackend backend;
+static NativeBackupQueue *backup_queue;
 static int (*readable_memory)(uintptr_t, size_t);
 
 static void fail(const char *message) {
     fprintf(stderr, "PREFERENCE_BACKEND_FATAL\t%s\n", message);
     fflush(NULL);
     if (store) preference_store_close(store);
+    if (backup_queue) native_backup_queue_close(backup_queue);
     preference_codecs_close(codecs);
     _exit(96);
 }
 
-static int unresolved_backup(void *context) {
+static int request_backup(void *context) {
     (void)context;
+    if (backup_queue) {
+        int created = 0;
+        int result = native_backup_queue_request(backup_queue, &created);
+        printf("PREFERENCE_NATIVE_BACKUP_QUEUE\t{\"result\":%d,\"created\":%s,\"delivery\":\"%s\",\"android_parity\":\"NOT_VERIFIED\"}\n",
+               result, created ? "true" : "false", result ? "FAILED" : "PENDING");
+        return result;
+    }
     fprintf(stderr, "PREFERENCE_BACKUP\tUNRESOLVED\tTID\t%ld\n", syscall(SYS_gettid));
     return -1;
 }
@@ -86,12 +96,16 @@ int native_config_install(uintptr_t base, int (*readable)(uintptr_t, size_t)) {
     if (memcmp((void *)target, bytes, sizeof(bytes))) return 96;
     if (preference_codecs_open_material(library, material, &codecs)) return 96;
     PreferenceStoreOptions options = {codecs, preference_codecs_transform, unresolved_exception,
-                                     unresolved_backup, NULL, NULL};
+                                     request_backup, NULL, NULL};
     if (preference_store_open(directory, &options, &store) || preference_store_backend(store, &backend)) {
         if (store) preference_store_close(store);
         preference_codecs_close(codecs);
         return 96;
     }
+    const char *backup_mode = getenv("NASHURA_PREFERENCE_BACKUP_BACKEND");
+    if (backup_mode && (strcmp(backup_mode, "native-filesystem-queue-v1") ||
+                        native_backup_queue_open(directory, &backup_queue)))
+        fail("unknown or unavailable native backup backend");
 #if defined(__aarch64__)
     readable_memory = readable;
     uint32_t instructions[] = {0x58000050, 0xd61f0200};
@@ -108,7 +122,8 @@ int native_config_install(uintptr_t base, int (*readable)(uintptr_t, size_t)) {
     __builtin___clear_cache((char *)target, (char *)(target + sizeof(patch)));
     if (mprotect((void *)start, length, PROT_READ | PROT_EXEC)) fail("execute protection");
     observe_mapped_files();
-    puts("PREFERENCE_BACKEND_HOOK\thistorical_identity_ascii_xml_only_backup_unresolved");
+    puts(backup_queue ? "PREFERENCE_BACKEND_HOOK\thistorical_ascii_native_backup_candidate_parity_unverified" :
+                       "PREFERENCE_BACKEND_HOOK\thistorical_identity_ascii_xml_only_backup_unresolved");
     return 0;
 #else
     (void)readable;

@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N 原生 Backup 候选绑定
+
+- 新增私有目录持久入队、独立双槽归档消费者、限定证据审计及43项工程测试。
+- 真实libg两个候选native0，自然loader到ready并解析162张表；默认对照native96。
+- 三个strict wrapper仍exit1；Android Backup等价性与当前配置身份仍未闭合。
+- 独立副本专项900/1、主工程211、公开1104/42均exit0，失败批次和历史证据保留。
+- ResourceManager、GameState、Step及性能实验保持NOT_RUN，本轮没有启动AVD或更改VM配置。
+
 ## 2026-10-28：E2.1-N Backup 真实失败重排与重试
 
 - 新增一次性IOException agent、采集runner、严格离线审计及47项独立测试。

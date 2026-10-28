@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-28：原生 Backup 候选绑定与自然 loader
+
+真实ARM64 libg默认对照退出96，两个显式文件系统候选子进程退出0；
+各自然loader53步、ready 0→1、162张表/24,353行，并正常析构及关闭。
+双槽各1086bytes经独立消费者验证归档后清pending；原始材料和资源身份不变。
+专项900/1、主工程211、公开1104/42均exit0。Android Backup等价性与当前材料身份
+仍未闭合，严格catalog及三个wrapper仍BLOCKED；GameState/Step均NOT_RUN。
+详见[报告](agent-handoff/PURE_LINUX_NATIVE_BACKUP_BINDING_2026-10-28.md)、
+[证据](agent-handoff/pure-linux-native-backup-binding-evidence-20261028.json)及
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_BINDING.md)。以下保留历史状态。
+
 ## 2026-10-28：真实 Backup 失败重排与重试
 
 专用Android实例中，一次自有store/request后agent抛真实IOException并重排；

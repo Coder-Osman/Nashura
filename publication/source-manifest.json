@@ -10194,8 +10194,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "615777b277c2fde3256add327207c1c7050f6ffbfc965b2cbd6e86ad3c4b4f6e",
-      "bytes": 41638,
+      "sha256": "4ec91d16aeff18d8995180a05db68940d78754ec84b212315980a4f96d1703fe",
+      "bytes": 42202,
       "source_sha256": "c008f55f17031af6abae22b02af32e87d0c8c9d3cbc1a7c54fc4f73bdf72e3a7",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10206,13 +10206,14 @@
         "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
         "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
         "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
-        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate"
+        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate",
+        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED."
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "101b95f194b855efbfa9af5f2be4668a3da259511411aa02c353b5c4505560d4",
-      "bytes": 73740,
+      "sha256": "cf5541908bf4f975b39c21f6e96b396dc60b5d0a98b65c85d3be42477139f9f8",
+      "bytes": 74700,
       "source_sha256": "7956b3b23c44bda14bd02a13c725f93621bc473669cff1644c882afc3de0d310",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10223,7 +10224,8 @@
         "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
         "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
         "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
-        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate"
+        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate",
+        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED."
       ]
     },
     {
@@ -16635,8 +16637,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "2c2b7d199be0a45eac9cdfa4d044d77eb8bbe2edbfcf15fc7aa32cad9d414b15",
-      "bytes": 41295,
+      "sha256": "595327aeb9f613f3e5e100ccf71dc93ec3e0d7780269752cb310e141429d56a6",
+      "bytes": 42074,
       "source_sha256": "268a62062b889a6cc7bd8034c306e2937b73840ef1d6e918fee39525ef232472",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -16647,7 +16649,8 @@
         "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
         "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
         "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
-        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate"
+        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate",
+        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED."
       ]
     },
     {
@@ -16974,10 +16977,12 @@
     },
     {
       "path": "tools/pure_linux/preference_hook_evidence.py",
-      "sha256": "443812ba7a62f8624c84ca7d6c3ecf7fb8806ab34ab17800cea3585ffbfa1f0c",
+      "sha256": "bbe3363b29c2c9204e848839d4b5ceaae74b9690be7a40d046b39a25fce9cb90",
       "source_sha256": "443812ba7a62f8624c84ca7d6c3ecf7fb8806ab34ab17800cea3585ffbfa1f0c",
-      "bytes": 2000,
-      "transformations": []
+      "bytes": 4383,
+      "transformations": [
+        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED."
+      ]
     },
     {
       "path": "tools/pure_linux/preference_identity_material.py",
@@ -17044,10 +17049,12 @@
     },
     {
       "path": "tools/pure_linux/preference_store_hook.c",
-      "sha256": "f7aaa90922c9711e902aa8d2c1e984c1538599982d2414a3cb20df824a1dcde0",
+      "sha256": "46e00f5b8a53002611c56cef0dc2aa1b3eac8832b35f09a013bb5a254b64334f",
       "source_sha256": "f7aaa90922c9711e902aa8d2c1e984c1538599982d2414a3cb20df824a1dcde0",
-      "bytes": 5238,
-      "transformations": []
+      "bytes": 6159,
+      "transformations": [
+        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED."
+      ]
     },
     {
       "path": "tools/pure_linux/preference_store.c",
@@ -17065,10 +17072,12 @@
     },
     {
       "path": "tools/pure_linux/provider_job.py",
-      "sha256": "1729742ef0e5cff2f5534cf747db7853ba2185c3731a763226064f87e88c1eaa",
-      "bytes": 27656,
+      "sha256": "7affcc9207d6c4a8ad1933796afe1c219b125036d54d298b541821ac14518a15",
+      "bytes": 28612,
       "source_sha256": "1729742ef0e5cff2f5534cf747db7853ba2185c3731a763226064f87e88c1eaa",
-      "transformations": []
+      "transformations": [
+        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED."
+      ]
     },
     {
       "path": "tools/pure_linux/provider_probe.c",
@@ -17946,10 +17955,80 @@
       "bytes": 24617,
       "source_sha256": "c6070055d0621ad2d96248dccd4caf5723321fdb053254aa3dd95aebcf808fda",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/native_backup_queue.h",
+      "sha256": "6742da300e9c5a0482f5c23ce7137540cafcaed9ef77a72ca769dfbc9078373b",
+      "bytes": 317,
+      "source_sha256": "6742da300e9c5a0482f5c23ce7137540cafcaed9ef77a72ca769dfbc9078373b",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/native_backup_queue.c",
+      "sha256": "b54b4b40ce77a362550a9deb523b591bd8864dc66a7c741e9bce1819a4783a4d",
+      "bytes": 4698,
+      "source_sha256": "b54b4b40ce77a362550a9deb523b591bd8864dc66a7c741e9bce1819a4783a4d",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/native_backup_consume.py",
+      "sha256": "3839818d7207099d75c0b87b6458dff86316af3268f241480fa434a1dfa97dc0",
+      "bytes": 6181,
+      "source_sha256": "3839818d7207099d75c0b87b6458dff86316af3268f241480fa434a1dfa97dc0",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_native_backup_queue.py",
+      "sha256": "4c445431140714f9a4a6b5ac1afbbd3dcdc2eedaf871a46330094923556cbef1",
+      "bytes": 8696,
+      "source_sha256": "4c445431140714f9a4a6b5ac1afbbd3dcdc2eedaf871a46330094923556cbef1",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_native_backup_evidence.py",
+      "sha256": "97167ea13ef00522d2f8649b4155dc4e1b0b615275957644ea8fdf6870aea23f",
+      "bytes": 2479,
+      "source_sha256": "97167ea13ef00522d2f8649b4155dc4e1b0b615275957644ea8fdf6870aea23f",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/native_backup_binding_audit.py",
+      "sha256": "71b0a43afce5410164d956b8580a03dd47b82add3f204e796b08759fb84c6315",
+      "bytes": 5941,
+      "source_sha256": "71b0a43afce5410164d956b8580a03dd47b82add3f204e796b08759fb84c6315",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_native_backup_binding_audit.py",
+      "sha256": "73c5400dc6daf819c44199fcdd34fa366daa3b0adeb28ff7497be7cbd8c61085",
+      "bytes": 4663,
+      "source_sha256": "73c5400dc6daf819c44199fcdd34fa366daa3b0adeb28ff7497be7cbd8c61085",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_NATIVE_BACKUP_BINDING_2026-10-28.md",
+      "sha256": "d206f8b48fdd0292016d45134e474c94d4fedfdb37ca9e81ba5da149eebc96ff",
+      "bytes": 8766,
+      "source_sha256": "d206f8b48fdd0292016d45134e474c94d4fedfdb37ca9e81ba5da149eebc96ff",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_BINDING.md",
+      "sha256": "ad605f8dbb490c0ac4cf99286a83f31df24126c9abf58ac4a35f0a605c4952b2",
+      "bytes": 1481,
+      "source_sha256": "ad605f8dbb490c0ac4cf99286a83f31df24126c9abf58ac4a35f0a605c4952b2",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-native-backup-binding-evidence-20261028.json",
+      "sha256": "febbff35118bb8da3ac9354107991ecab5e6535e87c46eb7f4f75224193394ac",
+      "bytes": 20247,
+      "source_sha256": "febbff35118bb8da3ac9354107991ecab5e6535e87c46eb7f4f75224193394ac",
+      "transformations": []
     }
   ],
-  "file_count": 2557,
-  "source_bytes": 35169340,
+  "file_count": 2567,
+  "source_bytes": 35239372,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

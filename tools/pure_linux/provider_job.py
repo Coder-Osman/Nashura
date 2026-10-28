@@ -8,6 +8,7 @@ import shutil
 import sys
 
 from preference_hook_evidence import observations as preference_observations
+from preference_hook_evidence import native_queue_observations
 
 from elf_audit import Elf64
 from native_init_job import check_inputs, digest, run
@@ -227,6 +228,8 @@ def main():
     parser.add_argument("--asset-backend-sha256")
     parser.add_argument("--observe-targets", type=Path)
     parser.add_argument("--loading-config-candidate", action="store_true")
+    parser.add_argument("--native-backup-queue", action="store_true",
+                        help="Explicit native filesystem candidate; never implies Android backup parity")
     for name in ("preference-material", "preference-xml0", "preference-xml1"):
         parser.add_argument("--" + name, type=Path)
         parser.add_argument("--" + name + "-sha256")
@@ -248,6 +251,8 @@ def main():
         parser.error("preference material and both XML seeds require all three explicit hashes")
     if any(preference_arguments) and arguments.loading_config_candidate:
         parser.error("strict preference backend and legacy loading candidate are exclusive")
+    if arguments.native_backup_queue and not all(preference_arguments):
+        parser.error("native backup candidate requires identity-bound preference inputs")
     if not 1 <= arguments.timeout <= 120:
         parser.error("timeout must be 1..120 seconds")
     if not 1 <= arguments.expected_preload_requests <= 16384:
@@ -302,6 +307,8 @@ def main():
         environment.update(NASHURA_PREFERENCE_DIRECTORY=str(configuration),
                            NASHURA_PREFERENCE_MATERIAL=str(extras["preference_material"][0]),
                            NASHURA_PREFERENCE_CRYPTO=str(payload / "libs/libcrypto.so"))
+        if arguments.native_backup_queue:
+            environment["NASHURA_PREFERENCE_BACKUP_BACKEND"] = "native-filesystem-queue-v1"
     if arguments.inspect_parsed_tables:
         if arguments.catalog_mode not in {"loader", "loader-construct"}:
             parser.error("parsed table observation requires a loader experiment")
@@ -350,6 +357,7 @@ def main():
         postcheck_errors.append("input identity: " + str(error))
     text = (output / "stdout.log").read_text(errors="replace")
     preference = preference_observations(text, (output / "stderr.log").read_text(errors="replace")) if all(preference_arguments) else None
+    backup_candidate = native_queue_observations(text, (output / "stderr.log").read_text(errors="replace")) if arguments.native_backup_queue else None
     observations = registration_observations(text, arguments.mode)
     try:
         resources_after = resource_inventory(roots)
@@ -412,6 +420,9 @@ def main():
                    "strict_preference_observations": preference,
                    "preference_current_runtime_identity": "UNRESOLVED" if all(preference_arguments) else None,
                    "preference_backup_service": "UNRESOLVED" if all(preference_arguments) else None,
+                   "native_backup_queue_candidate": arguments.native_backup_queue,
+                   "native_backup_candidate_observations": backup_candidate,
+                   "native_backup_android_parity": "NOT_VERIFIED" if arguments.native_backup_queue else None,
                    "outputs": {path.name: digest(path) for path in output.iterdir() if path.is_file()}})
     if not result["probe_unchanged"]:
         result["status"] = "BLOCKED"

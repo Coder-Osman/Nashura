@@ -1,0 +1,550 @@
+{
+  "schema": "nashura.pure-linux-native-backup-binding-evidence.v1",
+  "baseline_commit": "13dfbe95ccf927ef710502f5b3a638f910c3e9a7",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "delivery_commit": "containing commit",
+  "status": "RUNTIME_OBSERVED_LIMITED",
+  "experiment": "nashura-backup-verified-20261028-w_y05ro4",
+  "input_identity": {
+    "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "user_apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "runtime_update_fingerprint": "e0cb2fb9eb2fdd0df1afcb00df3e3ba61cf25aa8b24e39c17cc391d952a4e339",
+    "material_sha256": "36f1ad056cb49ee68ba1f5d9947e0776b1518916cfbec75416d0d14e9a8fecf4",
+    "xml0_sha256": "659b5791ffe3b15abf0d5aea2fd8dab791b4dc55475fedc14028a7cd726f6cc6",
+    "xml1_sha256": "891fb08375e6949e112590030df7dde588f0b4fc7df3d131ca12fac784153fe0",
+    "resource_manifest_sha256": "47a96c006f5d56f25e6e350a26eab2dbef0b8dfb17fe33124188c85dc27fb108",
+    "asset_backend_sha256": "905fb58cc33ed308107d433c6c1f9cfd57f6b6e121ff5e77dd1896176e11ea84",
+    "asset_index_sha256": "cc7fedcfb2a43a3cc8aae9afb586114915bfc69ae461d92420de349550772916"
+  },
+  "historical_apk_identity": "DIFFERENT_WHOLE_APK_HASH_NOT_RELABELED",
+  "environment": {
+    "guest": "existing Ubuntu ARM64",
+    "machine": "aarch64",
+    "kernel": "6.8.0-138-generic",
+    "native_runtime": "existing Android API30 linker64/Bionic in isolated Linux process",
+    "android_emulator_started_this_stage": false,
+    "guest_configuration_modified": false
+  },
+  "artifacts": {
+    "batch_sha256": "690811acf4c6a95417bdd8cd2bf505c41abeaa447f3c6f47d9f59f0a7c92da22",
+    "audit_sha256": "ccd99d54682f67c2fd6a71de3fd6cc33f51369f690019bf8045a1a5dd7864b74",
+    "evidence_archive_sha256": "fafa190405b68c51b51a17601b10b89c6d054bc579ebd8e782995bbd17ae8021",
+    "private_artifact_policy": "raw logs, configuration material, XML and binary archives remain private"
+  },
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "$EXPERIMENT/provider_job.py",
+        "--payload",
+        "$PAYLOAD",
+        "--probe",
+        "$EXPERIMENT/probe",
+        "--output",
+        "$EXPERIMENT/process-0",
+        "--mode",
+        "both",
+        "--data-root",
+        "$RESOURCES/asset-tables-v41",
+        "--update-root",
+        "$RESOURCES/update-stage-v64/resources",
+        "--data-path",
+        "/",
+        "--search-root",
+        "$RESOURCES/update-stage-v64/resources",
+        "--factory-mode",
+        "register",
+        "--resource-manifest",
+        "$EXPERIMENT/resource-manifest.json",
+        "--asset-root",
+        "$RESOURCES/asset-tables-v41",
+        "--asset-index",
+        "$RESOURCES/native-assets-v22.index",
+        "--asset-index-sha256",
+        "cc7fedcfb2a43a3cc8aae9afb586114915bfc69ae461d92420de349550772916",
+        "--asset-backend",
+        "$EXPERIMENT/libnative-assets-v47.so",
+        "--asset-backend-sha256",
+        "905fb58cc33ed308107d433c6c1f9cfd57f6b6e121ff5e77dd1896176e11ea84",
+        "--timeout",
+        "55",
+        "--resource-trace",
+        "--catalog-mode",
+        "loader",
+        "--inspect-parsed-tables",
+        "--expected-preload-requests",
+        "377",
+        "--preference-material",
+        "$EXPERIMENT/material.bin",
+        "--preference-material-sha256",
+        "36f1ad056cb49ee68ba1f5d9947e0776b1518916cfbec75416d0d14e9a8fecf4",
+        "--preference-xml0",
+        "$EXPERIMENT/original-0.xml",
+        "--preference-xml0-sha256",
+        "659b5791ffe3b15abf0d5aea2fd8dab791b4dc55475fedc14028a7cd726f6cc6",
+        "--preference-xml1",
+        "$EXPERIMENT/original-1.xml",
+        "--preference-xml1-sha256",
+        "891fb08375e6949e112590030df7dde588f0b4fc7df3d131ca12fac784153fe0"
+      ],
+      "exit_code": 1
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "$EXPERIMENT/provider_job.py",
+        "--payload",
+        "$PAYLOAD",
+        "--probe",
+        "$EXPERIMENT/probe",
+        "--output",
+        "$EXPERIMENT/process-1",
+        "--mode",
+        "both",
+        "--data-root",
+        "$RESOURCES/asset-tables-v41",
+        "--update-root",
+        "$RESOURCES/update-stage-v64/resources",
+        "--data-path",
+        "/",
+        "--search-root",
+        "$RESOURCES/update-stage-v64/resources",
+        "--factory-mode",
+        "register",
+        "--resource-manifest",
+        "$EXPERIMENT/resource-manifest.json",
+        "--asset-root",
+        "$RESOURCES/asset-tables-v41",
+        "--asset-index",
+        "$RESOURCES/native-assets-v22.index",
+        "--asset-index-sha256",
+        "cc7fedcfb2a43a3cc8aae9afb586114915bfc69ae461d92420de349550772916",
+        "--asset-backend",
+        "$EXPERIMENT/libnative-assets-v47.so",
+        "--asset-backend-sha256",
+        "905fb58cc33ed308107d433c6c1f9cfd57f6b6e121ff5e77dd1896176e11ea84",
+        "--timeout",
+        "55",
+        "--resource-trace",
+        "--catalog-mode",
+        "loader",
+        "--inspect-parsed-tables",
+        "--expected-preload-requests",
+        "377",
+        "--preference-material",
+        "$EXPERIMENT/material.bin",
+        "--preference-material-sha256",
+        "36f1ad056cb49ee68ba1f5d9947e0776b1518916cfbec75416d0d14e9a8fecf4",
+        "--preference-xml0",
+        "$EXPERIMENT/original-0.xml",
+        "--preference-xml0-sha256",
+        "659b5791ffe3b15abf0d5aea2fd8dab791b4dc55475fedc14028a7cd726f6cc6",
+        "--preference-xml1",
+        "$EXPERIMENT/original-1.xml",
+        "--preference-xml1-sha256",
+        "891fb08375e6949e112590030df7dde588f0b4fc7df3d131ca12fac784153fe0",
+        "--native-backup-queue"
+      ],
+      "exit_code": 1,
+      "consumer_command": [
+        "/usr/bin/python3",
+        "$EXPERIMENT/native_backup_consume.py",
+        "--directory",
+        "$EXPERIMENT/process-1/preference-store",
+        "--output",
+        "$EXPERIMENT/process-1/consumer.json"
+      ],
+      "consumer_exit": 0
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "$EXPERIMENT/provider_job.py",
+        "--payload",
+        "$PAYLOAD",
+        "--probe",
+        "$EXPERIMENT/probe",
+        "--output",
+        "$EXPERIMENT/process-2",
+        "--mode",
+        "both",
+        "--data-root",
+        "$RESOURCES/asset-tables-v41",
+        "--update-root",
+        "$RESOURCES/update-stage-v64/resources",
+        "--data-path",
+        "/",
+        "--search-root",
+        "$RESOURCES/update-stage-v64/resources",
+        "--factory-mode",
+        "register",
+        "--resource-manifest",
+        "$EXPERIMENT/resource-manifest.json",
+        "--asset-root",
+        "$RESOURCES/asset-tables-v41",
+        "--asset-index",
+        "$RESOURCES/native-assets-v22.index",
+        "--asset-index-sha256",
+        "cc7fedcfb2a43a3cc8aae9afb586114915bfc69ae461d92420de349550772916",
+        "--asset-backend",
+        "$EXPERIMENT/libnative-assets-v47.so",
+        "--asset-backend-sha256",
+        "905fb58cc33ed308107d433c6c1f9cfd57f6b6e121ff5e77dd1896176e11ea84",
+        "--timeout",
+        "55",
+        "--resource-trace",
+        "--catalog-mode",
+        "loader",
+        "--inspect-parsed-tables",
+        "--expected-preload-requests",
+        "377",
+        "--preference-material",
+        "$EXPERIMENT/material.bin",
+        "--preference-material-sha256",
+        "36f1ad056cb49ee68ba1f5d9947e0776b1518916cfbec75416d0d14e9a8fecf4",
+        "--preference-xml0",
+        "$EXPERIMENT/original-0.xml",
+        "--preference-xml0-sha256",
+        "659b5791ffe3b15abf0d5aea2fd8dab791b4dc55475fedc14028a7cd726f6cc6",
+        "--preference-xml1",
+        "$EXPERIMENT/original-1.xml",
+        "--preference-xml1-sha256",
+        "891fb08375e6949e112590030df7dde588f0b4fc7df3d131ca12fac784153fe0",
+        "--native-backup-queue"
+      ],
+      "exit_code": 1,
+      "consumer_command": [
+        "/usr/bin/python3",
+        "$EXPERIMENT/native_backup_consume.py",
+        "--directory",
+        "$EXPERIMENT/process-2/preference-store",
+        "--output",
+        "$EXPERIMENT/process-2/consumer.json"
+      ],
+      "consumer_exit": 0
+    }
+  ],
+  "command_path_aliases": {
+    "$EXPERIMENT": "new exclusive guest directory",
+    "$PAYLOAD": "existing identity-bound user APK payload",
+    "$RESOURCES": "existing read-only verified resources"
+  },
+  "batch_harness_exit": 0,
+  "bounded_binding_audit": {
+    "schema": "nashura.native-backup-binding-audit.v1",
+    "audit": "PASS",
+    "scope": "bounded candidate enqueue, natural loader and native archive only",
+    "machine": "aarch64",
+    "kernel": "6.8.0-138-generic",
+    "batch_sha256": "690811acf4c6a95417bdd8cd2bf505c41abeaa447f3c6f47d9f59f0a7c92da22",
+    "probe_sha256": "74d6793ff4de288da3c4db7366b4ae2d498edf37b7069dc1321d5d22e1a47a31",
+    "reports": [
+      {
+        "ordinal": 0,
+        "native_exit": 96,
+        "wrapper_exit": 1,
+        "elapsed_seconds": 7.681992295998498,
+        "result_sha256": "e917aad87e15c5ed13289494ebde8806255e42afc7d257715a5a5c30175f5e4a",
+        "outputs": {
+          "before.maps": "a127665ebeb48d3e04e6599e739e50819afc35294c5b75f0fd204ecd647ae373",
+          "stderr.log": "1bd1eb72b89fd8b7cab4f6e96199639e9b977565a85b7e9337f1a82163ded034",
+          "stdout.log": "5b134922ee4decafe5a9a3b9c14e2a5a3daf76c635c2b277db08b8b83b3768d1",
+          "after.maps": "148593de54b0c2842f46ce294999346bf1b017021dd2e0f5c3c76d72636a7aa2",
+          "syscalls.14481": "3298754838df4fa3a9de3b8d0a780bf3ad7e5831846cd9587eb834d8b85c50b3"
+        },
+        "inputs_unchanged": true,
+        "postcheck_errors": [],
+        "configuration": {
+          "hook_bound": true,
+          "write_summary": {
+            "result": -1,
+            "deleted": false,
+            "commits": 2,
+            "disk_writes": 2,
+            "false_commits": 0,
+            "backup_requests": 1,
+            "backup_failures": 1,
+            "decode_exceptions": 0,
+            "entries": [
+              12,
+              12
+            ]
+          },
+          "persistence_before_unresolved_backup_observed": true,
+          "backup_service": "UNRESOLVED",
+          "current_runtime_identity": "UNRESOLVED",
+          "configuration_contract_pass": false,
+          "catalog_ready_pass": false
+        }
+      },
+      {
+        "ordinal": 1,
+        "native_exit": 0,
+        "wrapper_exit": 1,
+        "elapsed_seconds": 19.108397061994765,
+        "result_sha256": "2d5e1b9dec29e3db321664426869e7893304fca6eec1d71e2acfa4b3b3b97a6d",
+        "outputs": {
+          "before.maps": "222c32d974cd6eefa3969519b10a14e9a6942666ba8fcb4abca5cd623ce10cd2",
+          "syscalls.14486": "07ba71af23881ae8f6cb83f44f4ba2bd73733a6f4947ad08a6b8d8409d0f585c",
+          "stderr.log": "c3218b7976b719c149fe54432c53bdcf29d00f8349af9512b2a4bcbeeebcbb9e",
+          "stdout.log": "43debd69514a2984dd1934e44196dc4ff87a669835a53a2e94cdcaf5d61e08e6",
+          "after.maps": "130d98b7e50640762bbf91d294c8819106a4091018e85b1e0d61e411f32d4ef6",
+          "closed.maps": "adea8c12a5a281701bd1be61574bdaccc78fe4d7a33d5953de1ab52e456011f0"
+        },
+        "inputs_unchanged": true,
+        "postcheck_errors": [],
+        "configuration": {
+          "candidate_hook_bound": true,
+          "queue_summary": {
+            "result": 0,
+            "created": true,
+            "delivery": "PENDING",
+            "android_parity": "NOT_VERIFIED"
+          },
+          "write_summary": {
+            "result": 0,
+            "deleted": false,
+            "commits": 2,
+            "disk_writes": 2,
+            "false_commits": 0,
+            "backup_requests": 1,
+            "backup_failures": 0,
+            "decode_exceptions": 0,
+            "entries": [
+              12,
+              12
+            ]
+          },
+          "bounded_enqueue_observed": true,
+          "delivery": "PENDING",
+          "android_backup_parity": "NOT_VERIFIED",
+          "current_runtime_identity": "UNRESOLVED",
+          "configuration_contract_pass": false,
+          "catalog_ready_pass": false
+        },
+        "parsed_tables": {
+          "complete": true,
+          "errors": [],
+          "summaries": {
+            "before": [
+              0,
+              0
+            ],
+            "after": [
+              162,
+              24353
+            ]
+          },
+          "layout_sha256": "8ff1043b9d3544dbd6cbefae576025845e1f5f6e8cb9a78a931428eb5de36f89",
+          "coverage": "table layout, counts and nonnull row pointers; not cell contents or Android parity",
+          "catalog_ready_pass": false
+        },
+        "consumer_exit": 0,
+        "consumer_sha256": "9957122f05b9b24062c235ba541b3fc67fb1cfcb7418f0efe8075955832eac61",
+        "archive_files": {
+          "store-0.xml": {
+            "sha256": "2276663fa3137ba380bc6f69fde4c3a587f687792e17f4fa9047fe5337ab573d",
+            "bytes": 1086
+          },
+          "store-1.xml": {
+            "sha256": "447137ea8d385ebb697560a70aecfeff9a82a46f96b5be8adacfe948cd9dad94",
+            "bytes": 1086
+          }
+        },
+        "pending_acknowledged": true
+      },
+      {
+        "ordinal": 2,
+        "native_exit": 0,
+        "wrapper_exit": 1,
+        "elapsed_seconds": 19.653308865003055,
+        "result_sha256": "dc5dfa94611e7e3dd32f4928d490a62c253fa214e1840666765836b1445f4a78",
+        "outputs": {
+          "before.maps": "5d5f693148f127dfb3a52aaee6fa712f7e39061bc207c4be287ebf1c31bab98f",
+          "syscalls.14492": "a0bcebd81000c01120d254697f8a612f6d0b8fc8f7c2e9c0c8438423f9db4c7e",
+          "stderr.log": "c3218b7976b719c149fe54432c53bdcf29d00f8349af9512b2a4bcbeeebcbb9e",
+          "stdout.log": "4c8eb12a116db236bba59c14e8919c398cd2d6a313f9571cc5477e30a877cdd0",
+          "after.maps": "f69ff37ce43b2e9706b738377e26b8480e6a218d7ec3cac8c97efe37817bffbc",
+          "closed.maps": "897c6799bc2b05dc513e72c3ba132405c47d6bb108c4efe533e4c7954492805e"
+        },
+        "inputs_unchanged": true,
+        "postcheck_errors": [],
+        "configuration": {
+          "candidate_hook_bound": true,
+          "queue_summary": {
+            "result": 0,
+            "created": true,
+            "delivery": "PENDING",
+            "android_parity": "NOT_VERIFIED"
+          },
+          "write_summary": {
+            "result": 0,
+            "deleted": false,
+            "commits": 2,
+            "disk_writes": 2,
+            "false_commits": 0,
+            "backup_requests": 1,
+            "backup_failures": 0,
+            "decode_exceptions": 0,
+            "entries": [
+              12,
+              12
+            ]
+          },
+          "bounded_enqueue_observed": true,
+          "delivery": "PENDING",
+          "android_backup_parity": "NOT_VERIFIED",
+          "current_runtime_identity": "UNRESOLVED",
+          "configuration_contract_pass": false,
+          "catalog_ready_pass": false
+        },
+        "parsed_tables": {
+          "complete": true,
+          "errors": [],
+          "summaries": {
+            "before": [
+              0,
+              0
+            ],
+            "after": [
+              162,
+              24353
+            ]
+          },
+          "layout_sha256": "8ff1043b9d3544dbd6cbefae576025845e1f5f6e8cb9a78a931428eb5de36f89",
+          "coverage": "table layout, counts and nonnull row pointers; not cell contents or Android parity",
+          "catalog_ready_pass": false
+        },
+        "consumer_exit": 0,
+        "consumer_sha256": "3e06dbcabd981b3beaf9ac63f38d203b20bdd746606847f25c7be5d931070c37",
+        "archive_files": {
+          "store-0.xml": {
+            "sha256": "2276663fa3137ba380bc6f69fde4c3a587f687792e17f4fa9047fe5337ab573d",
+            "bytes": 1086
+          },
+          "store-1.xml": {
+            "sha256": "447137ea8d385ebb697560a70aecfeff9a82a46f96b5be8adacfe948cd9dad94",
+            "bytes": 1086
+          }
+        },
+        "pending_acknowledged": true
+      }
+    ],
+    "android_backup_parity": "NOT_VERIFIED",
+    "current_runtime_identity": "UNRESOLVED",
+    "configuration_contract_pass": false,
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN"
+  },
+  "coverage": {
+    "input_files_checked": 187,
+    "not_a_loaded_library_coverage_count": true,
+    "candidate_repeats": 2,
+    "loader_steps_each": 53,
+    "table_count": 162,
+    "row_count": 24353,
+    "table_scope": "layout/counts/nonnull row pointers; cell contents and Android parity unverified",
+    "original_material_and_xml_unchanged": true,
+    "write_target": "exclusive copied preference stores only",
+    "android_backup_service_equivalence": "NOT_VERIFIED",
+    "android_exception_parity": "NOT_VERIFIED"
+  },
+  "retained_failures": [
+    {
+      "kind": "host_queue_compile",
+      "result": "58 passed, 1 skipped, 18 errors",
+      "cause": "missing getentropy declaration",
+      "fix": "include sys/random.h; no runtime policy change"
+    },
+    {
+      "experiment": "nashura-backup-final-20261028-bvo2dat7",
+      "native_exits": [
+        96,
+        96,
+        96
+      ],
+      "cause": "copied configuration material mode 0644 rejected before backend install",
+      "fix": "new isolated experiment with umask 077; failed evidence retained"
+    }
+  ],
+  "warnings": [
+    "Android linker DT warnings",
+    "missing GMT/posixrules tzdata",
+    "APK miss csv_logic/globalIdDb.csv; absence retained"
+  ],
+  "gates": {
+    "configuration_contract_pass": false,
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "step_tick": "NOT_RUN",
+    "complete_match": "NOT_RUN",
+    "no_javavm_cold_start": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "next_blocker": "Full configuration contract: current-runtime material identity plus Android Backup/exception semantic equivalence; candidate native archive is not equivalent evidence.",
+  "validation": {
+    "scope": "Engineering validation only; overlapping test sets are reported separately and grant no native semantic gate.",
+    "test_runtime": "/opt/anaconda3/bin/python3",
+    "new_tests": 43,
+    "tests": [
+      {
+        "command": "/opt/anaconda3/bin/python3 -m pytest -q -p no:cacheprovider tools/pure_linux",
+        "working_directory": "isolated repository copy",
+        "exit_code": 0,
+        "passed": 900,
+        "skipped": 1,
+        "log_sha256": "9c8cafe7e5af75457798b6b127ed19af1c0bedf7415b0f56a4b00b5b5d2b104a"
+      },
+      {
+        "command": "/opt/anaconda3/bin/python3 tools/run_main_engine_checks.py",
+        "working_directory": "isolated repository copy",
+        "exit_code": 0,
+        "passed": 211,
+        "skipped": 0,
+        "log_sha256": "5946c8abee5019a837b3f885936548b189bc151fe979c6b7157e8500bfb63aca"
+      },
+      {
+        "command": "/opt/anaconda3/bin/python3 tools/run_public_checks.py",
+        "working_directory": "isolated repository copy",
+        "exit_code": 0,
+        "passed": 1104,
+        "skipped": 42,
+        "log_sha256": "38641968e5af71916cade7b344e0623d9b5f1035cf64b633e6852b88fc61c009"
+      }
+    ],
+    "credential_scan": {
+      "command": "gitleaks dir . --config .gitleaks.toml --redact",
+      "exit_code": 0,
+      "findings": 0,
+      "log_sha256": "42928dd30033bb292c80d45bd1d01d65f4db8024987403b27ad6d270ed18acdf"
+    },
+    "original_xml_identity": {
+      "files": 253,
+      "unchanged": true,
+      "snapshot_sha256": "52ca27d4ad36d84d32bd3911fb0a026286da6c35763599311189f9b4c44b33c8"
+    },
+    "regression_source_identity": {
+      "files": 142,
+      "matches_current_source": true
+    },
+    "bounded_binding_audit": {
+      "exit_code": 0,
+      "sha256": "ccd99d54682f67c2fd6a71de3fd6cc33f51369f690019bf8045a1a5dd7864b74",
+      "scope": "bounded native candidate only; configuration and catalog gates remain false"
+    },
+    "source_snapshot": {
+      "command": "/opt/anaconda3/bin/python3 tools/check_public_snapshot.py",
+      "exit_code": 0,
+      "source_files_verified": 2567,
+      "log_sha256": "5e3ed6f24c1368ab81d624c6e83bcb64402f8d672b8fb689e3021ecfefe117f9"
+    },
+    "credential_scan_after_manifest": {
+      "command": "gitleaks dir . --config .gitleaks.toml --redact",
+      "exit_code": 0,
+      "findings": 0,
+      "log_sha256": "8e32f6d97e08932f4c1934dca57cb5800dbb7b191073ddb358ea81ff465ecd35"
+    }
+  }
+}

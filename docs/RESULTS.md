@@ -1,5 +1,18 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：原生候选入队与自然 loader 重复观察
+
+默认Backup未解析对照native96；两个显式候选native0，严格wrapper均1。
+各自然loader53步、ready 0→1、162张表/24,353行；正常析构、asset finish及dlclose。
+独立消费者各exit0、两槽各1086bytes逐字节归档后清pending；写入仅在独占副本。
+新增43项工具测试，隔离专项900/1、主工程211、公开1104/42均exit0。
+首次编译及权限拒收失败保留；候选归档不等价Android BackupManager。
+完整配置契约与当前材料身份仍BLOCKED，严格CATALOG_READY_PASS未取得，
+ResourceManager、GameState、Step、完整局和10×均NOT_RUN。
+详见[报告](../agent-handoff/PURE_LINUX_NATIVE_BACKUP_BINDING_2026-10-28.md)、
+[证据](../agent-handoff/pure-linux-native-backup-binding-evidence-20261028.json)及
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_BINDING.md)。以下保留历史记录。
+
 ## 2026-10-28 E2.1-N：真实 agent 失败、重排与重试
 
 一次自有store/request，真实IOException后目标pending保持且进入新journal；
