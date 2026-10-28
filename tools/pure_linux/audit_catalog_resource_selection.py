@@ -52,10 +52,12 @@ def audit(paths, expected, roots, cwd):
         raise ValueError("input identity mismatch")
     android = json.loads(paths["android"].read_text())
     trace = android["trace"]
+    startup_clean = (android.get("spawn_thread_alive") is False or
+                     android.get("spawn_gate", {}).get("disabled") is True)
     if (android.get("status") != "RUNTIME_OBSERVED_REQUIRES_AUDIT" or
             android.get("catalog_ready_pass") is not False or android.get("cleanup_error") or
-            android.get("spawn_thread_alive") is not False or trace.get("errors") != [] or
-            trace.get("lost") != 0 or trace.get("activeScopes") != 0):
+            not startup_clean or android.get("script_error_count") != 0 or trace.get("errors") != [] or
+            trace.get("lost") != 0 or trace.get("activeScopes") != 0 or trace.get("activeBatchScopes") != 0):
         raise ValueError("Android observation incomplete")
     coverage = {entry["label"]: entry["installed"] for entry in trace["coverage"]}
     if not all(coverage.get(name) is True for name in ("filesystem_open", "asset_open", "table_batch")):
@@ -77,7 +79,7 @@ def audit(paths, expected, roots, cwd):
             "removed": len(set(before) - set(after)), "catalog_ready_pass": False,
             "limitations": ["APK object can be an invalid wrapper; virtual validity was not called",
                             "Android null is compared with Linux absent observation, not full causal trace",
-                            "separate process executions and Android update identity changed",
+                            "separate process executions and Android update inventory may differ from Linux",
                             "object type does not establish byte or parse parity"]}
 
 

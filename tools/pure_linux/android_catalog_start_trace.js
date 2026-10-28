@@ -45,38 +45,42 @@ function attach(module, offset, label, callbacks) {
 }
 function observe(module) {
   if (module.name !== 'libg.so') return;
+  let getterHooksAttempted = false;
   attach(module, 0xe1bdcc, 'table_batch', {
     onEnter: function (args) {
-      this.threadId = Process.getCurrentThreadId();
+      if (!getterHooksAttempted) {
+        getterHooksAttempted = true;
+        for (const [label, offset] of [['entry_type', 0xdcb6fc], ['entry_id', 0xdcb474]]) {
+          attach(module, offset, label, {
+            onEnter: function () { this.batch = batchScopes.get(Process.getCurrentThreadId()) || null; },
+            onLeave: function (value) { if (this.batch) record({kind: label, batch: this.batch, value: value.toUInt32()}); }
+          });
+        }
+      }
+      this.observerThreadId = Process.getCurrentThreadId();
       this.batchCall = ++nextCall;
-      if (batchScopes.has(this.threadId)) errors.push('nested batch');
-      batchScopes.set(this.threadId, this.batchCall);
+      if (batchScopes.has(this.observerThreadId)) errors.push('nested batch');
+      batchScopes.set(this.observerThreadId, this.batchCall);
       let listCount = null;
       try { listCount = args[1].and(ptr('0x00ffffffffffffff')).add(12).readS32(); } catch (_) {}
       record({kind: 'table_batch', call: this.batchCall, args: [2, 3, 4, 5, 6].map(i => args[i].toUInt32()), listCount: listCount,
         caller: this.returnAddress.sub(module.base).toString()});
     },
     onLeave: function () {
-      if (batchScopes.get(this.threadId) !== this.batchCall) errors.push('batch scope mismatch');
-      batchScopes.delete(this.threadId);
+      if (batchScopes.get(this.observerThreadId) !== this.batchCall) errors.push('batch scope mismatch');
+      batchScopes.delete(this.observerThreadId);
     }
   });
-  for (const [label, offset] of [['entry_type', 0xdcb6fc], ['entry_id', 0xdcb474]]) {
-    attach(module, offset, label, {
-      onEnter: function () { this.batch = batchScopes.get(Process.getCurrentThreadId()) || null; },
-      onLeave: function (value) { if (this.batch) record({kind: label, batch: this.batch, value: value.toUInt32()}); }
-    });
-  }
   attach(module, 0xdcd364, 'postprocess', {
     onEnter: function () { record({kind: 'postprocess', caller: this.returnAddress.sub(module.base).toString()}); }
   });
   attach(module, 0x12e03e4, 'filesystem_open', {
     onEnter: function (args) {
       this.path = engineString(args[1]);
-      this.threadId = Process.getCurrentThreadId();
+      this.observerThreadId = Process.getCurrentThreadId();
       this.callId = ++nextCall;
-      this.parent = scopes.get(this.threadId) || null;
-      scopes.set(this.threadId, this.callId);
+      this.parent = scopes.get(this.observerThreadId) || null;
+      scopes.set(this.observerThreadId, this.callId);
     },
     onLeave: function (value) {
       let vtable = null;
@@ -89,8 +93,8 @@ function observe(module) {
       }
       record({kind: 'filesystem_open', path: this.path, nonnull: !value.isNull(), vtable: vtable,
         call: this.callId, parent: this.parent});
-      if (scopes.get(this.threadId) !== this.callId) errors.push('filesystem scope mismatch');
-      if (this.parent) scopes.set(this.threadId, this.parent); else scopes.delete(this.threadId);
+      if (scopes.get(this.observerThreadId) !== this.callId) errors.push('filesystem scope mismatch');
+      if (this.parent) scopes.set(this.observerThreadId, this.parent); else scopes.delete(this.observerThreadId);
     }
   });
   record({kind: 'engine_hooks_ready'});

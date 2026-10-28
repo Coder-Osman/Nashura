@@ -1,5 +1,10 @@
 # 阶段成果与证据索引
 
+## 2026-10-29 E2.1-N：catalog 批次返回序列
+
+Android/Linux 5 批次的 313 次 getter 返回序列一致；旧观察器回调异常已修复并
+记录。详见[报告](../agent-handoff/PURE_LINUX_CATALOG_ENTRY_COMPARISON_2026-10-29.md)。
+
 ## 2026-10-29 E2.1-N：catalog 批次内入口
 
 Linux 完成限定 getter 观测；Android 附加超时，跨平台比较未知。详见

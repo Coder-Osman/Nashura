@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import queue
 import socket
 import subprocess
 import threading
@@ -17,7 +18,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("adb", "engine", "script", "output"):
         parser.add_argument("--" + name, type=Path, required=True)
+    parser.add_argument("--spawn-gate", action="store_true")
+    parser.add_argument("--expected-batches", type=int, default=0)
     args = parser.parse_args()
+    if args.expected_batches < 0:
+        parser.error("expected-batches must be nonnegative")
     entry_guards(args.engine)
     args.output.mkdir(mode=0o700, exist_ok=False)
     report = {"schema": "nashura.android-catalog-start-trace.v1", "status": "FAILED", "catalog_ready_pass": False,
@@ -29,6 +34,10 @@ def main():
     device = None
     thread = None
     start_identity = None
+    gate_enabled = False
+    gate_events = queue.Queue()
+    gate_spawn = None
+    launch = None
 
     def adb(*argv, check=True):
         run = subprocess.run([str(args.adb), "-s", "emulator-5630", *argv], capture_output=True, timeout=20)
@@ -58,35 +67,85 @@ def main():
         capture_update("before")
         device = frida.get_device_manager().add_remote_device("127.0.0.1:27066")
 
-        def spawn():
-            try:
-                report["spawn"]["pid"] = device.spawn("nullsroyale.rel.free", activity="com.supercell.clashroyale.Engine0App")
-            except Exception as error:
-                report["spawn"]["error"] = type(error).__name__ + ": " + str(error)
+        if args.spawn_gate:
+            report["spawn_gate"] = {"events": [], "enabled": False, "disabled": False}
 
-        thread = threading.Thread(target=spawn)
-        thread.start()
-        deadline = time.monotonic() + 30
-        while time.monotonic() < deadline:
-            process = adb("shell", "pidof", "nullsroyale.rel.free:engine0", check=False)
-            candidate = process.stdout.decode().strip()
-            if process.returncode == 0 and candidate.isdigit():
-                pid = int(candidate)
-                break
-            time.sleep(0.05)
-        if pid is None:
-            raise ValueError("owned startup process absent")
+            def on_spawn(spawn):
+                gate_events.put((spawn.pid, spawn.identifier))
+
+            device.on("spawn-added", on_spawn)
+            device.enable_spawn_gating()
+            gate_enabled = True
+            report["spawn_gate"]["enabled"] = True
+            launch = subprocess.Popen([str(args.adb), "-s", "emulator-5630", "shell", "am", "start",
+                                       "-n", "nullsroyale.rel.free/com.supercell.clashroyale.Engine0App"],
+                                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            deadline = time.monotonic() + 40
+            while time.monotonic() < deadline:
+                try:
+                    candidate, identifier = gate_events.get(timeout=0.5)
+                except queue.Empty:
+                    continue
+                report["spawn_gate"]["events"].append({"pid": candidate, "identifier": identifier})
+                if identifier == "nullsroyale.rel.free:engine0":
+                    if gate_spawn is not None:
+                        raise ValueError("multiple gated target processes")
+                    gate_spawn = candidate
+                    pid = candidate
+                    break
+                device.resume(candidate)
+            if pid is None:
+                raise ValueError("target spawn not observed by gate")
+            observed = adb("shell", "pidof", "nullsroyale.rel.free:engine0").stdout.decode().strip()
+            if observed != str(pid):
+                raise ValueError("gated target PID differs")
+        else:
+            def spawn():
+                try:
+                    report["spawn"]["pid"] = device.spawn("nullsroyale.rel.free", activity="com.supercell.clashroyale.Engine0App")
+                except Exception as error:
+                    report["spawn"]["error"] = type(error).__name__ + ": " + str(error)
+
+            thread = threading.Thread(target=spawn)
+            thread.start()
+            deadline = time.monotonic() + 30
+            while time.monotonic() < deadline:
+                process = adb("shell", "pidof", "nullsroyale.rel.free:engine0", check=False)
+                candidate = process.stdout.decode().strip()
+                if process.returncode == 0 and candidate.isdigit():
+                    pid = int(candidate)
+                    break
+                time.sleep(0.05)
+            if pid is None:
+                raise ValueError("owned startup process absent")
         report["owned_pid"] = pid
         start_identity = adb("shell", "cat", "/proc/%d/stat" % pid).stdout.decode().strip()
         session = device.attach(pid)
         script = session.create_script(args.script.read_text())
+        report["script_messages"] = []
+        report["script_error_count"] = 0
+
+        def on_message(message, data):
+            if message.get("type") == "error":
+                report["script_error_count"] += 1
+            if len(report["script_messages"]) < 100:
+                report["script_messages"].append(message)
+
+        script.on("message", on_message)
         script.load()
         report["installation"] = script.exports_sync.install()
         try:
             device.resume(pid)
             report["resume"] = "returned"
+            gate_spawn = None
         except Exception as error:
             report["resume"] = type(error).__name__ + ": " + str(error)
+            if args.spawn_gate:
+                raise
+        if gate_enabled:
+            device.disable_spawn_gating()
+            gate_enabled = False
+            report["spawn_gate"]["disabled"] = True
         deadline = time.monotonic() + 90
         while time.monotonic() < deadline:
             try:
@@ -100,7 +159,17 @@ def main():
             time.sleep(0.5)
         else:
             raise ValueError("cold-ready status not reached")
-        report["trace"] = script.exports_sync.snapshot()
+        deadline = time.monotonic() + 30
+        while True:
+            report["trace"] = script.exports_sync.snapshot()
+            if report["script_error_count"]:
+                raise ValueError("Frida script callback error")
+            batches = sum(event.get("kind") == "table_batch" for event in report["trace"]["events"])
+            if batches >= args.expected_batches and report["trace"].get("activeBatchScopes", 0) == 0:
+                break
+            if time.monotonic() >= deadline:
+                raise ValueError("expected completed batch observations not reached")
+            time.sleep(0.25)
         capture_update("after")
         report["update_unchanged"] = report["update_before"]["sha256"] == report["update_after"]["sha256"]
         report["status"] = "RUNTIME_OBSERVED_REQUIRES_AUDIT"
@@ -117,6 +186,15 @@ def main():
         raise
     finally:
         try:
+            if gate_enabled:
+                try:
+                    if gate_spawn is not None:
+                        device.kill(gate_spawn)
+                        gate_spawn = None
+                finally:
+                    device.disable_spawn_gating()
+                    gate_enabled = False
+                    report["spawn_gate"]["disabled"] = True
             if pid is not None and start_identity is not None:
                 current = adb("shell", "cat", "/proc/%d/stat" % pid, check=False)
                 if current.returncode == 0:
@@ -126,6 +204,16 @@ def main():
                     if original != observed:
                         raise ValueError("owned process starttime changed")
                     adb("shell", "kill", str(pid))
+            if launch is not None:
+                try:
+                    stdout, stderr = launch.communicate(timeout=10)
+                    report["launch"] = {"exit": launch.returncode,
+                                        "stdout_sha256": hashlib.sha256(stdout).hexdigest(),
+                                        "stderr_sha256": hashlib.sha256(stderr).hexdigest()}
+                except subprocess.TimeoutExpired:
+                    launch.kill()
+                    launch.communicate()
+                    report["launch"] = {"timeout": True}
             if thread is not None:
                 thread.join(timeout=25)
                 report["spawn_thread_alive"] = thread.is_alive()
@@ -133,6 +221,8 @@ def main():
             report["cleanup_error"] = type(error).__name__ + ": " + str(error)
             report["status"] = "INCOMPLETE_CLEANUP"
         finally:
+            if report.get("script_error_count"):
+                report["status"] = "FAILED_SCRIPT_CALLBACK"
             with (args.output / "result.json").open("x") as stream:
                 json.dump(report, stream, indent=2)
                 stream.write("\n")

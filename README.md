@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-10-29：catalog 批次返回序列对照
+
+修复 Android 回调异常后，两侧 5 个批次的 313 次 getter 返回序列一致；update
+输入与表行内容仍有差异。详见[报告](agent-handoff/PURE_LINUX_CATALOG_ENTRY_COMPARISON_2026-10-29.md)。
+
 ## 2026-10-29：Linux catalog 批次内入口观测
 
 Linux 真实引擎的 5 次批次及 313 次候选 getter 调用均记录返回；Android 附加超时，
