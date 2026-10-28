@@ -1,0 +1,114 @@
+{
+  "schema": "nashura.pure-linux-backup-manual-callback.v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "base_head": "850c3673df6cd0fa5fde6919593562d9f0fd9919",
+  "experiment": {
+    "classification": "USER_APPROVED_MANUAL_TRIGGER",
+    "trigger_count": 1,
+    "method": "com.supercell.titan.GameApp.requestBackup:()V",
+    "dex_receiver_path": "GameApp.getInstance()",
+    "device_serial": "emulator-5580",
+    "avd": "nashura-e2-backup-api30",
+    "api": 30,
+    "game_pid": 6901,
+    "game_cmdline": "nullsroyale.rel.free",
+    "game_uid": 10166,
+    "system_server_pid": 522,
+    "system_server_cmdline": "system_server",
+    "system_server_uid": 1000,
+    "frida_version": "16.7.19",
+    "game_process_restarted": false,
+    "app_data_cleared": false,
+    "avd_configuration_changed": false
+  },
+  "observed_path": {
+    "client_requestBackup_enter_return": "RUNTIME_OBSERVED",
+    "client_binder_proxy_dataChanged_enter_return": "RUNTIME_OBSERVED",
+    "server_BackupManagerService_dataChanged": "RUNTIME_OBSERVED",
+    "server_dataChangedForUser": "RUNTIME_OBSERVED",
+    "server_isUserReadyForBackup": "RUNTIME_OBSERVED",
+    "server_UserBackupManagerService_dataChanged": "RUNTIME_OBSERVED",
+    "server_dataChangedTargets": "RUNTIME_OBSERVED",
+    "server_dataChangedImpl_enter_return": "RUNTIME_OBSERVED",
+    "server_writeToJournalLocked": "NOT_OBSERVED_IN_THIS_CALL",
+    "server_DataChangedJournal_addPackage": "NOT_OBSERVED_IN_THIS_CALL",
+    "server_KeyValueBackupJob_schedule": "NOT_OBSERVED_IN_THIS_CALL"
+  },
+  "backup_state": {
+    "enabled_before": true,
+    "enabled_after": true,
+    "pending_key_value_before": 30,
+    "pending_key_value_after": 30,
+    "backup_running_before": false,
+    "backup_running_after": false,
+    "preexisting_pending_contains_target_package": true,
+    "interpretation": "The request reached dataChangedImpl, but the preexisting pending queue prevents attribution of journal/job behavior to a new enqueue; no journal/job call was observed in this transaction."
+  },
+  "observer": {
+    "path": "tools/pure_linux/backup_runtime_observer.js",
+    "sha256": "a3eedb563984c6a67784a660971077891de67818070a3e91339cf985f53fabe6",
+    "syntax_check": "node --check tools/pure_linux/backup_runtime_observer.js",
+    "syntax_check_exit_code": 0,
+    "server_identity_evidence": "UID=1000 and ActivityThread.currentProcessName()==null, plus host-verified PID and /proc cmdline",
+    "app_identity_evidence": "UID=10166 and currentProcessName nullsroyale.rel.free, plus host-verified /proc cmdline"
+  },
+  "runner": {
+    "path": "tools/pure_linux/run_backup_callback_once.py",
+    "sha256": "da1a2418d3285f631dea07e6ebec585774d20d84bc3e09a2ca390edcdab0fd63",
+    "python_compile_exit_code": 0,
+    "command": "/tmp/nashura-frida-16.7.19-venv/bin/python tools/pure_linux/run_backup_callback_once.py --observer tools/pure_linux/backup_runtime_observer.js --output /tmp/nashura-backup-callback-20261028-094333-confirmed/frida-events.jsonl --system-server-pid 522 --game-pid 6901 --adb $HOME/Library/Android/sdk/platform-tools/adb --serial emulator-5580",
+    "exit_code": 0
+  },
+  "raw_outputs": {
+    "directory": "/tmp/nashura-backup-callback-20261028-094333-confirmed",
+    "frida_events_jsonl_sha256": "3d9211e7674b45fcd555aed7f2774315af67c14cff2f9975cd3416ea67d827a0",
+    "frida_event_lines": 41,
+    "backup_before_sha256": "9ff59d6b682e63f54cc3449baa2c2bc785c1b49f5b5eebbcda746e23f375e241",
+    "backup_after_sha256": "103983230fc85029b2ca42951c605342950112da9c3f7c89f246153d2e1c732b",
+    "frida_event_counts": {
+      "observer_ready": 2,
+      "hook_installed": 19,
+      "manual_requestBackup_begin": 1,
+      "manual_requestBackup_return": 1,
+      "call_enter": 9,
+      "call_return": 9,
+      "call_throw": 0
+    }
+  },
+  "failed_attempts": [
+    {
+      "directory": "/tmp/nashura-backup-callback-20261028-094033-attempt2",
+      "failure": "Frida process display label differed from package name; pre-trigger identity gate stopped execution. No callback invoked."
+    },
+    {
+      "directory": "/tmp/nashura-backup-callback-20261028-094058-attempt3",
+      "failure": "Static-style JNI bridge invocation produced Error: expected a pointer; no requestBackup entry observed."
+    },
+    {
+      "directory": "/tmp/nashura-backup-callback-20261028-094138-attempt4",
+      "failure": "Heap search did not yield a usable instance through the initial RPC flow; no requestBackup entry observed."
+    },
+    {
+      "directory": "/tmp/nashura-backup-callback-20261028-094214-attempt5",
+      "failure": "ActivityThread Application was not GameApp; cast rejected before requestBackup."
+    },
+    {
+      "directory": "/tmp/nashura-backup-callback-20261028-094257-attempt6",
+      "failure": "DEX receiver was instance-bound; class wrapper call rejected before requestBackup."
+    }
+  ],
+  "gate_status": {
+    "backup_request_delivery": "PASS_LIMITED_TO_MANUAL_CALLBACK",
+    "journal_and_job_side_effect_contract": "UNRESOLVED",
+    "configuration_contract": "BLOCKED",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "gamestate_step": "NOT_RUN",
+    "no_java_vm": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "next_blocker": "Capture the real LOADING_SCREEN_STATE_LABEL preference store/commit flow with its backup request when no preexisting package journal entry masks the enqueue side effect."
+}
