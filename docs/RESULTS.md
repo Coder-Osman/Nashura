@@ -1,5 +1,12 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：Linux catalog 的资源路径观察
+
+真实 libg 轨迹复算发现247次 APK open/read/close及131个 update 文件完整映射关闭；
+122个 update 打开路径同时存在 APK 暂存副本，其中118个清单 SHA 不同。
+未证明逐请求回退、映射字节消费或 Android 资源一致；严格catalog门保持关闭。
+Linux专项964通过/1跳过。详见[报告](../agent-handoff/PURE_LINUX_CATALOG_RESOURCE_TRACE_2026-10-28.md)。
+
 ## 2026-10-28 E2.1-N：已有编码键的真实 libg 配置写入
 
 修复非空偏好 XML 的键计数：使用绑定材料逐槽 AES 编码，不以明文键估算。

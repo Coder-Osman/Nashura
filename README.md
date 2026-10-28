@@ -1,5 +1,12 @@
 # Nashura
 
+## 2026-10-28：真实 Linux catalog 资源轨迹
+
+已有原版 libg loader 轨迹显示247次 APK open/read/close、131个 update 文件映射关闭；
+122个 update 文件与 APK 同名，其中118个清单 SHA 不同。路径集合与 mmap 只提供有限
+运行证据，不证明请求级因果或 Android 字节一致；严格 catalog 仍未通过。专项964通过/1跳过。
+详见[报告](agent-handoff/PURE_LINUX_CATALOG_RESOURCE_TRACE_2026-10-28.md)。
+
 ## 2026-10-28：非空偏好编码键与真实 libg 复核
 
 修正非空偏好表使用明文键统计的缺陷，按绑定材料逐槽计算编码键；缺少材料或加密库时保持未知。

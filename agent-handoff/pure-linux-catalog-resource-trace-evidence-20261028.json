@@ -1,0 +1,57 @@
+{
+  "schema": "nashura.pure-linux-catalog-resource-trace.v1",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "baseline_commit": "39a32fe46bede40004137e86a6d845f0d9979ff7",
+  "status": "RUNTIME_OBSERVED_LIMITED",
+  "scope": "offline reanalysis of the existing actual ARM64 Linux libg loader, no new engine run",
+  "identity": {
+    "result_sha256": "caad1b680c3a52efb00d49ed8e7762d77e474f5600df788e8ac684006d093014",
+    "syscall_sha256": "0a34bb830c6e805de966479b0cb8276b7a8b6068d76cd440b32c8c6b758ca071",
+    "stderr_sha256": "d17169692bc04fada60abc7fe686c1ac4abbdcd58589e89ceaa7edf22d45b875",
+    "audit_sha256": "8c9beee1ec4885338625f80e35ca65e50902408aa7c3ebd9540a14302469b7d7",
+    "tool_sha256": "c7474e3d8c33c05e1821fbaa0ec437ac9a6ad5b7984ee88b70c5b0136a7b4a8c",
+    "test_sha256": "d03fbe335b6f9977c0ba3ebf999023d92fa2f1f7e61a2bbaf3db4130d9ed116e"
+  },
+  "observations": {
+    "asset_open_calls": 247,
+    "asset_read_calls": 247,
+    "asset_close_calls": 247,
+    "asset_absent_calls": 261,
+    "update_open_calls": 131,
+    "update_unique_paths": 131,
+    "update_successful_stat_before_open": 131,
+    "update_fully_mapped": 131,
+    "update_closed": 131,
+    "staged_same_name": 124,
+    "update_open_also_staged_as_asset": 122,
+    "update_open_with_different_staged_asset_sha": 118,
+    "update_paths_also_opened_as_asset": 0,
+    "complete_successful_trace": true,
+    "unresolved_relative_paths": 0,
+    "request_level_causality": "NOT_VERIFIED",
+    "mapped_bytes_consumed": "NOT_VERIFIED",
+    "android_resource_parity": "NOT_RUN"
+  },
+  "verification": {
+    "command": "/opt/anaconda3/bin/python3 -m pytest -q -p no:cacheprovider tools/pure_linux",
+    "exit_code": 0,
+    "passed": 964,
+    "skipped": 1,
+    "real_trace_audit_exit_code": 0,
+    "main_engine": "211 passed; exit 0",
+    "source_manifest": "2591 files; exit 0",
+    "gitleaks": "no leaks found; exit 0",
+    "public_checks": "NOT_RERUN; previous stage passed",
+    "fetch": "exit 128; GitHub port 443 connection timeout"
+  },
+  "gates": {
+    "configuration_contract_pass": false,
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "step": "NOT_RUN",
+    "full_battle": "NOT_RUN",
+    "android_parity": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  }
+}
