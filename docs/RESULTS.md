@@ -1,5 +1,18 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：当前身份与单事务逐字节一致
+
+只读捕获两次一致，当前材料绑定到原Android事务与三个真实libg子进程。
+真实store/恢复后文件与进程身份不变；新的两个Bionic重放进程各exit0，
+目标双槽208bytes、恢复65bytes，共8项逐字节对照通过。
+修复前4项恢复XML格式差异保留；修复后probe与旧libg批次probe分别记录。
+专项951通过/1跳过、主工程211通过、公开1104通过/42跳过，均exit0；253份原XML不变。
+当前材料身份取得限定证据，Backup服务与异常域仍未闭合；严格catalog仍BLOCKED。
+ResourceManager、GameState、Step、完整局及10×均NOT_RUN。
+详见[报告](../agent-handoff/PURE_LINUX_RUNTIME_PREFERENCE_BINDING_2026-10-28.md)、
+[证据](../agent-handoff/pure-linux-runtime-preference-binding-evidence-20261028.json)及
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_RUNTIME_PREFERENCE.md)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：原生候选入队与自然 loader 重复观察
 
 默认Backup未解析对照native96；两个显式候选native0，严格wrapper均1。

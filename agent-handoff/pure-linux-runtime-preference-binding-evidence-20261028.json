@@ -1,0 +1,529 @@
+{
+  "schema": "nashura.runtime-preference-binding-public.v1",
+  "baseline_commit": "49ccae96835da7a6db2b1aa6cf035bf9f7cc21fa",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "status": "RUNTIME_OBSERVED_BOUND_LIMITED",
+  "scope": "current runtime identity and one ASCII empty-map transaction only",
+  "environment": {
+    "host": "Apple Silicon macOS",
+    "guest_machine": "aarch64",
+    "guest_kernel": "6.8.0-138-generic",
+    "runtime": "existing Android API30 linker64/Bionic",
+    "no_new_components": true
+  },
+  "input_identity": {
+    "apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6"
+  },
+  "current_material": {
+    "sha256": "e2d80e03f4beffe43301c91704a7a9b51141be2e89038a0754c5be7b98390883",
+    "historical_matches": {
+      "o": false,
+      "p": true,
+      "iv": true
+    },
+    "cipher_profiles_observed": 6,
+    "read_only_inspections": 2,
+    "store_calls_during_capture": 0,
+    "backup_requests_during_capture": 0
+  },
+  "private_evidence_sha256": {
+    "capture": "bed133645ab926df4d74da017e408b5be6f61f4b76ad37c5e8d797aedac6b138",
+    "controller": "f1d1e5b7324ecaf6a9524a5f2b47019ad8a1843c0334754e40bef32ebbc1a74f",
+    "trace": "ad5e184e00ef91a7e4d14aa45af54210adf601781df9837391f58be16b664d59",
+    "binding_audit": "dfc34c84488cd4e7c57154f1baee320c9a6d23f90e6cf87a074f6faaf21f4a77"
+  },
+  "android_transaction": {
+    "status": "RUNTIME_OBSERVED",
+    "counts": {
+      "android.app.SharedPreferencesImpl$EditorImpl.commit": 4,
+      "android.app.SharedPreferencesImpl$EditorImpl.commitToMemory": 4,
+      "android.app.SharedPreferencesImpl$EditorImpl.putString": 2,
+      "android.app.SharedPreferencesImpl$EditorImpl.remove": 2,
+      "android.app.SharedPreferencesImpl.contains": 13,
+      "android.app.SharedPreferencesImpl.createFileOutputStream": 4,
+      "android.app.SharedPreferencesImpl.edit": 4,
+      "android.app.SharedPreferencesImpl.enqueueDiskWrite": 4,
+      "android.app.SharedPreferencesImpl.getString": 3,
+      "android.app.SharedPreferencesImpl.writeToFile": 4,
+      "android.app.backup.BackupManager.dataChanged": 2,
+      "android.app.backup.IBackupManager$Stub$Proxy.dataChanged": 2,
+      "c.a.j": 9,
+      "c.a.n": 4,
+      "com.android.server.backup.BackupManagerService.dataChanged": 4,
+      "com.android.server.backup.BackupManagerService.dataChangedForUser": 2,
+      "com.android.server.backup.BackupManagerService.isUserReadyForBackup": 5,
+      "com.android.server.backup.KeyValueBackupJob.schedule": 2,
+      "com.android.server.backup.UserBackupManagerService.dataChanged": 2,
+      "com.android.server.backup.UserBackupManagerService.dataChangedImpl": 2,
+      "com.android.server.backup.UserBackupManagerService.dataChangedTargets": 2,
+      "com.supercell.titan.ApplicationUtilBase.getKeyValue": 3,
+      "com.supercell.titan.ApplicationUtilBase.storeKeyValue": 2,
+      "com.supercell.titan.GameApp.requestBackup": 2
+    },
+    "commits": [
+      {
+        "transaction": "target",
+        "slot": "storage.xml",
+        "operation": "putString",
+        "commit_return": true,
+        "write_to_file_returned": true,
+        "xml_sha256": "61cd030b3e1dea7cb38df471ec520d10c34ee9be99dbee87777ff2e534428aec"
+      },
+      {
+        "transaction": "target",
+        "slot": "storage_new.xml",
+        "operation": "putString",
+        "commit_return": true,
+        "write_to_file_returned": true,
+        "xml_sha256": "85cfe0ee75d8b520f4aa67ee26846bd928883aba7ab9fb88441ae7b32281b96f"
+      },
+      {
+        "transaction": "restore",
+        "slot": "storage.xml",
+        "operation": "remove",
+        "commit_return": true,
+        "write_to_file_returned": true,
+        "xml_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793"
+      },
+      {
+        "transaction": "restore",
+        "slot": "storage_new.xml",
+        "operation": "remove",
+        "commit_return": true,
+        "write_to_file_returned": true,
+        "xml_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793"
+      }
+    ],
+    "api_value_restored": true,
+    "xml_bytes_restored": true,
+    "backup_order": "after both synchronous commits",
+    "cross_process_attribution": "temporal correlation only; no Binder transaction IDs",
+    "journal": "NOT_OBSERVED_IN_THIS_WINDOW",
+    "fsync": "UNCOVERED",
+    "cross_process_recovery": "NOT_RUN"
+  },
+  "native_libg_batch": {
+    "schema": "nashura.native-backup-binding-audit.v1",
+    "audit": "PASS",
+    "scope": "bounded candidate enqueue, natural loader and native archive only",
+    "machine": "aarch64",
+    "kernel": "6.8.0-138-generic",
+    "batch_sha256": "e97c84c7fc6c6920474f8324919daf0032d68f26a7da874df57c56dc443cfc3e",
+    "probe_sha256": "74d6793ff4de288da3c4db7366b4ae2d498edf37b7069dc1321d5d22e1a47a31",
+    "reports": [
+      {
+        "ordinal": 0,
+        "native_exit": 96,
+        "wrapper_exit": 1,
+        "elapsed_seconds": 6.1768660270026885,
+        "result_sha256": "cb2883c3d2459e56bb3595e9cd17727fc42584322380929ae3b1236252e6ae51",
+        "outputs": {
+          "before.maps": "08b1c743cd37037ed1a25b71a4a190f4defe342de8118f11cbdce48dd67ba17f",
+          "syscalls.14523": "aa8d8d8b3e77c2eb43fb3a9f501276064f37355b6b681d781f99bc56a7a2338c",
+          "stderr.log": "9e93e3c12aa149f712b75c671b4e15ee0032a9b43f9bf7934401029243e503ac",
+          "stdout.log": "2071e0f0343c95a5bcc146fb493ea9f2c77fcfe45a47c4eae83a14297c3533cf",
+          "after.maps": "a992990670ed0e54db27f1be570eb2835f81995299b69ce4538900b03b300ef8"
+        },
+        "inputs_unchanged": true,
+        "postcheck_errors": [],
+        "configuration": {
+          "hook_bound": true,
+          "write_summary": {
+            "result": -1,
+            "deleted": false,
+            "commits": 2,
+            "disk_writes": 2,
+            "false_commits": 0,
+            "backup_requests": 1,
+            "backup_failures": 1,
+            "decode_exceptions": 0,
+            "entries": [
+              1,
+              1
+            ]
+          },
+          "persistence_before_unresolved_backup_observed": true,
+          "backup_service": "UNRESOLVED",
+          "current_runtime_identity": "UNRESOLVED",
+          "configuration_contract_pass": false,
+          "catalog_ready_pass": false
+        }
+      },
+      {
+        "ordinal": 1,
+        "native_exit": 0,
+        "wrapper_exit": 1,
+        "elapsed_seconds": 15.191801649998524,
+        "result_sha256": "8ee190417202412ba0d56cf0d8b9718471d41bc9ec301d581e20639dc4fe9790",
+        "outputs": {
+          "before.maps": "4290b7d2284eaa031963ca5fdc71d9f096217e32eb015a463e0b1745c67844e4",
+          "syscalls.14528": "77fdac8ccc8bcde70753f912e85f9558d1a959dc784d0ce0b1c026aef85c55a1",
+          "stderr.log": "28e9d704374fe5254bdbe45adc22f8da7fbc9637a9b7874136f4aeb8699cd498",
+          "stdout.log": "8b49c042e28b186c8faec9d9c5ed59234805addc6ac95668b1a5de09b4354a27",
+          "after.maps": "7d04c5b4b9bc7a7eed2c8c95e865f0865bacc3436823545446cbdd0d3dd1304d",
+          "closed.maps": "105db49f47df251e17db69d862b86f3ac703be3ca75c7c4cdcd64f5433fb8041"
+        },
+        "inputs_unchanged": true,
+        "postcheck_errors": [],
+        "configuration": {
+          "candidate_hook_bound": true,
+          "queue_summary": {
+            "result": 0,
+            "created": true,
+            "delivery": "PENDING",
+            "android_parity": "NOT_VERIFIED"
+          },
+          "write_summary": {
+            "result": 0,
+            "deleted": false,
+            "commits": 2,
+            "disk_writes": 2,
+            "false_commits": 0,
+            "backup_requests": 1,
+            "backup_failures": 0,
+            "decode_exceptions": 0,
+            "entries": [
+              1,
+              1
+            ]
+          },
+          "bounded_enqueue_observed": true,
+          "delivery": "PENDING",
+          "android_backup_parity": "NOT_VERIFIED",
+          "current_runtime_identity": "UNRESOLVED",
+          "configuration_contract_pass": false,
+          "catalog_ready_pass": false
+        },
+        "parsed_tables": {
+          "complete": true,
+          "errors": [],
+          "summaries": {
+            "before": [
+              0,
+              0
+            ],
+            "after": [
+              162,
+              24353
+            ]
+          },
+          "layout_sha256": "8ff1043b9d3544dbd6cbefae576025845e1f5f6e8cb9a78a931428eb5de36f89",
+          "coverage": "table layout, counts and nonnull row pointers; not cell contents or Android parity",
+          "catalog_ready_pass": false
+        },
+        "consumer_exit": 0,
+        "consumer_sha256": "331c794f25a3536d6edf37163d916c2b228ecbcfbfc26e4cc3744bb57d7db46f",
+        "archive_files": {
+          "store-0.xml": {
+            "sha256": "f75951c5d2103bfb954404d1419c8a74744d38d3d9fd241dccf97e30c86c1b9d",
+            "bytes": 168
+          },
+          "store-1.xml": {
+            "sha256": "a3f8ab679b55cb4426bf19275238b3c4097448e199e436ab95734a5457a80ece",
+            "bytes": 168
+          }
+        },
+        "pending_acknowledged": true
+      },
+      {
+        "ordinal": 2,
+        "native_exit": 0,
+        "wrapper_exit": 1,
+        "elapsed_seconds": 15.041745063994313,
+        "result_sha256": "fa66e94172e3009900a9019f87b5b0ba2b595deee22b2be9afb821d8c8c89cf0",
+        "outputs": {
+          "before.maps": "3404acdcda403b773a9be8c4b5b1ab91cce6dd456c821658625e82803d0bb55f",
+          "stderr.log": "28e9d704374fe5254bdbe45adc22f8da7fbc9637a9b7874136f4aeb8699cd498",
+          "syscalls.14534": "29cafe257a5959f9bca3e569e679ae146a4d87f2b038870a9840e1b432ac89ec",
+          "stdout.log": "e22abf3eacc58d2beef9bb256f1eb349b6e2e5a11d48e4bde2f8e7f5b367f866",
+          "after.maps": "5d5f047f4de8c7b662c029c77fb0b1f3dbc7a9e9b1a56a3a5ffaafa835ff5af1",
+          "closed.maps": "708439a6b81ce4356d844d0e4e015dea174e64412baddddc9aeef51691998339"
+        },
+        "inputs_unchanged": true,
+        "postcheck_errors": [],
+        "configuration": {
+          "candidate_hook_bound": true,
+          "queue_summary": {
+            "result": 0,
+            "created": true,
+            "delivery": "PENDING",
+            "android_parity": "NOT_VERIFIED"
+          },
+          "write_summary": {
+            "result": 0,
+            "deleted": false,
+            "commits": 2,
+            "disk_writes": 2,
+            "false_commits": 0,
+            "backup_requests": 1,
+            "backup_failures": 0,
+            "decode_exceptions": 0,
+            "entries": [
+              1,
+              1
+            ]
+          },
+          "bounded_enqueue_observed": true,
+          "delivery": "PENDING",
+          "android_backup_parity": "NOT_VERIFIED",
+          "current_runtime_identity": "UNRESOLVED",
+          "configuration_contract_pass": false,
+          "catalog_ready_pass": false
+        },
+        "parsed_tables": {
+          "complete": true,
+          "errors": [],
+          "summaries": {
+            "before": [
+              0,
+              0
+            ],
+            "after": [
+              162,
+              24353
+            ]
+          },
+          "layout_sha256": "8ff1043b9d3544dbd6cbefae576025845e1f5f6e8cb9a78a931428eb5de36f89",
+          "coverage": "table layout, counts and nonnull row pointers; not cell contents or Android parity",
+          "catalog_ready_pass": false
+        },
+        "consumer_exit": 0,
+        "consumer_sha256": "bbb6f26aab47ef6f50c1e8289f8ae9962e110450f83ba86d26c6bd4c0110fd4c",
+        "archive_files": {
+          "store-0.xml": {
+            "sha256": "f75951c5d2103bfb954404d1419c8a74744d38d3d9fd241dccf97e30c86c1b9d",
+            "bytes": 168
+          },
+          "store-1.xml": {
+            "sha256": "a3f8ab679b55cb4426bf19275238b3c4097448e199e436ab95734a5457a80ece",
+            "bytes": 168
+          }
+        },
+        "pending_acknowledged": true
+      }
+    ],
+    "android_backup_parity": "NOT_VERIFIED",
+    "current_runtime_identity": "UNRESOLVED",
+    "configuration_contract_pass": false,
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN"
+  },
+  "first_replay_failure": {
+    "status": "BYTE_MISMATCH_PRESERVED",
+    "audit_sha256": "518a9f5d6ddc736c1e08753a88c18e3504e26a4dfac1e7f75733bd0605a581cd",
+    "target_bytes_equal": 4,
+    "restore_bytes_unequal": 4,
+    "all_maps_equal": true,
+    "native_restore_bytes": 70,
+    "android_restore_bytes": 65,
+    "cause": "empty map XML serialization"
+  },
+  "fixed_replay": {
+    "result_sha256": "4098d2ffb0edbb4fe523c7b5d3808c929b7b9562bf1c345d013a554e31d9676e",
+    "probe_sha256": "071e23667d03638293ab0f7ea40703203b17369eaebacd23e3387a94b572671b",
+    "runtime": {
+      "libcrypto.so": "2f45ce72276ddde55e7b41afbca0ddd2b1ffd03f50e885d42ff323e0f3c82e5b",
+      "libc.so": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569",
+      "libdl.so": "6ac8782db7bbb2d28acf225a2b78aeb117ac64148a36724dedf4d27afb7e18e4",
+      "linker64": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7"
+    },
+    "native_exits": [
+      0,
+      0
+    ],
+    "comparisons": [
+      {
+        "ordinal": 0,
+        "stage": "target",
+        "slot": 0,
+        "native_sha256": "61cd030b3e1dea7cb38df471ec520d10c34ee9be99dbee87777ff2e534428aec",
+        "android_sha256": "61cd030b3e1dea7cb38df471ec520d10c34ee9be99dbee87777ff2e534428aec",
+        "byte_equal": true,
+        "map_equal": true
+      },
+      {
+        "ordinal": 0,
+        "stage": "target",
+        "slot": 1,
+        "native_sha256": "85cfe0ee75d8b520f4aa67ee26846bd928883aba7ab9fb88441ae7b32281b96f",
+        "android_sha256": "85cfe0ee75d8b520f4aa67ee26846bd928883aba7ab9fb88441ae7b32281b96f",
+        "byte_equal": true,
+        "map_equal": true
+      },
+      {
+        "ordinal": 0,
+        "stage": "restore",
+        "slot": 0,
+        "native_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+        "android_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+        "byte_equal": true,
+        "map_equal": true
+      },
+      {
+        "ordinal": 0,
+        "stage": "restore",
+        "slot": 1,
+        "native_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+        "android_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+        "byte_equal": true,
+        "map_equal": true
+      },
+      {
+        "ordinal": 1,
+        "stage": "target",
+        "slot": 0,
+        "native_sha256": "61cd030b3e1dea7cb38df471ec520d10c34ee9be99dbee87777ff2e534428aec",
+        "android_sha256": "61cd030b3e1dea7cb38df471ec520d10c34ee9be99dbee87777ff2e534428aec",
+        "byte_equal": true,
+        "map_equal": true
+      },
+      {
+        "ordinal": 1,
+        "stage": "target",
+        "slot": 1,
+        "native_sha256": "85cfe0ee75d8b520f4aa67ee26846bd928883aba7ab9fb88441ae7b32281b96f",
+        "android_sha256": "85cfe0ee75d8b520f4aa67ee26846bd928883aba7ab9fb88441ae7b32281b96f",
+        "byte_equal": true,
+        "map_equal": true
+      },
+      {
+        "ordinal": 1,
+        "stage": "restore",
+        "slot": 0,
+        "native_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+        "android_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+        "byte_equal": true,
+        "map_equal": true
+      },
+      {
+        "ordinal": 1,
+        "stage": "restore",
+        "slot": 1,
+        "native_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+        "android_sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793",
+        "byte_equal": true,
+        "map_equal": true
+      }
+    ],
+    "all_bytes_equal": true,
+    "all_maps_equal": true
+  },
+  "boundaries": {
+    "android_backup_parity": "NOT_VERIFIED",
+    "configuration_contract_pass": false,
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN"
+  },
+  "later_stages": {
+    "empty_battle": "NOT_RUN",
+    "reset": "NOT_RUN",
+    "gamestate_step": "NOT_RUN",
+    "complete_match": "NOT_RUN",
+    "no_javavm_cold_start_gate": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "evidence_caveats": [
+    "Native libg batch used pre-serialization-fix probe; fixed probe only exercised standalone replay.",
+    "Nested historical auditor leaves current_runtime_identity UNRESOLVED; top-level audit separately binds current material.",
+    "run.exit outer shell record empty; native/wrapper/consumer exits independently recorded.",
+    "Current empty-map ASCII transaction does not cover arbitrary keys, codec exceptions, crash recovery or service delivery."
+  ],
+  "validation": {
+    "initial_failures": [
+      {
+        "label": "specialist",
+        "command": [
+          "python3",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/pure_linux"
+        ],
+        "exit_code": 1,
+        "log_sha256": "bbda88165bff149a2f44c0a975038fb7d2ee9ee451318262f94c0c88c75a8233",
+        "environment": "system Python 3.9; missing cryptography and unsupported Python type/slots features",
+        "private_log_basename": "specialist.log"
+      },
+      {
+        "label": "main",
+        "command": [
+          "python3",
+          "tools/run_main_engine_checks.py"
+        ],
+        "exit_code": 1,
+        "log_sha256": "7ce9a3328dc13285888b7353407feafecee8d1126a9220d5ddc1c9004cf48be3",
+        "environment": "system Python 3.9; missing cryptography and unsupported Python type/slots features",
+        "private_log_basename": "main.log"
+      },
+      {
+        "label": "public",
+        "command": [
+          "python3",
+          "tools/run_public_checks.py"
+        ],
+        "exit_code": 1,
+        "log_sha256": "925217931468bfc6fcc5905c3b5dab1455b983c60fab862721c9c13c6a926492",
+        "environment": "system Python 3.9; missing cryptography and unsupported Python type/slots features",
+        "private_log_basename": "public.log"
+      }
+    ],
+    "python313_checks": [
+      {
+        "label": "specialist",
+        "command": [
+          "/opt/anaconda3/bin/python3",
+          "-m",
+          "pytest",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "tools/pure_linux"
+        ],
+        "exit_code": 0,
+        "log_sha256": "fda01ea42ffe4af40e9213a3bb99d12a1c442936f31644fcd2e26930d48d3846",
+        "environment": "existing Anaconda Python 3.13.5; isolated repository copy",
+        "private_log_basename": "specialist-py313.log",
+        "passed": 951,
+        "skipped": 1
+      },
+      {
+        "label": "main",
+        "command": [
+          "/opt/anaconda3/bin/python3",
+          "tools/run_main_engine_checks.py"
+        ],
+        "exit_code": 0,
+        "log_sha256": "bb89360efe25f2ff1def9188e213ce9f2937f9f3df4b6e8e4d3aaa7b73ed344e",
+        "environment": "existing Anaconda Python 3.13.5; isolated repository copy",
+        "private_log_basename": "main-py313.log",
+        "passed": 211,
+        "skipped": 0
+      },
+      {
+        "label": "public",
+        "command": [
+          "/opt/anaconda3/bin/python3",
+          "tools/run_public_checks.py"
+        ],
+        "exit_code": 0,
+        "log_sha256": "198ce9cbd6a8d5da1ff7c7000f2d9cd75c2d93c66a42cac05453b4e4497ee385",
+        "environment": "existing Anaconda Python 3.13.5; isolated repository copy",
+        "private_log_basename": "public-py313.log",
+        "passed": 1104,
+        "skipped": 42
+      }
+    ],
+    "historical_xml": {
+      "count": 253,
+      "unchanged": true,
+      "record_sha256": "e603e5f6a474fa37e82f2cfbc2803dd2d0cde4417fd8facb87aeebfd9f05e656"
+    },
+    "scope": "Engineering regression only; not full native lifecycle or configuration contract pass."
+  }
+}

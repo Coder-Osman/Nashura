@@ -4,7 +4,7 @@ import json
 import re
 
 
-def native_queue_observations(stdout, stderr):
+def native_queue_observations(stdout, stderr, expected_entries=(12, 12)):
     marker = "PREFERENCE_BACKEND_HOOK\thistorical_ascii_native_backup_candidate_parity_unverified"
     lines = stdout.splitlines()
     hooks = [line for line in lines if line.startswith("PREFERENCE_BACKEND_HOOK")]
@@ -20,7 +20,7 @@ def native_queue_observations(stdout, stderr):
                               "android_parity": "NOT_VERIFIED"}
             expected_write = {"result": 0, "deleted": False, "commits": 2, "disk_writes": 2,
                               "false_commits": 0, "backup_requests": 1, "backup_failures": 0,
-                              "decode_exceptions": 0, "entries": [12, 12]}
+                              "decode_exceptions": 0, "entries": list(expected_entries)}
             valid = all(type(actual) is dict and actual.keys() == expected.keys() and
                         all(type(actual[key]) is type(value) and actual[key] == value
                             for key, value in expected.items())
@@ -39,7 +39,7 @@ def native_queue_observations(stdout, stderr):
             "configuration_contract_pass": False, "catalog_ready_pass": False}
 
 
-def observations(stdout, stderr):
+def observations(stdout, stderr, expected_entries=(12, 12)):
     marker = "PREFERENCE_BACKEND_HOOK\thistorical_identity_ascii_xml_only_backup_unresolved"
     hooks = [line for line in stdout.splitlines() if line.startswith("PREFERENCE_BACKEND_HOOK")]
     writes = [line for line in stdout.splitlines() if line.startswith("PREFERENCE_BACKEND_WRITE")]
@@ -55,7 +55,7 @@ def observations(stdout, stderr):
             pass
     expected = {"result": -1, "deleted": False, "commits": 2, "disk_writes": 2,
                 "false_commits": 0, "backup_requests": 1, "backup_failures": 1,
-                "decode_exceptions": 0, "entries": [12, 12]}
+                "decode_exceptions": 0, "entries": list(expected_entries)}
     equal = type(summary) is dict and summary.keys() == expected.keys()
     equal = equal and all(type(summary[key]) is type(value) and summary[key] == value
                           for key, value in expected.items())

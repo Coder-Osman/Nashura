@@ -217,7 +217,9 @@ static int escaped(char *bytes, size_t *length, const char *value) {
 
 static int serialize(const Map *map, char *bytes, size_t *length) {
     *length = 0;
-    if (emit(bytes, length, "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>\n<map>\n")) return -1;
+    if (emit(bytes, length, "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>\n")) return -1;
+    if (!map->count) return emit(bytes, length, "<map />\n");
+    if (emit(bytes, length, "<map>\n")) return -1;
     for (size_t index = 0; index < map->count; index++) {
         const Entry *entry = &map->entries[index];
         if (emit(bytes, length, "    <string name=\"") || escaped(bytes, length, entry->key) ||

@@ -18,7 +18,7 @@ def require(condition, message):
         raise ValueError(message)
 
 
-def audit(root):
+def audit(root, expected_entries=(12, 12)):
     batch = json.loads((root / "batch-result.json").read_text())
     require(batch["machine"] == "aarch64" and len(batch["records"]) == 3, "batch shape")
     reports = []
@@ -47,11 +47,11 @@ def audit(root):
                   "result_sha256": digest(path / "result.json"), "outputs": output_hashes,
                   "inputs_unchanged": True, "postcheck_errors": []}
         if not ordinal:
-            control = observations(stdout, stderr)
+            control = observations(stdout, stderr, expected_entries)
             require(control["persistence_before_unresolved_backup_observed"] is True, "control observation")
             report["configuration"] = control
         else:
-            candidate = native_queue_observations(stdout, stderr)
+            candidate = native_queue_observations(stdout, stderr, expected_entries)
             tables = table_observations(stdout)
             require(candidate["bounded_enqueue_observed"] is True, "candidate observation")
             require(tables["complete"] is True and tables["summaries"]["after"] == [162, 24353], "table observation")

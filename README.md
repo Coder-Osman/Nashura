@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-28：当前配置身份与单事务字节对照
+
+当前Android材料与真实libg三进程身份已绑定；一次受控store后恢复原值，
+两槽及进程身份不变。ARM64 Linux两个重放进程exit0；修复空map XML格式后，
+写入/恢复共8项字节对照全部一致，原始差异批次保留。
+专项951通过/1跳过，主工程211通过，公开1104通过/42跳过；Backup服务等价性与异常域仍未闭合，
+严格CATALOG_READY_PASS保持BLOCKED，ResourceManager/GameState/Step仍NOT_RUN。
+详见[报告](agent-handoff/PURE_LINUX_RUNTIME_PREFERENCE_BINDING_2026-10-28.md)、
+[证据](agent-handoff/pure-linux-runtime-preference-binding-evidence-20261028.json)和
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_RUNTIME_PREFERENCE.md)。以下保留历史状态。
+
 ## 2026-10-28：原生 Backup 候选绑定与自然 loader
 
 真实ARM64 libg默认对照退出96，两个显式文件系统候选子进程退出0；
