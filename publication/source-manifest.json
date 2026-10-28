@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "06a5e58a7c571fce6ce7d0a31bc65cbe37d2727b41bd0632682b418d59c30696",
-      "bytes": 35145,
-      "source_sha256": "06a5e58a7c571fce6ce7d0a31bc65cbe37d2727b41bd0632682b418d59c30696",
+      "sha256": "ea57fa7015b1a7a6db178c4eb34e5d2d0327d92e3d19947fe6e054bf9e29cd2d",
+      "bytes": 39049,
+      "source_sha256": "ea57fa7015b1a7a6db178c4eb34e5d2d0327d92e3d19947fe6e054bf9e29cd2d",
       "transformations": []
     },
     {
@@ -19310,10 +19310,45 @@
       "bytes": 722,
       "source_sha256": "54327989838cea64cf4855ff36ac919c794b834faa1460b0d936b314c4365e74",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_owner_init.py",
+      "sha256": "46239352744d20296613ba1ea55ddf95fea4ec844359f39350b11c46669c233a",
+      "bytes": 3379,
+      "source_sha256": "46239352744d20296613ba1ea55ddf95fea4ec844359f39350b11c46669c233a",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_owner_init.py",
+      "sha256": "11bc0d26f525ca9b7ccfdfcfcc574885eba2631180e506c083a8a3288ac99477",
+      "bytes": 1816,
+      "source_sha256": "11bc0d26f525ca9b7ccfdfcfcc574885eba2631180e506c083a8a3288ac99477",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_OWNER_INIT_ARGUMENT_2026-10-29.md",
+      "sha256": "a0640401cf478451bb67e5013c1f312f10d4f25d9d6849022095f94d41f296be",
+      "bytes": 2723,
+      "source_sha256": "a0640401cf478451bb67e5013c1f312f10d4f25d9d6849022095f94d41f296be",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-owner-init-argument-evidence-20261029.json",
+      "sha256": "b2f5339b68a5094c94457e515f2e7a0fc70b59757cfdb51c1c65b4314c34d2d2",
+      "bytes": 1121,
+      "source_sha256": "b2f5339b68a5094c94457e515f2e7a0fc70b59757cfdb51c1c65b4314c34d2d2",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_OWNER_INIT_ARGUMENT.md",
+      "sha256": "bf56203d5857b849ed1b4d05f2b515ffc6e6cbc4c32246cdf2657a37683604ef",
+      "bytes": 679,
+      "source_sha256": "bf56203d5857b849ed1b4d05f2b515ffc6e6cbc4c32246cdf2657a37683604ef",
+      "transformations": []
     }
   ],
-  "file_count": 2748,
-  "source_bytes": 35880403,
+  "file_count": 2753,
+  "source_bytes": 35894025,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
