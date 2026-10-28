@@ -118,6 +118,14 @@ static int read_resource(uintptr_t manager) {
     }
     puts("RESOURCE_FILE_VTABLE\t1");
     int valid = ((int (*)(void *))(base + entries[5]))(file);
+    if (!valid) {
+        puts("RESOURCE_INVALID_FILE\t1");
+        puts("PHASE\tresource_close_enter");
+        ((void (*)(void *))(base + entries[0]))(file);
+        puts("PHASE\tresource_close_return");
+        puts("RESOURCE_MISSING\t1");
+        return 60;
+    }
     int64_t length = ((int64_t (*)(void *))(base + entries[4]))(file);
     printf("RESOURCE_VALID_LENGTH\t%d\t%" PRId64 "\n", valid, length);
     if (!valid || length < 1 || length > 1024 * 1024) return 63;
@@ -496,14 +504,16 @@ int native_provider_probe(uintptr_t engine, int (*readable)(uintptr_t, size_t)) 
     int factory_status = prepare_factory();
     if (factory_status) return factory_status;
     int resource_status = read_resource(manager);
-    if (resource_status) return resource_status;
-    int catalog_status = inspect_catalog(context);
-    if (catalog_status) return catalog_status;
+    if (resource_status && resource_status != 60) return resource_status;
+    if (!resource_status) {
+        int catalog_status = inspect_catalog(context);
+        if (catalog_status) return catalog_status;
+    }
     puts("PHASE\tprovider_release_enter");
     ((void (*)(void *))(base + 0x12e157c))((void *)manager);
     puts("PHASE\tprovider_release_return");
     if (pointer_at(manager + 0x160) || pointer_at(manager + 0x170)) return 56;
     puts("PROVIDER_SLOTS_RELEASED\t1");
     puts("PROVIDER_COVERAGE\tregistration_and_optional_catalog_attempt");
-    return 0;
+    return resource_status;
 }

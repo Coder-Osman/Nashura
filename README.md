@@ -1,5 +1,12 @@
 # Nashura
 
+## 2026-10-28：Linux 原生资源路由矩阵
+
+真实 ARM64 Linux libg 对13个合成 APK/update 冲突、缺失和回退案例按 E1 对应路由
+规则运行；首轮因 probe 对无效文件调用 length 失败，修正后13/13及独立验收通过。
+第三轮缺失例执行 provider release、dlclose 和 asset finish；Android 配对字节、完整 catalog 和 Backup 等价仍未通过。
+专项973通过/1跳过，详见[报告](agent-handoff/PURE_LINUX_RESOURCE_MATRIX_2026-10-28.md)。
+
 ## 2026-10-28：真实 Linux catalog 资源轨迹
 
 已有原版 libg loader 轨迹显示247次 APK open/read/close、131个 update 文件映射关闭；

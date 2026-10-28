@@ -150,6 +150,7 @@ __attribute__((noinline, visibility("default"))) void native_init_loaded_marker(
 
 int main(int argument_count, char **arguments) {
     if (argument_count < 2 || argument_count > 4) return 2;
+    int provider_result = 0;
     setvbuf(stdout, NULL, _IONBF, 0);
     printf("PHASE\tbefore_load\tTID\t%ld\n", syscall(SYS_gettid));
     if (save_maps("before.maps")) return 3;
@@ -198,9 +199,9 @@ int main(int argument_count, char **arguments) {
         printf("FILESYSTEM_RESULT\t%d\n", result);
         if (result != 0) return result;
         if (native_provider_probe) {
-            result = native_provider_probe(engine_base, readable);
-            printf("PROVIDER_RESULT\t%d\n", result);
-            if (result != 0) return result;
+            provider_result = native_provider_probe(engine_base, readable);
+            printf("PROVIDER_RESULT\t%d\n", provider_result);
+            if (provider_result != 0 && provider_result != 60) return provider_result;
         }
     }
     puts("PHASE\tbefore_close");
@@ -212,5 +213,5 @@ int main(int argument_count, char **arguments) {
         if (status) return 93;
     }
     if (save_maps("closed.maps")) return 8;
-    return 0;
+    return provider_result;
 }

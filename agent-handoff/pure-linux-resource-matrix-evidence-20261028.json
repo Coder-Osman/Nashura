@@ -1,0 +1,43 @@
+{
+  "schema": "nashura.pure-linux-resource-matrix-evidence.v1",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "baseline_commit": "afdeb3333f5ec08fc2e6a71343b918207c9a878b",
+  "status": "ROUTING_MATRIX_PASS_LIMITED",
+  "environment": {"guest_machine": "aarch64", "guest_kernel": "6.8.0-138-generic", "runtime": "Android API30 linker/Bionic in Linux guest"},
+  "identity": {
+    "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "backend_sha256": "905fb58cc33ed308107d433c6c1f9cfd57f6b6e121ff5e77dd1896176e11ea84",
+    "probe_v1_sha256": "f9f9307ab34d5dd6e3c6cfce8fb844dd7ff3cbdc4c8b9b255564153498919a74",
+    "probe_v2_sha256": "6538c2acc470c9992a431b26a390d7035206c033f70f2a4f59252a8630278f90",
+    "probe_v3_sha256": "b577eb66efb380b5e1a7d09b7ea15ae2a43158a515ae31cd8e7192c6a48d1d7b",
+    "provider_source_sha256": "a998bb70ad5805e5857abd92298773d490529d5cd2c1f609707aa20b9ead46ad",
+    "native_init_source_sha256": "71460f8a169da950753624756250138bf436f2e3445a36d2f396d36593fadcb3",
+    "runner_sha256": "500b0d9cb61c5c60ca34fb2ea2d40d3138a30d7576d7ca7c28af4b90d6c975bc",
+    "verifier_sha256": "ab5cfd7a56e6176fe2579237c7c2f60bdb4efe94e0ae0a9944707a9e90a93c4f",
+    "matrix_v1_sha256": "34157f9cdefb2a1361a127aceaa498c431f13dc293988a2029053a06997b37ce",
+    "matrix_v2_sha256": "ad66083f0f2b4080f21955a262fa612021b27254c232efcc954df84a249638ac",
+    "matrix_v3_sha256": "db7d512572c70ec9b547eccae86848fe97bb0833acf57bef3584cd0a3221a38d",
+    "verification_v2_sha256": "6a8accc34b65f2a94ad588e3b81f66f830258f4340783420e7eaac109524c8f5",
+    "verification_v3_sha256": "5c2948df7203877fb4083fd6a8c1be06f19ccffad2ae0508a4e1ba471295c00a"
+  },
+  "runs": {
+    "v1": {"driver_exit": 1, "passed": 12, "total": 13, "failed_case": 4, "failed_native_exit": 95,
+           "cause": "probe calls length on an invalid APK wrapper before checking valid"},
+    "v2": {"driver_exit": 0, "passed": 13, "total": 13, "valid_file_cases": 9,
+           "missing_file_cases": 4, "missing_native_exit": 60, "missing_wrapper_exit": 1,
+           "missing_cleanup": "process_exit_only; invalid wrapper separately closed",
+           "paired_android_byte_comparison": "NOT_RUN"},
+    "v3": {"driver_exit": 0, "passed": 13, "total": 13, "valid_file_cases": 9,
+           "missing_file_cases": 4, "missing_native_exit": 60, "missing_wrapper_exit": 1,
+           "cleanup": "provider slots released, dlclose and asset finish observed; not full engine lifetime",
+           "paired_android_byte_comparison": "NOT_RUN"},
+    "independent_verifier_v3": {"exit": 0, "status": "PASS_LIMITED", "cases": 13}
+  },
+  "verification": {"command": "/opt/anaconda3/bin/python3 -m pytest -q -p no:cacheprovider tools/pure_linux",
+                   "exit_code": 0, "passed": 973, "skipped": 1,
+                   "main_engine": "211 passed; second-round source snapshot",
+                   "public_checks": "1104 passed, 42 skipped; isolated second-round source snapshot"},
+  "gates": {"catalog_ready_pass": false, "configuration_contract_pass": false, "resource_manager": "NOT_RUN",
+            "gamestate": "NOT_RUN", "step": "NOT_RUN", "full_battle": "NOT_RUN", "android_parity": "NOT_RUN",
+            "performance_10x": "NOT_RUN"}
+}

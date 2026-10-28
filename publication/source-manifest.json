@@ -10194,8 +10194,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "8320977911683b155a4034f8c54da1c5d5a6536c5061600d9a3a4d12555134c5",
-      "bytes": 44583,
+      "sha256": "15c4bc488671db1f22c412fe82b4cd08cbccb6774ca94e2882ab64fb8d1d75aa",
+      "bytes": 45093,
       "source_sha256": "c008f55f17031af6abae22b02af32e87d0c8c9d3cbc1a7c54fc4f73bdf72e3a7",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10210,13 +10210,14 @@
         "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
         "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED.",
         "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
-        "2026-10-28: bounded Linux catalog resource trace audit"
+        "2026-10-28: bounded Linux catalog resource trace audit",
+        "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "1df2abebd7fe4a33a94441965498366dabf205c16ca62ad9a29563f1670bccd1",
-      "bytes": 77920,
+      "sha256": "d86157f41b48f90dba11d53cc63cb4ad52c3c4d41095aebe6ccb59eb0a756e3f",
+      "bytes": 78396,
       "source_sha256": "7956b3b23c44bda14bd02a13c725f93621bc473669cff1644c882afc3de0d310",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10231,7 +10232,8 @@
         "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
         "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED.",
         "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
-        "2026-10-28: bounded Linux catalog resource trace audit"
+        "2026-10-28: bounded Linux catalog resource trace audit",
+        "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix"
       ]
     },
     {
@@ -16643,8 +16645,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "e6b9f07ca042b5451c9acbbf3918f9d2b9f5200e1452d49a634ddbecf488412d",
-      "bytes": 44773,
+      "sha256": "c582a0a0792860a1171dc52003341c937cff9e2dd857ecc36034bf3f2dd75db8",
+      "bytes": 45272,
       "source_sha256": "268a62062b889a6cc7bd8034c306e2937b73840ef1d6e918fee39525ef232472",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -16659,7 +16661,8 @@
         "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
         "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED.",
         "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
-        "2026-10-28: bounded Linux catalog resource trace audit"
+        "2026-10-28: bounded Linux catalog resource trace audit",
+        "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix"
       ]
     },
     {
@@ -16811,9 +16814,9 @@
     },
     {
       "path": "tools/pure_linux/native_init_probe.c",
-      "sha256": "aba0c83f8124a14d283e532878105e1daa9a365d8505a86ad24536c6954dc6da",
-      "bytes": 8718,
-      "source_sha256": "aba0c83f8124a14d283e532878105e1daa9a365d8505a86ad24536c6954dc6da",
+      "sha256": "71460f8a169da950753624756250138bf436f2e3445a36d2f396d36593fadcb3",
+      "bytes": 8822,
+      "source_sha256": "71460f8a169da950753624756250138bf436f2e3445a36d2f396d36593fadcb3",
       "transformations": []
     },
     {
@@ -17094,9 +17097,9 @@
     },
     {
       "path": "tools/pure_linux/provider_probe.c",
-      "sha256": "bd56346148d0658ba1334a09dabadc717911829e55398f5c025c3cf1f79303db",
-      "bytes": 25219,
-      "source_sha256": "bd56346148d0658ba1334a09dabadc717911829e55398f5c025c3cf1f79303db",
+      "sha256": "a998bb70ad5805e5857abd92298773d490529d5cd2c1f609707aa20b9ead46ad",
+      "bytes": 25568,
+      "source_sha256": "a998bb70ad5805e5857abd92298773d490529d5cd2c1f609707aa20b9ead46ad",
       "transformations": []
     },
     {
@@ -18208,10 +18211,59 @@
       "bytes": 1177,
       "source_sha256": "09623c9ff1ea4df19972a83322c7b526e73f05002f3a54cbd27ad9b467b4ba2d",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/run_resource_matrix.py",
+      "sha256": "500b0d9cb61c5c60ca34fb2ea2d40d3138a30d7576d7ca7c28af4b90d6c975bc",
+      "bytes": 7678,
+      "source_sha256": "500b0d9cb61c5c60ca34fb2ea2d40d3138a30d7576d7ca7c28af4b90d6c975bc",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/verify_resource_matrix.py",
+      "sha256": "ab5cfd7a56e6176fe2579237c7c2f60bdb4efe94e0ae0a9944707a9e90a93c4f",
+      "bytes": 4902,
+      "source_sha256": "ab5cfd7a56e6176fe2579237c7c2f60bdb4efe94e0ae0a9944707a9e90a93c4f",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_resource_matrix.py",
+      "sha256": "65a33f3cbde60c21369992ca6c4a3f8ad22e8e4679ecbcf61ce2c8541d52fc76",
+      "bytes": 2317,
+      "source_sha256": "65a33f3cbde60c21369992ca6c4a3f8ad22e8e4679ecbcf61ce2c8541d52fc76",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_verify_resource_matrix.py",
+      "sha256": "4f3745868d0f482a1bf09c13c7de465329351c31740892d8b29b7a8c659aad96",
+      "bytes": 3309,
+      "source_sha256": "4f3745868d0f482a1bf09c13c7de465329351c31740892d8b29b7a8c659aad96",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_RESOURCE_MATRIX_2026-10-28.md",
+      "sha256": "8026965765fe149caf8f39dcdd031a366e9e76fce6eda29ffe71d0e9fea9c342",
+      "bytes": 5592,
+      "source_sha256": "8026965765fe149caf8f39dcdd031a366e9e76fce6eda29ffe71d0e9fea9c342",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-resource-matrix-evidence-20261028.json",
+      "sha256": "82ada480a5dfbc060af29a283bdab84fc6ed604107ce3334d7c5e837a29a8eae",
+      "bytes": 3246,
+      "source_sha256": "82ada480a5dfbc060af29a283bdab84fc6ed604107ce3334d7c5e837a29a8eae",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-28_RESOURCE_MATRIX.md",
+      "sha256": "b941a6377dc27ac8d5f2a63fd1c0f343f9c740f07264829e226bfacda911a748",
+      "bytes": 1130,
+      "source_sha256": "b941a6377dc27ac8d5f2a63fd1c0f343f9c740f07264829e226bfacda911a748",
+      "transformations": []
     }
   ],
-  "file_count": 2591,
-  "source_bytes": 35385890,
+  "file_count": 2598,
+  "source_bytes": 35416002,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

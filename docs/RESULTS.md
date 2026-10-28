@@ -1,5 +1,12 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：真实 libg 合成资源路由矩阵
+
+ARM64 Linux 原生引擎对13例合成 APK/update 冲突、缺失和回退按既有 E1 对应规则
+运行；修复 probe 的无效文件 length 调用后13/13通过，独立验收exit0。
+第三轮缺失例完成provider释放、dlclose及asset finish；Android配对字节及严格catalog仍未验证；Linux专项973通过/1跳过。
+详见[报告](../agent-handoff/PURE_LINUX_RESOURCE_MATRIX_2026-10-28.md)。
+
 ## 2026-10-28 E2.1-N：Linux catalog 的资源路径观察
 
 真实 libg 轨迹复算发现247次 APK open/read/close及131个 update 文件完整映射关闭；

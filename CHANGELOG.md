@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N 真实 libg 资源路由矩阵
+
+- 新增13例合成资源矩阵和SHA绑定独立验收，使用 ARM64 Linux 的真实 libg 与现有backend。
+- 首轮12/13暴露无效文件仍调用length；修正probe后13/13通过，首轮结果保留。
+- 有效文件覆盖读/长度/EOF/seek/释放，第三轮缺失例完成provider释放、dlclose及asset finish；不认定Android配对字节一致。
+- 专项973通过/1跳过；严格catalog、Backup及后续战斗对象图仍未验收。
+
 ## 2026-10-28：E2.1-N 真实 catalog 资源轨迹审计
 
 - 新增 SHA 绑定的资源轨迹审计器、边界测试及脱敏报告；重分析已运行的真实 libg。
