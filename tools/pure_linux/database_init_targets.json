@@ -1,0 +1,10 @@
+[
+  {"name":"table_batch","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":14794228,"scope_start":"table_batch","table_counts_register":"x0"},
+  {"name":"finish_a","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":14795408,"scope":"table_batch","scope_start":"finish_a","table_counts_register":"x0","context_slot_b60":true},
+  {"name":"finish_lookup","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":18907132,"scope":"finish_a","scope_start":"finish_lookup","lookup_input":true,"string_arguments":[{"register":"x1","encoding":"engine-string16","limit":1024}]},
+  {"name":"lookup_inner","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":18539004,"scope":"finish_lookup","scope_start":"lookup_inner","first_lookup_tree":true},
+  {"name":"first_lookup_result","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":18539264,"scope":"lookup_inner","site_only":true,"first_lookup_result":true},
+  {"name":"database_constructor_candidate","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":18566644},
+  {"name":"database_init_candidate","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":18566412},
+  {"name":"source_loader_candidate","module":"libg.so","sha256":"110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783","offset":18563656}
+]

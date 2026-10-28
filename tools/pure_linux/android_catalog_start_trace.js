@@ -17,6 +17,10 @@ const pathCreationHistory = new Map();
 const pathSourceHistory = new Map();
 const sourceLoaderScopes = new Map();
 const sourceParentHistory = new Map();
+const sourceDbHistory = new Map();
+const dbCtorScopes = new Map();
+const dbInitScopes = new Map();
+const dbConstructors = new Map();
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
 function record(event) {
   if (events.length >= 30000) { lost++; return; }
@@ -131,6 +135,59 @@ function collectPath(module, history, args, returnAddress) {
 function observe(module) {
   if (module.name !== 'libg.so') return;
   if (includeBatchPhases) {
+    attach(module, 0x11b4df4, 'database_constructor_candidate', {
+      onEnter: function (args) {
+        this.observerDbThread = Process.getCurrentThreadId();
+        this.object = args[0].and(ptr('0x00ffffffffffffff'));
+        this.objectKey = this.object.toString();
+        this.callId = ++nextCall;
+        this.path = engineString(args[2]);
+        if (dbCtorScopes.has(this.observerDbThread)) errors.push('nested database constructor');
+        dbCtorScopes.set(this.observerDbThread, this.callId);
+      },
+      onLeave: function () {
+        try {
+          const state = {id: this.callId, path: this.path,
+                         reader_nonnull: !this.object.add(0x70).readPointer().isNull()};
+          dbConstructors.set(this.objectKey, state);
+          record({kind: 'database_constructor', ...state});
+        } catch (error) { errors.push('database constructor: ' + String(error)); }
+        if (dbCtorScopes.get(this.observerDbThread) !== this.callId) errors.push('database constructor scope mismatch');
+        dbCtorScopes.delete(this.observerDbThread);
+      }
+    });
+    attach(module, 0x131a5f0, 'database_open_candidate', {
+      onEnter: function (args) {
+        this.parent = dbCtorScopes.get(Process.getCurrentThreadId()) || null;
+        if (this.parent) {
+          this.path = boundedString(args[0].and(ptr('0x00ffffffffffffff')));
+          this.output = this.context.x8.and(ptr('0x00ffffffffffffff'));
+        }
+      },
+      onLeave: function () {
+        if (!this.parent) return;
+        try { record({kind: 'database_open', parent: this.parent, path: this.path,
+                      result_nonnull: !this.output.readPointer().isNull()}); }
+        catch (error) { errors.push('database open output: ' + String(error)); }
+      }
+    });
+    attach(module, 0x11b4d0c, 'database_init_candidate', {
+      onEnter: function (args) {
+        this.observerDbThread = Process.getCurrentThreadId();
+        this.objectKey = args[0].and(ptr('0x00ffffffffffffff')).toString();
+        this.callId = ++nextCall;
+        this.dbConstructor = dbConstructors.get(this.objectKey) || null;
+        if (dbInitScopes.has(this.observerDbThread)) errors.push('nested database init');
+        dbInitScopes.set(this.observerDbThread, this.callId);
+        record({kind: 'database_init_enter', id: this.callId,
+                constructor_id: this.dbConstructor ? this.dbConstructor.id : null});
+      },
+      onLeave: function (value) {
+        record({kind: 'database_init_return', id: this.callId, result: value.toUInt32()});
+        if (dbInitScopes.get(this.observerDbThread) !== this.callId) errors.push('database init scope mismatch');
+        dbInitScopes.delete(this.observerDbThread);
+      }
+    });
     attach(module, 0x11b4248, 'source_loader_candidate', {
       onEnter: function () {
         this.observerThread = Process.getCurrentThreadId();
@@ -138,10 +195,12 @@ function observe(module) {
         const caller = this.returnAddress.and(ptr('0x00ffffffffffffff'));
         this.label = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
           ? caller.sub(module.base).toString() : 'external';
-        sourceLoaderScopes.set(this.observerThread, this.label);
+        sourceLoaderScopes.set(this.observerThread, {label: this.label,
+          init: dbInitScopes.get(this.observerThread) || null});
       },
       onLeave: function () {
-        if (sourceLoaderScopes.get(this.observerThread) !== this.label) errors.push('source loader scope mismatch');
+        if (!sourceLoaderScopes.has(this.observerThread) || sourceLoaderScopes.get(this.observerThread).label !== this.label)
+          errors.push('source loader scope mismatch');
         sourceLoaderScopes.delete(this.observerThread);
       }
     });
@@ -150,10 +209,15 @@ function observe(module) {
         try {
           this.pathItem = collectPath(module, pathSourceHistory, args, this.returnAddress);
           const owner = args[0].and(ptr('0x00ffffffffffffff')).readPointer().and(ptr('0x00ffffffffffffff')).toString();
-          const parent = sourceLoaderScopes.get(Process.getCurrentThreadId()) || 'unobserved';
+          const scope = sourceLoaderScopes.get(Process.getCurrentThreadId());
+          const parent = scope ? scope.label : 'unobserved';
           if (!sourceParentHistory.has(owner)) sourceParentHistory.set(owner, {});
           const counts = sourceParentHistory.get(owner);
           counts[parent] = (counts[parent] || 0) + 1;
+          if (!sourceDbHistory.has(owner)) sourceDbHistory.set(owner, {});
+          const dbCounts = sourceDbHistory.get(owner);
+          const init = scope && scope.init ? String(scope.init) : 'unobserved';
+          dbCounts[init] = (dbCounts[init] || 0) + 1;
         }
         catch (error) { errors.push('path source: ' + String(error)); }
       },
@@ -242,6 +306,7 @@ function observe(module) {
                   const paths = pathCreationHistory.get(object.toString());
                   const sourcePaths = pathSourceHistory.get(object.toString());
                   const sourceParents = sourceParentHistory.get(object.toString());
+                  const sourceDb = sourceDbHistory.get(object.toString());
                   this.tree = {root_nonnull: !object.add(0x100).readPointer().isNull(),
                                size_word: object.add(0x108).readU64().toString(),
                                prior_insertion: insertion ? JSON.parse(JSON.stringify(insertion))
@@ -252,7 +317,8 @@ function observe(module) {
                                  : {calls: 0, returns: 0, callers: {}},
                                prior_paths: paths ? Array.from(paths.values(), item => ({...item})) : [],
                                prior_source_paths: sourcePaths ? Array.from(sourcePaths.values(), item => ({...item})) : [],
-                               source_parents: sourceParents ? {...sourceParents} : {}};
+                               source_parents: sourceParents ? {...sourceParents} : {},
+                               source_db_init: sourceDb ? {...sourceDb} : {}};
                 } catch (error) { errors.push('lookup tree: ' + String(error)); }
               }
             },
@@ -414,5 +480,6 @@ rpc.exports = {
   snapshot: function () { return {events: events, coverage: coverage, errors: errors, lost: lost,
     activeScopes: scopes.size, activeBatchScopes: batchScopes.size, activeFinishScopes: finishScopes.size,
     activeLookupScopes: lookupScopes.size, activeInnerScopes: innerScopes.size,
-    activeSourceLoaderScopes: sourceLoaderScopes.size}; }
+    activeSourceLoaderScopes: sourceLoaderScopes.size, activeDbCtorScopes: dbCtorScopes.size,
+    activeDbInitScopes: dbInitScopes.size}; }
 };

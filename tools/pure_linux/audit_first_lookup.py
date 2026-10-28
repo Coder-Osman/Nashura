@@ -38,8 +38,8 @@ def compare_first(android, linux):
             "linux_first_found": found_l[0]["first_lookup_found"]}
 
 
-def audit(paths, identities, allow_population=False, allow_path=False, allow_source=False):
-    baseline = audit_lookup(paths, identities, allow_inner=True, allow_first=True, allow_population=allow_population, allow_path=allow_path, allow_source=allow_source)
+def audit(paths, identities, allow_population=False, allow_path=False, allow_source=False, allow_db=False):
+    baseline = audit_lookup(paths, identities, allow_inner=True, allow_first=True, allow_population=allow_population, allow_path=allow_path, allow_source=allow_source, allow_db=allow_db)
     android = json.loads(paths["android"].read_text())
     linux = json.loads(paths["linux_observation"].read_text())
     return {"schema": "nashura.first-lookup.v1", "status": "RUNTIME_OBSERVED_LIMITED",

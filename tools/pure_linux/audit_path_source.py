@@ -31,8 +31,8 @@ def compare_database(rows, database):
             "meta_unobserved": len(meta - observed), "observed_not_meta": len(observed - meta)}
 
 
-def audit(paths, identities, database, database_sha):
-    baseline = audit_first(paths, identities, allow_source=True)
+def audit(paths, identities, database, database_sha, allow_db=False):
+    baseline = audit_first(paths, identities, allow_source=not allow_db, allow_db=allow_db)
     if sha(database) != database_sha:
         raise ValueError("database identity mismatch")
     android = json.loads(paths["android"].read_text())
