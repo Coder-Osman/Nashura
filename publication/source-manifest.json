@@ -10194,22 +10194,24 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "e536235cf14134da05a5e8278d44ecc09cfa1f472d5f4b4663f7e10adf0ac639",
-      "bytes": 37678,
+      "sha256": "5ed7616903209744957aee3bbb9e375b5c7f9d44ac7bd8030e9c880126797f90",
+      "bytes": 38189,
       "source_sha256": "c008f55f17031af6abae22b02af32e87d0c8c9d3cbc1a7c54fc4f73bdf72e3a7",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
-        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved"
+        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
+        "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "235a792364d6a694cdcaf3035320df95c9e94734e43c8fc3269b0e0ce43dafe3",
-      "bytes": 67202,
+      "sha256": "16d53d9b519e6f62677ce247feb6ab3aa1d9127edaef8ee20b94ede85774e369",
+      "bytes": 68215,
       "source_sha256": "7956b3b23c44bda14bd02a13c725f93621bc473669cff1644c882afc3de0d310",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
-        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved"
+        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
+        "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved"
       ]
     },
     {
@@ -16621,12 +16623,13 @@
     },
     {
       "path": "README.md",
-      "sha256": "f6f73d31d3477e0c43c88751c900a1492688d07c17a246fe252a2272d2722705",
-      "bytes": 35882,
+      "sha256": "98bdbcf375d418b2ccdf266a1f1fc883bc43e0864139d5547a5ff3f28a776ec1",
+      "bytes": 36672,
       "source_sha256": "268a62062b889a6cc7bd8034c306e2937b73840ef1d6e918fee39525ef232472",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
-        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved"
+        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
+        "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved"
       ]
     },
     {
@@ -17470,9 +17473,65 @@
       "bytes": 13512,
       "source_sha256": "5fb00a623b3ac4b6a19298478b3692b3cf3745c6b66e3afc9b7e044445d9ee9d",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_BACKUP_QUEUE_SEMANTICS_2026-10-28.md",
+      "sha256": "6f772e2ea266e73a49896942e3ac95d9d6eb6fc85c346f8e04fb146a69bde80a",
+      "bytes": 5553,
+      "source_sha256": "6f772e2ea266e73a49896942e3ac95d9d6eb6fc85c346f8e04fb146a69bde80a",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-backup-queue-semantics-evidence-20261028.json",
+      "sha256": "d6535baa139a9c9ca6fe755023091f2a871bfbffeae89b5e3a01ab34bd2a2e4f",
+      "bytes": 12070,
+      "source_sha256": "d6535baa139a9c9ca6fe755023091f2a871bfbffeae89b5e3a01ab34bd2a2e4f",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_QUEUE.md",
+      "sha256": "f0ce8fbd6e88d9a6034abf8c4d526763f2dabd756770319551d5c3bf5c8492a7",
+      "bytes": 1881,
+      "source_sha256": "f0ce8fbd6e88d9a6034abf8c4d526763f2dabd756770319551d5c3bf5c8492a7",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_queue_contract.py",
+      "sha256": "a53c60ac3d7c6cf68c9552d5da3c2b6b870e4281973d67095a02d1746ab7b2d8",
+      "bytes": 4043,
+      "source_sha256": "a53c60ac3d7c6cf68c9552d5da3c2b6b870e4281973d67095a02d1746ab7b2d8",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/backup_queue_readonly.js",
+      "sha256": "e214f1d1a1616e0e2554f7fe126cc80919839d66e7ea243297dc73dcc74e6e91",
+      "bytes": 3628,
+      "source_sha256": "e214f1d1a1616e0e2554f7fe126cc80919839d66e7ea243297dc73dcc74e6e91",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/run_backup_queue_readonly.py",
+      "sha256": "8b2fd637b1021b688c915ebdfc3702ef4560640c035824a2990eeb6a09c0d386",
+      "bytes": 2622,
+      "source_sha256": "8b2fd637b1021b688c915ebdfc3702ef4560640c035824a2990eeb6a09c0d386",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_backup_queue_contract.py",
+      "sha256": "ac001cee8f27f9eed571fe3dff9279ef44c21a61c887caf04571327c6fd1f5c5",
+      "bytes": 5035,
+      "source_sha256": "ac001cee8f27f9eed571fe3dff9279ef44c21a61c887caf04571327c6fd1f5c5",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_backup_queue_readonly.py",
+      "sha256": "52b06011e5d62657970b44970c2effbed08e45f5d613430f617d73b4baf27a9a",
+      "bytes": 3825,
+      "source_sha256": "52b06011e5d62657970b44970c2effbed08e45f5d613430f617d73b4baf27a9a",
+      "transformations": []
     }
   ],
-  "file_count": 2492,
+  "file_count": 2500,
   "source_bytes": 34623972,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,

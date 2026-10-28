@@ -1,5 +1,18 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：Backup 队列去重语义
+
+同隔离Android实例两轮只读检查各两次采样：目标已在pending、属于participants、journal对象存在。
+未持锁采样不证明历史事务分支。真实services DEX的40指令方法经人工审阅并绑定SHA：
+只有put原返回为null才调用journal；正常非null targets路径仍schedule，异常不保证。
+25项新增边界测试通过；隔离全量专项602通过/1跳过、主工程211通过，均exit0；
+250份原工作树历史XML未变。公开回归与发布核验详见机器证据，集合不累加。
+历史put返回、journal写入/交付及Linux绑定仍未闭合，严格catalog保持false，
+ResourceManager/GameState/真实Step未运行。详见
+[报告](../agent-handoff/PURE_LINUX_BACKUP_QUEUE_SEMANTICS_2026-10-28.md)、
+[机器证据](../agent-handoff/pure-linux-backup-queue-semantics-evidence-20261028.json)及
+[回执](../agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_QUEUE.md)。以下保留历史状态。
+
 ## 2026-10-28 E2.1-N：loading 双槽真实磁盘事务
 
 一次受控目标写入/恢复观测到4条同步commit完整链，返回均true；两槽最终XML

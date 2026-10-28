@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-28：E2.1-N Backup pending 去重契约
+
+- 新增只读目标队列探针、独占0600 runner、精确方法SHA绑定的人工审阅契约及25项边界测试。
+- 真实Android目标pending/participants存在，静态区分重复请求跳journal与正常schedule路径。
+- 保留两次只读失败、metadata试验、身份拒收及初次fixture失败，历史动态分支保持未知。
+- 隔离专项602通过/1跳过、主工程211通过；严格catalog仍BLOCKED，未推进后续对象图。
+
 ## 2026-10-28：E2.1-N loading 双槽磁盘事务
 
 - 增加四阶段只读文件捕获、独占0600输出及SHA绑定离线审计，新增28项审计器测试。

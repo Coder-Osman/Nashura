@@ -1,0 +1,350 @@
+{
+  "schema": "nashura.pure-linux-backup-queue-semantics.v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "base_head": "76ca520cae256b419eeaad177f3a47ac8a9b32e3",
+  "commit_identity": "containing commit; no self-referential SHA",
+  "environment": {
+    "host": "macOS arm64",
+    "runtime": "Android 30 arm64-v8a",
+    "serial": "emulator-5580",
+    "pid": 522,
+    "identity_check": "ADB cmdline and Frida process name before attach; ADB cmdline after",
+    "pid_reuse_protection": "boot_id/starttime NOT_CAPTURED"
+  },
+  "scope": {
+    "read_only_queue_inspection": true,
+    "controlled_store_repeated": false,
+    "backup_request_issued": false,
+    "game_restarted": false,
+    "libg_loaded_this_stage": false,
+    "engine_resources_identity": "NOT_CAPTURED_THIS_STAGE"
+  },
+  "artifacts": {
+    "inspect-first.json": {
+      "private_path": "/private/tmp/nashura-backup-queue-20261028-8KeLJO/inspect-first.json",
+      "sha256": "15b3ec1f616e198ae2c7c4b6d2c805be3adef6a240b2fafe1ba83556614adcc2",
+      "bytes": 952
+    },
+    "inspect-second.json": {
+      "private_path": "/private/tmp/nashura-backup-queue-20261028-8KeLJO/inspect-second.json",
+      "sha256": "dd78b4efebe52d6e7e3b78406d84ea3155790f6c25402f0629b772a7df4a98fb",
+      "bytes": 1749
+    },
+    "inspect-third.json": {
+      "private_path": "/private/tmp/nashura-backup-queue-20261028-8KeLJO/inspect-third.json",
+      "sha256": "a35b0287747131b63d2f4eca2f5e675132a588f5bc3655b88e48e47b0877fffc",
+      "bytes": 29029
+    },
+    "inspect-fourth.json": {
+      "private_path": "/private/tmp/nashura-backup-queue-20261028-8KeLJO/inspect-fourth.json",
+      "sha256": "91a6e106cbd2c8347e09f77f5dfdfed802beba03ccad2eb56cf3edef8c2f8e7d",
+      "bytes": 1335
+    },
+    "inspect-fifth.json": {
+      "private_path": "/private/tmp/nashura-backup-queue-20261028-8KeLJO/inspect-fifth.json",
+      "sha256": "91a6e106cbd2c8347e09f77f5dfdfed802beba03ccad2eb56cf3edef8c2f8e7d",
+      "bytes": 1335
+    },
+    "services.jar": {
+      "private_path": "/private/tmp/nashura-backup-queue-20261028-8KeLJO/services.jar",
+      "sha256": "c6992cdc2a3e23d5aeb6ab77e7a7f6889cfcf5c262c6ed86825e6fcbf601681d",
+      "bytes": 14712067
+    },
+    "services.dex": {
+      "private_path": "/private/tmp/nashura-backup-queue-20261028-8KeLJO/services.dex",
+      "sha256": "66b315411f05fe53c5fb9f0e144857cef26dfce79927b004cb0e5a057a347a0a",
+      "bytes": 11521244
+    },
+    "static-contract/report.json": {
+      "private_path": "/private/tmp/nashura-backup-queue-20261028-8KeLJO/static-contract/report.json",
+      "sha256": "7d018d2679e7784457763dd78b746d8dfc47cd027ea464a250480ed85b8e739c",
+      "bytes": 2143
+    },
+    "tests-new.log": {
+      "private_path": "/private/tmp/nashura-backup-queue-20261028-8KeLJO/tests-new.log",
+      "sha256": "782c3e83fb9f85e8a02e0ed951cedd94cdc3acb7f424d1ca52fc52d9d7923a56",
+      "bytes": 99
+    },
+    "tests-all.log": {
+      "private_path": "/private/tmp/nashura-backup-queue-20261028-8KeLJO/tests-all.log",
+      "sha256": "3cb33f7c528258a87e01b29c26b749106f48611905617a775dc5e3080dcff024",
+      "bytes": 751
+    },
+    "checks-main.log": {
+      "private_path": "/private/tmp/nashura-backup-queue-20261028-8KeLJO/checks-main.log",
+      "sha256": "e339c5ecd4b18b45f5da6817486179ae1316e4780762df4445b20516c5ff003f",
+      "bytes": 261
+    },
+    "checks-public.log": {
+      "private_path": "/private/tmp/nashura-backup-queue-20261028-8KeLJO/checks-public.log",
+      "sha256": "9473013a9a20365e93cec068200921e572593772489aa97fb2819f01f35e2723",
+      "bytes": 3108
+    }
+  },
+  "sources": {
+    "tools/pure_linux/backup_queue_contract.py": {
+      "sha256": "a53c60ac3d7c6cf68c9552d5da3c2b6b870e4281973d67095a02d1746ab7b2d8",
+      "bytes": 4043,
+      "tested_copy_matches": true
+    },
+    "tools/pure_linux/backup_queue_readonly.js": {
+      "sha256": "e214f1d1a1616e0e2554f7fe126cc80919839d66e7ea243297dc73dcc74e6e91",
+      "bytes": 3628,
+      "tested_copy_matches": true
+    },
+    "tools/pure_linux/run_backup_queue_readonly.py": {
+      "sha256": "8b2fd637b1021b688c915ebdfc3702ef4560640c035824a2990eeb6a09c0d386",
+      "bytes": 2622,
+      "tested_copy_matches": true
+    },
+    "tools/pure_linux/test_backup_queue_contract.py": {
+      "sha256": "ac001cee8f27f9eed571fe3dff9279ef44c21a61c887caf04571327c6fd1f5c5",
+      "bytes": 5035,
+      "tested_copy_matches": true
+    },
+    "tools/pure_linux/test_backup_queue_readonly.py": {
+      "sha256": "52b06011e5d62657970b44970c2effbed08e45f5d613430f617d73b4baf27a9a",
+      "bytes": 3825,
+      "tested_copy_matches": true
+    }
+  },
+  "runtime": {
+    "status": "RUNTIME_OBSERVED",
+    "exit_code": 0,
+    "runs": 2,
+    "samples_per_run": 2,
+    "schema": "nashura.backup-queue-readonly.v1",
+    "read_only": true,
+    "uid": 1000,
+    "process_name": null,
+    "pid": 522,
+    "user_id": 0,
+    "service_class": "com.android.server.backup.BackupManagerService",
+    "user_class": "com.android.server.backup.UserBackupManagerService",
+    "target_uid": 10166,
+    "first": {
+      "pending_count": 30,
+      "target_pending": true,
+      "participant_uid_count": 25,
+      "target_set_present": true,
+      "target_set_count": 1,
+      "target_participates": true,
+      "journal_present": true,
+      "journal_class": "com.android.server.backup.DataChangedJournal"
+    },
+    "second": {
+      "pending_count": 30,
+      "target_pending": true,
+      "participant_uid_count": 25,
+      "target_set_present": true,
+      "target_set_count": 1,
+      "target_participates": true,
+      "journal_present": true,
+      "journal_class": "com.android.server.backup.DataChangedJournal"
+    },
+    "samples_equal": true,
+    "consistency": "UNSYNCHRONIZED_TWO_SAMPLES",
+    "historical_branch": "UNRESOLVED",
+    "catalog_ready_pass": false
+  },
+  "static": {
+    "status": "STATIC_FOUND",
+    "exit_code": 0,
+    "schema": "nashura.backup-queue-contract.v1",
+    "dex_sha256": "66b315411f05fe53c5fb9f0e144857cef26dfce79927b004cb0e5a057a347a0a",
+    "dexdump_sha256": "9c4addfdb5373f0923e418a64683976922c1ffdd1a3e9673b9cce5a0838e9692",
+    "dump_sha256": "88b8396fea3c5f786aee3f44b6dba41767d0ccbe2a65839ada57c6708adc3e4a",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "review": {
+      "method": "com.android.server.backup.UserBackupManagerService.dataChangedImpl:(Ljava/lang/String;Ljava/util/HashSet;)V",
+      "method_evidence": {
+        "sha256": "4dfda6c5a81f6bc233b7f994e2f98a59836c777123b3e72dcc2883702ac0f587",
+        "instructions": 40,
+        "catch_table_present": true
+      },
+      "status": "STATIC_FOUND",
+      "basis": "manual review of exact normalized method",
+      "automatic_semantic_inference": false,
+      "normal_return_cases": [
+        {
+          "targets": "null",
+          "member": null,
+          "previous_request": null,
+          "queue_put": false,
+          "journal_call": false,
+          "schedule_call": false
+        },
+        {
+          "targets": "nonnull",
+          "member": false,
+          "previous_request": null,
+          "queue_put": false,
+          "journal_call": false,
+          "schedule_call": true
+        },
+        {
+          "targets": "nonnull",
+          "member": true,
+          "previous_request": "null",
+          "queue_put": true,
+          "journal_call": true,
+          "schedule_call": true
+        },
+        {
+          "targets": "nonnull",
+          "member": true,
+          "previous_request": "nonnull",
+          "queue_put": true,
+          "journal_call": false,
+          "schedule_call": true
+        }
+      ],
+      "queue_lock": "mQueueLock covers membership, put and conditional journal call",
+      "schedule": "after releasing queue monitor on nonnull-target normal paths",
+      "exceptions": "monitor cleanup and rethrow; schedule not guaranteed after exception",
+      "journal_callee_semantics": "UNRESOLVED",
+      "job_delivery": "UNRESOLVED",
+      "historical_branch": "UNRESOLVED",
+      "runtime_parity": "NOT_RUN",
+      "catalog_ready_pass": false
+    },
+    "inputs_unchanged": true
+  },
+  "failures": [
+    {
+      "name": "inspect-first.json",
+      "exit_code": 1,
+      "cause": "Frida object wrapper getClass TypeError",
+      "retained": true
+    },
+    {
+      "name": "inspect-second.json",
+      "exit_code": 1,
+      "cause": "incorrect mService field assumption",
+      "retained": true
+    },
+    {
+      "name": "inspect-third.json",
+      "exit_code": 0,
+      "scope": "metadata only; not final queue contract evidence",
+      "retained": true
+    },
+    {
+      "name": "first static command",
+      "exit_code": 1,
+      "cause": "manually mistyped expected DEX SHA; rejected before output creation",
+      "raw_evidence": "tool output only; no standalone failure log",
+      "inputs_changed": false
+    },
+    {
+      "name": "first new tests",
+      "passed": 24,
+      "failed": 1,
+      "cause": "fixture changed DEX magic; identity rejection occurred before exclusive-output assertion",
+      "production_checks_relaxed": false,
+      "final_passed": 25
+    }
+  ],
+  "tests": {
+    "new": {
+      "command": "/opt/anaconda3/bin/python3 -m pytest -q -p no:cacheprovider tools/pure_linux/test_backup_queue_contract.py tools/pure_linux/test_backup_queue_readonly.py",
+      "passed": 25,
+      "exit_code": 0,
+      "scope": "synthetic/fake tool boundary checks"
+    },
+    "isolated_source": "/private/tmp/nashura-backup-queue-checks-20261028-61b6_x8u/source",
+    "full": {
+      "command": "/opt/anaconda3/bin/python3 -m pytest -q -p no:cacheprovider tools/pure_linux",
+      "passed": 602,
+      "skipped": 1,
+      "exit_code": 0
+    },
+    "main": {
+      "command": "/opt/anaconda3/bin/python3 tools/run_main_engine_checks.py",
+      "passed": 211,
+      "exit_code": 0
+    },
+    "public": {
+      "command": "/opt/anaconda3/bin/python3 tools/run_public_checks.py",
+      "groups": [
+        {
+          "passed": 794,
+          "skipped": 27
+        },
+        {
+          "passed": 23,
+          "skipped": 0
+        },
+        {
+          "passed": 82,
+          "skipped": 0
+        },
+        {
+          "passed": 15,
+          "skipped": 3
+        },
+        {
+          "passed": 25,
+          "skipped": 4
+        },
+        {
+          "passed": 31,
+          "skipped": 3
+        },
+        {
+          "passed": 31,
+          "skipped": 2
+        },
+        {
+          "passed": 38,
+          "skipped": 3
+        },
+        {
+          "passed": 65,
+          "skipped": 0
+        }
+      ],
+      "passed": 1104,
+      "skipped": 42,
+      "exit_code": 0
+    },
+    "node_syntax": {
+      "command": "node --check tools/pure_linux/backup_queue_readonly.js",
+      "exit_code": 0
+    },
+    "historical_xml": {
+      "count": 250,
+      "changed": []
+    },
+    "counting": "separate overlapping collections; do not sum"
+  },
+  "gates": {
+    "CATALOG_READY_PASS": false,
+    "ResourceManager": "BLOCKED",
+    "GameState": "NOT_RUN",
+    "GameStateStep": "NOT_RUN",
+    "no_VM": "NOT_RUN",
+    "Android_free": "NOT_RUN",
+    "complete_match": "NOT_RUN",
+    "PERFORMANCE_10X": "NOT_RUN",
+    "training": "NOT_RUN"
+  },
+  "unresolved": [
+    "Historical dataChangedImpl HashMap.put return and branch",
+    "journal callee semantics and actual job delivery",
+    "fsync runtime coverage and cross-process recovery",
+    "complete loading config/exception domain and Linux Backup binding"
+  ],
+  "first_blocker": "loading configuration/Backup real side-effect contract and native binding",
+  "next": "passively capture natural requests in same-thread dataChangedImpl scope and match pending map identity; never force another request or clear queue",
+  "publication": {
+    "commands": [
+      "/opt/anaconda3/bin/python3 tools/check_public_snapshot.py",
+      "/opt/homebrew/bin/gitleaks dir . --config .gitleaks.toml --redact",
+      "git diff --check",
+      "git diff --cached --check"
+    ],
+    "results": "recorded in receipt after execution; not lifecycle evidence"
+  }
+}

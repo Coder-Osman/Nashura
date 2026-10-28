@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-28：Backup pending 去重分支与只读队列
+
+真实 Android 只读队列检查确认目标包已有 pending 请求且属于 participants；匹配服务端
+DEX 的静态分支显示：put 返回旧请求时跳过 journal，正常路径仍调度 job。
+当前未持锁快照不证明历史事务实际分支，journal/交付与 Linux Backup 绑定仍未闭合。
+新增25项工具测试通过；隔离全量专项602通过/1跳过、主工程211通过。
+严格 catalog 仍 BLOCKED，后续对象图未启动。详见
+[报告](agent-handoff/PURE_LINUX_BACKUP_QUEUE_SEMANTICS_2026-10-28.md)、
+[机器证据](agent-handoff/pure-linux-backup-queue-semantics-evidence-20261028.json)和
+[回执](agent-handoff/CODEX_REPLY_2026-10-28_BACKUP_QUEUE.md)。以下保留历史状态。
+
 ## 2026-10-28：loading 双槽真实同步提交与恢复
 
 隔离 Android 实验确认四次同步 commit 均返回 true；目标写入和恢复都按
