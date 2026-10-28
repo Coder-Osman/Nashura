@@ -1,5 +1,11 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：原生队列单边界中断恢复
+
+ARM64 Linux/Bionic 实测发布后进程中断、显式恢复及原生归档通过；仅覆盖同 inode
+双链接状态，不代表 Android Backup 或完整 catalog 等价。专项988通过/1跳过。
+详见[报告](../agent-handoff/PURE_LINUX_BACKUP_CRASH_RECOVERY_2026-10-28.md)。
+
 ## 2026-10-28 E2.1-N：Android 与 Linux 资源局部对照
 
 24个独立真实引擎资源案例与历史 Android E1 归档的字节和文件操作匹配，独立

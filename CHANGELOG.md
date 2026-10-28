@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-10-28：原生 Backup 队列中断恢复
+
+- 增加同 inode、双链接发布中断的显式恢复，未知状态和活跃锁继续拒收。
+- ARM64 Linux/Bionic 受控进程退出与恢复、合并请求、归档通过；非 Android Backup 等价。
+- 专项988通过/1跳过；严格 catalog 门保持关闭。
+
 ## 2026-10-28：Android E1 与 Linux 资源局部对照
 
 - SHA 绑定 Android 历史归档与真实 Linux libg 的24项文件路由及操作对照，独立复核通过。

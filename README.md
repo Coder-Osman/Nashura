@@ -1,5 +1,11 @@
 # Nashura
 
+## 2026-10-28：原生 Backup 队列中断恢复
+
+ARM64 Linux/Bionic 中复现发布后进程中断，显式恢复保留请求并完成原生归档；
+仅覆盖一个中断边界，Android Backup 等价及严格 catalog 仍未通过。
+专项988通过/1跳过，详见[报告](agent-handoff/PURE_LINUX_BACKUP_CRASH_RECOVERY_2026-10-28.md)。
+
 ## 2026-10-28：Android E1 与 Linux 资源局部对照
 
 历史 Android 归档与真实 ARM64 Linux libg 的24个案例在字节及文件操作上匹配；
