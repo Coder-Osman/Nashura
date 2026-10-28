@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "636dc7347aa84fff70688bedbac921e422f5e7a445793ac0bca961d037f17f52",
-      "bytes": 13683,
-      "source_sha256": "636dc7347aa84fff70688bedbac921e422f5e7a445793ac0bca961d037f17f52",
+      "sha256": "24cc55df523842004c537462975c98d73bb1a5c7b32b726d066c7cc8d9f0c8f5",
+      "bytes": 17268,
+      "source_sha256": "24cc55df523842004c537462975c98d73bb1a5c7b32b726d066c7cc8d9f0c8f5",
       "transformations": []
     },
     {
@@ -18781,9 +18781,9 @@
     },
     {
       "path": "tools/pure_linux/audit_finish_lookup.py",
-      "sha256": "c3fb0f0b3b9b919d999b77eee5a461d1f41f09bec928c78afa87208e902cc8d4",
-      "bytes": 8388,
-      "source_sha256": "c3fb0f0b3b9b919d999b77eee5a461d1f41f09bec928c78afa87208e902cc8d4",
+      "sha256": "97f98f025a8f154494a7f1c05e268e282ebc6f1d82ef1a5d26de6789671e6ff6",
+      "bytes": 8816,
+      "source_sha256": "97f98f025a8f154494a7f1c05e268e282ebc6f1d82ef1a5d26de6789671e6ff6",
       "transformations": []
     },
     {
@@ -18900,9 +18900,9 @@
     },
     {
       "path": "tools/pure_linux/audit_first_lookup.py",
-      "sha256": "adf56632083b559b418fbb44c478f738eb529f8129f1c96bdafbfce3f03239fb",
-      "bytes": 3902,
-      "source_sha256": "adf56632083b559b418fbb44c478f738eb529f8129f1c96bdafbfce3f03239fb",
+      "sha256": "ed540af29a8f7f60b6daaf353a9df26389779636b40aa4bcd3e41bbcd8dff7c6",
+      "bytes": 3961,
+      "source_sha256": "ed540af29a8f7f60b6daaf353a9df26389779636b40aa4bcd3e41bbcd8dff7c6",
       "transformations": []
     },
     {
@@ -18953,10 +18953,52 @@
       "bytes": 1481,
       "source_sha256": "da4309464fbdf1d286c3f245e615f90c4fe33c4a3618dca148d7935f4a834e1c",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_tree_population.py",
+      "sha256": "abad9cb0fc418fd3677e201c3db73531aa2b9008b2d432c331aed737d9075b75",
+      "bytes": 3134,
+      "source_sha256": "abad9cb0fc418fd3677e201c3db73531aa2b9008b2d432c331aed737d9075b75",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/tree_population_targets.json",
+      "sha256": "da5852b56a8a77df6cc23ceab44c13b68346f58f7b35014fff3c524d5bddc52e",
+      "bytes": 1607,
+      "source_sha256": "da5852b56a8a77df6cc23ceab44c13b68346f58f7b35014fff3c524d5bddc52e",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_tree_population.py",
+      "sha256": "49963e5374e31c8d308d8eb4346a218f46526c239bc1ec270316e7b47b7856ea",
+      "bytes": 561,
+      "source_sha256": "49963e5374e31c8d308d8eb4346a218f46526c239bc1ec270316e7b47b7856ea",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_TREE_POPULATION.md",
+      "sha256": "7bc42f0a3643f9f2dbd3d3c5d3400aabf5f07f6d7c8296849faddd3f0c68f605",
+      "bytes": 713,
+      "source_sha256": "7bc42f0a3643f9f2dbd3d3c5d3400aabf5f07f6d7c8296849faddd3f0c68f605",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_TREE_POPULATION_2026-10-29.md",
+      "sha256": "16b6ea20702ffe709eb96aafc4b9981979aa966b3ceb2adfe20cb86762002954",
+      "bytes": 3615,
+      "source_sha256": "16b6ea20702ffe709eb96aafc4b9981979aa966b3ceb2adfe20cb86762002954",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-tree-population-evidence-20261029.json",
+      "sha256": "0cda70ee11415f92d03e4bfb537be4ad0d9e192c4852b2b221d2bf9bdb76f89e",
+      "bytes": 1341,
+      "source_sha256": "0cda70ee11415f92d03e4bfb537be4ad0d9e192c4852b2b221d2bf9bdb76f89e",
+      "transformations": []
     }
   ],
-  "file_count": 2697,
-  "source_bytes": 35738850,
+  "file_count": 2703,
+  "source_bytes": 35753893,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

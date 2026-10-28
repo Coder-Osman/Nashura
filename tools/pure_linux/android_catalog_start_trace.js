@@ -10,6 +10,9 @@ const batchScopes = new Map();
 const finishScopes = new Map();
 const lookupScopes = new Map();
 const innerScopes = new Map();
+const insertionHistory = new Map();
+const populationHistory = new Map();
+const allocationHistory = new Map();
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
 function record(event) {
   if (events.length >= 30000) { lost++; return; }
@@ -93,6 +96,56 @@ function attach(module, offset, label, callbacks) {
 }
 function observe(module) {
   if (module.name !== 'libg.so') return;
+  if (includeBatchPhases) {
+    attach(module, 0x11b0084, 'tree_node_candidate', {
+      onEnter: function (args) {
+        const key = args[0].and(ptr('0x00ffffffffffffff')).toString();
+        if (!allocationHistory.has(key)) {
+          if (allocationHistory.size >= 8192) { errors.push('allocation history limit'); return; }
+          allocationHistory.set(key, {calls: 0, returns: 0, callers: {}});
+        }
+        this.allocation = allocationHistory.get(key);
+        this.allocation.calls++;
+        const caller = this.returnAddress.and(ptr('0x00ffffffffffffff'));
+        const label = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
+          ? caller.sub(module.base).toString() : 'external';
+        this.allocation.callers[label] = (this.allocation.callers[label] || 0) + 1;
+      },
+      onLeave: function () { if (this.allocation) this.allocation.returns++; }
+    });
+    attach(module, 0x11aebb0, 'tree_population_candidate', {
+      onEnter: function (args) {
+        const key = args[0].and(ptr('0x00ffffffffffffff')).toString();
+        if (!populationHistory.has(key)) {
+          if (populationHistory.size >= 8192) { errors.push('population history limit'); return; }
+          populationHistory.set(key, {calls: 0, returns: 0, callers: {}});
+        }
+        this.population = populationHistory.get(key);
+        this.population.calls++;
+        const caller = this.returnAddress.and(ptr('0x00ffffffffffffff'));
+        const label = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
+          ? caller.sub(module.base).toString() : 'external';
+        this.population.callers[label] = (this.population.callers[label] || 0) + 1;
+      },
+      onLeave: function () { if (this.population) this.population.returns++; }
+    });
+    attach(module, 0x11b2250, 'tree_insert_candidate', {
+      onEnter: function (args) {
+        const key = args[0].and(ptr('0x00ffffffffffffff')).toString();
+        if (!insertionHistory.has(key)) {
+          if (insertionHistory.size >= 8192) { errors.push('insertion history limit'); return; }
+          insertionHistory.set(key, {calls: 0, returns: 0, callers: {}});
+        }
+        this.insertion = insertionHistory.get(key);
+        this.insertion.calls++;
+        const caller = this.returnAddress.and(ptr('0x00ffffffffffffff'));
+        const label = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
+          ? caller.sub(module.base).toString() : 'external';
+        this.insertion.callers[label] = (this.insertion.callers[label] || 0) + 1;
+      },
+      onLeave: function () { if (this.insertion) this.insertion.returns++; }
+    });
+  }
   let getterHooksAttempted = false;
   attach(module, 0xe1bdcc, 'table_batch', {
     onEnter: function (args) {
@@ -114,8 +167,17 @@ function observe(module) {
                 innerScopes.set(this.observerThread, this.observerBatch);
                 try {
                   const object = args[0].and(ptr('0x00ffffffffffffff'));
+                  const insertion = insertionHistory.get(object.add(0xf8).toString());
+                  const population = populationHistory.get(object.toString());
+                  const allocation = allocationHistory.get(object.toString());
                   this.tree = {root_nonnull: !object.add(0x100).readPointer().isNull(),
-                               size_word: object.add(0x108).readU64().toString()};
+                               size_word: object.add(0x108).readU64().toString(),
+                               prior_insertion: insertion ? JSON.parse(JSON.stringify(insertion))
+                                 : {calls: 0, returns: 0, callers: {}},
+                               prior_population: population ? JSON.parse(JSON.stringify(population))
+                                 : {calls: 0, returns: 0, callers: {}},
+                               prior_allocation: allocation ? JSON.parse(JSON.stringify(allocation))
+                                 : {calls: 0, returns: 0, callers: {}}};
                 } catch (error) { errors.push('lookup tree: ' + String(error)); }
               }
             },
