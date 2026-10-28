@@ -1,5 +1,10 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：APK 资源身份对照
+
+历史 E1 与用户 APK 的9,829项资源逐项 SHA 一致；Linux loader 的619项暂存清单
+也与 APK 一致。update 和 catalog 表值未对照；详见[报告](../agent-handoff/PURE_LINUX_CATALOG_APK_IDENTITY_2026-10-28.md)。
+
 ## 2026-10-28 E2.1-N：原生队列单边界中断恢复
 
 ARM64 Linux/Bionic 实测发布后进程中断、显式恢复及原生归档通过；仅覆盖同 inode

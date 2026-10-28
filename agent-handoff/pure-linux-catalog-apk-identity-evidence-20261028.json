@@ -1,0 +1,22 @@
+{
+  "schema": "nashura.catalog-apk-public-evidence.v1",
+  "base_commit": "e4bc544e9b380eb0762a2b2fe584e8afd78fd02b",
+  "status": "PASS_LIMITED",
+  "historical_apk_sha256": "f1ee6d6146efc8c998843958ae0788e5121c265445c0c7ff5ffa2a5202d7dd9b",
+  "current_apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+  "loader_result_sha256": "caad1b680c3a52efb00d49ed8e7762d77e474f5600df788e8ac684006d093014",
+  "loader_stderr_sha256": "d17169692bc04fada60abc7fe686c1ac4abbdcd58589e89ceaa7edf22d45b875",
+  "e1_comparison_sha256": "5dd3bb7148c7bcc7871fd7e3a7c487a8313129e5ccf6e6b2f6eedb0ba09d2f2c",
+  "comparison_sha256": "6da26d2479953dcf76d3eb8cabc7360917bc2f496d33dfb0cbc82d226f6c5412",
+  "tool_sha256": "624568f39777c634b22fd8d9f4ece4006daf4ba229e5d081d8025e674e5a8b14",
+  "comparison_exit": 0,
+  "tests": {"passed": 992, "skipped": 1, "exit": 0},
+  "asset_count": 9829,
+  "different_assets": 0,
+  "staged_assets": 619,
+  "staged_mismatches": 0,
+  "loader_asset_opens": 247,
+  "update_resource_comparison": "NOT_RUN",
+  "catalog_cell_comparison": "NOT_RUN",
+  "catalog_ready_pass": false
+}

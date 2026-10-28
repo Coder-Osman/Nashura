@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-10-28：历史 Android 与 Linux loader 的 APK 资源身份
+
+两份不同整包 APK 的9,829个资源逐项 SHA 一致，Linux loader 的619个暂存资源
+与 APK 清单一致；update 与 catalog 表值仍待对照。详见[报告](agent-handoff/PURE_LINUX_CATALOG_APK_IDENTITY_2026-10-28.md)。
+
 ## 2026-10-28：原生 Backup 队列中断恢复
 
 ARM64 Linux/Bionic 中复现发布后进程中断，显式恢复保留请求并完成原生归档；
