@@ -1,0 +1,22 @@
+{
+  "schema": "nashura.catalog-layout-difference-public-evidence.v1",
+  "base_commit": "0b33fdf271cfb96613d67c68524722d2955e3380",
+  "status": "DIFFERENCES",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "android_result_sha256": "4a9dbb681c1c3c5d02afbe7d530e9039df0f3e4382fa287e3318962bd9cf7c4c",
+  "linux_stdout_sha256": "2adeafc44e3c03b5a62954d863ede2ea2971656aa01f519bc614ab863919a6ff",
+  "comparison_sha256": "66f7e26662c2f955dbd08903492de8e856768eb397348084a97514cddaeb7956",
+  "android_exit": 0,
+  "comparison_exit": 2,
+  "android_tables": 162,
+  "linux_tables": 162,
+  "android_rows": 25810,
+  "linux_rows": 24353,
+  "different_slots": 17,
+  "csv_dimension_differences": 0,
+  "tests": {"passed": 1000, "skipped": 1, "exit": 0},
+  "android_current_update_identity": "NOT_VERIFIED",
+  "root_cause": "UNKNOWN",
+  "catalog_ready_pass": false,
+  "gamestate": "NOT_RUN"
+}

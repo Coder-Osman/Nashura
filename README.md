@@ -1,5 +1,11 @@
 # Nashura
 
+## 2026-10-28：Android 与 Linux catalog 行数差异
+
+真实运行观察到162个相同表槽，但Android 25,810行、Linux 24,353行，17槽不同。
+两次输入和阶段尚未完全对齐，根因未知；严格 catalog 门保持关闭。
+详见[报告](agent-handoff/PURE_LINUX_CATALOG_LAYOUT_DIFFERENCE_2026-10-28.md)。
+
 ## 2026-10-28：历史 Android 与 Linux loader 的 update 资源身份
 
 两边990个 update 文件路径及 SHA 一致，Linux loader 实际打开的131个路径全部匹配；

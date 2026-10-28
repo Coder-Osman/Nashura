@@ -1,5 +1,10 @@
 # 变更记录
 
+## 2026-10-28：Android 与 Linux catalog 布局差异
+
+- 隔离 Android 真实进程只读采集并与既有 Linux loader 对照；162槽相同、17槽行数不同。
+- Android 25,810行、Linux 24,353行；运行阶段及本次 update 身份待对齐，根因未知。
+
 ## 2026-10-28：Android 与 Linux update 资源身份
 
 - 比较 E1 历史与 Linux loader 的990项 update 清单及131个实际打开路径，SHA全部一致。

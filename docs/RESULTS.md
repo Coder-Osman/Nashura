@@ -1,5 +1,10 @@
 # 阶段成果与证据索引
 
+## 2026-10-28 E2.1-N：catalog 实际布局差异
+
+Android 和 Linux 各162槽，17槽行数不同，合计分别25,810和24,353；根因未确定。
+详见[报告](../agent-handoff/PURE_LINUX_CATALOG_LAYOUT_DIFFERENCE_2026-10-28.md)。
+
 ## 2026-10-28 E2.1-N：update 资源身份对照
 
 历史 Android 与 Linux 的990项 update 文件逐项 SHA 一致；Linux loader 打开的131项
