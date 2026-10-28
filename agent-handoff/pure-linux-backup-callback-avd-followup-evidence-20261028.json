@@ -1,0 +1,66 @@
+{
+  "schema": "nashura-pure-linux-backup-callback-avd-followup-v1",
+  "date": "2026-10-28",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "base_head": "513a085ea0bdda29a5587f158ad4733043ad9f0e",
+  "scope": "read-only observation of the active isolated API 30 ARM64 AVD",
+  "device": {
+    "avd": "nashura-e2-backup-api30",
+    "serial": "emulator-5580",
+    "android_api": 30,
+    "abi": "arm64-v8a",
+    "boot_completed": true,
+    "still_online_at_capture": true,
+    "other_avd_touched": false
+  },
+  "package": {
+    "name": "nullsroyale.rel.free",
+    "version_name": "15.535.13",
+    "version_code": 150535013,
+    "base_apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "provided_apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "identity_match": true,
+    "running_pid": "5062"
+  },
+  "backup": {
+    "enabled_at_capture": true,
+    "enable_event_observed_in_logcat": true,
+    "enable_event_time": "2026-10-28 08:11:52.042",
+    "pending_key_value_count": 30,
+    "target_package_pending": true,
+    "pending_item_attributable_to_current_launch": false,
+    "request_backup_observed": false,
+    "data_changed_observed": false,
+    "binder_server_transaction_observed": false,
+    "journal_side_effect_observed": false
+  },
+  "experiment": {
+    "activity_start_observed": true,
+    "activity_displayed_observed": true,
+    "filtered_logcat_window_entries_contain_attributable_callback": false,
+    "logcat_is_complete_transaction_coverage": false,
+    "device_state_writes_performed_by_this_turn": false,
+    "preexisting_scope_deviation": "The user's permission was limited to starting the isolated AVD and explicitly excluded installing the game or changing AVD configuration. Current device/log evidence shows the package installed and Backup Manager enabled via a bmgr path before this read-only follow-up. This turn made no further device changes and did not stop the app or AVD.",
+    "cleanup_performed": false
+  },
+  "private_output_directory": "/tmp/nashura-backup-avd-followup-20261028-081805",
+  "private_outputs": {
+    "app-pid.txt": "e5a31e049686665f391aba755d8e9d5c3762cbb33e041219031154a00276baad",
+    "backup-state.txt": "1fdd7ed316d0c4864ed945de01d4b0ba36e60d44b36190b1256af546f61abed4",
+    "boot-completed.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "device-apk-sha256.txt": "829a9c8c84961b1e70ad15616e605b15e686e2d8049a37c7bfec4bc070f31708",
+    "filtered-logcat.txt": "f663f12b62b73de16067da381a42b728668d05e2562d95c160e40d7337f45bbc",
+    "package-path.txt": "ce1876a8bc194c17f22d8ca63a4adb0cff9c4f1f7289ef0c8fa9c849bb9838e6"
+  },
+  "status": {
+    "callback_semantics": "UNRESOLVED",
+    "catalog_strict_gate": "BLOCKED",
+    "resource_manager": "NOT_RUN",
+    "gamestate": "NOT_RUN",
+    "gamestate_step": "NOT_RUN",
+    "android_free": "NOT_RUN",
+    "no_vm": "NOT_RUN",
+    "performance_10x": "NOT_RUN"
+  },
+  "next_blocker": "No transaction-level proof ties a native configuration callback to server receipt, caller/user authorization result, journal side effect, and synchronous reply; current AVD has a documented out-of-scope state change and is being preserved untouched."
+}
