@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "732e6b244450689bc3c94d48ce4d3a66cc960ea5cdde8b8d954247f0811b0af2",
-      "bytes": 42058,
-      "source_sha256": "732e6b244450689bc3c94d48ce4d3a66cc960ea5cdde8b8d954247f0811b0af2",
+      "sha256": "57821c1eca1656d420029a8b2b7cdaa6ac720d6b15240d78f0a62d2174a78da3",
+      "bytes": 43929,
+      "source_sha256": "57821c1eca1656d420029a8b2b7cdaa6ac720d6b15240d78f0a62d2174a78da3",
       "transformations": []
     },
     {
@@ -19380,10 +19380,45 @@
       "bytes": 652,
       "source_sha256": "6698058e9902149df2821fdf6f306bf4b6e5dc296fd6f2b954b2610ea651a3d4",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_allocator_origin.py",
+      "sha256": "1742059ea05ecf6870e88a9005c03beb6c1b2a24d8b049ee9b8b600055de105a",
+      "bytes": 2824,
+      "source_sha256": "1742059ea05ecf6870e88a9005c03beb6c1b2a24d8b049ee9b8b600055de105a",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_allocator_origin.py",
+      "sha256": "f00438b18b13e952e6a96108e02c29b9063b9c29cd6862fbb4f607dc681b8961",
+      "bytes": 1526,
+      "source_sha256": "f00438b18b13e952e6a96108e02c29b9063b9c29cd6862fbb4f607dc681b8961",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_ALLOCATOR_ORIGIN_2026-10-29.md",
+      "sha256": "fa1d00d971f5a5cdaca646fe6fa260f2d707b86b0e3ef940feba5fbaabbd700f",
+      "bytes": 2479,
+      "source_sha256": "fa1d00d971f5a5cdaca646fe6fa260f2d707b86b0e3ef940feba5fbaabbd700f",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-allocator-origin-evidence-20261029.json",
+      "sha256": "6c84058e80a4a8a4d01931314be74702634c9f0916a18e14b3c1c5a5fb7dbbab",
+      "bytes": 1210,
+      "source_sha256": "6c84058e80a4a8a4d01931314be74702634c9f0916a18e14b3c1c5a5fb7dbbab",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_ALLOCATOR_ORIGIN.md",
+      "sha256": "4297781b8b0a4c206042c04a958d3b2a3daa289a78793b9e9df069c68afcba8b",
+      "bytes": 619,
+      "source_sha256": "4297781b8b0a4c206042c04a958d3b2a3daa289a78793b9e9df069c68afcba8b",
+      "transformations": []
     }
   ],
-  "file_count": 2758,
-  "source_bytes": 35906166,
+  "file_count": 2763,
+  "source_bytes": 35916695,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
