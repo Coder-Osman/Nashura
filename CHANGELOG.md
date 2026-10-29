@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-10-29：真实系统服务启动边界
+
+- 新增原始 `SystemServer`/`android_servers` 入口探针和脱敏证据摘要。
+- 记录真实 property service 缺失、同镜像 ADB pairing 依赖以及补依赖后的 linker 边界；
+  display/package、GameApp Context、catalog、ResourceManager、GameState、Step 和完整对局继续未验收。
+
 ## 2026-10-29：真实 ART 下的 holder setup 生命周期
 
 - 修正 holder payload 与 allocation 前缀的对象布局断言，真实偏移为 `24`。

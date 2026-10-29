@@ -1,0 +1,44 @@
+{
+  "status": "SYSTEM_SERVICES_BLOCKED_LIMITED",
+  "image": {
+    "sha256": "a19fab1d61b2041d6945d6733bc32f4f3d90986017470b39849695e1a4437c0b"
+  },
+  "services_jar": {
+    "source_path": "/system/framework/services.jar",
+    "bytes": 14712067,
+    "sha256": "c6992cdc2a3e23d5aeb6ab77e7a7f6889cfcf5c262c6ed86825e6fcbf601681d"
+  },
+  "probe": "tools/pure_linux/ArtSystemServicesProbe.java",
+  "attempts": [
+    {
+      "mode": "system-server",
+      "exit": 3,
+      "stage": "SystemServer.main",
+      "failure": "java.lang.RuntimeException",
+      "cause": "SystemProperties.native_set failed for sys.system_server.start_count"
+    },
+    {
+      "mode": "display",
+      "exit": 3,
+      "stage": "android_servers.load",
+      "failure": "java.lang.UnsatisfiedLinkError",
+      "cause": "libadb_pairing_server.so missing from the original closure"
+    },
+    {
+      "mode": "display",
+      "exit": -11,
+      "stage": "android_servers.load",
+      "failure": "SIGSEGV",
+      "cause": "linker crash after original ADB pairing and ART/system namespace dependencies were added"
+    }
+  ],
+  "adb_pairing_inputs": {
+    "libadb_pairing_auth.so": "37e2ab911ade3bb86b375fb638a2a87ea51bacf72170b848f10238b0e7b0e101",
+    "libadb_pairing_connection.so": "f6bd5ad4baa7b4fba9292ec9a698f7d5daec17a40071e880b3c784e90142c193",
+    "libadb_pairing_server.so": "d836957db1a6f631ae83171d9a43b127384127ca1f657b9cd673ab259be68b17"
+  },
+  "input_snapshots_equal": true,
+  "display_service_started": false,
+  "package_service_started": false,
+  "game_context_initialized": false
+}

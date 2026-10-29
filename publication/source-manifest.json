@@ -10194,15 +10194,15 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "f57a99e92e15afbc1bbb01578e9104a006e439477db47d174fad59f92266a112",
-      "bytes": 54412,
+      "sha256": "29102224df1ed24a70facd00e2aeb2779a8cca063b78bbf9b5691f95c2b4a244",
+      "bytes": 54771,
       "source_sha256": "eb402a06a18cfcf0142c28072b4624045ee9f74be8f14a79b63dc00d50b07759",
       "transformations": []
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "fa49ab7aa3b3730a5c2c66ea9cc4a4b40a62a40e10b6e807eccdb520ba9eb1a3",
-      "bytes": 88348,
+      "sha256": "e285c4ccee899e31ccdef1e91b5cd0edece6afa7eb9a978a633da3c765b6c6bf",
+      "bytes": 89036,
       "source_sha256": "929d40b0d6c3425b18cf448dccc789888f95ef691589b9fb13c77d92026cbc8c",
       "transformations": []
     },
@@ -16615,8 +16615,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "1f6280581caec353ad072c87282175c47541101cbdd6555182306a0469dc7e0a",
-      "bytes": 55477,
+      "sha256": "67a3a40682c172531b457ea48f2f5ef048eba7cdd9fbb16c5818c7ab77643658",
+      "bytes": 56098,
       "source_sha256": "ce84b3cf4f373f851e7f77d3e04c1cc64235ad379a38c427129251abd44a57cd",
       "transformations": []
     },
@@ -19747,10 +19747,31 @@
       "bytes": 5483,
       "source_sha256": "44340edff727df781a7ade2ebd59ed7b1c8c1cd7524833832925d22beb344bd4",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_SYSTEM_SERVICES_BOUNDARY_2026-10-29.md",
+      "sha256": "b88a25812c1e925544fa854b71d2bf0bb341a8f7b615d4096ad53ae5c980c91c",
+      "bytes": 2437,
+      "source_sha256": "b88a25812c1e925544fa854b71d2bf0bb341a8f7b615d4096ad53ae5c980c91c",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-system-services-boundary-evidence-20261029.json",
+      "sha256": "7d6b5f44a5564f7237c25a3e1199ede35bbef358879c90494d755e263b229644",
+      "bytes": 1565,
+      "source_sha256": "7d6b5f44a5564f7237c25a3e1199ede35bbef358879c90494d755e263b229644",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/ArtSystemServicesProbe.java",
+      "sha256": "4d716c8d86dce33656934540cbedb463f65b8ba2aa3681a20d312d4629e44d86",
+      "bytes": 3488,
+      "source_sha256": "4d716c8d86dce33656934540cbedb463f65b8ba2aa3681a20d312d4629e44d86",
+      "transformations": []
     }
   ],
-  "file_count": 2813,
-  "source_bytes": 36309989,
+  "file_count": 2816,
+  "source_bytes": 36319147,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

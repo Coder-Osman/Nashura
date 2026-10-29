@@ -1,5 +1,14 @@
 # Nashura
 
+## 2026-10-29：真实系统服务启动边界
+
+同一 ARM64 guest 中已实际调用同镜像 `SystemServer.main()` 与
+`android_servers` 加载入口。`SystemServer` 在真实 property service 缺失处停止；
+补入同镜像 ADB pairing 库后，`libandroid_servers.so` 又在不完整 linker 闭包处
+触发 `SIGSEGV`。display/package 服务和 `GameApp` Context 仍未建立，阶段状态为
+`SYSTEM_SERVICES_BLOCKED_LIMITED`。详见[阶段报告](agent-handoff/PURE_LINUX_SYSTEM_SERVICES_BOUNDARY_2026-10-29.md)
+和[证据摘要](agent-handoff/pure-linux-system-services-boundary-evidence-20261029.json)。
+
 ## 2026-10-29：真实 ART 下的 holder setup 生命周期
 
 在 Ubuntu ARM64 guest 的真实 binderfs/ART 闭包中，以原始 APK `classes.dex` 和精确

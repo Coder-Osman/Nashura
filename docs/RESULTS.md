@@ -1,5 +1,15 @@
 # 阶段成果与证据索引
 
+## 2026-10-29：真实系统服务启动边界
+
+在真实 SELinuxfs、binderfs、同镜像 `servicemanager` 和原始 `services.jar` 下调用
+`SystemServer.main()`；执行到 `SystemProperties.native_set` 时因隔离环境没有原始
+property service 退出。另以同镜像 ADB pairing APEX 依赖尝试加载 `libandroid_servers.so`，
+首轮缺库，补入原始库后在 linker 阶段 `SIGSEGV`。display/package 服务和 `GameApp`
+Context 仍未启动，状态为 `SYSTEM_SERVICES_BLOCKED_LIMITED`。详见
+[报告](../agent-handoff/PURE_LINUX_SYSTEM_SERVICES_BOUNDARY_2026-10-29.md)和
+[证据](../agent-handoff/pure-linux-system-services-boundary-evidence-20261029.json)。
+
 ## 2026-10-29：真实 ART 下的 holder setup 生命周期
 
 真实 ARM64 Linux guest 中，原始 APK DEX 与精确 `libg.so` 完成 holder setup 限定
