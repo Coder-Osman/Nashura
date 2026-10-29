@@ -106,3 +106,22 @@ ARM64 Linux + Bionic [合成ABI已通过]
 
 历史整包锁定门未通过不再阻塞这一新输入的独立组件加载实验；它仍不能用于声称历史
 Java客户端身份一致。见[新输入实验](PURE_LINUX_USER_APK_LOAD_2026-10-27.md)。
+
+## 2026-10-29：真实 ART 与游戏 VM 绑定前沿
+
+ARM64 Linux guest 已加载实际 Binder 模块和 binderfs，协议 8、映射及 ioctl 通过。
+同一 SDK 镜像提取的 ART 执行 Java 与原生 pthread JNI 生命周期（mask 127）。精确
+引擎经 Java `System.load` 后，游戏 VM 槽与 ART `JavaVM*` 相同，原生环境 getter
+返回当前 `JNIEnv*`（mask 7）。15 个游戏 Java 类查找失败仍被记录；此阶段没有
+重跑 holder setup、初始化 catalog 或战斗对象图。
+
+```text
+ARM64 Linux + Binder + Bionic/ART [真实 Java/JNI PASS_LIMITED]
+  └─ 精确 libg System.load → VM 槽/环境 getter [PASS_LIMITED]
+      ├─ APK dex / Android framework / JNI 类注册 [UNRESOLVED]
+      ├─ holder setup → catalog → ResourceManager [待新运行时重验]
+      └─ GameState → Step/动作 → 快照/完整对局/性能 [NOT_RUN]
+```
+
+此前空 VM fault 的前置状态已改变；仍需真实入口实验确认下游行为。
+见[ART 报告](PURE_LINUX_ART_JAVAVM_2026-10-29.md)。

@@ -30,7 +30,7 @@ git diff --stat
 ```
 
 5. 审阅后显式暂存本次发布文件，再运行 `git diff --cached --check`，使新增文件也进入检查。检查与提交分开执行；任何失败先修复，再提交与推送。历史失败报告若需保留原始字节，只对该报告登记精确的 Git whitespace 属性并解释原因，不批量豁免源码。
-6. 仅提交审阅后的阶段成果，使用描述目标的提交消息，然后 `git push origin main`。核对远端 HEAD，汇报提交与测试结果。
+6. 仅提交审阅后的阶段成果，使用描述目标的提交消息。当前纯 Linux libg 目标明确要求不修改 main；只在 `codex/pure-linux-libg-headless-20261026` 上提交，并执行 `git push origin HEAD:codex/pure-linux-libg-headless-20261026`。核对远端该分支 HEAD，汇报提交与测试结果；其他目标按其已授权的目标分支执行。
 
 当前主工程检查和冻结 history-v2 检查分别记录；两者均为 CPU 工程测试，不代替新实现的真实 CUDA 数值对照、batch256 跨进程恢复或原生完整搜索局。
 

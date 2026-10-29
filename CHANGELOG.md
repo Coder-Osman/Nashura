@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-29：真实 ART/JavaVM、JNI 生命周期和 libg VM 绑定
+
+- 真实 binderfs 协议 8、1 MiB 映射与 ioctl 通过；直接从 SDK 镜像重建 ART 闭包，全程未启动 Android 模拟器。
+- 修正 boot classpath 顺序、APEX namespace 名称、重复 bionic TLS 与 statsd 搜索路径，Java 计算和 JNI pthread 生命周期真实通过。
+- 新增身份检查的引擎 Java fixture 和只读 VM observer；`libg.so` 的 VM 槽、环境 getter 均与 ART 匹配，进程 exit 0。
+- 保留属性 SELinux `EPERM`、配置失败链及 15 个游戏 Java 类缺失；holder setup、严格 catalog、ResourceManager、GameState、Step、完整对局和性能仍待验收。
+- 发布配置/namespace/property/JNI 源码、复现文档与证据摘要；只更新当前工作分支，保持 main 不变。
+
 ## 2026-10-29：Android ART 闭包与 app_process Binder 阻塞
 
 - 在同构 Ubuntu ARM64 guest 的 user/mount namespace 中重建含 boot image 的 ART 闭包；`/proc` bind mount、`pivot_root` 和 linker NEEDED 解析通过。

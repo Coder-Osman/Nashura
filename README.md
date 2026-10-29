@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-29：ARM64 Linux 真实 ART/JavaVM 与 libg VM 绑定
+
+真实 Binder 协议、ART Java 计算、JNI 原生线程 attach/callback/detach 均通过；
+精确身份 `libg.so` 经 Java `System.load` 返回，游戏 VM 槽与真实 `JavaVM*` 相同，
+原生环境 getter 返回当前 `JNIEnv*`，exit 0。阶段为 `LOAD_AND_VM_BINDING_PASS_LIMITED`，
+仍有 15 个游戏 Java 类缺失；holder setup 尚未在此新运行时重跑，严格 catalog、
+ResourceManager、GameState、Step、完整对局和性能门继续未验收。详见
+[报告](agent-handoff/PURE_LINUX_ART_JAVAVM_2026-10-29.md)、
+[复现步骤](agent-handoff/PURE_LINUX_ART_REPRODUCING_2026-10-29.md)和
+[证据](agent-handoff/pure-linux-art-javavm-evidence-20261029.json)。以下记录保留历史边界。
+
 ## 2026-10-29：Android ART 闭包启动边界
 
 同构 Ubuntu ARM64 guest 中的临时 ART 闭包完成 `/proc` bind mount、`pivot_root` 和

@@ -9995,9 +9995,9 @@
     },
     {
       "path": "agent-handoff/DEPENDENCY_MAP.md",
-      "sha256": "014b3daa50b1de9c7c7f77419b0569c3cdf4ec399b645f71c4669e9b22bfea0c",
-      "bytes": 7050,
-      "source_sha256": "014b3daa50b1de9c7c7f77419b0569c3cdf4ec399b645f71c4669e9b22bfea0c",
+      "sha256": "7171f4572c46827a0a588ee679ba2d37ac83a69e2bc03864391cdbe80388c73e",
+      "bytes": 8095,
+      "source_sha256": "7171f4572c46827a0a588ee679ba2d37ac83a69e2bc03864391cdbe80388c73e",
       "transformations": []
     },
     {
@@ -10194,53 +10194,17 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "5a845a0d06e10ba0c863638b450c2af8b0ce24c16704575f94c9b95bc2dac2a6",
-      "bytes": 52316,
-      "source_sha256": "d12ae431fcb26011c336e50a81a75853196b6510ba1c4854365275d453ff55bd",
-      "transformations": [
-        "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
-        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
-        "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved",
-        "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
-        "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
-        "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
-        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
-        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
-        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate",
-        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
-        "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED.",
-        "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
-        "2026-10-28: bounded Linux catalog resource trace audit",
-        "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
-        "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
-        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence",
-        "2026-10-29: record Android ART closure and guest Binder startup boundary"
-      ]
+      "sha256": "8e11b75b226d80ce8bd35cacc00a32e9ac00fec14b2a9eb127699bf01995a1ce",
+      "bytes": 53140,
+      "source_sha256": "8e11b75b226d80ce8bd35cacc00a32e9ac00fec14b2a9eb127699bf01995a1ce",
+      "transformations": []
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "7ff08b887b162b2fbe35b6eb0d093bf70b6dd95964c72d7bb5802d553f376bf1",
-      "bytes": 86150,
-      "source_sha256": "8fb78c645d00a2c95af39be154e70d0de92382e6dbf1322e56d79d7489ff8724",
-      "transformations": [
-        "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
-        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
-        "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved",
-        "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
-        "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
-        "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
-        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
-        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
-        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate",
-        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
-        "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED.",
-        "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
-        "2026-10-28: bounded Linux catalog resource trace audit",
-        "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
-        "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
-        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence",
-        "2026-10-29: record Android ART closure and guest Binder startup boundary"
-      ]
+      "sha256": "95693e4c4f78587875e875be9e9374b9b573a8e9b80e6a556d815c6093c0af67",
+      "bytes": 86968,
+      "source_sha256": "95693e4c4f78587875e875be9e9374b9b573a8e9b80e6a556d815c6093c0af67",
+      "transformations": []
     },
     {
       "path": "firstlight_CR/.clang-format",
@@ -16651,28 +16615,10 @@
     },
     {
       "path": "README.md",
-      "sha256": "4dd896e14f316a12e1e5bae6190726127c2570cc1061638a92e33c11b7052bfc",
-      "bytes": 53368,
-      "source_sha256": "8ae14dbb13dd932bd21ccd98b2a35eb91686abd66e33b5e2f4043a2acc5fc0bb",
-      "transformations": [
-        "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
-        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
-        "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved",
-        "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
-        "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
-        "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
-        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
-        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
-        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate",
-        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
-        "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED.",
-        "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
-        "2026-10-28: bounded Linux catalog resource trace audit",
-        "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
-        "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
-        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence",
-        "2026-10-29: record Android ART closure and guest Binder startup boundary"
-      ]
+      "sha256": "f0f639dae90db8a5db6451ece4ae82b6f5774149eac9107d663ff980ea14ef9b",
+      "bytes": 54158,
+      "source_sha256": "f0f639dae90db8a5db6451ece4ae82b6f5774149eac9107d663ff980ea14ef9b",
+      "transformations": []
     },
     {
       "path": "tools/pure_linux/arm64_smoke.c",
@@ -19548,63 +19494,81 @@
       "sha256": "d3b2591436d0a68750b72931d84cdbd35e6d6f7d69951a7b974a54440682dc6d",
       "bytes": 4340,
       "source_sha256": "ed6541fac1ee54b0e543d98e0297520b86ca59a95480783eec5c501753352a75",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
       "sha256": "32651ea20ac1d0d679db76acfe8b7fec2c9187748553fee9bd78161221e3e579",
       "bytes": 12024,
       "source_sha256": "5e7d184f83664142c0d403631627d53e7092168680f9e18a85d5a92f61284a4c",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-command-coordinates.xml",
       "sha256": "eeb655741e84fed0a99bfbdfe0a546bb2b2929f1e2466b23025d057398adb1e1",
       "bytes": 8184,
       "source_sha256": "a4e9cec4d99b75d2ef79b01d993b9a04795e45ea6f661fe8dc73fd81301e8658",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-dispatch-command.xml",
       "sha256": "503f912305ea9ac17d17af4df09512578f580de22b622341fadde2572ce93dc0",
       "bytes": 6406,
       "source_sha256": "f1cbc3b728b4427400c7ba2f6faf366881db6e4ef561b7fd700c2eb612860305",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-live-command.xml",
       "sha256": "8f2ba185607af0eb38a3e0d2a18ebe0fe00a5c9c1a424b2ee5e9b93d583b24f1",
       "bytes": 6370,
       "source_sha256": "b6dfa3b3539472c83e03eff210e080300abeae05ec7df4c59a1c5a9f9c31fbee",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-position-guards.xml",
       "sha256": "0df715f2306e2db6915e00edacf990bf1b98e7b0daf3fd123f43a39536dd5696",
       "bytes": 4244,
       "source_sha256": "da79f2a8eb0e8eded49b8b7e93cb74b1c0bf4dc982f8abd974f5296630c3a644",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-public.xml",
       "sha256": "36fbf0d43e1a33e86dba5225f1e297bbadb74c85020000c7564278d8678c8963",
       "bytes": 161225,
       "source_sha256": "0f3ecaae3fada7588b8895763fb4d9b89d899372201db148f510ca955326a0c2",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
       "sha256": "acc8b50cc08a44ec984f4239ec568d6e42408774e584a740c830c782d6838ff5",
       "bytes": 6383,
       "source_sha256": "e08e156cb9098f73d3277d00fc362ea08235b04299f93f7c3d53f546dbf329c8",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-selection-timeout.xml",
       "sha256": "bf83441a71d1799e2b971d7bddd0428e464f3d5f9e647ec8ce4ac18babc931ae",
       "bytes": 14581,
       "source_sha256": "7968099b866349417b4cdc269be6df76d570059ee2d584c1c6b8b1d2d6ab8d6a",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "agent-handoff/PURE_LINUX_HOLDER_SETUP_JAVAVM_BLOCK_2026-10-29.md",
@@ -19633,10 +19597,108 @@
       "bytes": 2755,
       "source_sha256": "2c003bd3decf64e25c1712a127d9eee0ec956f022f6e0cb09ef9e8c3eebf0c26",
       "transformations": []
+    },
+    {
+      "path": "docs/MAINTENANCE.md",
+      "sha256": "12cad825bfd26b51e582537a2e935071e89fd98672c42ded100edf0a13fe5302",
+      "bytes": 4932,
+      "source_sha256": "12cad825bfd26b51e582537a2e935071e89fd98672c42ded100edf0a13fe5302",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_ART_JAVAVM_2026-10-29.md",
+      "sha256": "4f0b70df39e14bc66594ffbb6e79f572e17ab3f66a2040892633b36a3a665644",
+      "bytes": 4746,
+      "source_sha256": "4f0b70df39e14bc66594ffbb6e79f572e17ab3f66a2040892633b36a3a665644",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_ART_REPRODUCING_2026-10-29.md",
+      "sha256": "63960a4b3adfeb3935ff654eedd464170275928ab09834120dad869067456853",
+      "bytes": 6794,
+      "source_sha256": "63960a4b3adfeb3935ff654eedd464170275928ab09834120dad869067456853",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-art-javavm-evidence-20261029.json",
+      "sha256": "dd7f401d16f89e711d60ccf82a89a414156599aaf54cf66597a82a940fadfdd4",
+      "bytes": 13766,
+      "source_sha256": "dd7f401d16f89e711d60ccf82a89a414156599aaf54cf66597a82a940fadfdd4",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/ArtEngineLoadProbe.java",
+      "sha256": "43e83c9dd39f272873f59f72be36ecadc84300fe55d0c24ee029e4bac74b8ab8",
+      "bytes": 1572,
+      "source_sha256": "43e83c9dd39f272873f59f72be36ecadc84300fe55d0c24ee029e4bac74b8ab8",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/ArtRuntimeProbe.java",
+      "sha256": "bcdb002d3a5465624236e50c4cc579fa00e8064d1358ded53e489a46d03d9fbb",
+      "bytes": 1028,
+      "source_sha256": "bcdb002d3a5465624236e50c4cc579fa00e8064d1358ded53e489a46d03d9fbb",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/art_engine_jni_probe.c",
+      "sha256": "43ca6311472f2cce1a5dc766e1beb453d733c303537ba381fdc033a43952f561",
+      "bytes": 2195,
+      "source_sha256": "43ca6311472f2cce1a5dc766e1beb453d733c303537ba381fdc033a43952f561",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/art_jni_probe.c",
+      "sha256": "05687ee02d959de6838b57c268e7a5e42c90ded84465dcd3bd96f5a5cd715d64",
+      "bytes": 2929,
+      "source_sha256": "05687ee02d959de6838b57c268e7a5e42c90ded84465dcd3bd96f5a5cd715d64",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/art_namespace.sh",
+      "sha256": "38ec92a5e04e044d27effaf6d65fe8f9edab4aa4704e9b64c6e452ca823b29df",
+      "bytes": 2223,
+      "source_sha256": "38ec92a5e04e044d27effaf6d65fe8f9edab4aa4704e9b64c6e452ca823b29df",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/art_property_bootstrap.c",
+      "sha256": "635b61c74a1ca2d1ebd65afbd534b78c47f0863f52a4fc817ae1d4efed471acb",
+      "bytes": 1975,
+      "source_sha256": "635b61c74a1ca2d1ebd65afbd534b78c47f0863f52a4fc817ae1d4efed471acb",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/art_property_info.cpp",
+      "sha256": "c10d8792ec7c4accedda9b39a6dd549186c5fc534fa97703ebc0a393d6de3dbe",
+      "bytes": 574,
+      "source_sha256": "c10d8792ec7c4accedda9b39a6dd549186c5fc534fa97703ebc0a393d6de3dbe",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/binder_device_probe.py",
+      "sha256": "7804e1eaed255272267bab67d9bae2895062839681b540a0a9eb1ef4ffa0007b",
+      "bytes": 2708,
+      "source_sha256": "7804e1eaed255272267bab67d9bae2895062839681b540a0a9eb1ef4ffa0007b",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/prepare_art_config.py",
+      "sha256": "07608d0bed34695f3b536cbabd5be97a19421e7cc916ec7f2e893d542c8599a0",
+      "bytes": 2067,
+      "source_sha256": "07608d0bed34695f3b536cbabd5be97a19421e7cc916ec7f2e893d542c8599a0",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_prepare_art_config.py",
+      "sha256": "ea6432a71a526ea5e272fbfaebd7f99a2e376d67b02b7ddd731992f9031a69c3",
+      "bytes": 2312,
+      "source_sha256": "ea6432a71a526ea5e272fbfaebd7f99a2e376d67b02b7ddd731992f9031a69c3",
+      "transformations": []
     }
   ],
-  "file_count": 2792,
-  "source_bytes": 36218302,
+  "file_count": 2806,
+  "source_bytes": 36271600,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

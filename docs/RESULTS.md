@@ -1,5 +1,17 @@
 # 阶段成果与证据索引
 
+## 2026-10-29：真实 ART、JNI 生命周期及 libg VM 绑定
+
+Ubuntu ARM64 Linux 中已通过真实 Binder 协议、ART Java 计算和 JNI pthread
+attach/callback/detach；精确引擎经 Java `System.load` 后，VM 槽与 ART 的真实
+`JavaVM*` 相同，环境 getter 返回当前 `JNIEnv*`，mask 7、exit 0。运行时专项为
+`PASS_LIMITED`，仍记录 15 个 Java 类缺失与 property SELinux 标签 `EPERM`。
+本阶段未重跑 holder setup，严格 `CATALOG_READY_PASS=false`，ResourceManager、
+GameState、Step、完整对局、Android 基线对照和性能未验收。详见
+[报告](../agent-handoff/PURE_LINUX_ART_JAVAVM_2026-10-29.md)、
+[复现步骤](../agent-handoff/PURE_LINUX_ART_REPRODUCING_2026-10-29.md)和
+[机器证据](../agent-handoff/pure-linux-art-javavm-evidence-20261029.json)。
+
 ## 2026-10-29：Android ART 闭包启动与 Binder 阻塞
 
 同构 Ubuntu ARM64 guest 中，ART 闭包完成 `/proc` bind mount、`pivot_root` 及 linker
