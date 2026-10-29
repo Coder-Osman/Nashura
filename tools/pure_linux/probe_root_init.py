@@ -32,7 +32,9 @@ def write_json(path, value):
 def validate(settings, output):
     closure, vendor, launcher, tools = (Path(settings[k]).resolve()
                                         for k in ("closure", "vendor", "launcher", "tools"))
-    for name in ("closure", "vendor", "launcher", "tools", "backup"):
+    names = ["closure", "vendor", "launcher", "tools", "backup"]
+    names += [name for name in ("graphics_inputs", "vendor_root") if settings.get(name)]
+    for name in names:
         if settings[name] != str(Path(settings[name]).resolve()):
             raise ValueError("absolute canonical input paths are required")
     validate_paths(closure, vendor, launcher, output / "runtime")
@@ -48,6 +50,15 @@ def validate(settings, output):
                      closure / "apex/com.android.art/bin/servicemanager-probe",
                      closure / "apex/com.android.art/bin/app_process64-holder-v3",
                      closure / "data/local/tmp/services-original.jar"]
+    if settings.get("graphics_inputs"):
+        graphics = Path(settings["graphics_inputs"])
+        statsd_libs = closure / "system/apex/com.android.os.statsd/lib64"
+        required += [graphics / "surfaceflinger", graphics / "gpuservice",
+                     graphics / "libstatssocket.so", graphics / "libstatspull.so"]
+        required += [statsd_libs / "libstatssocket.so", statsd_libs / "libstatspull.so"]
+        vendor_root = Path(settings["vendor_root"])
+        required += [vendor_root / "bin/hw/android.hardware.graphics.allocator@3.0-service",
+                     vendor_root / "bin/hw/android.hardware.graphics.composer@2.3-service"]
     if settings.get("apex_packages"):
         packages = Path(settings["apex_packages"])
         if str(packages.resolve()) != str(packages) or not packages.is_dir():
@@ -62,6 +73,11 @@ def validate(settings, output):
     for name, expected in identities.items():
         if sha256(name) != expected:
             raise ValueError("input identity mismatch: " + name)
+    if settings.get("graphics_inputs"):
+        statsd_libs = closure / "system/apex/com.android.os.statsd/lib64"
+        for library in ("libstatssocket.so", "libstatspull.so"):
+            if sha256(Path(settings["graphics_inputs"]) / library) != sha256(statsd_libs / library):
+                raise ValueError("graphics library must match original statsd APEX: " + library)
     before = kernel_state()
     if before.get("enforce") != "0" or before.get("selinux_status", {}).get("policy_load") != 1:
         raise ValueError("one preloaded permissive original policy is required")
@@ -97,6 +113,9 @@ def services(settings, output, environment):
                NASHURA_RUN_SUSPEND_HAL="1",
                CLASSPATH="/nashura-tools/art-system-services.dex:/data/local/tmp/services-original.jar:"
                          "/data/local/tmp/current-game-classes.dex")
+    if settings.get("graphics_inputs"):
+        env["NASHURA_GRAPHICS_INPUTS"] = settings["graphics_inputs"]
+        env["NASHURA_GRAPHICS_VENDOR_ROOT"] = settings["vendor_root"]
     prefix = namespace(settings)
     commands = {
         "service": ["strace", "-f", "-s", "256", "-o", str(output / "service.strace")]
@@ -109,8 +128,17 @@ def services(settings, output, environment):
                   str(output / "probe.strace")] + prefix
                  + ["/apex/com.android.art/bin/app_process64-holder-v3", "-Xbootclasspath:" + ":".join(boot),
                     "-Djava.library.path=/system/lib64:/data/local/tmp/libg-input", "/system/bin",
-                    "ArtSystemServicesProbe", "services"],
+                    "ArtSystemServicesProbe", "display" if settings.get("graphics_inputs") else "services"],
     }
+    if settings.get("graphics_inputs"):
+        commands["allocator"] = (["strace", "-f", "-s", "256", "-o", str(output / "allocator.strace")]
+                                 + prefix + ["/vendor/bin/hw/android.hardware.graphics.allocator@3.0-service"])
+        commands["composer"] = (["strace", "-f", "-s", "256", "-o", str(output / "composer.strace")]
+                                + prefix + ["/vendor/bin/hw/android.hardware.graphics.composer@2.3-service"])
+        commands["surfaceflinger"] = ["strace", "-f", "-s", "256", "-o",
+                                      str(output / "surfaceflinger.strace")] + prefix + ["/system/bin/surfaceflinger"]
+        commands["gpuservice"] = (["strace", "-f", "-s", "256", "-o", str(output / "gpuservice.strace")]
+                                  + prefix + ["/system/bin/gpuservice"])
     write_json(output / "services-command.json", commands)
     result = {"system_services_ready": False}
 
@@ -119,52 +147,64 @@ def services(settings, output, environment):
             os.killpg(process.pid, signal.SIGKILL)
         return process.wait(timeout=2)
 
-    with (output / "service.stdout").open("xb") as so, (output / "service.stderr").open("xb") as se:
-        service = subprocess.Popen(commands["service"], env=env, stdout=so, stderr=se, start_new_session=True)
-        hwservice = None
-        suspend = None
+    processes, streams = {}, {}
+
+    def start(name, delay):
+        stdout = (output / (name + ".stdout")).open("xb")
+        stderr = (output / (name + ".stderr")).open("xb")
+        streams[name] = (stdout, stderr)
+        process_env = env
+        if settings.get("graphics_inputs") and name in {
+                "allocator", "composer", "surfaceflinger", "gpuservice"}:
+            process_env = dict(env, NASHURA_EXEC_GROUPS="1003,1030,1073")
+        process = subprocess.Popen(commands[name], env=process_env, stdout=stdout, stderr=stderr,
+                                   start_new_session=True)
+        processes[name] = process
+        time.sleep(delay)
+        result[name + "_alive_before"] = process.poll() is None
+        return process
+
+    try:
+        service = start("service", .4)
+        start("hwservicemanager", .2)
+        if settings.get("graphics_inputs"):
+            start("allocator", .25)
+            start("composer", .25)
+        start("suspend_hal", .3)
+        if settings.get("graphics_inputs"):
+            start("surfaceflinger", .35)
+            start("gpuservice", .2)
+        probe = start("probe", 0)
         try:
-            time.sleep(.4)
-            result["service_alive_before"] = service.poll() is None
-            with (output / "hwservicemanager.stdout").open("xb") as ho, \
-                 (output / "hwservicemanager.stderr").open("xb") as he:
-                hwservice = subprocess.Popen(commands["hwservicemanager"], env=env,
-                                             stdout=ho, stderr=he, start_new_session=True)
-                time.sleep(.2)
-                result["hwservicemanager_alive_before"] = hwservice.poll() is None
-            with (output / "suspend-hal.stdout").open("xb") as so, \
-                 (output / "suspend-hal.stderr").open("xb") as se:
-                suspend = subprocess.Popen(commands["suspend_hal"], env=env, stdout=so,
-                                           stderr=se, start_new_session=True)
-                time.sleep(.3)
-                result["suspend_hal_alive_before"] = suspend.poll() is None
-            with (output / "probe.stdout").open("xb") as po, (output / "probe.stderr").open("xb") as pe:
-                probe = subprocess.Popen(commands["probe"], env=env, stdout=po, stderr=pe, start_new_session=True)
-                try:
-                    result["probe_exit"] = probe.wait(timeout=9)
-                finally:
-                    result["probe_exit_after_cleanup"] = stop(probe)
-            probe_lines = set((output / "probe.stdout").read_text(errors="replace").splitlines())
-            required = {
-                "ART_ANDROID_SERVERS_LOADED=true", "ART_SYSTEM_CONTEXT_PRESENT=true",
-                "ART_POWER_SERVICE_STARTED=true", "ART_THERMAL_SERVICE_STARTED=true",
-                "ART_POWER_BINDER_PRESENT=true", "ART_THERMAL_BINDER_PRESENT=true",
-                "ART_POWER_SERVICE_LISTED=true", "ART_POWER_FETCHER_PRESENT=true",
-                "ART_DIRECT_POWER_FETCHER_PRESENT=true", "ART_POWER_FACTORY_RESULT_PRESENT=true",
-                "ART_CONTEXT_POWER_PRESENT=true", "ART_POWER_INTERNAL_PRESENT=true",
-                "ART_POWER_THERMAL_FETCHER_PROBE_RETURNED_LIMITED",
-            }
-            result["power_thermal_fetcher_probe_pass"] = (result.get("probe_exit") == 0 and
-                                                              required <= probe_lines)
-            result["power_thermal_fetcher_missing_observations"] = sorted(required - probe_lines)
-            result["service_alive_after"] = service.poll() is None
+            result["probe_exit"] = probe.wait(timeout=9)
         finally:
-            if suspend is not None:
-                result["suspend_hal_exit_after_cleanup"] = stop(suspend)
-            if hwservice is not None:
-                result["hwservicemanager_exit_after_cleanup"] = stop(hwservice)
-            result["service_exit_after_cleanup"] = stop(service)
-            write_json(output / "services-result.json", result)
+            result["probe_exit_after_cleanup"] = stop(probe)
+        probe_lines = set((output / "probe.stdout").read_text(errors="replace").splitlines())
+        required = {
+            "ART_ANDROID_SERVERS_LOADED=true", "ART_SYSTEM_CONTEXT_PRESENT=true",
+            "ART_POWER_SERVICE_STARTED=true", "ART_THERMAL_SERVICE_STARTED=true",
+            "ART_POWER_BINDER_PRESENT=true", "ART_THERMAL_BINDER_PRESENT=true",
+            "ART_POWER_SERVICE_LISTED=true", "ART_POWER_FETCHER_PRESENT=true",
+            "ART_DIRECT_POWER_FETCHER_PRESENT=true", "ART_POWER_FACTORY_RESULT_PRESENT=true",
+            "ART_CONTEXT_POWER_PRESENT=true", "ART_POWER_INTERNAL_PRESENT=true",
+            "ART_POWER_THERMAL_FETCHER_PROBE_RETURNED_LIMITED",
+        }
+        result["power_thermal_fetcher_probe_pass"] = (result.get("probe_exit") == 0 and
+                                                          required <= probe_lines)
+        result["power_thermal_fetcher_missing_observations"] = sorted(required - probe_lines)
+        display_required = {"ART_DISPLAY_SERVICE_STARTED=true", "ART_DISPLAY_BINDER_PRESENT=true"}
+        if settings.get("graphics_inputs"):
+            result["display_service_probe_pass"] = (result.get("probe_exit") == 0 and
+                                                      display_required <= probe_lines)
+            result["display_service_missing_observations"] = sorted(display_required - probe_lines)
+        result["service_alive_after"] = service.poll() is None
+    finally:
+        for name in reversed(list(processes)):
+            result[name + "_exit_after_cleanup"] = stop(processes[name])
+        for stdout, stderr in streams.values():
+            stdout.close()
+            stderr.close()
+        write_json(output / "services-result.json", result)
     return result
 
 

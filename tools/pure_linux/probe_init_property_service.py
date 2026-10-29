@@ -129,6 +129,21 @@ def run(closure, vendor, launcher, output, expected_init_sha256, timeout=20,
               "platform_property_contexts": closure / "system/etc/selinux/plat_property_contexts"}
     inputs.update({"vendor/" + str(p.relative_to(vendor)): p
                    for p in vendor.rglob("*") if p.is_file()})
+    if extra_environment:
+        for key in ("NASHURA_GRAPHICS_INPUTS", "NASHURA_GRAPHICS_VENDOR_ROOT"):
+            base = extra_environment.get(key)
+            if not base:
+                continue
+            base = Path(base)
+            if key == "NASHURA_GRAPHICS_INPUTS":
+                paths = [base / "surfaceflinger", base / "gpuservice",
+                         base / "libstatssocket.so", base / "libstatspull.so"]
+            else:
+                paths = ([base / "bin/hw/android.hardware.graphics.allocator@3.0-service",
+                          base / "bin/hw/android.hardware.graphics.composer@2.3-service"]
+                         + list((base / "lib64").glob("*.so"))
+                         + list((base / "lib64/hw").glob("*.so")))
+            inputs.update({key + "/" + str(p.relative_to(base)): p for p in paths if p.is_file()})
     # Protect earlier ART property evidence from accidental reuse or replacement.
     original_properties = closure / "dev/__properties__"
     inputs.update({"prior_properties/" + p.name: p for p in original_properties.glob("*") if p.is_file()})

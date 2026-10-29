@@ -1,5 +1,28 @@
 # 阶段成果与证据索引
 
+## 2026-10-30：Display statsd linker 依赖复验
+
+在同一 ARM64 Ubuntu guest 的已加载 permissive policy 和隔离 namespace 中，
+r5 输入将同一 statsd APEX 的 `libstatssocket.so`、`libstatspull.so` 只读 bind
+到 `/system/lib64`，并为 SurfaceFlinger、GPUService、allocator 和 composer 固定
+输入身份。两库均被 SurfaceFlinger/GPUService 的真实 linker 路径从
+`/system/lib64` 打开，旧的 statsd 库可见性缺口已越过，状态为
+`DISPLAY_STATS_LINKER_VISIBILITY_PASS_LIMITED`。
+
+同一 run 的三次 property 写入与同镜像 `getprop` 读回 `1/2/3` 全部通过，693 个
+输入身份未改变，`kernel/kptr_restrict`、`vm/mmap_rnd_bits` 和
+`vm/mmap_rnd_compat_bits` 均恢复；policy 保持 permissive/已加载，按实验约定需
+guest 重启后撤回。SurfaceFlinger 随后因 guest 缺少 `/dev/goldfish_pipe`、OpenGL
+host pipe 和 EGL 初始化条件而以127结束，composer 因 framebuffer 设备缺失以1结束；
+allocator 以234结束，GPUService 在清理前保持运行。`system_services_ready=false`，
+Display Binder 探测、严格 `CATALOG_READY_PASS`、GameApp Context、ResourceManager、
+GameState、Step、完整对局和性能仍未通过或未运行。
+
+私有主机归档为 111,462,400 字节，SHA-256 为
+`0f9020ed9a8d48b0985c421e1c57e6e0677af0f7b277301ce45ee6e5bd631674`；guest 中本轮
+输出与临时归档已在复制后清理。详见[报告](../agent-handoff/PURE_LINUX_DISPLAY_STATS_LINKER_2026-10-30.md)、
+[证据](../agent-handoff/pure-linux-display-stats-linker-evidence-20261030.json)。
+
 ## 2026-10-30：Display 服务依赖边界
 
 v25 的原始 init trial 在 ARM64 guest 中成功完成 APEX bootstrap，5 个 bootstrap APEX

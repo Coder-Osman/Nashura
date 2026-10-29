@@ -51,6 +51,68 @@ if [ -n "${NASHURA_INIT_STATE:-}" ]; then
     mount --bind "$NASHURA_INIT_STATE/kmsg" "$ART_BASE/dev/kmsg"
     mount --bind "$NASHURA_VENDOR_INPUTS" "$ART_BASE/vendor"
 fi
+if [ -n "${NASHURA_GRAPHICS_INPUTS:-}" ]; then
+    case "$NASHURA_GRAPHICS_INPUTS" in /*) ;; *) exit 74 ;; esac
+    [ "$NASHURA_GRAPHICS_INPUTS" != / ] && [ ! -L "$NASHURA_GRAPHICS_INPUTS" ] || exit 74
+    [ -d "$NASHURA_GRAPHICS_INPUTS" ] || exit 74
+    for binary in surfaceflinger gpuservice; do
+        [ -x "$NASHURA_GRAPHICS_INPUTS/$binary" ] || exit 74
+        mkdir -p "$ART_BASE/system/bin"
+        touch "$ART_BASE/system/bin/$binary"
+        mount --bind "$NASHURA_GRAPHICS_INPUTS/$binary" "$ART_BASE/system/bin/$binary"
+        mount -o remount,bind,ro "$ART_BASE/system/bin/$binary"
+    done
+    # The default linker namespace searches /system/lib64.  Keep the two
+    # statsd dependencies explicit and read-only instead of relying on an
+    # ambient APEX search path.
+    for library in libstatssocket.so libstatspull.so; do
+        [ -f "$NASHURA_GRAPHICS_INPUTS/$library" ] || exit 74
+        mkdir -p "$ART_BASE/system/lib64"
+        touch "$ART_BASE/system/lib64/$library"
+        mount --bind "$NASHURA_GRAPHICS_INPUTS/$library" "$ART_BASE/system/lib64/$library"
+        mount -o remount,bind,ro "$ART_BASE/system/lib64/$library"
+    done
+fi
+if [ -n "${NASHURA_GRAPHICS_VENDOR_ROOT:-}" ]; then
+    case "$NASHURA_GRAPHICS_VENDOR_ROOT" in /*) ;; *) exit 75 ;; esac
+    [ "$NASHURA_GRAPHICS_VENDOR_ROOT" != / ] && [ ! -L "$NASHURA_GRAPHICS_VENDOR_ROOT" ] || exit 75
+    [ -x "$NASHURA_GRAPHICS_VENDOR_ROOT/bin/hw/android.hardware.graphics.allocator@3.0-service" ] || exit 75
+    [ -x "$NASHURA_GRAPHICS_VENDOR_ROOT/bin/hw/android.hardware.graphics.composer@2.3-service" ] || exit 75
+    mount --bind "$NASHURA_GRAPHICS_VENDOR_ROOT" "$ART_BASE/vendor"
+    mount -o remount,bind,ro "$ART_BASE/vendor"
+    mkdir -p "$ART_BASE/dev/dri" "$ART_BASE/dev/dma_heap"
+    mount -t tmpfs -o mode=0755 tmpfs "$ART_BASE/dev/dri"
+    create_device_node() {
+        node_path=$1
+        device_source=$2
+        device_gid=$3
+        device_numbers=$(stat -c '%t %T' "$device_source") || exit 76
+        set -- $device_numbers
+        [ "$#" -eq 2 ] || exit 76
+        major=$((0x$1))
+        minor=$((0x$2))
+        mknod "$node_path" c "$major" "$minor"
+        chmod 0660 "$node_path"
+        chown "0:$device_gid" "$node_path"
+    }
+    for device in card0 renderD128; do
+        source="/dev/dri/$device"
+        [ -c "$source" ] || exit 76
+        if [ "$device" = renderD128 ]; then
+            device_gid=1030
+        else
+            device_gid=1003
+        fi
+        create_device_node "$ART_BASE/dev/dri/$device" "$source" "$device_gid"
+    done
+    if [ -c /dev/dma_heap/system ]; then
+        mount -t tmpfs -o mode=0755 tmpfs "$ART_BASE/dev/dma_heap"
+        create_device_node "$ART_BASE/dev/dma_heap/system" /dev/dma_heap/system 1003
+    fi
+    mkdir -p "$ART_BASE/sys"
+    mount --rbind /sys "$ART_BASE/sys"
+    mount -o remount,bind,ro "$ART_BASE/sys"
+fi
 if [ -n "${NASHURA_APEX_PACKAGES:-}" ]; then
     [ "${NASHURA_ROOT_INIT_TRIAL:-0}" = 1 ] && [ "$(id -u)" = 0 ] || exit 71
     case "$NASHURA_APEX_PACKAGES" in /*) ;; *) exit 71 ;; esac
@@ -85,7 +147,9 @@ ln -sfn /proc/self/fd/2 "$ART_BASE/dev/stderr"
 if [ -n "${NASHURA_ART_LINKER_CONFIG:-}" ]; then
     case "$NASHURA_ART_LINKER_CONFIG" in /*) ;; *) exit 69 ;; esac
     [ -f "$NASHURA_ART_LINKER_CONFIG" ] || exit 69
+    touch "$ART_BASE/linkerconfig/ld.config.txt"
     mount --bind "$NASHURA_ART_LINKER_CONFIG" "$ART_BASE/linkerconfig/com.android.art/ld.config.txt"
+    mount --bind "$NASHURA_ART_LINKER_CONFIG" "$ART_BASE/linkerconfig/ld.config.txt"
 fi
 if [ "${NASHURA_ROOT_INIT_TRIAL:-0}" = 1 ]; then
     [ "$(id -u)" = 0 ] && [ "${NASHURA_BIND_SELINUXFS:-0}" = 1 ] || exit 70
@@ -151,6 +215,10 @@ export BOOTCLASSPATH=/apex/com.android.art/javalib/core-oj.jar:/apex/com.android
 unset LD_LIBRARY_PATH LD_PRELOAD LD_DEBUG LD_DEBUG_OUTPUT
 if [ "${NASHURA_ROOT_INIT_TRIAL:-0}" = 1 ]; then
     if [ -n "${NASHURA_EXEC_UID:-}" ]; then
+        if [ -n "${NASHURA_EXEC_GROUPS:-}" ]; then
+            exec /nashura-tools/nashura_namespace_exec --user "$NASHURA_EXEC_UID" "${NASHURA_EXEC_GID:?}" \
+                --groups "$NASHURA_EXEC_GROUPS" "$@"
+        fi
         exec /nashura-tools/nashura_namespace_exec --user "$NASHURA_EXEC_UID" "${NASHURA_EXEC_GID:?}" "$@"
     fi
     exec /nashura-tools/nashura_namespace_exec "$@"

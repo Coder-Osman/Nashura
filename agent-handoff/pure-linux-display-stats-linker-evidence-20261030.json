@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "status": "DISPLAY_STATS_LINKER_VISIBILITY_PASS_LIMITED",
+  "date": "2026-10-30",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "guest": {
+    "architecture": "aarch64",
+    "policy_action": "reuse preloaded policy; no policy write",
+    "enforce": "0",
+    "policy_load": 1,
+    "trial_timeout_seconds": 20
+  },
+  "graphics_inputs": {
+    "libstatssocket_sha256": "c70fa366743987548481e54c169c7d928c4d35d2fb1c37533498bd9f8fdd92ed",
+    "libstatspull_sha256": "0ff86311f4be8c046548f07efe263f28c75c4d7589af3d49d36dafd4a833252a",
+    "same_statsd_apex_origin": true,
+    "readonly_bind_destination": "/system/lib64"
+  },
+  "property_trial": {
+    "status": "INIT_PROPERTY_CONTINUITY_PASS_LIMITED",
+    "readback_values": ["1", "2", "3"],
+    "readback_verified": true,
+    "input_identity_count": 693,
+    "inputs_unchanged": true,
+    "sysctls_restored": true,
+    "kernel_after": {
+      "kptr_restrict": "1",
+      "enforce": "0",
+      "policy_load": 1
+    }
+  },
+  "loader_observation": {
+    "surfaceflinger_opened": ["/system/lib64/libstatssocket.so", "/system/lib64/libstatspull.so"],
+    "gpuservice_opened": ["/system/lib64/libstatssocket.so", "/system/lib64/libstatspull.so"],
+    "statsd_visibility_pass": true
+  },
+  "service_probe": {
+    "system_services_ready": false,
+    "surfaceflinger_exit_after_cleanup": 127,
+    "composer_exit_after_cleanup": 1,
+    "allocator_exit_after_cleanup": 234,
+    "gpuservice_alive_before_cleanup": true,
+    "surfaceflinger_boundary": "missing goldfish/OpenGL host pipe and EGL initialization",
+    "composer_boundary": "framebuffer device missing",
+    "catalog_ready_pass": false
+  },
+  "private_evidence": {
+    "archive": "/private/tmp/nashura-display-root-trial-20261031-r5.tar",
+    "archive_bytes": 111462400,
+    "archive_sha256": "0f9020ed9a8d48b0985c421e1c57e6e0677af0f7b277301ce45ee6e5bd631674",
+    "guest_output_cleaned_after_copy": true
+  },
+  "engineering_validation": {
+    "targeted_tests": {
+      "command": "python3 -m pytest -q -p no:cacheprovider tools/pure_linux/test_probe_root_init.py",
+      "passed": 8,
+      "failed": 0
+    },
+    "pure_linux_suite": {
+      "passed": 1140,
+      "skipped": 1,
+      "python": "/opt/anaconda3/bin/python3"
+    },
+    "public_checks": {
+      "main": {"passed": 794, "skipped": 27},
+      "affordability": {"passed": 23, "skipped": 0},
+      "selection_timeout": {"passed": 82, "skipped": 0},
+      "position_guards": {"passed": 15, "skipped": 3},
+      "live_command": {"passed": 25, "skipped": 4},
+      "dispatch_command": {"passed": 31, "skipped": 3},
+      "reservation_mapping": {"passed": 31, "skipped": 2},
+      "command_coordinates": {"passed": 38, "skipped": 3},
+      "collection_coordinator": {"passed": 65, "skipped": 0}
+    },
+    "main_engine": {"passed": 211},
+    "gitleaks": "no leaks found",
+    "public_snapshot": {"source_files_verified": 2840},
+    "strict_catalog_ready": false,
+    "game_context": "NOT_RUN",
+    "resource_manager": "NOT_RUN",
+    "game_state": "NOT_RUN",
+    "step_tick": "NOT_RUN"
+  }
+}

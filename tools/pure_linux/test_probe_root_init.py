@@ -88,6 +88,48 @@ def test_original_apex_inputs_require_pinned_identity(settings):
     assert probe.trial(settings, Path("output"))["system_services_ready"] is False
 
 
+def test_graphics_inputs_are_optional_and_all_binaries_must_be_pinned(settings, tmp_path):
+    graphics = tmp_path / "graphics"
+    vendor_root = tmp_path / "vendor-root"
+    graphics.mkdir()
+    vendor_root.mkdir()
+    for name in ("surfaceflinger", "gpuservice", "libstatssocket.so", "libstatspull.so"):
+        path = graphics / name
+        path.write_bytes(name.encode())
+        path.chmod(0o755 if ".so" not in name else 0o644)
+    vendor_binaries = [
+        vendor_root / "bin/hw/android.hardware.graphics.allocator@3.0-service",
+        vendor_root / "bin/hw/android.hardware.graphics.composer@2.3-service",
+    ]
+    for path in vendor_binaries:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(path.name.encode())
+        path.chmod(0o755)
+    settings.update(graphics_inputs=str(graphics), vendor_root=str(vendor_root))
+    statsd_libs = Path(settings["closure"]) / "system/apex/com.android.os.statsd/lib64"
+    for name in ("libstatssocket.so", "libstatspull.so"):
+        source = statsd_libs / name
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_bytes(("original-" + name).encode())
+        settings["identities"][str(source)] = probe.sha256(source)
+        (graphics / name).write_bytes(source.read_bytes())
+        settings["identities"][str(graphics / name)] = probe.sha256(graphics / name)
+    with pytest.raises(ValueError, match="missing required input identity"):
+        probe.trial(settings, Path("output"))
+    for path in [*graphics.iterdir(), *vendor_binaries]:
+        settings["identities"][str(path)] = probe.sha256(path)
+    assert probe.trial(settings, Path("output"))["system_services_ready"] is False
+    (graphics / "libstatspull.so").write_bytes(b"different statsd library")
+    settings["identities"][str(graphics / "libstatspull.so")] = probe.sha256(graphics / "libstatspull.so")
+    with pytest.raises(ValueError, match="must match original statsd APEX"):
+        probe.trial(settings, Path("output-replaced"))
+    (graphics / "libstatspull.so").write_bytes((statsd_libs / "libstatspull.so").read_bytes())
+    settings["identities"][str(graphics / "libstatspull.so")] = probe.sha256(graphics / "libstatspull.so")
+    settings["identities"][str(graphics / "surfaceflinger")] = "wrong"
+    with pytest.raises(ValueError, match="input identity mismatch"):
+        probe.trial(settings, Path("output"))
+
+
 def test_services_launch_both_binder_managers_before_java(tmp_path, monkeypatch):
     settings = {"launcher": "/probe/launcher.sh", "closure": "/probe/closure",
                 "linker_config": "/probe/ld.config", "service_uid": 1000, "service_gid": 1000,
@@ -121,6 +163,47 @@ def test_services_launch_both_binder_managers_before_java(tmp_path, monkeypatch)
     assert calls[3][-3:] == ["/system/bin", "ArtSystemServicesProbe", "services"]
     assert result["hwservicemanager_alive_before"] is True
     assert result["system_services_ready"] is False
+
+
+def test_graphics_services_start_before_display_probe_and_are_cleaned_up(tmp_path, monkeypatch):
+    settings = {"launcher": "/probe/launcher.sh", "closure": "/probe/closure",
+                "linker_config": "/probe/ld.config", "service_uid": 1000, "service_gid": 1000,
+                "tools": "/probe/tools", "graphics_inputs": "/probe/graphics",
+                "vendor_root": "/probe/vendor-root"}
+    calls = []
+
+    class Process:
+        def __init__(self, command):
+            self.command = command
+            self.pid = len(calls) + 100
+
+        def poll(self):
+            return None
+
+        def wait(self, timeout=None):
+            return 0
+
+    def popen(command, **kwargs):
+        calls.append((command, kwargs))
+        return Process(command)
+
+    monkeypatch.setattr(probe.subprocess, "Popen", popen)
+    monkeypatch.setattr(probe.os, "killpg", lambda *_: None)
+    monkeypatch.setattr(probe.time, "sleep", lambda *_: None)
+    result = probe.services(settings, tmp_path, {})
+    names = [call[0][-1].rsplit("/", 1)[-1] for call in calls]
+    assert names == ["servicemanager-probe", "hwservicemanager",
+                     "android.hardware.graphics.allocator@3.0-service",
+                     "android.hardware.graphics.composer@2.3-service",
+                     "android.system.suspend@1.0-service", "surfaceflinger", "gpuservice",
+                     "display"]
+    assert calls[-1][0][-3:] == ["/system/bin", "ArtSystemServicesProbe", "display"]
+    assert calls[-1][1]["env"]["NASHURA_GRAPHICS_INPUTS"] == "/probe/graphics"
+    assert calls[5][1]["env"]["NASHURA_EXEC_GROUPS"] == "1003,1030,1073"
+    assert "NASHURA_EXEC_GROUPS" not in calls[-1][1]["env"]
+    assert result["surfaceflinger_alive_before"] is True
+    assert result["system_services_ready"] is False
+    assert result["display_service_probe_pass"] is False
 def test_failed_observation_still_restores_every_sysctl(settings, monkeypatch):
     monkeypatch.setattr(probe.os, "geteuid", lambda: 0)
 

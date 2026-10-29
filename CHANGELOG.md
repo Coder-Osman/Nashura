@@ -1,5 +1,18 @@
 # 变更记录
 
+## 2026-10-30：Display statsd linker 依赖复验
+
+- 扩展纯 Linux namespace launcher，允许图形服务输入及 vendor 图形根只读 bind，并
+  为服务子进程传递固定补充组；`namespace_exec` 增加数值补充组解析和降权路径。
+- 将同一 statsd APEX 的 `libstatssocket.so`、`libstatspull.so` 固定到
+  `/system/lib64`，在 probe 前检查同源哈希，拒绝缺失、身份错误或非同源库。
+- 在真实 ARM64 guest 完成 r5 复验：两库均被 SurfaceFlinger/GPUService 从
+  `/system/lib64` 打开；三次 property 读回、输入身份和 sysctl 恢复通过。
+- 保留 SurfaceFlinger 的 EGL/goldfish pipe 缺口、composer framebuffer 缺口和
+  allocator 退出证据；`system_services_ready=false`，完整系统服务与游戏验收门保持关闭。
+- 私有 guest 输出归档已复制并清理；公开仓库只加入脱敏报告、证据摘要和源码，未加入
+  凭据、policy、DEX、第三方 ELF 或原始 strace。
+
 ## 2026-10-30：Display 服务依赖边界
 
 - 新增 v25 原始 init Display probe 的脱敏报告、机器摘要和 Codex 回执。
