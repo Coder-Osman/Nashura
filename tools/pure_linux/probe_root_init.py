@@ -109,7 +109,7 @@ def services(settings, output, environment):
                   str(output / "probe.strace")] + prefix
                  + ["/apex/com.android.art/bin/app_process64-holder-v3", "-Xbootclasspath:" + ":".join(boot),
                     "-Djava.library.path=/system/lib64:/data/local/tmp/libg-input", "/system/bin",
-                    "ArtSystemServicesProbe", "display"],
+                    "ArtSystemServicesProbe", "services"],
     }
     write_json(output / "services-command.json", commands)
     result = {"system_services_ready": False}
@@ -144,6 +144,19 @@ def services(settings, output, environment):
                     result["probe_exit"] = probe.wait(timeout=9)
                 finally:
                     result["probe_exit_after_cleanup"] = stop(probe)
+            probe_lines = set((output / "probe.stdout").read_text(errors="replace").splitlines())
+            required = {
+                "ART_ANDROID_SERVERS_LOADED=true", "ART_SYSTEM_CONTEXT_PRESENT=true",
+                "ART_POWER_SERVICE_STARTED=true", "ART_THERMAL_SERVICE_STARTED=true",
+                "ART_POWER_BINDER_PRESENT=true", "ART_THERMAL_BINDER_PRESENT=true",
+                "ART_POWER_SERVICE_LISTED=true", "ART_POWER_FETCHER_PRESENT=true",
+                "ART_DIRECT_POWER_FETCHER_PRESENT=true", "ART_POWER_FACTORY_RESULT_PRESENT=true",
+                "ART_CONTEXT_POWER_PRESENT=true", "ART_POWER_INTERNAL_PRESENT=true",
+                "ART_POWER_THERMAL_FETCHER_PROBE_RETURNED_LIMITED",
+            }
+            result["power_thermal_fetcher_probe_pass"] = (result.get("probe_exit") == 0 and
+                                                              required <= probe_lines)
+            result["power_thermal_fetcher_missing_observations"] = sorted(required - probe_lines)
             result["service_alive_after"] = service.poll() is None
         finally:
             if suspend is not None:

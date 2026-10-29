@@ -111,8 +111,9 @@ public final class ArtSystemServicesProbe {
     }
 
     public static void main(String[] args) {
-        if (args.length != 1 || !(args[0].equals("system-server") || args[0].equals("display"))) {
-            throw new IllegalArgumentException("Expected system-server or display");
+        if (args.length != 1 || !(args[0].equals("system-server") || args[0].equals("services") ||
+            args[0].equals("display"))) {
+            throw new IllegalArgumentException("Expected system-server, services or display");
         }
         report("ART_PROBE_MAIN_ENTERED=true");
         try {
@@ -203,6 +204,9 @@ public final class ArtSystemServicesProbe {
                     .getMethod("getService", Class.class)
                     .invoke(null, Class.forName("android.os.PowerManagerInternal"));
                 reportService("ART_POWER_INTERNAL", powerInternal);
+                if (args[0].equals("services")) {
+                    report("ART_POWER_THERMAL_FETCHER_PROBE_RETURNED_LIMITED");
+                } else {
                 stage = "DisplayManagerService.start";
                 Object display = managerClass.getMethod("startService", String.class)
                     .invoke(manager, "com.android.server.display.DisplayManagerService");
@@ -214,6 +218,7 @@ public final class ArtSystemServicesProbe {
                 if (binder != null) {
                     System.out.println("ART_DISPLAY_BINDER_DESCRIPTOR=" + Class.forName("android.os.IBinder")
                         .getMethod("getInterfaceDescriptor").invoke(binder));
+                }
                 }
             }
             report("ART_SYSTEM_SERVICES_PROBE_RETURNED_LIMITED");

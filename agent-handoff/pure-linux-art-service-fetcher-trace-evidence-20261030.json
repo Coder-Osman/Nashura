@@ -1,10 +1,12 @@
 {
   "schema_version": 1,
-  "status": "ART_SERVICE_FETCHER_TRACE_SOURCE_READY_GUEST_BLOCKED",
+  "status": "ART_SERVICE_FETCHER_TRACE_RUNTIME_OBSERVED_LIMITED",
   "date": "2026-10-30",
   "probe": {
     "source": "tools/pure_linux/ArtSystemServicesProbe.java",
-    "source_sha256": "c26a173c543a3d05a852f346fbf561aa9bb60325490f3231b6584f0a664b07da",
+    "source_sha256": "79f0e81d21272ac1a4da4e699ef7dce77790cff28ada859a54cc8093c2988441",
+    "dex_sha256": "37d7ad5d45eccf96d0bc2d31eddcd9576216c6a43c400203301d8e461b0f5991",
+    "dex_build": "javac --release 17 -Xlint:all -Werror; d8 36.0.0 --min-api 23",
     "scope": [
       "ThermalManagerService start and Binder lookup",
       "Power Binder lookup and service listing",
@@ -14,7 +16,14 @@
     ],
     "cache_recheck_is_interventional": true,
     "cache_recheck_description": "In the isolated probe process, a non-initial Context cache state is cleared before direct fetcher retry; interpret retry separately from the natural initial state.",
-    "guest_runtime_probe_executed": false
+    "guest_runtime_probe_executed": true,
+    "guest_probe_stdout_sha256": "d1c6ea35bdfc1ab0aef543c1b6f11979f2227d191ce3a8453682fedf7122df21",
+    "guest_services_result_sha256": "7a5405f80880d72085eecc650289de47186a05bb43e42b3b94ee2fc33564ea71",
+    "guest_result_sha256": "a20bcef4da8475e91b3f3e797497d3554f9f3c07fa26041abb57d6f37c6d7c19",
+    "guest_probe_exit": 0,
+    "power_thermal_fetcher_probe_pass": true,
+    "power_thermal_fetcher_missing_observations": [],
+    "system_services_ready": false
   },
   "engineering_validation": {
     "targeted_tests": {
@@ -46,13 +55,30 @@
   },
   "guest_trial": {
     "label": "v22 original-policy root-init trial",
-    "status": "BLOCKED_GUEST_PRIVILEGE",
-    "read_only_plan_started": false,
-    "apply_started": false,
+    "status": "INIT_PROPERTY_CONTINUITY_PASS_LIMITED",
+    "read_only_plan_started": true,
+    "apply_started": true,
     "new_policy_load_attempted": false,
-    "sysctl_changed_by_this_attempt": false,
-    "output_directory_created": false,
-    "blocker": "Guest sudo authentication was rejected; execution stopped before preflight or apply."
+    "sysctl_changed_by_this_attempt": true,
+    "output_directory_created": true,
+    "input_identity_count": 159,
+    "property_readback_values": ["1", "2", "3"],
+    "property_readback_verified": true,
+    "inputs_unchanged": true,
+    "sysctls_restored": true,
+    "kernel_after": {
+      "enforce": "0",
+      "policy_load": 1,
+      "kptr_restrict": "1",
+      "mmap_rnd_bits": "33",
+      "mmap_rnd_compat_bits": "16"
+    },
+    "service_probe": {
+      "probe_exit": 0,
+      "power_thermal_fetcher_probe_pass": true,
+      "missing_observations": [],
+      "system_services_ready": false
+    }
   },
   "previous_limited_result": {
     "property_write_and_same_image_getprop_readback": "PASS_LIMITED",

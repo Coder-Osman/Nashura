@@ -118,7 +118,7 @@ def test_services_launch_both_binder_managers_before_java(tmp_path, monkeypatch)
     assert ["/system/bin/hwservicemanager"] == calls[1][-1:]
     assert calls[0][-1:] == ["/apex/com.android.art/bin/servicemanager-probe"]
     assert calls[2][-1:] == ["/system/bin/hw/android.system.suspend@1.0-service"]
-    assert calls[3][-3:] == ["/system/bin", "ArtSystemServicesProbe", "display"]
+    assert calls[3][-3:] == ["/system/bin", "ArtSystemServicesProbe", "services"]
     assert result["hwservicemanager_alive_before"] is True
     assert result["system_services_ready"] is False
 def test_failed_observation_still_restores_every_sysctl(settings, monkeypatch):
