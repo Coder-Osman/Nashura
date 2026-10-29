@@ -1,5 +1,17 @@
 # 阶段成果与证据索引
 
+## 2026-10-30：Display 服务依赖边界
+
+v25 的原始 init trial 在 ARM64 guest 中成功完成 APEX bootstrap，5 个 bootstrap APEX
+均挂载，三次 property 写入/同镜像读回通过，输入身份、loop cleanup 和三项 sysctl
+恢复通过。Display probe 已进入 ART、System Context、Power/Thermal、ServiceRegistry
+fetcher 与 `PowerManagerInternal` 前置链；随后因 `/dev/binder` 没有 `SurfaceFlinger`
+而等待并由 9 秒上限收尾。状态为 `DISPLAY_SERVICE_ENTRY_REACHED_LIMITED`，
+`system_services_ready=false`。GameApp Context、严格 `CATALOG_READY_PASS`、
+ResourceManager、GameState、Step、完整对局、Android 对照和性能保持未通过或未运行。
+详见[报告](../agent-handoff/PURE_LINUX_DISPLAY_SERVICE_BOUNDARY_2026-10-30.md)、
+[证据](../agent-handoff/pure-linux-display-service-boundary-evidence-20261030.json)。
+
 ## 2026-10-30：ART 服务观察器 guest 限定运行
 
 扩展原始 ART probe 的 Thermal/Power Binder、ServiceRegistry fetcher、Context 缓存槽

@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "status": "DISPLAY_SERVICE_ENTRY_REACHED_LIMITED",
+  "date": "2026-10-30",
+  "baseline_commit": "285f441",
+  "target_branch": "codex/pure-linux-libg-headless-20261026",
+  "guest_trial": {
+    "label": "v25 original-policy root-init display trial",
+    "status": "INIT_PROPERTY_CONTINUITY_PASS_LIMITED",
+    "preflight_passed": true,
+    "input_identity_count": 160,
+    "loaded_policy_sha256": "9f9115c47be1a90556dabaf6339127c5b626bd2fa2a26687ee0733bbb790d0bc",
+    "policy_enforce": "0",
+    "property_readback_values": ["1", "2", "3"],
+    "property_readback_verified": true,
+    "inputs_unchanged": true,
+    "sysctls_before": {
+      "kernel/kptr_restrict": "1",
+      "vm/mmap_rnd_bits": "33",
+      "vm/mmap_rnd_compat_bits": "16"
+    },
+    "sysctls_restored": true,
+    "kernel_after": {
+      "kptr_restrict": "1",
+      "enforce": "0",
+      "policy_load": 1
+    },
+    "apex_bootstrap": {
+      "apex_packages_mounted": 5,
+      "apexd_bootstrap_exit": 0,
+      "loop_cleanup_errors": [],
+      "preexisting_devices_unchanged": true,
+      "created_devices_removed": true,
+      "shm_nodev_failure_reproduced": false
+    },
+    "display_probe": {
+      "probe_mode": "display",
+      "probe_exit": null,
+      "probe_timeout_seconds": 9,
+      "art_android_servers_loaded": true,
+      "system_context_present": true,
+      "power_thermal_fetcher_observations": "complete",
+      "surfaceflinger_wait_events": 104,
+      "surfaceflinger_not_started_events": 2,
+      "display_service_started_marker": false,
+      "display_binder_marker": false,
+      "system_services_ready": false,
+      "first_missing_dependency": "SurfaceFlinger service on /dev/binder",
+      "strace_signals": ["ENOTCONN", "ENOENT"]
+    },
+    "evidence_archive_sha256": "ee458f3ed407cc1df2a1d1eabdca984a38e20a0cedad0e2f29b68d2691f57d39",
+    "evidence_files": {
+      "plan.json": "e09ca488bc4048666a9b83becd07a9601034ce8029af30ba9c353d48128c32bf",
+      "result.json": "9cc9c8023d5123485c72ba79efedfd4008b738e7b20a70678a521fccd30daf31",
+      "services-result.json": "2e8ea2c44e79e6d38150df7cfaa486e59bd3bc9ad287d1a7ed9b6c021abddc0f",
+      "services-command.json": "2cfdae8d99b1f9ad7a39ee2ae47828bfe7a1b0e32a237b81290d7b9e296b2843",
+      "probe.stdout": "c089c6ed76e5085c5d0c8e80a2e1cc72ae10af4d698e3b50df3688d8a0ee47e6",
+      "apex-loops/result.json": "3e73c81097e4acda274f9f14614a9c4b52fea2b02a44b5ee7ee3e80c947ed78e",
+      "runtime/result.json": "eb451d817f1ccd987b4f62e557b206d8f31654aa4aca3246f64259efe37449b7"
+    },
+    "private_strace_sha256": {
+      "probe.strace": "abaf16f891b15c5f9e7740a91cdfab0a4144dcfb5a75a76be8c8d4d646eb4deb",
+      "runtime/init.strace": "0d9aa2199e9b4f7a1ad9553497e0ca763809236b293a9f53b31e132fd51c9770"
+    }
+  },
+  "acceptance": {
+    "display_entry": "LIMITED_REACHED",
+    "system_services_ready": false,
+    "game_context": "NOT_RUN",
+    "catalog_ready": false,
+    "resource_manager": "NOT_RUN",
+    "game_state": "NOT_RUN",
+    "step_action_snapshot": "NOT_RUN",
+    "complete_match": "NOT_RUN",
+    "android_comparison": "NOT_RUN",
+    "performance": "NOT_RUN"
+  },
+  "engineering_validation": {
+    "public_checks": {
+      "primary_group": {
+        "passed": 794,
+        "skipped": 27
+      },
+      "affordability": {
+        "passed": 23,
+        "skipped": 0
+      },
+      "all_groups_passed": true
+    },
+    "main_engine": {
+      "passed": 211,
+      "failed": 0
+    },
+    "public_snapshot": {
+      "files_verified": 2837,
+      "passed": true
+    },
+    "gitleaks": "no leaks found",
+    "git_diff_check": "passed"
+  }
+}

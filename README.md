@@ -1,5 +1,17 @@
 # Nashura
 
+## 2026-10-30：Display 服务依赖边界
+
+v25 在用户目录输出、复用 service-v2 工具链后，原始 `apexd-bootstrap` 成功挂载 5 个
+bootstrap APEX；三次 property 写入与同镜像 `getprop` 读回通过，loop cleanup、输入
+身份和 sysctl 恢复通过。Display probe 已加载 `android_servers`、System Context 和
+Power/Thermal/fetcher 前置链，随后在 `/dev/binder` 等待不存在的 `SurfaceFlinger`，
+9 秒上限收尾。状态为 `DISPLAY_SERVICE_ENTRY_REACHED_LIMITED`，
+`system_services_ready=false`；GameApp Context、严格 catalog、ResourceManager、
+GameState、Step、完整对局、Android 对照和性能仍未验收。详见[报告](agent-handoff/PURE_LINUX_DISPLAY_SERVICE_BOUNDARY_2026-10-30.md)、
+[证据](agent-handoff/pure-linux-display-service-boundary-evidence-20261030.json)和
+[回执](agent-handoff/CODEX_REPLY_2026-10-30_DISPLAY_SERVICE.md)。
+
 ## 2026-10-30：ART 服务观察器 guest 限定运行
 
 扩展原始 ART 服务探针，加入 Thermal/Power Binder、ServiceRegistry fetcher、Context

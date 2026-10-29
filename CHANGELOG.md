@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-30：Display 服务依赖边界
+
+- 新增 v25 原始 init Display probe 的脱敏报告、机器摘要和 Codex 回执。
+- 记录 service-v2 工具链下 5 个 bootstrap APEX 挂载成功、property 三次独立读回、loop cleanup、输入身份和 sysctl 恢复。
+- 记录 Display 依赖链到达后因缺少 `SurfaceFlinger` 在 `/dev/binder` 等待；`system_services_ready=false`，完整 system services 和游戏验收门保持关闭。
+- 原始 policy、DEX、第三方 ELF、strace、guest 文件和凭据未进入公开仓库。
+
 ## 2026-10-30：ART 服务观察器 guest 限定运行
 
 - 扩展 `ArtSystemServicesProbe`，增加 Thermal/Power Binder 与服务列表、ServiceRegistry fetcher、Context 缓存槽、`PowerManagerInternal` 观察和阶段化错误输出。
