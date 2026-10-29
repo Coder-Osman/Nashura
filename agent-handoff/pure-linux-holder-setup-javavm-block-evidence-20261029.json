@@ -1,0 +1,72 @@
+{
+  "schema": "nashura.pure-linux-holder-setup-javavm-block.v1",
+  "date": "2026-10-29",
+  "status": "RUNTIME_BLOCKED_JAVAVM",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "probe_sha256": "d4fc8504bb00ec67775bdc826973661893968226ec73ecf3355e2293cb6b8216",
+  "holder_setup_guard": {
+    "offset": "0x13a3e3c",
+    "sha256": "78cc9be1bb5f8c5b2b5d8126531866d5beef174720d0a854e8cdaa899133dd02"
+  },
+  "linux": {
+    "host": "Ubuntu 22.04.5 ARM64 guest",
+    "arch": "aarch64",
+    "provider_job_status": "BLOCKED",
+    "provider_job_exit_code": 1,
+    "native_fault_signal": "SIGSEGV",
+    "content_bootstrap_returned": true,
+    "filesystem_bootstrap_returned": true,
+    "provider_registration": {
+      "data": "returned_nonzero",
+      "update": "returned_nonzero",
+      "content_ready": 0
+    },
+    "holder_setup": {
+      "input_ready": true,
+      "slot_before_nonnull": false,
+      "slot_after_nonnull": null,
+      "allocator_site_calls": 1,
+      "first_allocation_site_calls": 1
+    },
+    "fault": {
+      "java_bridge_call_offset": "0x140b31c",
+      "java_bridge_deref_offset": "0x17d8b14",
+      "pc_offset": "0x17d8b14",
+      "lr_offset": "0x140b320",
+      "x0": "0x0",
+      "jni_onload_offset": "0x13cfe74",
+      "java_vm_bind_offset": "0x17d88c0",
+      "jni_env_attach_offset": "0x17d8ae8",
+      "jni_onload_explicitly_called": false
+    },
+    "runtime_inventory": {
+      "/system": false,
+      "/apex": false,
+      "app_process64": false,
+      "dalvikvm64": false,
+      "libart.so": false,
+      "java_command": false
+    },
+    "inputs_unchanged": true,
+    "resources_unchanged": true,
+    "auxiliary_unchanged": true,
+    "probe_unchanged": true,
+    "postcheck_errors": []
+  },
+  "artifacts": {
+    "result_json_sha256": "de034567b90a178b7a8a3f17c5c53125f0f1f81b911da7a42463d3e86c440769",
+    "stdout_log_sha256": "8740d97d8272b422cf08852adff87de84c34d9c6766ebee61324b7a1018d1f4e",
+    "stderr_log_sha256": "6ce8eab3c17840393c48df62302edca7f786c3d1a861ac0b57b8d372bf3b533c",
+    "observation_json_sha256": "b7ef7e6d51289480f216dbf4696f48010dca1b6578c946a0875c91d6c397283e",
+    "before_maps_sha256": "4a0f46e0002f456c17922d892841345b3a336a9af553dd817407e5cc0bd3dd4f",
+    "after_maps_sha256": "24b3947315f85cf3f03d7459e7632f33e47028888589327bfbd598f42d8bbb4e"
+  },
+  "gates": {
+    "linux_holder_setup": "RUNTIME_BLOCKED_JAVAVM",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "game_state": "NOT_RUN",
+    "step_tick": "NOT_RUN",
+    "full_match": "NOT_RUN"
+  }
+}

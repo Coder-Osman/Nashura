@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-10-29：Linux holder setup 真实执行与 JavaVM 阻塞
+
+- 恢复 VMware guest 登录后，使用新 probe 真实执行 `--holder-setup-only`；内容 root、filesystem 和两个 provider 注册返回。
+- GDB 观测将首个 fault 定位到 `libg.so+0x17d8b14` 的空 `JavaVM` 解引用；输入、资源、辅助文件和 probe 身份均保持不变。
+- 新增 `PURE_LINUX_HOLDER_SETUP_JAVAVM_BLOCK_2026-10-29.md` 及机器证据摘要；严格 catalog、ResourceManager、GameState、Step、完整对局和性能继续保持未运行。
+
 ## 2026-10-29：worker2 后续工程复验
 
 - 使用 Python 3.13.5 重跑公开工程门：纯 Linux `1105 passed、1 skipped`，公开主组 `794 passed、27 skipped`，主引擎 `211 passed`，其余分组均通过。

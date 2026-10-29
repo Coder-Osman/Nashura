@@ -1,5 +1,16 @@
 # 阶段成果与证据索引
 
+## 2026-10-29 E2.1-N：Linux holder setup 真实执行与 JavaVM 阻塞
+
+恢复 guest 登录通道后，真实 ARM64 Linux probe 完成内容 root、filesystem 和
+data/update provider 注册；holder setup 在 allocator 和首个对象分配后于
+`libg.so+0x17d8b14` 读取空 `JavaVM` 指针并收到 `SIGSEGV`。输入、资源、辅助文件和
+probe 前后 SHA 均未改变，状态为 `RUNTIME_BLOCKED_JAVAVM`。这不是 catalog ready、
+ResourceManager、GameState 或完整对局证据；这些门保持 `NOT_RUN`。
+
+详见[报告](../agent-handoff/PURE_LINUX_HOLDER_SETUP_JAVAVM_BLOCK_2026-10-29.md)和
+[机器证据](../agent-handoff/pure-linux-holder-setup-javavm-block-evidence-20261029.json)。
+
 ## 2026-10-29：worker2 后续工程复验
 
 Python 3.13.5 下重新运行公开工程门：纯 Linux 专项 `1105 passed、1 skipped`，

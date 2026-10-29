@@ -119,7 +119,7 @@ static int exercise_holder_setup(void) {
         !guard("NASHURA_HOLDER_SETUP_GUARD", 0x13a3e3c) ||
         !guard("NASHURA_ARGUMENT_DESTROY_GUARD", 0x13a2a3c) ||
         !guard("NASHURA_HOLDER_DESTROY_GUARD", 0x13a3d70)) return 0;
-    const char *name = (const char *)(base + 0x2ba51);
+    const char *name = (const char *)(base + 0x2ba51e);
     if (!is_readable((uintptr_t)name, sizeof("AndroidMainAllocator")) ||
         memcmp(name, "AndroidMainAllocator", sizeof("AndroidMainAllocator"))) return 0;
     struct { uint64_t before; uintptr_t object[2]; uint64_t after; } allocator = {canary, {0, 0}, canary};

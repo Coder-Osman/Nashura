@@ -1,5 +1,15 @@
 # Nashura
 
+## 2026-10-29：Linux holder setup 真实执行与 JavaVM 阻塞
+
+恢复 guest 登录通道后，使用当前 probe 在 Ubuntu ARM64 中真实执行
+`--holder-setup-only`：内容 root、filesystem 和 data/update provider 注册均返回，
+holder setup 在分配器和首个对象分配后于 `libg.so+0x17d8b14` 对空 `JavaVM` 指针
+触发 `SIGSEGV`。输入、资源和辅助文件前后身份一致；状态为
+`RUNTIME_BLOCKED_JAVAVM`，严格 catalog、ResourceManager、GameState、真实 Step、
+完整对局和性能仍未运行。详见[阶段报告](agent-handoff/PURE_LINUX_HOLDER_SETUP_JAVAVM_BLOCK_2026-10-29.md)
+和[机器证据](agent-handoff/pure-linux-holder-setup-javavm-block-evidence-20261029.json)。
+
 ## 2026-10-29：worker2 后续工程复验
 
 接续 holder setup 边界工作后，使用 Python 3.13.5 完成公开工程门复验：纯 Linux

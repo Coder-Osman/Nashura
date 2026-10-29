@@ -10194,8 +10194,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "d12ae431fcb26011c336e50a81a75853196b6510ba1c4854365275d453ff55bd",
-      "bytes": 50935,
+      "sha256": "dd7f8270c0a4cad4da8c6ece52f6ce27321f357ef51d5c0112b67d27e688f12d",
+      "bytes": 51486,
       "source_sha256": "d12ae431fcb26011c336e50a81a75853196b6510ba1c4854365275d453ff55bd",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10212,13 +10212,14 @@
         "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
         "2026-10-28: bounded Linux catalog resource trace audit",
         "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
-        "2026-10-29: record Linux native holder setup implementation and blocked guest execution"
+        "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
+        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "8fb78c645d00a2c95af39be154e70d0de92382e6dbf1322e56d79d7489ff8724",
-      "bytes": 84396,
+      "sha256": "d32e919252692450428df86867846aadcc41edbf720de5e683011444c37d68a1",
+      "bytes": 85108,
       "source_sha256": "8fb78c645d00a2c95af39be154e70d0de92382e6dbf1322e56d79d7489ff8724",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10235,7 +10236,8 @@
         "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
         "2026-10-28: bounded Linux catalog resource trace audit",
         "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
-        "2026-10-29: record Linux native holder setup implementation and blocked guest execution"
+        "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
+        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence"
       ]
     },
     {
@@ -16647,8 +16649,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "8ae14dbb13dd932bd21ccd98b2a35eb91686abd66e33b5e2f4043a2acc5fc0bb",
-      "bytes": 51792,
+      "sha256": "713aae5999714839770833139599fe12e12c6ca40e09df827469739980eb8035",
+      "bytes": 52519,
       "source_sha256": "8ae14dbb13dd932bd21ccd98b2a35eb91686abd66e33b5e2f4043a2acc5fc0bb",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -16665,7 +16667,8 @@
         "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
         "2026-10-28: bounded Linux catalog resource trace audit",
         "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
-        "2026-10-29: record Linux native holder setup implementation and blocked guest execution"
+        "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
+        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence"
       ]
     },
     {
@@ -17101,11 +17104,12 @@
     },
     {
       "path": "tools/pure_linux/provider_probe.c",
-      "sha256": "b6b5fd34e4164bbc95c6a4fcfa86efa9e0b16e4053d3d44ae90abc6e39dbecf1",
-      "bytes": 39301,
+      "sha256": "30c4f268278bfe26c6fc769b7b9fc7012fd464d3f1f59052edfe5f25d0df3cf2",
+      "bytes": 39302,
       "source_sha256": "eea8b7154fb33ade2bae882b07b4589e8de3740023717e745f8bb1bf93b4aff1",
       "transformations": [
-        "2026-10-29: add guarded Linux holder setup probe and output contract"
+        "2026-10-29: add guarded Linux holder setup probe and output contract",
+        "2026-10-29: correct AndroidMainAllocator literal offset for holder setup"
       ]
     },
     {
@@ -19538,70 +19542,84 @@
     },
     {
       "path": "publication/checks-affordability.xml",
-      "sha256": "ed6541fac1ee54b0e543d98e0297520b86ca59a95480783eec5c501753352a75",
+      "sha256": "a1d540a34d0ccd405c1090838a6cb6db9af9709deb305367cb31648cab6222bb",
       "bytes": 4340,
       "source_sha256": "ed6541fac1ee54b0e543d98e0297520b86ca59a95480783eec5c501753352a75",
       "transformations": []
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
-      "sha256": "5e7d184f83664142c0d403631627d53e7092168680f9e18a85d5a92f61284a4c",
+      "sha256": "6170edebe33e17502afdcb44592f089dc1c555e4ddadcf48b5f4b7b2d990b577",
       "bytes": 12024,
       "source_sha256": "5e7d184f83664142c0d403631627d53e7092168680f9e18a85d5a92f61284a4c",
       "transformations": []
     },
     {
       "path": "publication/checks-command-coordinates.xml",
-      "sha256": "a4e9cec4d99b75d2ef79b01d993b9a04795e45ea6f661fe8dc73fd81301e8658",
+      "sha256": "48c99b07efa1b15b3b06c55e822bc8fc5f864cda58cfd9890efca963a9e07d11",
       "bytes": 8184,
       "source_sha256": "a4e9cec4d99b75d2ef79b01d993b9a04795e45ea6f661fe8dc73fd81301e8658",
       "transformations": []
     },
     {
       "path": "publication/checks-dispatch-command.xml",
-      "sha256": "f1cbc3b728b4427400c7ba2f6faf366881db6e4ef561b7fd700c2eb612860305",
+      "sha256": "62a5ac0d917066fdc78baadb6547d4716e1a39a98c9f713b3b621003f6d6aca3",
       "bytes": 6406,
       "source_sha256": "f1cbc3b728b4427400c7ba2f6faf366881db6e4ef561b7fd700c2eb612860305",
       "transformations": []
     },
     {
       "path": "publication/checks-live-command.xml",
-      "sha256": "b6dfa3b3539472c83e03eff210e080300abeae05ec7df4c59a1c5a9f9c31fbee",
+      "sha256": "7a6ed3337cb10a35126ca04774b6597dbd290cddc58e1be86d8fa8dbdef78b32",
       "bytes": 6370,
       "source_sha256": "b6dfa3b3539472c83e03eff210e080300abeae05ec7df4c59a1c5a9f9c31fbee",
       "transformations": []
     },
     {
       "path": "publication/checks-position-guards.xml",
-      "sha256": "da79f2a8eb0e8eded49b8b7e93cb74b1c0bf4dc982f8abd974f5296630c3a644",
+      "sha256": "3e192bbfcb01f9fbd9601e0f8848983df0f25fd4722714d9ff42c33dbe56f4f0",
       "bytes": 4244,
       "source_sha256": "da79f2a8eb0e8eded49b8b7e93cb74b1c0bf4dc982f8abd974f5296630c3a644",
       "transformations": []
     },
     {
       "path": "publication/checks-public.xml",
-      "sha256": "0f3ecaae3fada7588b8895763fb4d9b89d899372201db148f510ca955326a0c2",
+      "sha256": "a6028695b0e87df4a8800c38a2a15718df54b11a6b7dd8ac79e9d361816d467c",
       "bytes": 161225,
       "source_sha256": "0f3ecaae3fada7588b8895763fb4d9b89d899372201db148f510ca955326a0c2",
       "transformations": []
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
-      "sha256": "e08e156cb9098f73d3277d00fc362ea08235b04299f93f7c3d53f546dbf329c8",
+      "sha256": "1c8adc367785a9f29a93a7b51a15efc2bf6c2fe78f435faf5e857ffcbd71837f",
       "bytes": 6383,
       "source_sha256": "e08e156cb9098f73d3277d00fc362ea08235b04299f93f7c3d53f546dbf329c8",
       "transformations": []
     },
     {
       "path": "publication/checks-selection-timeout.xml",
-      "sha256": "7968099b866349417b4cdc269be6df76d570059ee2d584c1c6b8b1d2d6ab8d6a",
-      "bytes": 14581,
+      "sha256": "1d391d67a3075429b42491aafda64683b842cce7fca0a840e9a68eee2318d24e",
+      "bytes": 14580,
       "source_sha256": "7968099b866349417b4cdc269be6df76d570059ee2d584c1c6b8b1d2d6ab8d6a",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_HOLDER_SETUP_JAVAVM_BLOCK_2026-10-29.md",
+      "sha256": "bcaec3c166da01c0616a86d04ab26a20f936eff9b9b2c44fbada3d935c36833c",
+      "bytes": 2963,
+      "source_sha256": "bcaec3c166da01c0616a86d04ab26a20f936eff9b9b2c44fbada3d935c36833c",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-holder-setup-javavm-block-evidence-20261029.json",
+      "sha256": "2d90161b0ecab9d0e21f9b78f6c4f86438ccc30ef9e6e6ce3b4c25ef7111b475",
+      "bytes": 2567,
+      "source_sha256": "2d90161b0ecab9d0e21f9b78f6c4f86438ccc30ef9e6e6ce3b4c25ef7111b475",
       "transformations": []
     }
   ],
-  "file_count": 2788,
-  "source_bytes": 36200324,
+  "file_count": 2790,
+  "source_bytes": 36207845,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
