@@ -1,5 +1,14 @@
 # 阶段成果与证据索引
 
+## 2026-10-29：原始 init property service 请求边界
+
+ARM64 Linux 中，原始 init 在三次隔离复测中均生成真实 property socket，并接收
+`sys.system_server.start_count=1` 请求，返回权限拒绝 `24 / 0x18`；阶段状态为
+`INIT_PROPERTY_REQUEST_REJECTED_LIMITED`。SELinux policy 尚未加载，init 后续在真实
+kptr_restrict 写入处 fatal，退出 `6`。指定输入与观测状态前后相同，property
+readback、系统服务及游戏完整链路继续未验收。详见[报告](../agent-handoff/PURE_LINUX_INIT_PROPERTY_SERVICE_2026-10-29.md)
+和[证据](../agent-handoff/pure-linux-init-property-service-evidence-20261029.json)。
+
 ## 2026-10-29：真实系统服务启动边界
 
 在真实 SELinuxfs、binderfs、同镜像 `servicemanager` 和原始 `services.jar` 下调用

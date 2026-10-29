@@ -33,6 +33,24 @@ for device in binder hwbinder vndbinder; do
     touch "$ART_BASE/dev/$device"
     mount --bind "/dev/binderfs/$device" "$ART_BASE/dev/$device"
 done
+if [ -n "${NASHURA_INIT_STATE:-}" ]; then
+    # Original init needs a fresh property area and sockets for every attempt.
+    # Keep these writable outputs separate from earlier ART evidence.
+    case "$NASHURA_INIT_STATE" in /*) ;; *) exit 68 ;; esac
+    case "${NASHURA_VENDOR_INPUTS:-}" in /*) ;; *) exit 68 ;; esac
+    [ "$NASHURA_INIT_STATE" != / ] && [ ! -L "$NASHURA_INIT_STATE" ] || exit 68
+    [ "$NASHURA_VENDOR_INPUTS" != / ] && [ ! -L "$NASHURA_VENDOR_INPUTS" ] || exit 68
+    [ -d "$NASHURA_INIT_STATE/properties" ] && [ -d "$NASHURA_INIT_STATE/socket" ] || exit 68
+    [ -f "$NASHURA_INIT_STATE/kmsg" ] || exit 68
+    [ -f "$NASHURA_VENDOR_INPUTS/etc/selinux/plat_sepolicy_vers.txt" ] || exit 68
+    mkdir -p "$ART_BASE/vendor" "$ART_BASE/dev/socket"
+    touch "$ART_BASE/dev/kmsg"
+    mount --bind "$NASHURA_INIT_STATE/properties" "$ART_BASE/dev/__properties__"
+    mount --bind "$NASHURA_INIT_STATE/socket" "$ART_BASE/dev/socket"
+    # A regular log sink captures KernelLogger output; it is not a kernel device.
+    mount --bind "$NASHURA_INIT_STATE/kmsg" "$ART_BASE/dev/kmsg"
+    mount --bind "$NASHURA_VENDOR_INPUTS" "$ART_BASE/vendor"
+fi
 ln -sfn /proc/self/fd "$ART_BASE/dev/fd"
 ln -sfn /proc/self/fd/0 "$ART_BASE/dev/stdin"
 ln -sfn /proc/self/fd/1 "$ART_BASE/dev/stdout"

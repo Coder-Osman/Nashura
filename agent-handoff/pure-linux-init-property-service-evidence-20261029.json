@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "status": "INIT_PROPERTY_REQUEST_REJECTED_LIMITED",
+  "runtime": {
+    "architecture": "aarch64",
+    "os": "Ubuntu Linux",
+    "kernel": "6.8.0-138-generic",
+    "android_sdk_api": 30,
+    "android_emulator_started": false
+  },
+  "init_sha256": "1f0964ea07e28a6c3b236b1b29c80a42972b392d9d3b3b48398904563c35bd67",
+  "vendor_image_sha256": "1953bc61224565d08deac8624502b676b30712fd8bd6c7ee95e415a1d8015a09",
+  "vendor_selinux_version": "30.0",
+  "vendor_inputs": {
+    "build.prop": {
+      "bytes": 2157,
+      "sha256": "bfc8b4cc9db217c0598be28d8018c7b6e7d7b2eecf30f822823d1f5f5f82158b"
+    },
+    "etc/selinux/vendor_seapp_contexts": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "etc/selinux/vendor_service_contexts": {
+      "bytes": 214,
+      "sha256": "b883e322b5dbd826cd805ef05daf205c4a5f3d4418dc1b0023de8b786732659c"
+    },
+    "etc/selinux/plat_pub_versioned.cil": {
+      "bytes": 925347,
+      "sha256": "0ba4f3bc21873f853aacca6d253bfa7ecae4d39ef408c56d6297ac6a45d02510"
+    },
+    "etc/selinux/plat_sepolicy_vers.txt": {
+      "bytes": 5,
+      "sha256": "166983be04e2ab397fc7a70bb60a516b1cfd42a5ec6dd356df01ae63a8500ec0"
+    },
+    "etc/selinux/selinux_denial_metadata": {
+      "bytes": 2276,
+      "sha256": "119dc88f76020b3d4a2907759b38939ce8cbd80fb4f02b4e58d37a2e4a1fa6bd"
+    },
+    "etc/selinux/vendor_hwservice_contexts": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "etc/selinux/precompiled_sepolicy.plat_sepolicy_and_mapping.sha256": {
+      "bytes": 65,
+      "sha256": "391829e0167f44415e54ba64692ad410b1398b16263869beb22e427130eae766"
+    },
+    "etc/selinux/vendor_file_contexts": {
+      "bytes": 14984,
+      "sha256": "767e507b4c1d6c2836021d4c2d8ea099c228e6a0c2e9af91373dbbdbb47002fc"
+    },
+    "etc/selinux/precompiled_sepolicy.product_sepolicy_and_mapping.sha256": {
+      "bytes": 65,
+      "sha256": "38acb15d02d5ac0f2a2789602e9df950c380d2799b4bdb59394e4eeabdd3a662"
+    },
+    "etc/selinux/precompiled_sepolicy.system_ext_sepolicy_and_mapping.sha256": {
+      "bytes": 65,
+      "sha256": "38acb15d02d5ac0f2a2789602e9df950c380d2799b4bdb59394e4eeabdd3a662"
+    },
+    "etc/selinux/precompiled_sepolicy": {
+      "bytes": 520456,
+      "sha256": "43989811a2b605756f4a190bef7c619465276e3e508f55a8d419ea4cab4b3c69"
+    },
+    "etc/selinux/vendor_mac_permissions.xml": {
+      "bytes": 2549,
+      "sha256": "5dd587b84d7db230355c039d84f381367af4338725a21e9a7c71c2baeb582c44"
+    },
+    "etc/selinux/vendor_sepolicy.cil": {
+      "bytes": 134220,
+      "sha256": "e5372fc6aedf9842a567d632d36aa33fdf42f13edd8f54a5f9e1fc4c54230556"
+    },
+    "etc/selinux/vndservice_contexts": {
+      "bytes": 130,
+      "sha256": "7515f108b5e0118518db85976d4ce770548fb5008e73a7d8f342ef911720feec"
+    },
+    "etc/selinux/vendor_property_contexts": {
+      "bytes": 1229,
+      "sha256": "aedf67a2d20d22f9ec687f579b2e1daee7c438bf29cc8a2bebeb96ecf86c5275"
+    }
+  },
+  "attempts": [
+    {
+      "attempt": "v2",
+      "status": "INIT_PROPERTY_REQUEST_REJECTED_LIMITED",
+      "init_launcher_exit": 6,
+      "timed_out": false,
+      "socket_created": true,
+      "request": {
+        "connected": true,
+        "response_code": 24,
+        "property": "sys.system_server.start_count",
+        "value": "1",
+        "readback_verified": false
+      },
+      "inputs_unchanged": true,
+      "kernel_state_unchanged": true,
+      "kernel_before": {
+        "kptr_restrict": "1",
+        "process_context": "kernel",
+        "enforce": "0",
+        "selinux_status": {
+          "version": 1,
+          "sequence": 0,
+          "enforcing": 0,
+          "policy_load": 0,
+          "deny_unknown": 1
+        },
+        "property_service_class_exists": false
+      },
+      "kernel_after": {
+        "kptr_restrict": "1",
+        "process_context": "kernel",
+        "enforce": "0",
+        "selinux_status": {
+          "version": 1,
+          "sequence": 0,
+          "enforcing": 0,
+          "policy_load": 0,
+          "deny_unknown": 1
+        },
+        "property_service_class_exists": false
+      },
+      "input_file_count": 22,
+      "property_file_count": 171,
+      "property_info": {
+        "bytes": 44704,
+        "sha256": "e4a9c9d69adb30b8b4e025c4a7143c4ca17f627eabf41f80f386d8f20b65dd26"
+      },
+      "private_artifact_sha256": {
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kmsg": "6289393a466d85f19ca8b115bb98ee8fbcfe232a9ad979c264ac37661da91289",
+        "init.strace": "f1f4191cc43f42e579bcb3a968d3f19bffcb712358febe84e76518f6d0757c81",
+        "exit": "06e9d52c1720fca412803e3b07c4b228ff113e303f4c7ab94665319d832bbfb7",
+        "command.json": "83656044546f3a11f023095ad6fa704100c7708b0efb66b8e8552c538cd2f16e",
+        "result": "4e2e330f604c63e2ce98694ad96d4d6ff4e6c62626155840ef4631f056c4d6cf"
+      },
+      "syscall_observation": {
+        "accepted": true,
+        "received_full_v2_request": true,
+        "sent_response_code": 24
+      },
+      "fatal_observation": "Unable to set adequate kptr_restrict value!"
+    },
+    {
+      "attempt": "v3",
+      "status": "INIT_PROPERTY_REQUEST_REJECTED_LIMITED",
+      "init_launcher_exit": 6,
+      "timed_out": false,
+      "socket_created": true,
+      "request": {
+        "connected": true,
+        "response_code": 24,
+        "property": "sys.system_server.start_count",
+        "value": "1",
+        "readback_verified": false
+      },
+      "inputs_unchanged": true,
+      "kernel_state_unchanged": true,
+      "kernel_before": {
+        "kptr_restrict": "1",
+        "process_context": "kernel",
+        "enforce": "0",
+        "selinux_status": {
+          "version": 1,
+          "sequence": 0,
+          "enforcing": 0,
+          "policy_load": 0,
+          "deny_unknown": 1
+        },
+        "property_service_class_exists": false
+      },
+      "kernel_after": {
+        "kptr_restrict": "1",
+        "process_context": "kernel",
+        "enforce": "0",
+        "selinux_status": {
+          "version": 1,
+          "sequence": 0,
+          "enforcing": 0,
+          "policy_load": 0,
+          "deny_unknown": 1
+        },
+        "property_service_class_exists": false
+      },
+      "input_file_count": 22,
+      "property_file_count": 171,
+      "property_info": {
+        "bytes": 44704,
+        "sha256": "e4a9c9d69adb30b8b4e025c4a7143c4ca17f627eabf41f80f386d8f20b65dd26"
+      },
+      "private_artifact_sha256": {
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kmsg": "191bff18301b3355ec7906173a3bcb8ca35f838050d26c71e240fc8e096262a0",
+        "init.strace": "1a6453674d8e6a7d716886d1351b0fae7fa0cd6ed0a746c739eaacc75d8287a2",
+        "exit": "06e9d52c1720fca412803e3b07c4b228ff113e303f4c7ab94665319d832bbfb7",
+        "command.json": "774a70631c25d1267d7382faeac2a010dd7cd6ef65b11c7da69eb0e32b68b5ce",
+        "result": "1e55f2063b8f7f6683eceb76bbe42233d1852116de03e4caaacde16dacdd0682"
+      },
+      "syscall_observation": {
+        "accepted": true,
+        "received_full_v2_request": true,
+        "sent_response_code": 24
+      },
+      "fatal_observation": "Unable to set adequate kptr_restrict value!"
+    },
+    {
+      "attempt": "v4",
+      "status": "INIT_PROPERTY_REQUEST_REJECTED_LIMITED",
+      "init_launcher_exit": 6,
+      "timed_out": false,
+      "socket_created": true,
+      "request": {
+        "connected": true,
+        "response_code": 24,
+        "property": "sys.system_server.start_count",
+        "value": "1",
+        "readback_verified": false
+      },
+      "inputs_unchanged": true,
+      "kernel_state_unchanged": true,
+      "kernel_before": {
+        "kptr_restrict": "1",
+        "process_context": "kernel",
+        "enforce": "0",
+        "selinux_status": {
+          "version": 1,
+          "sequence": 0,
+          "enforcing": 0,
+          "policy_load": 0,
+          "deny_unknown": 1
+        },
+        "property_service_class_exists": false
+      },
+      "kernel_after": {
+        "kptr_restrict": "1",
+        "process_context": "kernel",
+        "enforce": "0",
+        "selinux_status": {
+          "version": 1,
+          "sequence": 0,
+          "enforcing": 0,
+          "policy_load": 0,
+          "deny_unknown": 1
+        },
+        "property_service_class_exists": false
+      },
+      "input_file_count": 22,
+      "property_file_count": 171,
+      "property_info": {
+        "bytes": 44704,
+        "sha256": "e4a9c9d69adb30b8b4e025c4a7143c4ca17f627eabf41f80f386d8f20b65dd26"
+      },
+      "private_artifact_sha256": {
+        "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kmsg": "adbee3b140626b83df70d0e73645d6b22a5f2490d9b0393966ddcb137706ab27",
+        "init.strace": "ccfb80145d1b14ab11648a8a23c07776365c3e10d1d1fc157f9ed93731e4ac38",
+        "exit": "06e9d52c1720fca412803e3b07c4b228ff113e303f4c7ab94665319d832bbfb7",
+        "command.json": "86e8d5f89d899ebd628549819d2a5143c477caef57193f0a0c6a6d54373a3e6a",
+        "result": "b2e017405817f12c056065ecbb94e2298bc5c4ca885355702631dabba1c08cee"
+      },
+      "syscall_observation": {
+        "accepted": true,
+        "received_full_v2_request": true,
+        "sent_response_code": 24
+      },
+      "fatal_observation": "Unable to set adequate kptr_restrict value!"
+    }
+  ],
+  "property_write_verified": false,
+  "system_services_ready": false,
+  "game_context_initialized": false,
+  "catalog_ready_pass": false,
+  "downstream_gates": "NOT_RUN",
+  "scope_note": "Hash comparisons cover 22 declared input files and listed SELinux/sysctl observations only; private raw artifacts and third-party inputs are omitted.",
+  "global_policy_loaded": false,
+  "sysctl_modified": false,
+  "engineering_validation": {
+    "python": "3.13.5",
+    "pure_linux": {
+      "passed": 1128,
+      "skipped": 1
+    },
+    "public_main_group": {
+      "passed": 794,
+      "skipped": 27
+    },
+    "main_engine": {
+      "passed": 211
+    },
+    "public_other_groups_exit": 0,
+    "shell_syntax_exit": 0,
+    "gitleaks_exit": 0,
+    "game_acceptance_implied": false
+  }
+}

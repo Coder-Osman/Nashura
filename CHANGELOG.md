@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-29：原始 init property service 请求边界
+
+- 扩展 namespace launcher，为原始 init 提供独立 property/socket/log 输出及原始 vendor 输入。
+- 新增有输入身份和状态对照的真实 property 协议探针；三次复测均收到权限拒绝 24，init 后续 fatal 退出 6，保留原始失败证据。
+- 增加协议分段/截断、输出路径和验收门测试；socket 或 ACK 不等于 property readback、系统服务或游戏初始化通过。
+- 发布限定阶段报告与脱敏 SHA 摘要，系统服务和完整游戏链路继续推进。
+
 ## 2026-10-29：真实系统服务启动边界
 
 - 新增原始 `SystemServer`/`android_servers` 入口探针和脱敏证据摘要。
