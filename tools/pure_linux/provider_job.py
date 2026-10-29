@@ -55,6 +55,7 @@ ENTRY_GUARDS = {
     "ALLOCATOR_FREE": (0x12373a4, "4582f74d263c1fb89fb1b2f5773cd3b243570010ae7699f124d2bbcf54d25fd5"),
     "ARGUMENT_FACTORY": (0x13a29b0, "678076dcebd45809617481c463e518663dfe5db67a9313fc0309b7a2a11fdb61"),
     "HOLDER_FACTORY": (0x13a3d14, "041505b15bf9b5814480d13d3f0d3d424b0ae1ff43e1242fc3ca890e3c436508"),
+    "HOLDER_SETUP": (0x13a3e3c, "78cc9be1bb5f8c5b2b5d8126531866d5beef174720d0a854e8cdaa899133dd02"),
     "ARGUMENT_DESTROY": (0x13a2a3c, "5673e9e2217f2b5b73e906964aa3ee0b4692e99df35cf614907e253064c34b18"),
     "HOLDER_DESTROY": (0x13a3d70, "10b0466a018fcab3030e87fbb8096da0d6eff17e4eefa8be245e7d627c3d19fb"),
 }
@@ -278,6 +279,7 @@ def main():
                         help="Call the observed owner getter and stop before catalog or factory initialization")
     parser.add_argument("--allocator-only", action="store_true", help="Exercise the observed native allocator only")
     parser.add_argument("--holder-factory-only", action="store_true", help="Exercise the observed native holder factory only")
+    parser.add_argument("--holder-setup-only", action="store_true", help="Exercise the observed native holder setup only")
     parser.add_argument("--app-version", help="Explicit verified package version for the bounded owner experiment")
     parser.add_argument("--loading-config-candidate", action="store_true")
     parser.add_argument("--native-backup-queue", action="store_true",
@@ -299,6 +301,8 @@ def main():
         parser.error("owner getter experiment must not initialize factory, catalog, or a resource")
     if arguments.allocator_only and (arguments.owner_getter_only or arguments.catalog_mode or arguments.factory_mode or arguments.resource_name):
         parser.error("allocator experiment must not run owner, factory, catalog, or a resource")
+    if arguments.holder_setup_only and (arguments.allocator_only or arguments.owner_getter_only or arguments.holder_factory_only or arguments.catalog_mode or arguments.factory_mode or arguments.resource_name):
+        parser.error("holder setup experiment must not run owner, allocator-only, holder factory, catalog, or a resource")
     if arguments.holder_factory_only and (arguments.allocator_only or arguments.owner_getter_only or arguments.catalog_mode or arguments.factory_mode or arguments.resource_name):
         parser.error("holder factory experiment must not run owner, allocator-only, catalog, or a resource")
     if arguments.app_version is not None and (not arguments.owner_getter_only or arguments.app_version != "15.535.13"):
@@ -399,6 +403,8 @@ def main():
         environment["NASHURA_ALLOCATOR_ONLY"] = "1"
     if arguments.holder_factory_only:
         environment["NASHURA_HOLDER_FACTORY_ONLY"] = "1"
+    if arguments.holder_setup_only:
+        environment["NASHURA_HOLDER_SETUP_ONLY"] = "1"
     if arguments.app_version is not None:
         environment["NASHURA_APP_VERSION"] = arguments.app_version
     if arguments.factory_mode:
@@ -486,6 +492,14 @@ def main():
         lines = text.splitlines()
         passed = passed and all(lines.count(line) == 1 for line in (
             "HOLDER_ARGUMENT_CREATED\t1", "HOLDER_FACTORY_CREATED\t1", "HOLDER_FACTORY_RELEASED\t1"))
+    if arguments.holder_setup_only:
+        lines = text.splitlines()
+        passed = passed and all(lines.count(line) == 1 for line in (
+            "HOLDER_SETUP_INPUT_READY\t1", "HOLDER_SETUP_SLOT_BEFORE\t0",
+            "HOLDER_SETUP_SLOT_AFTER\t1", "HOLDER_SETUP_OBJECT_RANGE\t1",
+            "HOLDER_SETUP_ALLOCATOR_MATCH\t1", "HOLDER_SETUP_OBJECT_OFFSET\t0",
+            "HOLDER_SETUP_RETURNED\t1", "HOLDER_SETUP_SLOT_CLEARED\t1",
+            "HOLDER_SETUP_RELEASED\t1"))
     if preference is not None:
         passed = passed and preference["configuration_contract_pass"]
     if arguments.observe_targets:
@@ -519,6 +533,7 @@ def main():
                    "owner_getter_only": arguments.owner_getter_only,
                    "allocator_only": arguments.allocator_only,
                    "holder_factory_only": arguments.holder_factory_only,
+                   "holder_setup_only": arguments.holder_setup_only,
                    "app_version_bridge_candidate": arguments.app_version is not None,
                    "native_backup_candidate_observations": backup_candidate,
                    "native_backup_android_parity": "NOT_VERIFIED" if arguments.native_backup_queue else None,
@@ -529,6 +544,8 @@ def main():
         result["status"] = "ALLOCATOR_ONLY_OBSERVED"
     elif passed and arguments.holder_factory_only:
         result["status"] = "HOLDER_FACTORY_OBSERVED"
+    elif passed and arguments.holder_setup_only:
+        result["status"] = "HOLDER_SETUP_OBSERVED"
     elif passed and arguments.owner_getter_only:
         result["status"] = "OWNER_GETTER_OBSERVED"
     elif passed and arguments.catalog_mode:

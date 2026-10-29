@@ -1,5 +1,16 @@
 # 阶段成果与证据索引
 
+## 2026-10-29 E2.1-N：Linux 原生持有者设置阶段
+
+Android holder setup 追踪稳定通过：事件无丢失，设置槽从空变为非空并与同线程
+后续初始化关联，update 清单前后均为908项。holder setup 的 Linux probe、版本
+guard、输出契约和审计器已加入；但 VMware Ubuntu ARM64 guest 的 `vmrun` 操作缺少
+有效 guest 密码，SSH 22 端口拒绝，本轮没有生成 Linux 结果或日志，因此阶段状态为
+`BLOCKED_ENVIRONMENT`，不声称 Linux setup 已执行。纯 Linux 专项为 `1105 passed、
+1 skipped`，严格 `CATALOG_READY_PASS=false`，其余完整引擎门保持 `NOT_RUN`。
+详见[报告](../agent-handoff/PURE_LINUX_HOLDER_SETUP_2026-10-29.md)和
+[机器证据](../agent-handoff/pure-linux-holder-setup-evidence-20261029.json)。
+
 ## 2026-10-29 E2.1-N：Linux 原生持有者工厂生命周期
 
 真实 ARM64 Linux 子进程完成参数工厂、持有者工厂的创建与清理，并通过 Android

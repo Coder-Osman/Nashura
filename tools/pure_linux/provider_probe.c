@@ -109,8 +109,60 @@ static int exercise_holder_factory(void) {
     puts("HOLDER_FACTORY_RELEASED\t1");
     return 1;
 }
+
+static int exercise_holder_setup(void) {
+    if (!guard("NASHURA_ALLOCATOR_CTOR_GUARD", 0x1237348) ||
+        !guard("NASHURA_ALLOCATOR_ALLOC_GUARD", 0x1237358) ||
+        !guard("NASHURA_ALLOCATOR_FREE_GUARD", 0x12373a4) ||
+        !guard("NASHURA_ARGUMENT_FACTORY_GUARD", 0x13a29b0) ||
+        !guard("NASHURA_HOLDER_FACTORY_GUARD", 0x13a3d14) ||
+        !guard("NASHURA_HOLDER_SETUP_GUARD", 0x13a3e3c) ||
+        !guard("NASHURA_ARGUMENT_DESTROY_GUARD", 0x13a2a3c) ||
+        !guard("NASHURA_HOLDER_DESTROY_GUARD", 0x13a3d70)) return 0;
+    const char *name = (const char *)(base + 0x2ba51);
+    if (!is_readable((uintptr_t)name, sizeof("AndroidMainAllocator")) ||
+        memcmp(name, "AndroidMainAllocator", sizeof("AndroidMainAllocator"))) return 0;
+    struct { uint64_t before; uintptr_t object[2]; uint64_t after; } allocator = {canary, {0, 0}, canary};
+    ((void (*)(void *, const char *))(base + 0x1237348))(allocator.object, name);
+    if (allocator.object[0] != base + 0x18bf798 || allocator.object[1] != (uintptr_t)name) return 0;
+    void *wrapper = NULL;
+    invoke_factory(allocator.object, NULL, &wrapper, (void *)(base + 0x13a29b0));
+    uintptr_t clean = (uintptr_t)wrapper & UINT64_C(0x00ffffffffffffff);
+    if (!is_readable(clean, 16) || pointer_at(clean) != base + 0x18c8ae8) return 0;
+    uintptr_t argument = pointer_at(clean + 8) & UINT64_C(0x00ffffffffffffff);
+    if (!is_readable(argument, 0x20) || pointer_at(argument) != base + 0x18c8b40 ||
+        pointer_at(argument + 8) != (uintptr_t)allocator.object) return 0;
+    void *holder = NULL;
+    invoke_factory(allocator.object, (void *)argument, &holder, (void *)(base + 0x13a3d14));
+    uintptr_t h = (uintptr_t)holder & UINT64_C(0x00ffffffffffffff);
+    if (!is_readable(h - 0x18, 0x40) || pointer_at(h) != base + 0x18c8be0 ||
+        pointer_at(h + 8) != (uintptr_t)allocator.object || pointer_at(h + 0x10) != argument ||
+        pointer_at(h + 0x18) || pointer_at(h + 0x20)) return 0;
+    puts("HOLDER_SETUP_INPUT_READY\t1");
+    printf("HOLDER_SETUP_SLOT_BEFORE\t%d\n", pointer_at(h + 0x20) != 0);
+    ((void (*)(void *))(base + 0x13a3e3c))(holder);
+    uintptr_t object = pointer_at(h + 0x20) & UINT64_C(0x00ffffffffffffff);
+    int object_range = object != 0 && is_readable(object, 0x78);
+    int allocator_match = object_range && pointer_at(object) == (uintptr_t)allocator.object;
+    printf("HOLDER_SETUP_SLOT_AFTER\t%d\n", object != 0);
+    printf("HOLDER_SETUP_OBJECT_RANGE\t%d\n", object_range);
+    printf("HOLDER_SETUP_ALLOCATOR_MATCH\t%d\n", allocator_match);
+    puts("HOLDER_SETUP_OBJECT_OFFSET\t0");
+    if (!object || !object_range || !allocator_match) return 0;
+    puts("HOLDER_SETUP_RETURNED\t1");
+    ((void (*)(void *))(base + 0x13a3d70))(holder);
+    int cleared = pointer_at(h + 0x20) == 0;
+    printf("HOLDER_SETUP_SLOT_CLEARED\t%d\n", cleared);
+    ((void (*)(void *, void *))(base + 0x12373a4))(allocator.object, (unsigned char *)holder - 0x18);
+    ((void (*)(void *))(base + 0x13a2a3c))(wrapper);
+    ((void (*)(void *, void *))(base + 0x12373a4))(allocator.object, (unsigned char *)wrapper - 0x18);
+    if (!cleared || allocator.before != canary || allocator.after != canary) return 0;
+    puts("HOLDER_SETUP_RELEASED\t1");
+    return 1;
+}
 #else
 static int exercise_holder_factory(void) { return 0; }
+static int exercise_holder_setup(void) { return 0; }
 #endif
 
 #if defined(__aarch64__)
@@ -669,6 +721,10 @@ int native_provider_probe(uintptr_t engine, int (*readable)(uintptr_t, size_t)) 
     int resource_status = 0;
     if (getenv("NASHURA_HOLDER_FACTORY_ONLY")) {
         if (!exercise_holder_factory()) return 100;
+        goto release_provider;
+    }
+    if (getenv("NASHURA_HOLDER_SETUP_ONLY")) {
+        if (!exercise_holder_setup()) return 101;
         goto release_provider;
     }
     if (getenv("NASHURA_ALLOCATOR_ONLY")) {

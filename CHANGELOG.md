@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-29：Linux 原生持有者设置阶段
+
+- 新增 `--holder-setup-only` 及 Linux holder setup 的对象槽、分配器关系、析构清理和输出顺序检查。
+- 新增 `audit_native_holder_setup.py` 及定向测试；纯 Linux 专项 `1105 passed、1 skipped`。
+- Android holder setup 证据稳定通过；Ubuntu ARM64 guest 因 `vmrun` 缺少有效登录密码且 SSH 22 端口拒绝，Linux setup 记录为 `BLOCKED_ENVIRONMENT`，不把未执行结果写成通过。
+- 详见 `agent-handoff/PURE_LINUX_HOLDER_SETUP_2026-10-29.md` 与对应机器证据摘要。
+
 ## 2026-10-29：Linux 原生持有者工厂生命周期
 
 - 在匹配真实 `libg.so` 的 ARM64 Linux 隔离子进程中完成参数工厂和持有者工厂的创建、字段检查、析构及分配器释放；跨端身份审计 exit 0。

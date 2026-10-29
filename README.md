@@ -1,5 +1,15 @@
 # Nashura
 
+## 2026-10-29：Linux 原生持有者设置阶段
+
+Android holder setup 追踪稳定通过，设置槽从空变为非空并与后续初始化关联；Linux
+侧已加入真实入口 guard、对象/分配器检查、清理契约和审计器。当前 Ubuntu ARM64
+guest 的 `vmrun` 登录缺少有效密码且 SSH 端口拒绝，所以 Linux setup 保持
+`BLOCKED_ENVIRONMENT`，没有生成 Linux 运行结果。纯 Linux 专项测试为
+`1105 passed、1 skipped`；严格 catalog、ResourceManager、GameState、真实 Step、
+完整对局和性能验收仍未运行。详见[报告](agent-handoff/PURE_LINUX_HOLDER_SETUP_2026-10-29.md)
+和[机器证据](agent-handoff/pure-linux-holder-setup-evidence-20261029.json)。
+
 ## 2026-10-29：Linux 原生持有者工厂生命周期
 
 在 ARM64 Linux 隔离子进程中，以真实 `libg.so` 验证参数工厂和持有者工厂的

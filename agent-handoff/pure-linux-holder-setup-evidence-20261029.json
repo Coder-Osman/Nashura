@@ -1,0 +1,65 @@
+{
+  "schema": "nashura.pure-linux-holder-setup.v1",
+  "baseline_commit": "3fbb164",
+  "status": "BLOCKED_ENVIRONMENT",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "holder_setup_guard": {
+    "offset": "0x13a3e3c",
+    "sha256": "78cc9be1bb5f8c5b2b5d8126531866d5beef174720d0a854e8cdaa899133dd02"
+  },
+  "probe_sha256": "35dc410dd8cb35890d4cdeeaaa798f85129ee8ee6f4fce0366d12b70180a30c8",
+  "android": {
+    "result_sha256": "d7b8c2549548de2d23d0ec3cbe3149cd484071d623d7c304655dde045f749f01",
+    "script_sha256": "c03f5bf0f77acaba856deb5fad44b413cd84a05d09da46c6f3316fee8208c90e",
+    "errors": [],
+    "lost": 0,
+    "event_count": 6056,
+    "setup_caller": "0x139e330",
+    "slot_before_nonnull": false,
+    "slot_after_nonnull": true,
+    "init_holder_setup_id": 2,
+    "update_before": {
+      "count": 908,
+      "sha256": "47d4ad200eafff21ea1538132e2bb629526efd87e495d72baf3acb9d95f9e2bc"
+    },
+    "update_after": {
+      "count": 908,
+      "sha256": "47d4ad200eafff21ea1538132e2bb629526efd87e495d72baf3acb9d95f9e2bc"
+    }
+  },
+  "linux": {
+    "execution": "NOT_RUN",
+    "result_sha256": null,
+    "stdout_sha256": null,
+    "stderr_sha256": null,
+    "vmware_tools": "running",
+    "guest_operations": [
+      {
+        "operation": "listProcessesInGuest",
+        "status": "BLOCKED_MISSING_GUEST_PASSWORD"
+      },
+      {
+        "operation": "runProgramInGuest",
+        "status": "BLOCKED_MISSING_GUEST_PASSWORD"
+      },
+      {
+        "operation": "ssh_port_22",
+        "status": "REFUSED"
+      }
+    ]
+  },
+  "gates": {
+    "android_holder_setup": "PASS",
+    "linux_holder_setup": "BLOCKED_ENVIRONMENT",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "game_state": "NOT_RUN",
+    "step_tick": "NOT_RUN",
+    "full_match": "NOT_RUN"
+  },
+  "limitations": [
+    "Linux probe was compiled but not executed in the guest",
+    "No Linux result or stdout/stderr identity exists for this stage",
+    "Android lifecycle evidence does not establish Linux execution"
+  ]
+}
