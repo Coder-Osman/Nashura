@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-30：ART 服务观察器扩展与 guest 实验阻塞
+
+- 扩展 `ArtSystemServicesProbe`，增加 Thermal/Power Binder 与服务列表、ServiceRegistry fetcher、Context 缓存槽、`PowerManagerInternal` 观察和阶段化错误输出。
+- 标记 fetcher 复查对隔离 Context 缓存槽的干预；纯 Linux 1,138 项、公开检查 1,104 项、主引擎 211 项通过，公开检查有 42 项跳过；Java 17 目标严格编译通过，guest ART probe 尚未运行。
+- v22 只读计划与 apply 因 guest sudo 认证失败均未开始；没有新加载 policy、sysctl 变更或实验输出。既有 property 写入/读回仍为 `PASS_LIMITED`，系统服务和完整游戏链路保持未验收。
+- 发布脱敏报告和证据摘要；公开清单（2,834 项）、gitleaks 和 whitespace 检查通过。
+
 ## 2026-10-29：原始 APEX 激活与持续属性服务
 
 - 将同镜像 22 个原始 APEX 作为只读输入，原始 apexd 逐包校验并实际挂载五个 bootstrap APEX；按真实挂载事件计数，汇总行的 22 不作为挂载数。

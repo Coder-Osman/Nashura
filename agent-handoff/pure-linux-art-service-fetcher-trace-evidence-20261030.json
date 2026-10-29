@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "status": "ART_SERVICE_FETCHER_TRACE_SOURCE_READY_GUEST_BLOCKED",
+  "date": "2026-10-30",
+  "probe": {
+    "source": "tools/pure_linux/ArtSystemServicesProbe.java",
+    "source_sha256": "c26a173c543a3d05a852f346fbf561aa9bb60325490f3231b6584f0a664b07da",
+    "scope": [
+      "ThermalManagerService start and Binder lookup",
+      "Power Binder lookup and service listing",
+      "SystemServiceRegistry Power fetcher and cache slot inspection",
+      "PowerManagerInternal LocalServices lookup",
+      "stage-specific flushed failure output"
+    ],
+    "cache_recheck_is_interventional": true,
+    "cache_recheck_description": "In the isolated probe process, a non-initial Context cache state is cleared before direct fetcher retry; interpret retry separately from the natural initial state.",
+    "guest_runtime_probe_executed": false
+  },
+  "engineering_validation": {
+    "targeted_tests": {
+      "command": "python3 -m pytest -q -p no:cacheprovider tools/pure_linux/test_probe_root_init.py",
+      "passed": 6,
+      "failed": 0
+    },
+    "java_compile": {
+      "release": 17,
+      "lint": "all",
+      "warnings_as_errors": true,
+      "passed": true
+    },
+    "pure_linux_suite": {
+      "passed": 1138,
+      "skipped": 1
+    },
+    "public_checks": {
+      "passed": 1104,
+      "skipped": 42,
+      "all_groups_passed": true
+    },
+    "main_engine": {
+      "passed": 211
+    },
+    "public_snapshot_files_verified": 2834,
+    "gitleaks": "no leaks found",
+    "git_diff_check": "passed"
+  },
+  "guest_trial": {
+    "label": "v22 original-policy root-init trial",
+    "status": "BLOCKED_GUEST_PRIVILEGE",
+    "read_only_plan_started": false,
+    "apply_started": false,
+    "new_policy_load_attempted": false,
+    "sysctl_changed_by_this_attempt": false,
+    "output_directory_created": false,
+    "blocker": "Guest sudo authentication was rejected; execution stopped before preflight or apply."
+  },
+  "previous_limited_result": {
+    "property_write_and_same_image_getprop_readback": "PASS_LIMITED",
+    "does_not_establish": [
+      "system services ready",
+      "GameApp Context initialized",
+      "strict catalog ready",
+      "ResourceManager, GameState, or Step passed",
+      "complete game or performance passed"
+    ]
+  }
+}

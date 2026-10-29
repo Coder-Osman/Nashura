@@ -10194,16 +10194,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "e88e55b5452660038cda4941eb2205da416b601aaac166bb7de91fc3f7c525bc",
-      "bytes": 57637,
-      "source_sha256": "e88e55b5452660038cda4941eb2205da416b601aaac166bb7de91fc3f7c525bc",
+      "sha256": "7eddf34e77d173540fd90d56ca2aab3a374e94ff61704c4abf7984f1f344c1fd",
+      "bytes": 58460,
+      "source_sha256": "7eddf34e77d173540fd90d56ca2aab3a374e94ff61704c4abf7984f1f344c1fd",
       "transformations": []
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "5cefda23799dcc73b28ee78101cfa55f64811c97406b694cbb10d1485abedd3d",
-      "bytes": 91802,
-      "source_sha256": "5cefda23799dcc73b28ee78101cfa55f64811c97406b694cbb10d1485abedd3d",
+      "sha256": "be36af1d8788e142987f9707e971c5929c96a9a66b3ee82ec6b57eef6443bfd6",
+      "bytes": 92607,
+      "source_sha256": "be36af1d8788e142987f9707e971c5929c96a9a66b3ee82ec6b57eef6443bfd6",
       "transformations": []
     },
     {
@@ -16615,9 +16615,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "61c734cace138c129cd1a923da198fd21014f042366597e7fd2e248124892c0c",
-      "bytes": 58843,
-      "source_sha256": "61c734cace138c129cd1a923da198fd21014f042366597e7fd2e248124892c0c",
+      "sha256": "ca00467d46556fdccaa7118e65128f7c8a3ffac91d0ff70cec85f5f81a10046f",
+      "bytes": 59620,
+      "source_sha256": "ca00467d46556fdccaa7118e65128f7c8a3ffac91d0ff70cec85f5f81a10046f",
       "transformations": []
     },
     {
@@ -19782,9 +19782,9 @@
     },
     {
       "path": "tools/pure_linux/ArtSystemServicesProbe.java",
-      "sha256": "b4ed1148af163b17ee23a6c19bea3540d5910be5c984bf7da3314a04289fc130",
-      "bytes": 3928,
-      "source_sha256": "b4ed1148af163b17ee23a6c19bea3540d5910be5c984bf7da3314a04289fc130",
+      "sha256": "c26a173c543a3d05a852f346fbf561aa9bb60325490f3231b6584f0a664b07da",
+      "bytes": 13470,
+      "source_sha256": "c26a173c543a3d05a852f346fbf561aa9bb60325490f3231b6584f0a664b07da",
       "transformations": []
     },
     {
@@ -19898,10 +19898,24 @@
       "bytes": 4062,
       "source_sha256": "d493bb31db8291be1eaceb9e5fb06f07f5d7f967c002977bcbd7a43bcc792645",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_ART_SERVICE_FETCHER_TRACE_2026-10-30.md",
+      "sha256": "9770ecbe9ec7e15c9d9b9c89f838fec94b38f37d9c4c8fc9ad348d49074a4783",
+      "bytes": 2897,
+      "source_sha256": "9770ecbe9ec7e15c9d9b9c89f838fec94b38f37d9c4c8fc9ad348d49074a4783",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-art-service-fetcher-trace-evidence-20261030.json",
+      "sha256": "6061cf83367478bcdf7c101404a145828dfbb5a746f453084e207e5aee91c5ad",
+      "bytes": 2277,
+      "source_sha256": "6061cf83367478bcdf7c101404a145828dfbb5a746f453084e207e5aee91c5ad",
+      "transformations": []
     }
   ],
-  "file_count": 2832,
-  "source_bytes": 36452149,
+  "file_count": 2834,
+  "source_bytes": 36469270,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

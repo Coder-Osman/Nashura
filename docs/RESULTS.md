@@ -1,5 +1,15 @@
 # 阶段成果与证据索引
 
+## 2026-10-30：ART 服务观察器扩展与 guest 实验阻塞
+
+扩展原始 ART probe 的 Thermal/Power Binder、ServiceRegistry fetcher、Context 缓存槽
+及 PowerManagerInternal 观察；纯 Linux 1,138 项、公开检查 1,104 项、主引擎 211 项
+通过，公开检查有 42 项跳过；未在 guest 运行。v22 policy 实验的只读计划与 apply 均未启动，guest sudo 认证被拒绝；本轮没有
+新 policy load、sysctl 写入或实验输出。既有 property 写入/同镜像读回维持
+`PASS_LIMITED`，系统服务、GameApp Context、严格 catalog 与完整游戏链路仍未通过或
+未运行。详见[报告](../agent-handoff/PURE_LINUX_ART_SERVICE_FETCHER_TRACE_2026-10-30.md)
+和[证据](../agent-handoff/pure-linux-art-service-fetcher-trace-evidence-20261030.json)。
+
 ## 2026-10-29：原始 APEX 激活与持续属性服务
 
 原始 apexd 已校验并实际挂载五个 bootstrap APEX，原始 BoringSSL 64 位自检返回

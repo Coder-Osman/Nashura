@@ -1,5 +1,15 @@
 # Nashura
 
+## 2026-10-30：ART 服务观察器扩展与 guest 实验阻塞
+
+扩展原始 ART 服务探针，加入 Thermal/Power Binder、ServiceRegistry fetcher、Context
+缓存槽及 PowerManagerInternal 观察；纯 Linux 1,138 项、公开检查 1,104 项、主引擎
+211 项通过，公开检查有 42 项跳过。扩展后的
+guest 服务 probe 未运行。原始 init 的 v22 只读计划和 apply 均因 guest sudo 认证失败
+未启动，本轮没有加载新 policy、改动 sysctl 或新增实验输出。既有 property 写入/读回
+仍为 `PASS_LIMITED`，系统服务与完整游戏链路未验收。详见[报告](agent-handoff/PURE_LINUX_ART_SERVICE_FETCHER_TRACE_2026-10-30.md)和
+[证据](agent-handoff/pure-linux-art-service-fetcher-trace-evidence-20261030.json)。
+
 ## 2026-10-29：原始 APEX 激活与持续属性服务
 
 原始 apexd 已校验并实际挂载五个 bootstrap APEX，原始 BoringSSL 64 位自检返回
