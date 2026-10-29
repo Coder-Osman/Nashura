@@ -32,6 +32,7 @@ const engineOwnerGetterHolders = new Map();
 const engineOwnerHolderSetups = new Map();
 const engineOwnerHolderFactories = new Map();
 const engineOwnerAllocators = new Map();
+const engineOwnerFactoryArguments = new Map();
 const engineOwnerInitScopes = new Map();
 const observedSlots = [9, 10, 22, 34, 35, 123, 133, 166, 173, 179, 187, 189, 191, 205, 212, 213, 214];
 function record(event) {
@@ -147,6 +148,29 @@ function collectPath(module, history, args, returnAddress) {
 function observe(module) {
   if (module.name !== 'libg.so') return;
   if (includeBatchPhases) {
+    attach(module, 0x13a29b0, 'owner_factory_argument_source_candidate', {
+      onEnter: function (args) {
+        this.sourceAllocator = args[0].and(ptr('0x00ffffffffffffff'));
+        this.sourceOutput = this.context.x8.and(ptr('0x00ffffffffffffff'));
+        this.sourceId = ++nextCall;
+        this.sourceThread = Process.getCurrentThreadId();
+        const caller = this.returnAddress.and(ptr('0x00ffffffffffffff'));
+        this.sourceCaller = caller.compare(module.base) >= 0 && caller.compare(module.base.add(module.size)) < 0
+          ? caller.sub(module.base).toString() : 'external';
+      },
+      onLeave: function () {
+        try {
+          const wrapper = this.sourceOutput.readPointer().and(ptr('0x00ffffffffffffff'));
+          const argument = wrapper.add(8).readPointer().and(ptr('0x00ffffffffffffff'));
+          const allocator = argument.add(8).readPointer().and(ptr('0x00ffffffffffffff'));
+          const row = {id: this.sourceId, caller: this.sourceCaller, thread: this.sourceThread,
+                       wrapper_nonnull: !wrapper.isNull(), argument_nonnull: !argument.isNull(),
+                       allocator_matches: allocator.equals(this.sourceAllocator)};
+          engineOwnerFactoryArguments.set(argument.toString(), row);
+          record({kind: 'owner_factory_argument_source_return', ...row});
+        } catch (error) { errors.push('factory argument source observation: ' + String(error)); }
+      }
+    });
     attach(module, 0x1237348, 'owner_allocator_constructor_candidate', {
       onEnter: function (args) {
         this.allocator = args[0].and(ptr('0x00ffffffffffffff'));
@@ -173,6 +197,7 @@ function observe(module) {
       onEnter: function (args) {
         this.allocator = args[0].and(ptr('0x00ffffffffffffff'));
         this.factoryArgument = args[1].and(ptr('0x00ffffffffffffff'));
+        this.factoryParent = this.context.x19.and(ptr('0x00ffffffffffffff'));
         this.output = this.context.x8.and(ptr('0x00ffffffffffffff'));
         this.factoryId = ++nextCall;
         this.factoryThread = Process.getCurrentThreadId();
@@ -182,6 +207,21 @@ function observe(module) {
           const holder = this.output.readPointer().and(ptr('0x00ffffffffffffff'));
           const allocator = holder.add(8).readPointer().and(ptr('0x00ffffffffffffff'));
           const factoryField = holder.add(0x10).readPointer().and(ptr('0x00ffffffffffffff'));
+          const argRange = this.factoryArgument.isNull() ? null : Process.findRangeByAddress(this.factoryArgument);
+          let argumentTableModule = null, argumentTableOffset = null;
+          if (argRange && argRange.protection.includes('r') &&
+              this.factoryArgument.add(8).compare(argRange.base.add(argRange.size)) <= 0) {
+            const argumentTable = this.factoryArgument.readPointer().and(ptr('0x00ffffffffffffff'));
+            const ownerModule = Process.findModuleByAddress(argumentTable);
+            argumentTableModule = ownerModule ? ownerModule.name : null;
+            argumentTableOffset = ownerModule && ownerModule.name === module.name ? argumentTable.sub(module.base).toString() : null;
+          }
+          const parentRange = this.factoryParent.isNull() ? null : Process.findRangeByAddress(this.factoryParent);
+          let argumentMatchesParentField = null;
+          if (parentRange && parentRange.protection.includes('r') &&
+              this.factoryParent.add(0xf0).compare(parentRange.base.add(parentRange.size)) <= 0)
+            argumentMatchesParentField = this.factoryParent.add(0xe8).readPointer().and(ptr('0x00ffffffffffffff'))
+              .equals(this.factoryArgument);
           const table = this.allocator.readPointer().and(ptr('0x00ffffffffffffff'));
           const tableModule = Process.findModuleByAddress(table);
           const tableOffset = tableModule && tableModule.name === module.name ? table.sub(module.base).toString() : null;
@@ -191,6 +231,9 @@ function observe(module) {
                   allocator_constructor: engineOwnerAllocators.get(this.allocator.toString()) || null,
                   factory_argument_nonnull: !this.factoryArgument.isNull(),
                   factory_argument_matches_field: factoryField.equals(this.factoryArgument),
+                  factory_argument_matches_parent_field: argumentMatchesParentField,
+                  factory_argument_table_module: argumentTableModule, factory_argument_table_offset: argumentTableOffset,
+                  factory_argument_source: engineOwnerFactoryArguments.get(this.factoryArgument.toString()) || null,
                   allocator_vtable_module: tableModule ? tableModule.name : null, allocator_vtable_offset: tableOffset});
         } catch (error) { errors.push('owner holder factory observation: ' + String(error)); }
       }

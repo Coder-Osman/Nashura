@@ -1,5 +1,14 @@
 # 阶段成果与证据索引
 
+## 2026-10-29 E2.1-N：Linux 原生持有者工厂生命周期
+
+真实 ARM64 Linux 子进程完成参数工厂、持有者工厂的创建与清理，并通过 Android
+参数来源和 Linux 输出的 SHA/顺序审计。阶段状态为 `NATIVE_VERIFIED_LIMITED`；严格
+`CATALOG_READY_PASS=false`，配置异常、Backup 等价、ResourceManager、GameState、
+Step、完整对局及性能验收保持 `UNRESOLVED/NOT_RUN`。相关测试为1094 passed、1 skipped。
+详见[报告](../agent-handoff/PURE_LINUX_NATIVE_HOLDER_FACTORY_2026-10-29.md)和
+[机器证据](../agent-handoff/pure-linux-native-holder-factory-evidence-20261029.json)。
+
 ## 2026-10-29 E2.1-N：完成函数查询键
 
 双端30字节键一致，查询结果仍不同。详见

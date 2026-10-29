@@ -60,6 +60,18 @@ def test_allocator_only_rejects_other_work(extra):
     assert "allocator experiment must not run" in result.stderr
 
 
+@pytest.mark.parametrize("extra", [["--owner-getter-only"], ["--allocator-only"],
+                                  ["--catalog-mode", "loader"], ["--factory-mode", "register"]])
+def test_holder_factory_only_rejects_other_work(extra):
+    script = Path(__file__).with_name("provider_job.py")
+    result = subprocess.run([sys.executable, str(script), "--payload", "unused", "--probe", "unused",
+                             "--output", "unused", "--mode", "both", "--data-root", "unused",
+                             "--update-root", "unused", "--resource-manifest", "unused",
+                             "--holder-factory-only", *extra], capture_output=True, text=True)
+    assert result.returncode == 2
+    assert "holder factory experiment must not run" in result.stderr
+
+
 @pytest.mark.parametrize("flags", [["--app-version", "15.535.13"],
                                    ["--owner-getter-only", "--app-version", "1.0"]])
 def test_app_version_requires_bounded_owner_and_observed_identity(flags):

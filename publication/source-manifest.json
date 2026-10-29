@@ -10194,9 +10194,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "5bba0247b1b3c8f5f8ce59a2c9b58fd68dcd9a5bc2bac2269eaf3a28229addd0",
-      "bytes": 49148,
-      "source_sha256": "5bba0247b1b3c8f5f8ce59a2c9b58fd68dcd9a5bc2bac2269eaf3a28229addd0",
+      "sha256": "fb7152fb2435b87967b4cc88a066b864e0bba37937450c043c03af27fc8c1f48",
+      "bytes": 49780,
+      "source_sha256": "fb7152fb2435b87967b4cc88a066b864e0bba37937450c043c03af27fc8c1f48",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -10216,9 +10216,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "47fe9e64d47b84ab0cd6a1474d012046351954af7c8feb870c01a473e87bf26a",
-      "bytes": 82269,
-      "source_sha256": "47fe9e64d47b84ab0cd6a1474d012046351954af7c8feb870c01a473e87bf26a",
+      "sha256": "c293f7e9805dbaec780d237ea34350438b5cee1847ae90d36f136d2b1a4996f7",
+      "bytes": 82911,
+      "source_sha256": "c293f7e9805dbaec780d237ea34350438b5cee1847ae90d36f136d2b1a4996f7",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -16645,9 +16645,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "ab18232581f53d9087f412913df8f47991d72ab42aa08690a81616e601aa581e",
-      "bytes": 49827,
-      "source_sha256": "ab18232581f53d9087f412913df8f47991d72ab42aa08690a81616e601aa581e",
+      "sha256": "eadec1c538699ab59d26c958a9b14a02c32172973f5d41237282fe85cb1f39ad",
+      "bytes": 50453,
+      "source_sha256": "eadec1c538699ab59d26c958a9b14a02c32172973f5d41237282fe85cb1f39ad",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -17087,9 +17087,9 @@
     },
     {
       "path": "tools/pure_linux/provider_job.py",
-      "sha256": "a406342feede1c6e1840964d1ae530379342781c6f1911a9893f703829f72f0c",
-      "bytes": 34063,
-      "source_sha256": "a406342feede1c6e1840964d1ae530379342781c6f1911a9893f703829f72f0c",
+      "sha256": "b4c34180361d8997b298132f555ff54538dae6d3564952dadbe4605cfef8181e",
+      "bytes": 35409,
+      "source_sha256": "b4c34180361d8997b298132f555ff54538dae6d3564952dadbe4605cfef8181e",
       "transformations": [
         "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
         "2026-10-28: correct encrypted preference key counting and document bounded native recheck"
@@ -17097,9 +17097,9 @@
     },
     {
       "path": "tools/pure_linux/provider_probe.c",
-      "sha256": "63a63deded285f1f62bc5d9e5f66ca019f62bfc1d8102f70637c27c0d6dba876",
-      "bytes": 32917,
-      "source_sha256": "63a63deded285f1f62bc5d9e5f66ca019f62bfc1d8102f70637c27c0d6dba876",
+      "sha256": "eea8b7154fb33ade2bae882b07b4589e8de3740023717e745f8bb1bf93b4aff1",
+      "bytes": 35858,
+      "source_sha256": "eea8b7154fb33ade2bae882b07b4589e8de3740023717e745f8bb1bf93b4aff1",
       "transformations": []
     },
     {
@@ -17384,9 +17384,9 @@
     },
     {
       "path": "tools/pure_linux/test_provider_job.py",
-      "sha256": "9bbf015327b1a3c318556002de0556fd35415cdd7bffafe0c1f29724eb5a43ad",
-      "bytes": 15767,
-      "source_sha256": "9bbf015327b1a3c318556002de0556fd35415cdd7bffafe0c1f29724eb5a43ad",
+      "sha256": "6b7b86b8931a35ea83f32e19b577582bcd029416a9540544345b5df298d418b3",
+      "bytes": 16544,
+      "source_sha256": "6b7b86b8931a35ea83f32e19b577582bcd029416a9540544345b5df298d418b3",
       "transformations": []
     },
     {
@@ -18501,9 +18501,9 @@
     },
     {
       "path": "tools/pure_linux/android_catalog_start_trace.js",
-      "sha256": "57821c1eca1656d420029a8b2b7cdaa6ac720d6b15240d78f0a62d2174a78da3",
-      "bytes": 43929,
-      "source_sha256": "57821c1eca1656d420029a8b2b7cdaa6ac720d6b15240d78f0a62d2174a78da3",
+      "sha256": "c03f5bf0f77acaba856deb5fad44b413cd84a05d09da46c6f3316fee8208c90e",
+      "bytes": 47055,
+      "source_sha256": "c03f5bf0f77acaba856deb5fad44b413cd84a05d09da46c6f3316fee8208c90e",
       "transformations": []
     },
     {
@@ -19450,10 +19450,45 @@
       "bytes": 673,
       "source_sha256": "53c5e585e7a85f37633eac34c52cfddea3c32db130f0d09c70c3d8f821a70fe9",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/audit_native_holder_factory.py",
+      "sha256": "540fa38658f1045baaecbf5738e5dee696ffd4a2e5881a59e0861f26d01a777f",
+      "bytes": 4320,
+      "source_sha256": "540fa38658f1045baaecbf5738e5dee696ffd4a2e5881a59e0861f26d01a777f",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_audit_native_holder_factory.py",
+      "sha256": "9179418dbd7cc163462d98bf33eee0ee34a2630976c8b3146b8731e5d0fedd19",
+      "bytes": 2127,
+      "source_sha256": "9179418dbd7cc163462d98bf33eee0ee34a2630976c8b3146b8731e5d0fedd19",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_NATIVE_HOLDER_FACTORY_2026-10-29.md",
+      "sha256": "38fe532487a48b73f992ee4118c7085a7a9e0d114e616c2632804eb31d1ab4c4",
+      "bytes": 4016,
+      "source_sha256": "38fe532487a48b73f992ee4118c7085a7a9e0d114e616c2632804eb31d1ab4c4",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-native-holder-factory-evidence-20261029.json",
+      "sha256": "9d23a22468277f3c1e04fc1b54831d9a670a2538b83ac6eaeecc1af9559314a6",
+      "bytes": 1349,
+      "source_sha256": "9d23a22468277f3c1e04fc1b54831d9a670a2538b83ac6eaeecc1af9559314a6",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_NATIVE_HOLDER_FACTORY.md",
+      "sha256": "8470d74b08095679c4872bca73225fc352221c92e682bdbca6e81befaa9208f7",
+      "bytes": 634,
+      "source_sha256": "8470d74b08095679c4872bca73225fc352221c92e682bdbca6e81befaa9208f7",
+      "transformations": []
     }
   ],
-  "file_count": 2768,
-  "source_bytes": 35929413,
+  "file_count": 2773,
+  "source_bytes": 35950049,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

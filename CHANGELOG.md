@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-29：Linux 原生持有者工厂生命周期
+
+- 在匹配真实 `libg.so` 的 ARM64 Linux 隔离子进程中完成参数工厂和持有者工厂的创建、字段检查、析构及分配器释放；跨端身份审计 exit 0。
+- 本阶段状态为 `NATIVE_VERIFIED_LIMITED`，相关测试1094 passed、1 skipped；严格 `CATALOG_READY_PASS` 仍为 `false`。
+- 配置异常、Android Backup 等价、ResourceManager、GameState、Step、完整对局和性能验收保持未运行；原始日志、库和资源未发布。
+- 详见 `agent-handoff/PURE_LINUX_NATIVE_HOLDER_FACTORY_2026-10-29.md` 与对应机器证据。
+
 ## 2026-10-29：完成函数查询键对照
 
 - 双端真实调用的30字节查询键一致，返回值仍有非空与空的差异。

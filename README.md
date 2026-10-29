@@ -1,5 +1,14 @@
 # Nashura
 
+## 2026-10-29：Linux 原生持有者工厂生命周期
+
+在 ARM64 Linux 隔离子进程中，以真实 `libg.so` 验证参数工厂和持有者工厂的
+创建、字段关系、析构及分配器释放；跨端身份审计通过，相关测试为1094 passed、
+1 skipped。状态为 `NATIVE_VERIFIED_LIMITED`，严格 catalog 门仍为 `false`，配置
+异常、Backup 等价、ResourceManager、GameState、Step、完整对局和性能验收未运行。
+详见[报告](agent-handoff/PURE_LINUX_NATIVE_HOLDER_FACTORY_2026-10-29.md)和
+[机器证据](agent-handoff/pure-linux-native-holder-factory-evidence-20261029.json)。
+
 ## 2026-10-29：完成函数查询键
 
 双端候选查询的30字节键一致，Android返回非空、Linux返回空；查询容器及填充来源

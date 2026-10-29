@@ -67,6 +67,53 @@ static int exercise_allocator(void) {
 }
 
 #if defined(__aarch64__)
+__attribute__((naked, noinline)) static void invoke_factory(void *allocator __attribute__((unused)),
+    void *argument __attribute__((unused)), void *output __attribute__((unused)), void *function __attribute__((unused))) {
+    __asm__ volatile("mov x8, x2\n\tbr x3");
+}
+
+static int exercise_holder_factory(void) {
+    if (!guard("NASHURA_ALLOCATOR_CTOR_GUARD", 0x1237348) ||
+        !guard("NASHURA_ALLOCATOR_ALLOC_GUARD", 0x1237358) ||
+        !guard("NASHURA_ALLOCATOR_FREE_GUARD", 0x12373a4) ||
+        !guard("NASHURA_ARGUMENT_FACTORY_GUARD", 0x13a29b0) ||
+        !guard("NASHURA_HOLDER_FACTORY_GUARD", 0x13a3d14) ||
+        !guard("NASHURA_ARGUMENT_DESTROY_GUARD", 0x13a2a3c) ||
+        !guard("NASHURA_HOLDER_DESTROY_GUARD", 0x13a3d70)) return 0;
+    const char *name = (const char *)(base + 0x2ba51e);
+    if (!is_readable((uintptr_t)name, sizeof("AndroidMainAllocator")) ||
+        memcmp(name, "AndroidMainAllocator", sizeof("AndroidMainAllocator"))) return 0;
+    struct { uint64_t before; uintptr_t object[2]; uint64_t after; } allocator = {canary, {0, 0}, canary};
+    ((void (*)(void *, const char *))(base + 0x1237348))(allocator.object, name);
+    if (allocator.object[0] != base + 0x18bf798 || allocator.object[1] != (uintptr_t)name) return 0;
+    void *wrapper = NULL;
+    invoke_factory(allocator.object, NULL, &wrapper, (void *)(base + 0x13a29b0));
+    uintptr_t clean = (uintptr_t)wrapper & UINT64_C(0x00ffffffffffffff);
+    if (!is_readable(clean, 16) || pointer_at(clean) != base + 0x18c8ae8) return 0;
+    uintptr_t argument = pointer_at(clean + 8) & UINT64_C(0x00ffffffffffffff);
+    if (!is_readable(argument, 0x20) || pointer_at(argument) != base + 0x18c8b40 ||
+        pointer_at(argument + 8) != (uintptr_t)allocator.object) return 0;
+    puts("HOLDER_ARGUMENT_CREATED\t1");
+    void *holder = NULL;
+    invoke_factory(allocator.object, (void *)argument, &holder, (void *)(base + 0x13a3d14));
+    uintptr_t h = (uintptr_t)holder & UINT64_C(0x00ffffffffffffff);
+    if (!is_readable(h - 0x18, 0x40) || pointer_at(h) != base + 0x18c8be0 ||
+        pointer_at(h + 8) != (uintptr_t)allocator.object || pointer_at(h + 0x10) != argument ||
+        pointer_at(h + 0x18) || pointer_at(h + 0x20)) return 0;
+    puts("HOLDER_FACTORY_CREATED\t1");
+    ((void (*)(void *))(base + 0x13a3d70))(holder);
+    ((void (*)(void *, void *))(base + 0x12373a4))(allocator.object, (unsigned char *)holder - 0x18);
+    ((void (*)(void *))(base + 0x13a2a3c))(wrapper);
+    ((void (*)(void *, void *))(base + 0x12373a4))(allocator.object, (unsigned char *)wrapper - 0x18);
+    if (allocator.before != canary || allocator.after != canary) return 0;
+    puts("HOLDER_FACTORY_RELEASED\t1");
+    return 1;
+}
+#else
+static int exercise_holder_factory(void) { return 0; }
+#endif
+
+#if defined(__aarch64__)
 __attribute__((noinline, used)) void app_version_return(void *output) {
     const char *version = getenv("NASHURA_APP_VERSION");
     if (!output || !version || strcmp(version, "15.535.13")) _exit(98);
@@ -620,6 +667,10 @@ int native_provider_probe(uintptr_t engine, int (*readable)(uintptr_t, size_t)) 
     if (!is_readable(context + 0x6e8, 1)) return 55;
     printf("PROVIDER_CONTENT_READY\t%u\n", *(unsigned char *)(context + 0x6e8));
     int resource_status = 0;
+    if (getenv("NASHURA_HOLDER_FACTORY_ONLY")) {
+        if (!exercise_holder_factory()) return 100;
+        goto release_provider;
+    }
     if (getenv("NASHURA_ALLOCATOR_ONLY")) {
         if (!exercise_allocator()) return 99;
         goto release_provider;
