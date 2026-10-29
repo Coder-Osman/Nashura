@@ -1,5 +1,15 @@
 # Nashura
 
+## 2026-10-29：原始 APEX 激活与持续属性服务
+
+原始 apexd 已校验并实际挂载五个 bootstrap APEX，原始 BoringSSL 64 位自检返回
+0；三次 property 读回、最终自动 loop 清理和 sysctl 恢复通过。v14 已启动原始
+hwservicemanager 与 suspend HAL，并观察到 `ISystemSuspend/default` 注册；HAL 受 guest
+电源 sysfs 缺口限制，DisplayManagerService 仍因 PowerManager 对象为空而失败。
+状态为 `ORIGINAL_APEX_BOOTSTRAP_PASS_LIMITED`，系统服务与完整游戏链路继续未验收。
+纯 Linux 专项回归为 `1138 passed、1 skipped`，主引擎为 `211 passed`。详见[报告](agent-handoff/PURE_LINUX_APEX_BOOTSTRAP_2026-10-29.md)和
+[证据](agent-handoff/pure-linux-apex-bootstrap-evidence-20261029.json)。以下记录保留历史边界。
+
 ## 2026-10-29：原始 init 属性写入与读回
 
 真实 property v2 写入已由同镜像 getprop 独立读回，连续值 `1、2、3` 的限定验证

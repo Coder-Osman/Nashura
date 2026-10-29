@@ -10194,16 +10194,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "690518b3cee4963ac6b5f83e052f074af7640dcfae8267ae41b2427dde75e582",
-      "bytes": 56679,
-      "source_sha256": "690518b3cee4963ac6b5f83e052f074af7640dcfae8267ae41b2427dde75e582",
+      "sha256": "e88e55b5452660038cda4941eb2205da416b601aaac166bb7de91fc3f7c525bc",
+      "bytes": 57637,
+      "source_sha256": "e88e55b5452660038cda4941eb2205da416b601aaac166bb7de91fc3f7c525bc",
       "transformations": []
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "5324a22ddba28c3ce35d033179117c442343b12edbf6b765a6c1825cf66d17de",
-      "bytes": 90987,
-      "source_sha256": "5324a22ddba28c3ce35d033179117c442343b12edbf6b765a6c1825cf66d17de",
+      "sha256": "5cefda23799dcc73b28ee78101cfa55f64811c97406b694cbb10d1485abedd3d",
+      "bytes": 91802,
+      "source_sha256": "5cefda23799dcc73b28ee78101cfa55f64811c97406b694cbb10d1485abedd3d",
       "transformations": []
     },
     {
@@ -16615,9 +16615,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "c6f4bcf49772d38b1202c2d298bf617d3469309eac86027cee82f511b2321a54",
-      "bytes": 58031,
-      "source_sha256": "c6f4bcf49772d38b1202c2d298bf617d3469309eac86027cee82f511b2321a54",
+      "sha256": "61c734cace138c129cd1a923da198fd21014f042366597e7fd2e248124892c0c",
+      "bytes": 58843,
+      "source_sha256": "61c734cace138c129cd1a923da198fd21014f042366597e7fd2e248124892c0c",
       "transformations": []
     },
     {
@@ -19677,9 +19677,9 @@
     },
     {
       "path": "tools/pure_linux/art_namespace.sh",
-      "sha256": "5c267f46a7a2349eef09e9662a50efc4bf03ca03f7542586cdaec21b4cb44c8b",
-      "bytes": 6146,
-      "source_sha256": "5c267f46a7a2349eef09e9662a50efc4bf03ca03f7542586cdaec21b4cb44c8b",
+      "sha256": "a54990439ce63b478087d1f9eaa10f530fae93d13c3a9a0428b31d9cb24d78b4",
+      "bytes": 8663,
+      "source_sha256": "a54990439ce63b478087d1f9eaa10f530fae93d13c3a9a0428b31d9cb24d78b4",
       "transformations": []
     },
     {
@@ -19839,16 +19839,16 @@
     {
       "path": "tools/pure_linux/probe_root_init.py",
       "transformations": [],
-      "sha256": "6abc085011034bb1f75590a723c9e775ba2af936bafebd8270d669df5fb7fedf",
-      "source_sha256": "6abc085011034bb1f75590a723c9e775ba2af936bafebd8270d669df5fb7fedf",
-      "bytes": 10887
+      "sha256": "ff5763feb1aafe58e26573fe1c0b778275ae313019afba9fe564ea7a80dad7c9",
+      "source_sha256": "ff5763feb1aafe58e26573fe1c0b778275ae313019afba9fe564ea7a80dad7c9",
+      "bytes": 13739
     },
     {
       "path": "tools/pure_linux/test_probe_root_init.py",
       "transformations": [],
-      "sha256": "dbe006f6b2a6a9864b9723428e2d778f86cf70f39bd1a858804511aa60b23c1e",
-      "source_sha256": "dbe006f6b2a6a9864b9723428e2d778f86cf70f39bd1a858804511aa60b23c1e",
-      "bytes": 3598
+      "sha256": "0feb48db9c743dab8f8a1631f2ba00b1049913eb9521cae2d0f0fcfdfcae4db6",
+      "source_sha256": "0feb48db9c743dab8f8a1631f2ba00b1049913eb9521cae2d0f0fcfdfcae4db6",
+      "bytes": 6744
     },
     {
       "path": "agent-handoff/PURE_LINUX_INIT_PROPERTY_READBACK_2026-10-29.md",
@@ -19870,10 +19870,38 @@
       "sha256": "8d77dd056b0548645d84edaea6861caf333b80c16aed21f1e99f067b373b0e77",
       "source_sha256": "8d77dd056b0548645d84edaea6861caf333b80c16aed21f1e99f067b373b0e77",
       "bytes": 9531
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_APEX_BOOTSTRAP_2026-10-29.md",
+      "sha256": "1f5b07df1fcb1b9a96b035bf3f9f2776f3b8d4e5fdebfd4e5f5fdffd75a58e90",
+      "bytes": 6363,
+      "source_sha256": "1f5b07df1fcb1b9a96b035bf3f9f2776f3b8d4e5fdebfd4e5f5fdffd75a58e90",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-apex-bootstrap-evidence-20261029.json",
+      "sha256": "79beb84944af287319b3b0c877afe753d61ef8b7e263c4eb8866e2eb60d07080",
+      "bytes": 21199,
+      "source_sha256": "79beb84944af287319b3b0c877afe753d61ef8b7e263c4eb8866e2eb60d07080",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/apex_loop_devices.py",
+      "sha256": "13df2a881c119e0a250683b98c650a60c6f4e81c7ed860c975f5be03749b1a7d",
+      "bytes": 5135,
+      "source_sha256": "13df2a881c119e0a250683b98c650a60c6f4e81c7ed860c975f5be03749b1a7d",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_apex_loop_devices.py",
+      "sha256": "d493bb31db8291be1eaceb9e5fb06f07f5d7f967c002977bcbd7a43bcc792645",
+      "bytes": 4062,
+      "source_sha256": "d493bb31db8291be1eaceb9e5fb06f07f5d7f967c002977bcbd7a43bcc792645",
+      "transformations": []
     }
   ],
-  "file_count": 2828,
-  "source_bytes": 36404290,
+  "file_count": 2832,
+  "source_bytes": 36452149,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

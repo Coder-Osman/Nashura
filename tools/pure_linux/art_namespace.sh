@@ -51,6 +51,33 @@ if [ -n "${NASHURA_INIT_STATE:-}" ]; then
     mount --bind "$NASHURA_INIT_STATE/kmsg" "$ART_BASE/dev/kmsg"
     mount --bind "$NASHURA_VENDOR_INPUTS" "$ART_BASE/vendor"
 fi
+if [ -n "${NASHURA_APEX_PACKAGES:-}" ]; then
+    [ "${NASHURA_ROOT_INIT_TRIAL:-0}" = 1 ] && [ "$(id -u)" = 0 ] || exit 71
+    case "$NASHURA_APEX_PACKAGES" in /*) ;; *) exit 71 ;; esac
+    case "${NASHURA_APEX_LOOP_DEVICES:-}" in /*) ;; *) exit 71 ;; esac
+    [ "$NASHURA_APEX_PACKAGES" != / ] && [ ! -L "$NASHURA_APEX_PACKAGES" ] || exit 71
+    [ -f "$NASHURA_APEX_PACKAGES/com.android.runtime.apex" ] || exit 71
+    [ -d "$NASHURA_APEX_LOOP_DEVICES/block" ] && [ -c /dev/loop-control ] || exit 71
+    mkdir -p "$ART_BASE/system/apex" "$ART_BASE/dev/block" "$ART_BASE/sys/block"
+    mount --bind "$NASHURA_APEX_PACKAGES" "$ART_BASE/system/apex"
+    mount -o remount,bind,ro "$ART_BASE/system/apex"
+    mount --bind "$NASHURA_APEX_LOOP_DEVICES/block" "$ART_BASE/dev/block"
+    mount -o remount,bind,ro "$ART_BASE/dev/block"
+    touch "$ART_BASE/dev/loop-control"
+    mount --bind /dev/loop-control "$ART_BASE/dev/loop-control"
+    # Expose only loops leased for this trial. Occupied guest disks stay outside.
+    for device in "$NASHURA_APEX_LOOP_DEVICES"/block/loop*; do
+        [ -b "$device" ] || exit 71
+        name=${device##*/}
+        mkdir -p "$ART_BASE/sys/block/$name"
+        mount --bind "/sys/block/$name" "$ART_BASE/sys/block/$name"
+        mount -o remount,bind,ro "$ART_BASE/sys/block/$name"
+        # Original apexd configures this one queue value after LOOP_SET_FD.
+        path="$ART_BASE/sys/block/$name/queue/read_ahead_kb"
+        mount --bind "/sys/block/$name/queue/read_ahead_kb" "$path"
+        mount -o remount,bind,rw "$path"
+    done
+fi
 ln -sfn /proc/self/fd "$ART_BASE/dev/fd"
 ln -sfn /proc/self/fd/0 "$ART_BASE/dev/stdin"
 ln -sfn /proc/self/fd/1 "$ART_BASE/dev/stdout"
@@ -96,6 +123,21 @@ if [ "${NASHURA_ROOT_INIT_TRIAL:-0}" = 1 ]; then
     mkdir -p "$ART_BASE/nashura-tools"
     mount --bind "$NASHURA_TOOLS_INPUTS" "$ART_BASE/nashura-tools"
     mount -o remount,bind,ro "$ART_BASE/nashura-tools"
+    if [ "${NASHURA_RUN_HWSERVICEMANAGER:-0}" = 1 ]; then
+        [ -x "$NASHURA_TOOLS_INPUTS/hwservicemanager" ] || exit 72
+        [ -f "$ART_BASE/system/lib64/android.hidl.token@1.0.so" ] || exit 72
+        touch "$ART_BASE/system/bin/hwservicemanager"
+        mount --bind "$NASHURA_TOOLS_INPUTS/hwservicemanager" "$ART_BASE/system/bin/hwservicemanager"
+        mount -o remount,bind,ro "$ART_BASE/system/bin/hwservicemanager"
+    fi
+    if [ "${NASHURA_RUN_SUSPEND_HAL:-0}" = 1 ]; then
+        [ -x "$NASHURA_TOOLS_INPUTS/android.system.suspend@1.0-service" ] || exit 73
+        mkdir -p "$ART_BASE/system/bin/hw"
+        touch "$ART_BASE/system/bin/hw/android.system.suspend@1.0-service"
+        mount --bind "$NASHURA_TOOLS_INPUTS/android.system.suspend@1.0-service" \
+            "$ART_BASE/system/bin/hw/android.system.suspend@1.0-service"
+        mount -o remount,bind,ro "$ART_BASE/system/bin/hw/android.system.suspend@1.0-service"
+    fi
 fi
 /usr/sbin/pivot_root "$ART_BASE" "$ART_BASE/oldroot"
 cd /

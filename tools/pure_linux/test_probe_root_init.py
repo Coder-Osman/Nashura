@@ -60,6 +60,67 @@ def test_apply_requires_root_without_creating_output(settings, monkeypatch):
     assert not Path("output").exists()
 
 
+def test_original_apex_inputs_require_pinned_identity(settings):
+    packages = Path(settings["closure"]).parent / "packages"
+    packages.mkdir()
+    runtime = packages / "com.android.runtime.apex"
+    runtime.write_bytes(b"synthetic test package")
+    settings["apex_packages"] = str(packages)
+    with pytest.raises(ValueError, match="missing required input identity"):
+        probe.trial(settings, Path("output"))
+    settings["identities"][str(runtime)] = probe.sha256(runtime)
+    settings.update(services=True, linker_config=str(Path(settings["closure"]).parent / "ld.config"))
+    service_inputs = [Path(settings["linker_config"]), Path(settings["tools"]) / "art-system-services.dex",
+                      Path(settings["tools"]) / "hwservicemanager",
+                      Path(settings["tools"]) / "android.system.suspend@1.0-service",
+                      Path(settings["closure"]) / "apex/com.android.art/bin/servicemanager-probe",
+                      Path(settings["closure"]) / "apex/com.android.art/bin/app_process64-holder-v3",
+                      Path(settings["closure"]) / "data/local/tmp/services-original.jar"]
+    for path in service_inputs:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b"synthetic service input")
+    settings["identities"].update({str(path): probe.sha256(path) for path in service_inputs
+                                   if path.name != "hwservicemanager"})
+    with pytest.raises(ValueError, match="missing required input identity"):
+        probe.trial(settings, Path("output"))
+    manager = Path(settings["tools"]) / "hwservicemanager"
+    settings["identities"][str(manager)] = probe.sha256(manager)
+    assert probe.trial(settings, Path("output"))["system_services_ready"] is False
+
+
+def test_services_launch_both_binder_managers_before_java(tmp_path, monkeypatch):
+    settings = {"launcher": "/probe/launcher.sh", "closure": "/probe/closure",
+                "linker_config": "/probe/ld.config", "service_uid": 1000, "service_gid": 1000,
+                "tools": "/probe/tools"}
+    calls = []
+
+    class Process:
+        def __init__(self, command):
+            self.command = command
+            self.pid = len(calls) + 100
+            self.returncode = None
+
+        def poll(self):
+            return self.returncode
+
+        def wait(self, timeout=None):
+            self.returncode = 0
+            return 0
+
+    def popen(command, **_):
+        calls.append(command)
+        return Process(command)
+
+    monkeypatch.setattr(probe.subprocess, "Popen", popen)
+    monkeypatch.setattr(probe.os, "killpg", lambda *_: None)
+    monkeypatch.setattr(probe.time, "sleep", lambda *_: None)
+    result = probe.services(settings, tmp_path, {})
+    assert ["/system/bin/hwservicemanager"] == calls[1][-1:]
+    assert calls[0][-1:] == ["/apex/com.android.art/bin/servicemanager-probe"]
+    assert calls[2][-1:] == ["/system/bin/hw/android.system.suspend@1.0-service"]
+    assert calls[3][-3:] == ["/system/bin", "ArtSystemServicesProbe", "display"]
+    assert result["hwservicemanager_alive_before"] is True
+    assert result["system_services_ready"] is False
 def test_failed_observation_still_restores_every_sysctl(settings, monkeypatch):
     monkeypatch.setattr(probe.os, "geteuid", lambda: 0)
 

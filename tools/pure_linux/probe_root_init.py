@@ -5,6 +5,7 @@ it never loads policy. Use a disposable extracted closure, not a running root.
 All three init sysctls are restored even when observation fails.
 """
 import argparse
+from contextlib import nullcontext
 import json
 import os
 from pathlib import Path
@@ -15,6 +16,7 @@ import time
 from probe_init_property_service import (
     PROPERTY_NAME, kernel_state, property_request, run, sha256, validate_paths,
 )
+from apex_loop_devices import ApexLoopDevices
 
 KNOBS = ("kernel/kptr_restrict", "vm/mmap_rnd_bits", "vm/mmap_rnd_compat_bits")
 SYSCTL_ROOT = Path("/proc/sys")
@@ -41,9 +43,18 @@ def validate(settings, output):
                 launcher, tools / "toolbox", tools / "nashura_namespace_exec", Path(settings["backup"])]
     if settings.get("services"):
         required += [Path(settings["linker_config"]), tools / "art-system-services.dex",
+                     tools / "hwservicemanager",
+                     tools / "android.system.suspend@1.0-service",
                      closure / "apex/com.android.art/bin/servicemanager-probe",
                      closure / "apex/com.android.art/bin/app_process64-holder-v3",
                      closure / "data/local/tmp/services-original.jar"]
+    if settings.get("apex_packages"):
+        packages = Path(settings["apex_packages"])
+        if str(packages.resolve()) != str(packages) or not packages.is_dir():
+            raise ValueError("canonical APEX package directory is required")
+        if not (packages / "com.android.runtime.apex").is_file():
+            raise ValueError("original runtime APEX is required")
+        required += list(packages.glob("*.apex"))
     identities = settings["identities"]
     for path in required:
         if str(path) not in identities:
@@ -60,6 +71,9 @@ def validate(settings, output):
         name: (SYSCTL_ROOT / name).read_text().strip() for name in KNOBS},
         "identities": identities, "timeout_seconds": 20,
         "policy_action": "reuse loaded policy; no policy write",
+        "apex_packages": settings.get("apex_packages"),
+        "loop_action": ("lease idle loops, allocate new loops, verify backing device/inode on cleanup; "
+                        "preserve occupied loops and dm mappings" if settings.get("apex_packages") else "none"),
         "sysctl_action": "restore recorded values in finally",
         "system_services_ready": False, "catalog_ready_pass": False}
 
@@ -79,12 +93,18 @@ def services(settings, output, environment):
              "/data/local/tmp/framework-tethering.jar", "/data/local/tmp/framework-wifi.jar"]
     env = dict(environment, NASHURA_ART_LINKER_CONFIG=settings["linker_config"],
                NASHURA_EXEC_UID=str(settings["service_uid"]), NASHURA_EXEC_GID=str(settings["service_gid"]),
+               NASHURA_RUN_HWSERVICEMANAGER="1",
+               NASHURA_RUN_SUSPEND_HAL="1",
                CLASSPATH="/nashura-tools/art-system-services.dex:/data/local/tmp/services-original.jar:"
                          "/data/local/tmp/current-game-classes.dex")
     prefix = namespace(settings)
     commands = {
         "service": ["strace", "-f", "-s", "256", "-o", str(output / "service.strace")]
                    + prefix + ["/apex/com.android.art/bin/servicemanager-probe"],
+        "hwservicemanager": ["strace", "-f", "-s", "256", "-o", str(output / "hwservicemanager.strace")]
+                             + prefix + ["/system/bin/hwservicemanager"],
+        "suspend_hal": ["strace", "-f", "-s", "256", "-o", str(output / "suspend-hal.strace")]
+                        + prefix + ["/system/bin/hw/android.system.suspend@1.0-service"],
         "probe": ["prlimit", "--nice=40:40", "--", "strace", "-f", "-s", "256", "-o",
                   str(output / "probe.strace")] + prefix
                  + ["/apex/com.android.art/bin/app_process64-holder-v3", "-Xbootclasspath:" + ":".join(boot),
@@ -101,9 +121,23 @@ def services(settings, output, environment):
 
     with (output / "service.stdout").open("xb") as so, (output / "service.stderr").open("xb") as se:
         service = subprocess.Popen(commands["service"], env=env, stdout=so, stderr=se, start_new_session=True)
+        hwservice = None
+        suspend = None
         try:
             time.sleep(.4)
             result["service_alive_before"] = service.poll() is None
+            with (output / "hwservicemanager.stdout").open("xb") as ho, \
+                 (output / "hwservicemanager.stderr").open("xb") as he:
+                hwservice = subprocess.Popen(commands["hwservicemanager"], env=env,
+                                             stdout=ho, stderr=he, start_new_session=True)
+                time.sleep(.2)
+                result["hwservicemanager_alive_before"] = hwservice.poll() is None
+            with (output / "suspend-hal.stdout").open("xb") as so, \
+                 (output / "suspend-hal.stderr").open("xb") as se:
+                suspend = subprocess.Popen(commands["suspend_hal"], env=env, stdout=so,
+                                           stderr=se, start_new_session=True)
+                time.sleep(.3)
+                result["suspend_hal_alive_before"] = suspend.poll() is None
             with (output / "probe.stdout").open("xb") as po, (output / "probe.stderr").open("xb") as pe:
                 probe = subprocess.Popen(commands["probe"], env=env, stdout=po, stderr=pe, start_new_session=True)
                 try:
@@ -112,6 +146,10 @@ def services(settings, output, environment):
                     result["probe_exit_after_cleanup"] = stop(probe)
             result["service_alive_after"] = service.poll() is None
         finally:
+            if suspend is not None:
+                result["suspend_hal_exit_after_cleanup"] = stop(suspend)
+            if hwservice is not None:
+                result["hwservicemanager_exit_after_cleanup"] = stop(hwservice)
             result["service_exit_after_cleanup"] = stop(service)
             write_json(output / "services-result.json", result)
     return result
@@ -160,9 +198,15 @@ def trial(settings, output, apply=False):
 
     observed, failure, restored = None, None, {}
     try:
-        observed = run(settings["closure"], settings["vendor"], settings["launcher"], output / "runtime",
-                       settings["identities"][str(Path(settings["closure"]) / "system/bin/init")],
-                       root_namespace=True, request_client=request_and_readback, extra_environment=environment)
+        loops = (ApexLoopDevices(output / "apex-loops", settings["apex_packages"])
+                 if settings.get("apex_packages") else nullcontext())
+        with loops as devices:
+            if devices:
+                environment.update(NASHURA_APEX_PACKAGES=settings["apex_packages"],
+                                   NASHURA_APEX_LOOP_DEVICES=str(devices))
+            observed = run(settings["closure"], settings["vendor"], settings["launcher"], output / "runtime",
+                           settings["identities"][str(Path(settings["closure"]) / "system/bin/init")],
+                           root_namespace=True, request_client=request_and_readback, extra_environment=environment)
     except Exception as error:
         failure = {"type": type(error).__name__, "message": str(error)}
     finally:

@@ -1,0 +1,573 @@
+{
+  "schema": "nashura.pure-linux-apex-bootstrap.v1",
+  "baseline_commit": "a7fad176fb6d4f56887bebf31e93c76052a39ee9",
+  "status": "ORIGINAL_APEX_BOOTSTRAP_PASS_LIMITED",
+  "original_system_ext4_sha256": "a19fab1d61b2041d6945d6733bc32f4f3d90986017470b39849695e1a4437c0b",
+  "original_apex_packages": {
+    "com.google.android.mediaprovider.apex": {
+      "bytes": 4092328,
+      "sha256": "dc3036b3c984e6c2ca3503ab29265c69ecd87791dd1f1ddd9a3982eca52af2fb"
+    },
+    "com.google.android.extservices.apex": {
+      "bytes": 4202922,
+      "sha256": "86d483ad42ded215387f1457b8fb3cfa495925ad27fbba8a5f9c7939945ba390"
+    },
+    "com.google.android.sdkext.apex": {
+      "bytes": 430472,
+      "sha256": "bb6f42c25f9fb29e7e986a0fc82485eb8e62227dda3d9b91fbbe5e65756ba683"
+    },
+    "com.google.android.conscrypt.apex": {
+      "bytes": 5005638,
+      "sha256": "53b80e2095307718ac2e0b0ced7fee967ccdf196c9580a5166a88427696f9aca"
+    },
+    "com.google.android.adbd.apex": {
+      "bytes": 8085743,
+      "sha256": "4b56c2ba8888508a76dc4cb2b57f65bbdcb9747070508716aebba7be0f26dc75"
+    },
+    "com.google.android.os.statsd.apex": {
+      "bytes": 1847615,
+      "sha256": "d6bca42c67e5e4997e57d34615c603c112ed645400f0ae62ac5dd7f7b5ad8bdd"
+    },
+    "com.google.android.neuralnetworks.apex": {
+      "bytes": 5640465,
+      "sha256": "5e45768f945dc55b35dd25bb3d485db3ba3d4125e9c9bc69a29f5e7ab0ceb9de"
+    },
+    "com.google.android.ipsec.apex": {
+      "bytes": 666997,
+      "sha256": "f5e50110dfe005845239447c8f216131c057a007032ceb9f0d20b289742ed2fd"
+    },
+    "com.google.android.resolv.apex": {
+      "bytes": 2568485,
+      "sha256": "dea5ca88893ef65c1cd55b7e7c2777c7415a429f17d137e1ae2da959ec7ab6cf"
+    },
+    "com.android.i18n.apex": {
+      "bytes": 25312052,
+      "sha256": "3d8986d1da34f023f63903d18966b2eabd92cfd94180a7a696c2c5e761c87887"
+    },
+    "com.google.android.cellbroadcast.apex": {
+      "bytes": 6851949,
+      "sha256": "addc3c2664b0e53188e7236ac3dcfc706211ee1c6de197e97e471228b1d5e87f"
+    },
+    "com.google.android.wifi.apex": {
+      "bytes": 5115254,
+      "sha256": "2c57ef87fb0cf685457428f4a00ef111c0ff65d47535387abd9b10d7d8b35b0e"
+    },
+    "com.android.apex.cts.shim.apex": {
+      "bytes": 334278,
+      "sha256": "a2cde02947f2ba402c4f84241e606085b97eccce9625ae337149e84ada6b11d1"
+    },
+    "com.google.android.tzdata2.apex": {
+      "bytes": 950636,
+      "sha256": "936090a85d593d01399703fc700e80878e630aa3aca3c9400d301fd27124ab3e"
+    },
+    "com.google.android.permission.apex": {
+      "bytes": 8434091,
+      "sha256": "f9bd74258bbb90f97b434376120a5d61a7f697e82bedba601e5848ae7a2db8a8"
+    },
+    "com.google.android.tethering.apex": {
+      "bytes": 1044908,
+      "sha256": "fb40d9b638aa09af2f1d5bb53ff56f6ba49148574b5ea633af11cdc7b9fee4e9"
+    },
+    "com.android.art.debug.apex": {
+      "bytes": 78529606,
+      "sha256": "ea1e5ef01fada6185dd8d561a826b2838a65936a16af9c36142d52408f37edfe"
+    },
+    "com.google.android.media.apex": {
+      "bytes": 4743450,
+      "sha256": "4b7f56d1e813bf56f9de6eafbb7e31c3635948f21a0c688ad217abcaa9d6074d"
+    },
+    "com.android.vndk.current.apex": {
+      "bytes": 76549004,
+      "sha256": "64978ea06e11c4caa46d42730469e38f57a44505a6b5dab1bcb771b0b32edafd"
+    },
+    "com.google.android.media.swcodec.apex": {
+      "bytes": 18862319,
+      "sha256": "2f736e6c3d116a58c7ad261d463186b62358f17164756baeaa2206f558ba27e4"
+    },
+    "com.google.android.telephony.apex": {
+      "bytes": 317612,
+      "sha256": "ad1bceb278c2dde89cd7ebd3db992969ef155bd2af0bafe9656d6873a8b2ff45"
+    },
+    "com.android.runtime.apex": {
+      "bytes": 3116245,
+      "sha256": "37e68315cb61f4fc872f8ea2e279069b64bc312f51675687497791a0df1055ed"
+    }
+  },
+  "original_apex_package_count": 22,
+  "original_apex_bytes": 262702069,
+  "source_sha256": {
+    "art_namespace.sh": "a54990439ce63b478087d1f9eaa10f530fae93d13c3a9a0428b31d9cb24d78b4",
+    "probe_root_init.py": "ff5763feb1aafe58e26573fe1c0b778275ae313019afba9fe564ea7a80dad7c9",
+    "probe_init_property_service.py": "dbb2d94f2398344f1081ed336a9ae395e9cfd10d095f61e7f941d34cfb83ef0f",
+    "apex_loop_devices.py": "13df2a881c119e0a250683b98c650a60c6f4e81c7ed860c975f5be03749b1a7d",
+    "test_probe_root_init.py": "0feb48db9c743dab8f8a1631f2ba00b1049913eb9521cae2d0f0fcfdfcae4db6",
+    "test_apex_loop_devices.py": "d493bb31db8291be1eaceb9e5fb06f07f5d7f967c002977bcbd7a43bcc792645"
+  },
+  "final_public_sources_match_guest": true,
+  "maximum_init_seconds": 20,
+  "actual_bootstrap_mount_count": 5,
+  "apexd_activated_counter": 22,
+  "activated_counter_is_mount_count": false,
+  "loaded_policy_sha256": "9f9115c47be1a90556dabaf6339127c5b626bd2fa2a26687ee0733bbb790d0bc",
+  "policy_load_count": 1,
+  "enforce": "0",
+  "sysctls_restored": true,
+  "restored_sysctls": {
+    "kernel/kptr_restrict": "1",
+    "vm/mmap_rnd_bits": "33",
+    "vm/mmap_rnd_compat_bits": "16"
+  },
+  "dm_mappings_modified": false,
+  "runs": [
+    {
+      "label": "v10",
+      "result_sha256": "af54230f3396103ff381a5f74f5b9da535572d55c3675c61210a4fc3fac77d2b",
+      "runtime_result_sha256": "09fc12fdb6ecab97c444f555220013d85aedf3b428c1ae777e81ad2a8892b566",
+      "kmsg_sha256": "df44bde36d9cf7c0a6ee1b5b02c0e034dd6d97de3f965e03527b74e7a40ce0fe",
+      "init_strace_sha256": "5605c329a29e502d66f610ba1a5eb62acac2a89222f71690e39e63f2e2dc90c6",
+      "status": "INIT_ROOT_NOT_VERIFIED",
+      "failure_type": "RuntimeError",
+      "inputs_unchanged": true,
+      "sysctls_restored": true,
+      "init_timed_out": true,
+      "init_launcher_exit": -9,
+      "writes": [
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "1",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "1"
+        },
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "2",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "2"
+        },
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "3",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "3"
+        }
+      ],
+      "mounted_packages": [
+        {
+          "file": "com.android.i18n.apex",
+          "mountpoint": "/apex/com.android.i18n@1"
+        },
+        {
+          "file": "com.google.android.tzdata2.apex",
+          "mountpoint": "/apex/com.android.tzdata@300900700"
+        },
+        {
+          "file": "com.android.art.debug.apex",
+          "mountpoint": "/apex/com.android.art@1"
+        },
+        {
+          "file": "com.android.runtime.apex",
+          "mountpoint": "/apex/com.android.runtime@1"
+        },
+        {
+          "file": "com.google.android.os.statsd.apex",
+          "mountpoint": "/apex/com.android.os.statsd@300900700"
+        }
+      ],
+      "avb_footer_verifications": 5,
+      "public_key_matches": 5,
+      "boringssl_self_test64_exit": 0,
+      "coldboot_wait_observed": true,
+      "loop_cleanup": {
+        "result_sha256": "70bf72f7fe34928c9242a529cb8b843af42e1bdfca05daeaa59deaa67e6c8d17",
+        "new_device_count": 44,
+        "leased_idle": [
+          12
+        ],
+        "preexisting_devices_unchanged": false,
+        "created_devices_removed": false,
+        "error_devices": [
+          "loop16",
+          "loop15",
+          "loop14",
+          "loop13",
+          "loop12"
+        ]
+      }
+    },
+    {
+      "label": "v11",
+      "result_sha256": "5dead8c011b435cea57b8fcbe505da620247b93831854915dc904fbc082f0240",
+      "runtime_result_sha256": "4d70bb9ab0bbe93d37353f77b6fd21ec11fd26a70d6e5b9058204f0aed7fc28a",
+      "kmsg_sha256": "52b461c2e585f0484e4780b6cc74b35e04dc3241d48ae338cf6f957e3eef97a0",
+      "init_strace_sha256": "36b44659d584a98bd84a2f4056cd38084ce011885c0a37a6aa8696414006ba84",
+      "status": "INIT_PROPERTY_CONTINUITY_PASS_LIMITED",
+      "failure_type": null,
+      "inputs_unchanged": true,
+      "sysctls_restored": true,
+      "init_timed_out": true,
+      "init_launcher_exit": -9,
+      "writes": [
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "1",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "1"
+        },
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "2",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "2"
+        },
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "3",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "3"
+        }
+      ],
+      "mounted_packages": [
+        {
+          "file": "com.android.i18n.apex",
+          "mountpoint": "/apex/com.android.i18n@1"
+        },
+        {
+          "file": "com.google.android.tzdata2.apex",
+          "mountpoint": "/apex/com.android.tzdata@300900700"
+        },
+        {
+          "file": "com.android.art.debug.apex",
+          "mountpoint": "/apex/com.android.art@1"
+        },
+        {
+          "file": "com.android.runtime.apex",
+          "mountpoint": "/apex/com.android.runtime@1"
+        },
+        {
+          "file": "com.google.android.os.statsd.apex",
+          "mountpoint": "/apex/com.android.os.statsd@300900700"
+        }
+      ],
+      "avb_footer_verifications": 5,
+      "public_key_matches": 5,
+      "boringssl_self_test64_exit": 0,
+      "coldboot_wait_observed": true,
+      "loop_cleanup": {
+        "result_sha256": "92c4bf5d3e9c6e70aeb055d75e9e57fe83d847ada13a1b0a5270e72912f00a6f",
+        "new_device_count": 44,
+        "leased_idle": [
+          12
+        ],
+        "preexisting_devices_unchanged": true,
+        "created_devices_removed": true,
+        "error_devices": []
+      },
+      "system_services": {
+        "probe_stdout_sha256": "bb8a6599db99c0cd13490f6d1f286960769a5c7c31a3c1d4f55d30f119350ea3",
+        "probe_strace_sha256": "7f2b8335d398b690c980436223d1aafda699311cd07119d1cee7657ab6f8c917",
+        "android_servers_loaded": true,
+        "system_context_present": true,
+        "power_service_started": false,
+        "display_service_started": false,
+        "cache_property": "cache_key.is_power_save_mode",
+        "cache_property_ack": 0,
+        "cache_property_independent_readback": false,
+        "wait_boundary": "hwservicemanager.ready",
+        "bounded_probe_seconds": 9,
+        "system_services_ready": false
+      }
+    },
+    {
+      "label": "v12",
+      "result_sha256": "87499204d6f2b647c702114df97fede93a40ea1fffd16eae8d5396ebb99a048b",
+      "runtime_result_sha256": "c7da3edae94664035dca550aec5dc70867b9b27ecd0cdc35e8fcac0cfb8de89b",
+      "kmsg_sha256": "e3ba92317b9ebc55bd52b318545bd733bc53536e15da5ffd2685b03baac55ce2",
+      "init_strace_sha256": "01a030a906f8ac13931046e1893c2f75f33727d1eb7544d40af60762c632a693",
+      "status": "INIT_PROPERTY_CONTINUITY_PASS_LIMITED",
+      "failure_type": null,
+      "inputs_unchanged": true,
+      "sysctls_restored": true,
+      "init_timed_out": true,
+      "init_launcher_exit": -9,
+      "writes": [
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "1",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "1"
+        },
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "2",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "2"
+        },
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "3",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "3"
+        }
+      ],
+      "mounted_packages": [
+        {
+          "file": "com.android.i18n.apex",
+          "mountpoint": "/apex/com.android.i18n@1"
+        },
+        {
+          "file": "com.google.android.tzdata2.apex",
+          "mountpoint": "/apex/com.android.tzdata@300900700"
+        },
+        {
+          "file": "com.android.art.debug.apex",
+          "mountpoint": "/apex/com.android.art@1"
+        },
+        {
+          "file": "com.android.runtime.apex",
+          "mountpoint": "/apex/com.android.runtime@1"
+        },
+        {
+          "file": "com.google.android.os.statsd.apex",
+          "mountpoint": "/apex/com.android.os.statsd@300900700"
+        }
+      ],
+      "avb_footer_verifications": 5,
+      "public_key_matches": 5,
+      "boringssl_self_test64_exit": 0,
+      "coldboot_wait_observed": true,
+      "loop_cleanup": {
+        "result_sha256": "92c4bf5d3e9c6e70aeb055d75e9e57fe83d847ada13a1b0a5270e72912f00a6f",
+        "new_device_count": 44,
+        "leased_idle": [
+          12
+        ],
+        "preexisting_devices_unchanged": true,
+        "created_devices_removed": true,
+        "error_devices": []
+      },
+      "system_services": {
+        "probe_stdout_sha256": "bb8a6599db99c0cd13490f6d1f286960769a5c7c31a3c1d4f55d30f119350ea3",
+        "probe_strace_sha256": "6b6a013add2f68c26f1e2574d5045ea3c084e49597ea2ee109440f2001a81eb5",
+        "android_servers_loaded": true,
+        "system_context_present": true,
+        "power_service_started": false,
+        "display_service_started": false,
+        "cache_property": "cache_key.is_power_save_mode",
+        "cache_property_ack": 0,
+        "cache_property_independent_readback": false,
+        "wait_boundary": "hwservicemanager.ready",
+        "bounded_probe_seconds": 9,
+        "system_services_ready": false
+      }
+    },
+    {
+      "label": "v13",
+      "result_sha256": "5303b586d0d4b01be759f40a4e642191be6877aa202b3f61e4a9da1e33d4b804",
+      "runtime_result_sha256": "acba866ce2d7eb86424f23fe7ea47912855d87ad8d94fde80e2bba27b6478a9c",
+      "kmsg_sha256": "c7753054514da940aef2adbb1e315b941a72f9cdbbd1d39156ef9fe0effe27e3",
+      "init_strace_sha256": "83b9b0e9bfef9e0d2ec79fc17b8f436ec9bbc1db9a878d563764a441ce26ee9c",
+      "status": "INIT_PROPERTY_CONTINUITY_PASS_LIMITED",
+      "failure_type": null,
+      "inputs_unchanged": true,
+      "sysctls_restored": true,
+      "init_timed_out": true,
+      "init_launcher_exit": -9,
+      "writes": [
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "1",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "1"
+        },
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "2",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "2"
+        },
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "3",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "3"
+        }
+      ],
+      "system_services": {
+        "probe_stdout_sha256": "bb8a6599db99c0cd13490f6d1f286960769a5c7c31a3c1d4f55d30f119350ea3",
+        "probe_strace_sha256": "8edd7034c0624a70caaf5f5114424920c76e7247184cac417599d084a26e2819",
+        "hwservicemanager_strace_sha256": "f8a1e02660cd43dccb8833643228f2ee21cacc66e20aecf5ba1d7f9e054302fd",
+        "services_result_sha256": "20959f4b345751740c9baf5a478a7b1745b68159b71796335b507c12cf722773",
+        "services_error_sha256": "b4c7df0c6afd115d07f02d6b3e2a3ee59f6af483aa4399a9d0c280f0fb04e23f",
+        "android_servers_loaded": true,
+        "system_context_present": true,
+        "java_probe_timed_out": true,
+        "java_probe_timeout_seconds": 9,
+        "service_alive_before_cleanup": true,
+        "hwservicemanager_alive_before_cleanup": true,
+        "suspend_hal_registered": false,
+        "lazy_hal_start_attempted": true,
+        "init_ctl_interface_start_error": "0x20",
+        "wait_boundary": "android.system.suspend@1.0::ISystemSuspend/default lazy start",
+        "system_services_ready": false
+      }
+    },
+    {
+      "label": "v14",
+      "result_sha256": "677b4d2d11c88c64541013db8ae8b7b0bf4ef893743a65779c33cefd0997064d",
+      "runtime_result_sha256": "21c09b37be5a7d6091609be480548e014ce9a12bd1c7ce9059ea2e7c47cb7a07",
+      "kmsg_sha256": "d814f5d91db43b3a3cf1875fa0177327dfcd5fde8b276b225b7ec37c2447f8fe",
+      "init_strace_sha256": "32c5e2613a133686981bbede02ad7d21b7c6487695b01c29f255836824077092",
+      "status": "INIT_PROPERTY_CONTINUITY_PASS_LIMITED",
+      "failure_type": null,
+      "inputs_unchanged": true,
+      "sysctls_restored": true,
+      "init_timed_out": true,
+      "init_launcher_exit": -9,
+      "writes": [
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "1",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "1"
+        },
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "2",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "2"
+        },
+        {
+          "connected": true,
+          "response_code": 0,
+          "property": "sys.system_server.start_count",
+          "value": "3",
+          "readback_verified": true,
+          "readback_exit": 0,
+          "readback_value": "3"
+        }
+      ],
+      "mounted_packages": [
+        {
+          "file": "com.android.i18n.apex",
+          "mountpoint": "/apex/com.android.i18n@1"
+        },
+        {
+          "file": "com.google.android.tzdata2.apex",
+          "mountpoint": "/apex/com.android.tzdata@300900700"
+        },
+        {
+          "file": "com.android.art.debug.apex",
+          "mountpoint": "/apex/com.android.art@1"
+        },
+        {
+          "file": "com.android.runtime.apex",
+          "mountpoint": "/apex/com.android.runtime@1"
+        },
+        {
+          "file": "com.google.android.os.statsd.apex",
+          "mountpoint": "/apex/com.android.os.statsd@300900700"
+        }
+      ],
+      "avb_footer_verifications": 5,
+      "public_key_matches": 5,
+      "boringssl_self_test64_exit": 0,
+      "coldboot_wait_observed": true,
+      "loop_cleanup": {
+        "result_sha256": "92c4bf5d3e9c6e70aeb055d75e9e57fe83d847ada13a1b0a5270e72912f00a6f",
+        "new_device_count": 44,
+        "leased_idle": [
+          12
+        ],
+        "preexisting_devices_unchanged": true,
+        "created_devices_removed": true,
+        "error_devices": [],
+        "cleanup_errors": []
+      },
+      "system_services": {
+        "probe_stdout_sha256": "b8fb4742a38740014c88029faa09cc86b8a9cb858951bd54f082d60382d8125f",
+        "probe_stderr_sha256": "4f377aa5a0e5eb8629d59ef64ed4d795b0622d26adc8d8ae34e599af1f675290",
+        "probe_strace_sha256": "cd7a5f8493e4114d1026c2bb580c37ee7e828f4f43accc22f1979f5ff410ce2c",
+        "hwservicemanager_strace_sha256": "a0f4c4d46271d6501124e6fbc9bf37945a255e1a8f2b42075137c19bede58465",
+        "suspend_hal_strace_sha256": "7c5a328c740961bdbbf1802192012f638ce15900c362f46d5a15cb1e3de1a84c",
+        "services_result_sha256": "e53c8cf587f42cc4735c09d0623b3d6acd4913b1868b9bf20af99145f75b9a3a",
+        "android_servers_loaded": true,
+        "system_context_present": true,
+        "power_service_started": true,
+        "display_service_started": false,
+        "display_failure": "NullPointerException: PowerManager.getBrightnessConstraint(int) on null service reference",
+        "suspend_hal_alive_before": true,
+        "suspend_hal_exit_after_cleanup": -9,
+        "suspend_hal_registered": true,
+        "suspend_hal_missing_sysfs": {
+          "wakeup_count": true,
+          "suspend_stats": true,
+          "wakeup_class": true
+        },
+        "hwservicemanager_alive_before": true,
+        "probe_exit": 3,
+        "probe_exit_after_cleanup": 3,
+        "service_exit_after_cleanup": -9,
+        "system_services_ready": false
+      }
+    }
+  ],
+  "first_cleanup_failure_recovery": {
+    "result_sha256": "832a0f416f186f463b77c803503cf55034f2397f2ffb8c7f5f758725a571d05d",
+    "ownership_method": "LOOP_GET_STATUS64 backing device/inode matched to original APEX files",
+    "preexisting_devices_unchanged": true,
+    "created_devices_removed": true,
+    "cleanup_errors": []
+  },
+  "system_services_ready": false,
+  "game_context_initialized": false,
+  "catalog_ready_pass": false,
+  "resource_manager_ready": false,
+  "game_state_ready": false,
+  "step_verified": false,
+  "full_match_verified": false,
+  "performance_verified": false,
+  "third_party_inputs_in_public_repository": false,
+  "private_evidence_required_for_replay": true
+}

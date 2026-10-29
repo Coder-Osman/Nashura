@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-29：原始 APEX 激活与持续属性服务
+
+- 将同镜像 22 个原始 APEX 作为只读输入，原始 apexd 逐包校验并实际挂载五个 bootstrap APEX；按真实挂载事件计数，汇总行的 22 不作为挂载数。
+- 原始 BoringSSL 64 位自检返回 0，init 随后等待真实 coldboot；三次属性独立读回通过。v14 启动原始 hwservicemanager 与 suspend HAL，观察到 `ISystemSuspend/default` 注册；HAL 受 guest 电源 sysfs 缺口限制，DisplayManagerService 因 PowerManager 对象为空而失败。
+- 新增按 backing device/inode 核验的 loop 分配与清理工具；保留首次路径检查失败及专门恢复证据，最终新设备全部移除、原设备状态一致、sysctl 恢复。
+- 纯 Linux 专项回归 `1138 passed、1 skipped`，主引擎 `211 passed`；发布 `ORIGINAL_APEX_BOOTSTRAP_PASS_LIMITED` 报告与证据，系统服务、GameApp 和完整游戏链路继续未验收。
+
 ## 2026-10-29：原始 init 属性写入与读回
 
 - 用户确认的 guest policy 实验取得真实 property ACK 与 getprop 读回；连续写入三个值验证通过。
