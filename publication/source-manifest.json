@@ -10194,8 +10194,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "dd7f8270c0a4cad4da8c6ece52f6ce27321f357ef51d5c0112b67d27e688f12d",
-      "bytes": 51486,
+      "sha256": "5a845a0d06e10ba0c863638b450c2af8b0ce24c16704575f94c9b95bc2dac2a6",
+      "bytes": 52316,
       "source_sha256": "d12ae431fcb26011c336e50a81a75853196b6510ba1c4854365275d453ff55bd",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10213,13 +10213,14 @@
         "2026-10-28: bounded Linux catalog resource trace audit",
         "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
         "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
-        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence"
+        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence",
+        "2026-10-29: record Android ART closure and guest Binder startup boundary"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "d32e919252692450428df86867846aadcc41edbf720de5e683011444c37d68a1",
-      "bytes": 85108,
+      "sha256": "7ff08b887b162b2fbe35b6eb0d093bf70b6dd95964c72d7bb5802d553f376bf1",
+      "bytes": 86150,
       "source_sha256": "8fb78c645d00a2c95af39be154e70d0de92382e6dbf1322e56d79d7489ff8724",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -10237,7 +10238,8 @@
         "2026-10-28: bounded Linux catalog resource trace audit",
         "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
         "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
-        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence"
+        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence",
+        "2026-10-29: record Android ART closure and guest Binder startup boundary"
       ]
     },
     {
@@ -16649,8 +16651,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "713aae5999714839770833139599fe12e12c6ca40e09df827469739980eb8035",
-      "bytes": 52519,
+      "sha256": "4dd896e14f316a12e1e5bae6190726127c2570cc1061638a92e33c11b7052bfc",
+      "bytes": 53368,
       "source_sha256": "8ae14dbb13dd932bd21ccd98b2a35eb91686abd66e33b5e2f4043a2acc5fc0bb",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
@@ -16668,7 +16670,8 @@
         "2026-10-28: bounded Linux catalog resource trace audit",
         "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
         "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
-        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence"
+        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence",
+        "2026-10-29: record Android ART closure and guest Binder startup boundary"
       ]
     },
     {
@@ -19542,66 +19545,66 @@
     },
     {
       "path": "publication/checks-affordability.xml",
-      "sha256": "a1d540a34d0ccd405c1090838a6cb6db9af9709deb305367cb31648cab6222bb",
+      "sha256": "d3b2591436d0a68750b72931d84cdbd35e6d6f7d69951a7b974a54440682dc6d",
       "bytes": 4340,
       "source_sha256": "ed6541fac1ee54b0e543d98e0297520b86ca59a95480783eec5c501753352a75",
-      "transformations": []
+      "transformations": ["2026-10-29: refresh pytest report after public verification"]
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
-      "sha256": "6170edebe33e17502afdcb44592f089dc1c555e4ddadcf48b5f4b7b2d990b577",
+      "sha256": "32651ea20ac1d0d679db76acfe8b7fec2c9187748553fee9bd78161221e3e579",
       "bytes": 12024,
       "source_sha256": "5e7d184f83664142c0d403631627d53e7092168680f9e18a85d5a92f61284a4c",
-      "transformations": []
+      "transformations": ["2026-10-29: refresh pytest report after public verification"]
     },
     {
       "path": "publication/checks-command-coordinates.xml",
-      "sha256": "48c99b07efa1b15b3b06c55e822bc8fc5f864cda58cfd9890efca963a9e07d11",
+      "sha256": "eeb655741e84fed0a99bfbdfe0a546bb2b2929f1e2466b23025d057398adb1e1",
       "bytes": 8184,
       "source_sha256": "a4e9cec4d99b75d2ef79b01d993b9a04795e45ea6f661fe8dc73fd81301e8658",
-      "transformations": []
+      "transformations": ["2026-10-29: refresh pytest report after public verification"]
     },
     {
       "path": "publication/checks-dispatch-command.xml",
-      "sha256": "62a5ac0d917066fdc78baadb6547d4716e1a39a98c9f713b3b621003f6d6aca3",
+      "sha256": "503f912305ea9ac17d17af4df09512578f580de22b622341fadde2572ce93dc0",
       "bytes": 6406,
       "source_sha256": "f1cbc3b728b4427400c7ba2f6faf366881db6e4ef561b7fd700c2eb612860305",
-      "transformations": []
+      "transformations": ["2026-10-29: refresh pytest report after public verification"]
     },
     {
       "path": "publication/checks-live-command.xml",
-      "sha256": "7a6ed3337cb10a35126ca04774b6597dbd290cddc58e1be86d8fa8dbdef78b32",
+      "sha256": "8f2ba185607af0eb38a3e0d2a18ebe0fe00a5c9c1a424b2ee5e9b93d583b24f1",
       "bytes": 6370,
       "source_sha256": "b6dfa3b3539472c83e03eff210e080300abeae05ec7df4c59a1c5a9f9c31fbee",
-      "transformations": []
+      "transformations": ["2026-10-29: refresh pytest report after public verification"]
     },
     {
       "path": "publication/checks-position-guards.xml",
-      "sha256": "3e192bbfcb01f9fbd9601e0f8848983df0f25fd4722714d9ff42c33dbe56f4f0",
+      "sha256": "0df715f2306e2db6915e00edacf990bf1b98e7b0daf3fd123f43a39536dd5696",
       "bytes": 4244,
       "source_sha256": "da79f2a8eb0e8eded49b8b7e93cb74b1c0bf4dc982f8abd974f5296630c3a644",
-      "transformations": []
+      "transformations": ["2026-10-29: refresh pytest report after public verification"]
     },
     {
       "path": "publication/checks-public.xml",
-      "sha256": "a6028695b0e87df4a8800c38a2a15718df54b11a6b7dd8ac79e9d361816d467c",
+      "sha256": "36fbf0d43e1a33e86dba5225f1e297bbadb74c85020000c7564278d8678c8963",
       "bytes": 161225,
       "source_sha256": "0f3ecaae3fada7588b8895763fb4d9b89d899372201db148f510ca955326a0c2",
-      "transformations": []
+      "transformations": ["2026-10-29: refresh pytest report after public verification"]
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
-      "sha256": "1c8adc367785a9f29a93a7b51a15efc2bf6c2fe78f435faf5e857ffcbd71837f",
+      "sha256": "acc8b50cc08a44ec984f4239ec568d6e42408774e584a740c830c782d6838ff5",
       "bytes": 6383,
       "source_sha256": "e08e156cb9098f73d3277d00fc362ea08235b04299f93f7c3d53f546dbf329c8",
-      "transformations": []
+      "transformations": ["2026-10-29: refresh pytest report after public verification"]
     },
     {
       "path": "publication/checks-selection-timeout.xml",
-      "sha256": "1d391d67a3075429b42491aafda64683b842cce7fca0a840e9a68eee2318d24e",
-      "bytes": 14580,
+      "sha256": "bf83441a71d1799e2b971d7bddd0428e464f3d5f9e647ec8ce4ac18babc931ae",
+      "bytes": 14581,
       "source_sha256": "7968099b866349417b4cdc269be6df76d570059ee2d584c1c6b8b1d2d6ab8d6a",
-      "transformations": []
+      "transformations": ["2026-10-29: refresh pytest report after public verification"]
     },
     {
       "path": "agent-handoff/PURE_LINUX_HOLDER_SETUP_JAVAVM_BLOCK_2026-10-29.md",
@@ -19616,10 +19619,24 @@
       "bytes": 2567,
       "source_sha256": "2d90161b0ecab9d0e21f9b78f6c4f86438ccc30ef9e6e6ce3b4c25ef7111b475",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/ANDROID_ART_CLOSURE_APP_PROCESS_BINDER_BLOCK_2026-10-29.md",
+      "sha256": "e41d8b16fde78770d430a689c7d77870befa6a20444b74729b3daa49309b7425",
+      "bytes": 4981,
+      "source_sha256": "e41d8b16fde78770d430a689c7d77870befa6a20444b74729b3daa49309b7425",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/android-art-closure-app-process-binder-evidence-20261029.json",
+      "sha256": "2c003bd3decf64e25c1712a127d9eee0ec956f022f6e0cb09ef9e8c3eebf0c26",
+      "bytes": 2755,
+      "source_sha256": "2c003bd3decf64e25c1712a127d9eee0ec956f022f6e0cb09ef9e8c3eebf0c26",
+      "transformations": []
     }
   ],
-  "file_count": 2790,
-  "source_bytes": 36207845,
+  "file_count": 2792,
+  "source_bytes": 36218302,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

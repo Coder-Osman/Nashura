@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-29：Android ART 闭包与 app_process Binder 阻塞
+
+- 在同构 Ubuntu ARM64 guest 的 user/mount namespace 中重建含 boot image 的 ART 闭包；`/proc` bind mount、`pivot_root` 和 linker NEEDED 解析通过。
+- `app_process64` 已加载 `libandroid_runtime.so`、`libart.so`，选择 default boot image 配置并进入 `JNI_CreateJavaVM`；启动随后在 `/dev/binder` 缺失（`ENOENT`，占位普通文件对照为 `ENOTTY`）处以 `SIGABRT`、退出码134结束。
+- 阶段状态为 `BLOCKED_GUEST_BINDER`；没有建立真实 Android JavaVM，Linux holder setup 继续为 `RUNTIME_BLOCKED_JAVAVM`，catalog、ResourceManager、GameState、Step、完整对局和性能保持 `NOT_RUN`。
+- 详见 `agent-handoff/ANDROID_ART_CLOSURE_APP_PROCESS_BINDER_BLOCK_2026-10-29.md` 及对应 JSON 证据摘要。
+
 ## 2026-10-29：Linux holder setup 真实执行与 JavaVM 阻塞
 
 - 恢复 VMware guest 登录后，使用新 probe 真实执行 `--holder-setup-only`；内容 root、filesystem 和两个 provider 注册返回。

@@ -1,0 +1,59 @@
+{
+  "schema": "nashura.android-art-closure-probe.v1",
+  "date": "2026-10-29",
+  "guest": {
+    "architecture": "aarch64",
+    "kernel": "Linux 6.8.0-138-generic",
+    "vm": "VMware Fusion Ubuntu 22.04.5 ARM64",
+    "workspace": "/dev/shm"
+  },
+  "inputs": {
+    "minimal_closure_tar_sha256": "f31376854ebf4955dab962d472d1e26e81288cba090d4ba3f7301a07d9f41f7b",
+    "art_boot_tar_sha256": "f43aef19d5c5ab204c97797355402b3c7cedd05d05c0f5f1d580fcbdf96bd36a",
+    "property_addon_tar_sha256": "9b1df5adbbb5cd371cc4adb5041768e6587596f4d64ed013cd5125623f87eb24",
+    "libstatssocket_sha256": "c70fa366743987548481e54c169c7d928c4d35d2fb1c37533498bd9f8fdd92ed",
+    "libstatspull_sha256": "0ff86311f4be8c046548f07efe263f28c75c4d7589af3d49d36dafd4a833252a"
+  },
+  "probe": {
+    "namespace": "unshare -Ur -m",
+    "proc_bind_mount": "PASS",
+    "pivot_root": "PASS",
+    "linker_list_exit": 0,
+    "app_process_command": "/apex/com.android.runtime/bin/linker64 /system/bin/app_process64 --version",
+    "app_process_exit": 134,
+    "app_process_signal": "SIGABRT",
+    "default_boot_image_log": "Using default boot image",
+    "boot_image_load_verified": false,
+    "runtime_abort_log": "Runtime does not yet exist!",
+    "jni_create_java_vm": "REACHED_ABORT_BOUNDARY",
+    "binder_open_default": "ENOENT",
+    "binder_ioctl_regular_file_control": "ENOTTY",
+    "failure_boundary": "android::ProcessState::ProcessState during JNI_CreateJavaVM; guest lacks a usable Binder device; binder_linux module is present but unloaded",
+    "app_process_default_strace_sha256": "036bd5ec82d8f1204c53513c82c76d6dd625638675cd00cf3573c7b95909239a",
+    "app_process_regular_file_strace_sha256": "2c06002fb0c1d59fd86ff6211cba690adb52abc07628c4e754fb4a1bc0a538c4"
+  },
+  "gates": {
+    "art_linker_and_needed_libraries": "PASS_LIMITED",
+    "app_process_full_start": "BLOCKED_GUEST_BINDER",
+    "jni_create_java_vm": "REACHED_ABORT_BOUNDARY",
+    "android_javavm_lifecycle": "NOT_RUN",
+    "linux_holder_setup": "RUNTIME_BLOCKED_JAVAVM",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "game_state": "NOT_RUN",
+    "step_tick": "NOT_RUN",
+    "full_match": "NOT_RUN"
+  },
+  "cleanup": {
+    "host_guest_main_archive_hashes_matched": true,
+    "temporary_archives_and_expanded_directories_removed": true,
+    "private_trace_and_diagnostics_retained": true,
+    "frozen_deployments_unchanged": true
+  },
+  "limitations": [
+    "The guest has no usable Binder driver device; a regular file was used only to identify the ioctl boundary",
+    "No JavaVM or JNI lifecycle was created",
+    "The default boot image configuration was selected; successful boot image loading was not verified",
+    "The private strace is retained by hash and is not published"
+  ]
+}

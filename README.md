@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-29：Android ART 闭包启动边界
+
+同构 Ubuntu ARM64 guest 中的临时 ART 闭包完成 `/proc` bind mount、`pivot_root` 和
+linker 依赖解析；`app_process64` 已加载 `libandroid_runtime.so` 与 `libart.so`，
+但 guest 没有 Binder 驱动，`JNI_CreateJavaVM` 在 `android::ProcessState` 打开
+`/dev/binder` 时返回 `ENOENT`（占位普通文件对照为 `ENOTTY`），进程以 `SIGABRT`
+（134）退出。阶段状态为 `BLOCKED_GUEST_BINDER`，JavaVM 指针没有返回；Linux holder setup、严格 catalog、ResourceManager、GameState、真实 Step、
+完整对局和性能验收仍保持原有阻塞/未运行状态。详见
+[阶段报告](agent-handoff/ANDROID_ART_CLOSURE_APP_PROCESS_BINDER_BLOCK_2026-10-29.md)
+和[证据摘要](agent-handoff/android-art-closure-app-process-binder-evidence-20261029.json)。
+
 ## 2026-10-29：Linux holder setup 真实执行与 JavaVM 阻塞
 
 恢复 guest 登录通道后，使用当前 probe 在 Ubuntu ARM64 中真实执行
