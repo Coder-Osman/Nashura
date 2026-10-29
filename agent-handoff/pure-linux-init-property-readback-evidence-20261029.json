@@ -1,0 +1,308 @@
+{
+  "schema": "nashura.pure-linux-init-property-readback.v1",
+  "baseline_commit": "3ea37a6",
+  "status": "INIT_PROPERTY_CONTINUITY_PASS_LIMITED",
+  "property_name": "sys.system_server.start_count",
+  "original_init_sha256": "1f0964ea07e28a6c3b236b1b29c80a42972b392d9d3b3b48398904563c35bd67",
+  "original_policy_sha256": "43989811a2b605756f4a190bef7c619465276e3e508f55a8d419ea4cab4b3c69",
+  "loaded_policy_sha256": "9f9115c47be1a90556dabaf6339127c5b626bd2fa2a26687ee0733bbb790d0bc",
+  "source_sha256": {
+    "namespace_exec.c": "c17165ff592eec55058d4c57b29628ba4b856ec02e4600ffc4554f3f9d58ad10",
+    "probe_root_init.py": "6abc085011034bb1f75590a723c9e775ba2af936bafebd8270d669df5fb7fedf",
+    "art_namespace.sh": "5c267f46a7a2349eef09e9662a50efc4bf03ca03f7542586cdaec21b4cb44c8b",
+    "probe_init_property_service.py": "dbb2d94f2398344f1081ed336a9ae395e9cfd10d095f61e7f941d34cfb83ef0f",
+    "test_probe_root_init.py": "dbe006f6b2a6a9864b9723428e2d778f86cf70f39bd1a858804511aa60b23c1e",
+    "test_probe_init_property_service.py": "03a659c5b96a5d2acad6a994f7cb642fa950b6fc3432928c1bf7d66b6cdc7694"
+  },
+  "namespace_exec_binary_sha256": "0f459dddf4e621e93bb67ebea15dcb0210180d9d07bcbfd1fa145653b33d0f1c",
+  "final_public_sources_match_guest": true,
+  "guest_root_namespaces": [
+    "mount",
+    "pid",
+    "cgroup",
+    "net",
+    "ipc"
+  ],
+  "maximum_init_seconds": 20,
+  "policy_load_count": 1,
+  "enforce": "0",
+  "policy_rollback": "guest reboot required; not automatically performed",
+  "sysctls_restored": true,
+  "restored_sysctls": {
+    "kernel/kptr_restrict": "1",
+    "vm/mmap_rnd_bits": "33",
+    "vm/mmap_rnd_compat_bits": "16"
+  },
+  "runs": [
+    {
+      "label": "private-v1",
+      "result_sha256": "ba0df45ece4d9b897d11ff1642733eab13c61f77c8510c9498c2215a061eba4c",
+      "status": "INIT_PROPERTY_WRITE_READBACK_PASS_LIMITED",
+      "sysctls_restored": true,
+      "init_launcher_exit": -1,
+      "init_timed_out": false,
+      "inputs_unchanged": true,
+      "writes": [
+        {
+          "value": "1",
+          "response_code": 0,
+          "readback_exit": 0,
+          "readback_value": "1",
+          "readback_verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "private-v2",
+      "result_sha256": "95bc4f097994384afb6436f6080185cadd3edab3de154eb042829a57ef671ce4",
+      "status": "INIT_PROPERTY_WRITE_READBACK_PASS_LIMITED",
+      "sysctls_restored": true,
+      "init_launcher_exit": -1,
+      "init_timed_out": false,
+      "inputs_unchanged": true,
+      "writes": [
+        {
+          "value": "1",
+          "response_code": 0,
+          "readback_exit": 0,
+          "readback_value": "1",
+          "readback_verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "private-v3",
+      "result_sha256": "d02184754c289c88c5f6e0a0313a238c23316a201be0ea1cc0e4dcd44cd86df3",
+      "status": "INIT_PROPERTY_WRITE_READBACK_PASS_LIMITED",
+      "sysctls_restored": true,
+      "init_launcher_exit": -9,
+      "init_timed_out": true,
+      "inputs_unchanged": true,
+      "writes": [
+        {
+          "value": "1",
+          "response_code": 0,
+          "readback_exit": 0,
+          "readback_value": "1",
+          "readback_verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "private-v4",
+      "result_sha256": "1bec911325ee81011441087b3af1a3c8cd4b2679cd8c8b7538b67f5db6a370ab",
+      "status": "INIT_PROPERTY_WRITE_READBACK_PASS_LIMITED",
+      "sysctls_restored": true,
+      "init_launcher_exit": -9,
+      "init_timed_out": true,
+      "inputs_unchanged": true,
+      "writes": [
+        {
+          "value": "1",
+          "response_code": 0,
+          "readback_exit": 0,
+          "readback_value": "1",
+          "readback_verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "private-v5",
+      "result_sha256": "1b855d3761bf31cbc93a721578b34547f61a387182c478d070d3080669f1edb1",
+      "status": "INIT_ROOT_TRIAL_NOT_VERIFIED",
+      "sysctls_restored": true,
+      "init_launcher_exit": -1,
+      "init_timed_out": false,
+      "inputs_unchanged": true,
+      "writes": [
+        {
+          "value": null,
+          "response_code": null,
+          "readback_exit": null,
+          "readback_value": null,
+          "readback_verified": false,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "public-v6",
+      "result_sha256": "33d32b7982bd4fa14491e2f83dddebfa64e1dc75231fd7a4acbfbb8cb4f1ac5c",
+      "status": "INIT_ROOT_NOT_VERIFIED",
+      "sysctls_restored": true,
+      "init_launcher_exit": -1,
+      "init_timed_out": false,
+      "inputs_unchanged": true,
+      "writes": [
+        {
+          "value": "1",
+          "response_code": 0,
+          "readback_exit": 0,
+          "readback_value": "1",
+          "readback_verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "public-v7",
+      "result_sha256": "5f210f4c6f62cf9920b0a79d39bf6e9873224d50097581ce7b9ea02b49c07d30",
+      "status": "INIT_PROPERTY_CONTINUITY_PASS_LIMITED",
+      "sysctls_restored": true,
+      "init_launcher_exit": -1,
+      "init_timed_out": false,
+      "inputs_unchanged": true,
+      "writes": [
+        {
+          "value": "1",
+          "response_code": 0,
+          "readback_exit": 0,
+          "readback_value": "1",
+          "readback_verified": true,
+          "error": null
+        },
+        {
+          "value": "2",
+          "response_code": 0,
+          "readback_exit": 0,
+          "readback_value": "2",
+          "readback_verified": true,
+          "error": null
+        },
+        {
+          "value": "3",
+          "response_code": 0,
+          "readback_exit": 0,
+          "readback_value": "3",
+          "readback_verified": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "label": "public-v8",
+      "result_sha256": "d5dcc5887e84c421e03ccb626426500788722660a40b585783857555455b51ec",
+      "status": "INIT_ROOT_NOT_VERIFIED",
+      "sysctls_restored": true,
+      "init_launcher_exit": -1,
+      "init_timed_out": false,
+      "inputs_unchanged": true,
+      "writes": [
+        {
+          "value": "1",
+          "response_code": 0,
+          "readback_exit": 0,
+          "readback_value": "1",
+          "readback_verified": true,
+          "error": null
+        },
+        {
+          "value": "2",
+          "response_code": null,
+          "readback_exit": null,
+          "readback_value": null,
+          "readback_verified": false,
+          "error": "ConnectionRefusedError"
+        },
+        {
+          "value": "3",
+          "response_code": null,
+          "readback_exit": null,
+          "readback_value": null,
+          "readback_verified": false,
+          "error": "ConnectionRefusedError"
+        }
+      ]
+    },
+    {
+      "label": "public-v9",
+      "result_sha256": "6ed66125e95bdbcb0d2c76d0073cbffbe7c1e02086968af2b7b17ead328a9917",
+      "status": "INIT_PROPERTY_CONTINUITY_PASS_LIMITED",
+      "sysctls_restored": true,
+      "init_launcher_exit": -1,
+      "init_timed_out": false,
+      "inputs_unchanged": true,
+      "writes": [
+        {
+          "value": "1",
+          "response_code": 0,
+          "readback_exit": 0,
+          "readback_value": "1",
+          "readback_verified": true,
+          "error": null
+        },
+        {
+          "value": "2",
+          "response_code": 0,
+          "readback_exit": 0,
+          "readback_value": "2",
+          "readback_verified": true,
+          "error": null
+        },
+        {
+          "value": "3",
+          "response_code": 0,
+          "readback_exit": 0,
+          "readback_value": "3",
+          "readback_verified": true,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "actual_kernel_compute_create": true,
+  "linkerconfig_exit": 0,
+  "apexd_bootstrap_exit": 0,
+  "bootstrap_activated_packages": 0,
+  "flattened_experiment": {
+    "file_count": 112,
+    "manifests": 5,
+    "original_ro_apex_updatable": "true",
+    "status": "NOT_ACTIVATED"
+  },
+  "latest_service_attempt": {
+    "result_sha256": "d5dcc5887e84c421e03ccb626426500788722660a40b585783857555455b51ec",
+    "probe_stdout_sha256": "bb8a6599db99c0cd13490f6d1f286960769a5c7c31a3c1d4f55d30f119350ea3",
+    "probe_stderr_sha256": "127989155ad173885b93639c4f45babeb8750140015bbdde55fa03e3f8bb9903",
+    "android_servers_loaded": true,
+    "system_context_present": true,
+    "probe_exit": 3,
+    "failure_stage": "PowerManagerService.start",
+    "failure": "init exits after missing APEX interpreter causes BoringSSL self-test exec ENOENT; property connection refused",
+    "power_manager_started": false,
+    "display_manager_started": false
+  },
+  "engineering_checks": {
+    "pure_linux": {
+      "passed": 1133,
+      "skipped": 1
+    },
+    "public_main": {
+      "passed": 794,
+      "skipped": 27
+    },
+    "main_engine": {
+      "passed": 211
+    },
+    "public_additional_groups": "all exit 0",
+    "native_helper_compile": "exit 0; NDK Android 30 static"
+  },
+  "backup_regular_files_verified": 1053,
+  "backup_symlinks_verified": 44,
+  "system_services_ready": false,
+  "game_context_initialized": false,
+  "catalog_ready_pass": false,
+  "resource_manager": "NOT_RUN",
+  "game_state": "NOT_RUN",
+  "step_tick": "NOT_RUN",
+  "full_game": "NOT_RUN",
+  "limits": [
+    "selected pinned input files only; not a full runtime inventory",
+    "property continuity does not prove persistent service readiness",
+    "private logs and third-party inputs are not included"
+  ]
+}

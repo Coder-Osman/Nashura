@@ -1,5 +1,13 @@
 # 阶段成果与证据索引
 
+## 2026-10-29：原始 init 属性写入与读回
+
+真实 property v2 写入已由同镜像 getprop 独立读回，连续值 `1、2、3` 的限定验证
+通过；真实 SELinux 域转换、linkerconfig 与 apexd bootstrap 均已返回，三项 sysctl
+已恢复。服务启动期间仍因原始 APEX 激活闭包缺失而中断，PowerManager / DisplayManager、
+GameApp Context 和完整游戏链路继续未验收。详见[报告](../agent-handoff/PURE_LINUX_INIT_PROPERTY_READBACK_2026-10-29.md)
+和[证据](../agent-handoff/pure-linux-init-property-readback-evidence-20261029.json)。以下各节保留历史边界。
+
 ## 2026-10-29：android_servers 加载与系统服务依赖
 
 修正 system → ART 的 `libart.so` 导出后，原始 `android_servers` 加载和系统

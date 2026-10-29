@@ -60,6 +60,43 @@ if [ -n "${NASHURA_ART_LINKER_CONFIG:-}" ]; then
     [ -f "$NASHURA_ART_LINKER_CONFIG" ] || exit 69
     mount --bind "$NASHURA_ART_LINKER_CONFIG" "$ART_BASE/linkerconfig/com.android.art/ld.config.txt"
 fi
+if [ "${NASHURA_ROOT_INIT_TRIAL:-0}" = 1 ]; then
+    [ "$(id -u)" = 0 ] && [ "${NASHURA_BIND_SELINUXFS:-0}" = 1 ] || exit 70
+    case "${NASHURA_TOOLS_INPUTS:-}" in /*) ;; *) exit 70 ;; esac
+    [ "$NASHURA_TOOLS_INPUTS" != / ] && [ -d "$NASHURA_TOOLS_INPUTS" ] || exit 70
+    [ -x "$NASHURA_TOOLS_INPUTS/nashura_namespace_exec" ] || exit 70
+    [ -x "$NASHURA_TOOLS_INPUTS/toolbox" ] || exit 70
+    mkdir -p "$ART_BASE/dev/pts"
+    mount -t devpts -o newinstance,ptmxmode=0666,mode=0620 devpts "$ART_BASE/dev/pts"
+    ln -sfn pts/ptmx "$ART_BASE/dev/ptmx"
+    mkdir -p "$ART_BASE/tmp/root-trial-sysctls"
+    for knob in kernel/kptr_restrict vm/mmap_rnd_bits vm/mmap_rnd_compat_bits; do
+        name=${knob##*/}
+        touch "$ART_BASE/tmp/root-trial-sysctls/$name"
+        mount --bind "/proc/sys/$knob" "$ART_BASE/tmp/root-trial-sysctls/$name"
+    done
+    mount --bind "$ART_BASE/proc/sys" "$ART_BASE/proc/sys"
+    mount -o remount,bind,ro "$ART_BASE/proc/sys"
+    for knob in kernel/kptr_restrict vm/mmap_rnd_bits vm/mmap_rnd_compat_bits; do
+        name=${knob##*/}
+        mount --bind "$ART_BASE/tmp/root-trial-sysctls/$name" "$ART_BASE/proc/sys/$knob"
+        mount -o remount,bind,rw "$ART_BASE/proc/sys/$knob"
+    done
+    mount --bind "$ART_BASE/proc/sysrq-trigger" "$ART_BASE/proc/sysrq-trigger"
+    mount -o remount,bind,ro "$ART_BASE/proc/sysrq-trigger"
+    # libselinux requires an rw selinuxfs to use its stateless calculation APIs.
+    # Keep policy/enforcement/boolean controls read-only, retaining those APIs.
+    for node in load enforce checkreqprot disable commit_pending_bools policy booleans avc; do
+        path="$ART_BASE/sys/fs/selinux/$node"
+        if [ -e "$path" ]; then
+            mount --bind "$path" "$path"
+            mount -o remount,bind,ro "$path"
+        fi
+    done
+    mkdir -p "$ART_BASE/nashura-tools"
+    mount --bind "$NASHURA_TOOLS_INPUTS" "$ART_BASE/nashura-tools"
+    mount -o remount,bind,ro "$ART_BASE/nashura-tools"
+fi
 /usr/sbin/pivot_root "$ART_BASE" "$ART_BASE/oldroot"
 cd /
 export ANDROID_ROOT=/system ANDROID_DATA=/data
@@ -70,4 +107,10 @@ export ANDROID_SOCKET_DIR=/data/sockets
 export BOOTCLASSPATH=/apex/com.android.art/javalib/core-oj.jar:/apex/com.android.art/javalib/core-libart.jar:/apex/com.android.art/javalib/core-icu4j.jar:/apex/com.android.art/javalib/okhttp.jar:/apex/com.android.art/javalib/bouncycastle.jar:/apex/com.android.art/javalib/apache-xml.jar
 # Namespace links must own Bionic; a global library path creates duplicate TLS instances.
 unset LD_LIBRARY_PATH LD_PRELOAD LD_DEBUG LD_DEBUG_OUTPUT
+if [ "${NASHURA_ROOT_INIT_TRIAL:-0}" = 1 ]; then
+    if [ -n "${NASHURA_EXEC_UID:-}" ]; then
+        exec /nashura-tools/nashura_namespace_exec --user "$NASHURA_EXEC_UID" "${NASHURA_EXEC_GID:?}" "$@"
+    fi
+    exec /nashura-tools/nashura_namespace_exec "$@"
+fi
 exec /apex/com.android.runtime/bin/linker64 "$@"

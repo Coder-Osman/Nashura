@@ -30,6 +30,19 @@ def test_no_response_or_connected_socket_is_not_write_evidence():
     assert result["status"] == "INIT_PROPERTY_BLOCKED_LIMITED"
 
 
+def test_matching_readback_is_required_even_when_flag_is_set():
+    request = {"connected": True, "response_code": 0, "value": "3", "readback_value": "3",
+               "readback_exit": 0, "readback_verified": True}
+    result = summarize(request, True, -9)
+    assert result["status"] == "INIT_PROPERTY_WRITE_READBACK_PASS_LIMITED"
+    assert result["property_write_verified"] is True
+    assert result["system_services_ready"] is False
+    assert result["catalog_ready_pass"] is False
+    for field, damaged in (("response_code", 24), ("readback_value", "2"), ("readback_exit", 1),
+                           ("connected", False), ("readback_verified", False)):
+        assert summarize(dict(request, **{field: damaged}), True, 0)["property_write_verified"] is False
+
+
 @pytest.mark.parametrize("truncated", [False, True])
 def test_protocol_encoding_and_truncated_response(tmp_path, monkeypatch, truncated):
     # macOS pytest roots can already exceed sockaddr_un.sun_path.

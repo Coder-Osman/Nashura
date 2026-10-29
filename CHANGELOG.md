@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-29：原始 init 属性写入与读回
+
+- 用户确认的 guest policy 实验取得真实 property ACK 与 getprop 读回；连续写入三个值验证通过。
+- 新增只复用固定已加载 policy 的计划/执行入口，验证输入身份、隔离 namespace、恢复三项 sysctl。
+- 保留真实 SELinux 计算接口并保护配置节点；新增 PT_INTERP 执行 helper、服务子进程降权和独立 devpts。
+- 记录 init 的 APEX tmpfs、原始可更新 APEX 缺口及 BoringSSL 自检退出；flattened 目录实验失败也保留。
+- 系统服务和游戏验收门保持关闭，发布脱敏证据及 1133 项纯 Linux 工程复验结果。
+
 ## 2026-10-29：android_servers 加载与系统服务依赖
 
 - 定位 JavaVM 创建时的 libart.so namespace 缺口，补齐精确导出并支持独立配置 bind；公开生成配置已在 ARM64 guest 复测。

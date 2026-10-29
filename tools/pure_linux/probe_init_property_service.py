@@ -52,12 +52,13 @@ def kernel_state():
     return result
 
 
-def property_request(path):
-    name, value = PROPERTY_NAME.encode(), PROPERTY_VALUE.encode()
+def property_request(path, name=PROPERTY_NAME, value=PROPERTY_VALUE):
+    property_name, property_value = name, value
+    name, value = name.encode(), value.encode()
     request = (struct.pack("<II", PROP_MSG_SETPROP2, len(name)) + name
                + struct.pack("<I", len(value)) + value)
-    result = {"connected": False, "response_code": None, "property": PROPERTY_NAME,
-              "value": PROPERTY_VALUE, "readback_verified": False}
+    result = {"connected": False, "response_code": None, "property": property_name,
+              "value": property_value, "readback_verified": False}
     with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as client:
         client.settimeout(2)
         client.connect(str(path))
@@ -77,7 +78,14 @@ def property_request(path):
 
 
 def summarize(request, socket_created, exit_code):
-    if request.get("connected") and request.get("response_code") == PROP_ERROR_PERMISSION_DENIED:
+    verified = (request.get("connected") is True and request.get("response_code") == 0
+                and request.get("readback_exit") == 0
+                and isinstance(request.get("value"), str)
+                and request.get("readback_value") == request["value"]
+                and request.get("readback_verified") is True)
+    if verified:
+        status = "INIT_PROPERTY_WRITE_READBACK_PASS_LIMITED"
+    elif request.get("connected") and request.get("response_code") == PROP_ERROR_PERMISSION_DENIED:
         status = "INIT_PROPERTY_REQUEST_REJECTED_LIMITED"
     elif request.get("connected") and request.get("response_code") == 0:
         status = "INIT_PROPERTY_WRITE_ACK_ONLY_LIMITED"
@@ -87,7 +95,7 @@ def summarize(request, socket_created, exit_code):
         status = "INIT_PROPERTY_BLOCKED_LIMITED"
     return {"status": status, "init_launcher_exit": exit_code,
             "socket_created": socket_created, "request": request,
-            "property_write_verified": False, "system_services_ready": False,
+            "property_write_verified": verified, "system_services_ready": False,
             "game_context_initialized": False, "catalog_ready_pass": False}
 
 
@@ -103,12 +111,15 @@ def validate_paths(closure, vendor, launcher, output):
         raise ValueError("output must be outside input directories")
 
 
-def run(closure, vendor, launcher, output, expected_init_sha256, timeout=20):
+def run(closure, vendor, launcher, output, expected_init_sha256, timeout=20,
+        root_namespace=False, request_client=None, extra_environment=None):
     closure, vendor, launcher, output = (Path(p).resolve() for p in (closure, vendor, launcher, output))
     validate_paths(closure, vendor, launcher, output)
     init = closure / "system/bin/init"
     if sha256(init) != expected_init_sha256:
         raise ValueError("original init identity mismatch")
+    if root_namespace and os.geteuid() != 0:
+        raise PermissionError("root PID namespace trial requires root")
     version = vendor / "etc/selinux/plat_sepolicy_vers.txt"
     contexts = vendor / "etc/selinux/vendor_property_contexts"
     for path in (version, contexts):
@@ -127,11 +138,16 @@ def run(closure, vendor, launcher, output, expected_init_sha256, timeout=20):
     (output / "properties").mkdir(mode=0o711)
     (output / "socket").mkdir(mode=0o755)
     (output / "kmsg").touch(exist_ok=False)
-    environment = dict(os.environ, NASHURA_BIND_SELINUXFS="1", NASHURA_INIT_STATE=str(output),
+    environment = dict(os.environ, **(extra_environment or {}))
+    environment.update(NASHURA_BIND_SELINUXFS="1", NASHURA_INIT_STATE=str(output),
                        NASHURA_VENDOR_INPUTS=str(vendor))
-    command = ["strace", "-f", "-s", "256", "-o", str(output / "init.strace"),
-               "unshare", "-Ur", "-m", "/bin/sh", str(launcher), str(closure),
-               "/system/bin/init", "second_stage"]
+    namespace = ["unshare", "-Ur", "-m"]
+    if root_namespace:
+        namespace = ["unshare", "-m", "--pid", "--fork", "--kill-child=SIGKILL",
+                     "--mount-proc", "--cgroup", "--net", "--ipc"]
+    command = (["strace", "-f", "-s", "256", "-o", str(output / "init.strace")]
+               + namespace + ["/bin/sh", str(launcher), str(closure),
+                              "/system/bin/init", "second_stage"])
     (output / "command.json").write_text(json.dumps({"argv": command, "environment": {
         k: environment[k] for k in ("NASHURA_BIND_SELINUXFS", "NASHURA_INIT_STATE", "NASHURA_VENDOR_INPUTS")}},
         indent=2) + "\n")
@@ -142,11 +158,15 @@ def run(closure, vendor, launcher, output, expected_init_sha256, timeout=20):
         path = output / "socket/property_service"
         while not stop.is_set():
             try:
-                observed = property_request(path)
+                observed = (request_client or property_request)(path)
             except OSError as error:
                 request["last_connect_error"] = type(error).__name__
                 stop.wait(0.001)
                 continue
+            except Exception as error:
+                request["observer_error"] = type(error).__name__
+                request["observer_error_message"] = str(error)
+                break
             request.clear()
             request.update(observed)
             break
@@ -169,7 +189,8 @@ def run(closure, vendor, launcher, output, expected_init_sha256, timeout=20):
                 exit_code = process.wait(timeout=3)
         finally:
             stop.set()
-            watcher.join(timeout=3)
+            # A bounded custom client may still be collecting readback after init exits.
+            watcher.join(timeout=max(3, timeout))
     if watcher.is_alive():
         raise RuntimeError("property observer did not finish")
     (output / "exit").write_text(str(exit_code) + "\n")
