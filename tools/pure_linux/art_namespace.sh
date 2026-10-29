@@ -55,6 +55,11 @@ ln -sfn /proc/self/fd "$ART_BASE/dev/fd"
 ln -sfn /proc/self/fd/0 "$ART_BASE/dev/stdin"
 ln -sfn /proc/self/fd/1 "$ART_BASE/dev/stdout"
 ln -sfn /proc/self/fd/2 "$ART_BASE/dev/stderr"
+if [ -n "${NASHURA_ART_LINKER_CONFIG:-}" ]; then
+    case "$NASHURA_ART_LINKER_CONFIG" in /*) ;; *) exit 69 ;; esac
+    [ -f "$NASHURA_ART_LINKER_CONFIG" ] || exit 69
+    mount --bind "$NASHURA_ART_LINKER_CONFIG" "$ART_BASE/linkerconfig/com.android.art/ld.config.txt"
+fi
 /usr/sbin/pivot_root "$ART_BASE" "$ART_BASE/oldroot"
 cd /
 export ANDROID_ROOT=/system ANDROID_DATA=/data

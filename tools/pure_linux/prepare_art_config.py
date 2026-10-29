@@ -28,6 +28,9 @@ def prepare(content, expected_sha256):
         text = text.replace("namespace." + name + ".", "namespace.com_android_" + name + ".")
         text = text.replace(".link." + name + ".", ".link.com_android_" + name + ".")
     text += "\nnamespace.system.permitted.paths += /apex/com.android.os.statsd/${LIB}\n"
+    # JniInvocation may be reached from the system namespace after android_servers
+    # dependencies are loaded. Its real dlopen must still resolve the ART runtime.
+    text += "namespace.system.link.com_android_art.shared_libs += libart.so\n"
     return text
 
 

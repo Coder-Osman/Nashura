@@ -10194,16 +10194,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "074547434e5ae373120501db5e92be9c00c5c8a376d1a9b4e64764756eff1acf",
-      "bytes": 55356,
-      "source_sha256": "074547434e5ae373120501db5e92be9c00c5c8a376d1a9b4e64764756eff1acf",
+      "sha256": "19d898f0dcaa066d7609d05d11d16160a41386e414673c5e2c68abaf3113014e",
+      "bytes": 56008,
+      "source_sha256": "19d898f0dcaa066d7609d05d11d16160a41386e414673c5e2c68abaf3113014e",
       "transformations": []
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "fb6640bdc26edc5b165267f45f759d89a77064863fcf891e5cb16a9261fe5767",
-      "bytes": 89707,
-      "source_sha256": "fb6640bdc26edc5b165267f45f759d89a77064863fcf891e5cb16a9261fe5767",
+      "sha256": "5ea58b02d0ec5f7957f848577a825919f6df8ce3879dd0f11d6ec23fdb57140b",
+      "bytes": 90365,
+      "source_sha256": "5ea58b02d0ec5f7957f848577a825919f6df8ce3879dd0f11d6ec23fdb57140b",
       "transformations": []
     },
     {
@@ -16615,9 +16615,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "6a74dbfb4de5068e481fa7185d70e81658f6bace2e4032e3626551139cd7d4e8",
-      "bytes": 56763,
-      "source_sha256": "6a74dbfb4de5068e481fa7185d70e81658f6bace2e4032e3626551139cd7d4e8",
+      "sha256": "5a7e2a64259619987a21402f638646eb431e99aa9d400b2a828c4f28eebff9d6",
+      "bytes": 57415,
+      "source_sha256": "5a7e2a64259619987a21402f638646eb431e99aa9d400b2a828c4f28eebff9d6",
       "transformations": []
     },
     {
@@ -19494,92 +19494,101 @@
     },
     {
       "path": "publication/checks-affordability.xml",
-      "sha256": "044b4886f046e1378ca8bd8e08290380fd880552514bbf7deda5224a3c6dc019",
+      "sha256": "9e3e8081f3c794646ab09b83139f3aeaf3f11b1a056697ba3c8342cb433733ec",
       "bytes": 4340,
       "source_sha256": "ed6541fac1ee54b0e543d98e0297520b86ca59a95480783eec5c501753352a75",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage"
+        "2026-10-29: refresh pytest report for original init property-service stage",
+        "2026-10-29: refresh pytest report for system-service dependency stage"
       ]
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
-      "sha256": "b4f7284c18540e2030e27ecfbf715b4105771f7446e79f7482ae57c3e799620b",
+      "sha256": "bbf8d37f4d776d7a1a8a9a0eca2c92dd040e8e22af91ddb005f5a8bc3cef5059",
       "bytes": 12024,
       "source_sha256": "5e7d184f83664142c0d403631627d53e7092168680f9e18a85d5a92f61284a4c",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage"
+        "2026-10-29: refresh pytest report for original init property-service stage",
+        "2026-10-29: refresh pytest report for system-service dependency stage"
       ]
     },
     {
       "path": "publication/checks-command-coordinates.xml",
-      "sha256": "dbc6d2bad97d0eac07114da1f4bc533594172a4b6aa4ab7a90d967414c41e939",
+      "sha256": "51e7464e2aff1ca7f766f450bb743e90d3c41c396cb365be97c41455654fad56",
       "bytes": 8184,
       "source_sha256": "a4e9cec4d99b75d2ef79b01d993b9a04795e45ea6f661fe8dc73fd81301e8658",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage"
+        "2026-10-29: refresh pytest report for original init property-service stage",
+        "2026-10-29: refresh pytest report for system-service dependency stage"
       ]
     },
     {
       "path": "publication/checks-dispatch-command.xml",
-      "sha256": "5a6d36c8d7b65466c22b0783b1e9be9a19209d431509b0c4fac066d1c58a079e",
+      "sha256": "b35ee6360b6888553abce0926415249ac03e1f36a744ae64e51b56728312101b",
       "bytes": 6406,
       "source_sha256": "f1cbc3b728b4427400c7ba2f6faf366881db6e4ef561b7fd700c2eb612860305",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage"
+        "2026-10-29: refresh pytest report for original init property-service stage",
+        "2026-10-29: refresh pytest report for system-service dependency stage"
       ]
     },
     {
       "path": "publication/checks-live-command.xml",
-      "sha256": "9aa709d7bbc4cce00e2bd7e18530caa7ce4855e0ad2f4326c99731a7786e3594",
+      "sha256": "e055b354bc8c1329f12874d06630ceaa25f59b80a37689907ebe7d5cb7e38454",
       "bytes": 6370,
       "source_sha256": "b6dfa3b3539472c83e03eff210e080300abeae05ec7df4c59a1c5a9f9c31fbee",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage"
+        "2026-10-29: refresh pytest report for original init property-service stage",
+        "2026-10-29: refresh pytest report for system-service dependency stage"
       ]
     },
     {
       "path": "publication/checks-position-guards.xml",
-      "sha256": "ca6996592945fd05621ba787c8ac0ce27ce4626bcc47081d51863773d3c1a194",
+      "sha256": "698f1cb62dc14058716edfe193c410515005a428b2d65dda3725b383fe6ffe72",
       "bytes": 4244,
       "source_sha256": "da79f2a8eb0e8eded49b8b7e93cb74b1c0bf4dc982f8abd974f5296630c3a644",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage"
+        "2026-10-29: refresh pytest report for original init property-service stage",
+        "2026-10-29: refresh pytest report for system-service dependency stage"
       ]
     },
     {
       "path": "publication/checks-public.xml",
-      "sha256": "f3edbbfde1260b2024cd75512028a7f6a0baa1d8cb3f4ec067acb947a669826c",
+      "sha256": "2e0aa89dda8a5811d4e5d9ede063b4a7f55487c1c4101dd5b1340e989a0f3154",
       "bytes": 161225,
       "source_sha256": "0f3ecaae3fada7588b8895763fb4d9b89d899372201db148f510ca955326a0c2",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage"
+        "2026-10-29: refresh pytest report for original init property-service stage",
+        "2026-10-29: refresh pytest report for system-service dependency stage"
       ]
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
-      "sha256": "149daff2277d9da0b7539ebaf64845f7bf68e0202b98543143a33f1fa75a2349",
+      "sha256": "b105274e556d78a3991e65dfa08d946b3665e8579dd96ff8b47f7022396959f1",
       "bytes": 6383,
       "source_sha256": "e08e156cb9098f73d3277d00fc362ea08235b04299f93f7c3d53f546dbf329c8",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage"
+        "2026-10-29: refresh pytest report for original init property-service stage",
+        "2026-10-29: refresh pytest report for system-service dependency stage"
       ]
     },
     {
       "path": "publication/checks-selection-timeout.xml",
-      "sha256": "f10832bf2f0d255d1e7e3274b301682a86005b3b6697b52b45ee77ef5b5e09bd",
+      "sha256": "2ab7ff4e4b73688e8799b0bd8038b10924c6226f1e7cd1d40c842ac544d222f3",
       "bytes": 14580,
       "source_sha256": "7968099b866349417b4cdc269be6df76d570059ee2d584c1c6b8b1d2d6ab8d6a",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage"
+        "2026-10-29: refresh pytest report for original init property-service stage",
+        "2026-10-29: refresh pytest report for system-service dependency stage"
       ]
     },
     {
@@ -19668,9 +19677,9 @@
     },
     {
       "path": "tools/pure_linux/art_namespace.sh",
-      "sha256": "9ca4b2a6456a158d3b49665783a4d0c176d24a8e5a47ad67ffe5dd42b20172cc",
-      "bytes": 3640,
-      "source_sha256": "9ca4b2a6456a158d3b49665783a4d0c176d24a8e5a47ad67ffe5dd42b20172cc",
+      "sha256": "4b2292eea33e4a9f518840c273ee753a1e79487ee7d5a9b2884f447a1a19810a",
+      "bytes": 3911,
+      "source_sha256": "4b2292eea33e4a9f518840c273ee753a1e79487ee7d5a9b2884f447a1a19810a",
       "transformations": []
     },
     {
@@ -19696,16 +19705,16 @@
     },
     {
       "path": "tools/pure_linux/prepare_art_config.py",
-      "sha256": "07608d0bed34695f3b536cbabd5be97a19421e7cc916ec7f2e893d542c8599a0",
-      "bytes": 2067,
-      "source_sha256": "07608d0bed34695f3b536cbabd5be97a19421e7cc916ec7f2e893d542c8599a0",
+      "sha256": "d5146c11363b47184bfa41a9e0d241e3d30084ae9c86c51eae99170e3a18b7f4",
+      "bytes": 2312,
+      "source_sha256": "d5146c11363b47184bfa41a9e0d241e3d30084ae9c86c51eae99170e3a18b7f4",
       "transformations": []
     },
     {
       "path": "tools/pure_linux/test_prepare_art_config.py",
-      "sha256": "ea6432a71a526ea5e272fbfaebd7f99a2e376d67b02b7ddd731992f9031a69c3",
-      "bytes": 2312,
-      "source_sha256": "ea6432a71a526ea5e272fbfaebd7f99a2e376d67b02b7ddd731992f9031a69c3",
+      "sha256": "d1169c452bfea6707f775d1618cd426649d6b2e6919110cb6228dcdadf72f01f",
+      "bytes": 2396,
+      "source_sha256": "d1169c452bfea6707f775d1618cd426649d6b2e6919110cb6228dcdadf72f01f",
       "transformations": []
     },
     {
@@ -19773,9 +19782,9 @@
     },
     {
       "path": "tools/pure_linux/ArtSystemServicesProbe.java",
-      "sha256": "4d716c8d86dce33656934540cbedb463f65b8ba2aa3681a20d312d4629e44d86",
-      "bytes": 3488,
-      "source_sha256": "4d716c8d86dce33656934540cbedb463f65b8ba2aa3681a20d312d4629e44d86",
+      "sha256": "b4ed1148af163b17ee23a6c19bea3540d5910be5c984bf7da3314a04289fc130",
+      "bytes": 3928,
+      "source_sha256": "b4ed1148af163b17ee23a6c19bea3540d5910be5c984bf7da3314a04289fc130",
       "transformations": []
     },
     {
@@ -19805,10 +19814,24 @@
       "bytes": 3745,
       "source_sha256": "1094a09286944ff6bee32bec4b5d6f2f7060691cddd1d630300232d40635c3c3",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_SYSTEM_SERVICE_DEPENDENCIES_2026-10-29.md",
+      "sha256": "318c91a5d5a656da795a9171d9d1359151f53c2e96949d5c4459fcec2c388110",
+      "bytes": 5281,
+      "source_sha256": "318c91a5d5a656da795a9171d9d1359151f53c2e96949d5c4459fcec2c388110",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-system-service-dependencies-evidence-20261029.json",
+      "sha256": "ff6029c6ca5e648eb04f89954d01efba1c18d93411028ea75247beae69aac463",
+      "bytes": 6229,
+      "source_sha256": "ff6029c6ca5e648eb04f89954d01efba1c18d93411028ea75247beae69aac463",
+      "transformations": []
     }
   ],
-  "file_count": 2820,
-  "source_bytes": 36350578,
+  "file_count": 2822,
+  "source_bytes": 36365090,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

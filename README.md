@@ -1,5 +1,14 @@
 # Nashura
 
+## 2026-10-29：android_servers 加载与系统服务依赖
+
+修正 system → ART 的 `libart.so` 导出后，原始 `android_servers` 加载和系统
+Context 均返回；子进程的真实优先级许可也已验证。原始 PowerManagerService
+随后在 BatterySaverController 写系统缓存属性时退出，可写 property service
+仍是共同依赖。状态为 `ANDROID_SERVERS_LOAD_PASS_LIMITED`，系统服务、GameApp
+Context 及完整游戏链路继续未验收。详见[报告](agent-handoff/PURE_LINUX_SYSTEM_SERVICE_DEPENDENCIES_2026-10-29.md)和
+[证据](agent-handoff/pure-linux-system-service-dependencies-evidence-20261029.json)。
+
 ## 2026-10-29：原始 init property service 请求边界
 
 ARM64 Linux 中，原始 init 在三次隔离复测中均生成真实 property socket，并接收

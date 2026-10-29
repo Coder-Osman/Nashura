@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "status": "ANDROID_SERVERS_LOAD_PASS_LIMITED",
+  "runtime": {
+    "os": "Ubuntu Linux",
+    "architecture": "aarch64",
+    "android_sdk_api": 30,
+    "android_emulator_started": false
+  },
+  "attempts": [
+    {
+      "attempt": "config-v1",
+      "android_servers_loaded": true,
+      "system_context_present": true,
+      "input_snapshots_equal": true,
+      "private_artifact_sha256": {
+        "stdout": "bb8a6599db99c0cd13490f6d1f286960769a5c7c31a3c1d4f55d30f119350ea3",
+        "stderr": "736ee7a824abb3c3c40e5ee538cfbd1598a6ee1f98306abea6f84d958914d916",
+        "probe.strace": "4a252f36f072f8fb82a02db41d42f4d2eaa363612aea63d7639a98fc7223fef8",
+        "command.json": "a67d13accb82427c1cb90068c2118e95add952fb22322b95cfb0756ebc575b82",
+        "before.json": "2bd1dd183646ae4db5295897b5841558d5352de1b111928f0a803e0857ebc182",
+        "after.json": "2bd1dd183646ae4db5295897b5841558d5352de1b111928f0a803e0857ebc182"
+      },
+      "exit": 3,
+      "boundary": "SystemServiceManager package-visible constructor reflection"
+    },
+    {
+      "attempt": "config-v2",
+      "android_servers_loaded": true,
+      "system_context_present": true,
+      "input_snapshots_equal": true,
+      "private_artifact_sha256": {
+        "stdout": "bb8a6599db99c0cd13490f6d1f286960769a5c7c31a3c1d4f55d30f119350ea3",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "probe.strace": "fcf6585239d6f4d07bc4d13505a75fdefea56e41def144c5f8e6665eef7d00d1",
+        "command.json": "2768b1b6e55998174cd97ecdf4007614a314df148c083303e3d5ade14342d369",
+        "before.json": "2bd1dd183646ae4db5295897b5841558d5352de1b111928f0a803e0857ebc182",
+        "after.json": "2bd1dd183646ae4db5295897b5841558d5352de1b111928f0a803e0857ebc182"
+      },
+      "exit": -9,
+      "boundary": "android.display priority SecurityException followed by RuntimeInit self SIGKILL"
+    },
+    {
+      "attempt": "priority-v3",
+      "android_servers_loaded": true,
+      "system_context_present": true,
+      "input_snapshots_equal": true,
+      "private_artifact_sha256": {
+        "stdout": "bb8a6599db99c0cd13490f6d1f286960769a5c7c31a3c1d4f55d30f119350ea3",
+        "stderr": "f778b6391883dc32e7727687086df84c3e5ec5a67f1a5da8f241d3198e5d4281",
+        "probe.strace": "1c986f3f1b2921a6357643a7850db9fa29e4b8c343ccb6ca139747fa724fec82",
+        "command.json": "7556a6bfd259fc0063dae08af7462b36ef092b77f2a26dd84d63bef40b88e209",
+        "before.json": "2bd1dd183646ae4db5295897b5841558d5352de1b111928f0a803e0857ebc182",
+        "after.json": "2bd1dd183646ae4db5295897b5841558d5352de1b111928f0a803e0857ebc182"
+      },
+      "exit": 3,
+      "boundary": "DisplayManagerService constructor needs real PowerManager",
+      "child_resource_limits": {
+        "nice": [
+          40,
+          40
+        ]
+      }
+    },
+    {
+      "attempt": "priority-v4",
+      "android_servers_loaded": true,
+      "system_context_present": true,
+      "input_snapshots_equal": true,
+      "private_artifact_sha256": {
+        "stdout": "bb8a6599db99c0cd13490f6d1f286960769a5c7c31a3c1d4f55d30f119350ea3",
+        "stderr": "3a16565810d9b68be0968bb0ed347bcb295388c8378525f652cd5eadf3e67a23",
+        "probe.strace": "8486f97ea29fcf2c4f8de96bae27e580eb95fe98de0a830a6a459640ff013a6e",
+        "command.json": "7dcf219ff94f2d42d6fbe5b9bf63d2ea9485b04f222ed62b3067d6d686aec9e1",
+        "before.json": "2bd1dd183646ae4db5295897b5841558d5352de1b111928f0a803e0857ebc182",
+        "after.json": "2bd1dd183646ae4db5295897b5841558d5352de1b111928f0a803e0857ebc182"
+      },
+      "exit": 3,
+      "boundary": "PowerManagerService BatterySaverController cache invalidation needs property service",
+      "child_resource_limits": {
+        "nice": [
+          40,
+          40
+        ]
+      }
+    },
+    {
+      "attempt": "priority-v5",
+      "android_servers_loaded": true,
+      "system_context_present": true,
+      "input_snapshots_equal": true,
+      "private_artifact_sha256": {
+        "stdout": "bb8a6599db99c0cd13490f6d1f286960769a5c7c31a3c1d4f55d30f119350ea3",
+        "stderr": "3a16565810d9b68be0968bb0ed347bcb295388c8378525f652cd5eadf3e67a23",
+        "probe.strace": "813c7005ca38bf5fdef9e9005a55beacc5b6a00a45e2f1f09514b3bc1538c5d6",
+        "command.json": "f07849507d86f700251135957be60e00f4a0ce3f5b6844836e7aae344c6ff62c",
+        "before.json": "2bd1dd183646ae4db5295897b5841558d5352de1b111928f0a803e0857ebc182",
+        "after.json": "2bd1dd183646ae4db5295897b5841558d5352de1b111928f0a803e0857ebc182"
+      },
+      "exit": 3,
+      "boundary": "PowerManagerService BatterySaverController cache invalidation needs property service",
+      "child_resource_limits": {
+        "nice": [
+          40,
+          40
+        ]
+      }
+    }
+  ],
+  "gdb_observation": {
+    "pc": 0,
+    "lr_object": "libandroid_runtime.so",
+    "lr_file_offset": "0xa0100",
+    "preceding_call": "JNI_CreateJavaVM",
+    "strace_cause": "JniInvocation failed to dlopen libart.so",
+    "stdout_sha256": "e3f2cbd3b2486b0fcabaa756a0afffc3d268954d4f2dbb6ab2c5e18429cd520f"
+  },
+  "configuration": {
+    "stock_sha256": "76ffeacf54f846f64e011aa832bd41e7e8ae9e808e6d57e2a163527f144b8b64",
+    "generated_sha256": "92206fda5f9ff3ff5832eff1a58af9e928f916d845247c3ff53751b316caffa8",
+    "change": "export libart.so over existing system to com_android_art link; use isolated bind configuration"
+  },
+  "verified_backup": {
+    "bytes": 150101817,
+    "sha256": "f624489227d86928f1c1126e561035b82d98a4e905abe50b5f8f12fbb5635ca8",
+    "regular_files": 1053,
+    "symlinks": 44
+  },
+  "global_policy_loaded": false,
+  "global_sysctl_changed": false,
+  "property_write_verified": false,
+  "power_service_started": false,
+  "display_service_started": false,
+  "package_service_started": false,
+  "system_services_ready": false,
+  "game_context_initialized": false,
+  "catalog_ready_pass": false,
+  "engineering_validation": {
+    "python": "3.13.5",
+    "pure_linux": {
+      "passed": 1128,
+      "skipped": 1
+    },
+    "main_engine": {
+      "passed": 211
+    },
+    "public_checks": "all groups exit 0",
+    "public_main_group": {
+      "passed": 794,
+      "skipped": 27
+    },
+    "gitleaks_exit": 0,
+    "shell_syntax_exit": 0
+  }
+}

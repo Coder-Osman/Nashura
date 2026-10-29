@@ -26,10 +26,16 @@ public final class ArtSystemServicesProbe {
                 System.out.println("ART_SYSTEM_CONTEXT_PRESENT=" + (context != null));
                 stage = "SystemServiceManager.construct";
                 Class<?> managerClass = Class.forName("com.android.server.SystemServiceManager");
-                Object manager = managerClass.getConstructor(Class.forName("android.content.Context"))
-                    .newInstance(context);
+                java.lang.reflect.Constructor<?> constructor = managerClass
+                    .getDeclaredConstructor(Class.forName("android.content.Context"));
+                constructor.setAccessible(true);
+                Object manager = constructor.newInstance(context);
                 Class.forName("com.android.server.LocalServices")
                     .getMethod("addService", Class.class, Object.class).invoke(null, managerClass, manager);
+                stage = "PowerManagerService.start";
+                Object power = managerClass.getMethod("startService", String.class)
+                    .invoke(manager, "com.android.server.power.PowerManagerService");
+                System.out.println("ART_POWER_SERVICE_STARTED=" + (power != null));
                 stage = "DisplayManagerService.start";
                 Object display = managerClass.getMethod("startService", String.class)
                     .invoke(manager, "com.android.server.display.DisplayManagerService");

@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-29：android_servers 加载与系统服务依赖
+
+- 定位 JavaVM 创建时的 libart.so namespace 缺口，补齐精确导出并支持独立配置 bind；公开生成配置已在 ARM64 guest 复测。
+- 修正真实 SystemServiceManager 构造器的反射访问，按依赖顺序尝试原始 PowerManagerService / DisplayManagerService。
+- 以子进程 RLIMIT_NICE 解决原始线程优先级许可；记录 PowerManager 缓存属性写入的真实失败与五次输入一致性。
+- 保留失败归档，新增逐文件验证的 ART 回退归档；本组服务依赖实验未改变全局 policy / sysctl，游戏验收门保持关闭。
+
 ## 2026-10-29：原始 init property service 请求边界
 
 - 扩展 namespace launcher，为原始 init 提供独立 property/socket/log 输出及原始 vendor 输入。

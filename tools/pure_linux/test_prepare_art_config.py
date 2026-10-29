@@ -29,6 +29,7 @@ def test_generated_namespace_contract():
     assert "namespace.system.link.com_android_art.shared_libs = libnativehelper.so" in text
     assert "namespace.com_android_conscrypt.links = com_android_art,system" in text
     assert "namespace.system.permitted.paths += /apex/com.android.os.statsd/${LIB}" in text
+    assert "namespace.system.link.com_android_art.shared_libs += libart.so" in text
     assert "namespace.art." not in text
     assert "namespace.conscrypt." not in text
 
