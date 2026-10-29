@@ -10194,9 +10194,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "7b03d2f6f3140e201241c325e095ef231959eb75d778ca16e205639cc76235d3",
-      "bytes": 50362,
-      "source_sha256": "fb7152fb2435b87967b4cc88a066b864e0bba37937450c043c03af27fc8c1f48",
+      "sha256": "d12ae431fcb26011c336e50a81a75853196b6510ba1c4854365275d453ff55bd",
+      "bytes": 50935,
+      "source_sha256": "d12ae431fcb26011c336e50a81a75853196b6510ba1c4854365275d453ff55bd",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -10217,9 +10217,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "fc2ecc69524e86472eb86c797c82a80be1c50191d2bca8e1143faa3771b4dad6",
-      "bytes": 83718,
-      "source_sha256": "c293f7e9805dbaec780d237ea34350438b5cee1847ae90d36f136d2b1a4996f7",
+      "sha256": "8fb78c645d00a2c95af39be154e70d0de92382e6dbf1322e56d79d7489ff8724",
+      "bytes": 84396,
+      "source_sha256": "8fb78c645d00a2c95af39be154e70d0de92382e6dbf1322e56d79d7489ff8724",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -16647,9 +16647,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "46d95624b173930d4bcc8f9cd3a177173383c51f70c964f1d2889e0b3ad6235c",
-      "bytes": 51173,
-      "source_sha256": "eadec1c538699ab59d26c958a9b14a02c32172973f5d41237282fe85cb1f39ad",
+      "sha256": "8ae14dbb13dd932bd21ccd98b2a35eb91686abd66e33b5e2f4043a2acc5fc0bb",
+      "bytes": 51792,
+      "source_sha256": "8ae14dbb13dd932bd21ccd98b2a35eb91686abd66e33b5e2f4043a2acc5fc0bb",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -19528,10 +19528,80 @@
       "bytes": 2056,
       "source_sha256": "42765c47079f000db31034cd3f091936a17ea6fb0079f03b3e88d5ead326079c",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/CODEX_REPLY_2026-10-29_REVALIDATION.md",
+      "sha256": "bc764cbd251662cfb0cde08421592385b875d583b056afed29c49509952c3a1d",
+      "bytes": 2182,
+      "source_sha256": "bc764cbd251662cfb0cde08421592385b875d583b056afed29c49509952c3a1d",
+      "transformations": []
+    },
+    {
+      "path": "publication/checks-affordability.xml",
+      "sha256": "ed6541fac1ee54b0e543d98e0297520b86ca59a95480783eec5c501753352a75",
+      "bytes": 4340,
+      "source_sha256": "ed6541fac1ee54b0e543d98e0297520b86ca59a95480783eec5c501753352a75",
+      "transformations": []
+    },
+    {
+      "path": "publication/checks-collection-coordinator.xml",
+      "sha256": "5e7d184f83664142c0d403631627d53e7092168680f9e18a85d5a92f61284a4c",
+      "bytes": 12024,
+      "source_sha256": "5e7d184f83664142c0d403631627d53e7092168680f9e18a85d5a92f61284a4c",
+      "transformations": []
+    },
+    {
+      "path": "publication/checks-command-coordinates.xml",
+      "sha256": "a4e9cec4d99b75d2ef79b01d993b9a04795e45ea6f661fe8dc73fd81301e8658",
+      "bytes": 8184,
+      "source_sha256": "a4e9cec4d99b75d2ef79b01d993b9a04795e45ea6f661fe8dc73fd81301e8658",
+      "transformations": []
+    },
+    {
+      "path": "publication/checks-dispatch-command.xml",
+      "sha256": "f1cbc3b728b4427400c7ba2f6faf366881db6e4ef561b7fd700c2eb612860305",
+      "bytes": 6406,
+      "source_sha256": "f1cbc3b728b4427400c7ba2f6faf366881db6e4ef561b7fd700c2eb612860305",
+      "transformations": []
+    },
+    {
+      "path": "publication/checks-live-command.xml",
+      "sha256": "b6dfa3b3539472c83e03eff210e080300abeae05ec7df4c59a1c5a9f9c31fbee",
+      "bytes": 6370,
+      "source_sha256": "b6dfa3b3539472c83e03eff210e080300abeae05ec7df4c59a1c5a9f9c31fbee",
+      "transformations": []
+    },
+    {
+      "path": "publication/checks-position-guards.xml",
+      "sha256": "da79f2a8eb0e8eded49b8b7e93cb74b1c0bf4dc982f8abd974f5296630c3a644",
+      "bytes": 4244,
+      "source_sha256": "da79f2a8eb0e8eded49b8b7e93cb74b1c0bf4dc982f8abd974f5296630c3a644",
+      "transformations": []
+    },
+    {
+      "path": "publication/checks-public.xml",
+      "sha256": "0f3ecaae3fada7588b8895763fb4d9b89d899372201db148f510ca955326a0c2",
+      "bytes": 161225,
+      "source_sha256": "0f3ecaae3fada7588b8895763fb4d9b89d899372201db148f510ca955326a0c2",
+      "transformations": []
+    },
+    {
+      "path": "publication/checks-reservation-mapping.xml",
+      "sha256": "e08e156cb9098f73d3277d00fc362ea08235b04299f93f7c3d53f546dbf329c8",
+      "bytes": 6383,
+      "source_sha256": "e08e156cb9098f73d3277d00fc362ea08235b04299f93f7c3d53f546dbf329c8",
+      "transformations": []
+    },
+    {
+      "path": "publication/checks-selection-timeout.xml",
+      "sha256": "7968099b866349417b4cdc269be6df76d570059ee2d584c1c6b8b1d2d6ab8d6a",
+      "bytes": 14581,
+      "source_sha256": "7968099b866349417b4cdc269be6df76d570059ee2d584c1c6b8b1d2d6ab8d6a",
+      "transformations": []
     }
   ],
-  "file_count": 2778,
-  "source_bytes": 35970615,
+  "file_count": 2788,
+  "source_bytes": 36200324,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

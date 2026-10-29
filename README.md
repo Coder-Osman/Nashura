@@ -1,5 +1,14 @@
 # Nashura
 
+## 2026-10-29：worker2 后续工程复验
+
+接续 holder setup 边界工作后，使用 Python 3.13.5 完成公开工程门复验：纯 Linux
+专项 `1105 passed、1 skipped`，公开主组 `794 passed、27 skipped`，主引擎专项
+`211 passed`，其余公开分组全部 exit 0；公开快照和 `gitleaks` 也通过。Ubuntu
+ARM64 guest 的 SSH 22 端口仍拒绝，Linux holder setup 继续保持
+`BLOCKED_ENVIRONMENT / NOT_RUN`，严格 catalog、ResourceManager、GameState、真实
+Step、完整对局和性能验收仍未运行。详见[复验记录](agent-handoff/CODEX_REPLY_2026-10-29_REVALIDATION.md)。
+
 ## 2026-10-29：Linux 原生持有者设置阶段
 
 Android holder setup 追踪稳定通过，设置槽从空变为非空并与后续初始化关联；Linux

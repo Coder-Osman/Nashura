@@ -1,5 +1,15 @@
 # 阶段成果与证据索引
 
+## 2026-10-29：worker2 后续工程复验
+
+Python 3.13.5 下重新运行公开工程门：纯 Linux 专项 `1105 passed、1 skipped`，
+公开主组 `794 passed、27 skipped`，主引擎专项 `211 passed`，affordability、
+selection timeout、position guards、live、dispatch、reservation、coordinates、
+collection coordinator 分组均 exit 0；公开快照和 `gitleaks` 通过。guest SSH 仍拒绝，
+所以 Linux holder setup 仍为 `BLOCKED_ENVIRONMENT / NOT_RUN`，没有生成新的 Linux
+运行日志；严格 `CATALOG_READY_PASS=false`，其余原生对象图保持 `NOT_RUN`。详见
+[复验记录](../agent-handoff/CODEX_REPLY_2026-10-29_REVALIDATION.md)。
+
 ## 2026-10-29 E2.1-N：Linux 原生持有者设置阶段
 
 Android holder setup 追踪稳定通过：事件无丢失，设置槽从空变为非空并与同线程

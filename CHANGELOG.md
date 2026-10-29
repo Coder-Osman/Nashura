@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-29：worker2 后续工程复验
+
+- 使用 Python 3.13.5 重跑公开工程门：纯 Linux `1105 passed、1 skipped`，公开主组 `794 passed、27 skipped`，主引擎 `211 passed`，其余分组均通过。
+- `check_public_snapshot.py` 和 `gitleaks` 通过；Python 3.9 的收集错误保留为环境边界，不覆盖正确解释器结果。
+- guest SSH 仍拒绝，Linux holder setup、严格 catalog、ResourceManager、GameState、Step、完整对局和性能保持 `BLOCKED/NOT_RUN`。
+- 详见 `agent-handoff/CODEX_REPLY_2026-10-29_REVALIDATION.md`。
+
 ## 2026-10-29：Linux 原生持有者设置阶段
 
 - 新增 `--holder-setup-only` 及 Linux holder setup 的对象槽、分配器关系、析构清理和输出顺序检查。
