@@ -10194,15 +10194,15 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "eb402a06a18cfcf0142c28072b4624045ee9f74be8f14a79b63dc00d50b07759",
-      "bytes": 54094,
+      "sha256": "f57a99e92e15afbc1bbb01578e9104a006e439477db47d174fad59f92266a112",
+      "bytes": 54412,
       "source_sha256": "eb402a06a18cfcf0142c28072b4624045ee9f74be8f14a79b63dc00d50b07759",
       "transformations": []
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "929d40b0d6c3425b18cf448dccc789888f95ef691589b9fb13c77d92026cbc8c",
-      "bytes": 87841,
+      "sha256": "fa49ab7aa3b3730a5c2c66ea9cc4a4b40a62a40e10b6e807eccdb520ba9eb1a3",
+      "bytes": 88348,
       "source_sha256": "929d40b0d6c3425b18cf448dccc789888f95ef691589b9fb13c77d92026cbc8c",
       "transformations": []
     },
@@ -16615,8 +16615,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "ce84b3cf4f373f851e7f77d3e04c1cc64235ad379a38c427129251abd44a57cd",
-      "bytes": 55044,
+      "sha256": "1f6280581caec353ad072c87282175c47541101cbdd6555182306a0469dc7e0a",
+      "bytes": 55477,
       "source_sha256": "ce84b3cf4f373f851e7f77d3e04c1cc64235ad379a38c427129251abd44a57cd",
       "transformations": []
     },
@@ -19659,8 +19659,8 @@
     },
     {
       "path": "tools/pure_linux/art_namespace.sh",
-      "sha256": "38ec92a5e04e044d27effaf6d65fe8f9edab4aa4704e9b64c6e452ca823b29df",
-      "bytes": 2223,
+      "sha256": "775680261352d9cbb513e6221999647b4b51f0b4bd7b6fa8dc0296bdb01dc866",
+      "bytes": 2484,
       "source_sha256": "38ec92a5e04e044d27effaf6d65fe8f9edab4aa4704e9b64c6e452ca823b29df",
       "transformations": []
     },
@@ -19701,8 +19701,8 @@
     },
     {
       "path": "agent-handoff/PURE_LINUX_HOLDER_SETUP_REAL_ART_2026-10-29.md",
-      "sha256": "5a6949dd7b1cf5b241eb8ae8733e2e08d9e51bccd2f988d38433853e2e3229f1",
-      "bytes": 7118,
+      "sha256": "ff91751640ef0e7b283cb0e5e96448df7627027cee86df3337b10e0935612a4f",
+      "bytes": 7740,
       "source_sha256": "5a6949dd7b1cf5b241eb8ae8733e2e08d9e51bccd2f988d38433853e2e3229f1",
       "transformations": []
     },
@@ -19729,14 +19729,28 @@
     },
     {
       "path": "tools/pure_linux/ArtFrameworkContextProbe.java",
-      "sha256": "9358f0239bd8feff32fcd85aebccecd8a9a8a32ba2312210b8e29f80ae7d69e0",
-      "bytes": 2057,
+      "sha256": "21f29b04817b0d52645f3c8e7716268a4a4f11152f124cf129b3381209ae4301",
+      "bytes": 3963,
       "source_sha256": "9358f0239bd8feff32fcd85aebccecd8a9a8a32ba2312210b8e29f80ae7d69e0",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_SYSTEM_CONTEXT_2026-10-29.md",
+      "sha256": "89e8e7f623325fe34f08d1f66689c1d3d891cd0a1679d386ee8d098f50518289",
+      "bytes": 3463,
+      "source_sha256": "89e8e7f623325fe34f08d1f66689c1d3d891cd0a1679d386ee8d098f50518289",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-system-context-evidence-20261029.json",
+      "sha256": "44340edff727df781a7ade2ebd59ed7b1c8c1cd7524833832925d22beb344bd4",
+      "bytes": 5483,
+      "source_sha256": "44340edff727df781a7ade2ebd59ed7b1c8c1cd7524833832925d22beb344bd4",
       "transformations": []
     }
   ],
-  "file_count": 2811,
-  "source_bytes": 36296996,
+  "file_count": 2813,
+  "source_bytes": 36309989,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

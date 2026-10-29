@@ -18,6 +18,12 @@ mkdir -p "$ART_BASE/proc" "$ART_BASE/oldroot" "$ART_BASE/dev" \
     "$ART_BASE/dev/__properties__" "$ART_BASE/data/dalvik-cache" \
     "$ART_BASE/data/sockets" "$ART_BASE/tmp"
 mount --rbind /proc "$ART_BASE/proc"
+if [ "${NASHURA_BIND_SELINUXFS:-0}" = 1 ]; then
+    [ -f /sys/fs/selinux/status ] || exit 67
+    [ "$(stat -f -c %t /sys/fs/selinux)" = f97cff8c ] || exit 67
+    mkdir -p "$ART_BASE/sys/fs/selinux"
+    mount --bind /sys/fs/selinux "$ART_BASE/sys/fs/selinux"
+fi
 for device in null zero random urandom; do
     touch "$ART_BASE/dev/$device"
     mount --bind "/dev/$device" "$ART_BASE/dev/$device"

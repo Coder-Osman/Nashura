@@ -11,6 +11,11 @@ Android v4 与 Linux final-v1 的跨端 holder 身份审计已 exit `0`，状态
 `NATIVE_VERIFIED_LIMITED`，provider 配置语义和 catalog 门保持关闭。详见[阶段报告](agent-handoff/PURE_LINUX_HOLDER_SETUP_REAL_ART_2026-10-29.md)和
 [证据摘要](agent-handoff/pure-linux-holder-setup-real-art-evidence-20261029.json)。
 
+随后在真实 SELinux/Binder 接口下启动同镜像 `servicemanager`，`ActivityThread.systemMain()`
+返回真实 `android.app.ContextImpl`（包名 `android`，资源存在），Binder
+`IServiceManager` descriptor/ping 通过。display/package 服务与 `GameApp` Context 仍未建立，
+状态为 `SYSTEM_CONTEXT_PASS_LIMITED`。详见[系统 Context 证据](agent-handoff/pure-linux-system-context-evidence-20261029.json)。
+
 ## 2026-10-29：ARM64 Linux 真实 ART/JavaVM 与 libg VM 绑定
 
 真实 Binder 协议、ART Java 计算、JNI 原生线程 attach/callback/detach 均通过；

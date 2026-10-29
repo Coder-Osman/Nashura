@@ -50,9 +50,17 @@ v1–v4 使用历史 E0 插桩 APK 的 DEX（`ef1ac708f6e836daa925afc50d3bf3b139
 和修正后的审计结果均保留在本机私有归档。
 
 直接构造 `GameApp` 成功；调用原始 `onCreate()` 在未附着 `ActivityInfo` 时失败。
-`ActivityThread.systemMain()` 在当前裁剪的 framework boot classpath/
-`SystemServiceRegistry` 初始化处失败，即使补入只读提取的 `framework-res.apk` 也
-没有形成 Android 系统服务环境。没有创建假的 Context、PackageManager 或 ready 状态。
+此前 `ActivityThread.systemMain()` 在裁剪的 boot classpath 中因
+`SystemServiceRegistry` 依赖缺失而失败；补入同一 SDK 的 tethering/wifi framework
+jar 后，仍需真实 ServiceManager 才能提供系统服务。启用 guest 内核 SELinux 接口、
+重建 binderfs 并启动同镜像原始 `servicemanager` 后，系统 Context 已真实返回：
+类型为 `android.app.ContextImpl`、包名 `android`、资源对象存在，Binder
+`android.os.IServiceManager` descriptor 与 ping 均通过。display/package 服务尚未
+启动，`GameApp.getInstance()` 仍为空；没有创建假的 Context、PackageManager 或 ready 状态。
+
+系统 Context 证据见[摘要](pure-linux-system-context-evidence-20261029.json)，其状态为
+`SYSTEM_CONTEXT_PASS_LIMITED`。该实验使用 permissive SELinux、`policy_load=0`，不代表
+完整 Android policy 语义或应用服务环境。
 
 ## 复现与身份
 

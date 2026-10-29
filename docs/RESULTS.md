@@ -11,6 +11,12 @@ setup 后 data/update provider 路径被清空，`GameApp` Context 仍为空，�
 验证 setup 事件关联、输出顺序和输入身份一致。详见[报告](../agent-handoff/PURE_LINUX_HOLDER_SETUP_REAL_ART_2026-10-29.md)、
 [证据](../agent-handoff/pure-linux-holder-setup-real-art-evidence-20261029.json)。
 
+在随后真实 SELinux/Binder 实验中，原始 `servicemanager` 通过 `BINDER_SET_CONTEXT_MGR_EXT`，
+`ActivityThread.systemMain()` 返回真实 `android.app.ContextImpl`，包名为 `android` 且资源对象存在；
+`IServiceManager` descriptor/ping 通过。display/package 服务尚未启动，`GameApp` Context 仍为空。
+状态为 `SYSTEM_CONTEXT_PASS_LIMITED`，证据见
+[pure-linux-system-context-evidence-20261029.json](../agent-handoff/pure-linux-system-context-evidence-20261029.json)。
+
 ## 2026-10-29：真实 ART、JNI 生命周期及 libg VM 绑定
 
 Ubuntu ARM64 Linux 中已通过真实 Binder 协议、ART Java 计算和 JNI pthread

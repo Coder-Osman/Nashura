@@ -1,0 +1,150 @@
+{
+  "schema": "nashura.pure-linux-system-context.v1",
+  "baseline_commit": "d50b8b68fcd6cdbdd57b1402d3726c57b17449c6",
+  "status": "SYSTEM_CONTEXT_PASS_LIMITED",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "original_game_dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+  "runtime": {
+    "architecture": "aarch64",
+    "kernel": "6.8.0-138-generic",
+    "sdk_system_partition_sha256": "a19fab1d61b2041d6945d6733bc32f4f3d90986017470b39849695e1a4437c0b",
+    "android_emulator_started": false,
+    "lsm": "lockdown,capability,landlock,yama,selinux",
+    "selinux_status": {
+      "version": 1,
+      "sequence": 0,
+      "enforcing": 0,
+      "policy_load": 0,
+      "deny_unknown": 1
+    },
+    "android_policy_equivalence_pass": false
+  },
+  "added_java_libraries": [
+    {
+      "apex": "tethering",
+      "jar": "framework-tethering.jar",
+      "bytes": 56838,
+      "sha256": "754a9a6978f9d887010b84c99a68aced91825c1a96c853a71ae19913e84581f8"
+    },
+    {
+      "apex": "wifi",
+      "jar": "framework-wifi.jar",
+      "bytes": 677998,
+      "sha256": "f6340cc5fd6948fa6103348263fc02d9cf602c04aa7ebf77ff3959d390f32772"
+    }
+  ],
+  "servicemanager": {
+    "binary_sha256": "a49a4e05a319889accd17f49c5b44bfb97eca4a647d8c76b9d24417532ff402d",
+    "original_binary_unmodified": true,
+    "selinux_status_open_returned": true,
+    "binder_context_manager_ioctl_returned": true,
+    "java_interface_descriptor": "android.os.IServiceManager",
+    "java_ping": true,
+    "display_service_present": false,
+    "package_service_present": false,
+    "cleanup": "controller sent SIGTERM after probe",
+    "controller_exit": 143,
+    "policy_logs_include_unknown_service_manager_class": true
+  },
+  "system_context": {
+    "main_returned": true,
+    "present": true,
+    "class": "android.app.ContextImpl",
+    "package": "android",
+    "resources_present": true,
+    "process_exit": 0
+  },
+  "game_context": {
+    "present": false,
+    "initialization_pass": false
+  },
+  "source_identity": {
+    "tools/pure_linux/art_namespace.sh": "775680261352d9cbb513e6221999647b4b51f0b4bd7b6fa8dc0296bdb01dc866",
+    "tools/pure_linux/ArtFrameworkContextProbe.java": "21f29b04817b0d52645f3c8e7716268a4a4f11152f124cf129b3381209ae4301"
+  },
+  "input_snapshot": {
+    "before_equals_after": true,
+    "sha256": "6888c0837f25ac9100fe0c4ac943bc28244e52afc021454910f839406b8c565d",
+    "group_entry_counts": {
+      "auxiliary": 5,
+      "game_libraries": 7,
+      "runtime": 1002
+    },
+    "fixture_dex_sha256": "24f3b2151048c88e182c5479c65b3b0e2ad415a67a9ba575e39842d1bdf9bfc8",
+    "namespace_launcher_sha256": "775680261352d9cbb513e6221999647b4b51f0b4bd7b6fa8dc0296bdb01dc866"
+  },
+  "artifacts": {
+    "command.json": {
+      "sha256": "07418c2395f67e061ece24e15834f55c3130190986341fca4550ecf71109f5c6",
+      "bytes": 1172
+    },
+    "service-command.json": {
+      "sha256": "2328df16747a7443cd55df84647e762e7b320531b049c3daba28b1d1df4ad0dd",
+      "bytes": 389
+    },
+    "system.stdout": {
+      "sha256": "e1cd993efb29019c7043425bcd3f33b5a7e8c464af335c39a8be3041e6c50c5b",
+      "bytes": 453
+    },
+    "system.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "system.exit": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "system.before.json": {
+      "sha256": "6888c0837f25ac9100fe0c4ac943bc28244e52afc021454910f839406b8c565d",
+      "bytes": 161409
+    },
+    "system.after.json": {
+      "sha256": "6888c0837f25ac9100fe0c4ac943bc28244e52afc021454910f839406b8c565d",
+      "bytes": 161409
+    },
+    "system.service.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "system.service.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "system.service.exit": {
+      "sha256": "9d9b18720961e9b4689fd763b85e7b6f36160ccd3a8a1c9ddc5103bb0f66c396",
+      "bytes": 4
+    },
+    "system.strace": {
+      "sha256": "9597fb2f1a2127e973bb68d3125050552c3620691f604e3190270e91e26991b2",
+      "bytes": 1736103
+    },
+    "system.service.strace": {
+      "sha256": "fea8635a6e4f0b916b2eb2f0715a35138f2d18de3decb5ac7882f3f1b33a6f43",
+      "bytes": 479370
+    }
+  },
+  "reboot_preservation": {
+    "runtime_archive_sha256": "83f1b0f3f060e5785f5be71f11da9e4cb3736418dd7c99956eefdaaf9aeacb4d",
+    "restored_archive_sha256_verified": true,
+    "one_time_custom_grub_entry_removed": true,
+    "default_boot_entry_preserved": true
+  },
+  "gates": {
+    "system_context": "PASS_LIMITED",
+    "game_context": "NOT_INITIALIZED",
+    "provider_configuration_semantics": "NOT_VERIFIED",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "game_state": "NOT_RUN",
+    "step_tick": "NOT_RUN",
+    "full_match": "NOT_RUN",
+    "performance": "NOT_RUN"
+  },
+  "limitations": [
+    "SELinux runs permissive with policy_load=0; Android policy semantics are not validated",
+    "display and package services are absent",
+    "the returned Context belongs to android, and GameApp.getInstance remains null",
+    "Context snapshot covers actual runtime/framework/DEX/fixture inputs; historical provider resource copies are outside this run",
+    "no ResourceManager, GameState, Step, action, snapshot, full-match or performance evidence"
+  ]
+}

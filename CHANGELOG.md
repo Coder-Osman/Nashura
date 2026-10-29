@@ -8,6 +8,7 @@
 - 扩展 holder setup 审计器与测试，发布脱敏报告和证据摘要。
 - 以 Android v4 原始追踪脚本身份完成 Android/Linux holder 跨端审计，校验 setup 事件关联、Linux 输出顺序及输入/资源/辅助文件/probe 前后身份；状态保持 `NATIVE_VERIFIED_LIMITED`。
 - 修正审计器读取运行器 result 顶层 update inventory 的层级，并增加对应回归测试；审计输出与失败身份均保留。
+- 在 guest 一次性 SELinux 启动、真实 binderfs 和同镜像 `servicemanager` 下复跑 Context：`ActivityThread.systemMain()` 返回 `android.app.ContextImpl`，`IServiceManager` descriptor/ping 通过；display/package 服务与 `GameApp` Context 仍未初始化，记录为 `SYSTEM_CONTEXT_PASS_LIMITED`。
 
 ## 2026-10-29：真实 ART/JavaVM、JNI 生命周期和 libg VM 绑定
 
