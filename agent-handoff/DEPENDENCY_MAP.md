@@ -123,5 +123,15 @@ ARM64 Linux + Binder + Bionic/ART [真实 Java/JNI PASS_LIMITED]
       └─ GameState → Step/动作 → 快照/完整对局/性能 [NOT_RUN]
 ```
 
-此前空 VM fault 的前置状态已改变；仍需真实入口实验确认下游行为。
-见[ART 报告](PURE_LINUX_ART_JAVAVM_2026-10-29.md)。
+此前空 VM fault 的前置状态已改变；真实 holder setup 已在同一 ART 闭包中完成限定
+生命周期，Android/Linux 跨端身份审计 exit 0。当前依赖图为：
+
+```text
+真实 ART JavaVM / libg VM 绑定 [PASS_LIMITED]
+  └─ holder setup 对象与清理 [NATIVE_VERIFIED_LIMITED]
+      ├─ provider 配置语义 / GameApp Context [NOT_INITIALIZED]
+      ├─ catalog → ResourceManager [CATALOG_READY_PASS=false / NOT_RUN]
+      └─ GameState → Step/动作 → 快照/完整对局/性能 [NOT_RUN]
+```
+
+见[ART 报告](PURE_LINUX_ART_JAVAVM_2026-10-29.md)和[holder 报告](PURE_LINUX_HOLDER_SETUP_REAL_ART_2026-10-29.md)。

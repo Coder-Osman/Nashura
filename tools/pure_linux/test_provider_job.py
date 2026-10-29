@@ -36,6 +36,18 @@ def test_registration_release_and_identity():
     assert registration_observations(registration_log(), "both")["complete"]
 
 
+def test_holder_replacement_observations_keep_initial_registration_strict():
+    from test_audit_native_holder_setup import fixture_data
+    _, _, holder = fixture_data()
+    text = registration_log().replace("PROVIDER_CONTENT_READY\t0", "PROVIDER_CONTENT_READY\t0\n" +
+                                    holder.replace("\nPROVIDER_RESULT\t0", ""))
+    assert registration_observations(text, "both", holder_setup=True)["complete"]
+    assert not registration_observations(text, "both")["complete"]
+    for damaged in (text.replace("OBJECT_OFFSET\t24", "OBJECT_OFFSET\t0"),
+                    text.replace("PROVIDER_STRING\tdata\t8\t1\t/", "")):
+        assert not registration_observations(damaged, "both", holder_setup=True)["complete"]
+
+
 @pytest.mark.parametrize("extra", [["--catalog-mode", "loader"], ["--factory-mode", "register"],
                                   ["--resource-name", "x", "--expected-resource-sha256", "0" * 64]])
 def test_owner_getter_only_rejects_combined_operations(extra):

@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-29：真实 ART 下的 holder setup 生命周期
+
+在 Ubuntu ARM64 guest 的真实 binderfs/ART 闭包中，以原始 APK `classes.dex` 和精确
+`libg.so` 完成 holder setup 的限定生命周期验证：payload 偏移 `24`、allocator
+前缀、manager 替换/保留、holder 清理、provider release 和 `dlclose` 均返回，进程
+exit `0`。`GameApp` Context 仍未初始化，setup 后 data/update 路径为空，严格
+catalog、ResourceManager、GameState、Step、动作、快照、完整对局和性能门继续关闭。
+Android v4 与 Linux final-v1 的跨端 holder 身份审计已 exit `0`，状态仍为
+`NATIVE_VERIFIED_LIMITED`，provider 配置语义和 catalog 门保持关闭。详见[阶段报告](agent-handoff/PURE_LINUX_HOLDER_SETUP_REAL_ART_2026-10-29.md)和
+[证据摘要](agent-handoff/pure-linux-holder-setup-real-art-evidence-20261029.json)。
+
 ## 2026-10-29：ARM64 Linux 真实 ART/JavaVM 与 libg VM 绑定
 
 真实 Binder 协议、ART Java 计算、JNI 原生线程 attach/callback/detach 均通过；

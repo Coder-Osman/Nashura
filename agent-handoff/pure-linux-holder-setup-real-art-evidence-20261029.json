@@ -1,0 +1,91 @@
+{
+  "schema": "nashura.pure-linux-holder-setup-real-art.v1",
+  "status": "NATIVE_VERIFIED_LIMITED",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "apk_classes_dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+  "runtime": {
+    "architecture": "aarch64",
+    "kernel": "6.8.0-138-generic",
+    "binder_protocol": 8,
+    "art_vm_binding_mask": 7,
+    "java_context_present": false,
+    "jni_pending_exception": false
+  },
+  "holder_setup": {
+    "native_return": 1,
+    "slot_before_nonnull": false,
+    "slot_after_nonnull": true,
+    "allocation_offset": 24,
+    "allocation_bytes": 120,
+    "payload_bytes": 96,
+    "allocator_prefix_match": true,
+    "allocation_self_match": true,
+    "manager_replaced": true,
+    "manager_retained_after_holder_destroy": true,
+    "slot_cleared": true,
+    "allocator_released": true,
+    "provider_release_returned": true,
+    "process_exit": 0
+  },
+  "provider_after_setup": {
+    "data_path_length": 0,
+    "update_path_length": 0,
+    "semantic_configuration_pass": false
+  },
+  "context_probe": {
+    "game_activity_constructed": true,
+    "activity_on_create": "FAILED_MISSING_ACTIVITY_INFO",
+    "system_main": "FAILED_FRAMEWORK_BOOT_CLASS_PATH",
+    "framework_res_apk_added": true
+  },
+  "artifacts": {
+    "holder_stdout_sha256": "a91a5ae648130590642ecbe273d1055e4f23ac8903213b3de02aae52d22008e0",
+    "holder_stderr_sha256": "e7b04cadd9db60e07a79443686f78ce13055a3feb43afb775ff93fed9ba766ef",
+    "holder_exit_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "activity_context_stderr_sha256": "5b3a058eeac96b36c80efea1ed099b0689e6f246d58c7648d96510ea233e74b9",
+    "system_context_stderr_sha256": "ba9b670c2e1c53d917593efba1ab4acdce5716d8985332650381afb5fdc0cb56"
+  },
+  "cross_platform_holder_audit": {
+    "status": "NATIVE_VERIFIED_LIMITED",
+    "android_result_sha256": "d7b8c2549548de2d23d0ec3cbe3149cd484071d623d7c304655dde045f749f01",
+    "android_script_sha256": "732e6b244450689bc3c94d48ce4d3a66cc960ea5cdde8b8d954247f0811b0af2",
+    "android_script_source_commit": "301a2eaff2742d0c997a612f5f981a5e727b48e9",
+    "android_update_inventory_stable": true,
+    "linux_result_sha256": "8e88d7a942c5c472f4f8bc8baa13eb472424438c7c1a482a7704df5139ea599a",
+    "linux_lifecycle_output_verified": true,
+    "inputs_resources_aux_probe_unchanged": true,
+    "audit_sha256": "84840bc9717d669e770f9b9261bdf3ae4d0cf8683f5f20c85cd4c1d39bc6d3bc"
+  },
+  "gates": {
+    "holder_setup": "PASS_LIMITED",
+    "java_context": "NOT_INITIALIZED",
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "game_state": "NOT_RUN",
+    "step_tick": "NOT_RUN",
+    "full_match": "NOT_RUN",
+    "performance": "NOT_RUN"
+  },
+  "limitations": [
+    "isolated holder setup is not the original Android parent lifetime",
+    "setup clears provider paths before the probe observes the replacement manager",
+    "framework ActivityInfo, system services and package manager are not initialized",
+    "no ResourceManager, GameState, Step, action, snapshot, full match or performance evidence"
+  ],
+  "verification": {
+    "pure_linux": {
+      "passed": 1119,
+      "skipped": 1
+    },
+    "main_engine": {
+      "passed": 211
+    },
+    "public_main": {
+      "passed": 794,
+      "skipped": 27
+    },
+    "snapshot_equal": true,
+    "snapshot_sha256": "83f4f1ca04d983e5532ef9cacd2c8e6d8f80414addeb3c10728c6cbcc4d6d54f",
+    "launch_sha256": "e2986dbfc8d7a9b8b15f3cff842f7058cd10557d4b5539f57f3a9ef3f275cd67"
+  }
+}

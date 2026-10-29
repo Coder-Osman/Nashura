@@ -17,6 +17,7 @@ typedef struct {
 static uintptr_t base;
 static int (*is_readable)(uintptr_t, size_t);
 static const uint64_t canary = UINT64_C(0x31594850524f5644);
+static int describe(uintptr_t manager, size_t slot, const char *name);
 
 static uintptr_t pointer_at(uintptr_t location) {
     uintptr_t result = 0;
@@ -140,23 +141,39 @@ static int exercise_holder_setup(void) {
         pointer_at(h + 0x18) || pointer_at(h + 0x20)) return 0;
     puts("HOLDER_SETUP_INPUT_READY\t1");
     printf("HOLDER_SETUP_SLOT_BEFORE\t%d\n", pointer_at(h + 0x20) != 0);
-    ((void (*)(void *))(base + 0x13a3e3c))(holder);
+    uintptr_t previous_manager = pointer_at(base + 0x19f8d50);
+    int setup_result = ((int (*)(void *))(base + 0x13a3e3c))(holder);
+    printf("HOLDER_SETUP_NATIVE_RETURN\t%d\n", setup_result);
     uintptr_t object = pointer_at(h + 0x20) & UINT64_C(0x00ffffffffffffff);
-    int object_range = object != 0 && is_readable(object, 0x78);
-    int allocator_match = object_range && pointer_at(object) == (uintptr_t)allocator.object;
+    uintptr_t allocation = object ? object - 0x18 : 0;
+    int allocation_range = allocation != 0 && is_readable(allocation, 0x78);
+    int payload_range = object != 0 && allocation_range && is_readable(object, 0x60);
+    int allocator_match = allocation_range && pointer_at(allocation) == (uintptr_t)allocator.object;
+    int allocation_self_match = allocation_range &&
+        (pointer_at(allocation + 8) & UINT64_C(0x00ffffffffffffff)) == allocation;
     printf("HOLDER_SETUP_SLOT_AFTER\t%d\n", object != 0);
-    printf("HOLDER_SETUP_OBJECT_RANGE\t%d\n", object_range);
+    printf("HOLDER_SETUP_ALLOCATION_RANGE\t%d\n", allocation_range);
+    printf("HOLDER_SETUP_PAYLOAD_RANGE\t%d\n", payload_range);
     printf("HOLDER_SETUP_ALLOCATOR_MATCH\t%d\n", allocator_match);
-    puts("HOLDER_SETUP_OBJECT_OFFSET\t0");
-    if (!object || !object_range || !allocator_match) return 0;
+    printf("HOLDER_SETUP_ALLOCATION_SELF_MATCH\t%d\n", allocation_self_match);
+    puts("HOLDER_SETUP_OBJECT_OFFSET\t24");
+    if (setup_result != 1 || !object || !allocation_range || !payload_range || !allocator_match ||
+        !allocation_self_match) return 0;
     puts("HOLDER_SETUP_RETURNED\t1");
+    uintptr_t manager = pointer_at(base + 0x19f8d50);
+    printf("HOLDER_SETUP_FILESYSTEM_PRESENT\t%d\n", manager != 0);
+    printf("HOLDER_SETUP_FILESYSTEM_REPLACED\t%d\n", manager != previous_manager);
+    if (!manager || !is_readable(manager, 0x188) ||
+        !describe(manager, 0x160, "data") || !describe(manager, 0x170, "update")) return 0;
     ((void (*)(void *))(base + 0x13a3d70))(holder);
     int cleared = pointer_at(h + 0x20) == 0;
     printf("HOLDER_SETUP_SLOT_CLEARED\t%d\n", cleared);
     ((void (*)(void *, void *))(base + 0x12373a4))(allocator.object, (unsigned char *)holder - 0x18);
     ((void (*)(void *))(base + 0x13a2a3c))(wrapper);
     ((void (*)(void *, void *))(base + 0x12373a4))(allocator.object, (unsigned char *)wrapper - 0x18);
-    if (!cleared || allocator.before != canary || allocator.after != canary) return 0;
+    int manager_retained = pointer_at(base + 0x19f8d50) == manager;
+    printf("HOLDER_SETUP_FILESYSTEM_RETAINED\t%d\n", manager_retained);
+    if (!cleared || !manager_retained || allocator.before != canary || allocator.after != canary) return 0;
     puts("HOLDER_SETUP_RELEASED\t1");
     return 1;
 }
@@ -725,6 +742,10 @@ int native_provider_probe(uintptr_t engine, int (*readable)(uintptr_t, size_t)) 
     }
     if (getenv("NASHURA_HOLDER_SETUP_ONLY")) {
         if (!exercise_holder_setup()) return 101;
+        /* Setup replaces and frees the previous filesystem singleton. Its
+           replacement survives holder destruction, so reacquire it here. */
+        manager = pointer_at(base + 0x19f8d50);
+        if (!manager || !is_readable(manager, 0x188)) return 101;
         goto release_provider;
     }
     if (getenv("NASHURA_ALLOCATOR_ONLY")) {

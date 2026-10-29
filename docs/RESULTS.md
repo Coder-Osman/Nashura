@@ -1,5 +1,16 @@
 # 阶段成果与证据索引
 
+## 2026-10-29：真实 ART 下的 holder setup 生命周期
+
+真实 ARM64 Linux guest 中，原始 APK DEX 与精确 `libg.so` 完成 holder setup 限定
+生命周期：payload 偏移 `24`，allocator 前缀和分配块自指针匹配；holder 析构、
+filesystem manager 替换/保留、provider release、`dlclose` 均返回，进程 exit `0`。
+setup 后 data/update provider 路径被清空，`GameApp` Context 仍为空，故状态为
+`NATIVE_VERIFIED_LIMITED`，不是完整初始化或 catalog ready。Activity/系统 Context
+探测的框架缺口已保留。Android v4 与 Linux final-v1 的跨端 holder 身份审计 exit `0`，
+验证 setup 事件关联、输出顺序和输入身份一致。详见[报告](../agent-handoff/PURE_LINUX_HOLDER_SETUP_REAL_ART_2026-10-29.md)、
+[证据](../agent-handoff/pure-linux-holder-setup-real-art-evidence-20261029.json)。
+
 ## 2026-10-29：真实 ART、JNI 生命周期及 libg VM 绑定
 
 Ubuntu ARM64 Linux 中已通过真实 Binder 协议、ART Java 计算和 JNI pthread

@@ -14,6 +14,7 @@ from preference_hook_evidence import native_queue_observations
 
 from elf_audit import Elf64
 from native_init_job import check_inputs, digest, run
+from audit_native_holder_setup import inspect_lifecycle
 
 
 ENGINE_SHA = "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783"
@@ -76,7 +77,17 @@ def entry_guards(path):
     return guards
 
 
-def registration_observations(text, mode):
+def registration_observations(text, mode, holder_setup=False):
+    if holder_setup:
+        try:
+            inspect_lifecycle(text)
+        except ValueError:
+            return {"complete": False, "malformed": True}
+        # Setup has its own second provider observation after replacing the
+        # manager. Validate that phase above, then audit initial registration.
+        begin = text.index("HOLDER_SETUP_FILESYSTEM_PRESENT\t1")
+        end = text.index("HOLDER_SETUP_SLOT_CLEARED\t1")
+        text = text[:begin] + text[end:]
     rows = [line.split("\t") for line in text.splitlines()]
     expected = {"data", "update"} if mode == "both" else {mode}
     returns = [row[2] for row in rows if row[:2] == ["PHASE", "register_return"] and len(row) == 3]
@@ -445,7 +456,7 @@ def main():
     stderr_text = (output / "stderr.log").read_text(errors="replace")
     preference = preference_observations(text, stderr_text, preference_counts) if all(preference_arguments) else None
     backup_candidate = native_queue_observations(text, stderr_text, preference_counts) if arguments.native_backup_queue else None
-    observations = registration_observations(text, arguments.mode)
+    observations = registration_observations(text, arguments.mode, arguments.holder_setup_only)
     try:
         resources_after = resource_inventory(roots)
     except Exception as error:
@@ -492,14 +503,12 @@ def main():
         lines = text.splitlines()
         passed = passed and all(lines.count(line) == 1 for line in (
             "HOLDER_ARGUMENT_CREATED\t1", "HOLDER_FACTORY_CREATED\t1", "HOLDER_FACTORY_RELEASED\t1"))
+    holder_setup = None
     if arguments.holder_setup_only:
-        lines = text.splitlines()
-        passed = passed and all(lines.count(line) == 1 for line in (
-            "HOLDER_SETUP_INPUT_READY\t1", "HOLDER_SETUP_SLOT_BEFORE\t0",
-            "HOLDER_SETUP_SLOT_AFTER\t1", "HOLDER_SETUP_OBJECT_RANGE\t1",
-            "HOLDER_SETUP_ALLOCATOR_MATCH\t1", "HOLDER_SETUP_OBJECT_OFFSET\t0",
-            "HOLDER_SETUP_RETURNED\t1", "HOLDER_SETUP_SLOT_CLEARED\t1",
-            "HOLDER_SETUP_RELEASED\t1"))
+        try:
+            holder_setup = inspect_lifecycle(text, stderr_text)
+        except ValueError:
+            passed = False
     if preference is not None:
         passed = passed and preference["configuration_contract_pass"]
     if arguments.observe_targets:
@@ -534,6 +543,7 @@ def main():
                    "allocator_only": arguments.allocator_only,
                    "holder_factory_only": arguments.holder_factory_only,
                    "holder_setup_only": arguments.holder_setup_only,
+                   "holder_setup_observations": holder_setup,
                    "app_version_bridge_candidate": arguments.app_version is not None,
                    "native_backup_candidate_observations": backup_candidate,
                    "native_backup_android_parity": "NOT_VERIFIED" if arguments.native_backup_queue else None,

@@ -9995,9 +9995,9 @@
     },
     {
       "path": "agent-handoff/DEPENDENCY_MAP.md",
-      "sha256": "7171f4572c46827a0a588ee679ba2d37ac83a69e2bc03864391cdbe80388c73e",
-      "bytes": 8095,
-      "source_sha256": "7171f4572c46827a0a588ee679ba2d37ac83a69e2bc03864391cdbe80388c73e",
+      "sha256": "761c04c8bf98946f2b72125bce1a5845db355a9a3430e58a1529bfc56560a8ed",
+      "bytes": 8610,
+      "source_sha256": "761c04c8bf98946f2b72125bce1a5845db355a9a3430e58a1529bfc56560a8ed",
       "transformations": []
     },
     {
@@ -10194,16 +10194,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "8e11b75b226d80ce8bd35cacc00a32e9ac00fec14b2a9eb127699bf01995a1ce",
-      "bytes": 53140,
-      "source_sha256": "8e11b75b226d80ce8bd35cacc00a32e9ac00fec14b2a9eb127699bf01995a1ce",
+      "sha256": "eb402a06a18cfcf0142c28072b4624045ee9f74be8f14a79b63dc00d50b07759",
+      "bytes": 54094,
+      "source_sha256": "eb402a06a18cfcf0142c28072b4624045ee9f74be8f14a79b63dc00d50b07759",
       "transformations": []
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "95693e4c4f78587875e875be9e9374b9b573a8e9b80e6a556d815c6093c0af67",
-      "bytes": 86968,
-      "source_sha256": "95693e4c4f78587875e875be9e9374b9b573a8e9b80e6a556d815c6093c0af67",
+      "sha256": "929d40b0d6c3425b18cf448dccc789888f95ef691589b9fb13c77d92026cbc8c",
+      "bytes": 87841,
+      "source_sha256": "929d40b0d6c3425b18cf448dccc789888f95ef691589b9fb13c77d92026cbc8c",
       "transformations": []
     },
     {
@@ -16615,9 +16615,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "f0f639dae90db8a5db6451ece4ae82b6f5774149eac9107d663ff980ea14ef9b",
-      "bytes": 54158,
-      "source_sha256": "f0f639dae90db8a5db6451ece4ae82b6f5774149eac9107d663ff980ea14ef9b",
+      "sha256": "ce84b3cf4f373f851e7f77d3e04c1cc64235ad379a38c427129251abd44a57cd",
+      "bytes": 55044,
+      "source_sha256": "ce84b3cf4f373f851e7f77d3e04c1cc64235ad379a38c427129251abd44a57cd",
       "transformations": []
     },
     {
@@ -17042,23 +17042,25 @@
     },
     {
       "path": "tools/pure_linux/provider_job.py",
-      "sha256": "84eabbfac8df56faba7c20131714a46bca5c3cef3cd69151c24a3a0eacecbaa8",
-      "bytes": 36706,
+      "sha256": "1da02a3c36b5fa04907cc9aa53ddd6f6db273afd32f8d4da4c3fdc82f1c87ccd",
+      "bytes": 37057,
       "source_sha256": "b4c34180361d8997b298132f555ff54538dae6d3564952dadbe4605cfef8181e",
       "transformations": [
         "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
         "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
-        "2026-10-29: add guarded Linux holder setup probe and output contract"
+        "2026-10-29: add guarded Linux holder setup probe and output contract",
+        "2026-10-29: verify real ART holder allocation prefix, replacement manager cleanup and bounded lifecycle evidence."
       ]
     },
     {
       "path": "tools/pure_linux/provider_probe.c",
-      "sha256": "30c4f268278bfe26c6fc769b7b9fc7012fd464d3f1f59052edfe5f25d0df3cf2",
-      "bytes": 39302,
+      "sha256": "002b260c7cfc57136a70f3d0a2a5bed172cff7f7ae5238fa573fca1b2274db60",
+      "bytes": 40815,
       "source_sha256": "eea8b7154fb33ade2bae882b07b4589e8de3740023717e745f8bb1bf93b4aff1",
       "transformations": [
         "2026-10-29: add guarded Linux holder setup probe and output contract",
-        "2026-10-29: correct AndroidMainAllocator literal offset for holder setup"
+        "2026-10-29: correct AndroidMainAllocator literal offset for holder setup",
+        "2026-10-29: verify real ART holder allocation prefix, replacement manager cleanup and bounded lifecycle evidence."
       ]
     },
     {
@@ -17343,11 +17345,12 @@
     },
     {
       "path": "tools/pure_linux/test_provider_job.py",
-      "sha256": "4cd6eb9011fcd654d7c242bc8defd57c7429a3bc86b0bc387cccc666151f787c",
-      "bytes": 17376,
+      "sha256": "03f5a7e23bc46cdaa5dae788d263d9aa86a86b70e7baa12dd33db9678826d18a",
+      "bytes": 18118,
       "source_sha256": "6b7b86b8931a35ea83f32e19b577582bcd029416a9540544345b5df298d418b3",
       "transformations": [
-        "2026-10-29: add holder setup CLI isolation tests"
+        "2026-10-29: add holder setup CLI isolation tests",
+        "2026-10-29: verify real ART holder allocation prefix, replacement manager cleanup and bounded lifecycle evidence."
       ]
     },
     {
@@ -19449,16 +19452,16 @@
     },
     {
       "path": "tools/pure_linux/audit_native_holder_setup.py",
-      "sha256": "50369fc5437c2531067fb56f6d89e4b1765a5d7af9a0bd75cb2689fbf87f460f",
-      "bytes": 4929,
-      "source_sha256": "50369fc5437c2531067fb56f6d89e4b1765a5d7af9a0bd75cb2689fbf87f460f",
+      "sha256": "0fab7f172b8a71bacf668340b3090d14d7ecec032691d51f36ab58b36f376899",
+      "bytes": 6738,
+      "source_sha256": "0fab7f172b8a71bacf668340b3090d14d7ecec032691d51f36ab58b36f376899",
       "transformations": []
     },
     {
       "path": "tools/pure_linux/test_audit_native_holder_setup.py",
-      "sha256": "ab0fdde213bbe4fde5e824919b63ee3be2698de22d961e5041160591159ca67d",
-      "bytes": 2530,
-      "source_sha256": "ab0fdde213bbe4fde5e824919b63ee3be2698de22d961e5041160591159ca67d",
+      "sha256": "c8f430602f1e184c50cd77819c5c87f2a2f8ccd01b8f463cb0264f37b35d7ab4",
+      "bytes": 4803,
+      "source_sha256": "c8f430602f1e184c50cd77819c5c87f2a2f8ccd01b8f463cb0264f37b35d7ab4",
       "transformations": []
     },
     {
@@ -19695,10 +19698,45 @@
       "bytes": 2312,
       "source_sha256": "ea6432a71a526ea5e272fbfaebd7f99a2e376d67b02b7ddd731992f9031a69c3",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_HOLDER_SETUP_REAL_ART_2026-10-29.md",
+      "sha256": "5a6949dd7b1cf5b241eb8ae8733e2e08d9e51bccd2f988d38433853e2e3229f1",
+      "bytes": 7118,
+      "source_sha256": "5a6949dd7b1cf5b241eb8ae8733e2e08d9e51bccd2f988d38433853e2e3229f1",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-holder-setup-real-art-evidence-20261029.json",
+      "sha256": "f200633650f049d96a8508f34c6c1d4711982037d8931e0564c8dc98694a1d0f",
+      "bytes": 3561,
+      "source_sha256": "f200633650f049d96a8508f34c6c1d4711982037d8931e0564c8dc98694a1d0f",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/ArtNativeInitProbe.java",
+      "sha256": "4af30ee2f53dc0cd6fdba46a1310932ec1e789829befa12113d0431b655e9ea6",
+      "bytes": 1096,
+      "source_sha256": "4af30ee2f53dc0cd6fdba46a1310932ec1e789829befa12113d0431b655e9ea6",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/art_native_init_driver.c",
+      "sha256": "9d976ecd6322c7b436107c76ac4a2a32f4a92fcfdec3faba71c6940cddef77b0",
+      "bytes": 1648,
+      "source_sha256": "9d976ecd6322c7b436107c76ac4a2a32f4a92fcfdec3faba71c6940cddef77b0",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/ArtFrameworkContextProbe.java",
+      "sha256": "9358f0239bd8feff32fcd85aebccecd8a9a8a32ba2312210b8e29f80ae7d69e0",
+      "bytes": 2057,
+      "source_sha256": "9358f0239bd8feff32fcd85aebccecd8a9a8a32ba2312210b8e29f80ae7d69e0",
+      "transformations": []
     }
   ],
-  "file_count": 2806,
-  "source_bytes": 36271600,
+  "file_count": 2811,
+  "source_bytes": 36296996,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

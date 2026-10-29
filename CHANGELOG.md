@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-29：真实 ART 下的 holder setup 生命周期
+
+- 修正 holder payload 与 allocation 前缀的对象布局断言，真实偏移为 `24`。
+- 在原始 APK DEX 的 ARM64 ART/binderfs 运行时验证 native setup return、manager 替换、holder 析构、provider release 和 `dlclose`。
+- 记录 setup 后 provider 路径清空、`GameApp` Context 空引用及 framework boot classpath 边界；严格 catalog、ResourceManager、GameState、Step、完整对局和性能保持未验收。
+- 扩展 holder setup 审计器与测试，发布脱敏报告和证据摘要。
+- 以 Android v4 原始追踪脚本身份完成 Android/Linux holder 跨端审计，校验 setup 事件关联、Linux 输出顺序及输入/资源/辅助文件/probe 前后身份；状态保持 `NATIVE_VERIFIED_LIMITED`。
+- 修正审计器读取运行器 result 顶层 update inventory 的层级，并增加对应回归测试；审计输出与失败身份均保留。
+
 ## 2026-10-29：真实 ART/JavaVM、JNI 生命周期和 libg VM 绑定
 
 - 真实 binderfs 协议 8、1 MiB 映射与 ioctl 通过；直接从 SDK 镜像重建 ART 闭包，全程未启动 Android 模拟器。
