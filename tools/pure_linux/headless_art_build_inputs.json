@@ -1,0 +1,94 @@
+{
+  "schema": "nashura.headless-art-build-inputs.v1",
+  "upstream_tag": "android-11.0.0_r1",
+  "inputs": {
+    "include/async_safe/log.h": {
+      "url": "https://android.googlesource.com/platform/bionic/+/android-11.0.0_r1/libc/async_safe/include/async_safe/log.h?format=TEXT",
+      "sha256": "bc9dcbbfa68361faf692e1170a649754b45642426a5d7c49baae8f749ec70ef9"
+    },
+    "include/log/log.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/liblog/include/log/log.h?format=TEXT",
+      "sha256": "bd8e78e088910dea97ca51ad8193db1d642da4168808ec299be71299aea82234"
+    },
+    "include/log/log_event_list.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/liblog/include/log/log_event_list.h?format=TEXT",
+      "sha256": "e601c400840d9813f9dd9179026077750f0c11500c85cf6ed25cfd899de757ce"
+    },
+    "include/log/log_id.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/liblog/include/log/log_id.h?format=TEXT",
+      "sha256": "c9497213aed22bee6ffef2deee0259bd765b1aaa61f165a47f6117303fd00301"
+    },
+    "include/log/log_main.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/liblog/include/log/log_main.h?format=TEXT",
+      "sha256": "87e6cd1f5771f627fa1a1efb121e9f79623e6ad50f85018d76b2b93604ec8a98"
+    },
+    "include/log/log_properties.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/liblog/include/log/log_properties.h?format=TEXT",
+      "sha256": "332604cc99fb392046e97dd649544c491822201942be4364419060afa24ebc30"
+    },
+    "include/log/log_radio.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/liblog/include/log/log_radio.h?format=TEXT",
+      "sha256": "4cb49268ef1a657377d5e0bb55c325dab2ee80a686d84b6b57afa71ee4d1cecc"
+    },
+    "include/log/log_read.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/liblog/include/log/log_read.h?format=TEXT",
+      "sha256": "933e55e32c3ef55d1cb2ccf740506a092a8200e69310d73556455e93d46d8053"
+    },
+    "include/log/log_safetynet.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/liblog/include/log/log_safetynet.h?format=TEXT",
+      "sha256": "8e6756ce54e47c8882d24ae784674574a525ec495f67aad52717c6d08dc0b382"
+    },
+    "include/log/log_system.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/liblog/include/log/log_system.h?format=TEXT",
+      "sha256": "2544affd0297a771a2fd318b3cc11e9907c0797053cb0e1d1e121797470b7e61"
+    },
+    "include/log/log_time.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/liblog/include/log/log_time.h?format=TEXT",
+      "sha256": "102407513bafeac34f6f2fa4268064cb2a93c180efb12c7156d0fe6c8cb6586c"
+    },
+    "include/log/logprint.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/liblog/include/log/logprint.h?format=TEXT",
+      "sha256": "4782a6ec0eee28853b6eb99fb634b231b78aabdceaef82118e6a1425535e4886"
+    },
+    "include/utils/Errors.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/libutils/include/utils/Errors.h?format=TEXT",
+      "sha256": "e6d281e4dd6649a66f4d5d06b3adcd0d750b3c5b4fb7be980ce04ca0696f09e0"
+    },
+    "include/utils/SortedVector.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/libutils/include/utils/SortedVector.h?format=TEXT",
+      "sha256": "31c23ef164a4215aacfa3b76cfcc0cef8b327cf3464d222ecf4864b1e07e64df"
+    },
+    "include/utils/String8.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/libutils/include/utils/String8.h?format=TEXT",
+      "sha256": "744d464b8d6763cb9e73926707b07364b90aa21efa85ac0bcb72c47281621836"
+    },
+    "include/utils/TypeHelpers.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/libutils/include/utils/TypeHelpers.h?format=TEXT",
+      "sha256": "c5ba6abcc6df8ab3fe2531d7da7e185a0f1627920159294f475cc2d6c5998057"
+    },
+    "include/utils/Unicode.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/libutils/include/utils/Unicode.h?format=TEXT",
+      "sha256": "6782d29460b98f8c52dae83665185bb43e813752dbad15402153876dd64d8a2a"
+    },
+    "include/utils/Vector.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/libutils/include/utils/Vector.h?format=TEXT",
+      "sha256": "8c6b5b8e2ef11762f58fbe32620468b413f344f04b0baf763ed6172974e751a8"
+    },
+    "include/utils/VectorImpl.h": {
+      "url": "https://android.googlesource.com/platform/system/core/+/android-11.0.0_r1/libutils/include/utils/VectorImpl.h?format=TEXT",
+      "sha256": "2c0d7bff0eb9e8aee019ec5c2a939951200104068ece641485014f0c5f4c2bf2"
+    },
+    "sigchain.cc": {
+      "url": "https://android.googlesource.com/platform/art/+/android-11.0.0_r1/sigchainlib/sigchain.cc?format=TEXT",
+      "sha256": "dcf3c67b5bb6975bd7abbe13fc3fdd91de644a4fa9fafc6650d5926c3e44fb1b"
+    },
+    "sigchain.h": {
+      "url": "https://android.googlesource.com/platform/art/+/android-11.0.0_r1/sigchainlib/sigchain.h?format=TEXT",
+      "sha256": "ec6b05d23fcd62ad9c7730a3fb237cfbd62fb037bcb18f6e926291237f8746a1"
+    },
+    "log.h": {
+      "url": "https://android.googlesource.com/platform/art/+/android-11.0.0_r1/sigchainlib/log.h?format=TEXT",
+      "sha256": "eeff92b5a9d8bc30ad653bce38f0155a6e2e171d6ba7a4f74a364b6321d385b2"
+    }
+  }
+}

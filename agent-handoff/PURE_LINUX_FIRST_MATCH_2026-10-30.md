@@ -144,3 +144,33 @@ Android11原始app_main.cpp的AppRuntime::onStarted在callMain前启动ProcessSt
 边界：/sys/fs/selinux在根视图缺失，但libselinux仍可经/oldroot/sys/fs/selinux
 发现历史guest挂载；不宣称policy无关或全局SELinux独立。ART/框架、DT_NEEDED
 客户端库仍未逐库最小化。设备根视图裁剪结果只覆盖本fixture。
+
+
+## 直接ART入口与零Binder复验（v49–v55）
+
+新增headless_art_runtime.cpp，保留真实AndroidRuntime构造、VM启动和native注册，
+直接进入HeadlessRuntimeEntry；省去AppRuntime/RuntimeInit在Java main前的Binder
+线程池与退出清理。没有修改libg或构造假Binder成功。真实AOSP sigchain实现静态
+编入可执行入口并导出信号链API；构建输入的官方URL与SHA在仓库单独固定。
+
+v49因可执行文件位于宿主路径而落入错误linker分区，缺libstatssocket，exit1；
+v50修正分区后因缺真实sigchain导出SIGABRT(134)。v51完成真实终局和字节配对，
+但自定义入口错误要求不存在的probe退出标记，exit70按失败保留。v52在Java探针
+完整正常返回后明确System.exit(0)，原生终局、正常收尾与退出0同时通过。
+strace记录零Binder设备open和零Binder ioctl；同一3602帧归档与Android一致。
+
+run_headless_match.py默认只做身份校验和计划输出，--apply在新目录运行完整replay，
+保存退出码、日志、归档与结果。它固定游戏和三项运行库SHA，校验全部必需文件和
+本地property区，拒绝继承服务启动开关。只有真实finalized、Java正常完成和PM零拒绝
+才产生结果。v53真实运行该工具通过；v54额外屏蔽私有namespace内oldroot/sys仍通过。
+最终v55复验采用最终C++源码和固定运行库身份校验。所有成功归档仍为相同SHA256。
+
+当前默认namespace仅暴露四个基础设备，不挂载Binder、图形或SELinuxfs；oldroot/sys
+已屏蔽。guest全局历史policy继续原样，proc与oldroot其他路径仍可见，不宣称安全
+沙箱或全局policy独立。ART/框架/DT_NEEDED库与原始snapshot wrapper边界仍待处理。
+本轮是正确性复验，新入口性能尚未重测。构建和guest本地复验详见
+ tools/pure_linux/HEADLESS_RUNTIME.md。
+
+纯Linux回归在已有完整Python环境1162 passed、1 skipped；新增runner/比较器22项
+在其中。首轮默认Python缺cryptography造成16失败，日志另存；未通过安装绕过。
+历史主工程211 passed与公开1104 passed/42 skipped保持其原运行范围，不冒作本轮重跑。

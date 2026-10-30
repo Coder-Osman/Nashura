@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-10-30：零Binder直接ART入口
+
+- 新增真实AndroidRuntime直接入口及原始sigchain构建身份，省去启动器Binder线程池。
+- 零Binder设备/零Binder ioctl下完整replay与Android3602帧配对；可复用runner真实通过。
+- 屏蔽oldroot/sys，保留全局policy、传递库闭包和snapshot adapter限制；1162项回归通过。
+
 ## 2026-10-30：真实首局、固定动作复演与快照适配
 
 - 新增版本绑定Mainloop任务桥、最小x8 ABI assembly桥与真实GameState探针。

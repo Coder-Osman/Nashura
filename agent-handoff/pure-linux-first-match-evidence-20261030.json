@@ -1414,9 +1414,9 @@
   "remaining_requirements": [
     "ResourceManager initialization identity and runtime boundary audit beyond populated catalog",
     "original client snapshot wrapper context or formal minimal-adapter contract",
-    "portable reproducible runner with required input identity checks",
     "broader fixtures and fair equal-CPU/whole-system performance comparison",
-    "historical strict catalog gate remains separate from runtime table observation"
+    "historical strict catalog gate remains separate from runtime table observation",
+    "portable runner now runtime-verified; transitive closure and broader fixtures still require coverage"
   ],
   "engineering_validation_files": [
     {
@@ -1715,5 +1715,325 @@
       "ART/framework/DT_NEEDED library closure not minimized",
       "single fixture and serializer coverage only"
     ]
+  },
+  "direct_art_entry": {
+    "status": "ZERO_BINDER_FULL_MATCH_PARITY_LIMITED",
+    "scope": "one fixed 52-command eight-card fixture and original serializer state",
+    "entry": "tools/pure_linux/headless_art_runtime.cpp",
+    "entry_java": "tools/pure_linux/HeadlessRuntimeEntry.java",
+    "runner": "tools/pure_linux/run_headless_match.py",
+    "build_inputs": "tools/pure_linux/headless_art_build_inputs.json",
+    "v49": {
+      "exit": 1,
+      "reason": "wrong linker section at host path; libstatssocket absent from that section",
+      "files": [
+        {
+          "name": "guest.stdout",
+          "bytes": 120,
+          "sha256": "914350dbc4c4a8dc6a237d77c50419bc004a2a5da3ec8a7640fea3f044af38ae"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 395,
+          "sha256": "581a7d25ab0591f4cbbb790ce4c26cd5f0ec7ecaee82cf72ca6281c5485fe47f"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 106661,
+          "sha256": "2ab835d95d672f1923ee738869c71afa72d116953fd5571e8928f0e59778dc11"
+        }
+      ]
+    },
+    "v50": {
+      "exit": 134,
+      "reason": "real ART sigchain API not exported by custom executable",
+      "files": [
+        {
+          "name": "guest.stdout",
+          "bytes": 152,
+          "sha256": "b97b1656793db82588880d2a9e420a2eb8e70fe1baa84b6b06e36591771fbbac"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 227,
+          "sha256": "699b5d768ae0d6c40a11952305c2cb23120a53284d74027f68c15216d3b77bc9"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 4,
+          "sha256": "e726b440cc164001999e718b51780d80314709efe06e7857282377be9111127b"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 138209,
+          "sha256": "7e4195e269590a3e182f729e59c633a543aaf5d73789a447edc034fbb0bc1736"
+        }
+      ]
+    },
+    "v51": {
+      "exit": 70,
+      "native_finalized": true,
+      "reason": "launcher required nonexistent normal-probe-exit marker; Java returned normally; preserved nonzero failure",
+      "files": [
+        {
+          "name": "guest.stdout",
+          "bytes": 30732,
+          "sha256": "b6eb5b5450feed2e734d94efd1d48566945132e6f4c1097eb3cf2f58657c43a6"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1123,
+          "sha256": "63a42b534d4032ad88d4e437ece588451f5fbebbe120fcb309ae3f1578348d4e"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 3,
+          "sha256": "6442bc26a7c562f5afe6467dab36365c709909f6a81afcecfc0c25cff0f1bab0"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 340790,
+          "sha256": "7bbca7015a80b8d9f5c4449e0980c63b5512959d872f3202f2be1b6c0beb6df1"
+        },
+        {
+          "name": "snapshots.bin",
+          "bytes": 12334754,
+          "sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+        }
+      ]
+    },
+    "v52": {
+      "exit": 0,
+      "native_finalized": true,
+      "final_tick": 3601,
+      "binder_device_open_count": 0,
+      "binder_ioctl_count": 0,
+      "android_serialized_bytes_equal": true,
+      "files": [
+        {
+          "name": "guest.stdout",
+          "bytes": 30771,
+          "sha256": "9fe5bf2b49992e49332c5f544e4bcbe0b23d2e7af7a8e60c8d01c12d508b3744"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1173,
+          "sha256": "12375294a8162a241eba3e67bfbd3d5e81e346fd43b34e2757ff0e844c1d0945"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 340139,
+          "sha256": "16945bf59119c7a51bb1b2218dbf0fcf26a63e7788b7b0df47f13bc269e92a17"
+        },
+        {
+          "name": "snapshots.bin",
+          "bytes": 12334754,
+          "sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+        }
+      ]
+    },
+    "portable_runs": {
+      "v53": {
+        "status": "NATIVE_FINAL_AND_ARCHIVE_OBSERVED_LIMITED",
+        "final_tick": 3601,
+        "records": 3602,
+        "archive_bytes": 12334754,
+        "archive_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206",
+        "whole_goal_complete": false,
+        "oldroot_sys_masked": false,
+        "files": [
+          {
+            "name": "stdout.log",
+            "bytes": 30770,
+            "sha256": "81e9c1b17b6f598b3019422d9ff623eb0aaeb5daad36acd5770f99116ae08f7a"
+          },
+          {
+            "name": "stderr.log",
+            "bytes": 1173,
+            "sha256": "12375294a8162a241eba3e67bfbd3d5e81e346fd43b34e2757ff0e844c1d0945"
+          },
+          {
+            "name": "exit.txt",
+            "bytes": 2,
+            "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+          },
+          {
+            "name": "result.json",
+            "bytes": 250,
+            "sha256": "953f2f3cd3c270f7a0eb30bba1df193393834a646800cfa0d88b9ed29dbc3b9a"
+          },
+          {
+            "name": "snapshots.bin",
+            "bytes": 12334754,
+            "sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+          },
+          {
+            "name": "job.log",
+            "bytes": 251,
+            "sha256": "fecff8051a2a9b71a3cd3af81993da55a10382c45e541e363906da423d50ab5a"
+          },
+          {
+            "name": "job.exit",
+            "bytes": 2,
+            "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+          }
+        ]
+      },
+      "v54": {
+        "status": "NATIVE_FINAL_AND_ARCHIVE_OBSERVED_LIMITED",
+        "final_tick": 3601,
+        "records": 3602,
+        "archive_bytes": 12334754,
+        "archive_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206",
+        "whole_goal_complete": false,
+        "oldroot_sys_masked": true,
+        "files": [
+          {
+            "name": "stdout.log",
+            "bytes": 30809,
+            "sha256": "ee55745ea14500223b4ce9d4852d6d80a35852c2095643c65cf288115f8edd02"
+          },
+          {
+            "name": "stderr.log",
+            "bytes": 1173,
+            "sha256": "12375294a8162a241eba3e67bfbd3d5e81e346fd43b34e2757ff0e844c1d0945"
+          },
+          {
+            "name": "exit.txt",
+            "bytes": 2,
+            "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+          },
+          {
+            "name": "result.json",
+            "bytes": 250,
+            "sha256": "953f2f3cd3c270f7a0eb30bba1df193393834a646800cfa0d88b9ed29dbc3b9a"
+          },
+          {
+            "name": "snapshots.bin",
+            "bytes": 12334754,
+            "sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+          },
+          {
+            "name": "job.log",
+            "bytes": 251,
+            "sha256": "fecff8051a2a9b71a3cd3af81993da55a10382c45e541e363906da423d50ab5a"
+          },
+          {
+            "name": "job.exit",
+            "bytes": 2,
+            "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+          }
+        ]
+      },
+      "v55": {
+        "status": "NATIVE_FINAL_AND_ARCHIVE_OBSERVED_LIMITED",
+        "final_tick": 3601,
+        "records": 3602,
+        "archive_bytes": 12334754,
+        "archive_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206",
+        "whole_goal_complete": false,
+        "oldroot_sys_masked": true,
+        "files": [
+          {
+            "name": "stdout.log",
+            "bytes": 30808,
+            "sha256": "1cfcc3024369eb2d902868528114765bdc996368fec139b74082d9b5b7adefbb"
+          },
+          {
+            "name": "stderr.log",
+            "bytes": 1179,
+            "sha256": "d79f2153c49951eea3be026a261b14ea226e67ec892f806379f574b257aa2fa0"
+          },
+          {
+            "name": "exit.txt",
+            "bytes": 2,
+            "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+          },
+          {
+            "name": "result.json",
+            "bytes": 250,
+            "sha256": "953f2f3cd3c270f7a0eb30bba1df193393834a646800cfa0d88b9ed29dbc3b9a"
+          },
+          {
+            "name": "snapshots.bin",
+            "bytes": 12334754,
+            "sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+          },
+          {
+            "name": "job.log",
+            "bytes": 251,
+            "sha256": "fecff8051a2a9b71a3cd3af81993da55a10382c45e541e363906da423d50ab5a"
+          },
+          {
+            "name": "job.exit",
+            "bytes": 2,
+            "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+          }
+        ]
+      }
+    },
+    "performance": "not remeasured; traced/serialized correctness runs excluded from prior performance table",
+    "remaining_boundaries": [
+      "historical guest global SELinux policy unchanged; no policy-independence claim",
+      "ART/framework and DT_NEEDED libraries remain; no all-library or all-EGL-call coverage",
+      "original snapshot wrapper controller absent; explicit serializer adapter only",
+      "ResourceManager initialization identity and historical strict catalog gate remain separate",
+      "same fixture only; no general mode/deck completeness claim"
+    ],
+    "build_artifacts": [
+      {
+        "name": "headless-art-runtime-v51",
+        "bytes": 559040,
+        "sha256": "de70de5c67d39b60bef107cb68144427423db0b935b6b3f4101ef50f9dc9447f"
+      },
+      {
+        "name": "headless-art-runtime-final",
+        "bytes": 559040,
+        "sha256": "53c3ddf0c106a9e7bc7e8e41c4635f924502edf217b58322ff95c78a0f11871d"
+      },
+      {
+        "name": "dex-v52/classes.dex",
+        "bytes": 34240,
+        "sha256": "eef573e7d3954eafb2220b601ddc05f9f38b203b6eadef51e0b592336c099c6d"
+      }
+    ],
+    "engineering_validation": {
+      "pure_linux": "1162 passed, 1 skipped",
+      "targeted": "22 passed (included in pure_linux)",
+      "initial_regression": "1145 passed, 16 failed, 2 skipped; all failures missing cryptography in default interpreter; retained",
+      "correct_environment": "existing /opt/anaconda3 Python; no package installation",
+      "files": [
+        {
+          "name": "checks-pure-linux-direct.log",
+          "bytes": 19732,
+          "sha256": "327e2c32013d1e13bf7b5237abb6095ab3e2ac6af10b7d91e4d10817c2b62bf7"
+        },
+        {
+          "name": "checks-pure-linux-direct.xml",
+          "bytes": 728336,
+          "sha256": "18807e6a88e28c32f164cc1cc22f6ec32ec951fc1d18aa3800fe635d25268deb"
+        },
+        {
+          "name": "checks-pure-linux-direct-complete-env.log",
+          "bytes": 1509,
+          "sha256": "e6fdc0096c1051f5230c83e0a9531ee1e142cfed51a8949a1d933bc332ec2a10"
+        },
+        {
+          "name": "checks-pure-linux-direct-complete-env.xml",
+          "bytes": 711597,
+          "sha256": "e6675b0e59aea7ced801bd1719809b6f0ba4d765b963aed9073f0c3ffb3c7d0b"
+        }
+      ]
+    }
   }
 }

@@ -1,5 +1,12 @@
 # 阶段成果与证据索引
 
+## 2026-10-30：零Binder完整对局复验
+
+直接ART入口保留原始VM/native注册，省去app_process的Binder启动流程。v52零Binder
+设备open/ioctl下tick3601原生终局、退出0，3602帧与Android字节一致。仓库runner的
+v53/v54复验同样通过，其中v54屏蔽oldroot/sys。新入口性能尚未重测，原始wrapper、
+ART传递闭包和ResourceManager身份边界仍保留。详见[复验说明](../tools/pure_linux/HEADLESS_RUNTIME.md)。
+
 ## 2026-10-30：最小 headless 真实首局与固定 replay
 
 真实 ARM64 Ubuntu 中，原始 libg 以八卡组完成部署、扣费、移动、伤害与原生终局

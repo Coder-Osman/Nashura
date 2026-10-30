@@ -1,6 +1,6 @@
 #!/bin/sh
-# Run under unshare -Ur -m -n -i. The original app_process launcher currently
-# uses Binder for startup/cleanup; this is not a battle dependency claim.
+# Run under unshare -Ur -m -n -i with headless_art_runtime. The direct entry
+# uses real ART/native registration without app_process's Binder thread pool.
 set -eu
 ulimit -c 0
 [ "$#" -ge 3 ] || exit 64
@@ -29,16 +29,14 @@ mount -o remount,bind,ro "$property_source"
 # Fresh mounts hide device files and SELinuxfs left in the extracted closure.
 mount -t tmpfs -o mode=0755 tmpfs "$art_base/dev"
 mount -t tmpfs -o mode=0555 tmpfs "$art_base/sys"
+# libselinux also searches /proc/mounts and can discover /oldroot/sys. Mask the
+# guest's sys view inside this private mount namespace before pivot_root.
+mount -t tmpfs -o mode=0555 tmpfs /sys
 mkdir -p "$art_base/dev/__properties__" "$art_base/dev/socket"
 mount --bind "$property_source" "$art_base/dev/__properties__"
 for device in null zero random urandom; do
     touch "$art_base/dev/$device"
     mount --bind "/dev/$device" "$art_base/dev/$device"
-done
-for device in binder hwbinder; do
-    [ -c "/dev/binderfs/$device" ] || exit 66
-    touch "$art_base/dev/$device"
-    mount --bind "/dev/binderfs/$device" "$art_base/dev/$device"
 done
 ln -s /proc/self/fd "$art_base/dev/fd"
 ln -s /proc/self/fd/0 "$art_base/dev/stdin"
@@ -47,8 +45,9 @@ ln -s /proc/self/fd/2 "$art_base/dev/stderr"
 touch "$art_base/linkerconfig/ld.config.txt"
 mount --bind "$linker_config" "$art_base/linkerconfig/com.android.art/ld.config.txt"
 mount --bind "$linker_config" "$art_base/linkerconfig/ld.config.txt"
-printf '%s\n' 'HEADLESS_NAMESPACE_BINDER_DEVICES=binder,hwbinder' \
-    'HEADLESS_NAMESPACE_GRAPHICS_DEVICES=absent' 'HEADLESS_NAMESPACE_SELINUXFS=absent'
+printf '%s\n' 'HEADLESS_NAMESPACE_BINDER_DEVICES=absent' \
+    'HEADLESS_NAMESPACE_GRAPHICS_DEVICES=absent' 'HEADLESS_NAMESPACE_SELINUXFS=absent' \
+    'HEADLESS_NAMESPACE_OLDROOT_SYS=masked'
 /usr/sbin/pivot_root "$art_base" "$art_base/oldroot"
 cd /
 export ANDROID_ROOT=/system ANDROID_DATA=/data

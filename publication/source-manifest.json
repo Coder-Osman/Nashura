@@ -17,9 +17,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "8e70b4f133b329de8cc89580aa4a6263f1ae90b7e32121a274c329bd6509f2b8",
-      "source_sha256": "8e70b4f133b329de8cc89580aa4a6263f1ae90b7e32121a274c329bd6509f2b8",
-      "bytes": 61849,
+      "sha256": "0848a01c234bb911efecdbd461718c5a05a14fd9003d1a3945f5eb16087dcf2a",
+      "source_sha256": "0848a01c234bb911efecdbd461718c5a05a14fd9003d1a3945f5eb16087dcf2a",
+      "bytes": 62212,
       "transformations": []
     },
     {
@@ -11391,9 +11391,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "e0668eb8be8867c83ab6ee9ad259861fa49b2a245d9803428710536b71fff172",
-      "source_sha256": "e0668eb8be8867c83ab6ee9ad259861fa49b2a245d9803428710536b71fff172",
-      "bytes": 97420,
+      "sha256": "bbb5e31cbb1386232acc730e3e81c4350fe255850d72e5c20292515513c1d48d",
+      "source_sha256": "bbb5e31cbb1386232acc730e3e81c4350fe255850d72e5c20292515513c1d48d",
+      "bytes": 97891,
       "transformations": []
     },
     {
@@ -20020,16 +20020,16 @@
     },
     {
       "path": "agent-handoff/PURE_LINUX_FIRST_MATCH_2026-10-30.md",
-      "sha256": "a87a94db15f391fde50c6d048f3558a9dc337ff5204b96eada6292e571c673d7",
-      "source_sha256": "a87a94db15f391fde50c6d048f3558a9dc337ff5204b96eada6292e571c673d7",
-      "bytes": 9679,
+      "sha256": "c5756d4d16ab51902ee74c8cb9016491a7debf8c474092292842112b8ddf287b",
+      "source_sha256": "c5756d4d16ab51902ee74c8cb9016491a7debf8c474092292842112b8ddf287b",
+      "bytes": 11894,
       "transformations": []
     },
     {
       "path": "agent-handoff/pure-linux-first-match-evidence-20261030.json",
-      "sha256": "a8f07eea6a1ba8f8d739bfae051a19a2b1d74353c7be520562615b5be73c8866",
-      "source_sha256": "a8f07eea6a1ba8f8d739bfae051a19a2b1d74353c7be520562615b5be73c8866",
-      "bytes": 57040,
+      "sha256": "32da7850b4ce9b96eb3b05dbd4b5aa6d64e175f96853516a4f9fcb95bdf7c33d",
+      "source_sha256": "32da7850b4ce9b96eb3b05dbd4b5aa6d64e175f96853516a4f9fcb95bdf7c33d",
+      "bytes": 68315,
       "transformations": []
     },
     {
@@ -20055,14 +20055,56 @@
     },
     {
       "path": "tools/pure_linux/run_headless_namespace.sh",
-      "sha256": "0049ca29364d084a97d5552f8eeef366af80009d6ecfb85ec6643ed272ebf7d1",
-      "source_sha256": "0049ca29364d084a97d5552f8eeef366af80009d6ecfb85ec6643ed272ebf7d1",
-      "bytes": 3063,
+      "sha256": "996d4c31776575cad77896028b8abab9b47d5d23c4eb2809ffc386d44173b5f7",
+      "source_sha256": "996d4c31776575cad77896028b8abab9b47d5d23c4eb2809ffc386d44173b5f7",
+      "bytes": 3112,
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/HEADLESS_RUNTIME.md",
+      "sha256": "989c10e44fae6cf3bccbed3d9b0cb46fd2202143e8bcc5b22b03c55d58b99a4c",
+      "source_sha256": "989c10e44fae6cf3bccbed3d9b0cb46fd2202143e8bcc5b22b03c55d58b99a4c",
+      "bytes": 4521,
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/HeadlessRuntimeEntry.java",
+      "sha256": "f934f9bf071b6911e5fa1b9c1769e3d8f788ddc7110caa5fb430f928fd194447",
+      "source_sha256": "f934f9bf071b6911e5fa1b9c1769e3d8f788ddc7110caa5fb430f928fd194447",
+      "bytes": 863,
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/headless_art_build_inputs.json",
+      "sha256": "da3f179ddab701e871582314b85996607e5456211e8b796ba935cdf00af8cd3a",
+      "source_sha256": "da3f179ddab701e871582314b85996607e5456211e8b796ba935cdf00af8cd3a",
+      "bytes": 5693,
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/headless_art_runtime.cpp",
+      "sha256": "c55f1f5cef84974d04e36b5c8ba1ae42affaf60db9c4cad1d7a5194ecf5b5c04",
+      "source_sha256": "c55f1f5cef84974d04e36b5c8ba1ae42affaf60db9c4cad1d7a5194ecf5b5c04",
+      "bytes": 3000,
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/run_headless_match.py",
+      "sha256": "7e98a45df64ddc83605af8a6e17d1c1a6d2938e808d1033429cff54f44f98cd0",
+      "source_sha256": "7e98a45df64ddc83605af8a6e17d1c1a6d2938e808d1033429cff54f44f98cd0",
+      "bytes": 8766,
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_run_headless_match.py",
+      "sha256": "e893e6d79a84ecf4b13c7d4a8dd2e85ba5e8510ac6f3a3ab2f6cdc6a37b39caf",
+      "source_sha256": "e893e6d79a84ecf4b13c7d4a8dd2e85ba5e8510ac6f3a3ab2f6cdc6a37b39caf",
+      "bytes": 4444,
       "transformations": []
     }
   ],
-  "file_count": 2855,
-  "source_bytes": 36747164,
+  "file_count": 2861,
+  "source_bytes": 36788824,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,
