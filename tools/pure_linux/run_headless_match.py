@@ -40,11 +40,16 @@ OPTIMIZATION_MARKERS = {
     "hot-distance-v1": "getter_sites=11 distance_functions=2",
     "grid-clear-unroll-v1": "offset=0xf34864 bytes=112",
     "hot-distance-grid-v1": "getter_sites=11 distance_functions=2 grid_functions=1",
+    "query-dimension-pair-v1": "offset=0xf34c6c bytes=76",
+    "hot-distance-query-v1": "getter_sites=11 distance_functions=2 query_blocks=1",
 }
 
 
 def optimization_installation_markers(optimization):
-    if optimization == "hot-distance-grid-v1":
+    if optimization == "hot-distance-query-v1":
+        names = ("hot-getters-v1", "saturated-distance-v1", "hot-distance-v1",
+                 "query-dimension-pair-v1", optimization)
+    elif optimization == "hot-distance-grid-v1":
         names = ("hot-getters-v1", "saturated-distance-v1", "hot-distance-v1",
                  "grid-clear-unroll-v1", optimization)
     else:

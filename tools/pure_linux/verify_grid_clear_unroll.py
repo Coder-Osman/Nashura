@@ -24,12 +24,13 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
-def stdout(directory, variant, *, timing=False):
+def stdout(directory, variant, *, timing=False, variants=None):
+    variants = VARIANTS if variants is None else variants
     if (directory / "stdout.log").exists():
         raise ValueError("only post-exit compressed stdout expected")
     text = gzip.decompress((directory / "stdout.log.gz").read_bytes()).decode()
     markers = [x for x in text.splitlines() if x.startswith("HEADLESS_NATIVE_OPTIMIZATION ")]
-    expected = optimization_installation_markers(VARIANTS[variant]) if VARIANTS[variant] else []
+    expected = optimization_installation_markers(variants[variant]) if variants[variant] else []
     if markers != expected:
         raise ValueError("wrong ordered native installation markers")
     if timing and any(x.startswith(OBSERVATIONS + ("HEADLESS_NATIVE_PHASE", "HEADLESS_PHASE_TIMING ",
@@ -38,10 +39,11 @@ def stdout(directory, variant, *, timing=False):
     return text
 
 
-def result_expected(variant, tick, *, pair=None):
+def result_expected(variant, tick, *, pair=None, variants=None):
+    variants = VARIANTS if variants is None else variants
     result = {"status": "NATIVE_FINAL_OBSERVED_LIMITED", "final_tick": tick,
         "snapshot_trace": pair is not None, "matches": 1 if pair else 216,
-        "record_hand_actions": False, "native_optimization": VARIANTS[variant],
+        "record_hand_actions": False, "native_optimization": variants[variant],
         "native_phases": False, "thread_resources": False,
         "serial_batches": 1, "whole_goal_complete": False}
     if pair:
@@ -72,7 +74,11 @@ def aggregate(rows):
         "block_duration_change_percent": blocks}
 
 
-def verify(root, reference):
+def verify(root, reference, *, variants=None, guest_root=None, observer=None,
+           schema="nashura.grid-clear-unroll.v1", require_grid_instruction_check=True):
+    variants = VARIANTS if variants is None else variants
+    guest_root = GUEST_ROOT if guest_root is None else Path(guest_root)
+    observer = OBSERVER if observer is None else observer
     root, reference = map(Path, (root, reference))
     if (root / "controller.exit").read_text().strip() != "0":
         raise ValueError("normal controller exit required")
@@ -81,12 +87,13 @@ def verify(root, reference):
     done = read(root / "done.json")
     if done["runs"] != 32 or done["successes"] != 32:
         raise ValueError("32 timing batches required")
-    check = read(root / "instruction-check.json")
-    if (check["exit_code"] != 0 or check["stderr"] or
-            "GRID_CLEAR_UNROLL_CHECK cases=24107 original_and_candidate=equal guard_pages=passed duplicate_cells=covered signed_modular_product=covered" not in check["stdout"].splitlines()):
-        raise ValueError("native instruction equivalence required")
+    if require_grid_instruction_check:
+        check = read(root / "instruction-check.json")
+        if (check["exit_code"] != 0 or check["stderr"] or
+                "GRID_CLEAR_UNROLL_CHECK cases=24107 original_and_candidate=equal guard_pages=passed duplicate_cells=covered signed_modular_product=covered" not in check["stdout"].splitlines()):
+            raise ValueError("native instruction equivalence required")
     stage = read(root / "stage-plan.json")
-    require_equal(stage["variants"], VARIANTS)
+    require_equal(stage["variants"], variants)
     require_equal(stage["cases"], list(CASES))
     require_equal(stage["order"], list(ORDER))
     if (stage["benchmark_repeats"] != 216 or stage["warmup_matches"] != 16
@@ -98,7 +105,7 @@ def verify(root, reference):
                 or env["memory_mib_expected"] != 6144):
             raise ValueError("fixed VM allocation changed")
     gates, timings = (read(root / x) for x in ("correctness-results.json", "timing-results.json"))
-    if ([(x["case"], x["variant"]) for x in gates] != [(c, v) for c in CASES for v in VARIANTS]
+    if ([(x["case"], x["variant"]) for x in gates] != [(c, v) for c in CASES for v in variants]
             or [(x["case"], x["index"], x["variant"]) for x in timings] != [(c, i, v) for c in CASES for i, v in enumerate(ORDER, 1)]):
         raise ValueError("wrong case/order or missing runs")
     correctness, cases = [], []
@@ -106,8 +113,8 @@ def verify(root, reference):
         case = root / name
         settings, prior_settings = read(case / "settings.json"), read(reference / name / "settings.json")
         expected = json.loads(json.dumps(prior_settings))
-        expected["observer"] = OBSERVER
-        expected["identities"][OBSERVER] = stage["observer_sha256"]
+        expected["observer"] = observer
+        expected["identities"][observer] = stage["observer_sha256"]
         require_equal(settings, expected)
         fixture = Path(__file__).with_name("fixtures") / ("headless-runtime-" + name + ".json")
         if settings["identities"][settings["replay"]] != sha256(fixture):
@@ -128,9 +135,9 @@ def verify(root, reference):
             if archive["sha256"] != read(original / "result.json")["archive_sha256"]:
                 raise ValueError("reference archive identity changed")
             validate_terminal_archive(raw_ref, archive, reset)
-            for variant in VARIANTS:
+            for variant in variants:
                 directory = case / ("full-" + variant)
-                text = stdout(directory, variant)
+                text = stdout(directory, variant, variants=variants)
                 validate_actions(text, replay)
                 if (verify_completion(int((directory / "exit.txt").read_text()), text) != tick
                         or [x for x in text.splitlines() if x.startswith(OBSERVATIONS)] != observations):
@@ -138,13 +145,13 @@ def verify(root, reference):
                 plan = read(directory / "plan.json")
                 prior = read(original / "plan.json")
                 expected_plan = json.loads(json.dumps(prior))
-                expected_plan["command"] = [x.replace(prior["output"], plan["output"]).replace(prior_settings["observer"], OBSERVER) for x in prior["command"]]
+                expected_plan["command"] = [x.replace(prior["output"], plan["output"]).replace(prior_settings["observer"], observer) for x in prior["command"]]
                 expected_plan["environment"] = {k: v.replace(prior["output"], plan["output"]) for k, v in prior["environment"].items()}
-                if VARIANTS[variant]:
-                    expected_plan["environment"]["NASHURA_NATIVE_OPTIMIZATION"] = VARIANTS[variant]
-                expected_plan.update(output=plan["output"], identities=settings["identities"], native_optimization=VARIANTS[variant])
+                if variants[variant]:
+                    expected_plan["environment"]["NASHURA_NATIVE_OPTIMIZATION"] = variants[variant]
+                expected_plan.update(output=plan["output"], identities=settings["identities"], native_optimization=variants[variant])
                 require_equal(plan, expected_plan)
-                if Path(plan["output"]) != GUEST_ROOT / name / ("full-" + variant):
+                if Path(plan["output"]) != guest_root / name / ("full-" + variant):
                     raise ValueError("wrong full-frame output path")
                 raw = Path(tmp) / (variant + ".bin")
                 raw.write_bytes(gzip.decompress((directory / "snapshots.bin.gz").read_bytes()))
@@ -152,7 +159,7 @@ def verify(root, reference):
                 if not pair["equal"]:
                     raise ValueError("serializer payload differs")
                 result = read(directory / "result.json")
-                require_equal(result, result_expected(variant, tick, pair=pair))
+                require_equal(result, result_expected(variant, tick, pair=pair, variants=variants))
                 gate = next(x for x in gates if (x["case"], x["variant"]) == (name, variant))
                 require_equal(gate["result"], result)
                 if (gate["snapshot_gzip_sha256"] != sha256(directory / "snapshots.bin.gz")
@@ -167,12 +174,12 @@ def verify(root, reference):
         for row in [x for x in timings if x["case"] == name]:
             label = str(row["index"]).zfill(2) + "-" + row["variant"]
             directory = case / "timing" / label
-            text = stdout(directory, row["variant"], timing=True)
+            text = stdout(directory, row["variant"], timing=True, variants=variants)
             validate_actions(text, replay)
             plan = read(directory / "plan.json")
-            validate_plan(plan, settings, row["variant"], Path(plan["output"]), variants=VARIANTS,
+            validate_plan(plan, settings, row["variant"], Path(plan["output"]), variants=variants,
                           benchmark_repeats=216, compress_stdout=True)
-            if Path(plan["output"]) != GUEST_ROOT / name / "timing" / label:
+            if Path(plan["output"]) != guest_root / name / "timing" / label:
                 raise ValueError("wrong timing output path")
             if verify_completion(int((directory / "exit.txt").read_text()), text, 216) != tick:
                 raise ValueError("wrong final tick")
@@ -181,7 +188,7 @@ def verify(root, reference):
             require_equal(summary, read(case / "timing" / (label + "-summary.json")))
             require_equal(summary, row["summary"])
             result = read(directory / "result.json")
-            require_equal(result, result_expected(row["variant"], tick))
+            require_equal(result, result_expected(row["variant"], tick, variants=variants))
             require_equal(result, row["result"])
             env = read(case / "timing" / (label + "-environment.json"))
             if env["cpu_count"] != 2 or env["affinity"] != [0, 1]:
@@ -191,8 +198,8 @@ def verify(root, reference):
         result = aggregate(verified)
         result.update(case=name, batches=verified)
         cases.append(result)
-    return {"schema": "nashura.grid-clear-unroll.v1", "host_recomputed": True,
-        "observer_sha256": stage["observer_sha256"], "instruction_cases": 24107,
+    return {"schema": schema, "host_recomputed": True,
+        "observer_sha256": stage["observer_sha256"], "instruction_cases": 24107 if require_grid_instruction_check else None,
         "timing_batches": 32, "timing_matches": 6912, "measured_matches": 6400,
         "correctness": correctness, "cases": cases, "whole_goal_complete": False,
         "limitations": ["two ABBA/BAAB blocks per case; no population significance claim",
