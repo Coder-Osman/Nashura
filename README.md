@@ -1,5 +1,13 @@
 # Nashura
 
+## 2026-10-30：空间查询调用者静态审计
+
+继续反汇编已归属的 ARM64 热点：坐标和范围进入二维网格候选查询；同一包装器有四个
+直接调用点，上层函数有三个调用点，具体玩法语义和回调身份仍未知。本轮只读静态分析，
+未启动 replay、未测并发或性能，也未修改引擎二进制。详见[调用者审计](agent-handoff/SERIAL_ARM64_QUERY_CALLER_AUDIT_2026-10-30.md)
+和[机器摘要](agent-handoff/serial-arm64-query-caller-audit-evidence-20261030.json)。
+整体目标仍未完成。
+
 ## 2026-10-30：ARM64 headless 串行 profile 热点归属
 
 单 fixture 固定 replay 的 `cpu-clock:u` profile 捕获 2,569 个样本、零丢样；

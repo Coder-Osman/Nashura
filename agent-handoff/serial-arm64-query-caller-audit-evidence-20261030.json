@@ -1,0 +1,75 @@
+{
+  "schema": "nashura.serial-arm64-query-caller-audit.v1",
+  "status": "STATIC_CALLER_AUDIT_LIMITED",
+  "whole_goal_complete": false,
+  "concurrency_tested": false,
+  "runtime_executed": false,
+  "optimization_applied": false,
+  "input": {
+    "sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "build_id": "90e6f351f0dec4a28b494c3812d2629fd45d5a83",
+    "elf_type": "ET_DYN",
+    "architecture": "AArch64",
+    "executable_load_vaddr": "0x0",
+    "executable_load_offset": "0x0",
+    "executable_load_file_size": "0x17e6550"
+  },
+  "method": {
+    "static_disassembly": "Capstone ARM64",
+    "function_boundaries": "GNU EH frame header/FDE index",
+    "profile_reused_from": "serial-arm64-cpu-profile-evidence-20261030.json",
+    "raw_third_party_binary_published": false
+  },
+  "ranges": {
+    "query_wrapper": {
+      "start": "0xf34afc",
+      "direct_target": "0xf34b3c"
+    },
+    "query_body": {
+      "start": "0xf34b3c",
+      "end_exclusive": "0xf35064"
+    },
+    "containing_caller": {
+      "start": "0xf5d7e0",
+      "end_exclusive": "0xf5deb0",
+      "callsite": "0xf5d9d8"
+    }
+  },
+  "call_arguments_at_f5d9d8": {
+    "x0": "grid-like object loaded from [x25 + 0xa0]",
+    "x1": "coordinate-like value returned by helper call on x21",
+    "w2": "computed from an object-field maximum plus an accumulated value",
+    "w3": 0,
+    "w4": 1,
+    "w5": 0,
+    "w6": 0,
+    "w7": -1,
+    "semantic_names_confirmed": false
+  },
+  "observations": [
+    "Wrapper reads two 32-bit words from the coordinate pointer and forwards them as center x/y.",
+    "Body forms center-minus-range and center-plus-range bounds for both axes, then arithmetic-shifts by 10 to derive cell coordinates.",
+    "Grid width and height are loaded from the grid-like object; cell bucket indexing is row-major.",
+    "Candidate traversal reads status at +0x0c and a visitation marker at +0x50, with virtual calls through vtable offsets +0x10 and +0x178.",
+    "Direct calls to wrapper: 0xf329ac, 0xf5d548, 0xf5d9d8, 0xf67930.",
+    "Direct calls to containing caller: 0xf19c28, 0xf24a64, 0xf61504."
+  ],
+  "interpretation": {
+    "supported": "Reusable two-dimensional spatial-grid candidate query and filtering.",
+    "unresolved": [
+      "collision versus targeting versus other gameplay purpose",
+      "virtual callback identities and exact filtering contract",
+      "which direct caller produced the sampled instructions",
+      "multi-seed and multi-deck coverage",
+      "whether any repository-owned code can reduce this cost without changing behavior"
+    ]
+  },
+  "not_performed": [
+    "guest execution",
+    "replay execution",
+    "concurrency measurement",
+    "performance comparison",
+    "third-party binary modification"
+  ],
+  "next_evidence": "Passively capture virtual receiver/vtable identity in a serial fixed workload and correlate it read-only with known battle objects."
+}

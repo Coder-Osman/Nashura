@@ -17,16 +17,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "0360aa4963e9513a91d5f1c37fba65440f29811a266ebcc1797222591b79389c",
-      "bytes": 64792,
-      "source_sha256": "0360aa4963e9513a91d5f1c37fba65440f29811a266ebcc1797222591b79389c",
+      "sha256": "795a1cf232a256776b234f7bb235bd44fe7150cc394e8fbb71ec18e8c270e607",
+      "bytes": 65274,
+      "source_sha256": "795a1cf232a256776b234f7bb235bd44fe7150cc394e8fbb71ec18e8c270e607",
       "transformations": []
     },
     {
       "path": "README.md",
-      "sha256": "30e89489688a760e83a9bf433b108b52733c4d2b5e20eb4d55bf6c04352ae24b",
-      "bytes": 63915,
-      "source_sha256": "30e89489688a760e83a9bf433b108b52733c4d2b5e20eb4d55bf6c04352ae24b",
+      "sha256": "fd38a4ec31b451576f86d0d9849c03bab48f3eb4c49f3f9ec11c28806ea76bd1",
+      "bytes": 64484,
+      "source_sha256": "fd38a4ec31b451576f86d0d9849c03bab48f3eb4c49f3f9ec11c28806ea76bd1",
       "transformations": []
     },
     {
@@ -11391,9 +11391,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "8e7aecb6ee0daf47e17d148caf33650a06dee4150642e8012426b65deecb250c",
-      "bytes": 100925,
-      "source_sha256": "8e7aecb6ee0daf47e17d148caf33650a06dee4150642e8012426b65deecb250c",
+      "sha256": "b92a66a862108561e44e93ee1c390f482280913747e6e89b1fd4d9ba92421d96",
+      "bytes": 101543,
+      "source_sha256": "b92a66a862108561e44e93ee1c390f482280913747e6e89b1fd4d9ba92421d96",
       "transformations": []
     },
     {
@@ -20227,9 +20227,9 @@
     },
     {
       "path": "agent-handoff/SERIAL_ARM64_CPU_PROFILE_2026-10-30.md",
-      "sha256": "3bc8271a58b9dc302292e8d40bc57fa9174b0c185904f75e050a7bd0408bd99d",
-      "bytes": 3061,
-      "source_sha256": "3bc8271a58b9dc302292e8d40bc57fa9174b0c185904f75e050a7bd0408bd99d",
+      "sha256": "c89fe0bb7770854dc194062e3580f07bd2b214fdada3a681e1156141385676bf",
+      "bytes": 3205,
+      "source_sha256": "c89fe0bb7770854dc194062e3580f07bd2b214fdada3a681e1156141385676bf",
       "transformations": []
     },
     {
@@ -20238,10 +20238,24 @@
       "bytes": 2598,
       "source_sha256": "08926da868ad576a3c7d2b8f96279a6e4b21c880d9fc04521d4c0446703a5978",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/SERIAL_ARM64_QUERY_CALLER_AUDIT_2026-10-30.md",
+      "sha256": "df4eb9a01be49b231ab6266a8f142c7cc48d5bbaaaefd152264aabcb21f7767d",
+      "bytes": 2731,
+      "source_sha256": "df4eb9a01be49b231ab6266a8f142c7cc48d5bbaaaefd152264aabcb21f7767d",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/serial-arm64-query-caller-audit-evidence-20261030.json",
+      "sha256": "a2018d7ee308c368a7bfec04c1c516bd835a300dfae28893012cbe50a2e13ebb",
+      "bytes": 2918,
+      "source_sha256": "a2018d7ee308c368a7bfec04c1c516bd835a300dfae28893012cbe50a2e13ebb",
+      "transformations": []
     }
   ],
-  "file_count": 2878,
-  "source_bytes": 36967938,
+  "file_count": 2880,
+  "source_bytes": 36975400,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

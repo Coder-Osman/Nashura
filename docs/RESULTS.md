@@ -1,5 +1,13 @@
 # 阶段成果与证据索引
 
+## 2026-10-30：空间候选查询调用者静态审计
+
+固定 profile 对应的 `libg.so` 静态反汇编确认调用点传入坐标与范围，目标按二维定点
+网格枚举候选并执行状态/虚调用过滤。通用包装器有4处直接调用，所在上层函数有3处
+直接调用；碰撞、寻敌或其他玩法语义仍未知。本轮没有运行 guest/replay、并发或性能
+测量，也没有改动引擎二进制。详见[审计报告](../agent-handoff/SERIAL_ARM64_QUERY_CALLER_AUDIT_2026-10-30.md)
+与[机器摘要](../agent-handoff/serial-arm64-query-caller-audit-evidence-20261030.json)。
+
 ## 2026-10-30：ARM64 headless 串行热点归属
 
 固定 replay 的 `cpu-clock:u` profile 捕获 2,569 个样本且零丢样；
