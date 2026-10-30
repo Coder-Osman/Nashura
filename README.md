@@ -1,5 +1,14 @@
 # Nashura
 
+## 2026-10-31：组件目标 guard 独立确认方向一致
+
+沿用同一observer和部署工具、固定VM/引擎/输入，反向case顺序重新完成12完整局34047帧、
+计时前后各120000组ARM64对照与32批/6912局。主机309文件身份及独立复算通过，确认轮
+四组中位耗时下降3.59% / 4.25% / 3.44% / 3.39%，八block及四组采样p95/p99均改善。
+两轮共64批、12800测量局，方向一致；这是固定四输入的局部可重复收益，继续默认关闭。
+下一优先级为同进程持续运行、动作边界和热点，不测并发、不扩外围服务，整体目标继续。
+[报告](agent-handoff/SERIAL_ARM64_COMPONENT_GUARD_CONFIRMATION_2026-10-31.md)与[机器摘要](agent-handoff/serial-arm64-component-guard-confirmation-evidence-20261031.json)。
+
 ## 2026-10-31：组件检查目标 guard 的首轮串行增益
 
 默认关闭的 component-guard-v1 / hot-distance-component-v1 保留原 bounds，只在 flag
