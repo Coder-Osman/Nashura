@@ -101,13 +101,16 @@ python3 tools/pure_linux/freeze_headless_actions.py "$EMPTY_REPLAY" "$RECORD_OUT
 ## 独立 native 阶段诊断
 
 --native-phases 默认关闭，只用于固定 replay 的独立诊断，禁止与 benchmark、
-手牌记录或任意 native 优化同时启用。八个精确原始调用点经 guard 后进入包装器，
+手牌记录或任意 native 优化同时启用。十一个精确原始调用点经 guard 后进入包装器，
 仍调用原目标，保留 BL 和尾跳 B；进程内 RW→RX，不修改原始 libg 文件。
 从 maps 的空隙提供近分支岛 mmap 提示，验证实际返回地址，不覆盖已有映射；
 地址空间布局不满足时拒绝任务，不修改 guest 系统配置。
 
-六窗口覆盖 state/world/object collection、command queue 和 mode 2/3 dispatch；
+九窗口覆盖 state/world/object collection、command queue、mode 2/3 dispatch，
+以及对象临时 new[]/delete[] 和组件虚函数更新；
 统计 inclusive/exclusive、原始返回值和零时长次数，exclusive 只扣已插桩子窗口。
+新 schema v2 记录请求分配字节，并校验对象嵌套和原 allocator 目标；旧六窗口 /
+八调用点日志继续输出原 schema v1，支持历史归档复算。诊断含时钟和计数开销。
 零时长代表时钟量化，零返回代表原始状态，两者均不等于免费或动作成功。
 runner 验证正常原生终局及队列/计数，写 native-phases.json。
 
@@ -149,6 +152,20 @@ signal/profiler 调用栈不在等价范围。非简单 getter 不参与此候�
 四个固定多卡组/seed 完整局需分别通过原始与优化 serializer 全帧和已观测状态
 对照，再进行同 observer 的串行 A/B 批次计时；终态 digest 一致本身不是全帧门。
 详见 `agent-handoff/SERIAL_ARM64_HOT_GETTERS_2026-10-31.md`。该候选默认关闭。
+
+### 组件 getter 扩展与三路径比较
+
+`--native-optimization component-getters-v1` 包含旧 11 点及两个已采样组件调用者的
+41 个额外 BL→原始 LDR，共 52 点，继续默认关闭。全部点位、getter LDR/RET、
+调用者入口与 LR 使用已核对，适用边界同旧 getter 候选，不承诺异常 PC/信号栈相同。
+四组原始/旧/新候选与对象诊断共 16 局全帧和已观测状态一致。
+
+`summarize_headless_threeway.py ROOT --correctness CORRECT_ROOT --output NEW_JSON`
+独立复算六种三路径全排列、72 批原始日志，严格核对计划、环境、终态、保存摘要和
+CPU 配额。每批 16 warmup + 100 measured；统计单位为 batch，不把局数视为独立样本。
+新相对旧候选四组变化有正有负，没有跨 fixture 稳定增量收益，保持 opt-in。临时
+分配/释放诊断占对象窗口不足 1%，本轮不增加缓冲池。详见
+[阶段报告](../../agent-handoff/SERIAL_ARM64_COMPONENT_GETTERS_2026-10-31.md)。
 
 ## 只归因 warm step 的 perf 采样
 

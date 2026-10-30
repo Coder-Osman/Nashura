@@ -12,15 +12,18 @@
 #include <time.h>
 #include <unistd.h>
 
-enum native_phase { NP_STATE, NP_WORLD, NP_OBJECTS, NP_QUEUE, NP_APPLY_2, NP_APPLY_3, NP_COUNT };
+enum native_phase { NP_STATE, NP_WORLD, NP_OBJECTS, NP_QUEUE, NP_APPLY_2, NP_APPLY_3,
+    NP_ARRAY_NEW, NP_ARRAY_DELETE, NP_COMPONENT, NP_COUNT };
 static const char *const native_phase_names[] = {
     "game_state_update", "world_update", "object_collection_tick",
-    "command_queue", "command_dispatch_mode2", "command_dispatch_mode3"
+    "command_queue", "command_dispatch_mode2", "command_dispatch_mode3",
+    "object_array_new", "object_array_delete", "component_update"
 };
 static struct native_phase_stat {
     uint64_t calls, inclusive_ns, exclusive_ns, min_ns, max_ns, zero_results, zero_duration_calls;
     uintptr_t first_target;
     uint64_t different_target_calls;
+    uint64_t requested_bytes, max_request_bytes;
 } native_phase_stats[NP_COUNT];
 static struct native_phase_frame { enum native_phase phase; uint64_t started, children; }
     native_phase_stack[32];
@@ -68,14 +71,16 @@ static void native_phase_report(void) {
     if (!native_phases_installed) return;
     for (unsigned i = 0; i < NP_COUNT; ++i) {
         struct native_phase_stat *s = &native_phase_stats[i];
-        printf("HEADLESS_NATIVE_PHASE scope=diagnostic-only phase=%s calls=%llu inclusive_ns=%llu exclusive_ns=%llu min_ns=%llu max_ns=%llu zero_results=%llu zero_duration_calls=%llu first_target_offset=0x%llx different_target_calls=%llu valid=%d\n",
+        printf("HEADLESS_NATIVE_PHASE scope=diagnostic-only phase=%s calls=%llu inclusive_ns=%llu exclusive_ns=%llu min_ns=%llu max_ns=%llu zero_results=%llu zero_duration_calls=%llu first_target_offset=0x%llx different_target_calls=%llu requested_bytes=%llu max_request_bytes=%llu valid=%d\n",
             native_phase_names[i], (unsigned long long)s->calls,
             (unsigned long long)s->inclusive_ns, (unsigned long long)s->exclusive_ns,
             (unsigned long long)s->min_ns, (unsigned long long)s->max_ns,
             (unsigned long long)s->zero_results,
             (unsigned long long)s->zero_duration_calls,
             (unsigned long long)(s->first_target ? s->first_target - native_phase_engine : 0),
-            (unsigned long long)s->different_target_calls, !native_phase_failed && !native_phase_depth);
+            (unsigned long long)s->different_target_calls,
+            (unsigned long long)s->requested_bytes, (unsigned long long)s->max_request_bytes,
+            !native_phase_failed && !native_phase_depth);
     }
     fflush(stdout);
 }
@@ -124,6 +129,29 @@ static __attribute__((noinline)) int32_t native_apply3_phase(void *command, void
     int32_t result = ((native_apply_fn)target)(command, state, mode, flag);
     native_phase_end(NP_APPLY_3, result);
     return result;
+}
+static __attribute__((noinline)) void *native_array_new_phase(size_t bytes) {
+    uintptr_t target = native_phase_engine + 0x17e4d60;
+    struct native_phase_stat *stat = &native_phase_stats[NP_ARRAY_NEW];
+    stat->requested_bytes += bytes;
+    if (bytes > stat->max_request_bytes) stat->max_request_bytes = bytes;
+    native_phase_begin(NP_ARRAY_NEW, target);
+    void *result = ((void *(*)(size_t))target)(bytes);
+    native_phase_end(NP_ARRAY_NEW, result ? 1 : 0);
+    return result;
+}
+static __attribute__((noinline)) void native_array_delete_phase(void *array) {
+    uintptr_t target = native_phase_engine + 0x17e4b40;
+    native_phase_begin(NP_ARRAY_DELETE, target);
+    ((native_one_fn)target)(array);
+    native_phase_end(NP_ARRAY_DELETE, 0);
+}
+static __attribute__((noinline)) void native_component_phase(void *component,
+        uintptr_t unused1, uintptr_t unused2, uintptr_t unused3, uintptr_t target) {
+    (void)unused1; (void)unused2; (void)unused3;
+    native_phase_begin(NP_COMPONENT, target);
+    ((native_one_fn)target)(component);
+    native_phase_end(NP_COMPONENT, 0);
 }
 
 struct native_phase_site { uintptr_t offset; uint32_t word; uintptr_t wrapper; int indirect; };
@@ -186,6 +214,9 @@ static int install_native_phases(uintptr_t engine) {
         {0xd2fadc, 0xd63f0100, (uintptr_t)native_apply2_phase, 1},
         {0xd2f838, 0xd63f0100, (uintptr_t)native_apply3_phase, 1},
         {0xd2fdfc, 0xd63f0100, (uintptr_t)native_apply3_phase, 1},
+        {0xf26458, 0x9422fa42, (uintptr_t)native_array_new_phase, 0},
+        {0xf2676c, 0x1422f8f5, (uintptr_t)native_array_delete_phase, 0},
+        {0xf26620, 0xd63f0100, (uintptr_t)native_component_phase, 1},
     };
     const size_t count = sizeof(sites) / sizeof(sites[0]);
     long page_size = sysconf(_SC_PAGESIZE);
@@ -196,7 +227,7 @@ static int install_native_phases(uintptr_t engine) {
             fflush(stdout); return 0;
         }
     }
-    uint32_t branches[8];
+    uint32_t branches[sizeof(sites) / sizeof(sites[0])];
     void *island = native_phase_allocate_island(engine, sites, count, (size_t)page_size, branches);
     if (island == MAP_FAILED) {
         puts("HEADLESS_NATIVE_PHASE_INSTALL_ERROR stage=near-island");
@@ -219,7 +250,7 @@ static int install_native_phases(uintptr_t engine) {
     }
     __builtin___clear_cache((char *)island, (char *)island + page_size);
     if (mprotect(island, (size_t)page_size, PROT_READ | PROT_EXEC)) return 0;
-    uintptr_t pages[8]; size_t page_count = 0;
+    uintptr_t pages[sizeof(sites) / sizeof(sites[0])]; size_t page_count = 0;
     for (size_t i = 0; i < count; ++i) {
         uintptr_t page = (engine + sites[i].offset) & ~((uintptr_t)page_size - 1);
         size_t j = 0; while (j < page_count && pages[j] != page) ++j;

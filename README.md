@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-31：对象更新分解与组件 getter 三路径实测
+
+新增对象临时分配与组件更新独立诊断；四组分配/释放仅占对象诊断窗口约
+0.71%–0.94%，本轮不引入缓冲池。新 52 点候选与原始、旧 11 点候选共 16 个
+完整局的全部 serializer 帧及已观测状态一致；72 批、8352 局串行测量完成。
+新候选相对旧候选耗时变化 -0.57% / +0.75% / +0.45% / -1.01%，增量不一致，
+保持默认关闭。当前 Mac 使用 Fusion ARM64 Linux guest，没有 QEMU 指令翻译；
+仍依赖 ART/Bionic，不是 macOS 原生移植。详见
+[报告](agent-handoff/SERIAL_ARM64_COMPONENT_GETTERS_2026-10-31.md)与
+[机器摘要](agent-handoff/serial-arm64-component-getters-evidence-20261031.json)。
+
 ## 2026-10-31：动作 dispatch 与状态更新归因
 
 新增默认关闭、与 benchmark 互斥的原始调用点诊断。四组固定输入共 12 个新完整局，

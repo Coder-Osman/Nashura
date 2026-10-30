@@ -8,22 +8,28 @@ from run_headless_match import verify_completion
 from summarize_headless_benchmark import records
 
 PHASES = ("game_state_update", "world_update", "object_collection_tick",
-          "command_queue", "command_dispatch_mode2", "command_dispatch_mode3")
+          "command_queue", "command_dispatch_mode2", "command_dispatch_mode3",
+          "object_array_new", "object_array_delete", "component_update")
 
 
 def summarize(text):
     tick = verify_completion(0, text)
     lines = text.splitlines()
-    marker = "HEADLESS_NATIVE_PHASE_INSTALL installed=1 sites=8 scope=diagnostic-only"
+    installs = [line for line in lines if line.startswith("HEADLESS_NATIVE_PHASE_INSTALL ")]
+    legacy = installs == ["HEADLESS_NATIVE_PHASE_INSTALL installed=1 sites=8 scope=diagnostic-only"]
+    phases_expected = PHASES[:6] if legacy else PHASES
+    marker = "HEADLESS_NATIVE_PHASE_INSTALL installed=1 sites=" + ("8" if legacy else "11") + " scope=diagnostic-only"
     if lines.count(marker) != 1 or any(line.startswith(("HEADLESS_NATIVE_OPTIMIZATION ",
             "HEADLESS_NATIVE_PHASE_INSTALL_ERROR ", "HEADLESS_BENCHMARK_METRICS ")) for line in lines):
         raise ValueError("missing unique diagnostic installation or optimization mixed in")
     rows = records(text, "HEADLESS_NATIVE_PHASE")
-    if len(rows) != len(PHASES) or [row.get("phase") for row in rows] != list(PHASES):
+    if len(installs) != 1 or len(rows) != len(phases_expected) or [row.get("phase") for row in rows] != list(phases_expected):
         raise ValueError("incomplete or duplicate phase records")
     result = {}
     fields = ("calls", "inclusive_ns", "exclusive_ns", "min_ns", "max_ns",
               "zero_results", "zero_duration_calls", "different_target_calls")
+    if not legacy:
+        fields += ("requested_bytes", "max_request_bytes")
     for row in rows:
         if row.get("scope") != "diagnostic-only" or row.get("valid") != "1":
             raise ValueError("invalid diagnostic counter state")
@@ -53,14 +59,31 @@ def summarize(text):
         row = result[name]
         if row["calls"] and (int(row["first_target_offset"], 16) != expected or row["different_target_calls"]):
             raise ValueError("wrong direct native target")
-    state, world, objects, queue, mode2, mode3 = (result[name] for name in PHASES)
+    state, world, objects, queue, mode2, mode3 = (result[name] for name in PHASES[:6])
     if (state["inclusive_ns"] - state["exclusive_ns"] != world["inclusive_ns"] + queue["inclusive_ns"]
             or world["inclusive_ns"] - world["exclusive_ns"] != objects["inclusive_ns"]
             or queue["inclusive_ns"] - queue["exclusive_ns"] != mode2["inclusive_ns"] + mode3["inclusive_ns"]
-            or objects["inclusive_ns"] != objects["exclusive_ns"]
+            or (legacy and objects["inclusive_ns"] != objects["exclusive_ns"])
             or mode2["inclusive_ns"] != mode2["exclusive_ns"]
             or mode3["inclusive_ns"] != mode3["exclusive_ns"]):
         raise ValueError("inconsistent native phase nesting")
+    if not legacy:
+        array_new, array_delete, component = (result[name] for name in PHASES[6:])
+        if (objects["inclusive_ns"] - objects["exclusive_ns"] != sum(
+                row["inclusive_ns"] for row in (array_new, array_delete, component))
+                or any(row["inclusive_ns"] != row["exclusive_ns"] for row in (array_new, array_delete, component))):
+            raise ValueError("inconsistent object phase nesting")
+        if array_new["calls"] != objects["calls"] or array_delete["calls"] != objects["calls"]:
+            raise ValueError("object temporary allocation count mismatch")
+        for name, expected in (("object_array_new", 0x17e4d60), ("object_array_delete", 0x17e4b40)):
+            row = result[name]
+            if row["calls"] and (int(row["first_target_offset"], 16) != expected or row["different_target_calls"]):
+                raise ValueError("wrong object allocator target")
+        for name, row in result.items():
+            if name != "object_array_new" and (row["requested_bytes"] or row["max_request_bytes"]):
+                raise ValueError("unexpected allocation-size counters")
+        if not 0 <= array_new["max_request_bytes"] <= array_new["requested_bytes"]:
+            raise ValueError("invalid allocation request accounting")
     phase_rows = records(text, "HEADLESS_PHASE_TIMING")
     if len(phase_rows) != 1 or phase_rows[0].get("scope") != "diagnostic-only":
         raise ValueError("missing unique parse/enqueue diagnostic record")
@@ -71,13 +94,13 @@ def summarize(text):
     if (total_commands <= 0 or phases["queue_at_step_start"] != total_commands
             or phases["queue_at_step_start"] + phases["queue_added"] - phases["queue_removed"] != phases["queue_at_end"]):
         raise ValueError("command queue conservation failed")
-    dispatches = sum(result[name]["calls"] for name in PHASES[-2:])
+    dispatches = sum(result[name]["calls"] for name in PHASES[4:6])
     if dispatches > phases["queue_removed"]:
         raise ValueError("dispatch calls exceed removed commands")
-    return {"schema": "nashura.headless-native-phases.v1", "scope": "diagnostic-only",
+    return {"schema": "nashura.headless-native-phases.v1" if legacy else "nashura.headless-native-phases.v2", "scope": "diagnostic-only",
             "final_tick": tick, "phases": result, "parse_enqueue": phases,
             "dispatch_calls": dispatches,
-            "zero_dispatch_results": sum(result[name]["zero_results"] for name in PHASES[-2:]),
+            "zero_dispatch_results": sum(result[name]["zero_results"] for name in PHASES[4:6]),
             "benchmark": False, "whole_goal_complete": False,
             "limitations": ["counter and clock overhead are included; no speed comparison",
                 "nested inclusive times overlap; exclusive removes only instrumented child windows",
