@@ -1,5 +1,25 @@
 # Nashura
 
+## 2026-10-30：替代ARM64转译器实测
+
+相同Xeon两核、固定真实对局及相同observer，原QEMU8.2.2复测30局中位
+2.168s，上游QEMU11.1.3为3.107s（30局），arm64emu-user JIT为4.858s
+（20局）。候选完整逐tick归档通过，但本轮没有测到更快替换。FEX方向
+为ARM64主机运行x86，与当前任务相反。保持最小headless服务边界，
+整体ready仍未验证。详见[替代转译器报告](agent-handoff/ALTERNATIVE_TRANSLATORS_2026-10-30.md)。
+
+## 2026-10-30：x86服务器转译效率实测
+
+同一Xeon服务器、相同两核预算顺序测量各30局，ARM Linux + QEMU与
+Android x86_64 + ARM native bridge均到tick3601，独立预检3602帧字节一致。
+step循环中位2.146s / 2.471s，吞吐1676 / 1452 tick/s；前者高15.38%。
+完整批次启动至退出约132s / 112s，不能从step优势外推端到端优势。
+跨本机ARM原生执行的47~54倍混合了硬件和转译差异；新增同机计时/计算探针，
+明确保留未精确归因及未测并发边界。最终ARM guest五阶段内容对象图身份
+与完整replay归档复验通过，完整目标继续进行。详见
+[服务器报告](agent-handoff/X86_SERVER_HEADLESS_COMPARISON_2026-10-30.md)和
+[机器证据](agent-handoff/x86-server-headless-comparison-evidence-20261030.json)。
+
 ## 2026-10-30：最小 headless 原生生命周期
 
 停止将完整系统/图形服务作为战斗默认依赖。真实 ARM64 Linux 中，以原始 APK DEX、

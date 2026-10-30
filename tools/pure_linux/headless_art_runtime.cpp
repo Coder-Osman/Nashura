@@ -12,6 +12,9 @@
  * APIs; libart requires the real chain, not placeholder signal callbacks.
  */
 #include <jni.h>
+#ifdef NASHURA_QEMU_PTHREAD_ENTRY
+#include <pthread.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -52,7 +55,7 @@ public:
     }
 };
 
-int main(int argc, char **argv) {
+static int run_runtime(int argc, char **argv) {
     // --probe-args separates VM options from the existing probe's arguments.
     int separator = 1;
     while (separator < argc && strcmp(argv[separator], "--probe-args")) ++separator;
@@ -73,3 +76,24 @@ int main(int argc, char **argv) {
     fputs("Headless entry returned without the probe exit marker\n", stderr);
     return 70;
 }
+
+#ifdef NASHURA_QEMU_PTHREAD_ENTRY
+// QEMU user mode exposes the host main stack through /proc/self/maps. ART's
+// implicit stack guard then fails mprotect. A real guest pthread gives ART a
+// guest-owned stack; no syscall or ART success value is replaced.
+struct ThreadArgs { int argc; char **argv; int result; };
+static void *thread_main(void *opaque) {
+    ThreadArgs *args = static_cast<ThreadArgs *>(opaque);
+    args->result = run_runtime(args->argc, args->argv);
+    return nullptr;
+}
+int main(int argc, char **argv) {
+    pthread_t thread;
+    ThreadArgs args{argc, argv, 71};
+    if (pthread_create(&thread, nullptr, thread_main, &args)) return 72;
+    if (pthread_join(thread, nullptr)) return 73;
+    return args.result;
+}
+#else
+int main(int argc, char **argv) { return run_runtime(argc, argv); }
+#endif

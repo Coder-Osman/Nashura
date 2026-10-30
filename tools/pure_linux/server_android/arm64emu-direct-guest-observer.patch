@@ -1,0 +1,18 @@
+--- a/tools/pure_linux/art_headless_task_bridge.c
++++ b/tools/pure_linux/art_headless_task_bridge.c
+@@ -98,2 +98,6 @@
+-    return address && pread(fd, value, sizeof(*value),
+-        (off_t)(address & UINT64_C(0x00ffffffffffffff))) == sizeof(*value);
++    /* arm64chroot has a translated address space and rejects /proc/self/mem.
++     * Read the same real guest bytes directly; all identity checks remain. */
++    (void)fd;
++    if (!address) return 0;
++    memcpy(value, (const void *)address, sizeof(*value));
++    return 1;
+@@ -945,2 +949 @@
+-    int valid = fd >= 0
+-        && read_pointer(fd, base + 0x1a06ab8, &owner)
++    int valid = read_pointer(fd, base + 0x1a06ab8, &owner)
+@@ -984 +987 @@
+-        valid = fd >= 0 && read_pointer(fd, base + 0x19ad878, &root) && !root;
++        valid = read_pointer(fd, base + 0x19ad878, &root) && !root;

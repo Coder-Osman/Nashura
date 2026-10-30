@@ -74,6 +74,7 @@ static int entry_guards(void) {
         {0xc8346c, {0xff, 0xc3, 0x03, 0xd1, 0xfd, 0x7b, 0x09, 0xa9, 0xfc, 0x6f, 0x0a, 0xa9, 0xfa, 0x67, 0x0b, 0xa9}},
         {0xc8eb64, {0xfd, 0x7b, 0xbd, 0xa9, 0xf6, 0x57, 0x01, 0xa9, 0xf4, 0x4f, 0x02, 0xa9, 0xfd, 0x03, 0x00, 0x91}},
         {0x80031c, {0xfd, 0x7b, 0xbe, 0xa9, 0xf3, 0x0b, 0x00, 0xf9, 0xfd, 0x03, 0x00, 0x91, 0x73, 0x8d, 0x00, 0xb0}},
+        {0x800368, {0xfd, 0x7b, 0xbe, 0xa9, 0xf3, 0x0b, 0x00, 0xf9, 0xfd, 0x03, 0x00, 0x91, 0x73, 0x8d, 0x00, 0xb0}},
         {0xeaf1c8, {0xe0, 0x51, 0x00, 0xf0, 0x00, 0xc0, 0x36, 0x91, 0xc0, 0x03, 0x5f, 0xd6, 0xe0, 0x03, 0x01, 0xaa}},
         {0x121a648, {0x80, 0x04, 0x00, 0xb4, 0x08, 0x04, 0x40, 0xb9, 0x28, 0x04, 0x00, 0x34, 0xfd, 0x7b, 0xbd, 0xa9}},
         {0xd0e100, {0xfd, 0x7b, 0xbc, 0xa9, 0xf7, 0x0b, 0x00, 0xf9, 0xf6, 0x57, 0x02, 0xa9, 0xf4, 0x4f, 0x03, 0xa9}},
@@ -103,6 +104,44 @@ static uintptr_t pointer_at(uintptr_t address) {
     uintptr_t value = 0;
     memcpy(&value, (const void *)address, sizeof(value));
     return value;
+}
+
+/* Read-only, version-bound relationships emitted by original 0x8001a4.
+ * The singleton's identity is observed; its full ResourceManager semantics
+ * and the complete owner initializer are not inferred from this graph.
+ */
+static int inspect_content_identity(const char *phase) {
+    static uintptr_t first_root, first_context, first_wrapper, first_singleton;
+    uintptr_t root = 0, root_vtable = 0, context = 0, wrapper = 0;
+    uintptr_t singleton = 0, singleton_slot = 0, singleton_vtable = 0, context_wrapper = 0;
+    int fd = open("/proc/self/mem", O_RDONLY | O_CLOEXEC);
+    int readable = fd >= 0
+        && read_pointer(fd, base + 0x19ad878, &root)
+        && read_pointer(fd, root, &root_vtable)
+        && read_pointer(fd, root + 0x20, &context)
+        && read_pointer(fd, root + 0x28, &wrapper)
+        && context && wrapper
+        && read_pointer(fd, wrapper, &singleton)
+        && read_pointer(fd, base + 0x19f23c0, &singleton_slot)
+        && singleton && read_pointer(fd, singleton, &singleton_vtable)
+        && read_pointer(fd, context + 0xb60, &context_wrapper);
+    if (fd >= 0) close(fd);
+    int graph = readable && root_vtable == base + 0x17f3040
+        && singleton == singleton_slot && singleton_vtable == base + 0x18bae08
+        && context_wrapper == wrapper;
+    int getter = graph && ((uintptr_t (*)(void))(base + 0x800368))() == wrapper;
+    if (graph && getter && !first_root) {
+        first_root = root; first_context = context;
+        first_wrapper = wrapper; first_singleton = singleton;
+    }
+    int stable = first_root && root == first_root && context == first_context
+        && wrapper == first_wrapper && singleton == first_singleton;
+    printf("HEADLESS_CONTENT_IDENTITY phase=%s readable=%d root_vtable=%d singleton_vtable=%d singleton_slot=%d context_wrapper=%d wrapper_getter=%d stable=%d verified=%d\n",
+           phase, readable, root_vtable == base + 0x17f3040,
+           singleton_vtable == base + 0x18bae08, singleton != 0 && singleton == singleton_slot,
+           wrapper != 0 && context_wrapper == wrapper, getter, stable, graph && getter && stable);
+    fflush(stdout);
+    return graph && getter && stable;
 }
 
 struct libg_string {
@@ -594,6 +633,10 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
     fflush(stdout);
     context_a = ((void *(*)(void))(base + 0x80031c))();
     context_b = ((void *(*)(void))(base + 0xeaf1c8))();
+    if (!inspect_content_identity("battle-before")) {
+        release_json_object(root);
+        return -54;
+    }
     content_context_ok = inspect_content_context((uintptr_t)context_a, &content_root,
                                                  &content_context, &content_ready);
     context_b_ok = (uintptr_t)context_b == base + 0x18eedb0;
@@ -804,7 +847,7 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
     printf("HEADLESS_GAME_STATE_RELEASE_RETURN step_once=%d tick=%d command_count=%d snapshot_status=%d\n",
            step_once, tick_after, command_count, snapshot_status);
     fflush(stdout);
-    return 1;
+    return inspect_content_identity("battle-after") ? 1 : -54;
 }
 
 static int inspect_tables(uintptr_t context) {
@@ -867,6 +910,7 @@ static int load_catalog(void) {
     uintptr_t root = pointer_at(base + 0x19ad878);
     uintptr_t context = root ? pointer_at(root + 0x20) : 0;
     if (!context) return -8;
+    if (!inspect_content_identity("catalog-before")) return -54;
     // Original initialize 0x756c94..0x756d10 sets up the packed reader and
     // registers this concrete factory. Native ownership lasts to process exit.
     if (pointer_at(base + 0x19f1228)) return -9;
@@ -921,6 +965,7 @@ static int load_catalog(void) {
     fflush(stdout);
     int inspected = inspect_tables(context);
     ((void (*)(void *))(base + 0xc8eb64))(loader);
+    if (!inspect_content_identity("catalog-after")) return -54;
     // Completing the task reports control flow only; the Java launcher never
     // interprets this as a catalog or battle readiness verdict.
     return inspected;
@@ -989,7 +1034,7 @@ static void run_task(struct task *task) {
         ((void (*)(void))(base + 0x8001a4))();
         puts("HEADLESS_CONTENT_BOOTSTRAP_RETURN");
         fflush(stdout);
-        task_status = 1;
+        task_status = inspect_content_identity("bootstrap-after") ? 1 : -54;
         return;
     }
     puts("HEADLESS_REAL_INIT_ENTER context=original_game_field entry=0x756be8");

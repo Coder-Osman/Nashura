@@ -160,6 +160,12 @@ static jint register_natives(JNIEnv *env, jclass cls, const JNINativeMethod *met
 JNIEXPORT void JNICALL Java_ArtHeadlessCreateProbe_prepareObservations(JNIEnv *env, jclass cls) {
     (void)cls;
     __android_log_set_logger(log_message);
+    // Android's ARM native bridge does not preserve this diagnostic JNI table
+    // callback ABI. Keep the engine JNI registrations and skip only our hook.
+    if (getenv("NASHURA_NATIVE_BRIDGE_OBSERVATION")) {
+        puts("HEADLESS_JNI_REGISTRATION_OBSERVER=SKIPPED_NATIVE_BRIDGE_ABI");
+        return;
+    }
     original = *env;
     memcpy(&observed, original, sizeof(observed));
     observed.RegisterNatives = register_natives;
@@ -218,6 +224,6 @@ JNIEXPORT void JNICALL Java_ArtHeadlessCreateProbe_inspectState(JNIEnv *env, jcl
     if (ready_read) printf("HEADLESS_CONTENT_READY_RAW=%u\n", ready);
     else puts("HEADLESS_CONTENT_READY_RAW=UNAVAILABLE");
     close(fd);
-    sample_mainloop();
+    if (!getenv("NASHURA_NATIVE_BRIDGE_OBSERVATION")) sample_mainloop();
     fflush(stdout);
 }

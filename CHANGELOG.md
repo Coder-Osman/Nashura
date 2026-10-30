@@ -1,5 +1,22 @@
 # 变更记录
 
+## 2026-10-30：替代转译器真实对局对比
+
+- 排除FEX方向不符；实际构建arm64emu-user x86_64 JIT和上游QEMU11.1.3。
+- 两候选3602帧归档匹配；20/30局正常终局，原QEMU相同observer复测30局。
+- 中位2.168/3.107/4.858s，保留原QEMU；不同版本和构建配置不作单因果结论。
+- 公开自有guest直接读取补丁及失败摘要，缺失smaps输出null；统计器14项通过。
+- 最终纯Linux1176 passed/1 skipped；保留缺cryptography的首次环境失败。
+
+## 2026-10-30：x86服务器效率对比与内容身份
+
+- 相同两核顺序完成ARM Linux QEMU及Android native bridge各30局，保留首轮争用样本。
+- 两条服务器路线3602帧配对；报告step、批次总耗时、进程与VM内存的不同口径。
+- 新增Android最小ClassLoader语义、native bridge诊断边界及QEMU真实pthread入口。
+- 新增完整局统计校验器和13项测试；同源计时/计算探针限制跨机性能归因。
+- 五阶段内容对象图身份在ARM guest真实对局及相同归档中通过；整体ready仍未验证。
+- 纯Linux1175 passed/1 skipped、公开1104 passed/42 skipped、主工程211 passed。
+
 ## 2026-10-30：零Binder直接ART入口
 
 - 新增真实AndroidRuntime直接入口及原始sigchain构建身份，省去启动器Binder线程池。

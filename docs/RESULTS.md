@@ -1,5 +1,28 @@
 # 阶段成果与证据索引
 
+## 2026-10-30：替代ARM64转译器
+
+FEX转译方向相反，未测；arm64emu-user JIT与上游QEMU11.1.3均完整真实
+终局并通过3602帧归档比对。固定同机两核及observer，旧QEMU30局中位
+2168.240ms，新上游30局3106.611ms，独立JIT20局4857.950ms。
+当前没有更快替换，继续旧QEMU；整体ready保持未验证。最终纯Linux
+1176 passed、1 skipped。详见[报告](../agent-handoff/ALTERNATIVE_TRANSLATORS_2026-10-30.md)
+和[机器摘要](../agent-handoff/alternative-translator-evidence-20261030.json)。
+
+## 2026-10-30：x86服务器Android与ARM Linux转译
+
+同机两核、各30局顺序实测全部原生终局，独立预检3602帧逐字节相同。
+ARM Linux + QEMU step中位2145.899ms，1675.878 tick/s；
+Android + native bridge为2471.171ms，1452.439 tick/s。
+进程RSS约354.50 / 357.96MiB，不与整个emulator内存混排。
+完整批次初始化/收尾和ART配置不同，冷启动及并发密度尚未测量。
+同源探针显示转译成本随计算类型变化；真实跨机47~54倍尚未精确拆分。
+最终源码ARM guest v56identity五阶段对象关系和原生终局归档通过，
+不替代完整ResourceManager初始化语义。纯Linux1175 passed、1 skipped，
+公开9组1104 passed、42 skipped，主工程211 passed。详见
+[报告](../agent-handoff/X86_SERVER_HEADLESS_COMPARISON_2026-10-30.md)与
+[证据](../agent-handoff/x86-server-headless-comparison-evidence-20261030.json)。
+
 ## 2026-10-30：零Binder完整对局复验
 
 直接ART入口保留原始VM/native注册，省去app_process的Binder启动流程。v52零Binder

@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.nashura.benchmark" android:versionCode="1" android:versionName="1">
+ <uses-sdk android:minSdkVersion="30" android:targetSdkVersion="30"/>
+ <application android:label="Nashura isolated benchmark" android:debuggable="true" android:hasCode="true" android:extractNativeLibs="true"/>
+ <instrumentation android:name="com.nashura.benchmark.BenchRunner" android:targetPackage="com.nashura.benchmark" android:functionalTest="true"/>
+</manifest>

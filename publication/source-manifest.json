@@ -17,16 +17,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "0848a01c234bb911efecdbd461718c5a05a14fd9003d1a3945f5eb16087dcf2a",
-      "source_sha256": "0848a01c234bb911efecdbd461718c5a05a14fd9003d1a3945f5eb16087dcf2a",
-      "bytes": 62212,
+      "sha256": "1f7b123c51ea0268272cd0364dca298a4714016d6bffb4ffe6bee1a657196651",
+      "bytes": 63390,
+      "source_sha256": "1f7b123c51ea0268272cd0364dca298a4714016d6bffb4ffe6bee1a657196651",
       "transformations": []
     },
     {
       "path": "README.md",
-      "sha256": "fc6f0aa4063f04b737053a4b7887575cc7f982bd9e4f973f50f37d0c610e9ea0",
-      "bytes": 61359,
-      "source_sha256": "fc6f0aa4063f04b737053a4b7887575cc7f982bd9e4f973f50f37d0c610e9ea0",
+      "sha256": "e201cf1c80ddf1cbd606a3a11640490c3c0443b0ec3279f8bc26e6dab8d58221",
+      "bytes": 62682,
+      "source_sha256": "e201cf1c80ddf1cbd606a3a11640490c3c0443b0ec3279f8bc26e6dab8d58221",
       "transformations": []
     },
     {
@@ -11391,9 +11391,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "bbb5e31cbb1386232acc730e3e81c4350fe255850d72e5c20292515513c1d48d",
-      "source_sha256": "bbb5e31cbb1386232acc730e3e81c4350fe255850d72e5c20292515513c1d48d",
-      "bytes": 97891,
+      "sha256": "7ea38404823e236b547d4bc6f041d7f56a88ea76a574a6f29583ba1af3aedd7e",
+      "bytes": 99354,
+      "source_sha256": "7ea38404823e236b547d4bc6f041d7f56a88ea76a574a6f29583ba1af3aedd7e",
       "transformations": []
     },
     {
@@ -19964,16 +19964,16 @@
     },
     {
       "path": "tools/pure_linux/HeadlessApkContext.java",
-      "transformations": [],
-      "sha256": "bf50ffecec6a126607f31e2b8fed9cdc3fa09f9d8226adc2c437e49f5c445d9b",
-      "source_sha256": "bf50ffecec6a126607f31e2b8fed9cdc3fa09f9d8226adc2c437e49f5c445d9b",
-      "bytes": 5631
+      "sha256": "0ad2c101b6a8fa1d32ba5e495f14d56bb96984bb82c2c882c15155400a08c2cb",
+      "bytes": 5894,
+      "source_sha256": "0ad2c101b6a8fa1d32ba5e495f14d56bb96984bb82c2c882c15155400a08c2cb",
+      "transformations": []
     },
     {
       "path": "tools/pure_linux/art_headless_observer.c",
-      "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961",
-      "source_sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961",
-      "bytes": 9493,
+      "sha256": "270dbe98b2ca7d1ea8220a41053de00535cd8a44c24d8ed96455f2836e3cea83",
+      "bytes": 9856,
+      "source_sha256": "270dbe98b2ca7d1ea8220a41053de00535cd8a44c24d8ed96455f2836e3cea83",
       "transformations": []
     },
     {
@@ -19999,9 +19999,9 @@
     },
     {
       "path": "tools/pure_linux/art_headless_task_bridge.c",
-      "sha256": "0fc7997c81b493e160fac5da64d8e6638194548b0978791ba2096964a2bfd5ff",
-      "source_sha256": "0fc7997c81b493e160fac5da64d8e6638194548b0978791ba2096964a2bfd5ff",
-      "bytes": 55930,
+      "sha256": "aec171ed760a8156e3f14fefabeffc3b07b975d9c9b30554aed4f9acafce3926",
+      "bytes": 58567,
+      "source_sha256": "aec171ed760a8156e3f14fefabeffc3b07b975d9c9b30554aed4f9acafce3926",
       "transformations": []
     },
     {
@@ -20062,9 +20062,9 @@
     },
     {
       "path": "tools/pure_linux/HEADLESS_RUNTIME.md",
-      "sha256": "989c10e44fae6cf3bccbed3d9b0cb46fd2202143e8bcc5b22b03c55d58b99a4c",
-      "source_sha256": "989c10e44fae6cf3bccbed3d9b0cb46fd2202143e8bcc5b22b03c55d58b99a4c",
-      "bytes": 4521,
+      "sha256": "ead8fa9bf63ee35a853d392f98a5a4a98abb3f23a9d1fcce033c002bdedd507a",
+      "bytes": 5363,
+      "source_sha256": "ead8fa9bf63ee35a853d392f98a5a4a98abb3f23a9d1fcce033c002bdedd507a",
       "transformations": []
     },
     {
@@ -20083,9 +20083,9 @@
     },
     {
       "path": "tools/pure_linux/headless_art_runtime.cpp",
-      "sha256": "c55f1f5cef84974d04e36b5c8ba1ae42affaf60db9c4cad1d7a5194ecf5b5c04",
-      "source_sha256": "c55f1f5cef84974d04e36b5c8ba1ae42affaf60db9c4cad1d7a5194ecf5b5c04",
-      "bytes": 3000,
+      "sha256": "1753df88883b4fa6f0b4a98d4cc3b889fe3f2160775c2495991e447aa62760cd",
+      "bytes": 3891,
+      "source_sha256": "1753df88883b4fa6f0b4a98d4cc3b889fe3f2160775c2495991e447aa62760cd",
       "transformations": []
     },
     {
@@ -20101,10 +20101,101 @@
       "source_sha256": "e893e6d79a84ecf4b13c7d4a8dd2e85ba5e8510ac6f3a3ab2f6cdc6a37b39caf",
       "bytes": 4444,
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/X86_SERVER_HEADLESS_COMPARISON_2026-10-30.md",
+      "sha256": "2f1a39355af547606defa7f56dab425f6330043d8c8f06c3df4dfd3de805a2bf",
+      "bytes": 9320,
+      "source_sha256": "2f1a39355af547606defa7f56dab425f6330043d8c8f06c3df4dfd3de805a2bf",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/x86-server-headless-comparison-evidence-20261030.json",
+      "sha256": "163d1f6cabd0f44506a8e892355641bc9d6cbec56e79789ee828ace8ec334d78",
+      "bytes": 43060,
+      "source_sha256": "163d1f6cabd0f44506a8e892355641bc9d6cbec56e79789ee828ace8ec334d78",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/server_android/AndroidManifest.xml",
+      "sha256": "8202073e41f86eccc52ef4621107da52d971635668e83f0d522e7df3122b69f9",
+      "bytes": 518,
+      "source_sha256": "8202073e41f86eccc52ef4621107da52d971635668e83f0d522e7df3122b69f9",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/server_android/README.md",
+      "sha256": "9ef28682ae901f13c3e18a83f98b271a5e03db383457754e8a01de4d1889fb9d",
+      "bytes": 4238,
+      "source_sha256": "9ef28682ae901f13c3e18a83f98b271a5e03db383457754e8a01de4d1889fb9d",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/server_android/bench_env.c",
+      "sha256": "afd43652f17eed30f7365fea625f5da68941be1e3c6af4de5ceb440dde462432",
+      "bytes": 492,
+      "source_sha256": "afd43652f17eed30f7365fea625f5da68941be1e3c6af4de5ceb440dde462432",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/server_android/cpu_probe.c",
+      "sha256": "9d77015abdd4d7f2ef88d67269b76c9b9988b484533aa695f634480b0c9d0be8",
+      "bytes": 1817,
+      "source_sha256": "9d77015abdd4d7f2ef88d67269b76c9b9988b484533aa695f634480b0c9d0be8",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/server_android/src/com/nashura/benchmark/BenchRunner.java",
+      "sha256": "efe40f1dd211be23919e74d66b6751bb4e468eb2da2546d881da16c2c7ac6816",
+      "bytes": 2564,
+      "source_sha256": "efe40f1dd211be23919e74d66b6751bb4e468eb2da2546d881da16c2c7ac6816",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/server_android/timer_probe.c",
+      "sha256": "52e534618c53a6285a3ff84705c59ca42a4dc8be23208a6841333cd543d57736",
+      "bytes": 816,
+      "source_sha256": "52e534618c53a6285a3ff84705c59ca42a4dc8be23208a6841333cd543d57736",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/summarize_headless_benchmark.py",
+      "sha256": "af7492d0ecb03601c857a35f14cba52b793c70bd8b3725e63c1cf4372df1ae73",
+      "bytes": 4881,
+      "source_sha256": "af7492d0ecb03601c857a35f14cba52b793c70bd8b3725e63c1cf4372df1ae73",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_summarize_headless_benchmark.py",
+      "sha256": "a41fdbd485a7c0027b02c6eef769861d5b63ec21585e673fd84f71f11815d40c",
+      "bytes": 2204,
+      "source_sha256": "a41fdbd485a7c0027b02c6eef769861d5b63ec21585e673fd84f71f11815d40c",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/ALTERNATIVE_TRANSLATORS_2026-10-30.md",
+      "sha256": "ef962e2fd54d141281cb038732548e93bbf442ec8e423a57be14a9421baf191d",
+      "bytes": 6896,
+      "source_sha256": "ef962e2fd54d141281cb038732548e93bbf442ec8e423a57be14a9421baf191d",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/alternative-translator-evidence-20261030.json",
+      "sha256": "901f03b8ea9015442ded1275f45be4f151e3441c94f9193d1ff6c2fd927ad714",
+      "bytes": 61863,
+      "source_sha256": "901f03b8ea9015442ded1275f45be4f151e3441c94f9193d1ff6c2fd927ad714",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/server_android/arm64emu-direct-guest-observer.patch",
+      "sha256": "f207687fafdcd58a63ecec2ae0ee18eafc43812d81373f9611c63ca1ae66a6dc",
+      "bytes": 851,
+      "source_sha256": "f207687fafdcd58a63ecec2ae0ee18eafc43812d81373f9611c63ca1ae66a6dc",
+      "transformations": []
     }
   ],
-  "file_count": 2861,
-  "source_bytes": 36788824,
+  "file_count": 2874,
+  "source_bytes": 36864787,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

@@ -92,6 +92,9 @@ public final class HeadlessApkContext extends ContextWrapper {
     @Override public AssetManager getAssets() { return assets; }
     @Override public Resources getResources() { return resources; }
     @Override public Context getApplicationContext() { return this; }
+    // Original Mainloop calls Context.getClassLoader. ContextWrapper's default
+    // delegates to the deliberately absent base; use the actual probe loader.
+    @Override public ClassLoader getClassLoader() { return HeadlessApkContext.class.getClassLoader(); }
     @Override public ApplicationInfo getApplicationInfo() {
         ApplicationInfo value = new ApplicationInfo(metadata.applicationInfo);
         value.sourceDir = apk;

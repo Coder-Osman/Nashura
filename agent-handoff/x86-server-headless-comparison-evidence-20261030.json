@@ -1,0 +1,1580 @@
+{
+  "schema": "nashura.x86-translated-headless-comparison.v1",
+  "date": "2026-10-30",
+  "status": "PAIRED_X86_TRANSLATED_MATCH_MEASURED_LIMITED",
+  "whole_goal_complete": false,
+  "readiness": "UNVERIFIED",
+  "inputs": {
+    "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "original_dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+    "fixture_sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8"
+  },
+  "host": {
+    "architecture": "x86_64",
+    "cpu": "Intel Xeon Gold 6130 @ 2.10GHz",
+    "sockets": 2,
+    "physical_cores": 32,
+    "logical_cpus": 64,
+    "ram_approx_gib": 250,
+    "cpu_affinity": [
+      4,
+      5
+    ],
+    "distinct_physical_cores": true,
+    "same_socket": true,
+    "governor": "powersave",
+    "separate_frequency_probe_khz": [
+      1000864,
+      2800002,
+      2800001,
+      2800000,
+      2800001,
+      2800005,
+      2799997,
+      2800004,
+      2800002,
+      2800002,
+      2799995,
+      2799995,
+      2800001,
+      2800007,
+      2799997,
+      2800001,
+      2800002,
+      2800002
+    ],
+    "global_configuration_changed": false
+  },
+  "linux": {
+    "schema": "nashura.headless-benchmark.v1",
+    "matches": 30,
+    "tick": 3601,
+    "terminal_digest": "6c959326dd2f09cc",
+    "terminal_bytes": 3091,
+    "trace": false,
+    "median_match_ms": 2145.8991075,
+    "timed_seconds": 64.461751218,
+    "ticks_per_second": 1675.8775236288368,
+    "matches_per_second": 0.46539225871392303,
+    "step_percentiles_us": {
+      "p50": 432.4855,
+      "p95": 1393.9775,
+      "p99": 2469.597
+    },
+    "peak_rss_mib": 354.49609375,
+    "sampled_rss_peak_mib": 355.4296875,
+    "sampled_pss_peak_mib": 355.25390625,
+    "samples": [
+      {
+        "completed": 3601,
+        "wall_ns": 2226235795,
+        "step_total_ns": 2216320405,
+        "step_min_ns": 213384,
+        "step_max_ns": 18835340,
+        "p50_ns": 435289,
+        "p95_ns": 1400053,
+        "p99_ns": 2744825,
+        "peak_rss_kb": 360632,
+        "trace": 0,
+        "start_ns": 6282320415231976,
+        "end_ns": 6282322641467771
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2143621702,
+        "step_total_ns": 2134301390,
+        "step_min_ns": 213148,
+        "step_max_ns": 8634199,
+        "p50_ns": 432182,
+        "p95_ns": 1391309,
+        "p99_ns": 2458280,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282322710780756,
+        "end_ns": 6282324854402458
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2144673572,
+        "step_total_ns": 2135304416,
+        "step_min_ns": 213199,
+        "step_max_ns": 8642847,
+        "p50_ns": 433072,
+        "p95_ns": 1395685,
+        "p99_ns": 2518840,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282324892914708,
+        "end_ns": 6282327037588280
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2147243270,
+        "step_total_ns": 2137835327,
+        "step_min_ns": 213267,
+        "step_max_ns": 8596512,
+        "p50_ns": 432730,
+        "p95_ns": 1393519,
+        "p99_ns": 2465287,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282327076256040,
+        "end_ns": 6282329223499310
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2146248254,
+        "step_total_ns": 2136821729,
+        "step_min_ns": 213385,
+        "step_max_ns": 8559155,
+        "p50_ns": 432160,
+        "p95_ns": 1389646,
+        "p99_ns": 2465907,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282329261940506,
+        "end_ns": 6282331408188760
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2144442589,
+        "step_total_ns": 2134982573,
+        "step_min_ns": 213312,
+        "step_max_ns": 8559375,
+        "p50_ns": 431334,
+        "p95_ns": 1389282,
+        "p99_ns": 2522254,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282331446504797,
+        "end_ns": 6282333590947386
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2148949719,
+        "step_total_ns": 2139515010,
+        "step_min_ns": 212936,
+        "step_max_ns": 8551933,
+        "p50_ns": 433006,
+        "p95_ns": 1396161,
+        "p99_ns": 2463346,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282333629081727,
+        "end_ns": 6282335778031446
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2149554769,
+        "step_total_ns": 2140139314,
+        "step_min_ns": 213397,
+        "step_max_ns": 8572695,
+        "p50_ns": 433238,
+        "p95_ns": 1395772,
+        "p99_ns": 2458270,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282335816386785,
+        "end_ns": 6282337965941554
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2144247587,
+        "step_total_ns": 2134732106,
+        "step_min_ns": 212956,
+        "step_max_ns": 8581316,
+        "p50_ns": 432939,
+        "p95_ns": 1391650,
+        "p99_ns": 2467286,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282338004707703,
+        "end_ns": 6282340148955290
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2147045837,
+        "step_total_ns": 2137617935,
+        "step_min_ns": 213542,
+        "step_max_ns": 8557878,
+        "p50_ns": 431598,
+        "p95_ns": 1394826,
+        "p99_ns": 2466816,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282340187354473,
+        "end_ns": 6282342334400310
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2145429168,
+        "step_total_ns": 2136012803,
+        "step_min_ns": 213565,
+        "step_max_ns": 8614697,
+        "p50_ns": 432162,
+        "p95_ns": 1388812,
+        "p99_ns": 2481722,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282342372476152,
+        "end_ns": 6282344517905320
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2144714845,
+        "step_total_ns": 2135152581,
+        "step_min_ns": 213280,
+        "step_max_ns": 8548477,
+        "p50_ns": 431463,
+        "p95_ns": 1388114,
+        "p99_ns": 2465519,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282344555878108,
+        "end_ns": 6282346700592953
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2145183484,
+        "step_total_ns": 2135829343,
+        "step_min_ns": 213166,
+        "step_max_ns": 8554348,
+        "p50_ns": 432788,
+        "p95_ns": 1393142,
+        "p99_ns": 2518021,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282346738645351,
+        "end_ns": 6282348883828835
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2147153148,
+        "step_total_ns": 2137770779,
+        "step_min_ns": 213013,
+        "step_max_ns": 8584392,
+        "p50_ns": 432059,
+        "p95_ns": 1394693,
+        "p99_ns": 2517478,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282348922144060,
+        "end_ns": 6282351069297208
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2148552594,
+        "step_total_ns": 2139050313,
+        "step_min_ns": 213312,
+        "step_max_ns": 8562766,
+        "p50_ns": 433119,
+        "p95_ns": 1394387,
+        "p99_ns": 2464669,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282351107237370,
+        "end_ns": 6282353255789964
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2145879948,
+        "step_total_ns": 2136494876,
+        "step_min_ns": 213222,
+        "step_max_ns": 8555157,
+        "p50_ns": 432494,
+        "p95_ns": 1393730,
+        "p99_ns": 2466584,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282353294140475,
+        "end_ns": 6282355440020423
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2147812971,
+        "step_total_ns": 2138416224,
+        "step_min_ns": 213401,
+        "step_max_ns": 8561439,
+        "p50_ns": 434230,
+        "p95_ns": 1395866,
+        "p99_ns": 2493094,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282355477858468,
+        "end_ns": 6282357625671439
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2145742160,
+        "step_total_ns": 2136214755,
+        "step_min_ns": 213379,
+        "step_max_ns": 8615890,
+        "p50_ns": 433551,
+        "p95_ns": 1394741,
+        "p99_ns": 2524815,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282357663613195,
+        "end_ns": 6282359809355355
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2145455226,
+        "step_total_ns": 2136105482,
+        "step_min_ns": 213396,
+        "step_max_ns": 8594092,
+        "p50_ns": 432192,
+        "p95_ns": 1392919,
+        "p99_ns": 2461769,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282359846974628,
+        "end_ns": 6282361992429854
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2144100285,
+        "step_total_ns": 2134713961,
+        "step_min_ns": 213095,
+        "step_max_ns": 8654726,
+        "p50_ns": 430403,
+        "p95_ns": 1392529,
+        "p99_ns": 2459983,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282362028972002,
+        "end_ns": 6282364173072287
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2146657980,
+        "step_total_ns": 2137203085,
+        "step_min_ns": 213219,
+        "step_max_ns": 8638434,
+        "p50_ns": 432339,
+        "p95_ns": 1392027,
+        "p99_ns": 2488642,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282364209428387,
+        "end_ns": 6282366356086367
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2146476777,
+        "step_total_ns": 2137060706,
+        "step_min_ns": 213332,
+        "step_max_ns": 8558159,
+        "p50_ns": 432477,
+        "p95_ns": 1393483,
+        "p99_ns": 2507873,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282366391931357,
+        "end_ns": 6282368538408134
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2146669801,
+        "step_total_ns": 2137268371,
+        "step_min_ns": 213057,
+        "step_max_ns": 8555967,
+        "p50_ns": 432923,
+        "p95_ns": 1397302,
+        "p99_ns": 2480744,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282368574461752,
+        "end_ns": 6282370721131553
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2145044387,
+        "step_total_ns": 2135631096,
+        "step_min_ns": 213195,
+        "step_max_ns": 8550072,
+        "p50_ns": 432272,
+        "p95_ns": 1394225,
+        "p99_ns": 2495133,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282370757267598,
+        "end_ns": 6282372902311985
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2148103309,
+        "step_total_ns": 2138555148,
+        "step_min_ns": 213274,
+        "step_max_ns": 8556239,
+        "p50_ns": 433198,
+        "p95_ns": 1394535,
+        "p99_ns": 2471908,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282372939080491,
+        "end_ns": 6282375087183800
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2147579998,
+        "step_total_ns": 2138191830,
+        "step_min_ns": 213258,
+        "step_max_ns": 8558258,
+        "p50_ns": 433893,
+        "p95_ns": 1397729,
+        "p99_ns": 2496276,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282375124771838,
+        "end_ns": 6282377272351836
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2145918267,
+        "step_total_ns": 2136481033,
+        "step_min_ns": 213418,
+        "step_max_ns": 8575574,
+        "p50_ns": 433307,
+        "p95_ns": 1394655,
+        "p99_ns": 2466106,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282377310079717,
+        "end_ns": 6282379455997984
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2144463899,
+        "step_total_ns": 2135134750,
+        "step_min_ns": 213433,
+        "step_max_ns": 8554068,
+        "p50_ns": 432217,
+        "p95_ns": 1391106,
+        "p99_ns": 2465771,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282379494137172,
+        "end_ns": 6282381638601071
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2144746245,
+        "step_total_ns": 2135254521,
+        "step_min_ns": 213573,
+        "step_max_ns": 8559486,
+        "p50_ns": 432391,
+        "p95_ns": 1389968,
+        "p99_ns": 2460560,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282381676550007,
+        "end_ns": 6282383821296252
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2143803632,
+        "step_total_ns": 2134419982,
+        "step_min_ns": 213167,
+        "step_max_ns": 8633528,
+        "p50_ns": 431873,
+        "p95_ns": 1395505,
+        "p99_ns": 2520084,
+        "peak_rss_kb": 363004,
+        "trace": 0,
+        "start_ns": 6282383859078598,
+        "end_ns": 6282386002882230
+      }
+    ],
+    "memory_samples": [
+      {
+        "rss_kb": 361772,
+        "pss_kb": 361592
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363956,
+        "pss_kb": 363776
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363952,
+        "pss_kb": 363772
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363956,
+        "pss_kb": 363776
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363952,
+        "pss_kb": 363772
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      },
+      {
+        "rss_kb": 363956,
+        "pss_kb": 363776
+      },
+      {
+        "rss_kb": 363960,
+        "pss_kb": 363780
+      }
+    ],
+    "scope": "step loop only; initialization, reset and terminal validation excluded",
+    "readiness": "UNVERIFIED",
+    "log_sha256": "c5a9248897d95e426b4794d1559f403c808c7279784cdb7783c5250170e00718",
+    "step_interval_seconds": 64.178531844,
+    "outside_step_fraction": 0.00439360347258011,
+    "host_process_sampled_peak_rss_mib": 357.41796875,
+    "host_process_cpu_seconds_over_full_batch_samples": 122.61,
+    "native_finalized_matches": 30,
+    "normal_completion": true,
+    "source_scope": "Measured baseline bridge predates read-only content identity instrumentation; exact artifact identities below",
+    "host_memory_scope": "translated engine process"
+  },
+  "android": {
+    "schema": "nashura.headless-benchmark.v1",
+    "matches": 30,
+    "tick": 3601,
+    "terminal_digest": "6c959326dd2f09cc",
+    "terminal_bytes": 3091,
+    "trace": false,
+    "median_match_ms": 2471.1713275,
+    "timed_seconds": 74.378334243,
+    "ticks_per_second": 1452.439088606869,
+    "matches_per_second": 0.4033432625956315,
+    "step_percentiles_us": {
+      "p50": 487.8475,
+      "p95": 1628.3455,
+      "p99": 2817.502
+    },
+    "peak_rss_mib": 357.96484375,
+    "sampled_rss_peak_mib": 360.17578125,
+    "sampled_pss_peak_mib": 239.9306640625,
+    "samples": [
+      {
+        "completed": 3601,
+        "wall_ns": 2671174053,
+        "step_total_ns": 2657714452,
+        "step_min_ns": 240503,
+        "step_max_ns": 43575170,
+        "p50_ns": 488924,
+        "p95_ns": 1654657,
+        "p99_ns": 3400886,
+        "peak_rss_kb": 365328,
+        "trace": 0,
+        "start_ns": 1499186406595,
+        "end_ns": 1501857580648
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2471639561,
+        "step_total_ns": 2459077425,
+        "step_min_ns": 240203,
+        "step_max_ns": 10694104,
+        "p50_ns": 487432,
+        "p95_ns": 1629726,
+        "p99_ns": 2815930,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1501953218713,
+        "end_ns": 1504424858274
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2472110934,
+        "step_total_ns": 2459482781,
+        "step_min_ns": 240476,
+        "step_max_ns": 10657926,
+        "p50_ns": 487313,
+        "p95_ns": 1630286,
+        "p99_ns": 2782807,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1504448214247,
+        "end_ns": 1506920325181
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2470890730,
+        "step_total_ns": 2458270656,
+        "step_min_ns": 240159,
+        "step_max_ns": 10721687,
+        "p50_ns": 485993,
+        "p95_ns": 1627128,
+        "p99_ns": 2813427,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1506943505706,
+        "end_ns": 1509414396436
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2470405625,
+        "step_total_ns": 2457805135,
+        "step_min_ns": 240183,
+        "step_max_ns": 10648138,
+        "p50_ns": 487392,
+        "p95_ns": 1630142,
+        "p99_ns": 2816554,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1509437706880,
+        "end_ns": 1511908112505
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2471244851,
+        "step_total_ns": 2457364681,
+        "step_min_ns": 240479,
+        "step_max_ns": 10621152,
+        "p50_ns": 489860,
+        "p95_ns": 1624361,
+        "p99_ns": 2800353,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1511931337643,
+        "end_ns": 1514402582494
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2471723441,
+        "step_total_ns": 2459069823,
+        "step_min_ns": 240458,
+        "step_max_ns": 10677657,
+        "p50_ns": 488069,
+        "p95_ns": 1633514,
+        "p99_ns": 2830166,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1514425777677,
+        "end_ns": 1516897501118
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2470787763,
+        "step_total_ns": 2458185442,
+        "step_min_ns": 240242,
+        "step_max_ns": 10732872,
+        "p50_ns": 487555,
+        "p95_ns": 1629053,
+        "p99_ns": 2791107,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1516920730890,
+        "end_ns": 1519391518653
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2511074793,
+        "step_total_ns": 2498510687,
+        "step_min_ns": 240323,
+        "step_max_ns": 12684528,
+        "p50_ns": 489625,
+        "p95_ns": 1631587,
+        "p99_ns": 2902640,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1519414588178,
+        "end_ns": 1521925662971
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2471085062,
+        "step_total_ns": 2458516413,
+        "step_min_ns": 240284,
+        "step_max_ns": 10662528,
+        "p50_ns": 485682,
+        "p95_ns": 1628042,
+        "p99_ns": 2805036,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1521949345149,
+        "end_ns": 1524420430211
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2471670104,
+        "step_total_ns": 2459100681,
+        "step_min_ns": 240074,
+        "step_max_ns": 10719862,
+        "p50_ns": 489227,
+        "p95_ns": 1627339,
+        "p99_ns": 2807773,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1524443676697,
+        "end_ns": 1526915346801
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2473007824,
+        "step_total_ns": 2460313317,
+        "step_min_ns": 240035,
+        "step_max_ns": 10773505,
+        "p50_ns": 487326,
+        "p95_ns": 1632127,
+        "p99_ns": 2821276,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1526939143571,
+        "end_ns": 1529412151395
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2468292308,
+        "step_total_ns": 2455686734,
+        "step_min_ns": 240186,
+        "step_max_ns": 10643457,
+        "p50_ns": 487989,
+        "p95_ns": 1629617,
+        "p99_ns": 2817862,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1529435613214,
+        "end_ns": 1531903905522
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2470304571,
+        "step_total_ns": 2457772708,
+        "step_min_ns": 240343,
+        "step_max_ns": 10621852,
+        "p50_ns": 486949,
+        "p95_ns": 1627391,
+        "p99_ns": 2790258,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1531927244546,
+        "end_ns": 1534397549117
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2477922522,
+        "step_total_ns": 2465370379,
+        "step_min_ns": 240485,
+        "step_max_ns": 10709922,
+        "p50_ns": 490838,
+        "p95_ns": 1625536,
+        "p99_ns": 2835747,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1534420745230,
+        "end_ns": 1536898667752
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2468600080,
+        "step_total_ns": 2456011639,
+        "step_min_ns": 240306,
+        "step_max_ns": 10711329,
+        "p50_ns": 487279,
+        "p95_ns": 1625475,
+        "p99_ns": 2815548,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1536921957610,
+        "end_ns": 1539390557690
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2470995196,
+        "step_total_ns": 2458388329,
+        "step_min_ns": 240284,
+        "step_max_ns": 10749994,
+        "p50_ns": 487855,
+        "p95_ns": 1626936,
+        "p99_ns": 2810935,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1539413639245,
+        "end_ns": 1541884634441
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2469282044,
+        "step_total_ns": 2456662895,
+        "step_min_ns": 240315,
+        "step_max_ns": 10640706,
+        "p50_ns": 485727,
+        "p95_ns": 1631627,
+        "p99_ns": 2771800,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1541907647586,
+        "end_ns": 1544376929630
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2469546824,
+        "step_total_ns": 2457049714,
+        "step_min_ns": 240554,
+        "step_max_ns": 10651218,
+        "p50_ns": 486893,
+        "p95_ns": 1625996,
+        "p99_ns": 2782186,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1544400102132,
+        "end_ns": 1546869648956
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2471527435,
+        "step_total_ns": 2458993682,
+        "step_min_ns": 240575,
+        "step_max_ns": 10725892,
+        "p50_ns": 489122,
+        "p95_ns": 1630322,
+        "p99_ns": 2837666,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1546892814082,
+        "end_ns": 1549364341517
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2471523060,
+        "step_total_ns": 2458957362,
+        "step_min_ns": 240232,
+        "step_max_ns": 10680223,
+        "p50_ns": 487502,
+        "p95_ns": 1627123,
+        "p99_ns": 2824035,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1549387290655,
+        "end_ns": 1551858813715
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2468430246,
+        "step_total_ns": 2455834890,
+        "step_min_ns": 240481,
+        "step_max_ns": 10638865,
+        "p50_ns": 488718,
+        "p95_ns": 1626787,
+        "p99_ns": 2813636,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1551882084600,
+        "end_ns": 1554350514846
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2470883061,
+        "step_total_ns": 2458191184,
+        "step_min_ns": 240188,
+        "step_max_ns": 10725748,
+        "p50_ns": 487915,
+        "p95_ns": 1630252,
+        "p99_ns": 2825755,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1554373906304,
+        "end_ns": 1556844789365
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2472301937,
+        "step_total_ns": 2459787891,
+        "step_min_ns": 240048,
+        "step_max_ns": 10638545,
+        "p50_ns": 489697,
+        "p95_ns": 1626151,
+        "p99_ns": 2817289,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1556867870916,
+        "end_ns": 1559340172853
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2474990966,
+        "step_total_ns": 2462412781,
+        "step_min_ns": 240063,
+        "step_max_ns": 10647658,
+        "p50_ns": 488556,
+        "p95_ns": 1626430,
+        "p99_ns": 2857614,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1559363261948,
+        "end_ns": 1561838252914
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2470797481,
+        "step_total_ns": 2458289667,
+        "step_min_ns": 239899,
+        "step_max_ns": 10651251,
+        "p50_ns": 487840,
+        "p95_ns": 1622644,
+        "p99_ns": 2819863,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1561864199440,
+        "end_ns": 1564334996921
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2471719586,
+        "step_total_ns": 2459154258,
+        "step_min_ns": 240348,
+        "step_max_ns": 10654709,
+        "p50_ns": 486898,
+        "p95_ns": 1628811,
+        "p99_ns": 2819507,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1564358194654,
+        "end_ns": 1566829914240
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2470640482,
+        "step_total_ns": 2458097087,
+        "step_min_ns": 240222,
+        "step_max_ns": 10616465,
+        "p50_ns": 488352,
+        "p95_ns": 1624952,
+        "p99_ns": 2825876,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1566853164018,
+        "end_ns": 1569323804500
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2471097804,
+        "step_total_ns": 2458568348,
+        "step_min_ns": 240177,
+        "step_max_ns": 10669658,
+        "p50_ns": 485801,
+        "p95_ns": 1628817,
+        "p99_ns": 2821107,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1569347004985,
+        "end_ns": 1571818102789
+      },
+      {
+        "completed": 3601,
+        "wall_ns": 2472663899,
+        "step_total_ns": 2460079060,
+        "step_min_ns": 240197,
+        "step_max_ns": 10622113,
+        "p50_ns": 487890,
+        "p95_ns": 1628649,
+        "p99_ns": 2817715,
+        "peak_rss_kb": 366556,
+        "trace": 0,
+        "start_ns": 1571841442084,
+        "end_ns": 1574314105983
+      }
+    ],
+    "memory_samples": [
+      {
+        "rss_kb": 367600,
+        "pss_kb": 244197
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      },
+      {
+        "rss_kb": 368820,
+        "pss_kb": 245689
+      }
+    ],
+    "scope": "step loop only; initialization, reset and terminal validation excluded",
+    "readiness": "UNVERIFIED",
+    "log_sha256": "679283c6d8f3869a3efec4ffe96e2f4a1c7c3347e838942f4838a8f22e5c0dd5",
+    "step_interval_seconds": 73.998720101,
+    "outside_step_fraction": 0.005103826885390683,
+    "host_process_sampled_peak_rss_mib": 6805.41015625,
+    "host_process_cpu_seconds_over_full_batch_samples": 111.64,
+    "native_finalized_matches": 30,
+    "normal_completion": true,
+    "source_scope": "Measured baseline bridge predates read-only content identity instrumentation; exact artifact identities below",
+    "host_memory_scope": "entire emulator, includes guest RAM and Android system"
+  },
+  "configuration": {
+    "linux": {
+      "translator": "QEMU aarch64 user 8.2.2",
+      "container_network": "none",
+      "privileged": false,
+      "memory_limit_gib": 6,
+      "pids_limit": 256,
+      "binder_devices": false,
+      "graphics_devices": false,
+      "art_options": [
+        "-Ximage:/nonexistent/task-boot.art",
+        "-Xusejit:false",
+        "-Xnoimage-dex2oat",
+        "-Xint",
+        "-Xms16m",
+        "-Xmx256m"
+      ],
+      "entry": "real pthread and direct AndroidRuntime",
+      "android_services_started": false
+    },
+    "android": {
+      "api": 30,
+      "release": 11,
+      "image_revision": 16,
+      "image": "Google APIs x86_64",
+      "image_zip_sha1": "6ae21030eaadc041078444d3798e4b399f3e787d",
+      "emulator": "37.1.11",
+      "vcpus": 2,
+      "ram_mib": 6144,
+      "native_bridge": "libndk_translation.so",
+      "arm64_isa_mapping": "x86_64",
+      "debuggable": true,
+      "no_window": true,
+      "graphics_backend": "swiftshader_indirect",
+      "diagnostics": "Custom JNI registration hook and signal sampling skipped for native bridge ABI"
+    }
+  },
+  "ratios": {
+    "linux_throughput_over_android": 1.1538366990909632,
+    "linux_median_latency_reduction": 0.13162673764472133
+  },
+  "batch_seconds": {
+    "linux": 131.967102235,
+    "android": 112.078591349
+  },
+  "ordering": {
+    "no_overlap": true,
+    "android_paused_during_linux": true,
+    "events": [
+      {
+        "event": "android_idle",
+        "utc_ns": 1793351760871714434,
+        "monotonic_ns": 6282264680260895,
+        "emulator_pid": 741163,
+        "sample": {
+          "VmHWM": 6966612,
+          "VmRSS": 6966612,
+          "cpu_ticks": 52597,
+          "monotonic_ns": 6282264680250152
+        },
+        "affinities": [
+          [
+            4,
+            5
+          ]
+        ]
+      },
+      {
+        "event": "android_paused",
+        "utc_ns": 1793351760871966963,
+        "monotonic_ns": 6282264680513120
+      },
+      {
+        "event": "linux_start",
+        "utc_ns": 1793351760872728793,
+        "monotonic_ns": 6282264681274807
+      },
+      {
+        "event": "linux_end",
+        "utc_ns": 1793351892839829922,
+        "monotonic_ns": 6282396648377042,
+        "returncode": 0,
+        "container_pid": 749152
+      },
+      {
+        "event": "android_resumed",
+        "utc_ns": 1793351892841427942,
+        "monotonic_ns": 6282396649974505
+      },
+      {
+        "event": "android_start",
+        "utc_ns": 1793351892850499104,
+        "monotonic_ns": 6282396659045575
+      },
+      {
+        "event": "android_end",
+        "utc_ns": 1793352004929090206,
+        "monotonic_ns": 6282508737636924,
+        "returncode": 0,
+        "emulator_pid": 741163
+      },
+      {
+        "event": "complete",
+        "utc_ns": 1793352004943265315,
+        "monotonic_ns": 6282508751812105
+      }
+    ],
+    "first_v1_runs": "Retained; excluded from final comparison because of short CPU overlap"
+  },
+  "archive_correctness": {
+    "records": 3602,
+    "first_tick": 0,
+    "final_tick": 3601,
+    "bytes_per_archive": 12334754,
+    "sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206",
+    "independent_server_preflights_equal": true,
+    "scope": "Explicit original serializer adapter, not unrecorded global state or original wrapper"
+  },
+  "diagnostics": {
+    "timer": {
+      "native": {
+        "two_reads_and_loop_ns": 81.423044,
+        "empty_span_ns": 40.348468
+      },
+      "translated": {
+        "two_reads_and_loop_ns": 810.005005,
+        "empty_span_ns": 403.972253
+      }
+    },
+    "synthetic_cpu_median_ms": {
+      "integer": {
+        "native": 87.99603,
+        "translated": 174.422424,
+        "translated_over_native": 1.9821624225547447,
+        "same_output": "9e4ef00cd75c5557"
+      },
+      "floating": {
+        "native": 88.891475,
+        "translated": 1324.330875,
+        "translated_over_native": 14.898288896657414,
+        "same_output": "12.573715178738455"
+      }
+    },
+    "synthetic_scope": "Same source; compiler and target differ. Not native x86 libg or Android bridge benchmark",
+    "cpu_frequency_scope": "Separate short workload, not retrospective game frequency",
+    "perf": "Counter access denied at perf_event_paranoid=4; no sysctl change",
+    "linux_timed_process_cpu_seconds_approx": 65.04947283854214,
+    "conclusion": "Translation is priority suspect; precise attribution of real engine cross-host slowdown remains unverified"
+  },
+  "guest_final_source_verification": {
+    "run": "v56identity",
+    "result": {
+      "status": "NATIVE_FINAL_AND_ARCHIVE_OBSERVED_LIMITED",
+      "final_tick": 3601,
+      "records": 3602,
+      "archive_bytes": 12334754,
+      "archive_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206",
+      "whole_goal_complete": false
+    },
+    "identity_observations": [
+      "HEADLESS_CONTENT_IDENTITY phase=bootstrap-after readable=1 root_vtable=1 singleton_vtable=1 singleton_slot=1 context_wrapper=1 wrapper_getter=1 stable=1 verified=1",
+      "HEADLESS_CONTENT_IDENTITY phase=catalog-before readable=1 root_vtable=1 singleton_vtable=1 singleton_slot=1 context_wrapper=1 wrapper_getter=1 stable=1 verified=1",
+      "HEADLESS_CONTENT_IDENTITY phase=catalog-after readable=1 root_vtable=1 singleton_vtable=1 singleton_slot=1 context_wrapper=1 wrapper_getter=1 stable=1 verified=1",
+      "HEADLESS_CONTENT_IDENTITY phase=battle-before readable=1 root_vtable=1 singleton_vtable=1 singleton_slot=1 context_wrapper=1 wrapper_getter=1 stable=1 verified=1",
+      "HEADLESS_CONTENT_IDENTITY phase=battle-after readable=1 root_vtable=1 singleton_vtable=1 singleton_slot=1 context_wrapper=1 wrapper_getter=1 stable=1 verified=1"
+    ],
+    "scope": "Read-only graph and original getter, not complete ResourceManager initializer semantics",
+    "artifacts": [
+      {
+        "name": "stdout.log",
+        "bytes": 31620,
+        "sha256": "76b7c41ada57dbfe695fe76ad2ab13b169be2f7b13bcfb537d76b45a3713a3a5"
+      },
+      {
+        "name": "stderr.log",
+        "bytes": 1187,
+        "sha256": "1ff8929cf99f975f88eefe291d5b16c0999b0c93922ce66a2457cd1549e83bd5"
+      },
+      {
+        "name": "result.json",
+        "bytes": 250,
+        "sha256": "953f2f3cd3c270f7a0eb30bba1df193393834a646800cfa0d88b9ed29dbc3b9a"
+      },
+      {
+        "name": "exit.txt",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "name": "snapshots.bin",
+        "bytes": 12334754,
+        "sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+      }
+    ]
+  },
+  "engineering_checks": {
+    "pure_linux": {
+      "passed": 1175,
+      "skipped": 1
+    },
+    "public": {
+      "groups": 9,
+      "passed": 1104,
+      "skipped": 42,
+      "current_xml_artifacts": [
+        {
+          "name": "checks-affordability.xml",
+          "bytes": 4340,
+          "sha256": "55d0b9fba3404772951e79083d60d80d6e633f569a2e04dbb8f3a919e22ac257"
+        },
+        {
+          "name": "checks-collection-coordinator.xml",
+          "bytes": 12024,
+          "sha256": "70cf313d7553471e69249055fe71316d91e312c76d841d46b4548bfbe5450b35"
+        },
+        {
+          "name": "checks-command-coordinates.xml",
+          "bytes": 8184,
+          "sha256": "02d67a2143075035724e6e7ec73ec4840c700210dccf3be98af234f97f737974"
+        },
+        {
+          "name": "checks-dispatch-command.xml",
+          "bytes": 6406,
+          "sha256": "bcf58f9283976884a615f782dd67a9c293684d1a9e47946443efaa00f9a6701b"
+        },
+        {
+          "name": "checks-live-command.xml",
+          "bytes": 6370,
+          "sha256": "bcf017c3f795eb2339a8d07caf62dfb30d110c95ad0d07fd37b1f3264a25e1f2"
+        },
+        {
+          "name": "checks-position-guards.xml",
+          "bytes": 4244,
+          "sha256": "6fe2b51a324166cbb122ddf3fd317a6e6ca5ad5a24a0854d1fab33a88c5cbf65"
+        },
+        {
+          "name": "checks-public.xml",
+          "bytes": 161225,
+          "sha256": "3395aa21f545cc69e191e8d2bd0d71abe73204d8cbfb93f6fd24f6f8d343370d"
+        },
+        {
+          "name": "checks-reservation-mapping.xml",
+          "bytes": 6383,
+          "sha256": "c3ff78f6703400d3dc1a4f40c2bc8d28ec59881f9d7d85f69f0939cfe0c351ef"
+        },
+        {
+          "name": "checks-selection-timeout.xml",
+          "bytes": 14581,
+          "sha256": "28b04761886c0ecc32023d8e772b6ab1caf4734e73a27453d4018c23903ce9fb"
+        }
+      ],
+      "historical_xml_preserved": true
+    },
+    "main_engine": {
+      "passed": 211
+    },
+    "benchmark_parser_tests": 13,
+    "ndk_strict_build": true,
+    "java8_d8_build": true
+  },
+  "private_artifacts": [
+    {
+      "name": "linux-qemu-v2.log",
+      "bytes": 93114,
+      "sha256": "c5a9248897d95e426b4794d1559f403c808c7279784cdb7783c5250170e00718"
+    },
+    {
+      "name": "android-v2.log",
+      "bytes": 84217,
+      "sha256": "679283c6d8f3869a3efec4ffe96e2f4a1c7c3347e838942f4838a8f22e5c0dd5"
+    },
+    {
+      "name": "linux-qemu-v2-host.jsonl",
+      "bytes": 46256,
+      "sha256": "79c99bfd0a945e45d5f44a946fe1b091756de33fa40cfe70e56131de37c635d2"
+    },
+    {
+      "name": "android-v2-host.jsonl",
+      "bytes": 40677,
+      "sha256": "0a5c7551f7e7290b11bb15741cfba5f6ca167fb3af2ecc1dd71d6770e972a92e"
+    },
+    {
+      "name": "sequential-v2.json",
+      "bytes": 1206,
+      "sha256": "08b9132435ac55a9567384e94ea119ad56d9deec583309d65fb0d395b6e3eb50"
+    },
+    {
+      "name": "timer-probe-v1.json",
+      "bytes": 946,
+      "sha256": "b5177a662ffcf9adefb419b40ef7030e1d2c85bd6e27b83f7a8a3d17e68f606e"
+    },
+    {
+      "name": "cpu-probe-v1.json",
+      "bytes": 1492,
+      "sha256": "ec943b9c15d5825e64d9b45bb5b657af156a72da8c4fe53c60f02b79c5d07ed5"
+    },
+    {
+      "name": "cpu-frequency-v1.json",
+      "bytes": 990,
+      "sha256": "7bc3c684ef732547526b71719ef0ba133df068c0b8b546977b29138a729f6a07"
+    },
+    {
+      "name": "cpu-probe-mac.log",
+      "bytes": 660,
+      "sha256": "790d2ffbb0fab2e81bd1359c78c1a5d8bc136025de44476e7d136472a83efab4"
+    },
+    {
+      "name": "pure-linux-tests.log",
+      "bytes": 1393,
+      "sha256": "618194449515daef0d5d4eae1e3c24ff63c3eba3c98f1521b797585cd8e0597b"
+    },
+    {
+      "name": "public-checks.log",
+      "bytes": 2901,
+      "sha256": "a4078006b7c39f345eadfd66ee22634b3cf6234613819955fd0a5fda3c778369"
+    },
+    {
+      "name": "main-engine-checks.log",
+      "bytes": 261,
+      "sha256": "bd8d3f1b1b231d6fc4382b79492088303931189e74b205afee89eff467a35c33"
+    }
+  ],
+  "measured_build_artifacts": [
+    {
+      "name": "headless_runtime_qemu_thread.cpp",
+      "bytes": 3466,
+      "sha256": "d5350ac406a92df8cce010a9f57dd2dfa6678150ec7832bd49904646c6d5ca60"
+    },
+    {
+      "name": "art_headless_task_bridge_baseline.c",
+      "bytes": 55930,
+      "sha256": "0fc7997c81b493e160fac5da64d8e6638194548b0978791ba2096964a2bfd5ff"
+    },
+    {
+      "name": "art_headless_observer_bridge.c",
+      "bytes": 9678,
+      "sha256": "9e4c2dffa4ecee9c53b8aa4bf4fb47259c01b760c723a51d3cc99d2917bf14bf"
+    },
+    {
+      "name": "runtime-qemu-thread",
+      "bytes": 563640,
+      "sha256": "e6214c205c8f3f0088f6145b80897df7fca97f9dfad1435058667f618656a094"
+    },
+    {
+      "name": "libobserver-nativebridge.so",
+      "bytes": 161104,
+      "sha256": "7e071b2341b4b517fe63bdc88ef5cadb4cdcb2ffbb8c7d58058f81fb7518ce1c"
+    }
+  ],
+  "final_build_artifacts": [
+    {
+      "name": "headless-art-runtime",
+      "bytes": 562264,
+      "sha256": "82cb63f22027250ad9377990a74f56eb78f9079965d8eca518b4a893009710e9"
+    },
+    {
+      "name": "headless-art-runtime-qemu",
+      "bytes": 563600,
+      "sha256": "64e5f39c833febed9dd86c57140efe46ba717db19d1210916988783139007c0c"
+    },
+    {
+      "name": "libheadless-observer.so",
+      "bytes": 165472,
+      "sha256": "5537b900a6b4d284923d8ffd213ea5e51cc526254f6b0773b135f4f3e40f392a"
+    },
+    {
+      "name": "classes.dex",
+      "bytes": 34364,
+      "sha256": "a2a5fc755f1dcc2f31391ccbc9ec5f706deb83a484186101f02a5e54d0d13ead"
+    }
+  ],
+  "remaining": [
+    "Original snapshot wrapper controller semantics",
+    "Broader fixtures and modes",
+    "ART and DT_NEEDED per-library minimization",
+    "Full ResourceManager and owner initialization semantics",
+    "Zero-Binder entry restore/reset formal recheck",
+    "Server concurrency density",
+    "Repeated end-to-end cold-start statistics",
+    "Real engine translation hotspot attribution"
+  ]
+}

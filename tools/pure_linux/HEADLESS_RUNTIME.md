@@ -70,3 +70,16 @@ e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206。
 单fixture、其他卡组/模式、未序列化全局、ART逐库最小化、ResourceManager完整初始化
 身份与历史strict catalog门都不是这些结果自动闭合的范围。带逐tick快照和strace
 的对局不纳入之前性能表；新启动器的性能尚未重测。
+
+## x86服务器与内容对象图补充
+
+服务器QEMU版本用-DNASHURA_QEMU_PTHREAD_ENTRY选择真实pthread入口，
+ART主线程直接读取host栈映射导致的mprotect失败不通过伪造返回值处理。
+该服务器在固定fixture完成独立归档及30局正式测速；不是本机旧入口性能重测。
+Android native bridge专用诊断开关只跳过自有JNI表hook及信号采样。
+实际配置、适用范围与复验见server_android/README.md及服务器报告。
+
+v56identity在ARM guest直接入口观察bootstrap-after、catalog-before/after、
+battle-before/after五阶段的root/context/wrapper/singleton关系、vtable和
+真实getter，均verified=1且跨阶段稳定；原生终局和3602帧归档仍通过。
+这只是版本绑定对象图身份，完整ResourceManager及owner初始化语义继续待验。

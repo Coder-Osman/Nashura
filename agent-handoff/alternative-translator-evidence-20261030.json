@@ -1,0 +1,2077 @@
+{
+  "schema": "nashura.alternative-arm64-translator-comparison.v1",
+  "date": "2026-10-30",
+  "status": "ALTERNATIVE_TRANSLATORS_MEASURED_NO_SPEEDUP_LIMITED",
+  "readiness": "UNVERIFIED",
+  "whole_goal_complete": false,
+  "decision": "Retain QEMU 8.2.2 for this fixed-fixture x86 server route; no measured replacement is faster",
+  "inputs": {
+    "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "original_dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+    "fixture_sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8"
+  },
+  "host": {
+    "architecture": "x86_64",
+    "cpu": "Intel Xeon Gold 6130",
+    "affinity": [
+      4,
+      5
+    ],
+    "memory_limit_gib": 6,
+    "pids_limit": 256,
+    "network": "none",
+    "privileged": false,
+    "android_services_started": false,
+    "global_configuration_changed": false
+  },
+  "fex": {
+    "checked_date": "2026-10-30",
+    "fex_commit": "d321f49fb5551b7e7ad0e09eee73940bf236e370",
+    "readme_sha256": "53d982507eae49e959e24a8d718f21cade7fcfd0cc3dee487e157064705bd8aa",
+    "readme_architecture_lines": [
+      "# FEX: Emulate x86 Programs on ARM64",
+      "FEX allows you to run x86 applications on ARM64 Linux devices, similar to qemu-user and box64.",
+      "FEX requires ARMv8.0-a or newer hardware, with minimum extensions FEAT_FP and FEAT_CRC32.",
+      "An x86-64 RootFS is required and can be downloaded using our `FEXRootFSFetcher` tool for many distributions."
+    ],
+    "elf_source_candidates": [
+      "Source/Tools/CommonTools/Linux/Utils/ELFContainer.cpp",
+      "Source/Tools/CommonTools/Linux/Utils/ELFContainer.h",
+      "Source/Tools/CommonTools/Linux/Utils/ELFParser.h",
+      "Source/Tools/FEXInterpreter/ELFCodeLoader.h"
+    ],
+    "loader_source": {
+      "path": "Source/Tools/CommonTools/Linux/Utils/ELFContainer.cpp",
+      "url": "https://raw.githubusercontent.com/FEX-Emu/FEX/d321f49fb5551b7e7ad0e09eee73940bf236e370/Source/Tools/CommonTools/Linux/Utils/ELFContainer.cpp",
+      "sha256": "8f989aca76f1624ef030aa3fd1544e0db2720e5255305f07b989acf5d3c33eb9",
+      "architecture_checks": [
+        {
+          "line": 36,
+          "context": [
+            "  if (Data[EI_CLASS] == ELFCLASS32) {",
+            "    Elf32_Ehdr* Header = reinterpret_cast<Elf32_Ehdr*>(Data);",
+            "    if (Header->e_machine == EM_386) {",
+            "      return ELFContainer::ELFType::TYPE_X86_32;",
+            "    }",
+            "  } else if (Data[EI_CLASS] == ELFCLASS64) {"
+          ]
+        },
+        {
+          "line": 41,
+          "context": [
+            "  } else if (Data[EI_CLASS] == ELFCLASS64) {",
+            "    Elf64_Ehdr* Header = reinterpret_cast<Elf64_Ehdr*>(Data);",
+            "    if (Header->e_machine == EM_X86_64) {",
+            "      return ELFContainer::ELFType::TYPE_X86_64;",
+            "    }",
+            "  }"
+          ]
+        },
+        {
+          "line": 186,
+          "context": [
+            "  LOGMAN_THROW_A_FMT(Header._32.e_shentsize == sizeof(Elf32_Shdr), \"PH Entry size wasn't correct size\");",
+            "",
+            "  if (Header._32.e_machine != EM_386) {",
+            "    LogMan::Msg::DFmt(\"32bit ELF wasn't x86 based\");",
+            "    return false;",
+            "  }"
+          ]
+        },
+        {
+          "line": 224,
+          "context": [
+            "  LOGMAN_THROW_A_FMT(Header._64.e_shentsize == 64, \"PH Entry size wasn't 64\");",
+            "",
+            "  if (Header._64.e_machine != EM_X86_64) {",
+            "    LogMan::Msg::DFmt(\"64bit ELF wasn't x86-64 based\");",
+            "    return false;",
+            "  }"
+          ]
+        }
+      ]
+    },
+    "local_experiment": {
+      "host": "x86_64",
+      "engine_e_machine": 183,
+      "engine_architecture": "AArch64",
+      "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783"
+    },
+    "outcome": "ARCHITECTURE_DIRECTION_MISMATCH",
+    "fex_benchmark_performed": false,
+    "reason": "FEX translates x86 applications on ARM64 Linux; the experiment requires ARM64 applications on x86_64 Linux."
+  },
+  "translators": {
+    "arm64emu": {
+      "url": "https://github.com/sylirre/arm64emu-user",
+      "commit": "90fe88ca71794d29eecddc4b8925d68b79a2c342",
+      "mode": "--jit",
+      "binary": {
+        "bytes": 2004024,
+        "sha256": "ab12525b8fdf76e88bf9e0cb8a938ce35d4a424487ecb9dded0cfec0e2c26650"
+      },
+      "source_modifications": false,
+      "untracked_build_artifact": "arm64chroot-static"
+    },
+    "qemu_upstream": {
+      "url": "https://download.qemu.org/qemu-11.1.3.tar.xz",
+      "pin": {
+        "version": "v11.1.3",
+        "tag_object": {
+          "sha": "34105b228c52e1d1d055003fab74d0503fa4bc37",
+          "type": "tag",
+          "url": "https://api.github.com/repos/qemu/qemu/git/tags/34105b228c52e1d1d055003fab74d0503fa4bc37"
+        },
+        "url": "https://download.qemu.org/qemu-11.1.3.tar.xz",
+        "bytes": 141819712,
+        "sha256": "5a8289c7940dc77d3873c81a6c29ba3afe1446fc9d36e77fa1658cdbecb84b22"
+      },
+      "commit": "005c61c0ef6f6ae615283440b4bb7be51b2c6ddd",
+      "binary": {
+        "binary_sha256": "10ff4f2212c366a6f5cfba842dfc5a75c44baa02afa150bcdca05a66e218cb3d",
+        "version": "qemu-aarch64 version 11.1.3\nCopyright (c) 2003-2026 Fabrice Bellard and the QEMU Project developers\n"
+      },
+      "configure": [
+        "--target-list=aarch64-linux-user",
+        "--disable-system",
+        "--disable-docs",
+        "--disable-tools",
+        "--disable-guest-agent",
+        "--disable-plugins",
+        "--disable-werror",
+        "--static"
+      ],
+      "build": "ninja -j4 qemu-aarch64; cc -m64 -O2 -g; no PGO/LTO/host-specific tuning",
+      "roms_excluded_from_user_only_source_extraction": true
+    },
+    "qemu_baseline": {
+      "version": "8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)",
+      "binary_sha256": "e4f8d99e9ff69c3cefffab71cee358ce2af1ecba1282d04c3eeb44ef76f5a71e",
+      "bytes": 6245816
+    }
+  },
+  "runs": {
+    "arm64emu": {
+      "schema": "nashura.headless-benchmark.v1",
+      "matches": 20,
+      "tick": 3601,
+      "terminal_digest": "6c959326dd2f09cc",
+      "terminal_bytes": 3091,
+      "trace": false,
+      "median_match_ms": 4857.9499715,
+      "timed_seconds": 97.199713404,
+      "ticks_per_second": 740.9486867585373,
+      "matches_per_second": 0.20576192356527,
+      "step_percentiles_us": {
+        "p50": 1065.956,
+        "p95": 2590.1815,
+        "p99": 5140.728
+      },
+      "peak_rss_mib": 475.91015625,
+      "sampled_rss_peak_mib": null,
+      "sampled_pss_peak_mib": null,
+      "memory_sample_counts": {
+        "rss_kb": 0,
+        "pss_kb": 0
+      },
+      "samples": [
+        {
+          "completed": 3601,
+          "wall_ns": 4889270528,
+          "step_total_ns": 4879141500,
+          "step_min_ns": 683085,
+          "step_max_ns": 23174747,
+          "p50_ns": 1065994,
+          "p95_ns": 2590647,
+          "p99_ns": 5268496,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284736469718602,
+          "end_ns": 6284741358989130
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4855237150,
+          "step_total_ns": 4845086458,
+          "step_min_ns": 682971,
+          "step_max_ns": 23195061,
+          "p50_ns": 1064839,
+          "p95_ns": 2586552,
+          "p99_ns": 5153664,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284741401686539,
+          "end_ns": 6284746256923689
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4861420018,
+          "step_total_ns": 4851420401,
+          "step_min_ns": 684087,
+          "step_max_ns": 23106240,
+          "p50_ns": 1066609,
+          "p95_ns": 2589558,
+          "p99_ns": 5162274,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284746283986534,
+          "end_ns": 6284751145406552
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4850566394,
+          "step_total_ns": 4840357976,
+          "step_min_ns": 683211,
+          "step_max_ns": 23125146,
+          "p50_ns": 1065918,
+          "p95_ns": 2586096,
+          "p99_ns": 5112251,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284751172814346,
+          "end_ns": 6284756023380740
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4857639566,
+          "step_total_ns": 4847694269,
+          "step_min_ns": 685589,
+          "step_max_ns": 23139987,
+          "p50_ns": 1069568,
+          "p95_ns": 2589716,
+          "p99_ns": 5120907,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284756048908380,
+          "end_ns": 6284760906547946
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4852197986,
+          "step_total_ns": 4842129108,
+          "step_min_ns": 683510,
+          "step_max_ns": 23170269,
+          "p50_ns": 1065660,
+          "p95_ns": 2588232,
+          "p99_ns": 5130072,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284760932187473,
+          "end_ns": 6284765784385459
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4859021132,
+          "step_total_ns": 4849091209,
+          "step_min_ns": 685051,
+          "step_max_ns": 23207433,
+          "p50_ns": 1067440,
+          "p95_ns": 2594589,
+          "p99_ns": 5099333,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284765810012324,
+          "end_ns": 6284770669033456
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4853573900,
+          "step_total_ns": 4843676569,
+          "step_min_ns": 683785,
+          "step_max_ns": 23293079,
+          "p50_ns": 1065311,
+          "p95_ns": 2586384,
+          "p99_ns": 5156287,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284770694645388,
+          "end_ns": 6284775548219288
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4860264890,
+          "step_total_ns": 4850246896,
+          "step_min_ns": 685974,
+          "step_max_ns": 23117846,
+          "p50_ns": 1067667,
+          "p95_ns": 2591020,
+          "p99_ns": 5146922,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284775573857745,
+          "end_ns": 6284780434122635
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4854836629,
+          "step_total_ns": 4844906708,
+          "step_min_ns": 683748,
+          "step_max_ns": 23202448,
+          "p50_ns": 1066578,
+          "p95_ns": 2587236,
+          "p99_ns": 5094319,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284780459754469,
+          "end_ns": 6284785314591098
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4858486898,
+          "step_total_ns": 4848511466,
+          "step_min_ns": 685993,
+          "step_max_ns": 23129389,
+          "p50_ns": 1065630,
+          "p95_ns": 2591034,
+          "p99_ns": 5112709,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284785340073590,
+          "end_ns": 6284790198560488
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4854561442,
+          "step_total_ns": 4844600406,
+          "step_min_ns": 684336,
+          "step_max_ns": 23267345,
+          "p50_ns": 1063393,
+          "p95_ns": 2591609,
+          "p99_ns": 5130299,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284790224214411,
+          "end_ns": 6284795078775853
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4857987507,
+          "step_total_ns": 4848028904,
+          "step_min_ns": 623926,
+          "step_max_ns": 23263184,
+          "p50_ns": 1064033,
+          "p95_ns": 2593472,
+          "p99_ns": 5141200,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284795104378609,
+          "end_ns": 6284799962366116
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4855882359,
+          "step_total_ns": 4845838756,
+          "step_min_ns": 683200,
+          "step_max_ns": 23149197,
+          "p50_ns": 1063144,
+          "p95_ns": 2586662,
+          "p99_ns": 5117497,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284799988080763,
+          "end_ns": 6284804843963122
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4867135689,
+          "step_total_ns": 4857086176,
+          "step_min_ns": 683658,
+          "step_max_ns": 23258381,
+          "p50_ns": 1070940,
+          "p95_ns": 2595589,
+          "p99_ns": 5159687,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284804869639654,
+          "end_ns": 6284809736775343
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4860105144,
+          "step_total_ns": 4850108534,
+          "step_min_ns": 685075,
+          "step_max_ns": 23176901,
+          "p50_ns": 1070888,
+          "p95_ns": 2591388,
+          "p99_ns": 5150299,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284809762324413,
+          "end_ns": 6284814622429557
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4871860075,
+          "step_total_ns": 4861835047,
+          "step_min_ns": 686353,
+          "step_max_ns": 23179843,
+          "p50_ns": 1069901,
+          "p95_ns": 2594630,
+          "p99_ns": 5113656,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284814648115814,
+          "end_ns": 6284819519975889
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4857912436,
+          "step_total_ns": 4847890559,
+          "step_min_ns": 685169,
+          "step_max_ns": 23208104,
+          "p50_ns": 1064856,
+          "p95_ns": 2584395,
+          "p99_ns": 5154505,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284819545576403,
+          "end_ns": 6284824403488839
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4864610942,
+          "step_total_ns": 4854613993,
+          "step_min_ns": 687265,
+          "step_max_ns": 23134556,
+          "p50_ns": 1067492,
+          "p95_ns": 2593553,
+          "p99_ns": 5140256,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284824429274796,
+          "end_ns": 6284829293885738
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 4857142719,
+          "step_total_ns": 4847164530,
+          "step_min_ns": 684886,
+          "step_max_ns": 23157232,
+          "p50_ns": 1063579,
+          "p95_ns": 2588368,
+          "p99_ns": 5154860,
+          "peak_rss_kb": 487332,
+          "trace": 0,
+          "start_ns": 6284829319607484,
+          "end_ns": 6284834176750203
+        }
+      ],
+      "memory_samples": [
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        },
+        {
+          "rss_kb": -1,
+          "pss_kb": -1
+        }
+      ],
+      "scope": "step loop only; initialization, reset and terminal validation excluded",
+      "readiness": "UNVERIFIED",
+      "log_sha256": "62b54098478dacef66d574604c1ef5fed93cafdb6391121602e2ca546e837d11",
+      "normal_completion": true,
+      "native_finalized_matches": 20,
+      "events": [
+        {
+          "event": "avd_paused",
+          "monotonic_ns": 6284629141052250,
+          "utc_ns": 1793354125332507565,
+          "pid": 741163
+        },
+        {
+          "event": "start",
+          "monotonic_ns": 6284629141283689,
+          "utc_ns": 1793354125332738577
+        },
+        {
+          "event": "end",
+          "monotonic_ns": 6284844971989124,
+          "utc_ns": 1793354341163445480,
+          "returncode": 0
+        },
+        {
+          "event": "avd_resumed",
+          "monotonic_ns": 6284844973516178,
+          "utc_ns": 1793354341164971901
+        }
+      ],
+      "batch_seconds": 215.830705435,
+      "host_sampled_peak_rss_mib": 476.734375,
+      "observer_scope": "Baseline task bridge before five-phase identity instrumentation; same direct guest memcpy adaptation in all three translator runs",
+      "private_artifacts": [
+        {
+          "name": "arm64emu-benchmark-v1/stdout.log",
+          "bytes": 67719,
+          "sha256": "62b54098478dacef66d574604c1ef5fed93cafdb6391121602e2ca546e837d11"
+        },
+        {
+          "name": "arm64emu-benchmark-v1/stderr.log",
+          "bytes": 1248,
+          "sha256": "1aa4a13ad8120424b37129b3befefaef47a1dc501d250c4314c817468653b7a1"
+        },
+        {
+          "name": "arm64emu-benchmark-v1/command.json",
+          "bytes": 2990,
+          "sha256": "412fcb40fa8ec0dc316e72c039b426107b5367930faf5a34c4f7f7d09dac65b2"
+        },
+        {
+          "name": "arm64emu-benchmark-v1/events.json",
+          "bytes": 463,
+          "sha256": "da06ca04b49b1dddabe72480343e880b5bdf5bd65f0b541cf62beef41751e65f"
+        },
+        {
+          "name": "arm64emu-benchmark-v1/host-process.jsonl",
+          "bytes": 75962,
+          "sha256": "05db746a9f752b0b7880a842cf8feed087affe22cd1532cdcf87555dd1b55a6e"
+        },
+        {
+          "name": "arm64emu-benchmark-v1/exit.txt",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        }
+      ],
+      "median_latency_over_baseline": 2.240503916703949,
+      "throughput_over_baseline": 0.4467073501290094
+    },
+    "qemu_upstream": {
+      "schema": "nashura.headless-benchmark.v1",
+      "matches": 30,
+      "tick": 3601,
+      "terminal_digest": "6c959326dd2f09cc",
+      "terminal_bytes": 3091,
+      "trace": false,
+      "median_match_ms": 3106.610752,
+      "timed_seconds": 93.296379377,
+      "ticks_per_second": 1157.9227481429168,
+      "matches_per_second": 0.32155588673782753,
+      "step_percentiles_us": {
+        "p50": 615.401,
+        "p95": 2058.099,
+        "p99": 3602.897
+      },
+      "peak_rss_mib": 345.21484375,
+      "sampled_rss_peak_mib": 346.17578125,
+      "sampled_pss_peak_mib": 346.0,
+      "memory_sample_counts": {
+        "rss_kb": 30,
+        "pss_kb": 30
+      },
+      "samples": [
+        {
+          "completed": 3601,
+          "wall_ns": 3195731453,
+          "step_total_ns": 3183036169,
+          "step_min_ns": 308352,
+          "step_max_ns": 21753598,
+          "p50_ns": 618198,
+          "p95_ns": 2079660,
+          "p99_ns": 3957669,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285023327176235,
+          "end_ns": 6285026522907688
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3102021971,
+          "step_total_ns": 3089912485,
+          "step_min_ns": 308732,
+          "step_max_ns": 12256345,
+          "p50_ns": 612259,
+          "p95_ns": 2048982,
+          "p99_ns": 3587448,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285026596497305,
+          "end_ns": 6285029698519276
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3109145320,
+          "step_total_ns": 3097086785,
+          "step_min_ns": 308098,
+          "step_max_ns": 12193067,
+          "p50_ns": 615856,
+          "p95_ns": 2059877,
+          "p99_ns": 3591764,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285029737891955,
+          "end_ns": 6285032847037275
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3105197190,
+          "step_total_ns": 3093275429,
+          "step_min_ns": 308210,
+          "step_max_ns": 12188485,
+          "p50_ns": 613241,
+          "p95_ns": 2059703,
+          "p99_ns": 3598288,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285032886325118,
+          "end_ns": 6285035991522308
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3106142198,
+          "step_total_ns": 3094195491,
+          "step_min_ns": 308420,
+          "step_max_ns": 12190648,
+          "p50_ns": 616347,
+          "p95_ns": 2056920,
+          "p99_ns": 3591269,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285036030467424,
+          "end_ns": 6285039136609622
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3107926120,
+          "step_total_ns": 3095845816,
+          "step_min_ns": 308338,
+          "step_max_ns": 12187716,
+          "p50_ns": 616127,
+          "p95_ns": 2058955,
+          "p99_ns": 3591590,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285039175505373,
+          "end_ns": 6285042283431493
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3107624591,
+          "step_total_ns": 3095603374,
+          "step_min_ns": 308098,
+          "step_max_ns": 12184194,
+          "p50_ns": 616410,
+          "p95_ns": 2055835,
+          "p99_ns": 3613745,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285042322517653,
+          "end_ns": 6285045430142244
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3110512359,
+          "step_total_ns": 3098366207,
+          "step_min_ns": 308152,
+          "step_max_ns": 12273659,
+          "p50_ns": 614595,
+          "p95_ns": 2062683,
+          "p99_ns": 3609538,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285045469550486,
+          "end_ns": 6285048580062845
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3106246866,
+          "step_total_ns": 3094215751,
+          "step_min_ns": 308144,
+          "step_max_ns": 12189582,
+          "p50_ns": 614318,
+          "p95_ns": 2054750,
+          "p99_ns": 3604154,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285048619458556,
+          "end_ns": 6285051725705422
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3105520872,
+          "step_total_ns": 3093437249,
+          "step_min_ns": 308217,
+          "step_max_ns": 12180902,
+          "p50_ns": 615399,
+          "p95_ns": 2055465,
+          "p99_ns": 3605131,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285051764797612,
+          "end_ns": 6285054870318484
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3107721659,
+          "step_total_ns": 3095695425,
+          "step_min_ns": 308069,
+          "step_max_ns": 12183927,
+          "p50_ns": 614413,
+          "p95_ns": 2058395,
+          "p99_ns": 3616349,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285054909681598,
+          "end_ns": 6285058017403257
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3107844158,
+          "step_total_ns": 3095776702,
+          "step_min_ns": 307585,
+          "step_max_ns": 12206436,
+          "p50_ns": 615783,
+          "p95_ns": 2062710,
+          "p99_ns": 3613837,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285058056717610,
+          "end_ns": 6285061164561768
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3106700967,
+          "step_total_ns": 3094707481,
+          "step_min_ns": 308199,
+          "step_max_ns": 12257691,
+          "p50_ns": 613299,
+          "p95_ns": 2052033,
+          "p99_ns": 3605584,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285061203855196,
+          "end_ns": 6285064310556163
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3105814360,
+          "step_total_ns": 3093861329,
+          "step_min_ns": 307636,
+          "step_max_ns": 12222142,
+          "p50_ns": 615484,
+          "p95_ns": 2063263,
+          "p99_ns": 3586107,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285064349746479,
+          "end_ns": 6285067455560839
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3106307087,
+          "step_total_ns": 3094269950,
+          "step_min_ns": 308080,
+          "step_max_ns": 12325245,
+          "p50_ns": 614797,
+          "p95_ns": 2058668,
+          "p99_ns": 3598090,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285067494638846,
+          "end_ns": 6285070600945933
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3107425799,
+          "step_total_ns": 3095414311,
+          "step_min_ns": 308137,
+          "step_max_ns": 12262317,
+          "p50_ns": 616355,
+          "p95_ns": 2052904,
+          "p99_ns": 3593627,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285070640112365,
+          "end_ns": 6285073747538164
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3106478168,
+          "step_total_ns": 3094463399,
+          "step_min_ns": 307917,
+          "step_max_ns": 12191181,
+          "p50_ns": 615565,
+          "p95_ns": 2053007,
+          "p99_ns": 3619400,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285073786961219,
+          "end_ns": 6285076893439387
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3105392257,
+          "step_total_ns": 3093177220,
+          "step_min_ns": 307874,
+          "step_max_ns": 12185100,
+          "p50_ns": 615095,
+          "p95_ns": 2058488,
+          "p99_ns": 3607067,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285076932635954,
+          "end_ns": 6285080038028211
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3108494234,
+          "step_total_ns": 3096405662,
+          "step_min_ns": 308267,
+          "step_max_ns": 12178556,
+          "p50_ns": 615379,
+          "p95_ns": 2063813,
+          "p99_ns": 3604457,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285080077471353,
+          "end_ns": 6285083185965587
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3107154811,
+          "step_total_ns": 3095160264,
+          "step_min_ns": 307602,
+          "step_max_ns": 12290639,
+          "p50_ns": 613964,
+          "p95_ns": 2058735,
+          "p99_ns": 3609662,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285083225172064,
+          "end_ns": 6285086332326875
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3107935129,
+          "step_total_ns": 3095953045,
+          "step_min_ns": 308280,
+          "step_max_ns": 12210701,
+          "p50_ns": 614307,
+          "p95_ns": 2054325,
+          "p99_ns": 3609882,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285086371418645,
+          "end_ns": 6285089479353774
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3104276028,
+          "step_total_ns": 3092218302,
+          "step_min_ns": 308117,
+          "step_max_ns": 12264490,
+          "p50_ns": 614221,
+          "p95_ns": 2057732,
+          "p99_ns": 3601640,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285089518360263,
+          "end_ns": 6285092622636291
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3105856174,
+          "step_total_ns": 3093838574,
+          "step_min_ns": 308291,
+          "step_max_ns": 12252496,
+          "p50_ns": 616235,
+          "p95_ns": 2052917,
+          "p99_ns": 3587399,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285092661650636,
+          "end_ns": 6285095767506810
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3107705395,
+          "step_total_ns": 3095691258,
+          "step_min_ns": 307605,
+          "step_max_ns": 12209088,
+          "p50_ns": 616549,
+          "p95_ns": 2056905,
+          "p99_ns": 3596776,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285095806931009,
+          "end_ns": 6285098914636404
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3106326390,
+          "step_total_ns": 3094230233,
+          "step_min_ns": 308303,
+          "step_max_ns": 12185068,
+          "p50_ns": 616208,
+          "p95_ns": 2059345,
+          "p99_ns": 3637917,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285098953956263,
+          "end_ns": 6285102060282653
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3109122686,
+          "step_total_ns": 3097015839,
+          "step_min_ns": 308164,
+          "step_max_ns": 12196721,
+          "p50_ns": 614231,
+          "p95_ns": 2054980,
+          "p99_ns": 3641208,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285102099462586,
+          "end_ns": 6285105208585272
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3106102233,
+          "step_total_ns": 3094047196,
+          "step_min_ns": 308055,
+          "step_max_ns": 12182958,
+          "p50_ns": 615313,
+          "p95_ns": 2055068,
+          "p99_ns": 3592093,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285105247720852,
+          "end_ns": 6285108353823085
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3106520537,
+          "step_total_ns": 3094429518,
+          "step_min_ns": 308411,
+          "step_max_ns": 12175747,
+          "p50_ns": 615622,
+          "p95_ns": 2058371,
+          "p99_ns": 3597110,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285108393125288,
+          "end_ns": 6285111499645825
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3105157673,
+          "step_total_ns": 3093173720,
+          "step_min_ns": 307866,
+          "step_max_ns": 12187691,
+          "p50_ns": 615761,
+          "p95_ns": 2060550,
+          "p99_ns": 3594016,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285111539032647,
+          "end_ns": 6285114644190320
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 3111974692,
+          "step_total_ns": 3099922901,
+          "step_min_ns": 308128,
+          "step_max_ns": 12181236,
+          "p50_ns": 615403,
+          "p95_ns": 2057827,
+          "p99_ns": 3596977,
+          "peak_rss_kb": 353500,
+          "trace": 0,
+          "start_ns": 6285114683166387,
+          "end_ns": 6285117795141079
+        }
+      ],
+      "memory_samples": [
+        {
+          "rss_kb": 354324,
+          "pss_kb": 354144
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354480,
+          "pss_kb": 354300
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354480,
+          "pss_kb": 354300
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354476,
+          "pss_kb": 354296
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354480,
+          "pss_kb": 354300
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354480,
+          "pss_kb": 354300
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354480,
+          "pss_kb": 354300
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        },
+        {
+          "rss_kb": 354484,
+          "pss_kb": 354304
+        }
+      ],
+      "scope": "step loop only; initialization, reset and terminal validation excluded",
+      "readiness": "UNVERIFIED",
+      "log_sha256": "bcc7fdaa1febfe67461501a8cda7e8d08299b1b9b50e1803f6df2d4965b88c81",
+      "normal_completion": true,
+      "native_finalized_matches": 30,
+      "events": [
+        {
+          "event": "previous_avd_not_running",
+          "monotonic_ns": 6284965333124523,
+          "utc_ns": 1793354461524580609,
+          "pid": 741163
+        },
+        {
+          "event": "start",
+          "monotonic_ns": 6284965333710289,
+          "utc_ns": 1793354461525165527
+        },
+        {
+          "event": "end",
+          "monotonic_ns": 6285128929687023,
+          "utc_ns": 1793354625121143008,
+          "returncode": 0
+        }
+      ],
+      "batch_seconds": 163.595976734,
+      "host_sampled_peak_rss_mib": 348.29296875,
+      "observer_scope": "Baseline task bridge before five-phase identity instrumentation; same direct guest memcpy adaptation in all three translator runs",
+      "private_artifacts": [
+        {
+          "name": "qemu-upstream-benchmark-v1/stdout.log",
+          "bytes": 93293,
+          "sha256": "bcc7fdaa1febfe67461501a8cda7e8d08299b1b9b50e1803f6df2d4965b88c81"
+        },
+        {
+          "name": "qemu-upstream-benchmark-v1/stderr.log",
+          "bytes": 1160,
+          "sha256": "83fbf347935570afd2991d4d540d2c82b7b8a625626dc2a8cc714300ea977c39"
+        },
+        {
+          "name": "qemu-upstream-benchmark-v1/command.json",
+          "bytes": 3410,
+          "sha256": "e8dd761698ead9abf87f497cf676e7fa0cae3dd0203d3440d83692604bc16a8f"
+        },
+        {
+          "name": "qemu-upstream-benchmark-v1/events.json",
+          "bytes": 368,
+          "sha256": "8de0cd9af0ae7d9c35932d899ee375b3e91c55583835d497769c6cb270d96f3b"
+        },
+        {
+          "name": "qemu-upstream-benchmark-v1/host-process.jsonl",
+          "bytes": 57459,
+          "sha256": "1e779e987dff67d5a15c8ebaa829880958cf7e59b6badf4cb094e956eb497540"
+        },
+        {
+          "name": "qemu-upstream-benchmark-v1/exit.txt",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        }
+      ],
+      "median_latency_over_baseline": 1.4327799994575552,
+      "throughput_over_baseline": 0.698095039131349
+    },
+    "qemu_baseline": {
+      "schema": "nashura.headless-benchmark.v1",
+      "matches": 30,
+      "tick": 3601,
+      "terminal_digest": "6c959326dd2f09cc",
+      "terminal_bytes": 3091,
+      "trace": false,
+      "median_match_ms": 2168.2398925,
+      "timed_seconds": 65.129739612,
+      "ticks_per_second": 1658.6892661259117,
+      "matches_per_second": 0.4606190686270235,
+      "step_percentiles_us": {
+        "p50": 439.271,
+        "p95": 1399.9105,
+        "p99": 2477.0845
+      },
+      "peak_rss_mib": 354.51171875,
+      "sampled_rss_peak_mib": 355.51171875,
+      "sampled_pss_peak_mib": 355.3359375,
+      "memory_sample_counts": {
+        "rss_kb": 30,
+        "pss_kb": 30
+      },
+      "samples": [
+        {
+          "completed": 3601,
+          "wall_ns": 2250834363,
+          "step_total_ns": 2240268323,
+          "step_min_ns": 216480,
+          "step_max_ns": 18708867,
+          "p50_ns": 442832,
+          "p95_ns": 1407423,
+          "p99_ns": 2754315,
+          "peak_rss_kb": 360628,
+          "trace": 0,
+          "start_ns": 6285184560604083,
+          "end_ns": 6285186811438446
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2170508326,
+          "step_total_ns": 2160552794,
+          "step_min_ns": 216801,
+          "step_max_ns": 8547146,
+          "p50_ns": 440100,
+          "p95_ns": 1399270,
+          "p99_ns": 2530017,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285186880639583,
+          "end_ns": 6285189051147909
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2169108299,
+          "step_total_ns": 2159156344,
+          "step_min_ns": 216925,
+          "step_max_ns": 8638555,
+          "p50_ns": 438939,
+          "p95_ns": 1401394,
+          "p99_ns": 2470542,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285189090232861,
+          "end_ns": 6285191259341160
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2167373804,
+          "step_total_ns": 2157432830,
+          "step_min_ns": 216420,
+          "step_max_ns": 8619587,
+          "p50_ns": 439195,
+          "p95_ns": 1399754,
+          "p99_ns": 2510167,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285191297497315,
+          "end_ns": 6285193464871119
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2168486861,
+          "step_total_ns": 2158552151,
+          "step_min_ns": 216323,
+          "step_max_ns": 8536338,
+          "p50_ns": 438327,
+          "p95_ns": 1399581,
+          "p99_ns": 2467804,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285193502730034,
+          "end_ns": 6285195671216895
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2168302028,
+          "step_total_ns": 2158268645,
+          "step_min_ns": 216298,
+          "step_max_ns": 8542649,
+          "p50_ns": 439380,
+          "p95_ns": 1400700,
+          "p99_ns": 2519435,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285195709081532,
+          "end_ns": 6285197877383560
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2168199988,
+          "step_total_ns": 2158254851,
+          "step_min_ns": 216811,
+          "step_max_ns": 8563189,
+          "p50_ns": 439287,
+          "p95_ns": 1396081,
+          "p99_ns": 2506093,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285197915492669,
+          "end_ns": 6285200083692657
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2166997313,
+          "step_total_ns": 2157050597,
+          "step_min_ns": 216723,
+          "step_max_ns": 8547679,
+          "p50_ns": 437514,
+          "p95_ns": 1398815,
+          "p99_ns": 2473140,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285200121599392,
+          "end_ns": 6285202288596705
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2166818921,
+          "step_total_ns": 2156836077,
+          "step_min_ns": 216685,
+          "step_max_ns": 8541316,
+          "p50_ns": 439001,
+          "p95_ns": 1399874,
+          "p99_ns": 2470783,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285202326626162,
+          "end_ns": 6285204493445083
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2166482610,
+          "step_total_ns": 2156546464,
+          "step_min_ns": 216492,
+          "step_max_ns": 8533935,
+          "p50_ns": 439336,
+          "p95_ns": 1405239,
+          "p99_ns": 2468540,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285204531395600,
+          "end_ns": 6285206697878210
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2167076924,
+          "step_total_ns": 2157115595,
+          "step_min_ns": 216589,
+          "step_max_ns": 8590597,
+          "p50_ns": 438937,
+          "p95_ns": 1397175,
+          "p99_ns": 2466161,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285206735998267,
+          "end_ns": 6285208903075191
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2165722973,
+          "step_total_ns": 2155775546,
+          "step_min_ns": 216522,
+          "step_max_ns": 8544504,
+          "p50_ns": 440644,
+          "p95_ns": 1398981,
+          "p99_ns": 2531436,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285208941214837,
+          "end_ns": 6285211106937810
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2167317658,
+          "step_total_ns": 2157375196,
+          "step_min_ns": 216769,
+          "step_max_ns": 8539104,
+          "p50_ns": 439186,
+          "p95_ns": 1399638,
+          "p99_ns": 2466779,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285211144763547,
+          "end_ns": 6285213312081205
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2167819577,
+          "step_total_ns": 2157853394,
+          "step_min_ns": 216526,
+          "step_max_ns": 8548557,
+          "p50_ns": 438878,
+          "p95_ns": 1402991,
+          "p99_ns": 2465001,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285213349780587,
+          "end_ns": 6285215517600164
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2171499383,
+          "step_total_ns": 2161480126,
+          "step_min_ns": 217080,
+          "step_max_ns": 8554772,
+          "p50_ns": 439449,
+          "p95_ns": 1400572,
+          "p99_ns": 2528734,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285215555882452,
+          "end_ns": 6285217727381835
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2166810464,
+          "step_total_ns": 2156795700,
+          "step_min_ns": 216414,
+          "step_max_ns": 8550819,
+          "p50_ns": 439005,
+          "p95_ns": 1394609,
+          "p99_ns": 2477578,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285217765840606,
+          "end_ns": 6285219932651070
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2168336395,
+          "step_total_ns": 2158297478,
+          "step_min_ns": 216781,
+          "step_max_ns": 8550230,
+          "p50_ns": 439820,
+          "p95_ns": 1403816,
+          "p99_ns": 2532464,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285219970572102,
+          "end_ns": 6285222138908497
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2168865240,
+          "step_total_ns": 2158855820,
+          "step_min_ns": 216721,
+          "step_max_ns": 8544741,
+          "p50_ns": 439255,
+          "p95_ns": 1396603,
+          "p99_ns": 2476591,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285222177079758,
+          "end_ns": 6285224345944998
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2168159841,
+          "step_total_ns": 2157714404,
+          "step_min_ns": 216286,
+          "step_max_ns": 8546431,
+          "p50_ns": 439551,
+          "p95_ns": 1398701,
+          "p99_ns": 2484783,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285224384315129,
+          "end_ns": 6285226552474970
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2168024123,
+          "step_total_ns": 2158064824,
+          "step_min_ns": 216646,
+          "step_max_ns": 8553570,
+          "p50_ns": 440871,
+          "p95_ns": 1398882,
+          "p99_ns": 2522130,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285226590814369,
+          "end_ns": 6285228758838492
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2168238715,
+          "step_total_ns": 2158297150,
+          "step_min_ns": 216877,
+          "step_max_ns": 8542335,
+          "p50_ns": 439540,
+          "p95_ns": 1399947,
+          "p99_ns": 2529569,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285228797076234,
+          "end_ns": 6285230965314949
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2168586293,
+          "step_total_ns": 2158521759,
+          "step_min_ns": 216583,
+          "step_max_ns": 8537843,
+          "p50_ns": 440275,
+          "p95_ns": 1400497,
+          "p99_ns": 2470737,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285231003482363,
+          "end_ns": 6285233172068656
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2169535230,
+          "step_total_ns": 2159524742,
+          "step_min_ns": 216818,
+          "step_max_ns": 8636247,
+          "p50_ns": 438373,
+          "p95_ns": 1404900,
+          "p99_ns": 2488436,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285233210553427,
+          "end_ns": 6285235380088657
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2167328216,
+          "step_total_ns": 2157397707,
+          "step_min_ns": 216834,
+          "step_max_ns": 8644799,
+          "p50_ns": 438878,
+          "p95_ns": 1400945,
+          "p99_ns": 2467636,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285235418314416,
+          "end_ns": 6285237585642632
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2168835398,
+          "step_total_ns": 2158843422,
+          "step_min_ns": 216296,
+          "step_max_ns": 8619926,
+          "p50_ns": 440146,
+          "p95_ns": 1396412,
+          "p99_ns": 2469954,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285237623882211,
+          "end_ns": 6285239792717609
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2168241070,
+          "step_total_ns": 2158286315,
+          "step_min_ns": 217228,
+          "step_max_ns": 8625467,
+          "p50_ns": 438389,
+          "p95_ns": 1400393,
+          "p99_ns": 2466308,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285239830920372,
+          "end_ns": 6285241999161442
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2167696372,
+          "step_total_ns": 2157738940,
+          "step_min_ns": 216912,
+          "step_max_ns": 8627299,
+          "p50_ns": 439250,
+          "p95_ns": 1394999,
+          "p99_ns": 2470958,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285242037050287,
+          "end_ns": 6285244204746659
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2168864578,
+          "step_total_ns": 2158822218,
+          "step_min_ns": 216771,
+          "step_max_ns": 8566487,
+          "p50_ns": 439448,
+          "p95_ns": 1403998,
+          "p99_ns": 2468852,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285244242668265,
+          "end_ns": 6285246411532843
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2170502546,
+          "step_total_ns": 2160379052,
+          "step_min_ns": 216559,
+          "step_max_ns": 8559638,
+          "p50_ns": 441223,
+          "p95_ns": 1403691,
+          "p99_ns": 2533042,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285246450148016,
+          "end_ns": 6285248620650562
+        },
+        {
+          "completed": 3601,
+          "wall_ns": 2169166103,
+          "step_total_ns": 2159092010,
+          "step_min_ns": 216775,
+          "step_max_ns": 8553479,
+          "p50_ns": 438866,
+          "p95_ns": 1401592,
+          "p99_ns": 2499924,
+          "peak_rss_kb": 363020,
+          "trace": 0,
+          "start_ns": 6285248658811380,
+          "end_ns": 6285250827977483
+        }
+      ],
+      "memory_samples": [
+        {
+          "rss_kb": 361852,
+          "pss_kb": 361672
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364036,
+          "pss_kb": 363856
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364040,
+          "pss_kb": 363860
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364036,
+          "pss_kb": 363856
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364040,
+          "pss_kb": 363860
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        },
+        {
+          "rss_kb": 364036,
+          "pss_kb": 363856
+        },
+        {
+          "rss_kb": 364044,
+          "pss_kb": 363864
+        }
+      ],
+      "scope": "step loop only; initialization, reset and terminal validation excluded",
+      "readiness": "UNVERIFIED",
+      "log_sha256": "86d5bb2f6737b447df1bead4c74451e1b7dd0174b9240796b726d395005c4457",
+      "normal_completion": true,
+      "native_finalized_matches": 30,
+      "events": [
+        {
+          "event": "previous_avd_not_running",
+          "monotonic_ns": 6285128934948044,
+          "utc_ns": 1793354625126403583,
+          "pid": 741163
+        },
+        {
+          "event": "start",
+          "monotonic_ns": 6285128935577878,
+          "utc_ns": 1793354625127033051
+        },
+        {
+          "event": "end",
+          "monotonic_ns": 6285261400620193,
+          "utc_ns": 1793354757592076575,
+          "returncode": 0
+        }
+      ],
+      "batch_seconds": 132.465042315,
+      "host_sampled_peak_rss_mib": 358.8984375,
+      "observer_scope": "Baseline task bridge before five-phase identity instrumentation; same direct guest memcpy adaptation in all three translator runs",
+      "private_artifacts": [
+        {
+          "name": "qemu-baseline-direct-benchmark-v1/stdout.log",
+          "bytes": 93114,
+          "sha256": "86d5bb2f6737b447df1bead4c74451e1b7dd0174b9240796b726d395005c4457"
+        },
+        {
+          "name": "qemu-baseline-direct-benchmark-v1/stderr.log",
+          "bytes": 1160,
+          "sha256": "83fbf347935570afd2991d4d540d2c82b7b8a625626dc2a8cc714300ea977c39"
+        },
+        {
+          "name": "qemu-baseline-direct-benchmark-v1/command.json",
+          "bytes": 3281,
+          "sha256": "de65b8b1c72c9664ec95bb01a8e7fdce93ad692b23188539e9f68eeb6957b6a2"
+        },
+        {
+          "name": "qemu-baseline-direct-benchmark-v1/events.json",
+          "bytes": 368,
+          "sha256": "47e79008d97cf31b43e5b24105b4da2c71a6ddfb448f3203c2ee85371f2517ef"
+        },
+        {
+          "name": "qemu-baseline-direct-benchmark-v1/host-process.jsonl",
+          "bytes": 46434,
+          "sha256": "b87d519c103daf3f7132a0c4962d971a64fed4387f16d263a44a1debe4430791"
+        },
+        {
+          "name": "qemu-baseline-direct-benchmark-v1/exit.txt",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        }
+      ],
+      "median_latency_over_baseline": 1.0,
+      "throughput_over_baseline": 1.0
+    }
+  },
+  "ordering": {
+    "sequential": [
+      "arm64emu",
+      "qemu_upstream",
+      "qemu_baseline"
+    ],
+    "no_overlap": true,
+    "initial_avd_paused_during_arm64emu": true,
+    "avd_disappeared_after_resume": true,
+    "avd_cause": "Unattributed; original log retained; not claimed intentional shutdown",
+    "avd_absent_during_both_qemu_runs": true,
+    "avd_restored_after_measurements": true,
+    "restored_boot_completed": true
+  },
+  "correctness": {
+    "archives": {
+      "arm64emu": {
+        "result": {
+          "schema": "nashura.headless-snapshot-comparison.v1",
+          "first_tick": 0,
+          "final_tick": 3601,
+          "records": 3602,
+          "equal": true,
+          "different_ticks": [],
+          "scope": "original serializer payloads; excludes process/global state outside serialization"
+        },
+        "archive_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206",
+        "evidence": {
+          "name": "arm64emu-archive-comparison-v1.json",
+          "bytes": 378,
+          "sha256": "d1143c8cb56793f0f7f7d218f4cd9633cfbbba11fa30fa1dd18dc2645b14f789"
+        }
+      },
+      "qemu_upstream": {
+        "result": {
+          "schema": "nashura.headless-snapshot-comparison.v1",
+          "first_tick": 0,
+          "final_tick": 3601,
+          "records": 3602,
+          "equal": true,
+          "different_ticks": [],
+          "scope": "original serializer payloads; excludes process/global state outside serialization"
+        },
+        "archive_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206",
+        "evidence": {
+          "name": "qemu-upstream-archive-v1.json",
+          "bytes": 378,
+          "sha256": "d1143c8cb56793f0f7f7d218f4cd9633cfbbba11fa30fa1dd18dc2645b14f789"
+        }
+      }
+    },
+    "scope": "Original serializer adapter only; excludes unrecorded state, original wrapper equivalence and other fixtures"
+  },
+  "observer": {
+    "binary": {
+      "bytes": 160584,
+      "sha256": "2f8b3618558ac0ad18086bc50e2fe43592141bc2593f8232ebea57eb5834976c"
+    },
+    "patch": "tools/pure_linux/server_android/arm64emu-direct-guest-observer.patch",
+    "base_git_commit": "09b54a868096eafc0c49f3a983f9cd104ab9ee04",
+    "base_source_sha256": "0fc7997c81b493e160fac5da64d8e6638194548b0978791ba2096964a2bfd5ff",
+    "direct_source": {
+      "name": "art_headless_task_bridge_direct_guest.c",
+      "bytes": 56040,
+      "sha256": "7fb49ce8ae6fba9911fce26af14f409a466e06f98797072ed8db5f8c75dfbedd"
+    },
+    "adaptation": "Read actual translated guest pointer bytes via memcpy instead of /proc/self/mem; preserved baseline object/vtable/entry checks",
+    "boundary": "Direct reads may fault on invalid pointers; no general safe read fallback. Observer diagnostic state remains READ_UNAVAILABLE under arm64emu; timed step calls unchanged",
+    "newer_five_phase_identity_instrumentation": false
+  },
+  "synthetic": {
+    "arm64emu": {
+      "integer": {
+        "median_ms": 330.836073,
+        "outputs": [
+          "9e4ef00cd75c5557"
+        ]
+      },
+      "floating": {
+        "median_ms": 364.85439,
+        "outputs": [
+          "12.573715178738455"
+        ]
+      }
+    },
+    "scope": "Separate dynamic-linked executable; fixed same source and outputs; not predictive of real match performance",
+    "binary_sha256": "53b98b404c2ceae6f87d2dbf6c84d3a4e71f484fde1fb0ff2e5706c7e8b441d5"
+  },
+  "failed_attempts": {
+    "arm64emu-preflight-v1": {
+      "stdout.log": {
+        "bytes": 9318,
+        "sha256": "2c5f0d148cff72ee99369fe6bf8db8e8f4b26a15396578772294e5b3589a00b6"
+      },
+      "stderr.log": {
+        "bytes": 1104,
+        "sha256": "9fe999f979a7f1ed0132fa7f94e3c760849901eaf9259b1553f0bc3b4cddf9f2"
+      },
+      "command.json": {
+        "bytes": 2831,
+        "sha256": "daf061b0b131aa0d79f9ba0421b840d70855ab475871cb38c5c458cd2a7ea26e"
+      }
+    },
+    "qemu-10.2.3-preflight-v1": {
+      "stdout.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr.log": {
+        "bytes": 921,
+        "sha256": "24416e5df08aee14982b94bb263c6200852af5c7a5f6230bcd5b8e93fd6224be"
+      },
+      "command.json": {
+        "bytes": 3229,
+        "sha256": "e160d5f29d0a7fd3d750df535ed5ed4e6982eacc7444cb6d137bff213e544b57"
+      }
+    },
+    "qemu-10.2.3-preflight-v2": {
+      "stdout.log": {
+        "bytes": 69,
+        "sha256": "1ddd30ebd0f63ae111035dbf7ab96853dda4fa570ed78e72da8f00dedf6ac474"
+      },
+      "stderr.log": {
+        "bytes": 250,
+        "sha256": "92da47d0a55dbc25836bb5742f3f3319de685f38898f7f063808cea4cda584ea"
+      },
+      "command.json": {
+        "bytes": 3185,
+        "sha256": "5dcff4bee2a9207ff7bfb615ef92070b44988afb3ada1ac8d3d620536ffd159c"
+      }
+    }
+  },
+  "failure_interpretation": {
+    "arm64emu_v1": "Observer /proc/self/mem unavailable; task -3; adapted own observer, not engine",
+    "tonistiigi_qemu_10_2_3": "Patched distribution failed explicit-linker argv path, then RuntimeInit registration; not a general engine compatibility verdict",
+    "upstream_extraction": "Default data_filter rejected a ROM symlink; user-only build re-extracted without roms; no bypass of archive path validation",
+    "test_environment": "First python3 suite lacked cryptography: 16 failed, 1159 passed, 2 skipped; rerun existing /opt/anaconda3/bin/python: 1176 passed, 1 skipped"
+  },
+  "engineering_checks": {
+    "pure_linux": {
+      "passed": 1176,
+      "skipped": 1
+    },
+    "benchmark_parser_tests": 14,
+    "previous_public": {
+      "groups": 9,
+      "passed": 1104,
+      "skipped": 42
+    },
+    "previous_main_engine": {
+      "passed": 211
+    }
+  },
+  "memory_boundary": "arm64emu guest smaps RSS/PSS return -1: publish null and zero valid samples; host RSS and getrusage separately labelled",
+  "limits": [
+    "One fixed fixture and serial process",
+    "20 arm64emu vs 30 QEMU matches, not a paired independent-process statistical trial",
+    "Two QEMU binary versions also have different build configurations; no claim that version alone explains performance",
+    "No repeated cold-start or concurrency density measurement",
+    "No libg native x86 build or exact hotspot attribution",
+    "Headless whole goal remains UNVERIFIED"
+  ],
+  "private_artifacts": [
+    {
+      "name": "fex-compatibility-v2.json",
+      "bytes": 3076,
+      "sha256": "0c6399a64b8a300eaec7748fedc67ccebff97d04323ee407d5e8afa219b8fca8"
+    },
+    {
+      "name": "translator-provenance-v1.json",
+      "bytes": 5919,
+      "sha256": "3f1c540c7f905ae8a6663511be3771b68683f4cc59d09f5bba475a0e60fa720f"
+    },
+    {
+      "name": "qemu-upstream-pin.json",
+      "bytes": 384,
+      "sha256": "5b0ee97374f452fb2e10e7f1913dd49d5c50204a1ce342e16d6940a8d9c83cee"
+    },
+    {
+      "name": "qemu-upstream-binary-v1.json",
+      "bytes": 208,
+      "sha256": "59a71e69353f9ccc5e4e7327ba4394077fae761175efef3cfec77180d8f454e7"
+    },
+    {
+      "name": "arm64emu-cpu-v1.json",
+      "bytes": 1239,
+      "sha256": "00670ee88c95950723bc99c3b03d08cf823ef246c16299c749a540e466fdabfa"
+    },
+    {
+      "name": "run_arm64emu_benchmark_v1.py",
+      "bytes": 2919,
+      "sha256": "9d5e5dbc74c8bee4db2d7b5add67e8db9d41c4d53dbac2b699120ac7e9695a0c"
+    },
+    {
+      "name": "run_upstream_qemu_v1.py",
+      "bytes": 5500,
+      "sha256": "3a7f8fe9b2c6f1119aadc6f743192465d6cd798a4fb0b39ad16edaf788a9f866"
+    },
+    {
+      "name": "pure-linux-tests-alternatives.log",
+      "bytes": 19629,
+      "sha256": "4306a1157089be289e3a9c2c43be164f9b59ce714e154ff5f6343e2da291caf5"
+    },
+    {
+      "name": "pure-linux-tests-alternatives-correct-env.log",
+      "bytes": 1392,
+      "sha256": "b128ec1c655406621c7f14d54afa1b11406ea16b4e90fd0c3117acd5da95a5c9"
+    }
+  ]
+}
