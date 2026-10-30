@@ -1,5 +1,15 @@
 # Nashura
 
+## 2026-10-31：饱和平方距离 native 候选
+
+基于真实采样定位两种整数平方距离函数，保持 32 位差值回绕、饱和与条件性读取。
+ARM64 guest 的 2234256 组原始指令/候选对照通过；四组共八个完整局全帧及已
+观测状态一致。32 批 ABBA/BAAB、6912 局全部正常退出，批次中位耗时降低约
+0.91%–3.96%，聚合吞吐提高约 0.86%–3.51%；主机独立复算。候选默认关闭，
+不与旧 getter 收益相加；固定 VM 与最小依赖边界，整体目标继续进行。详见
+[报告](agent-handoff/SERIAL_ARM64_SATURATED_DISTANCE_2026-10-31.md)与
+[机器摘要](agent-handoff/serial-arm64-saturated-distance-evidence-20261031.json)。
+
 ## 2026-10-31：线程资源诊断与有界串行稳定性
 
 四组 warm-loop 独立诊断中，Mainloop 线程 CPU / 包围墙钟约 99.970%–99.987%，

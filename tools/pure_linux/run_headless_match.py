@@ -34,6 +34,7 @@ OPTIMIZATION_MARKERS = {
     "spatial-y-bound-v1": "offset=0xf34c84 target=0xf34c38",
     "hot-getters-v1": "sites=11",
     "component-getters-v1": "sites=52",
+    "saturated-distance-v1": "functions=2",
 }
 
 

@@ -1,0 +1,2341 @@
+{
+  "schema": "nashura.serial-arm64-saturated-distance-evidence.v1",
+  "date": "2026-10-31",
+  "base_commit": "5777a37ef2cab1614f577ef965298c0f45de762f",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "vm": {
+    "vcpus": 2,
+    "memory_mib": 6144,
+    "affinity": [
+      0,
+      1
+    ],
+    "configuration_changed": false
+  },
+  "static_audit": {
+    "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "arrays": {
+      "distance_pointer_original": {
+        "offset": "0x121b860",
+        "bytes": 92,
+        "sha256": "391b200948f568fbe7afcbc9a43e676cac1146c453c6f044937fdadc15f1a8b6"
+      },
+      "distance_scalar_original": {
+        "offset": "0x121b8bc",
+        "bytes": 84,
+        "sha256": "a28f8c01c69c18501c79baea977d086de618352bff52cddbb55be6d442dc20b3"
+      }
+    },
+    "direct_entry_refs": {
+      "0x121b860": [
+        {
+          "pc": "0xde4100",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xde4164",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xde4470",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xde44d4",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xe5b4f8",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf2e4ec",
+          "kind": "B"
+        },
+        {
+          "pc": "0xf2e6dc",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf2e9f8",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf2ef7c",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf2f040",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf2f0ec",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf35594",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf38854",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf3c0f4",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf3c108",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf4dba8",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf4dc88",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf4dca0",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf5e8d8",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf5e9d0",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf5ea24",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf5eab0",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf5ebd0",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf5eef8",
+          "kind": "BL"
+        }
+      ],
+      "0x121b8bc": [
+        {
+          "pc": "0xf16784",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf2a6f4",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf4a7c4",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf4a8bc",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf6660c",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf66728",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf670a0",
+          "kind": "BL"
+        },
+        {
+          "pc": "0xf671f4",
+          "kind": "BL"
+        }
+      ]
+    },
+    "external_direct_branches_into_interiors": [],
+    "scope": "fixed ELF executable PT_LOAD segments; direct branch targets only; no claim excluding all computed jumps or all inputs",
+    "abi_source": "https://github.com/ARM-software/abi-aa/blob/2025Q1/aapcs64/aapcs64.rst",
+    "abi_source_sha256": "5862a326f202ed68e21e27b35716481ff610825484d2a088191759b76fddcc03"
+  },
+  "candidate": "saturated-distance-v1",
+  "default_enabled": false,
+  "observer_sha256": "6e397f814aff95b0d45a378d91cff069032183dcfc3d0e079d57553025fbfc5d",
+  "instruction_check": {
+    "cases": 2234256,
+    "original_and_candidate_equal": true,
+    "conditional_y_read_preserved": true,
+    "exit_code": 0
+  },
+  "benchmark": {
+    "host_recomputed": true,
+    "matches": 6912,
+    "measured_matches": 6400,
+    "correctness": [
+      {
+        "case": "deck-a-seed-1",
+        "variant": "original",
+        "final_tick": 3601,
+        "frames": 3602,
+        "archive_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206",
+        "archive_bytes": 12334754,
+        "observed_lines": 730,
+        "full_frames_equal": true,
+        "observed_equal": true
+      },
+      {
+        "case": "deck-a-seed-1",
+        "variant": "distance",
+        "final_tick": 3601,
+        "frames": 3602,
+        "archive_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206",
+        "archive_bytes": 12334754,
+        "observed_lines": 730,
+        "full_frames_equal": true,
+        "observed_equal": true
+      },
+      {
+        "case": "deck-a-seed-7",
+        "variant": "original",
+        "final_tick": 3601,
+        "frames": 3602,
+        "archive_sha256": "06c0fbdd239ded1a6fac1af5c15860213a77d7b38ecfd7965b657fba85561101",
+        "archive_bytes": 12745766,
+        "observed_lines": 761,
+        "full_frames_equal": true,
+        "observed_equal": true
+      },
+      {
+        "case": "deck-a-seed-7",
+        "variant": "distance",
+        "final_tick": 3601,
+        "frames": 3602,
+        "archive_sha256": "06c0fbdd239ded1a6fac1af5c15860213a77d7b38ecfd7965b657fba85561101",
+        "archive_bytes": 12745766,
+        "observed_lines": 761,
+        "full_frames_equal": true,
+        "observed_equal": true
+      },
+      {
+        "case": "deck-b-seed-1",
+        "variant": "original",
+        "final_tick": 2154,
+        "frames": 2155,
+        "archive_sha256": "7c6f93900bd0b5bb625fa1f0e4d25f8ef5b3e4cc566f81f5a7dc289cfb93e925",
+        "archive_bytes": 5941764,
+        "observed_lines": 539,
+        "full_frames_equal": true,
+        "observed_equal": true
+      },
+      {
+        "case": "deck-b-seed-1",
+        "variant": "distance",
+        "final_tick": 2154,
+        "frames": 2155,
+        "archive_sha256": "7c6f93900bd0b5bb625fa1f0e4d25f8ef5b3e4cc566f81f5a7dc289cfb93e925",
+        "archive_bytes": 5941764,
+        "observed_lines": 539,
+        "full_frames_equal": true,
+        "observed_equal": true
+      },
+      {
+        "case": "deck-b-seed-7",
+        "variant": "original",
+        "final_tick": 1989,
+        "frames": 1990,
+        "archive_sha256": "2339ed81ed21fdddb5e00cf578f23e7d3b816bbb41dafe50ae6d8a567d420d87",
+        "archive_bytes": 5505695,
+        "observed_lines": 531,
+        "full_frames_equal": true,
+        "observed_equal": true
+      },
+      {
+        "case": "deck-b-seed-7",
+        "variant": "distance",
+        "final_tick": 1989,
+        "frames": 1990,
+        "archive_sha256": "2339ed81ed21fdddb5e00cf578f23e7d3b816bbb41dafe50ae6d8a567d420d87",
+        "archive_bytes": 5505695,
+        "observed_lines": 531,
+        "full_frames_equal": true,
+        "observed_equal": true
+      }
+    ],
+    "cases": [
+      {
+        "case": "deck-a-seed-1",
+        "paths": {
+          "original": {
+            "batch_count": 4,
+            "median_batch_match_ms": 29.3526485,
+            "timed_seconds": 23.487105943,
+            "ticks_per_second": 122654.53253335292,
+            "matches_per_second": 34.06124202536876,
+            "step_percentiles_us": {
+              "p50": 5.5835,
+              "p95": 18.17725,
+              "p99": 24.584
+            }
+          },
+          "distance": {
+            "batch_count": 4,
+            "median_batch_match_ms": 28.32747225,
+            "timed_seconds": 22.721993527,
+            "ticks_per_second": 126784.65014862426,
+            "matches_per_second": 35.208178325083104,
+            "step_percentiles_us": {
+              "p50": 5.479,
+              "p95": 17.261,
+              "p99": 23.386
+            }
+          }
+        },
+        "match_ms_change_percent": -3.492619243541184,
+        "throughput_change_percent": 3.367276797657892,
+        "interleaved_block_match_ms_changes_percent": [
+          -2.361425406016293,
+          -4.151459962033199
+        ],
+        "runs": [
+          {
+            "index": 1,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "6c959326dd2f09cc",
+              "terminal_bytes": 3091,
+              "trace": false,
+              "median_match_ms": 29.1742095,
+              "match_wall_percentiles_ms": {
+                "p50": 29.170168,
+                "p95": 29.850106,
+                "p99": 30.421624
+              },
+              "timed_seconds": 5.832121,
+              "ticks_per_second": 123488.52158588616,
+              "matches_per_second": 34.29284131793562,
+              "step_percentiles_us": {
+                "p50": 5.542,
+                "p95": 18.0,
+                "p99": 23.959
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.333,
+                  "p90": 5.875
+                },
+                "p95": {
+                  "p10": 16.917,
+                  "p90": 22.792
+                },
+                "p99": {
+                  "p10": 22.542,
+                  "p90": 47.877
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.109375,
+              "sampled_rss_peak_mib": 258.20703125,
+              "sampled_pss_peak_mib": 257.96484375,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "27a076a2a359a3c80c7e5919b435ab6abcefb592c00013262ba1559f9b227222",
+            "plan_sha256": "ccf5505a40f8d45c2329d2e14c77edc8aaa0df92b9f0ea0b5806e3e7784d811a"
+          },
+          {
+            "index": 2,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "6c959326dd2f09cc",
+              "terminal_bytes": 3091,
+              "trace": false,
+              "median_match_ms": 28.338484,
+              "match_wall_percentiles_ms": {
+                "p50": 28.335567,
+                "p95": 29.958913,
+                "p99": 30.543057
+              },
+              "timed_seconds": 5.693771845,
+              "ticks_per_second": 126489.08660301263,
+              "matches_per_second": 35.126100139686926,
+              "step_percentiles_us": {
+                "p50": 5.5,
+                "p95": 17.313,
+                "p99": 23.438
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.25,
+                  "p90": 5.792
+                },
+                "p95": {
+                  "p10": 16.25,
+                  "p90": 22.084
+                },
+                "p99": {
+                  "p10": 21.584,
+                  "p90": 48.043
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 257.98828125,
+              "sampled_rss_peak_mib": 258.12890625,
+              "sampled_pss_peak_mib": 257.890625,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "a1bb82618b096ca59dfb9e21d6f7f8cd28676ecfb05a31e9b1ed21945c3f5d88",
+            "plan_sha256": "9be67b814e69196ec217e12bc34d30f82be1ca8b1168c4fd6bbb21bc108b604d"
+          },
+          {
+            "index": 3,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "6c959326dd2f09cc",
+              "terminal_bytes": 3091,
+              "trace": false,
+              "median_match_ms": 28.3164605,
+              "match_wall_percentiles_ms": {
+                "p50": 28.314315,
+                "p95": 28.883707,
+                "p99": 29.504893
+              },
+              "timed_seconds": 5.67203137,
+              "ticks_per_second": 126973.90987807601,
+              "matches_per_second": 35.26073587283422,
+              "step_percentiles_us": {
+                "p50": 5.458,
+                "p95": 17.209,
+                "p99": 23.334
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.209,
+                  "p90": 5.709
+                },
+                "p95": {
+                  "p10": 16.376,
+                  "p90": 21.959
+                },
+                "p99": {
+                  "p10": 21.709,
+                  "p90": 47.418
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.125,
+              "sampled_rss_peak_mib": 258.13671875,
+              "sampled_pss_peak_mib": 257.89453125,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "5e678378f63f64216a81e3d11170f7f2aaf99cad04e6ef6f6f8413f4b6ec40de",
+            "plan_sha256": "6d9f060524a63e63d62e3dda56139d54cefbd78735110952df4f1b4561897c6e"
+          },
+          {
+            "index": 4,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "6c959326dd2f09cc",
+              "terminal_bytes": 3091,
+              "trace": false,
+              "median_match_ms": 28.850956,
+              "match_wall_percentiles_ms": {
+                "p50": 28.850872,
+                "p95": 29.678482,
+                "p99": 30.578469
+              },
+              "timed_seconds": 5.79002168,
+              "ticks_per_second": 124386.40816971863,
+              "matches_per_second": 34.54218499575635,
+              "step_percentiles_us": {
+                "p50": 5.5005,
+                "p95": 17.8335,
+                "p99": 24.459
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.292,
+                  "p90": 5.792
+                },
+                "p95": {
+                  "p10": 16.876,
+                  "p90": 22.709
+                },
+                "p99": {
+                  "p10": 22.417,
+                  "p90": 48.001
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.62109375,
+              "sampled_rss_peak_mib": 258.58984375,
+              "sampled_pss_peak_mib": 258.34765625,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "9a0de54e59dd4847145b01eb47e96c55d3bc4b5e0f9fcc16efee6b17bfe4b5a3",
+            "plan_sha256": "6163b1704c084cd72d611b2e5fe48dc46e50a89c103bfce8db45b3974c1f36bc"
+          },
+          {
+            "index": 5,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "6c959326dd2f09cc",
+              "terminal_bytes": 3091,
+              "trace": false,
+              "median_match_ms": 28.5097715,
+              "match_wall_percentiles_ms": {
+                "p50": 28.508545,
+                "p95": 29.499331,
+                "p99": 31.083388
+              },
+              "timed_seconds": 5.720543387,
+              "ticks_per_second": 125897.13096777881,
+              "matches_per_second": 34.961713681693645,
+              "step_percentiles_us": {
+                "p50": 5.542,
+                "p95": 17.3545,
+                "p99": 23.5845
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.291,
+                  "p90": 5.792
+                },
+                "p95": {
+                  "p10": 16.251,
+                  "p90": 22.168
+                },
+                "p99": {
+                  "p10": 21.584,
+                  "p90": 47.293
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 257.9140625,
+              "sampled_rss_peak_mib": 258.03125,
+              "sampled_pss_peak_mib": 257.7890625,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "c09b3c55e2d6009120b3b1d8c22273cecc7f0998a39a9929f2fdf17904418665",
+            "plan_sha256": "ccb2708bc6131323d26b7b82eba20bc1ab7f289a89cd6b6883d9018fa74fc0fe"
+          },
+          {
+            "index": 6,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "6c959326dd2f09cc",
+              "terminal_bytes": 3091,
+              "trace": false,
+              "median_match_ms": 29.5963405,
+              "match_wall_percentiles_ms": {
+                "p50": 29.590736,
+                "p95": 31.004406,
+                "p99": 31.689177
+              },
+              "timed_seconds": 5.945764616,
+              "ticks_per_second": 121128.2394297864,
+              "matches_per_second": 33.63738945564743,
+              "step_percentiles_us": {
+                "p50": 5.667,
+                "p95": 18.3545,
+                "p99": 25.2305
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.458,
+                  "p90": 5.958
+                },
+                "p95": {
+                  "p10": 17.209,
+                  "p90": 23.501
+                },
+                "p99": {
+                  "p10": 22.875,
+                  "p90": 49.585
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.5625,
+              "sampled_rss_peak_mib": 258.671875,
+              "sampled_pss_peak_mib": 258.4296875,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "d7ebc152e24574544fdb18d708dd271d8fd2af47a957f4af65bf128f9b17bc35",
+            "plan_sha256": "645a0aeffc5fffe4922f1c599b77630310fd4446402d8b89bbe3dd477bbded80"
+          },
+          {
+            "index": 7,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "6c959326dd2f09cc",
+              "terminal_bytes": 3091,
+              "trace": false,
+              "median_match_ms": 29.5310875,
+              "match_wall_percentiles_ms": {
+                "p50": 29.5264,
+                "p95": 30.571725,
+                "p99": 31.475254
+              },
+              "timed_seconds": 5.919198647,
+              "ticks_per_second": 121671.8753585024,
+              "matches_per_second": 33.788357500278366,
+              "step_percentiles_us": {
+                "p50": 5.625,
+                "p95": 18.5,
+                "p99": 24.709
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.375,
+                  "p90": 5.876
+                },
+                "p95": {
+                  "p10": 17.209,
+                  "p90": 23.251
+                },
+                "p99": {
+                  "p10": 23.084,
+                  "p90": 49.085
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.140625,
+              "sampled_rss_peak_mib": 258.234375,
+              "sampled_pss_peak_mib": 257.9921875,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "8ad80b9e91683b5810e865c69353b7cb04f1762d3578f9cb77a9187908eca112",
+            "plan_sha256": "124506d6101b56718a698579513ed775de7434e89a1a4c69812959c78e402eb0"
+          },
+          {
+            "index": 8,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "6c959326dd2f09cc",
+              "terminal_bytes": 3091,
+              "trace": false,
+              "median_match_ms": 28.163005,
+              "match_wall_percentiles_ms": {
+                "p50": 28.162523,
+                "p95": 28.627163,
+                "p99": 28.9858
+              },
+              "timed_seconds": 5.635646925,
+              "ticks_per_second": 127793.669402027,
+              "matches_per_second": 35.488383616225214,
+              "step_percentiles_us": {
+                "p50": 5.458,
+                "p95": 17.188,
+                "p99": 22.501
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.25,
+                  "p90": 5.708
+                },
+                "p95": {
+                  "p10": 16.042,
+                  "p90": 21.668
+                },
+                "p99": {
+                  "p10": 21.376,
+                  "p90": 47.293
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 259.04296875,
+              "sampled_rss_peak_mib": 259.078125,
+              "sampled_pss_peak_mib": 258.8359375,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "44ac570b29c2959c4874cb146b8bd1e7fc9e5aec89b9fc030f6fb9c9ae644928",
+            "plan_sha256": "583ae0190a8a02b5460eb72ad3b7ae2d948c4a6821515e1873088adecb58c8de"
+          }
+        ]
+      },
+      {
+        "case": "deck-a-seed-7",
+        "paths": {
+          "original": {
+            "batch_count": 4,
+            "median_batch_match_ms": 32.53030375,
+            "timed_seconds": 26.211369257999998,
+            "ticks_per_second": 109906.50551843064,
+            "matches_per_second": 30.521106781013785,
+            "step_percentiles_us": {
+              "p50": 6.20875,
+              "p95": 19.000500000000002,
+              "p99": 23.1675
+            }
+          },
+          "distance": {
+            "batch_count": 4,
+            "median_batch_match_ms": 31.24165025,
+            "timed_seconds": 25.322986269,
+            "ticks_per_second": 113762.2541590456,
+            "matches_per_second": 31.591850641223438,
+            "step_percentiles_us": {
+              "p50": 6.0215,
+              "p95": 17.979,
+              "p99": 22.04225
+            }
+          }
+        },
+        "match_ms_change_percent": -3.9613939971279932,
+        "throughput_change_percent": 3.50820783758643,
+        "interleaved_block_match_ms_changes_percent": [
+          -3.0051029036792687,
+          -3.2570900484165333
+        ],
+        "runs": [
+          {
+            "index": 1,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "17a67651dda08250",
+              "terminal_bytes": 3218,
+              "trace": false,
+              "median_match_ms": 31.6485365,
+              "match_wall_percentiles_ms": {
+                "p50": 31.647224,
+                "p95": 32.31287,
+                "p99": 32.921682
+              },
+              "timed_seconds": 6.334784388,
+              "ticks_per_second": 113689.74157420053,
+              "matches_per_second": 31.57171385009734,
+              "step_percentiles_us": {
+                "p50": 6.042,
+                "p95": 18.293,
+                "p99": 22.792
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.917,
+                  "p90": 6.209
+                },
+                "p95": {
+                  "p10": 17.625,
+                  "p90": 21.626
+                },
+                "p99": {
+                  "p10": 19.834,
+                  "p90": 47.877
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.25,
+              "sampled_rss_peak_mib": 258.41015625,
+              "sampled_pss_peak_mib": 258.16796875,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "9faa1876f03ef4040ea97dcd64f64a526a402aa5a0a0947f1d24cfd1706b3afc",
+            "plan_sha256": "b2ea4ef979165ab2f6bdda97870ff3edf1be3f01c1ae48a5bb614ef43201ef26"
+          },
+          {
+            "index": 2,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "17a67651dda08250",
+              "terminal_bytes": 3218,
+              "trace": false,
+              "median_match_ms": 30.6318155,
+              "match_wall_percentiles_ms": {
+                "p50": 30.630857,
+                "p95": 31.443842,
+                "p99": 31.872731
+              },
+              "timed_seconds": 6.142680437,
+              "ticks_per_second": 117245.23314967296,
+              "matches_per_second": 32.559076131539285,
+              "step_percentiles_us": {
+                "p50": 5.917,
+                "p95": 17.708,
+                "p99": 21.709
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.792,
+                  "p90": 6.084
+                },
+                "p95": {
+                  "p10": 16.834,
+                  "p90": 20.084
+                },
+                "p99": {
+                  "p10": 18.834,
+                  "p90": 47.669
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 259.37890625,
+              "sampled_rss_peak_mib": 258.85546875,
+              "sampled_pss_peak_mib": 258.61328125,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "e0a528744fd33af752abe2ea9756ec8c8a00b6e01673cd2eb9768ea807b80de0",
+            "plan_sha256": "d80bad590501d0d410753eb5fc25381a2de54f20842932989027c03755946e97"
+          },
+          {
+            "index": 3,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "17a67651dda08250",
+              "terminal_bytes": 3218,
+              "trace": false,
+              "median_match_ms": 31.635598,
+              "match_wall_percentiles_ms": {
+                "p50": 31.635264,
+                "p95": 34.322184,
+                "p99": 40.78535
+              },
+              "timed_seconds": 6.450248098,
+              "ticks_per_second": 111654.61995536408,
+              "matches_per_second": 31.00655927669094,
+              "step_percentiles_us": {
+                "p50": 6.084,
+                "p95": 18.25,
+                "p99": 22.2505
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.958,
+                  "p90": 6.292
+                },
+                "p95": {
+                  "p10": 17.501,
+                  "p90": 21.959
+                },
+                "p99": {
+                  "p10": 19.417,
+                  "p90": 50.335
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.2421875,
+              "sampled_rss_peak_mib": 258.32421875,
+              "sampled_pss_peak_mib": 258.08203125,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "54f1b2604099d17a2d5d6174df5ee3c9d4dedd341a77024741a23f2a352ebefa",
+            "plan_sha256": "925c0d535ccdff28801dd9639e33362de1f1464d350975f977bd893fbb2d2a81"
+          },
+          {
+            "index": 4,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "17a67651dda08250",
+              "terminal_bytes": 3218,
+              "trace": false,
+              "median_match_ms": 32.5480505,
+              "match_wall_percentiles_ms": {
+                "p50": 32.542968,
+                "p95": 35.174094,
+                "p99": 40.7764
+              },
+              "timed_seconds": 6.573584275,
+              "ticks_per_second": 109559.7120035401,
+              "matches_per_second": 30.42480200042769,
+              "step_percentiles_us": {
+                "p50": 6.167,
+                "p95": 18.959,
+                "p99": 22.9385
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 6.0,
+                  "p90": 6.417
+                },
+                "p95": {
+                  "p10": 18.125,
+                  "p90": 23.0
+                },
+                "p99": {
+                  "p10": 19.792,
+                  "p90": 50.876
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 257.80859375,
+              "sampled_rss_peak_mib": 258.03515625,
+              "sampled_pss_peak_mib": 257.79296875,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "b482ffbe72f67e64b3adb9218184cfc43f00bbcc34faa3e5c1040f0880013af6",
+            "plan_sha256": "9648a08592117529fac449c5afa58b77c083a624ecb4fc86f6be80154ffcd8b1"
+          },
+          {
+            "index": 5,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "17a67651dda08250",
+              "terminal_bytes": 3218,
+              "trace": false,
+              "median_match_ms": 30.8477025,
+              "match_wall_percentiles_ms": {
+                "p50": 30.847369,
+                "p95": 32.887477,
+                "p99": 34.896582
+              },
+              "timed_seconds": 6.21721311,
+              "ticks_per_second": 115839.68367460385,
+              "matches_per_second": 32.16875414457202,
+              "step_percentiles_us": {
+                "p50": 5.959,
+                "p95": 17.626,
+                "p99": 21.834
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.834,
+                  "p90": 6.208
+                },
+                "p95": {
+                  "p10": 17.001,
+                  "p90": 20.251
+                },
+                "p99": {
+                  "p10": 18.584,
+                  "p90": 47.794
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.26171875,
+              "sampled_rss_peak_mib": 258.44921875,
+              "sampled_pss_peak_mib": 258.20703125,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "ba14288c593d4b7b33562f2eaa0a186c6eecf6d7660ce83d23fe57cd2f908142",
+            "plan_sha256": "54e4e2336479c89da8e19fd3f20fa9f0a907d5340c999c71549c38d8dd97195a"
+          },
+          {
+            "index": 6,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "17a67651dda08250",
+              "terminal_bytes": 3218,
+              "trace": false,
+              "median_match_ms": 33.058857,
+              "match_wall_percentiles_ms": {
+                "p50": 33.058857,
+                "p95": 36.262544,
+                "p99": 36.748059
+              },
+              "timed_seconds": 6.703102606,
+              "ticks_per_second": 107442.78319048008,
+              "matches_per_second": 29.836929516934205,
+              "step_percentiles_us": {
+                "p50": 6.292,
+                "p95": 19.584,
+                "p99": 24.3965
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 6.0,
+                  "p90": 7.042
+                },
+                "p95": {
+                  "p10": 18.084,
+                  "p90": 22.835
+                },
+                "p99": {
+                  "p10": 19.834,
+                  "p90": 50.585
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 259.3828125,
+              "sampled_rss_peak_mib": 258.69140625,
+              "sampled_pss_peak_mib": 258.44921875,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "84eb76b10dc7d601bf2e0677d122957ce52afbd0e9119b433a463025832fbaf1",
+            "plan_sha256": "603d40db479a5201fe8de4457497df0501daddd9b8ae5453eabdb664ed839167"
+          },
+          {
+            "index": 7,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "17a67651dda08250",
+              "terminal_bytes": 3218,
+              "trace": false,
+              "median_match_ms": 32.512557,
+              "match_wall_percentiles_ms": {
+                "p50": 32.45093,
+                "p95": 35.540651,
+                "p99": 36.047461
+              },
+              "timed_seconds": 6.599897989,
+              "ticks_per_second": 109122.89874788246,
+              "matches_per_second": 30.30349868033392,
+              "step_percentiles_us": {
+                "p50": 6.2505,
+                "p95": 19.042,
+                "p99": 23.3965
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 6.042,
+                  "p90": 6.876
+                },
+                "p95": {
+                  "p10": 18.0,
+                  "p90": 21.918
+                },
+                "p99": {
+                  "p10": 19.834,
+                  "p90": 49.752
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.58203125,
+              "sampled_rss_peak_mib": 258.69140625,
+              "sampled_pss_peak_mib": 258.44921875,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "d5043b2aa24d893f1bc0f6054505a66d03edf5a3a5ca40381e1650522fc3bc85",
+            "plan_sha256": "6a6e578847851c910f676d5d059258df8a7834ea6720471ac328287a4b2c4633"
+          },
+          {
+            "index": 8,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 3601,
+              "terminal_digest": "17a67651dda08250",
+              "terminal_bytes": 3218,
+              "trace": false,
+              "median_match_ms": 32.5879915,
+              "match_wall_percentiles_ms": {
+                "p50": 32.579137,
+                "p95": 34.276776,
+                "p99": 34.487615
+              },
+              "timed_seconds": 6.512844624,
+              "ticks_per_second": 110581.48037894908,
+              "matches_per_second": 30.70854773089394,
+              "step_percentiles_us": {
+                "p50": 6.333,
+                "p95": 18.709,
+                "p99": 23.3965
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.958,
+                  "p90": 6.708
+                },
+                "p95": {
+                  "p10": 17.584,
+                  "p90": 22.001
+                },
+                "p99": {
+                  "p10": 20.0,
+                  "p90": 48.877
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 225.0,
+              "total_step_samples": 45013,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 259.06640625,
+              "sampled_rss_peak_mib": 258.33203125,
+              "sampled_pss_peak_mib": 258.08984375,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "6f0f24dc01ab16f0d119cbe97d2ee3205f948af829d2c3c39930e7386b679e33",
+            "plan_sha256": "5ea3211e1023a3846637fc1c414016b63f08b61203e6306d3ccf26727fd97aca"
+          }
+        ]
+      },
+      {
+        "case": "deck-b-seed-1",
+        "paths": {
+          "original": {
+            "batch_count": 4,
+            "median_batch_match_ms": 13.935556250000001,
+            "timed_seconds": 11.277527622,
+            "ticks_per_second": 152799.44840378064,
+            "matches_per_second": 70.9375340778926,
+            "step_percentiles_us": {
+              "p50": 5.8125,
+              "p95": 10.09425,
+              "p99": 11.90625
+            }
+          },
+          "distance": {
+            "batch_count": 4,
+            "median_batch_match_ms": 13.80887525,
+            "timed_seconds": 11.18090089,
+            "ticks_per_second": 154119.96018506878,
+            "matches_per_second": 71.55058504413591,
+            "step_percentiles_us": {
+              "p50": 5.7085,
+              "p95": 9.844000000000001,
+              "p99": 11.437750000000001
+            }
+          }
+        },
+        "match_ms_change_percent": -0.9090487507450673,
+        "throughput_change_percent": 0.8642124006878804,
+        "interleaved_block_match_ms_changes_percent": [
+          -0.2655534265137649,
+          -2.4761961941673682
+        ],
+        "runs": [
+          {
+            "index": 1,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 2154,
+              "terminal_digest": "90fc49ef96c98086",
+              "terminal_bytes": 2493,
+              "trace": false,
+              "median_match_ms": 13.990911,
+              "match_wall_percentiles_ms": {
+                "p50": 13.990369,
+                "p95": 15.470208,
+                "p99": 15.828178
+              },
+              "timed_seconds": 2.847168414,
+              "ticks_per_second": 151308.2253517863,
+              "matches_per_second": 70.24522996833161,
+              "step_percentiles_us": {
+                "p50": 5.833,
+                "p95": 10.1255,
+                "p99": 12.0
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.709,
+                  "p90": 6.333
+                },
+                "p95": {
+                  "p10": 9.292,
+                  "p90": 13.167
+                },
+                "p99": {
+                  "p10": 10.834,
+                  "p90": 21.376
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 135.0,
+              "total_step_samples": 26928,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 259.01953125,
+              "sampled_rss_peak_mib": 258.3828125,
+              "sampled_pss_peak_mib": 258.140625,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "7096829939996ffa9c06567ec94cfe61d0474a8289fa671dfbea55a7e69784fb",
+            "plan_sha256": "d9ec81694c5cb9e484f7eb848079fa51c417eff337ca80b9032ed3a27cff9ffc"
+          },
+          {
+            "index": 2,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 2154,
+              "terminal_digest": "90fc49ef96c98086",
+              "terminal_bytes": 2493,
+              "trace": false,
+              "median_match_ms": 14.1629575,
+              "match_wall_percentiles_ms": {
+                "p50": 14.153457,
+                "p95": 15.248326,
+                "p99": 15.541086
+              },
+              "timed_seconds": 2.854136118,
+              "ticks_per_second": 150938.84180333966,
+              "matches_per_second": 70.07374271278536,
+              "step_percentiles_us": {
+                "p50": 5.792,
+                "p95": 10.376,
+                "p99": 12.292
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.625,
+                  "p90": 6.333
+                },
+                "p95": {
+                  "p10": 9.209,
+                  "p90": 12.334
+                },
+                "p99": {
+                  "p10": 10.542,
+                  "p90": 21.293
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 135.0,
+              "total_step_samples": 26928,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.67578125,
+              "sampled_rss_peak_mib": 258.64453125,
+              "sampled_pss_peak_mib": 258.40234375,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "4dbccf2fc02c0991dc8586456cab0eee8cbd7c1ed09c5454fed719e3da8c2e53",
+            "plan_sha256": "43e874cd2b969161c67f13816c399e0c2297ed7bf855569f2a2720f3b6f9589a"
+          },
+          {
+            "index": 3,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 2154,
+              "terminal_digest": "90fc49ef96c98086",
+              "terminal_bytes": 2493,
+              "trace": false,
+              "median_match_ms": 14.1078535,
+              "match_wall_percentiles_ms": {
+                "p50": 14.107707,
+                "p95": 15.334831,
+                "p99": 26.219226
+              },
+              "timed_seconds": 2.914582673,
+              "ticks_per_second": 147808.4680838971,
+              "matches_per_second": 68.62045872047219,
+              "step_percentiles_us": {
+                "p50": 5.833,
+                "p95": 10.125,
+                "p99": 11.7505
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.708,
+                  "p90": 6.083
+                },
+                "p95": {
+                  "p10": 9.292,
+                  "p90": 15.042
+                },
+                "p99": {
+                  "p10": 10.75,
+                  "p90": 26.543
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 135.0,
+              "total_step_samples": 26928,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 259.41015625,
+              "sampled_rss_peak_mib": 258.515625,
+              "sampled_pss_peak_mib": 258.2734375,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "0248283bac8bc94e1ce10db892b91d9fbc8a21fd1711f0df2e7ed5b14d3c2368",
+            "plan_sha256": "444a348e2b9dfee34396cde6a5354c215b0ddbfe2a58555429a128173b5b9b3d"
+          },
+          {
+            "index": 4,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 2154,
+              "terminal_digest": "90fc49ef96c98086",
+              "terminal_bytes": 2493,
+              "trace": false,
+              "median_match_ms": 14.355174,
+              "match_wall_percentiles_ms": {
+                "p50": 14.355049,
+                "p95": 14.856982,
+                "p99": 15.097656
+              },
+              "timed_seconds": 2.8730558,
+              "ticks_per_second": 149944.8775063819,
+              "matches_per_second": 69.61229224994516,
+              "step_percentiles_us": {
+                "p50": 5.916,
+                "p95": 10.3545,
+                "p99": 12.0
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.75,
+                  "p90": 6.125
+                },
+                "p95": {
+                  "p10": 9.376,
+                  "p90": 12.792
+                },
+                "p99": {
+                  "p10": 11.126,
+                  "p90": 20.876
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 135.0,
+              "total_step_samples": 26928,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.0078125,
+              "sampled_rss_peak_mib": 258.1796875,
+              "sampled_pss_peak_mib": 257.9375,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "f3ae2233856ab79e7b92203f8f572588fc74f9fe6249802943921e15d57af459",
+            "plan_sha256": "c1fbf3099e469ccef4142579404c2fffc3027f330d565e5128288f5520f06003"
+          },
+          {
+            "index": 5,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 2154,
+              "terminal_digest": "90fc49ef96c98086",
+              "terminal_bytes": 2493,
+              "trace": false,
+              "median_match_ms": 13.509897,
+              "match_wall_percentiles_ms": {
+                "p50": 13.509814,
+                "p95": 13.718444,
+                "p99": 13.825448
+              },
+              "timed_seconds": 2.706329056,
+              "ticks_per_second": 159182.4168775432,
+              "matches_per_second": 73.90084349003864,
+              "step_percentiles_us": {
+                "p50": 5.625,
+                "p95": 9.459,
+                "p99": 11.125
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.542,
+                  "p90": 5.709
+                },
+                "p95": {
+                  "p10": 8.876,
+                  "p90": 11.792
+                },
+                "p99": {
+                  "p10": 10.375,
+                  "p90": 19.584
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 135.0,
+              "total_step_samples": 26928,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.16015625,
+              "sampled_rss_peak_mib": 258.15234375,
+              "sampled_pss_peak_mib": 257.91015625,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "eea9a656ae638f8b5c6b332dbce0303b24a7a6eeb1f8b355b0c5f0fd91e18919",
+            "plan_sha256": "c5e83e4e2ba79f9dc790d027e3fff52ff21b1bf61e97096ea3f3b45221af8af9"
+          },
+          {
+            "index": 6,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 2154,
+              "terminal_digest": "90fc49ef96c98086",
+              "terminal_bytes": 2493,
+              "trace": false,
+              "median_match_ms": 13.818573,
+              "match_wall_percentiles_ms": {
+                "p50": 13.817031,
+                "p95": 14.207752,
+                "p99": 14.377883
+              },
+              "timed_seconds": 2.773857497,
+              "ticks_per_second": 155307.18519820197,
+              "matches_per_second": 72.10175728793035,
+              "step_percentiles_us": {
+                "p50": 5.708,
+                "p95": 10.063,
+                "p99": 11.8125
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.625,
+                  "p90": 5.917
+                },
+                "p95": {
+                  "p10": 9.167,
+                  "p90": 12.209
+                },
+                "p99": {
+                  "p10": 10.75,
+                  "p90": 20.251
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 135.0,
+              "total_step_samples": 26928,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.44140625,
+              "sampled_rss_peak_mib": 258.3828125,
+              "sampled_pss_peak_mib": 258.140625,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "225f299ccd8071ebb01ac382fdc0919d3834effc5384207027e26552b496eab7",
+            "plan_sha256": "b0657b93754bfa7e6e9ee1015b89e6f759019f020acde604c05a3a6c11efb97e"
+          },
+          {
+            "index": 7,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 2154,
+              "terminal_digest": "90fc49ef96c98086",
+              "terminal_bytes": 2493,
+              "trace": false,
+              "median_match_ms": 13.8802015,
+              "match_wall_percentiles_ms": {
+                "p50": 13.880077,
+                "p95": 14.239838,
+                "p99": 14.464053
+              },
+              "timed_seconds": 2.783445911,
+              "ticks_per_second": 154772.18303309075,
+              "matches_per_second": 71.8533811667088,
+              "step_percentiles_us": {
+                "p50": 5.792,
+                "p95": 9.75,
+                "p99": 11.292
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.667,
+                  "p90": 5.917
+                },
+                "p95": {
+                  "p10": 9.125,
+                  "p90": 11.584
+                },
+                "p99": {
+                  "p10": 10.708,
+                  "p90": 20.001
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 135.0,
+              "total_step_samples": 26928,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.41796875,
+              "sampled_rss_peak_mib": 258.390625,
+              "sampled_pss_peak_mib": 258.1484375,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "ac30df1659cc963723c84329b92d8d64accdf809f69854611762a4152deb043a",
+            "plan_sha256": "1028da230e2286008b5eea0d58ef96aac12eafb7e08f4425a7191012bf756dbb"
+          },
+          {
+            "index": 8,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 2154,
+              "terminal_digest": "90fc49ef96c98086",
+              "terminal_bytes": 2493,
+              "trace": false,
+              "median_match_ms": 13.5030015,
+              "match_wall_percentiles_ms": {
+                "p50": 13.502897,
+                "p95": 13.797948,
+                "p99": 14.086374
+              },
+              "timed_seconds": 2.705853043,
+              "ticks_per_second": 159210.42020906231,
+              "matches_per_second": 73.91384410819978,
+              "step_percentiles_us": {
+                "p50": 5.625,
+                "p95": 9.563,
+                "p99": 11.1045
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.542,
+                  "p90": 5.75
+                },
+                "p95": {
+                  "p10": 8.958,
+                  "p90": 11.459
+                },
+                "p99": {
+                  "p10": 10.25,
+                  "p90": 19.542
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 135.0,
+              "total_step_samples": 26928,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.40625,
+              "sampled_rss_peak_mib": 258.546875,
+              "sampled_pss_peak_mib": 258.3046875,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "3187b463f60f5167869913adad9b260d8ac2c70189780f21cf8e3ec9781509d4",
+            "plan_sha256": "613b7eb9d567c09f4e9c3c0a5c720f232e6cce9d0dc4837c55377ac29dc0eeb9"
+          }
+        ]
+      },
+      {
+        "case": "deck-b-seed-7",
+        "paths": {
+          "original": {
+            "batch_count": 4,
+            "median_batch_match_ms": 13.53489875,
+            "timed_seconds": 10.855801892999999,
+            "ticks_per_second": 146575.99831717933,
+            "matches_per_second": 73.6933123766613,
+            "step_percentiles_us": {
+              "p50": 5.19825,
+              "p95": 12.792,
+              "p99": 14.86475
+            }
+          },
+          "distance": {
+            "batch_count": 4,
+            "median_batch_match_ms": 13.277963,
+            "timed_seconds": 10.711628828,
+            "ticks_per_second": 148548.83655421596,
+            "matches_per_second": 74.68518680453292,
+            "step_percentiles_us": {
+              "p50": 5.167,
+              "p95": 12.312750000000001,
+              "p99": 14.61475
+            }
+          }
+        },
+        "match_ms_change_percent": -1.8983204436605061,
+        "throughput_change_percent": 1.3459490364633675,
+        "interleaved_block_match_ms_changes_percent": [
+          -1.0989914333179862,
+          -2.601394677183133
+        ],
+        "runs": [
+          {
+            "index": 1,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 1989,
+              "terminal_digest": "4c3305a63def1d50",
+              "terminal_bytes": 2447,
+              "trace": false,
+              "median_match_ms": 13.4852715,
+              "match_wall_percentiles_ms": {
+                "p50": 13.484605,
+                "p95": 13.686653,
+                "p99": 13.781656
+              },
+              "timed_seconds": 2.694940984,
+              "ticks_per_second": 147609.91144583817,
+              "matches_per_second": 74.21312792651491,
+              "step_percentiles_us": {
+                "p50": 5.167,
+                "p95": 12.667,
+                "p99": 14.709
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 4.958,
+                  "p90": 5.375
+                },
+                "p95": {
+                  "p10": 12.417,
+                  "p90": 13.667
+                },
+                "p99": {
+                  "p10": 13.001,
+                  "p90": 23.918
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 124.0,
+              "total_step_samples": 24865,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.36328125,
+              "sampled_rss_peak_mib": 258.21875,
+              "sampled_pss_peak_mib": 257.9765625,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "d75e90966578c0eb634d57332fc83c976fd512cc3f221d55a0c455d947ba7b62",
+            "plan_sha256": "f3c2219d3aef6106ad08194abeef9d02a594626ac4e36f171a4540161c39a28f"
+          },
+          {
+            "index": 2,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 1989,
+              "terminal_digest": "4c3305a63def1d50",
+              "terminal_bytes": 2447,
+              "trace": false,
+              "median_match_ms": 13.264056,
+              "match_wall_percentiles_ms": {
+                "p50": 13.261181,
+                "p95": 13.64261,
+                "p99": 13.74828
+              },
+              "timed_seconds": 2.660071686,
+              "ticks_per_second": 149544.84200317902,
+              "matches_per_second": 75.18594369189492,
+              "step_percentiles_us": {
+                "p50": 5.167,
+                "p95": 12.333,
+                "p99": 14.7715
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 4.917,
+                  "p90": 5.375
+                },
+                "p95": {
+                  "p10": 12.0,
+                  "p90": 13.126
+                },
+                "p99": {
+                  "p10": 12.626,
+                  "p90": 23.917
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 124.0,
+              "total_step_samples": 24865,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.171875,
+              "sampled_rss_peak_mib": 258.12109375,
+              "sampled_pss_peak_mib": 257.87890625,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "c4de60c48057e474315c6e823c3c9ea667e144b0e8cb059b4bcc5185c158049e",
+            "plan_sha256": "34332d466a560985e3e97a6a975082b6e275eb7c8bcfe14d18571b36866244fb"
+          },
+          {
+            "index": 3,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 1989,
+              "terminal_digest": "4c3305a63def1d50",
+              "terminal_bytes": 2447,
+              "trace": false,
+              "median_match_ms": 13.457063,
+              "match_wall_percentiles_ms": {
+                "p50": 13.45648,
+                "p95": 14.179253,
+                "p99": 19.973692
+              },
+              "timed_seconds": 2.748867984,
+              "ticks_per_second": 144714.11588894986,
+              "matches_per_second": 72.75722266915528,
+              "step_percentiles_us": {
+                "p50": 5.209,
+                "p95": 12.7295,
+                "p99": 14.2505
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.0,
+                  "p90": 5.459
+                },
+                "p95": {
+                  "p10": 12.292,
+                  "p90": 13.626
+                },
+                "p99": {
+                  "p10": 12.875,
+                  "p90": 24.918
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 124.0,
+              "total_step_samples": 24865,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 259.21484375,
+              "sampled_rss_peak_mib": 258.4453125,
+              "sampled_pss_peak_mib": 258.203125,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "ebed598f4ab232b2d33a66ca097f2347a5facbf68355102193135b80bb1971ba",
+            "plan_sha256": "2702275006a3bfb69cae693066c7bc7e60546e0a0bb384448a1c84fbdd112d99"
+          },
+          {
+            "index": 4,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 1989,
+              "terminal_digest": "4c3305a63def1d50",
+              "terminal_bytes": 2447,
+              "trace": false,
+              "median_match_ms": 13.5327735,
+              "match_wall_percentiles_ms": {
+                "p50": 13.532732,
+                "p95": 13.881368,
+                "p99": 14.03529
+              },
+              "timed_seconds": 2.711238765,
+              "ticks_per_second": 146722.59969696915,
+              "matches_per_second": 73.76701844995935,
+              "step_percentiles_us": {
+                "p50": 5.209,
+                "p95": 12.792,
+                "p99": 14.875
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 5.0,
+                  "p90": 5.458
+                },
+                "p95": {
+                  "p10": 12.458,
+                  "p90": 13.542
+                },
+                "p99": {
+                  "p10": 13.125,
+                  "p90": 23.584
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 124.0,
+              "total_step_samples": 24865,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 259.51953125,
+              "sampled_rss_peak_mib": 258.62109375,
+              "sampled_pss_peak_mib": 258.37890625,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "ada99cbe170c6499530f4ab7acf1005ef1c7dcdc1f07d4c2b38d015bc14b4895",
+            "plan_sha256": "11c165da07d4d2b1b766878ad211f1a13f441017de8075d6c2669498f7b00cc4"
+          },
+          {
+            "index": 5,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 1989,
+              "terminal_digest": "4c3305a63def1d50",
+              "terminal_bytes": 2447,
+              "trace": false,
+              "median_match_ms": 13.29187,
+              "match_wall_percentiles_ms": {
+                "p50": 13.290474,
+                "p95": 13.758864,
+                "p99": 14.410844
+              },
+              "timed_seconds": 2.667944449,
+              "ticks_per_second": 149103.55429218308,
+              "matches_per_second": 74.96407958380246,
+              "step_percentiles_us": {
+                "p50": 5.167,
+                "p95": 12.2925,
+                "p99": 14.4795
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 4.917,
+                  "p90": 5.417
+                },
+                "p95": {
+                  "p10": 12.042,
+                  "p90": 13.292
+                },
+                "p99": {
+                  "p10": 12.625,
+                  "p90": 23.959
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 124.0,
+              "total_step_samples": 24865,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.1796875,
+              "sampled_rss_peak_mib": 258.12890625,
+              "sampled_pss_peak_mib": 257.88671875,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "2276322b08c2f162eec7163b4fb9f9d043055b0a5b9726ac538007dd9b05c9c5",
+            "plan_sha256": "c313d83245e07595e7295547e3a04dcbd78fd749ca4bad9f4811744d6e86fd4e"
+          },
+          {
+            "index": 6,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 1989,
+              "terminal_digest": "4c3305a63def1d50",
+              "terminal_bytes": 2447,
+              "trace": false,
+              "median_match_ms": 13.5959215,
+              "match_wall_percentiles_ms": {
+                "p50": 13.595276,
+                "p95": 14.195128,
+                "p99": 14.551515
+              },
+              "timed_seconds": 2.730938158,
+              "ticks_per_second": 145664.22854896446,
+              "matches_per_second": 73.23490625890621,
+              "step_percentiles_us": {
+                "p50": 5.209,
+                "p95": 12.834,
+                "p99": 15.209
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 4.959,
+                  "p90": 5.458
+                },
+                "p95": {
+                  "p10": 12.542,
+                  "p90": 13.792
+                },
+                "p99": {
+                  "p10": 13.417,
+                  "p90": 23.959
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 124.0,
+              "total_step_samples": 24865,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.98046875,
+              "sampled_rss_peak_mib": 258.25390625,
+              "sampled_pss_peak_mib": 258.01171875,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "47852c2b89901bd4cb011bc4bb25de4bb13adee2836e0bed8f215f351a96e682",
+            "plan_sha256": "ae7c27c2c19a1989efcb9119b144b5fd9960d2ce8b0b189630439f1efb00783f"
+          },
+          {
+            "index": 7,
+            "variant": "original",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 1989,
+              "terminal_digest": "4c3305a63def1d50",
+              "terminal_bytes": 2447,
+              "trace": false,
+              "median_match_ms": 13.537024,
+              "match_wall_percentiles_ms": {
+                "p50": 13.534399,
+                "p95": 14.174211,
+                "p99": 14.456178
+              },
+              "timed_seconds": 2.718683986,
+              "ticks_per_second": 146320.79419619608,
+              "matches_per_second": 73.56500462352744,
+              "step_percentiles_us": {
+                "p50": 5.1875,
+                "p95": 12.792,
+                "p99": 14.8545
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 4.959,
+                  "p90": 5.458
+                },
+                "p95": {
+                  "p10": 12.459,
+                  "p90": 13.709
+                },
+                "p99": {
+                  "p10": 13.125,
+                  "p90": 24.751
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 124.0,
+              "total_step_samples": 24865,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 258.2265625,
+              "sampled_rss_peak_mib": 258.13671875,
+              "sampled_pss_peak_mib": 257.89453125,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "94f596eb2989b0d639972ee3a5e6a4db76470592eb105bb6939eae3832beb391",
+            "plan_sha256": "0aeca2cef72ac9474d76d0872c333a96e6cabb71dcee3af81fb3912c20e554b4"
+          },
+          {
+            "index": 8,
+            "variant": "distance",
+            "summary": {
+              "schema": "nashura.headless-benchmark.v2",
+              "matches": 216,
+              "warmup_matches": 16,
+              "measured_matches": 200,
+              "tick": 1989,
+              "terminal_digest": "4c3305a63def1d50",
+              "terminal_bytes": 2447,
+              "trace": false,
+              "median_match_ms": 13.1352405,
+              "match_wall_percentiles_ms": {
+                "p50": 13.134678,
+                "p95": 13.62861,
+                "p99": 13.862242
+              },
+              "timed_seconds": 2.634744709,
+              "ticks_per_second": 150982.36980651625,
+              "matches_per_second": 75.90868265787644,
+              "step_percentiles_us": {
+                "p50": 5.042,
+                "p95": 12.209,
+                "p99": 14.75
+              },
+              "step_percentile_repeat_spread_us": {
+                "p50": {
+                  "p10": 4.833,
+                  "p90": 5.333
+                },
+                "p95": {
+                  "p10": 11.917,
+                  "p90": 13.667
+                },
+                "p99": {
+                  "p10": 12.542,
+                  "p90": 24.042
+                }
+              },
+              "step_sample_every_ticks": 16,
+              "step_samples_per_match_median": 124.0,
+              "total_step_samples": 24865,
+              "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+              "peak_rss_mib": 257.87109375,
+              "sampled_rss_peak_mib": 257.7890625,
+              "sampled_pss_peak_mib": 257.546875,
+              "memory_sample_counts": {
+                "rss_kb": 200,
+                "pss_kb": 200
+              },
+              "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+              "readiness": "UNVERIFIED"
+            },
+            "stdout_sha256": "88c56d00ba7cdd59ed461efe57ac3c51f024b9c227efd72c021f7fef5b8e48f1",
+            "plan_sha256": "299592f8f8ef8b558ea9abfc92e0ac5d38ed1acc47ddd602847aafb03795a7ee"
+          }
+        ]
+      }
+    ],
+    "initial_namespace_failure_preserved": true,
+    "whole_goal_complete": false,
+    "status": "completed-native-runs-host-recomputed",
+    "orders": [
+      "ABBA",
+      "BAAB"
+    ],
+    "comparison_unit": "batch; four batches per variant/case; within-batch matches not IID"
+  },
+  "checks": {
+    "pure_linux": {
+      "tests": 1331,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "passed": 1330
+    },
+    "public": {
+      "tests": 1146,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 42,
+      "passed": 1104
+    },
+    "main_engine": {
+      "passed": 211,
+      "failed": 0
+    },
+    "ndk_android30_arm64": "passed -O2 -g -Wall -Wextra -Werror",
+    "manifest": {
+      "status": "passed",
+      "source_files_verified": 2931
+    },
+    "gitleaks": "passed; no leaks found",
+    "diff_check": "passed"
+  },
+  "whole_goal_complete": false,
+  "private_archive": {
+    "bytes": 7082712,
+    "sha256": "3b8feffa0dc1640d9312708fcb86e8fae23a02fdd799a9721b6c9090e5f826da"
+  },
+  "limitations": [
+    "fixed engine and four fixtures; not all cards or unserialized state",
+    "four batches per path/case; no population significance claim",
+    "host frequency/thermal and VM scheduling not locked",
+    "sample shares and instrumented measurements not causal speedup evidence",
+    "candidate is opt-in and independent of previous hot-getter candidate; gains not additive",
+    "bounded performance experiment is not long-duration stability"
+  ],
+  "archived_guest_log_cleanup": {
+    "removed": [
+      {
+        "path": "/home/gujiga/nashura-serial-stability-20261031-v1/deck-a-seed-1/original/stdout.log",
+        "sha256": "9c2daacf049891d18bbf940473579fb78b0bd93b3dbfa8cdab1358698bd34c0d",
+        "bytes": 13785192
+      },
+      {
+        "path": "/home/gujiga/nashura-serial-stability-20261031-v1/deck-a-seed-1/hot/stdout.log",
+        "sha256": "52e0dd1821e9883766638555cff0c00293d5aba1035c99bf4ddb1db8741f0453",
+        "bytes": 13785278
+      },
+      {
+        "path": "/home/gujiga/nashura-serial-stability-20261031-v1/deck-a-seed-7/original/stdout.log",
+        "sha256": "81b0e2cf93de0380d0686ea5c10d5c9c4321a54a48100cd473e6d4d81600a458",
+        "bytes": 13783877
+      },
+      {
+        "path": "/home/gujiga/nashura-serial-stability-20261031-v1/deck-a-seed-7/hot/stdout.log",
+        "sha256": "68494f3a8a34d33e0c489b224be4ef9dbffb7f4b3304c4f8e77b5ba4042e428c",
+        "bytes": 13732245
+      },
+      {
+        "path": "/home/gujiga/nashura-serial-stability-20261031-v1/deck-b-seed-1/original/stdout.log",
+        "sha256": "d35ae1a527f29415b42653048ba7a8c813110ca012d609d4bce22e56fcf110ad",
+        "bytes": 13751132
+      },
+      {
+        "path": "/home/gujiga/nashura-serial-stability-20261031-v1/deck-b-seed-1/hot/stdout.log",
+        "sha256": "b01ba7f0b2bee2198c6b1d62cf3e495a152fa61fe240a7e6d650843e5bbe2630",
+        "bytes": 13774660
+      },
+      {
+        "path": "/home/gujiga/nashura-serial-stability-20261031-v1/deck-b-seed-7/original/stdout.log",
+        "sha256": "9597fe189c8be54063b91f4d1d194222ce20aa3ce057030bbaf8b9d6173c6ba6",
+        "bytes": 13752649
+      },
+      {
+        "path": "/home/gujiga/nashura-serial-stability-20261031-v1/deck-b-seed-7/hot/stdout.log",
+        "sha256": "a78e518f8f441b7c96712c17d93ce3489645d0f269c11c4429e743be52498995",
+        "bytes": 13752502
+      }
+    ],
+    "bytes": 110117535,
+    "free_bytes": 127741952,
+    "host_archive_and_recompute_verified": true
+  }
+}

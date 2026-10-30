@@ -24,6 +24,7 @@
 #include "headless_hot_getters.h"
 #include "headless_native_phases.h"
 #include "headless_thread_resources.h"
+#include "headless_saturated_distance.h"
 
 static uintptr_t base;
 static _Atomic int destroyed;
@@ -1143,7 +1144,8 @@ static void run_task(struct task *task) {
             int installed = !strcmp(optimization, "spatial-y-bound-v1")
                 ? install_spatial_y_bound(base) : !strcmp(optimization, "hot-getters-v1")
                 ? install_hot_getters(base) : !strcmp(optimization, "component-getters-v1")
-                ? install_component_getters(base) : 0;
+                ? install_component_getters(base) : !strcmp(optimization, "saturated-distance-v1")
+                ? install_saturated_distance(base) : 0;
             if (!installed) { task_status = -55; return; }
         }
         const int step_once = requested_mode == 6 || requested_mode == 8 ||

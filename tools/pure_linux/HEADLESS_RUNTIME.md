@@ -146,6 +146,23 @@ runner 验证正常原生终局及队列/计数，写 native-phases.json。
 本机 ARM64 Linux guest 没有 QEMU 指令翻译层；本节与历史 x86 服务器的 QEMU
 复测分开。Linux guest 仍承载现有 ELF/Bionic/ART 依赖，不是 macOS 原生移植。
 
+### 饱和平方距离
+
+--native-optimization saturated-distance-v1 在精确原始字节 guard 后替换两个
+固定函数体，默认关闭、与其他候选互斥。保留 32 位坐标差回绕，使用有符号扩宽
+乘法与无符号 64 位和比较实现 INT32_MAX 饱和；指针版保持首坐标越界时不读取
+第二坐标。仅改变普通调用边界允许的临时寄存器/flags，未承诺故障 PC、信号或
+profiler 栈一致。仅在 Mainloop 首局前安装，文件不变、RW/RX 分离并刷新缓存。
+
+check_saturated_distance.c 用现有 ARM64/Bionic namespace 执行原始机器码与候选，
+验证边界/随机输入和 PROT_NONE guard page。真实多 seed/卡组完整局全帧门仍
+独立执行，模型与指令对照不代替引擎等价。verify_saturated_distance_evidence.py
+接收解包归档位置、--reference 上阶段原始目录及 --output 新验证 JSON，独立
+核对全部原始日志、计划、身份、全帧门与 ABBA/BAAB 批次。
+
+原始 evidence 由操作者本地持有；公开摘要只含脱敏计数和 SHA。候选收益、批次
+顺序和统计边界见[阶段报告](../../agent-handoff/SERIAL_ARM64_SATURATED_DISTANCE_2026-10-31.md)。
+
 ### 空间查询边界
 
 `--native-optimization spatial-y-bound-v1` 显式启用固定版本候选，默认仍调用原始代码。
