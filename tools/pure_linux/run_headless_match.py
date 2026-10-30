@@ -38,12 +38,18 @@ OPTIMIZATION_MARKERS = {
     "component-getters-v1": "sites=52",
     "saturated-distance-v1": "functions=2",
     "hot-distance-v1": "getter_sites=11 distance_functions=2",
+    "grid-clear-unroll-v1": "offset=0xf34864 bytes=112",
+    "hot-distance-grid-v1": "getter_sites=11 distance_functions=2 grid_functions=1",
 }
 
 
 def optimization_installation_markers(optimization):
-    names = (("hot-getters-v1", "saturated-distance-v1", optimization)
-             if optimization == "hot-distance-v1" else (optimization,))
+    if optimization == "hot-distance-grid-v1":
+        names = ("hot-getters-v1", "saturated-distance-v1", "hot-distance-v1",
+                 "grid-clear-unroll-v1", optimization)
+    else:
+        names = (("hot-getters-v1", "saturated-distance-v1", optimization)
+                 if optimization == "hot-distance-v1" else (optimization,))
     return ["HEADLESS_NATIVE_OPTIMIZATION name=" + name + " installed=1 "
             + OPTIMIZATION_MARKERS[name] for name in names]
 

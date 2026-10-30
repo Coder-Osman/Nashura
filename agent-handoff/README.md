@@ -2,6 +2,7 @@
 
 本目录用于跨助手、跨Codex任务共享**文字任务与证据**，不属于游戏引擎、Replay、权重或部署代码。与现有 `AGENTS.md`、冻结规范同级协作；不能替代它们。所有记录应注明日期、commit SHA、版本与证据状态。
 
+- [SERIAL_ARM64_GRID_CLEAR_UNROLL_2026-10-31.md](SERIAL_ARM64_GRID_CLEAR_UNROLL_2026-10-31.md)：24107 组指令、12 个完整局与 32 批串行对照；清理展开增益不一致，保持默认关闭。
 - [SERIAL_ARM64_COMBINED_PROFILE_2026-10-31.md](SERIAL_ARM64_COMBINED_PROFILE_2026-10-31.md)：组合候选四组 warm-step 软件采样、精确函数范围及下一热点优先级。
 - [SERIAL_ARM64_COMBINED_FOLLOWUP_2026-10-31.md](SERIAL_ARM64_COMBINED_FOLLOWUP_2026-10-31.md)：排除本轮工程检查重叠的 32 批独立复测、八个全帧门及 49536 局有界同进程稳定性。
 - [SERIAL_ARM64_HOT_DISTANCE_2026-10-31.md](SERIAL_ARM64_HOT_DISTANCE_2026-10-31.md)：旧 getter 与饱和距离显式组合、16 个完整局全帧门及 64 批平衡顺序四路径增量验证。

@@ -43,7 +43,7 @@ def test_default_and_spatial_candidate_are_not_combined():
     assert '? install_hot_getters(base) : !strcmp(optimization, "component-getters-v1")' in source
     assert '? install_component_getters(base) : !strcmp(optimization, "saturated-distance-v1")' in source
     assert '? install_saturated_distance(base) : !strcmp(optimization, "hot-distance-v1")' in source
-    assert '? install_combined_hot_distance(base) : 0' in source
+    assert '? install_combined_hot_distance(base) : !strcmp(optimization, "grid-clear-unroll-v1")' in source
     header = Path(__file__).with_name("headless_hot_getters.h").read_text()
     assert 'PROT_READ | PROT_WRITE | PROT_EXEC' not in header
     assert 'site->getter + 4' in header

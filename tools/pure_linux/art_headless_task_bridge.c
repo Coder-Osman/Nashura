@@ -26,6 +26,7 @@
 #include "headless_thread_resources.h"
 #include "headless_saturated_distance.h"
 #include "headless_combined_hot_distance.h"
+#include "headless_combined_grid_clear.h"
 
 static uintptr_t base;
 static _Atomic int destroyed;
@@ -1147,7 +1148,9 @@ static void run_task(struct task *task) {
                 ? install_hot_getters(base) : !strcmp(optimization, "component-getters-v1")
                 ? install_component_getters(base) : !strcmp(optimization, "saturated-distance-v1")
                 ? install_saturated_distance(base) : !strcmp(optimization, "hot-distance-v1")
-                ? install_combined_hot_distance(base) : 0;
+                ? install_combined_hot_distance(base) : !strcmp(optimization, "grid-clear-unroll-v1")
+                ? install_grid_clear_unroll(base) : !strcmp(optimization, "hot-distance-grid-v1")
+                ? install_combined_grid_clear(base) : 0;
             if (!installed) { task_status = -55; return; }
         }
         const int step_once = requested_mode == 6 || requested_mode == 8 ||

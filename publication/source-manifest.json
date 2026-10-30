@@ -1,6 +1,6 @@
 {
   "schema": "hashura.public-source-snapshot.v1",
-  "file_count": 2945,
+  "file_count": 2953,
   "files": [
     {
       "path": ".tmp_remote_edit/compact_patch/resident.cpp",
@@ -18,16 +18,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "7e2fda26bf8e5f15fa4bb12e7e67b7f7f2d5b050f047e39f304e8f54428ecf66",
-      "bytes": 76032,
-      "source_sha256": "7e2fda26bf8e5f15fa4bb12e7e67b7f7f2d5b050f047e39f304e8f54428ecf66",
+      "sha256": "54b28c3937ee05f390b34ad7abe2cbc5fb828b7b28ed37e9562206b40744cd66",
+      "bytes": 76601,
+      "source_sha256": "54b28c3937ee05f390b34ad7abe2cbc5fb828b7b28ed37e9562206b40744cd66",
       "transformations": []
     },
     {
       "path": "README.md",
-      "sha256": "241872c7d3f5263c291b5ad44b6843b6ad8240027d654f3c86791103531c5bf6",
-      "bytes": 73030,
-      "source_sha256": "241872c7d3f5263c291b5ad44b6843b6ad8240027d654f3c86791103531c5bf6",
+      "sha256": "682648776b90c38e63474add357ffd5c13ef693a86f0025f1557fc5e41cc8964",
+      "bytes": 73638,
+      "source_sha256": "682648776b90c38e63474add357ffd5c13ef693a86f0025f1557fc5e41cc8964",
       "transformations": []
     },
     {
@@ -11392,9 +11392,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "bb0b6935f0d060f9befa6c825e9ed790a28e53fb5750cc23649c73bd9e8f01e4",
-      "bytes": 115911,
-      "source_sha256": "bb0b6935f0d060f9befa6c825e9ed790a28e53fb5750cc23649c73bd9e8f01e4",
+      "sha256": "f1c088e70713df318869086b22edf94f2529be78cd239366357e603bbcff0995",
+      "bytes": 116619,
+      "source_sha256": "f1c088e70713df318869086b22edf94f2529be78cd239366357e603bbcff0995",
       "transformations": []
     },
     {
@@ -17806,65 +17806,65 @@
     },
     {
       "path": "publication/checks-affordability.xml",
-      "sha256": "94f85104788e6e2549aeff63e19ea24ed43faa9143e7891a94dc37899d98ba1e",
+      "sha256": "4f0ac24b606339341a915cdd10f6842f0d418f7cbc2a068f1bf0cdc13725311a",
       "bytes": 4340,
-      "source_sha256": "94f85104788e6e2549aeff63e19ea24ed43faa9143e7891a94dc37899d98ba1e",
+      "source_sha256": "4f0ac24b606339341a915cdd10f6842f0d418f7cbc2a068f1bf0cdc13725311a",
       "transformations": []
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
-      "sha256": "8515925c5381b6b7b7100258623eaacf384cd3aa4cf3df54984aceb1285099c3",
+      "sha256": "da764365d2fe668f6bb08059b11d1dc8da67ef99edf2dcb559b5f0c847dec74b",
       "bytes": 12024,
-      "source_sha256": "8515925c5381b6b7b7100258623eaacf384cd3aa4cf3df54984aceb1285099c3",
+      "source_sha256": "da764365d2fe668f6bb08059b11d1dc8da67ef99edf2dcb559b5f0c847dec74b",
       "transformations": []
     },
     {
       "path": "publication/checks-command-coordinates.xml",
-      "sha256": "192e5721a1dd27f3153e9cb6bfdccead6bc8679c065801b30502b1a96091ac67",
+      "sha256": "ac10646f28f6326581b50629182c882315518d21af1ef2d9328da340443d4c61",
       "bytes": 8184,
-      "source_sha256": "192e5721a1dd27f3153e9cb6bfdccead6bc8679c065801b30502b1a96091ac67",
+      "source_sha256": "ac10646f28f6326581b50629182c882315518d21af1ef2d9328da340443d4c61",
       "transformations": []
     },
     {
       "path": "publication/checks-dispatch-command.xml",
-      "sha256": "00e9926b2e8981d0437cbab4d3041f2462dd3c76876737041c299e6b33090037",
+      "sha256": "ca438965e90213d677e239ae82891fdac36486374a854929915f51b60d5041cc",
       "bytes": 6406,
-      "source_sha256": "00e9926b2e8981d0437cbab4d3041f2462dd3c76876737041c299e6b33090037",
+      "source_sha256": "ca438965e90213d677e239ae82891fdac36486374a854929915f51b60d5041cc",
       "transformations": []
     },
     {
       "path": "publication/checks-live-command.xml",
-      "sha256": "ce27c0402ddc26e2670d7e4ce9e660fddb14d16008e5fa289cca7439d1d74a06",
+      "sha256": "dc6121f5421ddca605709e13b87df7d53ed6a41d54840d0c7ad487a71139a68e",
       "bytes": 6370,
-      "source_sha256": "ce27c0402ddc26e2670d7e4ce9e660fddb14d16008e5fa289cca7439d1d74a06",
+      "source_sha256": "dc6121f5421ddca605709e13b87df7d53ed6a41d54840d0c7ad487a71139a68e",
       "transformations": []
     },
     {
       "path": "publication/checks-position-guards.xml",
-      "sha256": "297362c35648cf992381473dfb204d36e9763fe0042a9649d1bf4d5c2868efbd",
+      "sha256": "c576e4b89d8f741a247c98c7d7d525c1e1e779de1fdb0fe9d4b74d9dc0c8f729",
       "bytes": 4244,
-      "source_sha256": "297362c35648cf992381473dfb204d36e9763fe0042a9649d1bf4d5c2868efbd",
+      "source_sha256": "c576e4b89d8f741a247c98c7d7d525c1e1e779de1fdb0fe9d4b74d9dc0c8f729",
       "transformations": []
     },
     {
       "path": "publication/checks-public.xml",
-      "sha256": "cad5c174ec44f04ee32f3608f51c0e555c21f50ccfe6c082df8065fcaff854e5",
+      "sha256": "d82a5aeaa716ca4fb657d8851a1d3a1e54c5c5f773a16a85abeac818169a1220",
       "bytes": 161225,
-      "source_sha256": "cad5c174ec44f04ee32f3608f51c0e555c21f50ccfe6c082df8065fcaff854e5",
+      "source_sha256": "d82a5aeaa716ca4fb657d8851a1d3a1e54c5c5f773a16a85abeac818169a1220",
       "transformations": []
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
-      "sha256": "b2aee11fab721284cffbcb89c2b7c79687419942dff8bd8ff5f6be990b4bd1a9",
+      "sha256": "cc302169ad4e097f45093bbbda1fb95cec9416e6dd0db09933756bfef6116952",
       "bytes": 6383,
-      "source_sha256": "b2aee11fab721284cffbcb89c2b7c79687419942dff8bd8ff5f6be990b4bd1a9",
+      "source_sha256": "cc302169ad4e097f45093bbbda1fb95cec9416e6dd0db09933756bfef6116952",
       "transformations": []
     },
     {
       "path": "publication/checks-selection-timeout.xml",
-      "sha256": "499afe8bfdd4cecbe94dfffef9f90228c299f4676b43558e735bbaa3c5d292a3",
+      "sha256": "a480e8974660bccff4199899c680a6d96aa06304dda5b5cff05850bc73ee4d3e",
       "bytes": 14580,
-      "source_sha256": "499afe8bfdd4cecbe94dfffef9f90228c299f4676b43558e735bbaa3c5d292a3",
+      "source_sha256": "a480e8974660bccff4199899c680a6d96aa06304dda5b5cff05850bc73ee4d3e",
       "transformations": []
     },
     {
@@ -19964,9 +19964,9 @@
     },
     {
       "path": "tools/pure_linux/art_headless_task_bridge.c",
-      "sha256": "6e4563679b39e9520e12b04e72ad5cbadba4c50e4a8daf7722289bfb802b1b90",
-      "bytes": 67080,
-      "source_sha256": "6e4563679b39e9520e12b04e72ad5cbadba4c50e4a8daf7722289bfb802b1b90",
+      "sha256": "52bd744fa6741bc5529a9ade09672e3de296273b22b4d8784755129cca0327ab",
+      "bytes": 67320,
+      "source_sha256": "52bd744fa6741bc5529a9ade09672e3de296273b22b4d8784755129cca0327ab",
       "transformations": []
     },
     {
@@ -20027,9 +20027,9 @@
     },
     {
       "path": "tools/pure_linux/HEADLESS_RUNTIME.md",
-      "sha256": "f5e85355cdb0fa27475962af39d133868451021e35ec2e24d77d4945ced127dd",
-      "bytes": 21135,
-      "source_sha256": "f5e85355cdb0fa27475962af39d133868451021e35ec2e24d77d4945ced127dd",
+      "sha256": "5ada02f119d8b21276b630861a9639859f6452590f8e0f59ecbba0051c6eba3f",
+      "bytes": 21592,
+      "source_sha256": "5ada02f119d8b21276b630861a9639859f6452590f8e0f59ecbba0051c6eba3f",
       "transformations": []
     },
     {
@@ -20055,9 +20055,9 @@
     },
     {
       "path": "tools/pure_linux/run_headless_match.py",
-      "sha256": "5a915d9558d7cd5153681ab0b568804e4a220b0486a60dce2043341edb273170",
-      "source_sha256": "5a915d9558d7cd5153681ab0b568804e4a220b0486a60dce2043341edb273170",
-      "bytes": 17511,
+      "sha256": "f5128c3ca8abd21bee3145e2c21d15ec0adc1b6e89d50ca69732d1d790028c23",
+      "source_sha256": "f5128c3ca8abd21bee3145e2c21d15ec0adc1b6e89d50ca69732d1d790028c23",
+      "bytes": 17852,
       "transformations": []
     },
     {
@@ -20216,9 +20216,9 @@
     },
     {
       "path": "agent-handoff/README.md",
-      "sha256": "c3fb77a7f192542ceb2723ac657a7a2f5e70973012f7714358dab8094f6c40df",
-      "bytes": 4138,
-      "source_sha256": "c3fb77a7f192542ceb2723ac657a7a2f5e70973012f7714358dab8094f6c40df",
+      "sha256": "048f2b8acac50b5ab58259aae0412c53f5426e71de40660b069418f188cf7c93",
+      "bytes": 4345,
+      "source_sha256": "048f2b8acac50b5ab58259aae0412c53f5426e71de40660b069418f188cf7c93",
       "transformations": []
     },
     {
@@ -20356,9 +20356,9 @@
     },
     {
       "path": "tools/pure_linux/test_headless_hot_getters.py",
-      "sha256": "a530d2a8f91ee98aee1db90a7eff08977fd86d4eeabcd0a566207b77dec1a7d0",
-      "bytes": 2495,
-      "source_sha256": "a530d2a8f91ee98aee1db90a7eff08977fd86d4eeabcd0a566207b77dec1a7d0",
+      "sha256": "f5157e1f3242d3427d0a58e470b44809d7a889ab0ecb421c509dae6ba4ef804d",
+      "bytes": 2539,
+      "source_sha256": "f5157e1f3242d3427d0a58e470b44809d7a889ab0ecb421c509dae6ba4ef804d",
       "transformations": []
     },
     {
@@ -20653,6 +20653,62 @@
       "sha256": "754dc32cd27d2ce1d3997a3c9aa691d11650812f9969778ece1ea171ede01114",
       "bytes": 10251,
       "source_sha256": "754dc32cd27d2ce1d3997a3c9aa691d11650812f9969778ece1ea171ede01114",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/SERIAL_ARM64_GRID_CLEAR_UNROLL_2026-10-31.md",
+      "sha256": "d039665cf532a0ef13a34a217dc9ce9cfacf7a000a9fbd27b094062c673e24bf",
+      "bytes": 5937,
+      "source_sha256": "d039665cf532a0ef13a34a217dc9ce9cfacf7a000a9fbd27b094062c673e24bf",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/serial-arm64-grid-clear-unroll-evidence-20261031.json",
+      "sha256": "bfdcb22b6fd8d983c82f3cde161fab0609dc180c46a6e7ea3d0bf6ee12915ff7",
+      "bytes": 88925,
+      "source_sha256": "bfdcb22b6fd8d983c82f3cde161fab0609dc180c46a6e7ea3d0bf6ee12915ff7",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/check_grid_clear_unroll.c",
+      "sha256": "83f5a469df0f81b25d7da4f0a159e26ec52db47f63918be9ca94892899027728",
+      "bytes": 4184,
+      "source_sha256": "83f5a469df0f81b25d7da4f0a159e26ec52db47f63918be9ca94892899027728",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/headless_combined_grid_clear.h",
+      "sha256": "662dc4befff9b488e2cffb2a99c07d081456b66a25cab918ea500b4cb1a623c4",
+      "bytes": 680,
+      "source_sha256": "662dc4befff9b488e2cffb2a99c07d081456b66a25cab918ea500b4cb1a623c4",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/headless_grid_clear_unroll.h",
+      "sha256": "5b327a62ac10191ec1542a48129748ad24f717e02e36e330354330d4524f295b",
+      "bytes": 2599,
+      "source_sha256": "5b327a62ac10191ec1542a48129748ad24f717e02e36e330354330d4524f295b",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_grid_clear_unroll.py",
+      "sha256": "0c91034584f3a2dbeac71ca79351a89d8d5c895c3972f936187d2c7f380c69c2",
+      "bytes": 1794,
+      "source_sha256": "0c91034584f3a2dbeac71ca79351a89d8d5c895c3972f936187d2c7f380c69c2",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_verify_grid_clear_unroll.py",
+      "sha256": "d6a0a3a09c844a4e3e1d717205cd6fa76e539d934430b1ad5e151e7389baf493",
+      "bytes": 7636,
+      "source_sha256": "d6a0a3a09c844a4e3e1d717205cd6fa76e539d934430b1ad5e151e7389baf493",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/verify_grid_clear_unroll.py",
+      "sha256": "de91a362f149f2cfca8cd1f6359856a34e63df0efc595d037149a814360269f0",
+      "bytes": 13709,
+      "source_sha256": "de91a362f149f2cfca8cd1f6359856a34e63df0efc595d037149a814360269f0",
       "transformations": []
     }
   ]

@@ -1,5 +1,14 @@
 # Nashura
 
+## 2026-10-31：网格清理展开未获得一致增益
+
+基于真实清理热点实现默认关闭的四项循环展开；ARM64 原始/候选指令 24107 组通过，
+12 个完整局共 34047 帧及已观测状态一致。32 批 ABBA/BAAB、6400 测量局复算后，
+相对 hot-distance-v1 耗时变化 -1.02% / +0.43% / -0.50% / -0.13%；a7 两 block
+均回退、b7 方向相反，不升级默认。固定 VM、最小依赖，无并发。详见
+[报告](agent-handoff/SERIAL_ARM64_GRID_CLEAR_UNROLL_2026-10-31.md)与
+[机器摘要](agent-handoff/serial-arm64-grid-clear-unroll-evidence-20261031.json)。
+
 ## 2026-10-31：组合候选之后的四组 warm-step 热点
 
 同一组合构建对四个固定输入独立 perf 采样并主机复算；仅保留后 200 局 warm-step

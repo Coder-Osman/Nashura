@@ -299,3 +299,7 @@ battle-before/after五阶段的root/context/wrapper/singleton关系、vtable和
 tick3601，终态摘要一致；队列从52降至2，历史v38的730条状态记录逐行相同。
 阶段耗时仅为单次诊断观测；没有并发测试、吞吐测量或snapshot trace归档。详见
 `agent-handoff/HEADLESS_REPLAY_ROUTE_DIAGNOSTICS_2026-10-30.md`。
+
+## 网格清理展开候选（2026-10-31）
+
+grid-clear-unroll-v1 只替换精确 build 的 +0xf34864..+0xf348d4；保留逐 pair 读写顺序、模乘和 signed 边界。hot-distance-grid-v1 显式组合既有 hot-distance-v1，要求五个有序安装标记。24107 组真实指令、12 个完整局门及 32 批无 profiler 对照通过，但增益不一致，仍默认关闭。详见 ../../agent-handoff/SERIAL_ARM64_GRID_CLEAR_UNROLL_2026-10-31.md。
