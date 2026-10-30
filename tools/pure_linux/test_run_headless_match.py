@@ -131,9 +131,18 @@ def test_minimal_benchmark_plan_disables_trace_and_observers(inputs, monkeypatch
     assert plan["environment"]["NASHURA_BENCHMARK_MINIMAL"] == "1"
     assert plan["environment"]["NASHURA_RESET_REPEATS"] == "20"
     assert plan["environment"]["NASHURA_MEMORY_SAMPLE"] == "1"
+    assert plan["environment"]["NASHURA_TASK_TIMEOUT_MS"] == "120000"
     assert plan["environment"]["NASHURA_QUIET"] == "1"
     assert "NASHURA_TRACE_SNAPSHOTS" not in plan["environment"]
     assert "NASHURA_PHASE_TIMING" not in plan["environment"]
+
+
+@pytest.mark.parametrize("timeout_seconds,expected_ms", [(5, 5000), (45, 45000), (120, 120000), (600, 120000)])
+def test_serial_benchmark_task_wait_tracks_outer_bound_and_native_cap(inputs, timeout_seconds, expected_ms):
+    settings, output = inputs
+    plan = runner.build_plan(settings, output, benchmark_repeats=216, timeout_seconds=timeout_seconds)
+    assert int(plan["environment"]["NASHURA_TASK_TIMEOUT_MS"]) == expected_ms
+    assert "NASHURA_TASK_TIMEOUT_MS" not in runner.build_plan(settings, output)["environment"]
 
 
 def test_mutation_after_identity_capture_is_rejected(inputs):

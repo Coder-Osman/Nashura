@@ -72,6 +72,42 @@ stdout、stderr、真实退出码、逐tick归档及结果。完整终局、Java
 避免固定 replay 在每次 reset 中只采到相同的 tick 模相位。计时数据仍只覆盖 warm
 step loop；不同 observer 构建或计时实现的结果不应直接作前后性能对照。
 
+重复局在同一个 Mainloop task 内执行。benchmark runner 将
+`NASHURA_TASK_TIMEOUT_MS` 设为 `min(--timeout-seconds * 1000, 120000)`，
+避免较长的串行批次触发原生默认约五秒等待；外层进程 timeout 仍独立生效，
+不保证一定等到 task 的完整上限。此设置只改变控制线程的等待契约，不改变 step。
+
+## 只归因 warm step 的 perf 采样
+
+在 ARM64 guest 内以 `cpu-clock:u` 采样，显式使用 `--clockid mono`。如需 sudo，
+仅让 perf 获得所需权限，通过 `runuser` / `setpriv` 将 runner 和引擎降回普通 guest
+用户。不要把整个 profile 的 Python 校验、ART 初始化或 reset 样本混入 warm step。
+以下命令中的路径由操作者提供；第三方输入仍须通过 runner 的身份校验：
+
+```sh
+sudo perf record --clockid mono -F 997 -e cpu-clock:u -g --call-graph fp \
+  -o "$NEW_DIR/perf.data" -- runuser -u "$GUEST_USER" -- \
+  python3 "$RUNNER" "$SETTINGS" --output "$NEW_DIR/run" --apply \
+  --benchmark-repeats 216 --step-sample-every 16 --timeout-seconds 120
+perf script --ns -i "$NEW_DIR/perf.data" -F comm,pid,tid,time,event,ip,sym,dso > "$NEW_DIR/perf-script.txt"
+perf script --ns --show-mmap-events -i "$NEW_DIR/perf.data" > "$NEW_DIR/perf-maps.txt"
+perf evlist -v -i "$NEW_DIR/perf.data" > "$NEW_DIR/perf-evlist.txt"
+perf report --stdio --no-children -i "$NEW_DIR/perf.data" > "$NEW_DIR/perf-report.txt"
+```
+
+执行前新建 `$NEW_DIR`、确保普通 guest 用户对输出目录有权限；分别保留 perf、runner
+及外层 wrapper 的真实退出码，不用管道或最后一条 `perf report` 的成功覆盖前序失败。
+必要的输出所有权交接在 workload 退出后完成。`summarize_headless_perf.py --help`
+列出汇总输入：runner log/plan、script/maps、evlist/report 和三个退出码文件。
+使用 `--repeats 216 --warmup-matches 16` 只保留后 200 局的 `[start_ns,end_ns)`
+step 窗口；汇总器复用完整终局/serializer 校验，要求零丢样、唯一 Mainloop 进程、
+明确的 monotonic clockid、精确的原生引擎身份及最小观测计划。
+
+归一化地址是 `IP - MMAP2.start + MMAP2.pgoff` 的 ELF 文件偏移，需核对精确 ELF 的
+PT_LOAD 后再解释为虚拟地址/函数范围；frame-pointer callchain 中的 return PC 也不是
+采样 IP。样本比例只用于热点优先级，不是函数耗时、cache miss、cycles 或优化收益。
+速度基线另用同一构建、不带 profiler 的串行运行测量。
+
 ## 已验证与未闭合
 
 v52直接入口exit0，strace零Binder设备打开及零Binder ioctl；v53/v54使用仓库runner，

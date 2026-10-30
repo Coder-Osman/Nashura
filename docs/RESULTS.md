@@ -1,5 +1,22 @@
 # 阶段成果与证据索引
 
+## 2026-10-31：warm-step 窗口归因与串行 task 等待
+
+新增离线 perf 汇总器，要求正常退出、完整终局/serializer 摘要、最小观测计划、精确
+libg、零丢样和明确的 monotonic clockid，仅归因 measured step-loop 窗口。修复自有
+runner 让 benchmark task 等待跟随外层 timeout 并保持原生 120 秒上限；216 局 profile
+全部正常完成，剔除 1,291 个非 step 与 448 个 warmup 样本后保留 5,689 个 warm 样本。
+libg 叶样本 5,629（98.95%）；空间候选查询范围叶样本 949（16.68%）。在线 CPU 样本
+不代表 off-CPU 等待、函数耗时或硬件 PMU 指标。
+
+同一构建的独立两批无 profiler 基线各 16 局预热、200 局测量，中位 29.428 / 29.023 ms，
+吞吐 121,324 / 122,783 tick/s，step p50/p95/p99 分别 5.626/18.461/25.629 与
+5.542/18.189/24.710 μs（各局抽样分位数的中位数）。终态均 tick 3601、摘要
+`6c959326dd2f09cc`、3,091 字节；这不是全 payload 等价门。没有修改 native 计算、
+没有优化前后收益结论，也未测并发。旧 CLI 失败、缺少 clock 绑定及长批次 `-5`/124
+失败分别留证。详见[报告](../agent-handoff/SERIAL_ARM64_WARM_WINDOW_2026-10-31.md)与
+[机器摘要](../agent-handoff/serial-arm64-warm-window-evidence-20261031.json)。
+
 ## 2026-10-31：串行 step 采样相位复核
 
 benchmark 对重复局的每 16 tick 定时采样增加确定性相位轮转，并在汇总时校验

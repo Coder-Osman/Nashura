@@ -2,6 +2,7 @@
 
 本目录用于跨助手、跨Codex任务共享**文字任务与证据**，不属于游戏引擎、Replay、权重或部署代码。与现有 `AGENTS.md`、冻结规范同级协作；不能替代它们。所有记录应注明日期、commit SHA、版本与证据状态。
 
+- [SERIAL_ARM64_WARM_WINDOW_2026-10-31.md](SERIAL_ARM64_WARM_WINDOW_2026-10-31.md)：仅 warm-step 窗口的 CPU 归因、长串行 task 等待修复与同构建重复基线。
 - [SERIAL_ARM64_SAMPLE_PHASE_2026-10-31.md](SERIAL_ARM64_SAMPLE_PHASE_2026-10-31.md)：串行 warm-step 采样相位复核及旧基线可比性边界。
 
 ## 文件约定

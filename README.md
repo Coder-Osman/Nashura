@@ -1,5 +1,15 @@
 # Nashura
 
+## 2026-10-31：warm-step 窗口归因与长串行等待修复
+
+修复 benchmark 重复局共享 Mainloop task 时的约五秒默认等待上限；216 局串行运行
+现在正常返回。新汇总器以明确的 monotonic 时钟只保留后 200 局 step 窗口：5,689 个
+CPU-clock 样本中，libg 叶样本占 98.95%，空间候选查询范围占 16.68%。另两批无 profiler
+基线各测 200 局，中位 29.43 / 29.02 ms，吞吐 121,324 / 122,783 tick/s；两列为相同
+构建重复测量，没有 native 优化收益结论。保留全部失败及单 seed/卡组、终态摘要等
+覆盖边界，整体目标继续进行。详见[阶段报告](agent-handoff/SERIAL_ARM64_WARM_WINDOW_2026-10-31.md)
+及[机器摘要](agent-handoff/serial-arm64-warm-window-evidence-20261031.json)。
+
 ## 2026-10-31：串行 step 采样相位复核
 
 headless benchmark 现在在串行 reset 间轮转每 16 tick 的采样相位，并验证日志中的

@@ -132,6 +132,10 @@ def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
         environment["NASHURA_RESET_REPEATS"] = str(benchmark_repeats)
         environment["NASHURA_STEP_SAMPLE_EVERY"] = str(step_sample_every)
         environment["NASHURA_MEMORY_SAMPLE"] = "1"
+        # Repeats execute inside one Mainloop task. Its default five-second
+        # wait is too short for longer serial runs; keep the native 120s cap
+        # and the outer process timeout as independent bounds.
+        environment["NASHURA_TASK_TIMEOUT_MS"] = str(min(timeout_seconds * 1000, 120000))
     if snapshot_trace:
         environment["NASHURA_TRACE_SNAPSHOTS"] = outside(output / "snapshots.bin")
     if benchmark_repeats is None and os.environ.get("NASHURA_PHASE_TIMING") == "1":

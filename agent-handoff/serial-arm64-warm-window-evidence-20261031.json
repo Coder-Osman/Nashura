@@ -1,0 +1,953 @@
+{
+  "schema": "nashura.serial-arm64-warm-window.v1",
+  "date": "2026-10-31",
+  "status": "WARM_WINDOW_ATTRIBUTED_AND_SERIAL_WAIT_VALIDATED_LIMITED",
+  "whole_goal_complete": false,
+  "concurrency_tested": false,
+  "native_engine_optimization_applied": false,
+  "performance_gain_claimed": false,
+  "guest": {
+    "architecture": "aarch64",
+    "kernel": "6.8.0-138-generic",
+    "os": "Ubuntu 22.04.5",
+    "hypervisor": "VMware Fusion",
+    "vcpus": 2,
+    "configured_memory_mib": 6144,
+    "cpu_affinity": [
+      0,
+      1
+    ],
+    "preflight_mem_available_kib": 2610388,
+    "swap_total_kib": 0,
+    "perf_event_paranoid": 4,
+    "preflight_load_average": [
+      0.0,
+      0.03,
+      0.0
+    ],
+    "execution": "one headless engine process at a time; Mainloop advances battles; default affinity spans vCPUs 0 and 1",
+    "vm_configuration_changed": false,
+    "system_configuration_changed": false
+  },
+  "fixed_inputs": {
+    "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "replay_sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8",
+    "observer_sha256": "39c5a13103daeb41eaee3455c92a6e37a9e0c0fedf5d013f68b3342821f80ca7",
+    "apk_and_assets_container_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "game_dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+    "runner_sha256": "bd275733d24ce1ffc7b47be44ef9a9e498de95c6ca72c95bf0210622cdb90b5d",
+    "seed": 1,
+    "deck_count": 1,
+    "loaded_commands": 52,
+    "deck0_card_ids": [
+      26000000,
+      26000001,
+      26000005,
+      28000001,
+      28000000,
+      26000003,
+      26000014,
+      26000018
+    ],
+    "deck1_card_ids": [
+      26000000,
+      26000001,
+      26000005,
+      28000001,
+      28000000,
+      26000003,
+      26000014,
+      26000018
+    ]
+  },
+  "serial_wait_fix": {
+    "cause": "all reset repeats share one Mainloop task; default task wait was approximately five seconds",
+    "benchmark_task_wait_ms": 120000,
+    "outer_timeout_seconds": 120,
+    "implementation": "min(timeout_seconds * 1000, 120000); outer timeout remains an independent bound",
+    "compute_path_changed": false
+  },
+  "profile": {
+    "schema": "nashura.headless-warm-perf.v1",
+    "whole_goal_complete": false,
+    "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "clock": "CLOCK_MONOTONIC",
+    "event": "cpu-clock:u",
+    "raw_sample_count": 7428,
+    "lost_samples": 0,
+    "warmup_matches": 16,
+    "measured_matches": 200,
+    "sample_regions": {
+      "outside_step_windows": 1291,
+      "warmup_step_windows": 448,
+      "measured_step_windows": 5689
+    },
+    "measured_samples_by_match": [
+      28,
+      28,
+      29,
+      28,
+      29,
+      28,
+      28,
+      28,
+      28,
+      28,
+      29,
+      29,
+      28,
+      29,
+      28,
+      28,
+      28,
+      29,
+      28,
+      28,
+      28,
+      28,
+      28,
+      29,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      29,
+      29,
+      29,
+      29,
+      29,
+      29,
+      28,
+      29,
+      28,
+      28,
+      28,
+      29,
+      28,
+      28,
+      29,
+      29,
+      29,
+      27,
+      28,
+      28,
+      29,
+      28,
+      28,
+      29,
+      28,
+      28,
+      28,
+      29,
+      28,
+      28,
+      28,
+      28,
+      29,
+      28,
+      29,
+      28,
+      29,
+      28,
+      28,
+      28,
+      29,
+      28,
+      29,
+      27,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      29,
+      29,
+      28,
+      28,
+      29,
+      29,
+      29,
+      29,
+      29,
+      28,
+      29,
+      28,
+      28,
+      28,
+      28,
+      28,
+      28,
+      29,
+      28,
+      28,
+      28,
+      29,
+      28,
+      28,
+      28,
+      29,
+      28,
+      28,
+      28,
+      29,
+      28,
+      28,
+      28,
+      28,
+      28,
+      29,
+      29,
+      29,
+      29,
+      27,
+      28,
+      28,
+      28,
+      28,
+      28,
+      29,
+      29,
+      29,
+      29,
+      28,
+      28,
+      28,
+      28,
+      29,
+      28,
+      29,
+      28,
+      28,
+      28,
+      29,
+      29,
+      29,
+      28,
+      28,
+      28,
+      29,
+      28,
+      29,
+      29,
+      29,
+      28,
+      28,
+      28,
+      28,
+      29,
+      28,
+      29,
+      28,
+      29,
+      28,
+      28,
+      28,
+      29,
+      30,
+      30,
+      30,
+      29,
+      28,
+      29,
+      30,
+      31,
+      28,
+      30,
+      30,
+      29,
+      29,
+      29,
+      29,
+      29,
+      28,
+      28,
+      28,
+      28,
+      29,
+      29,
+      28,
+      30,
+      30,
+      29,
+      29,
+      29,
+      28,
+      29,
+      29
+    ],
+    "measured_thread_samples": {
+      "Mainloop": 5687,
+      "main": 2
+    },
+    "measured_leaf_dso_samples": {
+      "libg.so": 5629,
+      "[vdso]": 4,
+      "libc.so": 47,
+      "nashura-libheadless-observer-20261031-phase-rotation-v2.so": 7,
+      "libc++_shared.so": 2
+    },
+    "mainloop_libg_leaf_samples": 5629,
+    "libg_leaf_top": [
+      {
+        "file_offset": "0xf34c60",
+        "samples": 200
+      },
+      {
+        "file_offset": "0xf67024",
+        "samples": 177
+      },
+      {
+        "file_offset": "0xf34c98",
+        "samples": 144
+      },
+      {
+        "file_offset": "0x115d540",
+        "samples": 142
+      },
+      {
+        "file_offset": "0x121b878",
+        "samples": 133
+      },
+      {
+        "file_offset": "0x115d5fc",
+        "samples": 127
+      },
+      {
+        "file_offset": "0xf34c7c",
+        "samples": 120
+      },
+      {
+        "file_offset": "0xf1b9e0",
+        "samples": 119
+      },
+      {
+        "file_offset": "0xf348a8",
+        "samples": 119
+      },
+      {
+        "file_offset": "0x115d590",
+        "samples": 113
+      },
+      {
+        "file_offset": "0x115d974",
+        "samples": 93
+      },
+      {
+        "file_offset": "0xf20210",
+        "samples": 84
+      },
+      {
+        "file_offset": "0xf34c78",
+        "samples": 83
+      },
+      {
+        "file_offset": "0xf34c90",
+        "samples": 82
+      },
+      {
+        "file_offset": "0xf171b4",
+        "samples": 72
+      },
+      {
+        "file_offset": "0x121b888",
+        "samples": 71
+      },
+      {
+        "file_offset": "0xcf0654",
+        "samples": 65
+      },
+      {
+        "file_offset": "0xe379e4",
+        "samples": 64
+      },
+      {
+        "file_offset": "0xdc2600",
+        "samples": 58
+      },
+      {
+        "file_offset": "0xf347fc",
+        "samples": 54
+      },
+      {
+        "file_offset": "0x115d5b4",
+        "samples": 54
+      },
+      {
+        "file_offset": "0x115d5cc",
+        "samples": 54
+      },
+      {
+        "file_offset": "0xf34de0",
+        "samples": 51
+      },
+      {
+        "file_offset": "0xf34dcc",
+        "samples": 50
+      },
+      {
+        "file_offset": "0x121b8bc",
+        "samples": 49
+      }
+    ],
+    "libg_callchain_top": [
+      {
+        "file_offset": "0x130f838",
+        "samples": 5687
+      },
+      {
+        "file_offset": "0x130fb68",
+        "samples": 5687
+      },
+      {
+        "file_offset": "0x139e5bc",
+        "samples": 5687
+      },
+      {
+        "file_offset": "0x13a10c8",
+        "samples": 5687
+      },
+      {
+        "file_offset": "0x1062148",
+        "samples": 5662
+      },
+      {
+        "file_offset": "0x10623ec",
+        "samples": 5454
+      },
+      {
+        "file_offset": "0xcf04e8",
+        "samples": 5380
+      },
+      {
+        "file_offset": "0xf26624",
+        "samples": 4423
+      },
+      {
+        "file_offset": "0xf657ac",
+        "samples": 1825
+      },
+      {
+        "file_offset": "0xf65a00",
+        "samples": 1822
+      },
+      {
+        "file_offset": "0xf61508",
+        "samples": 1805
+      },
+      {
+        "file_offset": "0xf34b30",
+        "samples": 1001
+      },
+      {
+        "file_offset": "0xf5d9dc",
+        "samples": 949
+      },
+      {
+        "file_offset": "0xf34e4f",
+        "samples": 811
+      },
+      {
+        "file_offset": "0xf67064",
+        "samples": 476
+      },
+      {
+        "file_offset": "0xf670eb",
+        "samples": 459
+      },
+      {
+        "file_offset": "0xf67083",
+        "samples": 431
+      },
+      {
+        "file_offset": "0xf5de90",
+        "samples": 427
+      },
+      {
+        "file_offset": "0xf65bbc",
+        "samples": 418
+      },
+      {
+        "file_offset": "0xf5ca58",
+        "samples": 415
+      },
+      {
+        "file_offset": "0x115bfec",
+        "samples": 313
+      },
+      {
+        "file_offset": "0x115d5b3",
+        "samples": 292
+      },
+      {
+        "file_offset": "0xf67063",
+        "samples": 276
+      },
+      {
+        "file_offset": "0xf26504",
+        "samples": 245
+      },
+      {
+        "file_offset": "0xf34c60",
+        "samples": 200
+      }
+    ],
+    "spatial_query_leaf_samples": 949,
+    "spatial_query_callchain_samples": 1033,
+    "scope": "only samples in measured warm step-loop windows; initialization, warmup, reset and terminal serialization excluded",
+    "limitations": [
+      "sample shares are not per-function latency or causal speedup",
+      "callchain addresses are return PCs; inclusive totals can overlap",
+      "file offsets require ELF PT_LOAD verification before interpreting as virtual offsets",
+      "profiled timing is not a performance baseline"
+    ],
+    "source_sha256": {
+      "log": "17ec810bdcf58e7638afe014bca41dd6626675a1fd50dd9c64dc596a848e76ab",
+      "script": "f436e45b17a320753df71c3c6b1bd7a8fe570e6fa1523cc21db78881e1916411",
+      "mappings": "46182d3e96d457fba2e726b4143d5cfe1e37c7abe953c810ca37e42c8d54241e",
+      "evlist": "6580474eb3c2aff80164eada77de5ad41aa832e91ceb6f7a8ebf12c6956a0243",
+      "report": "3ddf7a34aeffd51ebc22e03d1bd76ec9520b81606549c084e53fa8349835976c",
+      "plan": "43c9c1518b43402d59999c0496a5beb587ffba1eeb62ff08e10a3087915b65c6",
+      "runner_exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "perf_exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "wrapper_exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "measured_libg_leaf_share_percent": 98.9453330989629,
+    "spatial_query_leaf_share_percent": 16.68131481806996,
+    "spatial_query_callchain_share_percent": 18.157848479521885,
+    "perf_data_sha256": "0bcebcdfa6082dc95bf4fa3a191f0125da0b10820bde558e9eef87a51a7032ed",
+    "perf_data_bytes": 1519282,
+    "normal_exit_codes": {
+      "runner": 0,
+      "perf": 0,
+      "wrapper": 0
+    },
+    "raw_artifacts_published": false,
+    "measured_match_sample_count_range": [
+      27,
+      31
+    ]
+  },
+  "unprofiled_final_baselines": {
+    "baseline-a": {
+      "schema": "nashura.headless-benchmark.v2",
+      "matches": 216,
+      "warmup_matches": 16,
+      "measured_matches": 200,
+      "tick": 3601,
+      "terminal_digest": "6c959326dd2f09cc",
+      "terminal_bytes": 3091,
+      "trace": false,
+      "median_match_ms": 29.427838,
+      "match_wall_percentiles_ms": {
+        "p50": 29.423736,
+        "p95": 32.471095,
+        "p99": 34.788562
+      },
+      "timed_seconds": 5.936180027,
+      "ticks_per_second": 121323.81375299553,
+      "matches_per_second": 33.69170057011817,
+      "step_percentiles_us": {
+        "p50": 5.626,
+        "p95": 18.461,
+        "p99": 25.6285
+      },
+      "step_percentile_repeat_spread_us": {
+        "p50": {
+          "p10": 5.376,
+          "p90": 5.959
+        },
+        "p95": {
+          "p10": 17.17,
+          "p90": 23.545
+        },
+        "p99": {
+          "p10": 22.879,
+          "p90": 47.55
+        }
+      },
+      "step_sample_every_ticks": 16,
+      "step_samples_per_match_median": 225.0,
+      "total_step_samples": 45013,
+      "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+      "peak_rss_mib": 258.1875,
+      "sampled_rss_peak_mib": 258.32421875,
+      "sampled_pss_peak_mib": 258.08203125,
+      "memory_sample_counts": {
+        "rss_kb": 200,
+        "pss_kb": 200
+      },
+      "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+      "readiness": "UNVERIFIED",
+      "log_sha256": "a130c60c569b66c86de89460ea1c8773adf8756c297d3ffa769d96b8082c2677",
+      "runner_exit_code": 0,
+      "plan_sha256": "3eb595e22865051b6df7679321bdd21b23757602027bd42432c53d93f8cfd187",
+      "guest_cpu_jiffies_delta": [
+        791,
+        0,
+        53,
+        2757,
+        1,
+        0,
+        15,
+        0,
+        0,
+        0
+      ],
+      "affinity_before_after": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "guest_loadavg_before_after": [
+        "0.00 0.03 0.00 4/547 93487",
+        "0.07 0.04 0.00 1/543 93536"
+      ]
+    },
+    "baseline-b": {
+      "schema": "nashura.headless-benchmark.v2",
+      "matches": 216,
+      "warmup_matches": 16,
+      "measured_matches": 200,
+      "tick": 3601,
+      "terminal_digest": "6c959326dd2f09cc",
+      "terminal_bytes": 3091,
+      "trace": false,
+      "median_match_ms": 29.0229755,
+      "match_wall_percentiles_ms": {
+        "p50": 29.022294,
+        "p95": 31.754893,
+        "p99": 34.854532
+      },
+      "timed_seconds": 5.86562687,
+      "ticks_per_second": 122783.1254803291,
+      "matches_per_second": 34.09695236887784,
+      "step_percentiles_us": {
+        "p50": 5.542,
+        "p95": 18.1885,
+        "p99": 24.71
+      },
+      "step_percentile_repeat_spread_us": {
+        "p50": {
+          "p10": 5.334,
+          "p90": 5.876
+        },
+        "p95": {
+          "p10": 17.084,
+          "p90": 22.959
+        },
+        "p99": {
+          "p10": 22.752,
+          "p90": 47.545
+        }
+      },
+      "step_sample_every_ticks": 16,
+      "step_samples_per_match_median": 225.0,
+      "total_step_samples": 45013,
+      "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+      "peak_rss_mib": 258.09375,
+      "sampled_rss_peak_mib": 258.17578125,
+      "sampled_pss_peak_mib": 257.93359375,
+      "memory_sample_counts": {
+        "rss_kb": 200,
+        "pss_kb": 200
+      },
+      "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+      "readiness": "UNVERIFIED",
+      "log_sha256": "9493c4920ebde2430255d21d7d61733634f3d8b652f0b19f93ff18b483c03d99",
+      "runner_exit_code": 0,
+      "plan_sha256": "796953745a915abba565208b1afb23fe504129803ae905b103d03106beab26a3",
+      "guest_cpu_jiffies_delta": [
+        784,
+        1,
+        47,
+        2749,
+        2,
+        0,
+        15,
+        0,
+        0,
+        0
+      ],
+      "affinity_before_after": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "guest_loadavg_before_after": [
+        "0.07 0.04 0.00 1/543 93536",
+        "0.19 0.07 0.01 1/542 93582"
+      ]
+    }
+  },
+  "earlier_unprofiled_runs": {
+    "host_engineering_checks_overlapped": true,
+    "role": "retained independent observations, not final quiet-run baselines",
+    "results": {
+      "baseline-a": {
+        "schema": "nashura.headless-benchmark.v2",
+        "matches": 216,
+        "warmup_matches": 16,
+        "measured_matches": 200,
+        "tick": 3601,
+        "terminal_digest": "6c959326dd2f09cc",
+        "terminal_bytes": 3091,
+        "trace": false,
+        "median_match_ms": 29.321801,
+        "match_wall_percentiles_ms": {
+          "p50": 29.307906,
+          "p95": 31.087868,
+          "p99": 31.998702
+        },
+        "timed_seconds": 5.887400437,
+        "ticks_per_second": 122329.03260220347,
+        "matches_per_second": 33.97085048658803,
+        "step_percentiles_us": {
+          "p50": 5.624,
+          "p95": 18.457,
+          "p99": 25.1655
+        },
+        "step_percentile_repeat_spread_us": {
+          "p50": {
+            "p10": 5.374,
+            "p90": 5.917
+          },
+          "p95": {
+            "p10": 16.999,
+            "p90": 23.541
+          },
+          "p99": {
+            "p10": 22.707,
+            "p90": 49.331
+          }
+        },
+        "step_sample_every_ticks": 16,
+        "step_samples_per_match_median": 225.0,
+        "total_step_samples": 45013,
+        "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+        "peak_rss_mib": 258.92578125,
+        "sampled_rss_peak_mib": 258.19921875,
+        "sampled_pss_peak_mib": 257.95703125,
+        "memory_sample_counts": {
+          "rss_kb": 200,
+          "pss_kb": 200
+        },
+        "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+        "readiness": "UNVERIFIED",
+        "log_sha256": "f48113042d98742f75c8ebd17ed35d8de3a3dbdc3e6ec1657c28c2822de49143",
+        "runner_exit_code": 0,
+        "plan_sha256": "9305eea9acd77d746b5abdf6662b2fd6f5d7da0f7ad7fb35538780ba1841bd14"
+      },
+      "baseline-b": {
+        "schema": "nashura.headless-benchmark.v2",
+        "matches": 216,
+        "warmup_matches": 16,
+        "measured_matches": 200,
+        "tick": 3601,
+        "terminal_digest": "6c959326dd2f09cc",
+        "terminal_bytes": 3091,
+        "trace": false,
+        "median_match_ms": 28.5871245,
+        "match_wall_percentiles_ms": {
+          "p50": 28.586062,
+          "p95": 29.360237,
+          "p99": 30.41819
+        },
+        "timed_seconds": 5.728081609,
+        "ticks_per_second": 125731.448879572,
+        "matches_per_second": 34.91570365997556,
+        "step_percentiles_us": {
+          "p50": 5.479,
+          "p95": 17.7285,
+          "p99": 24.1865
+        },
+        "step_percentile_repeat_spread_us": {
+          "p50": {
+            "p10": 5.291,
+            "p90": 5.791
+          },
+          "p95": {
+            "p10": 16.833,
+            "p90": 22.499
+          },
+          "p99": {
+            "p10": 22.291,
+            "p90": 48.164
+          }
+        },
+        "step_sample_every_ticks": 16,
+        "step_samples_per_match_median": 225.0,
+        "total_step_samples": 45013,
+        "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+        "peak_rss_mib": 258.015625,
+        "sampled_rss_peak_mib": 258.07421875,
+        "sampled_pss_peak_mib": 257.83203125,
+        "memory_sample_counts": {
+          "rss_kb": 200,
+          "pss_kb": 200
+        },
+        "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+        "readiness": "UNVERIFIED",
+        "log_sha256": "9c1b10c5702ba55eb28947503dbd74a5eefcf806fd68e8e70e6ac59744d3a1bf",
+        "runner_exit_code": 0,
+        "plan_sha256": "b533090f6e6f5a1a0570eab6f1a6e8bfbbdbbac7f57db8e35691c59fcbd07fab"
+      }
+    }
+  },
+  "retained_failed_or_limited_attempts": [
+    {
+      "version": "v1",
+      "wrapper_exit": 2,
+      "perf_exit": 2,
+      "perf_data_sha256": "bca80f64d7ffc555fa4b2a863eec533b49e048d77abb3214ec83c9f4f53466f1",
+      "script_sha256": "246f8cda124a6bec50cc652f8d2f807abb816ad39dbf61f414f1a626127b7786",
+      "reason": "old deployed runner rejected benchmark CLI options; no battle workload ran",
+      "raw_samples": 1
+    },
+    {
+      "version": "v2",
+      "wrapper_exit": 0,
+      "perf_exit": 0,
+      "perf_data_sha256": "99c4922e66a2ce0f4eaae1b787eb4ffe59fed6aa80b55424deda54b1ca54975c",
+      "script_sha256": "8f0bb89a9b7af0e447df66e926d3d2aa9bacf90c007f443a34dc5e9f1078763d",
+      "reason": "successful 46-match profile with default unverified clock; not used for warm-window attribution",
+      "raw_samples": 251
+    },
+    {
+      "version": "v3",
+      "wrapper_exit": 1,
+      "perf_exit": 1,
+      "perf_data_sha256": "f578b16e07e5e318083d1f7c090d94b9f75dde08c0634e03df05ae0be66d4e4f",
+      "script_sha256": "0d4e4c62d243d244c61be0bcedfdb175a0825bb39dc5f22d9f9c0e10b9eb5df5",
+      "reason": "216 per-match terminal records emitted, but native five-second task wait expired; Java failed and outer timeout terminated runtime",
+      "runner_exit": 124,
+      "raw_samples": 7549
+    }
+  ],
+  "evidence": {
+    "baseline_control_plan_sha256": "7f1d9c3ed124cff43c8f6a1aecd71cad835ddd73ea9b50709ae895aea1da1c12",
+    "baseline_control_result_sha256": "ed1ea16dd213f658ee307c80c4b76ace5f95582d9bebdb1a7580c818eef055c9",
+    "profile_wrapper_script_sha256": "2e22487349c6c6e3225a85ad25614d7cc6a3784bd581dac3f49852f7725b00b3",
+    "baseline_controller_script_sha256": "f89e579553b8dd903a7d9847b3944a2d1cb34a89c26c0829cb735c9edfdbbc04",
+    "local_elf_pt_load_summary": {
+      "sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "arch": "aarch64",
+      "PT_LOAD": [
+        {
+          "offset": "0x0",
+          "vaddr": "0x0",
+          "filesz": "0x17e6550",
+          "memsz": "0x17e6550",
+          "flags": 5,
+          "vaddr_minus_offset": 0
+        },
+        {
+          "offset": "0x17e6550",
+          "vaddr": "0x17ea550",
+          "filesz": "0xffb18",
+          "memsz": "0x100ab0",
+          "flags": 6,
+          "vaddr_minus_offset": 16384
+        },
+        {
+          "offset": "0x18e6070",
+          "vaddr": "0x18ee070",
+          "filesz": "0xa9c78",
+          "memsz": "0x129700",
+          "flags": 6,
+          "vaddr_minus_offset": 32768
+        },
+        {
+          "offset": "0x1a11000",
+          "vaddr": "0x1a19000",
+          "filesz": "0x2b764",
+          "memsz": "0x2b764",
+          "flags": 5,
+          "vaddr_minus_offset": 32768
+        },
+        {
+          "offset": "0x1a3d000",
+          "vaddr": "0x1a45000",
+          "filesz": "0x352c",
+          "memsz": "0x352c",
+          "flags": 6,
+          "vaddr_minus_offset": 32768
+        },
+        {
+          "offset": "0x1a44000",
+          "vaddr": "0x3a44000",
+          "filesz": "0x3100",
+          "memsz": "0x3100",
+          "flags": 4,
+          "vaddr_minus_offset": 33554432
+        }
+      ]
+    }
+  },
+  "validation": {
+    "pure_linux": {
+      "passed": 1216,
+      "skipped": 1,
+      "junit_sha256": "b549ba32b8367c8767c8d1c237a5bf86ad62db297f581096017516920bf54315"
+    },
+    "public": {
+      "passed": 1104,
+      "skipped": 42,
+      "junit_sha256": {
+        "checks-public.xml": "26ec6b05bd165690c021d3cb9e65f2bb11503a249102bbe47603ffd1ca0af808",
+        "checks-affordability.xml": "fce07b098aeda1f9d7258b023534e2aa047f98a47b00e1dcc307bc85e4417c01",
+        "checks-selection-timeout.xml": "356958ed0be5b0f8e996aaa0c1f10c0fcaa54bc65c8f5b7a05edb5fb951ca0f5",
+        "checks-position-guards.xml": "979ca5dd3c8399cfa3213d104eaeadd05cb43688634c8dee48e9a5b187b2fd8e",
+        "checks-live-command.xml": "eda6c73f15a67ed4245f38dc3fe8f77e55a7625b451afc81685843e99035b9b2",
+        "checks-dispatch-command.xml": "fb1f1305e0cd7cd53be4f9fc4310843d822589b261c59ab893a927403836b525",
+        "checks-reservation-mapping.xml": "aefffc2749a5e8b59b6c1178c4f6c8837e196531f14023bcebb7aed1edeb3146",
+        "checks-command-coordinates.xml": "d11d8e62a0768412d78358c6c90035896d12b6d7b54b494030ec253d5c441a6c",
+        "checks-collection-coordinator.xml": "f371917872599688763c1ad3685e9f74a4ebdb8aa86aeeec59813b8eee1542d9"
+      },
+      "failures": 0,
+      "errors": 0
+    },
+    "main_engine": {
+      "passed": 211,
+      "log_sha256": "c8ab393255353bcb99237c7e2ad3a9e732455d130f4464703b967778f13ba6f8"
+    },
+    "new_profile_and_runner_tests": 44,
+    "public_snapshot": "passed: 2890 files",
+    "gitleaks": "passed: no leaks found",
+    "git_diff_check": "passed",
+    "host_postprocessing_error": "two zsh wrappers used read-only variable status after tests completed; validation counts were independently audited from complete logs and nine zero-error JUnit files"
+  },
+  "limits": [
+    "one seed, one eight-card deck and one fixed 52-command replay in this phase",
+    "terminal digest and byte length stability are not full serializer payload or unrepresented state equivalence",
+    "step percentiles are medians of per-match rotating-phase sample percentiles, not pooled per-step quantiles",
+    "no native computational optimization or before/after speedup claim",
+    "hardware cycles/instructions/cache measurements and phase-specific action apply/allocation/synchronization attribution remain missing",
+    "short serial batches are not long-duration stability acceptance",
+    "host scheduler, frequency and thermal state were not pinned; final baselines did not overlap agent-run engineering tests"
+  ],
+  "implementation_sha256": {
+    "tools/pure_linux/run_headless_match.py": "bd275733d24ce1ffc7b47be44ef9a9e498de95c6ca72c95bf0210622cdb90b5d",
+    "tools/pure_linux/test_run_headless_match.py": "cacb44f27f4ec98a8cbff246102e7438fbd2c7d3ed4a52ce100f8865bc06e314",
+    "tools/pure_linux/summarize_headless_perf.py": "b1c269c71becb381061213903bf6c1823346cdb418b063d0126422da6aa7fa12",
+    "tools/pure_linux/test_summarize_headless_perf.py": "067ceae312d45a9d10ecfddf3b9b21586e9290e195e6bb7f961942f697b017a7"
+  }
+}

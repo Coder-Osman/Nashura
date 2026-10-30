@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-31：warm-step profile 窗口归因与长串行等待
+
+- 修复 benchmark 共用单个 Mainloop task 时触发默认约五秒等待的问题；等待跟随 timeout，保留原生 120 秒上限及独立外层终止界限。
+- 新增严格 warm-window perf 汇总器，验证 monotonic clockid、退出码、完整终局、输入身份、最小观测及零丢样；按进程/时间映射归一化 libg 文件偏移。
+- ARM64 guest 216 局 profile 正常完成，后 200 局保留 5,689 个窗口内 CPU-clock 样本；libg 叶样本占 98.95%，空间查询范围占 16.68%。
+- 同构建两批独立无 profiler 基线各测 200 局，中位 29.43 / 29.02 ms；不解释为优化前后收益，保留单 seed/卡组及终态摘要边界。
+- 旧 CLI 与长批次 task timeout 失败原始文件继续保留；没有修改 libg、扩大 Android 服务适配或运行并发测试。整体目标仍未完成。
+
 ## 2026-10-31：串行 step 采样相位复核
 
 - native benchmark 在串行 reset 间轮转采样相位，记录 `sample_phase` 与 period，并在汇总器中核对相位、采样数和动作序列契约。
