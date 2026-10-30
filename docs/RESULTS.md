@@ -1,5 +1,25 @@
 # 阶段成果与证据索引
 
+## 2026-10-31：热 getter 内联的串行完整局对照
+
+固定 ARM64 build 的 11 个热 getter BL 调用点替换为原有 LDR；不缓存、不提前
+读取、不重排，三调用者入口、全部 BL 和 getter LDR/RET 精确 guard。只改一次性
+进程，原始库文件不变；候选默认关闭，与空间候选互斥。
+
+两卡组、seed 1/7 的四组新原始局/优化局与历史原始局全部 serializer 帧和已观测
+状态一致。相同 observer、输入和 VM 配置下按 ABBA/BAAB 运行 32 批、3712 局，
+剔除每批 16 局 warmup 后共 3200 测量局。四组批次中位耗时变化为
+`-5.89% / -5.52% / -5.22% / -5.00%`，聚合吞吐变化为
+`+5.92% / +6.05% / +6.46% / +5.77%`。两个交错 block 分别都观察到耗时下降；
+每 variant/case 只有四个独立批次，保留虚拟机调度、主机频率和热状态未锁定的边界。
+
+pure_linux `1249 passed / 1 skipped`、公开 `1104 passed / 42 skipped`、
+main_engine `211 passed`。没有并发、外围 Android 服务重建或系统配置变更；
+当前 Mac → Fusion ARM64 Ubuntu 路径没有 QEMU 翻译层，但仍依赖 ART/JNI，
+不宣称 macOS 原生/无 ART 运行。整体目标与长期稳定性继续未完成。详见
+[报告](../agent-handoff/SERIAL_ARM64_HOT_GETTERS_2026-10-31.md)和
+[机器摘要](../agent-handoff/serial-arm64-hot-getters-evidence-20261031.json)。
+
 ## 2026-10-31：多卡组完整局与查询候选实测
 
 两个实际不同的八卡集合、seed 1/7 共四组固定非空动作，由真实 selection builder

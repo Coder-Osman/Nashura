@@ -21,6 +21,7 @@
 #include <sys/resource.h>
 #include <time.h>
 #include "headless_spatial_y_bound.h"
+#include "headless_hot_getters.h"
 
 static uintptr_t base;
 static _Atomic int destroyed;
@@ -1122,8 +1123,12 @@ static void run_task(struct task *task) {
     if (requested_mode == 4) { task_status = construct_game_state(); return; }
     if (requested_mode >= 5 && requested_mode <= 10) {
         const char *optimization = getenv("NASHURA_NATIVE_OPTIMIZATION");
-        if (optimization && (strcmp(optimization, "spatial-y-bound-v1")
-                || !install_spatial_y_bound(base))) { task_status = -55; return; }
+        if (optimization) {
+            int installed = !strcmp(optimization, "spatial-y-bound-v1")
+                ? install_spatial_y_bound(base) : !strcmp(optimization, "hot-getters-v1")
+                ? install_hot_getters(base) : 0;
+            if (!installed) { task_status = -55; return; }
+        }
         const int step_once = requested_mode == 6 || requested_mode == 8 ||
                               requested_mode == 9 || requested_mode == 10;
         const int allow_commands = requested_mode == 7 || requested_mode == 8 ||

@@ -112,35 +112,37 @@ def test_phase_timing_is_opt_in_for_guest_plan(inputs, monkeypatch):
     assert runner.build_plan(settings, output)["environment"]["NASHURA_PHASE_TIMING"] == "1"
 
 
-def test_native_optimization_is_explicit_and_version_limited(inputs, monkeypatch):
+@pytest.mark.parametrize("optimization", runner.OPTIMIZATION_MARKERS)
+def test_native_optimization_is_explicit_and_version_limited(inputs, monkeypatch, optimization):
     settings, output = inputs
-    monkeypatch.setenv("NASHURA_NATIVE_OPTIMIZATION", "spatial-y-bound-v1")
+    monkeypatch.setenv("NASHURA_NATIVE_OPTIMIZATION", optimization)
     assert "NASHURA_NATIVE_OPTIMIZATION" not in runner.build_plan(settings, output)["environment"]
-    plan = runner.build_plan(settings, output, native_optimization="spatial-y-bound-v1")
-    assert plan["native_optimization"] == "spatial-y-bound-v1"
-    assert plan["environment"]["NASHURA_NATIVE_OPTIMIZATION"] == "spatial-y-bound-v1"
+    plan = runner.build_plan(settings, output, native_optimization=optimization)
+    assert plan["native_optimization"] == optimization
+    assert plan["environment"]["NASHURA_NATIVE_OPTIMIZATION"] == optimization
     with pytest.raises(ValueError, match="unknown native"):
         runner.build_plan(settings, output, native_optimization="unreviewed")
 
 
 @pytest.mark.parametrize("markers", [0, 1, 2])
-def test_optimized_run_requires_one_successful_native_installation(inputs, monkeypatch, markers):
+@pytest.mark.parametrize("optimization", runner.OPTIMIZATION_MARKERS)
+def test_optimized_run_requires_one_successful_native_installation(inputs, monkeypatch, markers, optimization):
     settings, output = inputs
-    marker = ("HEADLESS_NATIVE_OPTIMIZATION name=spatial-y-bound-v1 "
-              "installed=1 offset=0xf34c84 target=0xf34c38\n")
+    marker = ("HEADLESS_NATIVE_OPTIMIZATION name=" + optimization
+              + " installed=1 " + runner.OPTIMIZATION_MARKERS[optimization] + "\n")
     def execute(command, *, env, stdout, stderr):
         stdout.write((marker * markers + COMPLETE).encode())
         return SimpleNamespace(returncode=0)
     monkeypatch.setattr(runner.subprocess, "run", execute)
     if markers == 1:
         result = runner.run(settings, output, apply=True, snapshot_trace=False,
-                            native_optimization="spatial-y-bound-v1")
-        assert result["native_optimization"] == "spatial-y-bound-v1"
+                            native_optimization=optimization)
+        assert result["native_optimization"] == optimization
         assert (output / "result.json").exists()
     else:
         with pytest.raises(ValueError, match="installation evidence"):
             runner.run(settings, output, apply=True, snapshot_trace=False,
-                       native_optimization="spatial-y-bound-v1")
+                       native_optimization=optimization)
         assert (output / "exit.txt").read_text() == "0\n"
         assert not (output / "result.json").exists()
 

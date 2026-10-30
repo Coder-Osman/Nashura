@@ -1,5 +1,16 @@
 # Nashura
 
+## 2026-10-31：热 getter 候选的四组串行收益
+
+同一 observer 在 11 个热调用点内联原有字段读取，默认关闭且不叠加空间候选。
+两卡组、seed 1/7 的四组完整局全部 serializer 帧及已观测状态一致；32 批共
+3712 局正常退出。交错 ABBA/BAAB 对照中，warm-loop 批次中位耗时降低约
+5.00%–5.89%，聚合吞吐提高 5.77%–6.46%。这是当前 guest/fixture 的限定收益，
+不代替长期稳定性、全部状态等价或整体目标；不测并发、不扩张 Android 服务。
+本机使用 Fusion ARM64 Linux guest，当前链路没有 QEMU 指令翻译。详见
+[报告](agent-handoff/SERIAL_ARM64_HOT_GETTERS_2026-10-31.md)与
+[机器摘要](agent-handoff/serial-arm64-hot-getters-evidence-20261031.json)。
+
 ## 2026-10-31：多卡组完整局配对与空间查询候选
 
 冻结两个不同八卡集合、seed 1/7 的原生非空动作；四组完整局的全部 serializer 帧及

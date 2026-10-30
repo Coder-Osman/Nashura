@@ -5,6 +5,9 @@
 - [SERIAL_ARM64_WARM_WINDOW_2026-10-31.md](SERIAL_ARM64_WARM_WINDOW_2026-10-31.md)：仅 warm-step 窗口的 CPU 归因、长串行 task 等待修复与同构建重复基线。
 - [SERIAL_ARM64_SAMPLE_PHASE_2026-10-31.md](SERIAL_ARM64_SAMPLE_PHASE_2026-10-31.md)：串行 warm-step 采样相位复核及旧基线可比性边界。
 
+- [SERIAL_ARM64_HOT_GETTERS_2026-10-31.md](SERIAL_ARM64_HOT_GETTERS_2026-10-31.md)：四组完整局全帧回归、热 getter 内联和 ABBA/BAAB 串行收益及本机 QEMU 边界。
+- [SERIAL_ARM64_SPATIAL_Y_BOUND_2026-10-31.md](SERIAL_ARM64_SPATIAL_Y_BOUND_2026-10-31.md)：多卡组固定动作、空间查询候选及未证实加速的完整结果。
+
 ## 文件约定
 
 - [ASSISTANT_TO_CODEX_2026-10-22.md](ASSISTANT_TO_CODEX_2026-10-22.md)：此次修复与合并工作的明确请求，包含四项改动和不允许做的事。

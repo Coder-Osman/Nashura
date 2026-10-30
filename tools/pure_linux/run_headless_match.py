@@ -30,6 +30,10 @@ BOOT = ["/apex/com.android.art/javalib/" + name + ".jar" for name in
 BOOT += ["/apex/com.android.conscrypt/javalib/conscrypt.jar",
          "/data/local/tmp/framework-sdk.jar",
          "/apex/com.android.os.statsd/javalib/framework-statsd.jar"]
+OPTIMIZATION_MARKERS = {
+    "spatial-y-bound-v1": "offset=0xf34c84 target=0xf34c38",
+    "hot-getters-v1": "sites=11",
+}
 
 
 def sha256(path):
@@ -101,7 +105,7 @@ def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
                step_sample_every=16, timeout_seconds=45, record_hand_actions=False,
                native_optimization=None):
     paths, output = validate(settings, output)
-    if native_optimization not in (None, "spatial-y-bound-v1"):
+    if native_optimization is not None and native_optimization not in OPTIMIZATION_MARKERS:
         raise ValueError("unknown native optimization")
     if record_hand_actions:
         if benchmark_repeats is not None:
@@ -203,7 +207,7 @@ def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=No
                                    benchmark_repeats or 1)
     if native_optimization is not None:
         marker = ("HEADLESS_NATIVE_OPTIMIZATION name=" + native_optimization
-                  + " installed=1 offset=0xf34c84 target=0xf34c38")
+                  + " installed=1 " + OPTIMIZATION_MARKERS[native_optimization])
         if (output / "stdout.log").read_text().splitlines().count(marker) != 1:
             raise ValueError("missing unique native optimization installation evidence")
     summary = {"status": "NATIVE_FINAL_OBSERVED_LIMITED",
@@ -231,7 +235,7 @@ def main():
     parser.add_argument("--benchmark-repeats", type=int)
     parser.add_argument("--record-hand-actions", action="store_true",
                         help="diagnostic native selection recording; requires empty command arrays")
-    parser.add_argument("--native-optimization", choices=["spatial-y-bound-v1"],
+    parser.add_argument("--native-optimization", choices=list(OPTIMIZATION_MARKERS),
                         help="experimental pinned-build optimization; default keeps original code")
     parser.add_argument("--step-sample-every", type=int, default=16)
     parser.add_argument("--timeout-seconds", type=int, default=45)

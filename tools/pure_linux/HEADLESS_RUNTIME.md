@@ -98,7 +98,13 @@ python3 tools/pure_linux/freeze_headless_actions.py "$EMPTY_REPLAY" "$RECORD_OUT
 固定 fixture 位于 `fixtures/headless-runtime-deck-{a,b}-seed-{1,7}.json`，它们覆盖两个
 实际不同的八卡集合，不代表全部卡牌、玩法或未序列化全局的等价性。
 
-## 实验性 native 查询优化
+## 实验性 native 优化
+
+`--native-optimization` 每次只选择一个候选，默认关闭；多个候选不叠加。
+本机 ARM64 Linux guest 没有 QEMU 指令翻译层；本节与历史 x86 服务器的 QEMU
+复测分开。Linux guest 仍承载现有 ELF/Bionic/ART 依赖，不是 macOS 原生移植。
+
+### 空间查询边界
 
 `--native-optimization spatial-y-bound-v1` 显式启用固定版本候选，默认仍调用原始代码。
 同一 observer 可测两个路径。Java 固定 libg SHA 后，Mainloop 在首个 battle 前额外
@@ -112,6 +118,19 @@ RW、后 RX，并刷新指令缓存；安装后该进程内保持启用至退出
 它不保证其他构建或并发修改的语义。完整局 serializer 配对证明已覆盖 fixture 的
 序列化状态一致，工程模型测试只检查跳转编码和跳过单元格的次序。性能收益必须
 另由相同 observer、相同输入、关闭诊断的多批 A/B 对照证明，不能由该模型推断。
+
+### 热 getter 调用内联
+
+`--native-optimization hot-getters-v1` 在三个热调用者的 11 个调用点，以 getter
+原有单条字段 LDR 替换 BL。四个 getter 均严格为 LDR 加 RET，读取时机、宽度、
+偏移及顺序不变。安装器校验调用者入口、原始 BL 与 getter 的 LDR/RET，全部通过
+才按 RW → 写入 → 指令缓存刷新 → RX 修改一次性进程；原始库文件保持不变。
+调用者保存并恢复 LR，正文不依赖中间 LR；正常执行语义之外的 fault PC 和
+signal/profiler 调用栈不在等价范围。非简单 getter 不参与此候选。
+
+四个固定多卡组/seed 完整局需分别通过原始与优化 serializer 全帧和已观测状态
+对照，再进行同 observer 的串行 A/B 批次计时；终态 digest 一致本身不是全帧门。
+详见 `agent-handoff/SERIAL_ARM64_HOT_GETTERS_2026-10-31.md`。该候选默认关闭。
 
 ## 只归因 warm step 的 perf 采样
 

@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-31：热 getter 内联的限定串行收益
+
+- 新增默认关闭的 `hot-getters-v1`：11 个 BL 替换为原 getter 的同宽/同偏移 LDR，完整字节 guard、RW/RX 和指令缓存刷新，与空间候选互斥。
+- 四组多卡组/seed 完整局在新默认路径、优化路径和历史原始路径间全帧及已观测状态一致；主机复算原始归档与日志。
+- 同 observer ABBA/BAAB 32 批、3712 局正常退出；四组耗时降低约 5.00%–5.89%，聚合吞吐提高 5.77%–6.46%，保留四批/variant 的统计边界。
+- pure_linux 1249 passed / 1 skipped、公开 1104 passed / 42 skipped、main_engine 211 passed；候选保持 opt-in，未测并发或修改 VM 配置。
+- 记录当前 Mac Fusion ARM64 guest 无 QEMU 翻译层及仍依赖 ART/JNI 的边界；整体优化目标继续进行。
+
 ## 2026-10-31：多卡组 serializer 回归门与 native 查询候选
 
 - 新增隔离的原生手牌动作记录、严格冻结器及两卡组/两 seed 固定输入，禁止记录模式混入 benchmark。
