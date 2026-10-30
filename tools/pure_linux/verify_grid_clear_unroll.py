@@ -75,10 +75,14 @@ def aggregate(rows):
 
 
 def verify(root, reference, *, variants=None, guest_root=None, observer=None,
-           schema="nashura.grid-clear-unroll.v1", require_grid_instruction_check=True):
+           schema="nashura.grid-clear-unroll.v1", require_grid_instruction_check=True,
+           timing_case_order=None):
     variants = VARIANTS if variants is None else variants
     guest_root = GUEST_ROOT if guest_root is None else Path(guest_root)
     observer = OBSERVER if observer is None else observer
+    timing_cases = tuple(CASES if timing_case_order is None else timing_case_order)
+    if sorted(timing_cases) != sorted(CASES):
+        raise ValueError("timing cases must be a complete permutation")
     root, reference = map(Path, (root, reference))
     if (root / "controller.exit").read_text().strip() != "0":
         raise ValueError("normal controller exit required")
@@ -96,6 +100,7 @@ def verify(root, reference, *, variants=None, guest_root=None, observer=None,
     require_equal(stage["variants"], variants)
     require_equal(stage["cases"], list(CASES))
     require_equal(stage["order"], list(ORDER))
+    require_equal(stage.get("timing_case_order", list(CASES)), list(timing_cases))
     if (stage["benchmark_repeats"] != 216 or stage["warmup_matches"] != 16
             or stage["profiling"] is not False or stage["concurrency"] is not False
             or stage["engineering_checks_finished_before_launch"] is not True):
@@ -106,7 +111,7 @@ def verify(root, reference, *, variants=None, guest_root=None, observer=None,
             raise ValueError("fixed VM allocation changed")
     gates, timings = (read(root / x) for x in ("correctness-results.json", "timing-results.json"))
     if ([(x["case"], x["variant"]) for x in gates] != [(c, v) for c in CASES for v in variants]
-            or [(x["case"], x["index"], x["variant"]) for x in timings] != [(c, i, v) for c in CASES for i, v in enumerate(ORDER, 1)]):
+            or [(x["case"], x["index"], x["variant"]) for x in timings] != [(c, i, v) for c in timing_cases for i, v in enumerate(ORDER, 1)]):
         raise ValueError("wrong case/order or missing runs")
     correctness, cases = [], []
     for name in CASES:
@@ -198,6 +203,10 @@ def verify(root, reference, *, variants=None, guest_root=None, observer=None,
         result = aggregate(verified)
         result.update(case=name, batches=verified)
         cases.append(result)
+    starts = [next(c for c in cases if c["case"] == name)["batches"][index - 1]["start_epoch_ns"]
+              for name in timing_cases for index in range(1, len(ORDER) + 1)]
+    if starts != sorted(set(starts)):
+        raise ValueError("timing process starts must follow the declared case/batch order")
     return {"schema": schema, "host_recomputed": True,
         "observer_sha256": stage["observer_sha256"], "instruction_cases": 24107 if require_grid_instruction_check else None,
         "timing_batches": 32, "timing_matches": 6912, "measured_matches": 6400,

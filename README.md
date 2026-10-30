@@ -1,5 +1,14 @@
 # Nashura
 
+## 2026-10-31：查询 pair-load 独立复测仍有 block 回退
+
+同一 observer、固定 VM/输入，反转四组计时顺序，重新完成 12 个完整局 34047 帧、
+192424 组 ARM64 指令及 32 批 ABBA/BAAB。主机核验 308 个文件并独立复算，四组
+中位耗时下降 1.56% / 0.85% / 0.20% / 0.90%，但 b1、b7 第一 block 分别回退
+0.57% / 0.06%；b1 p99 略升。保持默认关闭，不把小幅增量视为完全稳定，下一优先级
+回到已采样的对象/组件路径；固定最小依赖与串行边界不变。详见
+[报告](agent-handoff/SERIAL_ARM64_QUERY_DIMENSION_CONFIRMATION_2026-10-31.md)与[机器摘要](agent-handoff/serial-arm64-query-dimension-confirmation-evidence-20261031.json)。
+
 ## 2026-10-31：查询维度 pair-load 的首轮限定收益
 
 默认关闭的 query-dimension-pair-v1 / hot-distance-query-v1 仅合并查询内相邻宽高

@@ -99,7 +99,7 @@ def synthetic(inputs,monkeypatch):
             summary=grid.summarize(text,216,expected_tick=17,expected_digest="e16801510db89efd",expected_bytes=3,warmup_matches=16)
             summary={k:v for k,v in summary.items() if k not in grid.COMPACT_OMIT}
             save(directory.parent/(directory.name+"-summary.json"),summary)
-            save(directory.parent/(directory.name+"-environment.json"),env)
+            save(directory.parent/(directory.name+"-environment.json"),{**env,"epoch_ns":grid.CASES.index(name)*8+index})
             timings.append({"case":name,"index":index,"variant":variant,"summary":summary,"result":result})
     save(root/"correctness-results.json",gates);save(root/"timing-results.json",timings)
     return root,previous
