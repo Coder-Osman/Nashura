@@ -1,0 +1,2847 @@
+{
+  "schema": "nashura.serial-arm64-spatial-y-bound.v1",
+  "status": "MULTIDECK_PARITY_PASSED_SPEEDUP_UNPROVEN",
+  "whole_goal_complete": false,
+  "concurrency_tested": false,
+  "native_optimization_applied_in_disposable_processes": true,
+  "default_optimization_enabled": false,
+  "guest": {
+    "architecture": "aarch64",
+    "cpu_count": 2,
+    "affinity": [
+      0,
+      1
+    ],
+    "memory_mib": 6144,
+    "kernel": "6.8.0-138-generic",
+    "hypervisor": "VMware Fusion",
+    "configuration_changed": false,
+    "remaining_benchmark_processes": 0
+  },
+  "input_identities": {
+    "run_headless_namespace.sh": "996d4c31776575cad77896028b8abab9b47d5d23c4eb2809ffc386d44173b5f7",
+    "nashura-headless-art-config-20261030.txt": "92206fda5f9ff3ff5832eff1a58af9e928f916d845247c3ff53751b316caffa8",
+    "nashura-headless-art-runtime-final-v56identity": "82cb63f22027250ad9377990a74f56eb78f9079965d8eca518b4a893009710e9",
+    "nashura-headless-direct-20261030-v56identity.dex": "a2a5fc755f1dcc2f31391ccbc9ec5f706deb83a484186101f02a5e54d0d13ead",
+    "nashura-libheadless-observer-20261030-v56identity.so": "5537b900a6b4d284923d8ffd213ea5e51cc526254f6b0773b135f4f3e40f392a",
+    "nashura-original-game-20261030.apk": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "replay.json": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8",
+    "core-oj.jar": "6e7721e9665c7f4dd29a4b10edcf75ea2fa80f18d98b840d8e65c6a18bd0ebfa",
+    "core-libart.jar": "f25ae54a3d7bc9a3885eecc2e5c31bbf215c11ca72713a9b3cfbeeb25d7cba6f",
+    "core-icu4j.jar": "ba284ec0e23211463f36d7d88ca12f69b4a69cb1ee944bff2dfa99890508ee66",
+    "okhttp.jar": "2717b71cca1bde47faab72943ac891babc3a8280db32108018b847f83e49afa7",
+    "bouncycastle.jar": "6353640f039b845cfc87a887e8108013b8b8a1c7e1816f106f8e8dd37113987f",
+    "apache-xml.jar": "18241f496bb627547da38f480c9fda21826a0ea749281997a58607a3884476e9",
+    "conscrypt.jar": "c68e417252d943411248e3e1a453a558bd9311d4e55bff397d2b5e86915c2911",
+    "framework-sdk.jar": "c17a2b45ae03bad051528fc1a9487a5c320b43b2fd4bf11c9b615cfda2ffe633",
+    "framework-statsd.jar": "5e0228a632e069c742484565f3868127b030be00c363ef26fc9d5e3f1ab81744",
+    "current-game-classes.dex": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+    "libg.so": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "libart_engine_jni_probe.so": "7cc39a656eb850a24e51f60468028ed46c51e897e1cd70965018d3903c42c0a4",
+    "linker64": "e6a2026a6252e0a80c242555e147faca98cd557e2adac1927cd5c096d70ce4c7",
+    "libc.so": "9fe640090067ed1cb993815eb5d99fc03d80076754deafa813d0fd78dbb40569",
+    "libart.so": "35a64b7c823728e10e5dee31689977417d5556a5358e4fecc568e1b133baed66",
+    "libandroid_runtime.so": "806a7753d28556488dc7c6535b111128e6ad60b3d25db2a8183a4643f9c7add6",
+    "libutils.so": "f67a4a20450acb622d4e8dfc56a856f17ce18c6c45059274598862163f5e8ef1",
+    "libsentry.so": "bea6725a4122db6e516da9ee4a62b066b05171fddcdf1513c98e33626746acda",
+    "libsentry-android.so": "6769fd03351610e93ca724ccc74c1c82a6caedd8c1d9996267599556545712a1",
+    "libscid_sdk.so": "2a6edcc8fcad301daa946157ea97c6c422067d5ceaab7cb2ed4655654b642319",
+    "libfmodstudio.so": "592cdc4beba2aea5f177f0ed3c52c7ed018b09734a3fb584a4ec487cd926caf0",
+    "libfmod.so": "299d2a6b03ec865cd9234f4f7484fb7e74928d0180dc6c4b455a8d2b5b54dd45",
+    "libc++_shared.so": "4397241b4bd20a8e579bfb41d21107857e12985f6a01ca0c2a5f83380d1270b4",
+    "u:object_r:default_prop:s0": "f1d727d1589d491d9f919b8a6d952202381ac0f7ab8c8d72c174a361e5666148",
+    "property_info": "b91c140bad30c3b43a576892fae0ab4cdc25ea1c8c163cc36533e18cc8df58a5",
+    "properties_serial": "3a244ce0d669442fafc9acb4e32e90da20c0c572c80c00171397c511e3fcaafd",
+    "nashura-libheadless-observer-20261031-phase-rotation-v2.so": "39c5a13103daeb41eaee3455c92a6e37a9e0c0fedf5d013f68b3342821f80ca7"
+  },
+  "observer_sha256": "b04ffec2f8f6be02563fe17bba28ddd5262e9e6347e31f3c58a1d374d3452a66",
+  "runner_sha256": "e3eeaa81cde4924597c641e94121bcfc4ccd61321cfdeaefa57c786aec01d01b",
+  "candidate": {
+    "name": "spatial-y-bound-v1",
+    "offset": "0xf34c84",
+    "original_instruction": "b.le +0xf34c60",
+    "replacement_instruction": "b.le +0xf34c38",
+    "original_word": "0x54fffeed",
+    "replacement_word": "0x54fffdad",
+    "file_modified": false,
+    "installation": "Mainloop before first battle; exact bytes guarded; RW then RX; instruction cache cleared",
+    "scope": "pinned ARM64 engine, serial Mainloop, stable grid dimensions throughout query"
+  },
+  "method": {
+    "order": [
+      "a1-original",
+      "b1-optimized",
+      "b2-optimized",
+      "a2-original"
+    ],
+    "cases": 4,
+    "batches": 16,
+    "repeats_per_batch": 116,
+    "warmup_matches_per_batch": 16,
+    "measured_matches_per_batch": 100,
+    "total_matches": 1856,
+    "total_measured_matches": 1600,
+    "step_sample_every": 16,
+    "step_sampling": "deterministic rotating phase",
+    "timed_scope": "warm step loop only",
+    "excluded": [
+      "ART startup",
+      "resource loading",
+      "reset",
+      "terminal validation",
+      "16 warmup matches"
+    ],
+    "disabled": [
+      "Frida",
+      "REA",
+      "Ghidra",
+      "strace",
+      "profiler",
+      "per-tick snapshots",
+      "detailed battle observations",
+      "dynamic hand actions"
+    ],
+    "host_engineering_checks_overlap": false,
+    "host_frequency_and_scheduling_locked": false,
+    "statistical_independence": "batch is the independent unit; per-match repeats are correlated; two batches per variant/case"
+  },
+  "cases": [
+    {
+      "case": "deck-a-seed-1",
+      "fixture": "tools/pure_linux/fixtures/headless-runtime-deck-a-seed-1.json",
+      "recording": {
+        "schema": "nashura.headless-frozen-actions.v1",
+        "source_sha256": "35e52fc32585d00b63d941cb7bcb4df0a4cd3adad8a9d194c5bbbeadd102e0ea",
+        "stdout_sha256": "6bc37ec3132dcb2f95fe1bf2b17934d304248b19b44d96ffbd79cd89f7e23112",
+        "recorded_final_tick": 3601,
+        "seed": 1,
+        "decks": [
+          [
+            26000000,
+            26000001,
+            26000005,
+            28000001,
+            28000000,
+            26000003,
+            26000014,
+            26000018
+          ],
+          [
+            26000000,
+            26000001,
+            26000005,
+            28000001,
+            28000000,
+            26000003,
+            26000014,
+            26000018
+          ]
+        ],
+        "command_count": 52,
+        "records": [
+          {
+            "tick": 0,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 60000
+          },
+          {
+            "tick": 0,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 60000
+          },
+          {
+            "tick": 100,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 77800
+          },
+          {
+            "tick": 100,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 77800
+          },
+          {
+            "tick": 200,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 65600
+          },
+          {
+            "tick": 200,
+            "owner": 1,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 65600
+          },
+          {
+            "tick": 300,
+            "owner": 0,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 53400
+          },
+          {
+            "tick": 300,
+            "owner": 1,
+            "slot": 3,
+            "card": 28000001,
+            "packed": 822083584,
+            "cost": 3,
+            "elixir": 53400
+          },
+          {
+            "tick": 400,
+            "owner": 1,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 41200
+          },
+          {
+            "tick": 500,
+            "owner": 0,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 49000
+          },
+          {
+            "tick": 700,
+            "owner": 1,
+            "slot": 7,
+            "card": 26000018,
+            "packed": 1107298304,
+            "cost": 4,
+            "elixir": 54600
+          },
+          {
+            "tick": 800,
+            "owner": 0,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 62400
+          },
+          {
+            "tick": 800,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 32400
+          },
+          {
+            "tick": 900,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 30200
+          },
+          {
+            "tick": 1000,
+            "owner": 1,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 38000
+          },
+          {
+            "tick": 1100,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 35800
+          },
+          {
+            "tick": 1200,
+            "owner": 1,
+            "slot": 3,
+            "card": 28000001,
+            "packed": 822083584,
+            "cost": 3,
+            "elixir": 43600
+          },
+          {
+            "tick": 1300,
+            "owner": 0,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 41400
+          },
+          {
+            "tick": 1400,
+            "owner": 1,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 49200
+          },
+          {
+            "tick": 1600,
+            "owner": 0,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 54800
+          },
+          {
+            "tick": 1600,
+            "owner": 1,
+            "slot": 7,
+            "card": 26000018,
+            "packed": 1107298304,
+            "cost": 4,
+            "elixir": 44800
+          },
+          {
+            "tick": 1800,
+            "owner": 0,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 50400
+          },
+          {
+            "tick": 1800,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 40400
+          },
+          {
+            "tick": 2000,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 36000
+          },
+          {
+            "tick": 2000,
+            "owner": 1,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 46000
+          },
+          {
+            "tick": 2100,
+            "owner": 1,
+            "slot": 3,
+            "card": 28000001,
+            "packed": 822083584,
+            "cost": 3,
+            "elixir": 33800
+          },
+          {
+            "tick": 2200,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 41600
+          },
+          {
+            "tick": 2400,
+            "owner": 0,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 47200
+          },
+          {
+            "tick": 2400,
+            "owner": 1,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 57200
+          },
+          {
+            "tick": 2500,
+            "owner": 0,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 42900
+          },
+          {
+            "tick": 2500,
+            "owner": 1,
+            "slot": 7,
+            "card": 26000018,
+            "packed": 1107298304,
+            "cost": 4,
+            "elixir": 52900
+          },
+          {
+            "tick": 2600,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 48600
+          },
+          {
+            "tick": 2700,
+            "owner": 0,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 74300
+          },
+          {
+            "tick": 2700,
+            "owner": 1,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 54300
+          },
+          {
+            "tick": 2800,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 60000
+          },
+          {
+            "tick": 2800,
+            "owner": 1,
+            "slot": 3,
+            "card": 28000001,
+            "packed": 822083584,
+            "cost": 3,
+            "elixir": 60000
+          },
+          {
+            "tick": 2900,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 65700
+          },
+          {
+            "tick": 2900,
+            "owner": 1,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 65700
+          },
+          {
+            "tick": 3000,
+            "owner": 0,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 71400
+          },
+          {
+            "tick": 3000,
+            "owner": 1,
+            "slot": 7,
+            "card": 26000018,
+            "packed": 1107298304,
+            "cost": 4,
+            "elixir": 61400
+          },
+          {
+            "tick": 3100,
+            "owner": 0,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 67100
+          },
+          {
+            "tick": 3100,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 57100
+          },
+          {
+            "tick": 3200,
+            "owner": 0,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 62800
+          },
+          {
+            "tick": 3200,
+            "owner": 1,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 62800
+          },
+          {
+            "tick": 3300,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 48500
+          },
+          {
+            "tick": 3300,
+            "owner": 1,
+            "slot": 3,
+            "card": 28000001,
+            "packed": 822083584,
+            "cost": 3,
+            "elixir": 68500
+          },
+          {
+            "tick": 3400,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 54200
+          },
+          {
+            "tick": 3400,
+            "owner": 1,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 74200
+          },
+          {
+            "tick": 3500,
+            "owner": 0,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 59900
+          },
+          {
+            "tick": 3500,
+            "owner": 1,
+            "slot": 7,
+            "card": 26000018,
+            "packed": 1107298304,
+            "cost": 4,
+            "elixir": 69900
+          },
+          {
+            "tick": 3600,
+            "owner": 0,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 55600
+          },
+          {
+            "tick": 3600,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 65600
+          }
+        ],
+        "whole_goal_complete": false,
+        "scope": "native selection and queue acceptance only; application and serializer equivalence require separate runs",
+        "frozen_replay_sha256": "dd6da267aae1f87bdcc21303e967b2d9c93c35c959acb16a86e60ff398c067af"
+      },
+      "baseline_pair": {
+        "equal": true,
+        "frames": 3602,
+        "archive_bytes": 12334754,
+        "sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+      },
+      "optimization_pair": {
+        "equal": true,
+        "frames": 3602,
+        "archive_bytes": 12334754,
+        "sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206",
+        "different_ticks": []
+      },
+      "observed_state": {
+        "equal": true,
+        "lines": [
+          730,
+          730,
+          730
+        ]
+      },
+      "benchmark_batches": [
+        {
+          "batch": "a1",
+          "optimized": false,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 3601,
+            "terminal_digest": "6c959326dd2f09cc",
+            "terminal_bytes": 3091,
+            "trace": false,
+            "median_match_ms": 28.5359205,
+            "match_wall_percentiles_ms": {
+              "p50": 28.533379,
+              "p95": 29.377726,
+              "p99": 29.650564
+            },
+            "timed_seconds": 2.855495237,
+            "ticks_per_second": 126107.7221681249,
+            "matches_per_second": 35.02019499253677,
+            "step_percentiles_us": {
+              "p50": 5.459,
+              "p95": 17.7915,
+              "p99": 23.9175
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 5.292,
+                "p90": 5.792
+              },
+              "p95": {
+                "p10": 16.834,
+                "p90": 22.584
+              },
+              "p99": {
+                "p10": 22.251,
+                "p90": 46.918
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 225.0,
+            "total_step_samples": 22507,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 259.5,
+            "sampled_rss_peak_mib": 258.91015625,
+            "sampled_pss_peak_mib": 258.66796875,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "0a24f0468f127d8c02552848cad11f540c3c59a9dfd35be5472a80399aecb8a8"
+          },
+          "stdout_sha256": "0a24f0468f127d8c02552848cad11f540c3c59a9dfd35be5472a80399aecb8a8",
+          "plan_sha256": "320003c4a9f94dfe35ecb887a45fee17f4c0c3149bfdb02fbfdb9d404624825b",
+          "loadavg": "0.07 0.06 0.02 1/543 94576",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        },
+        {
+          "batch": "b1",
+          "optimized": true,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 3601,
+            "terminal_digest": "6c959326dd2f09cc",
+            "terminal_bytes": 3091,
+            "trace": false,
+            "median_match_ms": 28.922823,
+            "match_wall_percentiles_ms": {
+              "p50": 28.913844,
+              "p95": 30.782915,
+              "p99": 32.874658
+            },
+            "timed_seconds": 2.915702417,
+            "ticks_per_second": 123503.68744781268,
+            "matches_per_second": 34.297052887479225,
+            "step_percentiles_us": {
+              "p50": 5.459,
+              "p95": 18.584,
+              "p99": 25.125
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 5.291,
+                "p90": 5.833
+              },
+              "p95": {
+                "p10": 17.209,
+                "p90": 22.917
+              },
+              "p99": {
+                "p10": 22.875,
+                "p90": 48.292
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 225.0,
+            "total_step_samples": 22507,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 258.4765625,
+            "sampled_rss_peak_mib": 258.69140625,
+            "sampled_pss_peak_mib": 258.44921875,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "52cdfc1a5bd1db84d7a87b339ad4fda9a755a1bd195e25dd53d07fb62e25da63"
+          },
+          "stdout_sha256": "52cdfc1a5bd1db84d7a87b339ad4fda9a755a1bd195e25dd53d07fb62e25da63",
+          "plan_sha256": "14d60b225fd02b64c732ba49f1676cf87d44983332d7ee7850b7faea6aa160c6",
+          "loadavg": "0.12 0.08 0.02 1/543 94622",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        },
+        {
+          "batch": "b2",
+          "optimized": true,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 3601,
+            "terminal_digest": "6c959326dd2f09cc",
+            "terminal_bytes": 3091,
+            "trace": false,
+            "median_match_ms": 28.4091615,
+            "match_wall_percentiles_ms": {
+              "p50": 28.406807,
+              "p95": 28.900274,
+              "p99": 29.064282
+            },
+            "timed_seconds": 2.842379302,
+            "ticks_per_second": 126689.63630104566,
+            "matches_per_second": 35.18179291892409,
+            "step_percentiles_us": {
+              "p50": 5.417,
+              "p95": 17.7295,
+              "p99": 23.5005
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 5.25,
+                "p90": 5.667
+              },
+              "p95": {
+                "p10": 16.626,
+                "p90": 22.584
+              },
+              "p99": {
+                "p10": 22.251,
+                "p90": 47.417
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 225.0,
+            "total_step_samples": 22507,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 257.80078125,
+            "sampled_rss_peak_mib": 257.89453125,
+            "sampled_pss_peak_mib": 257.65234375,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "0828a21d1c6beab2d81abbeff2fb63c3cad219e00d0c6022794346abeefea9f0"
+          },
+          "stdout_sha256": "0828a21d1c6beab2d81abbeff2fb63c3cad219e00d0c6022794346abeefea9f0",
+          "plan_sha256": "cfb16fd26749e07612f7a02f95890f541270de6b73919eea09ef28553de3bd41",
+          "loadavg": "0.16 0.09 0.02 1/544 94673",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        },
+        {
+          "batch": "a2",
+          "optimized": false,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 3601,
+            "terminal_digest": "6c959326dd2f09cc",
+            "terminal_bytes": 3091,
+            "trace": false,
+            "median_match_ms": 28.909328,
+            "match_wall_percentiles_ms": {
+              "p50": 28.908932,
+              "p95": 29.41419,
+              "p99": 29.584902
+            },
+            "timed_seconds": 2.891411649,
+            "ticks_per_second": 124541.24272638289,
+            "matches_per_second": 34.585182651036625,
+            "step_percentiles_us": {
+              "p50": 5.5415,
+              "p95": 17.896,
+              "p99": 23.8545
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 5.333,
+                "p90": 5.792
+              },
+              "p95": {
+                "p10": 16.876,
+                "p90": 22.959
+              },
+              "p99": {
+                "p10": 22.834,
+                "p90": 47.709
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 225.0,
+            "total_step_samples": 22507,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 258.609375,
+            "sampled_rss_peak_mib": 258.6796875,
+            "sampled_pss_peak_mib": 258.44140625,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "210625ec1dbe3262f24b5a94d1fa576e3af143c743d6d099e396e97ba6615655"
+          },
+          "stdout_sha256": "210625ec1dbe3262f24b5a94d1fa576e3af143c743d6d099e396e97ba6615655",
+          "plan_sha256": "d816dcd1eabd1be0b916facc5862321b469f089aab06e84b4c6f18a1b8f151e3",
+          "loadavg": "0.26 0.12 0.03 1/543 94719",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        }
+      ],
+      "comparison": {
+        "original_mean_of_batch_medians_ms": 28.72262425,
+        "optimized_mean_of_batch_medians_ms": 28.665992250000002,
+        "latency_change_percent": -0.19716861351899428,
+        "conclusion": "small observed difference; stable causal speedup not established"
+      }
+    },
+    {
+      "case": "deck-a-seed-7",
+      "fixture": "tools/pure_linux/fixtures/headless-runtime-deck-a-seed-7.json",
+      "recording": {
+        "schema": "nashura.headless-frozen-actions.v1",
+        "source_sha256": "4110ce87c26983bea371b9aa17073db120d3c0d909ba85e360edc6855a75b0d4",
+        "stdout_sha256": "34c8e3410604cd21803758e683ce130502bac014fc8ca2d27e29dbfbc8d2d748",
+        "recorded_final_tick": 3601,
+        "seed": 7,
+        "decks": [
+          [
+            26000000,
+            26000001,
+            26000005,
+            28000001,
+            28000000,
+            26000003,
+            26000014,
+            26000018
+          ],
+          [
+            26000000,
+            26000001,
+            26000005,
+            28000001,
+            28000000,
+            26000003,
+            26000014,
+            26000018
+          ]
+        ],
+        "command_count": 51,
+        "records": [
+          {
+            "tick": 0,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 60000
+          },
+          {
+            "tick": 0,
+            "owner": 1,
+            "slot": 2,
+            "card": 26000005,
+            "packed": 817889280,
+            "cost": 3,
+            "elixir": 60000
+          },
+          {
+            "tick": 100,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 77800
+          },
+          {
+            "tick": 100,
+            "owner": 1,
+            "slot": 2,
+            "card": 26000005,
+            "packed": 817889280,
+            "cost": 3,
+            "elixir": 77800
+          },
+          {
+            "tick": 200,
+            "owner": 0,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 65600
+          },
+          {
+            "tick": 200,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 65600
+          },
+          {
+            "tick": 300,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 43400
+          },
+          {
+            "tick": 300,
+            "owner": 1,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 53400
+          },
+          {
+            "tick": 600,
+            "owner": 0,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 66800
+          },
+          {
+            "tick": 600,
+            "owner": 1,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 56800
+          },
+          {
+            "tick": 700,
+            "owner": 1,
+            "slot": 3,
+            "card": 28000001,
+            "packed": 822083584,
+            "cost": 3,
+            "elixir": 34600
+          },
+          {
+            "tick": 800,
+            "owner": 0,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 52400
+          },
+          {
+            "tick": 900,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 30200
+          },
+          {
+            "tick": 900,
+            "owner": 1,
+            "slot": 2,
+            "card": 26000005,
+            "packed": 817889280,
+            "cost": 3,
+            "elixir": 40200
+          },
+          {
+            "tick": 1100,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 45800
+          },
+          {
+            "tick": 1200,
+            "owner": 0,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 53600
+          },
+          {
+            "tick": 1300,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 31400
+          },
+          {
+            "tick": 1300,
+            "owner": 1,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 51400
+          },
+          {
+            "tick": 1600,
+            "owner": 0,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 54800
+          },
+          {
+            "tick": 1600,
+            "owner": 1,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 54800
+          },
+          {
+            "tick": 1700,
+            "owner": 1,
+            "slot": 3,
+            "card": 28000001,
+            "packed": 822083584,
+            "cost": 3,
+            "elixir": 32600
+          },
+          {
+            "tick": 1800,
+            "owner": 0,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 40400
+          },
+          {
+            "tick": 1900,
+            "owner": 1,
+            "slot": 2,
+            "card": 26000005,
+            "packed": 817889280,
+            "cost": 3,
+            "elixir": 38200
+          },
+          {
+            "tick": 2000,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 36000
+          },
+          {
+            "tick": 2100,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 43800
+          },
+          {
+            "tick": 2200,
+            "owner": 0,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 41600
+          },
+          {
+            "tick": 2400,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 37200
+          },
+          {
+            "tick": 2400,
+            "owner": 1,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 67200
+          },
+          {
+            "tick": 2500,
+            "owner": 1,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 52900
+          },
+          {
+            "tick": 2600,
+            "owner": 0,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 78600
+          },
+          {
+            "tick": 2600,
+            "owner": 1,
+            "slot": 3,
+            "card": 28000001,
+            "packed": 822083584,
+            "cost": 3,
+            "elixir": 48600
+          },
+          {
+            "tick": 2700,
+            "owner": 0,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 64300
+          },
+          {
+            "tick": 2700,
+            "owner": 1,
+            "slot": 2,
+            "card": 26000005,
+            "packed": 817889280,
+            "cost": 3,
+            "elixir": 54300
+          },
+          {
+            "tick": 2800,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 60000
+          },
+          {
+            "tick": 2800,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 60000
+          },
+          {
+            "tick": 2900,
+            "owner": 0,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 65700
+          },
+          {
+            "tick": 2900,
+            "owner": 1,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 65700
+          },
+          {
+            "tick": 3000,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 61400
+          },
+          {
+            "tick": 3000,
+            "owner": 1,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 51400
+          },
+          {
+            "tick": 3100,
+            "owner": 0,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 67100
+          },
+          {
+            "tick": 3100,
+            "owner": 1,
+            "slot": 3,
+            "card": 28000001,
+            "packed": 822083584,
+            "cost": 3,
+            "elixir": 47100
+          },
+          {
+            "tick": 3200,
+            "owner": 0,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 52800
+          },
+          {
+            "tick": 3200,
+            "owner": 1,
+            "slot": 2,
+            "card": 26000005,
+            "packed": 817889280,
+            "cost": 3,
+            "elixir": 52800
+          },
+          {
+            "tick": 3300,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 48500
+          },
+          {
+            "tick": 3300,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 58500
+          },
+          {
+            "tick": 3400,
+            "owner": 0,
+            "slot": 6,
+            "card": 26000014,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 54200
+          },
+          {
+            "tick": 3400,
+            "owner": 1,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 64200
+          },
+          {
+            "tick": 3500,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000001,
+            "packed": 813694976,
+            "cost": 3,
+            "elixir": 49900
+          },
+          {
+            "tick": 3500,
+            "owner": 1,
+            "slot": 4,
+            "card": 28000000,
+            "packed": 1094715392,
+            "cost": 4,
+            "elixir": 49900
+          },
+          {
+            "tick": 3600,
+            "owner": 0,
+            "slot": 5,
+            "card": 26000003,
+            "packed": 1367345152,
+            "cost": 5,
+            "elixir": 55600
+          },
+          {
+            "tick": 3600,
+            "owner": 1,
+            "slot": 3,
+            "card": 28000001,
+            "packed": 822083584,
+            "cost": 3,
+            "elixir": 45600
+          }
+        ],
+        "whole_goal_complete": false,
+        "scope": "native selection and queue acceptance only; application and serializer equivalence require separate runs",
+        "frozen_replay_sha256": "488ebe83d6d8d3eea97652926c6c8c8875411c4896edc2f025d9c944798872b9"
+      },
+      "baseline_pair": {
+        "equal": true,
+        "frames": 3602,
+        "archive_bytes": 12745766,
+        "sha256": "06c0fbdd239ded1a6fac1af5c15860213a77d7b38ecfd7965b657fba85561101"
+      },
+      "optimization_pair": {
+        "equal": true,
+        "frames": 3602,
+        "archive_bytes": 12745766,
+        "sha256": "06c0fbdd239ded1a6fac1af5c15860213a77d7b38ecfd7965b657fba85561101",
+        "different_ticks": []
+      },
+      "observed_state": {
+        "equal": true,
+        "lines": [
+          761,
+          761,
+          761
+        ]
+      },
+      "benchmark_batches": [
+        {
+          "batch": "a1",
+          "optimized": false,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 3601,
+            "terminal_digest": "17a67651dda08250",
+            "terminal_bytes": 3218,
+            "trace": false,
+            "median_match_ms": 31.0886135,
+            "match_wall_percentiles_ms": {
+              "p50": 31.087509,
+              "p95": 31.447432,
+              "p99": 31.653686
+            },
+            "timed_seconds": 3.106949751,
+            "ticks_per_second": 115901.45604514478,
+            "matches_per_second": 32.18590837132596,
+            "step_percentiles_us": {
+              "p50": 5.917,
+              "p95": 18.146,
+              "p99": 21.8755
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 5.792,
+                "p90": 6.042
+              },
+              "p95": {
+                "p10": 17.459,
+                "p90": 20.792
+              },
+              "p99": {
+                "p10": 19.209,
+                "p90": 47.792
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 225.0,
+            "total_step_samples": 22507,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 258.1484375,
+            "sampled_rss_peak_mib": 258.4140625,
+            "sampled_pss_peak_mib": 258.171875,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "36f7ad4ef9df63bd80de96652fc51872be2901edb4c7f7b664fac99acf28aa33"
+          },
+          "stdout_sha256": "36f7ad4ef9df63bd80de96652fc51872be2901edb4c7f7b664fac99acf28aa33",
+          "plan_sha256": "781cca891226b548208cccfbfd95ad8238ecc549c5be161b45309529ed3aac5a",
+          "loadavg": "0.34 0.14 0.04 1/543 94765",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        },
+        {
+          "batch": "b1",
+          "optimized": true,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 3601,
+            "terminal_digest": "17a67651dda08250",
+            "terminal_bytes": 3218,
+            "trace": false,
+            "median_match_ms": 31.263888,
+            "match_wall_percentiles_ms": {
+              "p50": 31.261513,
+              "p95": 32.376657,
+              "p99": 35.77242
+            },
+            "timed_seconds": 3.14953028,
+            "ticks_per_second": 114334.50958915689,
+            "matches_per_second": 31.75076633967145,
+            "step_percentiles_us": {
+              "p50": 5.959,
+              "p95": 18.292,
+              "p99": 21.8545
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 5.875,
+                "p90": 6.125
+              },
+              "p95": {
+                "p10": 17.625,
+                "p90": 20.667
+              },
+              "p99": {
+                "p10": 19.625,
+                "p90": 48.834
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 225.0,
+            "total_step_samples": 22507,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 258.5,
+            "sampled_rss_peak_mib": 258.72265625,
+            "sampled_pss_peak_mib": 258.48046875,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "9a21d49747efebbebcb5726e996d9553312f6a7de11005dfc027b7fd12f70ab6"
+          },
+          "stdout_sha256": "9a21d49747efebbebcb5726e996d9553312f6a7de11005dfc027b7fd12f70ab6",
+          "plan_sha256": "9c16f61b898936b1bd0546561b296adf22e344432fc24e1bdf31af0b4e181079",
+          "loadavg": "0.33 0.15 0.05 1/543 94815",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        },
+        {
+          "batch": "b2",
+          "optimized": true,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 3601,
+            "terminal_digest": "17a67651dda08250",
+            "terminal_bytes": 3218,
+            "trace": false,
+            "median_match_ms": 31.131573,
+            "match_wall_percentiles_ms": {
+              "p50": 31.128531,
+              "p95": 31.637462,
+              "p99": 31.7515
+            },
+            "timed_seconds": 3.113444948,
+            "ticks_per_second": 115659.66510225894,
+            "matches_per_second": 32.11876287205191,
+            "step_percentiles_us": {
+              "p50": 5.917,
+              "p95": 18.208,
+              "p99": 22.3755
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 5.833,
+                "p90": 6.083
+              },
+              "p95": {
+                "p10": 17.459,
+                "p90": 20.708
+              },
+              "p99": {
+                "p10": 19.584,
+                "p90": 47.5
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 225.0,
+            "total_step_samples": 22507,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 258.48828125,
+            "sampled_rss_peak_mib": 258.51171875,
+            "sampled_pss_peak_mib": 258.26953125,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "671e4cf527474491a6ae251863ed4e8f543c3bbc4dc715374577068f916fa829"
+          },
+          "stdout_sha256": "671e4cf527474491a6ae251863ed4e8f543c3bbc4dc715374577068f916fa829",
+          "plan_sha256": "d2194651d2cde6117ef19c180b03edb72c4814f588ad6dcff88c696f1cdafaf9",
+          "loadavg": "0.33 0.16 0.05 1/543 94861",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        },
+        {
+          "batch": "a2",
+          "optimized": false,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 3601,
+            "terminal_digest": "17a67651dda08250",
+            "terminal_bytes": 3218,
+            "trace": false,
+            "median_match_ms": 31.427855,
+            "match_wall_percentiles_ms": {
+              "p50": 31.424438,
+              "p95": 32.21841,
+              "p99": 32.63875
+            },
+            "timed_seconds": 3.155928339,
+            "ticks_per_second": 114102.71759025514,
+            "matches_per_second": 31.686397553528227,
+            "step_percentiles_us": {
+              "p50": 6.042,
+              "p95": 18.271,
+              "p99": 22.2505
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 5.917,
+                "p90": 6.167
+              },
+              "p95": {
+                "p10": 17.667,
+                "p90": 20.792
+              },
+              "p99": {
+                "p10": 19.542,
+                "p90": 47.667
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 225.0,
+            "total_step_samples": 22507,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 259.06640625,
+            "sampled_rss_peak_mib": 258.828125,
+            "sampled_pss_peak_mib": 258.5859375,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "4eac7d56fdcaf79fd9049effb9df8168a76929ffd5ae038faa307926ca5c4d29"
+          },
+          "stdout_sha256": "4eac7d56fdcaf79fd9049effb9df8168a76929ffd5ae038faa307926ca5c4d29",
+          "plan_sha256": "7e4178e6ca063e231294afbe2b74388e79c7ce5d120bc7864d3522699199be77",
+          "loadavg": "0.39 0.18 0.06 1/543 94907",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        }
+      ],
+      "comparison": {
+        "original_mean_of_batch_medians_ms": 31.25823425,
+        "optimized_mean_of_batch_medians_ms": 31.1977305,
+        "latency_change_percent": -0.1935609974514252,
+        "conclusion": "small observed difference; stable causal speedup not established"
+      }
+    },
+    {
+      "case": "deck-b-seed-1",
+      "fixture": "tools/pure_linux/fixtures/headless-runtime-deck-b-seed-1.json",
+      "recording": {
+        "schema": "nashura.headless-frozen-actions.v1",
+        "source_sha256": "63b6df36c171a464b263905dd3e8ad4a38325816ecdb8968c2d0a6279664f436",
+        "stdout_sha256": "3dd27a937addfb3d8745044c73fd33bd443f061e215e1484cc29e12109045852",
+        "recorded_final_tick": 2154,
+        "seed": 1,
+        "decks": [
+          [
+            26000000,
+            26000003,
+            26000005,
+            26000021,
+            26000024,
+            26000014,
+            28000000,
+            28000001
+          ],
+          [
+            26000000,
+            26000003,
+            26000005,
+            26000021,
+            26000024,
+            26000014,
+            28000000,
+            28000001
+          ]
+        ],
+        "command_count": 22,
+        "records": [
+          {
+            "tick": 0,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 60000
+          },
+          {
+            "tick": 0,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000003,
+            "packed": 1350567936,
+            "cost": 5,
+            "elixir": 60000
+          },
+          {
+            "tick": 100,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 77800
+          },
+          {
+            "tick": 100,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000003,
+            "packed": 1350567936,
+            "cost": 5,
+            "elixir": 77800
+          },
+          {
+            "tick": 200,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000003,
+            "packed": 1350567936,
+            "cost": 5,
+            "elixir": 65600
+          },
+          {
+            "tick": 200,
+            "owner": 1,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 45600
+          },
+          {
+            "tick": 400,
+            "owner": 1,
+            "slot": 3,
+            "card": 26000021,
+            "packed": 1090521088,
+            "cost": 4,
+            "elixir": 51200
+          },
+          {
+            "tick": 500,
+            "owner": 0,
+            "slot": 4,
+            "card": 26000024,
+            "packed": 1631584256,
+            "cost": 6,
+            "elixir": 69000
+          },
+          {
+            "tick": 600,
+            "owner": 1,
+            "slot": 6,
+            "card": 28000000,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 46800
+          },
+          {
+            "tick": 700,
+            "owner": 0,
+            "slot": 6,
+            "card": 28000000,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 44600
+          },
+          {
+            "tick": 800,
+            "owner": 1,
+            "slot": 7,
+            "card": 28000001,
+            "packed": 838860800,
+            "cost": 3,
+            "elixir": 42400
+          },
+          {
+            "tick": 900,
+            "owner": 0,
+            "slot": 5,
+            "card": 26000014,
+            "packed": 1098909696,
+            "cost": 4,
+            "elixir": 40200
+          },
+          {
+            "tick": 1100,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 35800
+          },
+          {
+            "tick": 1100,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000003,
+            "packed": 1350567936,
+            "cost": 5,
+            "elixir": 65800
+          },
+          {
+            "tick": 1200,
+            "owner": 1,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 33600
+          },
+          {
+            "tick": 1400,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000003,
+            "packed": 1350567936,
+            "cost": 5,
+            "elixir": 59200
+          },
+          {
+            "tick": 1500,
+            "owner": 1,
+            "slot": 3,
+            "card": 26000021,
+            "packed": 1090521088,
+            "cost": 4,
+            "elixir": 57000
+          },
+          {
+            "tick": 1700,
+            "owner": 0,
+            "slot": 4,
+            "card": 26000024,
+            "packed": 1631584256,
+            "cost": 6,
+            "elixir": 62600
+          },
+          {
+            "tick": 1700,
+            "owner": 1,
+            "slot": 6,
+            "card": 28000000,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 52600
+          },
+          {
+            "tick": 1800,
+            "owner": 1,
+            "slot": 7,
+            "card": 28000001,
+            "packed": 838860800,
+            "cost": 3,
+            "elixir": 30400
+          },
+          {
+            "tick": 2000,
+            "owner": 0,
+            "slot": 6,
+            "card": 28000000,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 56000
+          },
+          {
+            "tick": 2100,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000003,
+            "packed": 1350567936,
+            "cost": 5,
+            "elixir": 53800
+          }
+        ],
+        "whole_goal_complete": false,
+        "scope": "native selection and queue acceptance only; application and serializer equivalence require separate runs",
+        "frozen_replay_sha256": "f1dae2fc9b84192ba277f9ec200a648e860dcb1c5423f6355e5e92c543e2858d"
+      },
+      "baseline_pair": {
+        "equal": true,
+        "frames": 2155,
+        "archive_bytes": 5941764,
+        "sha256": "7c6f93900bd0b5bb625fa1f0e4d25f8ef5b3e4cc566f81f5a7dc289cfb93e925"
+      },
+      "optimization_pair": {
+        "equal": true,
+        "frames": 2155,
+        "archive_bytes": 5941764,
+        "sha256": "7c6f93900bd0b5bb625fa1f0e4d25f8ef5b3e4cc566f81f5a7dc289cfb93e925",
+        "different_ticks": []
+      },
+      "observed_state": {
+        "equal": true,
+        "lines": [
+          539,
+          539,
+          539
+        ]
+      },
+      "benchmark_batches": [
+        {
+          "batch": "a1",
+          "optimized": false,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 2154,
+            "terminal_digest": "90fc49ef96c98086",
+            "terminal_bytes": 2493,
+            "trace": false,
+            "median_match_ms": 13.8698135,
+            "match_wall_percentiles_ms": {
+              "p50": 13.869147,
+              "p95": 14.215486,
+              "p99": 14.428697
+            },
+            "timed_seconds": 1.393968007,
+            "ticks_per_second": 154522.91510159458,
+            "matches_per_second": 71.7376578930337,
+            "step_percentiles_us": {
+              "p50": 5.792,
+              "p95": 9.771,
+              "p99": 11.4585
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 5.667,
+                "p90": 5.958
+              },
+              "p95": {
+                "p10": 9.208,
+                "p90": 11.75
+              },
+              "p99": {
+                "p10": 10.708,
+                "p90": 19.875
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 135.0,
+            "total_step_samples": 13464,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 258.31640625,
+            "sampled_rss_peak_mib": 258.3046875,
+            "sampled_pss_peak_mib": 258.0625,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "2e385a356bb11ab7285e1b0e9d26937b62cd8fefbde8ecacb081aee896376b50"
+          },
+          "stdout_sha256": "2e385a356bb11ab7285e1b0e9d26937b62cd8fefbde8ecacb081aee896376b50",
+          "plan_sha256": "289d4cecf3e8b58a70fadb7fb484ea271f50ad5ceb25563744e2a7aecaf59d4b",
+          "loadavg": "0.37 0.19 0.07 1/543 94953",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        },
+        {
+          "batch": "b1",
+          "optimized": true,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 2154,
+            "terminal_digest": "90fc49ef96c98086",
+            "terminal_bytes": 2493,
+            "trace": false,
+            "median_match_ms": 13.617372,
+            "match_wall_percentiles_ms": {
+              "p50": 13.617143,
+              "p95": 13.813479,
+              "p99": 13.883772
+            },
+            "timed_seconds": 1.362565567,
+            "ticks_per_second": 158084.13570456827,
+            "matches_per_second": 73.3909636511459,
+            "step_percentiles_us": {
+              "p50": 5.584,
+              "p95": 9.625,
+              "p99": 11.4795
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 5.459,
+                "p90": 5.75
+              },
+              "p95": {
+                "p10": 9.084,
+                "p90": 11.875
+              },
+              "p99": {
+                "p10": 10.833,
+                "p90": 19.833
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 135.0,
+            "total_step_samples": 13464,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 258.03125,
+            "sampled_rss_peak_mib": 258.0703125,
+            "sampled_pss_peak_mib": 257.828125,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "d2034e8e117bc6cd319e9381d0a6e3d045e5491670f785fe17b56c6f5e21ee74"
+          },
+          "stdout_sha256": "d2034e8e117bc6cd319e9381d0a6e3d045e5491670f785fe17b56c6f5e21ee74",
+          "plan_sha256": "9fcf7fe360e59b2def17bff7ec145c1ce0dea01d1768bbe3c7fae4ccbb3b2696",
+          "loadavg": "0.29 0.18 0.07 1/543 94999",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        },
+        {
+          "batch": "b2",
+          "optimized": true,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 2154,
+            "terminal_digest": "90fc49ef96c98086",
+            "terminal_bytes": 2493,
+            "trace": false,
+            "median_match_ms": 13.7763145,
+            "match_wall_percentiles_ms": {
+              "p50": 13.776252,
+              "p95": 13.988089,
+              "p99": 14.064835
+            },
+            "timed_seconds": 1.37599354,
+            "ticks_per_second": 156541.43260003967,
+            "matches_per_second": 72.67475979574729,
+            "step_percentiles_us": {
+              "p50": 5.626,
+              "p95": 9.729,
+              "p99": 11.4165
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 5.542,
+                "p90": 5.791
+              },
+              "p95": {
+                "p10": 9.208,
+                "p90": 11.833
+              },
+              "p99": {
+                "p10": 10.625,
+                "p90": 20.167
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 135.0,
+            "total_step_samples": 13464,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 258.05078125,
+            "sampled_rss_peak_mib": 258.10546875,
+            "sampled_pss_peak_mib": 257.86328125,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "5911e0a5968dd431154132351513ae07fd70676dbd99a04a19f4d2e220235e6a"
+          },
+          "stdout_sha256": "5911e0a5968dd431154132351513ae07fd70676dbd99a04a19f4d2e220235e6a",
+          "plan_sha256": "70d7ed94440a37ecc1ca07ebe5148c2ab69dfcb8391ba0b9a8868e6bcba69bfa",
+          "loadavg": "0.32 0.19 0.07 1/543 95049",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        },
+        {
+          "batch": "a2",
+          "optimized": false,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 2154,
+            "terminal_digest": "90fc49ef96c98086",
+            "terminal_bytes": 2493,
+            "trace": false,
+            "median_match_ms": 13.7875855,
+            "match_wall_percentiles_ms": {
+              "p50": 13.784773,
+              "p95": 14.001194,
+              "p99": 14.029194
+            },
+            "timed_seconds": 1.378935724,
+            "ticks_per_second": 156207.42595250945,
+            "matches_per_second": 72.51969635678248,
+            "step_percentiles_us": {
+              "p50": 5.75,
+              "p95": 9.729,
+              "p99": 11.333
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 5.626,
+                "p90": 5.833
+              },
+              "p95": {
+                "p10": 9.084,
+                "p90": 11.958
+              },
+              "p99": {
+                "p10": 10.667,
+                "p90": 19.792
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 135.0,
+            "total_step_samples": 13464,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 257.76171875,
+            "sampled_rss_peak_mib": 257.875,
+            "sampled_pss_peak_mib": 257.6328125,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "818355e147ce417cd45c07cbff49289c28b7ba94023a06b824fe88096d151ec7"
+          },
+          "stdout_sha256": "818355e147ce417cd45c07cbff49289c28b7ba94023a06b824fe88096d151ec7",
+          "plan_sha256": "2689eda486dd357c0dc4a3d807aa5db7e51ed27cab0016eb1901241af3c06ffb",
+          "loadavg": "0.31 0.20 0.07 1/543 95095",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        }
+      ],
+      "comparison": {
+        "original_mean_of_batch_medians_ms": 13.828699499999999,
+        "optimized_mean_of_batch_medians_ms": 13.69684325,
+        "latency_change_percent": -0.9534971093991818,
+        "conclusion": "small observed difference; stable causal speedup not established"
+      }
+    },
+    {
+      "case": "deck-b-seed-7",
+      "fixture": "tools/pure_linux/fixtures/headless-runtime-deck-b-seed-7.json",
+      "recording": {
+        "schema": "nashura.headless-frozen-actions.v1",
+        "source_sha256": "7ec28663c1a47cfa5924d2aab45fc44654fb5516f562038be0b996765b8854e8",
+        "stdout_sha256": "5c540981b4bbfab7e6a437cbbd542a5d8abac5344f5d9553c2e002c058a4679e",
+        "recorded_final_tick": 1989,
+        "seed": 7,
+        "decks": [
+          [
+            26000000,
+            26000003,
+            26000005,
+            26000021,
+            26000024,
+            26000014,
+            28000000,
+            28000001
+          ],
+          [
+            26000000,
+            26000003,
+            26000005,
+            26000021,
+            26000024,
+            26000014,
+            28000000,
+            28000001
+          ]
+        ],
+        "command_count": 19,
+        "records": [
+          {
+            "tick": 0,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 60000
+          },
+          {
+            "tick": 0,
+            "owner": 1,
+            "slot": 2,
+            "card": 26000005,
+            "packed": 817889280,
+            "cost": 3,
+            "elixir": 60000
+          },
+          {
+            "tick": 100,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 77800
+          },
+          {
+            "tick": 100,
+            "owner": 1,
+            "slot": 2,
+            "card": 26000005,
+            "packed": 817889280,
+            "cost": 3,
+            "elixir": 77800
+          },
+          {
+            "tick": 200,
+            "owner": 0,
+            "slot": 6,
+            "card": 28000000,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 65600
+          },
+          {
+            "tick": 200,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000003,
+            "packed": 1350567936,
+            "cost": 5,
+            "elixir": 65600
+          },
+          {
+            "tick": 400,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000003,
+            "packed": 1350567936,
+            "cost": 5,
+            "elixir": 61200
+          },
+          {
+            "tick": 400,
+            "owner": 1,
+            "slot": 5,
+            "card": 26000014,
+            "packed": 1098909696,
+            "cost": 4,
+            "elixir": 51200
+          },
+          {
+            "tick": 600,
+            "owner": 0,
+            "slot": 5,
+            "card": 26000014,
+            "packed": 1098909696,
+            "cost": 4,
+            "elixir": 46800
+          },
+          {
+            "tick": 700,
+            "owner": 1,
+            "slot": 4,
+            "card": 26000024,
+            "packed": 1631584256,
+            "cost": 6,
+            "elixir": 64600
+          },
+          {
+            "tick": 900,
+            "owner": 0,
+            "slot": 4,
+            "card": 26000024,
+            "packed": 1631584256,
+            "cost": 6,
+            "elixir": 60200
+          },
+          {
+            "tick": 900,
+            "owner": 1,
+            "slot": 3,
+            "card": 26000021,
+            "packed": 1090521088,
+            "cost": 4,
+            "elixir": 40200
+          },
+          {
+            "tick": 1100,
+            "owner": 0,
+            "slot": 0,
+            "card": 26000000,
+            "packed": 809500672,
+            "cost": 3,
+            "elixir": 35800
+          },
+          {
+            "tick": 1100,
+            "owner": 1,
+            "slot": 2,
+            "card": 26000005,
+            "packed": 817889280,
+            "cost": 3,
+            "elixir": 35800
+          },
+          {
+            "tick": 1300,
+            "owner": 0,
+            "slot": 6,
+            "card": 28000000,
+            "packed": 1103104000,
+            "cost": 4,
+            "elixir": 41400
+          },
+          {
+            "tick": 1400,
+            "owner": 1,
+            "slot": 1,
+            "card": 26000003,
+            "packed": 1350567936,
+            "cost": 5,
+            "elixir": 59200
+          },
+          {
+            "tick": 1600,
+            "owner": 0,
+            "slot": 1,
+            "card": 26000003,
+            "packed": 1350567936,
+            "cost": 5,
+            "elixir": 54800
+          },
+          {
+            "tick": 1600,
+            "owner": 1,
+            "slot": 5,
+            "card": 26000014,
+            "packed": 1098909696,
+            "cost": 4,
+            "elixir": 44800
+          },
+          {
+            "tick": 1800,
+            "owner": 0,
+            "slot": 5,
+            "card": 26000014,
+            "packed": 1098909696,
+            "cost": 4,
+            "elixir": 40400
+          }
+        ],
+        "whole_goal_complete": false,
+        "scope": "native selection and queue acceptance only; application and serializer equivalence require separate runs",
+        "frozen_replay_sha256": "30c91af5ce2fa4597a95e92199e1e634bc60d9d239e0194e8412c44b890a254f"
+      },
+      "baseline_pair": {
+        "equal": true,
+        "frames": 1990,
+        "archive_bytes": 5505695,
+        "sha256": "2339ed81ed21fdddb5e00cf578f23e7d3b816bbb41dafe50ae6d8a567d420d87"
+      },
+      "optimization_pair": {
+        "equal": true,
+        "frames": 1990,
+        "archive_bytes": 5505695,
+        "sha256": "2339ed81ed21fdddb5e00cf578f23e7d3b816bbb41dafe50ae6d8a567d420d87",
+        "different_ticks": []
+      },
+      "observed_state": {
+        "equal": true,
+        "lines": [
+          531,
+          531,
+          531
+        ]
+      },
+      "benchmark_batches": [
+        {
+          "batch": "a1",
+          "optimized": false,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 1989,
+            "terminal_digest": "4c3305a63def1d50",
+            "terminal_bytes": 2447,
+            "trace": false,
+            "median_match_ms": 13.5423315,
+            "match_wall_percentiles_ms": {
+              "p50": 13.541436,
+              "p95": 13.767523,
+              "p99": 13.832066
+            },
+            "timed_seconds": 1.351987896,
+            "ticks_per_second": 147116.7017015957,
+            "matches_per_second": 73.96515922654385,
+            "step_percentiles_us": {
+              "p50": 5.1875,
+              "p95": 12.917,
+              "p99": 14.417
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 4.958,
+                "p90": 5.417
+              },
+              "p95": {
+                "p10": 12.459,
+                "p90": 13.584
+              },
+              "p99": {
+                "p10": 13.083,
+                "p90": 23.792
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 124.0,
+            "total_step_samples": 12434,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 257.9140625,
+            "sampled_rss_peak_mib": 257.82421875,
+            "sampled_pss_peak_mib": 257.58203125,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "57577ee6335dcd884d2867e9d3c48ae6a5d6c836f7fa870f5fdb45fa02467d58"
+          },
+          "stdout_sha256": "57577ee6335dcd884d2867e9d3c48ae6a5d6c836f7fa870f5fdb45fa02467d58",
+          "plan_sha256": "e431bb5cf06492771f2e1931abc72cf3ab3ea1d7093ee5f94c59ddbeaeb3598e",
+          "loadavg": "0.31 0.20 0.08 1/543 95141",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        },
+        {
+          "batch": "b1",
+          "optimized": true,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 1989,
+            "terminal_digest": "4c3305a63def1d50",
+            "terminal_bytes": 2447,
+            "trace": false,
+            "median_match_ms": 13.362037,
+            "match_wall_percentiles_ms": {
+              "p50": 13.361808,
+              "p95": 13.793065,
+              "p99": 13.879941
+            },
+            "timed_seconds": 1.33978386,
+            "ticks_per_second": 148456.78167820294,
+            "matches_per_second": 74.6389048155872,
+            "step_percentiles_us": {
+              "p50": 5.125,
+              "p95": 12.8125,
+              "p99": 14.4795
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 4.916,
+                "p90": 5.333
+              },
+              "p95": {
+                "p10": 12.458,
+                "p90": 13.709
+              },
+              "p99": {
+                "p10": 13.042,
+                "p90": 23.583
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 124.0,
+            "total_step_samples": 12434,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 258.2734375,
+            "sampled_rss_peak_mib": 258.2109375,
+            "sampled_pss_peak_mib": 257.96875,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "f160a76337c8079efd21051bd0fb9f47eef1f936e5d22a71e29635cc107ae787"
+          },
+          "stdout_sha256": "f160a76337c8079efd21051bd0fb9f47eef1f936e5d22a71e29635cc107ae787",
+          "plan_sha256": "22effa751a5f86b3e11b795c184d6f049bd2a49cb2faa2a1bb9102fbe4ae0095",
+          "loadavg": "0.26 0.20 0.08 1/544 95191",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        },
+        {
+          "batch": "b2",
+          "optimized": true,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 1989,
+            "terminal_digest": "4c3305a63def1d50",
+            "terminal_bytes": 2447,
+            "trace": false,
+            "median_match_ms": 13.2239925,
+            "match_wall_percentiles_ms": {
+              "p50": 13.220222,
+              "p95": 13.442559,
+              "p99": 13.490351
+            },
+            "timed_seconds": 1.323081702,
+            "ticks_per_second": 150330.85235729456,
+            "matches_per_second": 75.58112235158097,
+            "step_percentiles_us": {
+              "p50": 5.042,
+              "p95": 12.7085,
+              "p99": 14.7715
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 4.875,
+                "p90": 5.25
+              },
+              "p95": {
+                "p10": 12.292,
+                "p90": 13.334
+              },
+              "p99": {
+                "p10": 12.917,
+                "p90": 23.292
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 124.0,
+            "total_step_samples": 12434,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 258.64453125,
+            "sampled_rss_peak_mib": 258.66015625,
+            "sampled_pss_peak_mib": 258.41796875,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "4b66bf983561b89ec84254a9569c4ecf2b4ac9debb9d6e18cc3a579e95acec8a"
+          },
+          "stdout_sha256": "4b66bf983561b89ec84254a9569c4ecf2b4ac9debb9d6e18cc3a579e95acec8a",
+          "plan_sha256": "a0b7a0dc79d84d87fc303c2b294afedde4da44c28e08786a7c966ebc24915b30",
+          "loadavg": "0.20 0.19 0.08 1/543 95238",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        },
+        {
+          "batch": "a2",
+          "optimized": false,
+          "runner_exit": 0,
+          "summary": {
+            "schema": "nashura.headless-benchmark.v2",
+            "matches": 116,
+            "warmup_matches": 16,
+            "measured_matches": 100,
+            "tick": 1989,
+            "terminal_digest": "4c3305a63def1d50",
+            "terminal_bytes": 2447,
+            "trace": false,
+            "median_match_ms": 13.359626,
+            "match_wall_percentiles_ms": {
+              "p50": 13.359396,
+              "p95": 13.629068,
+              "p99": 13.642945
+            },
+            "timed_seconds": 1.338257217,
+            "ticks_per_second": 148626.13664500043,
+            "matches_per_second": 74.72405060080465,
+            "step_percentiles_us": {
+              "p50": 5.125,
+              "p95": 12.709,
+              "p99": 15.0005
+            },
+            "step_percentile_repeat_spread_us": {
+              "p50": {
+                "p10": 4.917,
+                "p90": 5.334
+              },
+              "p95": {
+                "p10": 12.417,
+                "p90": 13.584
+              },
+              "p99": {
+                "p10": 12.917,
+                "p90": 23.792
+              }
+            },
+            "step_sample_every_ticks": 16,
+            "step_samples_per_match_median": 124.0,
+            "total_step_samples": 12434,
+            "step_percentile_method": "median of per-match percentiles from deterministic rotating-phase samples",
+            "peak_rss_mib": 258.30078125,
+            "sampled_rss_peak_mib": 258.2578125,
+            "sampled_pss_peak_mib": 258.015625,
+            "memory_sample_counts": {
+              "rss_kb": 100,
+              "pss_kb": 100
+            },
+            "scope": "warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary",
+            "readiness": "UNVERIFIED",
+            "log_sha256": "84ce6fc6f5afd71e2b82f5f83ed0459a65414f23f5f3ce1ef1417c64d3b4617e"
+          },
+          "stdout_sha256": "84ce6fc6f5afd71e2b82f5f83ed0459a65414f23f5f3ce1ef1417c64d3b4617e",
+          "plan_sha256": "98657d6a1389876876f655b878e5757e0935b23eabeb86ff61503fe6b481e44c",
+          "loadavg": "0.25 0.20 0.08 1/543 95284",
+          "cpu_count": 2,
+          "affinity": [
+            0,
+            1
+          ]
+        }
+      ],
+      "comparison": {
+        "original_mean_of_batch_medians_ms": 13.45097875,
+        "optimized_mean_of_batch_medians_ms": 13.293014750000001,
+        "latency_change_percent": -1.174368073401344,
+        "conclusion": "small observed difference; stable causal speedup not established"
+      }
+    }
+  ],
+  "private_archive": {
+    "bytes": 11503680,
+    "sha256": "d7079df1715f4f2633d6fcf38b2b727abcb09d812c783d7bf6f62fd524a0b05f",
+    "raw_third_party_inputs_published": false
+  },
+  "failures": [
+    {
+      "stage": "candidate initial deployment",
+      "reason": "temporary tools directory absent; one PTY line exceeded canonical input size; no battle completion evidence was produced by initial deployment",
+      "evidence_retained": true,
+      "retry": "new v2 evidence directory after explicit deployment verification"
+    }
+  ],
+  "limitations": [
+    "serializer parity covers serialized data plus separately observed state, not every process/global byte",
+    "four fixed cases only; not all cards or modes",
+    "small timing differences do not establish stable causal speedup",
+    "no new hardware cycles/cache counters, action apply attribution, off-CPU trace or long-duration stability evidence",
+    "baseline stderr retains known UnityAds class/storeKeyValue exceptions outside successful battle step window"
+  ],
+  "next": "keep candidate disabled by default; profile validated in-grid candidate traversal and action/state hot paths; stable speedup remains unproven",
+  "engineering_checks": {
+    "pure_linux": {
+      "passed": 1242,
+      "skipped": 1
+    },
+    "public": {
+      "passed": 1104,
+      "skipped": 42
+    },
+    "main_engine": {
+      "passed": 211
+    },
+    "junit": [
+      {
+        "name": "nashura-spatial-y-tests-final-20261031.xml",
+        "tests": 1243,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1,
+        "sha256": "470c17b83d50f9bbdb22c8aaefb59894bc8e3afc4a9ad125c032ee6ca54e66a4"
+      },
+      {
+        "name": "checks-selection-timeout.xml",
+        "tests": 82,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "sha256": "76a407a3171460128e207e022acfd2716749405eb0eb923d983b03e5825dbad2"
+      },
+      {
+        "name": "checks-reservation-mapping.xml",
+        "tests": 33,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2,
+        "sha256": "156b0299a70b34f0e2b0c7c50d6d7024ef4ff9b2746dd93311fe193fe4595ed9"
+      },
+      {
+        "name": "checks-collection-coordinator.xml",
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "sha256": "9a237d08b208609e898dcdcc48f610c86de5c6ed4369866f993d4f599a385ba4"
+      },
+      {
+        "name": "checks-public.xml",
+        "tests": 821,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 27,
+        "sha256": "8e204357de2faea8128c2b70117f0c00eb73c65ee366ebde19d7ec8e49a37821"
+      },
+      {
+        "name": "checks-dispatch-command.xml",
+        "tests": 34,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "sha256": "9e4476ba6285c4402d191ff8fe51faede0b6cf9f61db87895a5b374da56864e2"
+      },
+      {
+        "name": "checks-live-command.xml",
+        "tests": 29,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 4,
+        "sha256": "3dac62c630cd34e2f1f8614c0e4416bba2f6061c463a5a37c19e983d6d443d66"
+      },
+      {
+        "name": "checks-command-coordinates.xml",
+        "tests": 41,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "sha256": "f1e76ab4510d9deb143ac95dd39d28231ed2b82a4a91e07d5923ae7f6604158e"
+      },
+      {
+        "name": "checks-affordability.xml",
+        "tests": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "sha256": "431b532c0ff0069f2e38c918a3819b41509bdaf25b465153987a4b8f47afefa6"
+      },
+      {
+        "name": "checks-position-guards.xml",
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "sha256": "c626d7972b14f9b0a3e231a5cbffc49e0210f00f00167d9dae4ec457d352c268"
+      }
+    ],
+    "source_manifest": {
+      "verified_files": 2901,
+      "status": "passed"
+    },
+    "gitleaks": {
+      "status": "passed",
+      "leaks": 0
+    },
+    "diff_check": {
+      "status": "passed"
+    }
+  },
+  "input_identity_scope": "basename-keyed identity summary; operator paths/settings remain private",
+  "runtime_result": "successful bounded native battle completion; HEADLESS_BATTLE_READY remains UNVERIFIED"
+}

@@ -1,4 +1,6 @@
 from pathlib import Path
+import json
+from types import SimpleNamespace
 
 import pytest
 
@@ -110,12 +112,74 @@ def test_phase_timing_is_opt_in_for_guest_plan(inputs, monkeypatch):
     assert runner.build_plan(settings, output)["environment"]["NASHURA_PHASE_TIMING"] == "1"
 
 
+def test_native_optimization_is_explicit_and_version_limited(inputs, monkeypatch):
+    settings, output = inputs
+    monkeypatch.setenv("NASHURA_NATIVE_OPTIMIZATION", "spatial-y-bound-v1")
+    assert "NASHURA_NATIVE_OPTIMIZATION" not in runner.build_plan(settings, output)["environment"]
+    plan = runner.build_plan(settings, output, native_optimization="spatial-y-bound-v1")
+    assert plan["native_optimization"] == "spatial-y-bound-v1"
+    assert plan["environment"]["NASHURA_NATIVE_OPTIMIZATION"] == "spatial-y-bound-v1"
+    with pytest.raises(ValueError, match="unknown native"):
+        runner.build_plan(settings, output, native_optimization="unreviewed")
+
+
+@pytest.mark.parametrize("markers", [0, 1, 2])
+def test_optimized_run_requires_one_successful_native_installation(inputs, monkeypatch, markers):
+    settings, output = inputs
+    marker = ("HEADLESS_NATIVE_OPTIMIZATION name=spatial-y-bound-v1 "
+              "installed=1 offset=0xf34c84 target=0xf34c38\n")
+    def execute(command, *, env, stdout, stderr):
+        stdout.write((marker * markers + COMPLETE).encode())
+        return SimpleNamespace(returncode=0)
+    monkeypatch.setattr(runner.subprocess, "run", execute)
+    if markers == 1:
+        result = runner.run(settings, output, apply=True, snapshot_trace=False,
+                            native_optimization="spatial-y-bound-v1")
+        assert result["native_optimization"] == "spatial-y-bound-v1"
+        assert (output / "result.json").exists()
+    else:
+        with pytest.raises(ValueError, match="installation evidence"):
+            runner.run(settings, output, apply=True, snapshot_trace=False,
+                       native_optimization="spatial-y-bound-v1")
+        assert (output / "exit.txt").read_text() == "0\n"
+        assert not (output / "result.json").exists()
+
+
 def test_battle_state_observations_are_opt_in(inputs, monkeypatch):
     settings, output = inputs
     monkeypatch.delenv("NASHURA_BATTLE_OBSERVATIONS", raising=False)
     assert runner.build_plan(settings, output)["environment"]["NASHURA_QUIET"] == "1"
     monkeypatch.setenv("NASHURA_BATTLE_OBSERVATIONS", "1")
     assert "NASHURA_QUIET" not in runner.build_plan(settings, output)["environment"]
+
+
+def test_native_hand_recording_is_explicit_and_enables_observations(inputs, monkeypatch):
+    settings, output = inputs
+    replay = Path(settings["replay"])
+    replay.write_text(json.dumps(dict(cmd=[], inject=[], evt=[])))
+    settings["identities"][str(replay)] = runner.sha256(replay)
+    monkeypatch.setenv("NASHURA_DEPLOY_HAND", "1")
+    assert "NASHURA_DEPLOY_HAND" not in runner.build_plan(settings, output)["environment"]
+    plan = runner.build_plan(settings, output, record_hand_actions=True)
+    assert plan["record_hand_actions"] is True
+    assert plan["environment"]["NASHURA_DEPLOY_HAND"] == "1"
+    assert "NASHURA_QUIET" not in plan["environment"]
+    assert not output.exists()
+    with pytest.raises(ValueError, match="diagnostic"):
+        runner.build_plan(settings, output, record_hand_actions=True, benchmark_repeats=20)
+
+
+@pytest.mark.parametrize("name", ["cmd", "inject", "evt"])
+def test_recording_rejects_preexisting_commands_or_events(inputs, name):
+    settings, output = inputs
+    replay = Path(settings["replay"])
+    content = dict(cmd=[], inject=[], evt=[])
+    content[name] = [{"synthetic": True}]
+    replay.write_text(json.dumps(content))
+    settings["identities"][str(replay)] = runner.sha256(replay)
+    with pytest.raises(ValueError, match="empty cmd"):
+        runner.build_plan(settings, output, record_hand_actions=True)
+    assert not output.exists()
 
 
 def test_minimal_benchmark_plan_disables_trace_and_observers(inputs, monkeypatch):

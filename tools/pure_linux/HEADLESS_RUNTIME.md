@@ -77,6 +77,42 @@ step loop；不同 observer 构建或计时实现的结果不应直接作前后�
 避免较长的串行批次触发原生默认约五秒等待；外层进程 timeout 仍独立生效，
 不保证一定等到 task 的完整上限。此设置只改变控制线程的等待契约，不改变 step。
 
+## 冻结多 seed / 卡组动作
+
+`--record-hand-actions --without-snapshot-trace` 仅用于独立诊断运行，要求输入
+`cmd`、`inject`、`evt` 全部为空，与 `--benchmark-repeats` 互斥。沿用原始 selection
+builder、parse 和 append；每 100 tick 尝试两方首张手牌，保留引擎产生的 packed
+selection。该模式开启关键 tick 状态观察，不进入性能计时。
+
+```sh
+python3 tools/pure_linux/run_headless_match.py "$RECORD_SETTINGS" \
+  --output "$RECORD_OUTPUT" --record-hand-actions --without-snapshot-trace --apply
+python3 tools/pure_linux/freeze_headless_actions.py "$EMPTY_REPLAY" "$RECORD_OUTPUT" \
+  --output "$NEW_FIXED_REPLAY" --summary "$NEW_ACTION_SUMMARY"
+```
+
+冻结器校验源 replay SHA、计划、正常退出、原生终局、两方非空动作、slot/card/packed、
+成本及入队增长，原样保留动作 JSON。它只证明 selection 与 queue acceptance。之后
+为固定 replay 更新 settings 路径及 SHA，以相同固定输入独立运行两次，并比较全部
+原始 serializer 帧和已观察的状态；动态入队与预加载命令的中间 queue 不要求相同。
+固定 fixture 位于 `fixtures/headless-runtime-deck-{a,b}-seed-{1,7}.json`，它们覆盖两个
+实际不同的八卡集合，不代表全部卡牌、玩法或未序列化全局的等价性。
+
+## 实验性 native 查询优化
+
+`--native-optimization spatial-y-bound-v1` 显式启用固定版本候选，默认仍调用原始代码。
+同一 observer 可测两个路径。Java 固定 libg SHA 后，Mainloop 在首个 battle 前额外
+校验入口、原始外层循环与待替换指令字节，再仅修改进程内 `+0xf34c84` 的 `b.le`
+目标，从内层 y 增量改为原始外层增量 `+0xf34c38`。文件保持原始字节；页权限先
+RW、后 RX，并刷新指令缓存；安装后该进程内保持启用至退出。runner 要求唯一的
+成功安装证据，旧 observer 即使正常完成对局也不视为优化成功。
+
+候选只跳过 `y >= height` 后剩余越界 y，保留原始候选顺序、过滤、输出及清理。
+适用边界为当前固定 ARM64 build、串行 Mainloop 和查询期间稳定的 grid dimensions；
+它不保证其他构建或并发修改的语义。完整局 serializer 配对证明已覆盖 fixture 的
+序列化状态一致，工程模型测试只检查跳转编码和跳过单元格的次序。性能收益必须
+另由相同 observer、相同输入、关闭诊断的多批 A/B 对照证明，不能由该模型推断。
+
 ## 只归因 warm step 的 perf 采样
 
 在 ARM64 guest 内以 `cpu-clock:u` 采样，显式使用 `--clockid mono`。如需 sudo，

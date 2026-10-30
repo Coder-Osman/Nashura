@@ -1,5 +1,20 @@
 # 阶段成果与证据索引
 
+## 2026-10-31：多卡组完整局与查询候选实测
+
+两个实际不同的八卡集合、seed 1/7 共四组固定非空动作，由真实 selection builder
+生成并冻结。旧 observer 重复局、新 observer 默认局和 opt-in 优化局的全部 serializer
+帧及已观测状态一致；终局分别 tick 3601、3601、2154、1989。范围仍限已覆盖 fixture
+的序列化状态及观测字段，不包含未序列化全局或所有卡牌玩法。
+
+空间查询候选只将超过 grid height 后的内层循环跳转到原始外层增量；默认关闭。
+同构建 16 批 A/B/B/A 共 1,856 局（1,600 测量局）全部正常退出，中位均值变化
+-0.20%、-0.19%、-0.95%、-1.17%；首组总吞吐略降，稳定因果收益未证实。
+计时没有快照、详细观察或 profiler，VM 固定 2 vCPU / 6144 MiB。工程检查全部通过：
+pure_linux 1242 / 1 skip，公开 1104 / 42 skip，主引擎 211。详见
+[报告](../agent-handoff/SERIAL_ARM64_SPATIAL_Y_BOUND_2026-10-31.md)和
+[机器摘要](../agent-handoff/serial-arm64-spatial-y-bound-evidence-20261031.json)。
+
 ## 2026-10-31：warm-step 窗口归因与串行 task 等待
 
 新增离线 perf 汇总器，要求正常退出、完整终局/serializer 摘要、最小观测计划、精确

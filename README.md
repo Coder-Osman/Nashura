@@ -1,5 +1,14 @@
 # Nashura
 
+## 2026-10-31：多卡组完整局配对与空间查询候选
+
+冻结两个不同八卡集合、seed 1/7 的原生非空动作；四组完整局的全部 serializer 帧及
+已观测状态配对一致。首个 opt-in native 候选仅跳过查询的越界 y 尾部，默认关闭。
+同构建 A/B/B/A 共 1,856 局正常完成，中位变化约 -0.19% 至 -1.17%，首组吞吐略降，
+尚无稳定因果加速结论。整体性能目标继续进行，不测并发、不扩张 Android 服务。
+详见[报告](agent-handoff/SERIAL_ARM64_SPATIAL_Y_BOUND_2026-10-31.md)与
+[机器摘要](agent-handoff/serial-arm64-spatial-y-bound-evidence-20261031.json)。
+
 ## 2026-10-31：warm-step 窗口归因与长串行等待修复
 
 修复 benchmark 重复局共享 Mainloop task 时的约五秒默认等待上限；216 局串行运行

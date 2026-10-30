@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-31：多卡组 serializer 回归门与 native 查询候选
+
+- 新增隔离的原生手牌动作记录、严格冻结器及两卡组/两 seed 固定输入，禁止记录模式混入 benchmark。
+- 四组完整局逐 tick serializer、已观测状态以及新构建默认路径均与原始路径一致。
+- 增加固定 build 的 opt-in 空间查询分支候选；仅进程内四字节、精确字节 guard、RW/RX 与指令缓存刷新，默认关闭。
+- 同 observer A/B/B/A 16 批、1,856 局全部完成；小幅耗时差异尚未建立稳定性能收益，不将局部等价写作全引擎等价。
+- pure_linux 1242 passed / 1 skipped、公开 1104 passed / 42 skipped、main_engine 211 passed；保留部署失败及原始证据，整体目标仍进行中。
+
 ## 2026-10-31：warm-step profile 窗口归因与长串行等待
 
 - 修复 benchmark 共用单个 Mainloop task 时触发默认约五秒等待的问题；等待跟随 timeout，保留原生 120 秒上限及独立外层终止界限。

@@ -1,6 +1,6 @@
 {
   "schema": "hashura.public-source-snapshot.v1",
-  "file_count": 2890,
+  "file_count": 2901,
   "files": [
     {
       "path": ".tmp_remote_edit/compact_patch/resident.cpp",
@@ -18,16 +18,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "510211919abe0adbbb3b2fcff9e25638ae9b593aff635abce2a13f957828628e",
-      "bytes": 68012,
-      "source_sha256": "510211919abe0adbbb3b2fcff9e25638ae9b593aff635abce2a13f957828628e",
+      "sha256": "810853b1e0ea0759774727dd1188647d6482a6998cc6036893609515d8ccfa31",
+      "bytes": 68789,
+      "source_sha256": "810853b1e0ea0759774727dd1188647d6482a6998cc6036893609515d8ccfa31",
       "transformations": []
     },
     {
       "path": "README.md",
-      "sha256": "1e7f65430ce6f8e93ec5fe0d7cd76d297ae4cf9b50f70e8f9468e600c06bd10f",
-      "bytes": 66181,
-      "source_sha256": "1e7f65430ce6f8e93ec5fe0d7cd76d297ae4cf9b50f70e8f9468e600c06bd10f",
+      "sha256": "f808a65587a0c7707b5cd8f8e6698f013082fb62db2de5da44afcab0c39b1ea5",
+      "bytes": 66837,
+      "source_sha256": "f808a65587a0c7707b5cd8f8e6698f013082fb62db2de5da44afcab0c39b1ea5",
       "transformations": []
     },
     {
@@ -11392,9 +11392,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "b3b3ef28508c1caffbb5e365ed4e5acb46c69963a4b62ad5aff80aadf1d6bd3f",
-      "bytes": 105640,
-      "source_sha256": "b3b3ef28508c1caffbb5e365ed4e5acb46c69963a4b62ad5aff80aadf1d6bd3f",
+      "sha256": "d9f15288eacc191e08f2d7ce40f4eae8df0ab28ea3c3c14efed5f1c7dff3f78a",
+      "bytes": 106740,
+      "source_sha256": "d9f15288eacc191e08f2d7ce40f4eae8df0ab28ea3c3c14efed5f1c7dff3f78a",
       "transformations": []
     },
     {
@@ -17791,14 +17791,14 @@
       "transformations": []
     },
     {
-      "path": "firstlight_CR/停止视频工作台.command",
+      "path": "firstlight_CR/\u505c\u6b62\u89c6\u9891\u5de5\u4f5c\u53f0.command",
       "sha256": "11d596f373a23d71b9edcb6400d323cbe26aad3c4b491f49627ba8b8b60c5d01",
       "bytes": 125,
       "source_sha256": "11d596f373a23d71b9edcb6400d323cbe26aad3c4b491f49627ba8b8b60c5d01",
       "transformations": []
     },
     {
-      "path": "firstlight_CR/启动视频工作台.command",
+      "path": "firstlight_CR/\u542f\u52a8\u89c6\u9891\u5de5\u4f5c\u53f0.command",
       "sha256": "50f92656828d741ea3edd9978e381892458ef93decc90ca81e88771a20b6e60b",
       "bytes": 126,
       "source_sha256": "50f92656828d741ea3edd9978e381892458ef93decc90ca81e88771a20b6e60b",
@@ -17806,65 +17806,65 @@
     },
     {
       "path": "publication/checks-affordability.xml",
-      "sha256": "fce07b098aeda1f9d7258b023534e2aa047f98a47b00e1dcc307bc85e4417c01",
+      "sha256": "431b532c0ff0069f2e38c918a3819b41509bdaf25b465153987a4b8f47afefa6",
       "bytes": 4340,
-      "source_sha256": "fce07b098aeda1f9d7258b023534e2aa047f98a47b00e1dcc307bc85e4417c01",
+      "source_sha256": "431b532c0ff0069f2e38c918a3819b41509bdaf25b465153987a4b8f47afefa6",
       "transformations": []
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
-      "sha256": "f371917872599688763c1ad3685e9f74a4ebdb8aa86aeeec59813b8eee1542d9",
+      "sha256": "9a237d08b208609e898dcdcc48f610c86de5c6ed4369866f993d4f599a385ba4",
       "bytes": 12024,
-      "source_sha256": "f371917872599688763c1ad3685e9f74a4ebdb8aa86aeeec59813b8eee1542d9",
+      "source_sha256": "9a237d08b208609e898dcdcc48f610c86de5c6ed4369866f993d4f599a385ba4",
       "transformations": []
     },
     {
       "path": "publication/checks-command-coordinates.xml",
-      "sha256": "d11d8e62a0768412d78358c6c90035896d12b6d7b54b494030ec253d5c441a6c",
+      "sha256": "f1e76ab4510d9deb143ac95dd39d28231ed2b82a4a91e07d5923ae7f6604158e",
       "bytes": 8184,
-      "source_sha256": "d11d8e62a0768412d78358c6c90035896d12b6d7b54b494030ec253d5c441a6c",
+      "source_sha256": "f1e76ab4510d9deb143ac95dd39d28231ed2b82a4a91e07d5923ae7f6604158e",
       "transformations": []
     },
     {
       "path": "publication/checks-dispatch-command.xml",
-      "sha256": "fb1f1305e0cd7cd53be4f9fc4310843d822589b261c59ab893a927403836b525",
+      "sha256": "9e4476ba6285c4402d191ff8fe51faede0b6cf9f61db87895a5b374da56864e2",
       "bytes": 6406,
-      "source_sha256": "fb1f1305e0cd7cd53be4f9fc4310843d822589b261c59ab893a927403836b525",
+      "source_sha256": "9e4476ba6285c4402d191ff8fe51faede0b6cf9f61db87895a5b374da56864e2",
       "transformations": []
     },
     {
       "path": "publication/checks-live-command.xml",
-      "sha256": "eda6c73f15a67ed4245f38dc3fe8f77e55a7625b451afc81685843e99035b9b2",
+      "sha256": "3dac62c630cd34e2f1f8614c0e4416bba2f6061c463a5a37c19e983d6d443d66",
       "bytes": 6370,
-      "source_sha256": "eda6c73f15a67ed4245f38dc3fe8f77e55a7625b451afc81685843e99035b9b2",
+      "source_sha256": "3dac62c630cd34e2f1f8614c0e4416bba2f6061c463a5a37c19e983d6d443d66",
       "transformations": []
     },
     {
       "path": "publication/checks-position-guards.xml",
-      "sha256": "979ca5dd3c8399cfa3213d104eaeadd05cb43688634c8dee48e9a5b187b2fd8e",
+      "sha256": "c626d7972b14f9b0a3e231a5cbffc49e0210f00f00167d9dae4ec457d352c268",
       "bytes": 4244,
-      "source_sha256": "979ca5dd3c8399cfa3213d104eaeadd05cb43688634c8dee48e9a5b187b2fd8e",
+      "source_sha256": "c626d7972b14f9b0a3e231a5cbffc49e0210f00f00167d9dae4ec457d352c268",
       "transformations": []
     },
     {
       "path": "publication/checks-public.xml",
-      "sha256": "26ec6b05bd165690c021d3cb9e65f2bb11503a249102bbe47603ffd1ca0af808",
+      "sha256": "8e204357de2faea8128c2b70117f0c00eb73c65ee366ebde19d7ec8e49a37821",
       "bytes": 161225,
-      "source_sha256": "26ec6b05bd165690c021d3cb9e65f2bb11503a249102bbe47603ffd1ca0af808",
+      "source_sha256": "8e204357de2faea8128c2b70117f0c00eb73c65ee366ebde19d7ec8e49a37821",
       "transformations": []
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
-      "sha256": "aefffc2749a5e8b59b6c1178c4f6c8837e196531f14023bcebb7aed1edeb3146",
+      "sha256": "156b0299a70b34f0e2b0c7c50d6d7024ef4ff9b2746dd93311fe193fe4595ed9",
       "bytes": 6383,
-      "source_sha256": "aefffc2749a5e8b59b6c1178c4f6c8837e196531f14023bcebb7aed1edeb3146",
+      "source_sha256": "156b0299a70b34f0e2b0c7c50d6d7024ef4ff9b2746dd93311fe193fe4595ed9",
       "transformations": []
     },
     {
       "path": "publication/checks-selection-timeout.xml",
-      "sha256": "356958ed0be5b0f8e996aaa0c1f10c0fcaa54bc65c8f5b7a05edb5fb951ca0f5",
+      "sha256": "76a407a3171460128e207e022acfd2716749405eb0eb923d983b03e5825dbad2",
       "bytes": 14580,
-      "source_sha256": "356958ed0be5b0f8e996aaa0c1f10c0fcaa54bc65c8f5b7a05edb5fb951ca0f5",
+      "source_sha256": "76a407a3171460128e207e022acfd2716749405eb0eb923d983b03e5825dbad2",
       "transformations": []
     },
     {
@@ -19964,9 +19964,9 @@
     },
     {
       "path": "tools/pure_linux/art_headless_task_bridge.c",
-      "sha256": "d85497bf0b55a18e2e5c325a4d34a38d9315f99753b88eb32ef60310e516ac36",
-      "bytes": 65250,
-      "source_sha256": "d85497bf0b55a18e2e5c325a4d34a38d9315f99753b88eb32ef60310e516ac36",
+      "sha256": "28a18c31099fb21e97ecc293bb236a0d479cec8d31137b1cc8d4b24cf6640217",
+      "bytes": 65517,
+      "source_sha256": "28a18c31099fb21e97ecc293bb236a0d479cec8d31137b1cc8d4b24cf6640217",
       "transformations": []
     },
     {
@@ -20027,9 +20027,9 @@
     },
     {
       "path": "tools/pure_linux/HEADLESS_RUNTIME.md",
-      "sha256": "c0c16564bca6b0eb5f2a0622c11b9a0ec50cd8fe58244d9fb71561960c08c490",
-      "bytes": 9179,
-      "source_sha256": "c0c16564bca6b0eb5f2a0622c11b9a0ec50cd8fe58244d9fb71561960c08c490",
+      "sha256": "89eb9052e23e24c3ec605fb2b7905ceb48ac0a31611f12873dff80c492dcc1e7",
+      "bytes": 11700,
+      "source_sha256": "89eb9052e23e24c3ec605fb2b7905ceb48ac0a31611f12873dff80c492dcc1e7",
       "transformations": []
     },
     {
@@ -20055,16 +20055,16 @@
     },
     {
       "path": "tools/pure_linux/run_headless_match.py",
-      "sha256": "bd275733d24ce1ffc7b47be44ef9a9e498de95c6ca72c95bf0210622cdb90b5d",
-      "source_sha256": "bd275733d24ce1ffc7b47be44ef9a9e498de95c6ca72c95bf0210622cdb90b5d",
-      "bytes": 11451,
+      "sha256": "e3eeaa81cde4924597c641e94121bcfc4ccd61321cfdeaefa57c786aec01d01b",
+      "source_sha256": "e3eeaa81cde4924597c641e94121bcfc4ccd61321cfdeaefa57c786aec01d01b",
+      "bytes": 13563,
       "transformations": []
     },
     {
       "path": "tools/pure_linux/test_run_headless_match.py",
-      "sha256": "cacb44f27f4ec98a8cbff246102e7438fbd2c7d3ed4a52ce100f8865bc06e314",
-      "source_sha256": "cacb44f27f4ec98a8cbff246102e7438fbd2c7d3ed4a52ce100f8865bc06e314",
-      "bytes": 7602,
+      "sha256": "7605edc962c00c83f2f1ec80f30de395270a6a6f11620b0de30385f3ca8d8112",
+      "source_sha256": "7605edc962c00c83f2f1ec80f30de395270a6a6f11620b0de30385f3ca8d8112",
+      "bytes": 10860,
       "transformations": []
     },
     {
@@ -20268,6 +20268,83 @@
       "sha256": "067ceae312d45a9d10ecfddf3b9b21586e9290e195e6bb7f961942f697b017a7",
       "bytes": 6425,
       "source_sha256": "067ceae312d45a9d10ecfddf3b9b21586e9290e195e6bb7f961942f697b017a7",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/SERIAL_ARM64_SPATIAL_Y_BOUND_2026-10-31.md",
+      "sha256": "e54856948aa8d0c335883cfe1d5eebb20c563eb7946425bf8ed455df8be7ebdb",
+      "bytes": 7564,
+      "source_sha256": "e54856948aa8d0c335883cfe1d5eebb20c563eb7946425bf8ed455df8be7ebdb",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/serial-arm64-spatial-y-bound-evidence-20261031.json",
+      "sha256": "495143db3bc8f24884ac765087de94f340c97037bcc79dae63784ce4d2479284",
+      "bytes": 86770,
+      "source_sha256": "495143db3bc8f24884ac765087de94f340c97037bcc79dae63784ce4d2479284",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/fixtures/headless-runtime-deck-a-seed-1.json",
+      "sha256": "dd6da267aae1f87bdcc21303e967b2d9c93c35c959acb16a86e60ff398c067af",
+      "bytes": 7307,
+      "source_sha256": "dd6da267aae1f87bdcc21303e967b2d9c93c35c959acb16a86e60ff398c067af",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/fixtures/headless-runtime-deck-a-seed-7.json",
+      "sha256": "488ebe83d6d8d3eea97652926c6c8c8875411c4896edc2f025d9c944798872b9",
+      "bytes": 7187,
+      "source_sha256": "488ebe83d6d8d3eea97652926c6c8c8875411c4896edc2f025d9c944798872b9",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/fixtures/headless-runtime-deck-b-seed-1.json",
+      "sha256": "f1dae2fc9b84192ba277f9ec200a648e860dcb1c5423f6355e5e92c543e2858d",
+      "bytes": 3702,
+      "source_sha256": "f1dae2fc9b84192ba277f9ec200a648e860dcb1c5423f6355e5e92c543e2858d",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/fixtures/headless-runtime-deck-b-seed-7.json",
+      "sha256": "30c91af5ce2fa4597a95e92199e1e634bc60d9d239e0194e8412c44b890a254f",
+      "bytes": 3340,
+      "source_sha256": "30c91af5ce2fa4597a95e92199e1e634bc60d9d239e0194e8412c44b890a254f",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/freeze_headless_actions.py",
+      "sha256": "00112558f8d8c634099cf11c46d12c4edaa7266de94b59df19213163779f44d1",
+      "bytes": 5317,
+      "source_sha256": "00112558f8d8c634099cf11c46d12c4edaa7266de94b59df19213163779f44d1",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/headless_spatial_y_bound.h",
+      "sha256": "304f45909d80388a60ab726397f01842cccc2ce31c2fdafbc25a39622c274541",
+      "bytes": 2691,
+      "source_sha256": "304f45909d80388a60ab726397f01842cccc2ce31c2fdafbc25a39622c274541",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_freeze_headless_actions.py",
+      "sha256": "01b043aca52ab224ae558d839d441d833a135447cd2ddeb8e57d1fbf5c7b81a1",
+      "bytes": 3738,
+      "source_sha256": "01b043aca52ab224ae558d839d441d833a135447cd2ddeb8e57d1fbf5c7b81a1",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_headless_spatial_y_bound.py",
+      "sha256": "42433e994ab33464599a0b48d4f57d6c6e2ba72889a93a2cf93433ac325fb328",
+      "bytes": 1968,
+      "source_sha256": "42433e994ab33464599a0b48d4f57d6c6e2ba72889a93a2cf93433ac325fb328",
+      "transformations": []
+    },
+    {
+      "path": "publication/checks-pure-linux-spatial-y-bound-20261031.xml",
+      "sha256": "470c17b83d50f9bbdb22c8aaefb59894bc8e3afc4a9ad125c032ee6ca54e66a4",
+      "bytes": 723988,
+      "source_sha256": "470c17b83d50f9bbdb22c8aaefb59894bc8e3afc4a9ad125c032ee6ca54e66a4",
       "transformations": []
     }
   ]
