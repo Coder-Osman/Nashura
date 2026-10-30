@@ -97,7 +97,7 @@ def validate(settings, output):
     return paths, output
 
 
-def build_plan(settings, output):
+def build_plan(settings, output, snapshot_trace=True):
     paths, output = validate(settings, output)
     closure = paths["closure"]
     inside = lambda path: "/" + str(path.relative_to(closure))
@@ -114,12 +114,18 @@ def build_plan(settings, output):
     environment = {"PATH": "/usr/sbin:/usr/bin:/sbin:/bin", "LANG": "C",
                    "CLASSPATH": outside(paths["probe_dex"]) + ":/data/local/tmp/current-game-classes.dex",
                    "NASHURA_BATTLE_STEPS": "10000", "NASHURA_SNAPSHOT_ADAPTER": "1",
-                   "NASHURA_QUIET": "1", "NASHURA_QUIET_SNAPSHOTS": "1",
-                   "NASHURA_BENCHMARK_VALIDATE": "1",
-                   "NASHURA_TRACE_SNAPSHOTS": outside(output / "snapshots.bin")}
+                   "NASHURA_QUIET_SNAPSHOTS": "1", "NASHURA_BENCHMARK_VALIDATE": "1"}
+    if os.environ.get("NASHURA_BATTLE_OBSERVATIONS") != "1":
+        environment["NASHURA_QUIET"] = "1"
+    if snapshot_trace:
+        environment["NASHURA_TRACE_SNAPSHOTS"] = outside(output / "snapshots.bin")
+    if os.environ.get("NASHURA_PHASE_TIMING") == "1":
+        environment["NASHURA_PHASE_TIMING"] = "1"
     return {"schema": "nashura.headless-local-run.v1", "command": command,
             "environment": environment, "identities": settings["identities"],
-            "output": str(output), "snapshot_scope": "explicit original-serializer adapter",
+            "output": str(output),
+            "snapshot_trace": snapshot_trace,
+            "snapshot_scope": "explicit original-serializer adapter" if snapshot_trace else "not captured",
             "whole_goal_complete": False}
 
 
@@ -138,8 +144,8 @@ def verify_completion(exit_code, stdout):
     return int(matches[0])
 
 
-def run(settings, output, apply=False):
-    plan = build_plan(settings, output)
+def run(settings, output, apply=False, snapshot_trace=True):
+    plan = build_plan(settings, output, snapshot_trace)
     if not apply:
         return plan
     from compare_headless_snapshots import inspect_archive
@@ -152,11 +158,13 @@ def run(settings, output, apply=False):
         result = subprocess.run(plan["command"], env=plan["environment"], stdout=stdout, stderr=stderr)
     (output / "exit.txt").write_text(str(result.returncode) + "\n")
     final_tick = verify_completion(result.returncode, (output / "stdout.log").read_text())
-    archive = inspect_archive(output / "snapshots.bin", final_tick)
-    summary = {"status": "NATIVE_FINAL_AND_ARCHIVE_OBSERVED_LIMITED",
-               "final_tick": final_tick, "records": len(archive["frames"]),
-               "archive_bytes": archive["bytes"], "archive_sha256": archive["sha256"],
+    summary = {"status": "NATIVE_FINAL_OBSERVED_LIMITED",
+               "final_tick": final_tick, "snapshot_trace": plan["snapshot_trace"],
                "whole_goal_complete": False}
+    if plan["snapshot_trace"]:
+        archive = inspect_archive(output / "snapshots.bin", final_tick)
+        summary.update(records=len(archive["frames"]), archive_bytes=archive["bytes"],
+                       archive_sha256=archive["sha256"])
     with (output / "result.json").open("x") as stream:
         json.dump(summary, stream, indent=2)
         stream.write("\n")
@@ -168,8 +176,10 @@ def main():
     parser.add_argument("settings", type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--without-snapshot-trace", action="store_true")
     args = parser.parse_args()
-    print(json.dumps(run(json.loads(args.settings.read_text()), args.output, args.apply), indent=2))
+    print(json.dumps(run(json.loads(args.settings.read_text()), args.output, args.apply,
+                         snapshot_trace=not args.without_snapshot_trace), indent=2))
 
 
 if __name__ == "__main__":

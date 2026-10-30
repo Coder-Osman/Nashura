@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-30：Headless replay 阶段诊断
+
+- 增加默认关闭的阶段计时和战斗状态观测；增加关闭逐 tick snapshot trace 的 runner 选项。
+- 原始 replay 与 52 条命令注入 replay 均在固定 ARM64 fixture 到 tick 3601 原生终局，终态摘要相同。
+- 730 条历史 v38 observation/player/object 记录逐行匹配；队列 52→2，50 条命令在 31 个变化步中消费。
+- 单次阶段耗时仅作诊断；未测并发、未建立性能基线，整体 ready 继续未验证。
+- 发布脱敏机器摘要与报告，不发布 observer、原始 guest 日志或第三方运行时资源。
+
 ## 2026-10-30：替代转译器真实对局对比
 
 - 排除FEX方向不符；实际构建arm64emu-user x86_64 JIT和上游QEMU11.1.3。

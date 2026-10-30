@@ -82,6 +82,32 @@ def test_plan_validates_without_creating_output_or_inheriting_service_environmen
     assert plan["whole_goal_complete"] is False
     assert "--probe-args" in plan["command"]
     assert "NASHURA_ROOT_INIT_TRIAL" not in plan["environment"]
+    assert plan["snapshot_trace"] is True
+    assert "NASHURA_TRACE_SNAPSHOTS" in plan["environment"]
+
+
+def test_snapshot_trace_can_be_disabled_for_lightweight_diagnostics(inputs):
+    settings, output = inputs
+    plan = runner.build_plan(settings, output, snapshot_trace=False)
+    assert plan["snapshot_trace"] is False
+    assert plan["snapshot_scope"] == "not captured"
+    assert "NASHURA_TRACE_SNAPSHOTS" not in plan["environment"]
+
+
+def test_phase_timing_is_opt_in_for_guest_plan(inputs, monkeypatch):
+    settings, output = inputs
+    monkeypatch.delenv("NASHURA_PHASE_TIMING", raising=False)
+    assert "NASHURA_PHASE_TIMING" not in runner.build_plan(settings, output)["environment"]
+    monkeypatch.setenv("NASHURA_PHASE_TIMING", "1")
+    assert runner.build_plan(settings, output)["environment"]["NASHURA_PHASE_TIMING"] == "1"
+
+
+def test_battle_state_observations_are_opt_in(inputs, monkeypatch):
+    settings, output = inputs
+    monkeypatch.delenv("NASHURA_BATTLE_OBSERVATIONS", raising=False)
+    assert runner.build_plan(settings, output)["environment"]["NASHURA_QUIET"] == "1"
+    monkeypatch.setenv("NASHURA_BATTLE_OBSERVATIONS", "1")
+    assert "NASHURA_QUIET" not in runner.build_plan(settings, output)["environment"]
 
 
 def test_mutation_after_identity_capture_is_rejected(inputs):

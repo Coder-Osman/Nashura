@@ -1,0 +1,93 @@
+{
+  "schema": "nashura.headless-replay-route-diagnostics.v1",
+  "date": "2026-10-30",
+  "status": "HEADLESS_REPLAY_ROUTE_DIAGNOSTICS_OBSERVED_LIMITED",
+  "whole_goal_complete": false,
+  "scope": {
+    "fixture_count": 1,
+    "architecture": "ARM64",
+    "execution": "sequential diagnostic runs",
+    "concurrency_tested": false,
+    "performance_baseline": false,
+    "snapshot_trace_captured": false,
+    "system_or_graphics_services_started": false
+  },
+  "terminal": {
+    "final_tick": 3601,
+    "finalized": true,
+    "summary_digest": "6c959326dd2f09cc",
+    "summary_bytes": 3091,
+    "original_replay_matches_injected_replay": true
+  },
+  "command_queue": {
+    "loaded_commands": 52,
+    "injected_commands": 52,
+    "queue_at_step_start": 52,
+    "queue_at_end": 2,
+    "commands_consumed": 50,
+    "queue_change_steps": 31,
+    "first_queue_change_tick": 21,
+    "last_queue_change_tick": 3521
+  },
+  "phase_timing_ns": {
+    "sample_count_per_route": 1,
+    "original_replay": {
+      "battle_json_parse": 113317,
+      "game_state_load": 110068,
+      "injected_logic_command_parse": 0,
+      "injected_logic_command_append": 0
+    },
+    "injected_replay": {
+      "battle_json_parse": 98858,
+      "game_state_load": 103442,
+      "injected_logic_command_parse": 15542,
+      "injected_logic_command_append": 1002
+    },
+    "interpretation": "single-run diagnostic observations; not a performance comparison"
+  },
+  "state_observation": {
+    "historical_v38_records_compared": 730,
+    "observation_player_object_records_equal": true,
+    "tick_200_object_count": 9,
+    "tick_3601_object_count": 12,
+    "tick_3601_finalized": true
+  },
+  "runner_controls": {
+    "phase_timing": "opt-in via NASHURA_PHASE_TIMING=1",
+    "battle_observations": "opt-in via NASHURA_BATTLE_OBSERVATIONS=1",
+    "snapshot_trace": "enabled by default; --without-snapshot-trace disables it"
+  },
+  "validation": {
+    "headless_runner_tests": {
+      "passed": 15,
+      "skipped": 0
+    },
+    "public_checks": {
+      "passed": 1104,
+      "skipped": 42,
+      "failed": 0
+    },
+    "main_engine_checks": {
+      "passed": 211,
+      "skipped": 0
+    },
+    "gitleaks": "passed; no leaks found",
+    "public_source_manifest": "passed"
+  },
+  "limitations": [
+    "single fixed fixture",
+    "no concurrency test or throughput measurement",
+    "no snapshot archive in this diagnostic run",
+    "whole-goal readiness and full ResourceManager semantics remain unverified",
+    "observer loaded from a user-directory path was rejected by ART linker namespace; a /dev/shm path succeeded"
+  ],
+  "published_artifacts": [
+    "agent-handoff/HEADLESS_REPLAY_ROUTE_DIAGNOSTICS_2026-10-30.md",
+    "agent-handoff/headless-replay-route-diagnostics-evidence-20261030.json"
+  ],
+  "private_artifacts_not_published": [
+    "observer binary",
+    "guest stdout and stderr logs",
+    "APK, DEX, libg and replay payloads"
+  ]
+}

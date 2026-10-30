@@ -249,6 +249,28 @@ static int32_t queue_count(void *queue) {
     return count;
 }
 
+struct phase_metrics {
+    int enabled;
+    uint64_t battle_json_parse_ns;
+    uint64_t game_state_load_ns;
+    uint64_t logic_command_parse_ns;
+    uint64_t logic_command_append_ns;
+    int32_t loaded_command_count;
+    int32_t injected_command_count;
+    int32_t queue_at_step_start;
+    int32_t queue_at_end;
+    int32_t queue_removed;
+    int32_t queue_added;
+    int32_t queue_change_steps;
+    int32_t first_queue_change_tick;
+    int32_t last_queue_change_tick;
+};
+
+static int phase_timing_requested(void) {
+    const char *value = getenv("NASHURA_PHASE_TIMING");
+    return value && !strcmp(value, "1");
+}
+
 static int32_t i32_at(uintptr_t address) {
     int32_t value;
     memcpy(&value, (const void *)address, sizeof(value));
@@ -302,7 +324,8 @@ static int observe_battle(void *state, const char *phase) {
     return finalized;
 }
 
-static int parse_and_append_commands(void *manager, void *commands, void *queue) {
+static int parse_and_append_commands(void *manager, void *commands, void *queue,
+                                     struct phase_metrics *metrics) {
     void **items = NULL;
     int32_t count = -1;
     if (!manager || !commands || !queue || !inspect_command_array(commands, &items, &count)) return -40;
@@ -317,14 +340,20 @@ static int parse_and_append_commands(void *manager, void *commands, void *queue)
                sizeof(json_command));
         if (!json_command) return -42;
         void *logic_command = NULL;
+        uint64_t started = metrics && metrics->enabled ? monotonic_ns() : 0;
         cr_call_logic_command_parse(json_command, context, &logic_command,
                                     (void *)(base + 0xd2fe78));
+        if (metrics && metrics->enabled)
+            metrics->logic_command_parse_ns += monotonic_ns() - started;
         printf("HEADLESS_GAME_STATE_COMMAND_PARSE index=%d json=%p result=%p\n",
                index, json_command, logic_command);
         fflush(stdout);
         if (!logic_command) return -43;
         int32_t queue_before = queue_count(queue);
+        started = metrics && metrics->enabled ? monotonic_ns() : 0;
         ((logic_command_append_fn)(base + 0xd2eef0))(queue, &logic_command);
+        if (metrics && metrics->enabled)
+            metrics->logic_command_append_ns += monotonic_ns() - started;
         int32_t queue_after = queue_count(queue);
         printf("HEADLESS_GAME_STATE_COMMAND_APPEND index=%d owner_after=%p queue_before=%d queue_after=%d\n",
                index, logic_command, queue_before, queue_after);
@@ -611,10 +640,16 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
     void *snapshot = NULL;
     uint64_t snapshot_hash = 0;
     int32_t snapshot_bytes = -1;
+    struct phase_metrics phase = {0};
+    phase.enabled = phase_timing_requested();
+    phase.first_queue_change_tick = -1;
+    phase.last_queue_change_tick = -1;
     const uint64_t canary = UINT64_C(0x93e726ac415bd80f);
     unsigned char *state;
     if (!battle_json || battle_json_size < 2 || !extract_location_id((char *)battle_json, &location_id)) return -30;
+    uint64_t json_parse_start = phase.enabled ? monotonic_ns() : 0;
     root = parse_json_text((char *)battle_json);
+    if (phase.enabled) phase.battle_json_parse_ns = monotonic_ns() - json_parse_start;
     if (!root) return -31;
     battle = lookup_json_member(root, "battle");
     commands = lookup_json_member(root, "cmd");
@@ -628,6 +663,8 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         release_json_object(root);
         return -32;
     }
+    phase.loaded_command_count = loaded_command_count;
+    phase.injected_command_count = command_count;
     printf("HEADLESS_GAME_STATE_JSON_VALID battle=1 loaded_cmd=%d inject_cmd=%d evt=%d allow_commands=%d snapshot_mode=%d\n",
            loaded_command_count, command_count, event_count, allow_commands, snapshot_mode);
     fflush(stdout);
@@ -669,7 +706,9 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
     fflush(stdout);
     puts("HEADLESS_GAME_STATE_LOAD_ENTER");
     fflush(stdout);
+    uint64_t game_load_start = phase.enabled ? monotonic_ns() : 0;
     ((game_load_fn)(base + 0x1061b1c))(state, root, NULL, NULL);
+    if (phase.enabled) phase.game_state_load_ns = monotonic_ns() - game_load_start;
     tick_before = ((game_tick_fn)(base + 0x1062bc0))(state);
     memcpy(&world, state + 0xa8, sizeof(world));
     memcpy(&queue, state + 0x38, sizeof(queue));
@@ -684,7 +723,7 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         return -35;
     }
     if (allow_commands && command_count > 0) {
-        int command_status = parse_and_append_commands(state, injected_commands, queue);
+        int command_status = parse_and_append_commands(state, injected_commands, queue, &phase);
         printf("HEADLESS_GAME_STATE_COMMAND_STATUS=%d queue_count_after=%d\n",
                command_status, queue_count(queue));
         fflush(stdout);
@@ -718,6 +757,7 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         tick_after = tick_before;
         int finalized = observe_battle(state, "before");
         if (finalized < 0) return -46;
+        if (phase.enabled) phase.queue_at_step_start = queue_count(queue);
         int completed = 0;
         const char *trace_file = getenv("NASHURA_TRACE_SNAPSHOTS");
         int trace_fd = trace_file ? open(trace_file, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, 0600) : -1;
@@ -731,9 +771,18 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
                 for (int owner = 0; owner < 2; ++owner)
                     if (queue_hand_deploy(state, owner) < 0) return -48;
             }
+            int32_t queue_before = phase.enabled ? queue_count(queue) : -1;
             uint64_t step_start = monotonic_ns();
             ((game_step_fn)(base + 0x10620a4))(state);
             uint64_t step_ns = monotonic_ns() - step_start;
+            int32_t queue_after = phase.enabled ? queue_count(queue) : -1;
+            if (phase.enabled && queue_before != queue_after) {
+                if (queue_after < queue_before) phase.queue_removed += queue_before - queue_after;
+                else phase.queue_added += queue_after - queue_before;
+                ++phase.queue_change_steps;
+                if (phase.first_queue_change_tick < 0) phase.first_queue_change_tick = previous + 1;
+                phase.last_queue_change_tick = previous + 1;
+            }
             total_step_ns += step_ns;
             durations[completed] = step_ns;
             if (step_ns > worst_step_ns) worst_step_ns = step_ns;
@@ -757,6 +806,7 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
             }
         }
         uint64_t elapsed_ns = monotonic_ns() - elapsed_start;
+        if (phase.enabled) phase.queue_at_end = queue_count(queue);
         if (trace_fd >= 0) close(trace_fd);
         qsort(durations, (size_t)completed, sizeof(durations[0]), compare_duration);
         uint64_t p50 = completed ? durations[(completed - 1) * 50 / 100] : 0;
@@ -788,6 +838,17 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         observe_battle(state, "after");
         printf("HEADLESS_GAME_STATE_STEP_RETURN tick_before=%d tick_after=%d completed=%d requested=%d finalized=%d\n",
                tick_before, tick_after, completed, steps, finalized);
+        if (phase.enabled) {
+            printf("HEADLESS_PHASE_TIMING scope=diagnostic-only battle_json_parse_ns=%llu game_state_load_ns=%llu injected_logic_parse_ns=%llu injected_logic_append_ns=%llu loaded_commands=%d injected_commands=%d queue_at_step_start=%d queue_at_end=%d queue_removed=%d queue_added=%d queue_change_steps=%d first_queue_change_tick=%d last_queue_change_tick=%d\n",
+                   (unsigned long long)phase.battle_json_parse_ns,
+                   (unsigned long long)phase.game_state_load_ns,
+                   (unsigned long long)phase.logic_command_parse_ns,
+                   (unsigned long long)phase.logic_command_append_ns,
+                   phase.loaded_command_count, phase.injected_command_count,
+                   phase.queue_at_step_start, phase.queue_at_end,
+                   phase.queue_removed, phase.queue_added, phase.queue_change_steps,
+                   phase.first_queue_change_tick, phase.last_queue_change_tick);
+        }
         fflush(stdout);
     } else {
         tick_after = tick_before;

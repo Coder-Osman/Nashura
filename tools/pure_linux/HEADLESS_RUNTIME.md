@@ -60,6 +60,12 @@ stdout、stderr、真实退出码、逐tick归档及结果。完整终局、Java
 三者同时通过才产生结果。归档连续tick、帧长和终点都校验；零退出或孤立函数返回
 不作为战斗完成。与Android对照仍用compare_headless_snapshots.py独立比较。
 
+阶段计时默认关闭，设置`NASHURA_PHASE_TIMING=1`后才进入guest计划；
+`NASHURA_BATTLE_OBSERVATIONS=1`关闭quiet模式并输出关键tick对象/队列状态。
+逐tick snapshot trace 默认保持开启；路径诊断可传`--without-snapshot-trace`，此时
+结果只声明原生终局已观察，不声明产生或校验了归档。trace关闭不会放宽终局、Java
+正常返回或PM零拒绝条件。诊断开关不改变service依赖边界。
+
 ## 已验证与未闭合
 
 v52直接入口exit0，strace零Binder设备打开及零Binder ioctl；v53/v54使用仓库runner，
@@ -83,3 +89,8 @@ v56identity在ARM guest直接入口观察bootstrap-after、catalog-before/after�
 battle-before/after五阶段的root/context/wrapper/singleton关系、vtable和
 真实getter，均verified=1且跨阶段稳定；原生终局和3602帧归档仍通过。
 这只是版本绑定对象图身份，完整ResourceManager及owner初始化语义继续待验。
+
+本轮 replay 路径诊断中，原始52条`battle.cmd`与runner显式注入的52条`cmd`均到
+tick3601，终态摘要一致；队列从52降至2，历史v38的730条状态记录逐行相同。
+阶段耗时仅为单次诊断观测；没有并发测试、吞吐测量或snapshot trace归档。详见
+`agent-handoff/HEADLESS_REPLAY_ROUTE_DIAGNOSTICS_2026-10-30.md`。

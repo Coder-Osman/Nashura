@@ -1,5 +1,14 @@
 # 阶段成果与证据索引
 
+## 2026-10-30：Headless replay 路径诊断
+
+原始 replay 和把相同 52 条命令转为显式注入的路径均到 tick 3601 原生终局，
+摘要相同（`6c959326dd2f09cc`，3091 字节）。两条路径均消费 50 条队列命令，
+最终留 2 条；历史 v38 的 730 条 observation/player/object 记录逐行一致。
+阶段计时是每条路径单次样本，不作为性能比较；本轮未测并发，未生成 snapshot
+归档。整体目标仍未完成。详见[报告](../agent-handoff/HEADLESS_REPLAY_ROUTE_DIAGNOSTICS_2026-10-30.md)
+与[机器摘要](../agent-handoff/headless-replay-route-diagnostics-evidence-20261030.json)。
+
 ## 2026-10-30：替代ARM64转译器
 
 FEX转译方向相反，未测；arm64emu-user JIT与上游QEMU11.1.3均完整真实

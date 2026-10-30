@@ -1,5 +1,13 @@
 # Nashura
 
+## 2026-10-30：Headless replay 路径诊断
+
+原始 replay 与 `cmd` 注入 replay 在同一 ARM64 fixture 均到 tick 3601 原生终局，
+终态摘要同为 `6c959326dd2f09cc` / 3091 字节；历史 v38 的 730 条
+observation/player/object 记录逐行相同。单次解析/追加计时仅用于阶段诊断，
+未测并发，也不构成性能基线。整体目标继续未完成。详见[报告](agent-handoff/HEADLESS_REPLAY_ROUTE_DIAGNOSTICS_2026-10-30.md)
+和[机器摘要](agent-handoff/headless-replay-route-diagnostics-evidence-20261030.json)。
+
 ## 2026-10-30：替代ARM64转译器实测
 
 相同Xeon两核、固定真实对局及相同observer，原QEMU8.2.2复测30局中位
