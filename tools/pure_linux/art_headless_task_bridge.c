@@ -28,6 +28,7 @@
 #include "headless_combined_hot_distance.h"
 #include "headless_combined_grid_clear.h"
 #include "headless_combined_query_pair.h"
+#include "headless_combined_component_guard.h"
 
 static uintptr_t base;
 static _Atomic int destroyed;
@@ -1153,7 +1154,9 @@ static void run_task(struct task *task) {
                 ? install_grid_clear_unroll(base) : !strcmp(optimization, "hot-distance-grid-v1")
                 ? install_combined_grid_clear(base) : !strcmp(optimization, "query-dimension-pair-v1")
                 ? install_query_dimension_pair(base) : !strcmp(optimization, "hot-distance-query-v1")
-                ? install_combined_query_pair(base) : 0;
+                ? install_combined_query_pair(base) : !strcmp(optimization, "component-guard-v1")
+                ? install_component_guard(base, 0) : !strcmp(optimization, "hot-distance-component-v1")
+                ? install_combined_component_guard(base) : 0;
             if (!installed) { task_status = -55; return; }
         }
         const int step_once = requested_mode == 6 || requested_mode == 8 ||

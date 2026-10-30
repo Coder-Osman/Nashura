@@ -1,5 +1,15 @@
 # 阶段成果与证据索引
 
+## 2026-10-31：组件检查目标 guard 的首轮串行增益
+
+默认关闭的 component-guard-v1 / hot-distance-component-v1 保留原 bounds，只在 flag
+bit0=0 且对象为空或当前虚函数目标精确匹配已 guard 的纯常量 getter 时省略冗余工作；
+其余回退原实现。计时前后各120000组ARM64对照、12完整局34047帧与已观测状态通过。
+主机核验309文件并独立复算32批/6912局，四组中位耗时下降3.28% / 4.03% / 3.20% / 3.03%，
+八block均下降，采样p95/p99均改善。维持默认关闭，待不变构建的独立确认；不扩张服务、
+不测并发，固定VM和最小依赖边界不变。详见
+[报告](../agent-handoff/SERIAL_ARM64_COMPONENT_GUARD_2026-10-31.md)与[机器摘要](../agent-handoff/serial-arm64-component-guard-evidence-20261031.json)。
+
 ## 2026-10-31：查询 pair-load 独立复测仍有 block 回退
 
 同一 observer、固定 VM/输入，反转四组计时顺序，重新完成 12 个完整局 34047 帧、

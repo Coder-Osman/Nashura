@@ -42,11 +42,16 @@ OPTIMIZATION_MARKERS = {
     "hot-distance-grid-v1": "getter_sites=11 distance_functions=2 grid_functions=1",
     "query-dimension-pair-v1": "offset=0xf34c6c bytes=76",
     "hot-distance-query-v1": "getter_sites=11 distance_functions=2 query_blocks=1",
+    "component-guard-v1": "functions=1 guarded_targets=1",
+    "hot-distance-component-v1": "getter_sites=11 distance_functions=2 component_functions=1",
 }
 
 
 def optimization_installation_markers(optimization):
-    if optimization == "hot-distance-query-v1":
+    if optimization == "hot-distance-component-v1":
+        names = ("hot-getters-v1", "saturated-distance-v1", "hot-distance-v1",
+                 "component-guard-v1", optimization)
+    elif optimization == "hot-distance-query-v1":
         names = ("hot-getters-v1", "saturated-distance-v1", "hot-distance-v1",
                  "query-dimension-pair-v1", optimization)
     elif optimization == "hot-distance-grid-v1":
