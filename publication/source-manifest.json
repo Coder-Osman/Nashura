@@ -1,6 +1,6 @@
 {
   "schema": "hashura.public-source-snapshot.v1",
-  "file_count": 2906,
+  "file_count": 2911,
   "files": [
     {
       "path": ".tmp_remote_edit/compact_patch/resident.cpp",
@@ -18,16 +18,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "5fd16500ceb5bd77494782cce94d87d908b436b790e2c976968efc8a1e35389b",
-      "bytes": 69628,
-      "source_sha256": "5fd16500ceb5bd77494782cce94d87d908b436b790e2c976968efc8a1e35389b",
+      "sha256": "a13d52825f3bee7c29fa379a439d218df74582b93352413ad5ec0ca1571f0fad",
+      "bytes": 70340,
+      "source_sha256": "a13d52825f3bee7c29fa379a439d218df74582b93352413ad5ec0ca1571f0fad",
       "transformations": []
     },
     {
       "path": "README.md",
-      "sha256": "d74079cc3c3854263290d7f770f1834b616b690c42bb994c5bae0ffc1873af70",
-      "bytes": 67622,
-      "source_sha256": "d74079cc3c3854263290d7f770f1834b616b690c42bb994c5bae0ffc1873af70",
+      "sha256": "7b3309032f072dc8180ddf67dd93faa08f4aa517422200175b22959479379b36",
+      "bytes": 68348,
+      "source_sha256": "7b3309032f072dc8180ddf67dd93faa08f4aa517422200175b22959479379b36",
       "transformations": []
     },
     {
@@ -11392,9 +11392,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "6a2d5b381a4ef4144988ef635a7090295b5498d09d34dcb1ff9e32b46d912787",
-      "bytes": 108137,
-      "source_sha256": "6a2d5b381a4ef4144988ef635a7090295b5498d09d34dcb1ff9e32b46d912787",
+      "sha256": "5a7fe140efb9acef9cbbaecc3bcbdc71ed6ccff6bef3afeb9cb344f767863025",
+      "bytes": 108987,
+      "source_sha256": "5a7fe140efb9acef9cbbaecc3bcbdc71ed6ccff6bef3afeb9cb344f767863025",
       "transformations": []
     },
     {
@@ -17806,65 +17806,65 @@
     },
     {
       "path": "publication/checks-affordability.xml",
-      "sha256": "8f6635a71fd9a5a6e081adddca6926a398e426f30295612887c71a7e64857c53",
+      "sha256": "e67cac8e4b1d50759a892de3d4cfc41a08597a3cb289fb1bc6d78a77df955b9c",
       "bytes": 4340,
-      "source_sha256": "8f6635a71fd9a5a6e081adddca6926a398e426f30295612887c71a7e64857c53",
+      "source_sha256": "e67cac8e4b1d50759a892de3d4cfc41a08597a3cb289fb1bc6d78a77df955b9c",
       "transformations": []
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
-      "sha256": "5f2f714a1288a3b5e6423db55f04f2e1546c858e6381f91421c8ad6a13729f98",
+      "sha256": "abc10943ad6380c15490b108ee9b0704fa181d7d9d116e3190d433c092e35c56",
       "bytes": 12024,
-      "source_sha256": "5f2f714a1288a3b5e6423db55f04f2e1546c858e6381f91421c8ad6a13729f98",
+      "source_sha256": "abc10943ad6380c15490b108ee9b0704fa181d7d9d116e3190d433c092e35c56",
       "transformations": []
     },
     {
       "path": "publication/checks-command-coordinates.xml",
-      "sha256": "f15d473824529ca7148b3b659dd6fa4c063ac0a464de233e529b597824e5435a",
+      "sha256": "970e0f83178d30b14b85fa78c6a9cd196885138f515cddb04cb345675fb53306",
       "bytes": 8184,
-      "source_sha256": "f15d473824529ca7148b3b659dd6fa4c063ac0a464de233e529b597824e5435a",
+      "source_sha256": "970e0f83178d30b14b85fa78c6a9cd196885138f515cddb04cb345675fb53306",
       "transformations": []
     },
     {
       "path": "publication/checks-dispatch-command.xml",
-      "sha256": "f83fd33b7b7dea91af54c277902f5c7c73f7c354bbf72ae05440d7c66f788000",
+      "sha256": "999ec47a69b1c3a3d1cf2c4507a08959d6db3d22bb90bd968bc4362827b1acf8",
       "bytes": 6406,
-      "source_sha256": "f83fd33b7b7dea91af54c277902f5c7c73f7c354bbf72ae05440d7c66f788000",
+      "source_sha256": "999ec47a69b1c3a3d1cf2c4507a08959d6db3d22bb90bd968bc4362827b1acf8",
       "transformations": []
     },
     {
       "path": "publication/checks-live-command.xml",
-      "sha256": "9d65d92f4586344cc980214601379052f0b1448617b5f58518d3b3b22ce7bb3d",
+      "sha256": "ed5bc985c0e72ce60df8e8b71d3ca9f91f9f0a4db64d146c545b135356b8c398",
       "bytes": 6370,
-      "source_sha256": "9d65d92f4586344cc980214601379052f0b1448617b5f58518d3b3b22ce7bb3d",
+      "source_sha256": "ed5bc985c0e72ce60df8e8b71d3ca9f91f9f0a4db64d146c545b135356b8c398",
       "transformations": []
     },
     {
       "path": "publication/checks-position-guards.xml",
-      "sha256": "0b5e46a99f9d39c05e1835d179cdb43de20f069f8feb50b8751a82209077ebd8",
+      "sha256": "095d40b678ddcad4758006cccee9c38813d97599dd68b2a8e3317a68324a22ea",
       "bytes": 4244,
-      "source_sha256": "0b5e46a99f9d39c05e1835d179cdb43de20f069f8feb50b8751a82209077ebd8",
+      "source_sha256": "095d40b678ddcad4758006cccee9c38813d97599dd68b2a8e3317a68324a22ea",
       "transformations": []
     },
     {
       "path": "publication/checks-public.xml",
-      "sha256": "36354576af0044e69c566c23ab5770948c157439a0818e1f30fa3e45b6601c2e",
+      "sha256": "0dbe9a42f07785f1e6c93bf52f75fc55c3f3808bb41405141fdc03c4e2ec4940",
       "bytes": 161225,
-      "source_sha256": "36354576af0044e69c566c23ab5770948c157439a0818e1f30fa3e45b6601c2e",
+      "source_sha256": "0dbe9a42f07785f1e6c93bf52f75fc55c3f3808bb41405141fdc03c4e2ec4940",
       "transformations": []
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
-      "sha256": "320c651a23a5aa5e35a8396c5af06715d97c9511e6779d1076a58e8d880d43b9",
+      "sha256": "87cc5a10345000e8ab1fd406868cd356300af4ca8bff46ae95e3e6924962ba9f",
       "bytes": 6383,
-      "source_sha256": "320c651a23a5aa5e35a8396c5af06715d97c9511e6779d1076a58e8d880d43b9",
+      "source_sha256": "87cc5a10345000e8ab1fd406868cd356300af4ca8bff46ae95e3e6924962ba9f",
       "transformations": []
     },
     {
       "path": "publication/checks-selection-timeout.xml",
-      "sha256": "b0f651033b65fb0d677a977c9d08885af6fe7f977db8695c57a7584deb6df69a",
+      "sha256": "d8da85a1348b8ad4956cd9b3b1fb756d96ab483400dcb61891289f2eb0a3b5eb",
       "bytes": 14580,
-      "source_sha256": "b0f651033b65fb0d677a977c9d08885af6fe7f977db8695c57a7584deb6df69a",
+      "source_sha256": "d8da85a1348b8ad4956cd9b3b1fb756d96ab483400dcb61891289f2eb0a3b5eb",
       "transformations": []
     },
     {
@@ -19964,9 +19964,9 @@
     },
     {
       "path": "tools/pure_linux/art_headless_task_bridge.c",
-      "sha256": "8b78e7b3e755bbfe86300b1c9166a04696a9d5cb00943a2d4a478c537e891d84",
-      "bytes": 65704,
-      "source_sha256": "8b78e7b3e755bbfe86300b1c9166a04696a9d5cb00943a2d4a478c537e891d84",
+      "sha256": "186f8e55dd53fc00fae9c1da48166c1e7c3b5d0bc5a85f98c1637e0daf614055",
+      "bytes": 66152,
+      "source_sha256": "186f8e55dd53fc00fae9c1da48166c1e7c3b5d0bc5a85f98c1637e0daf614055",
       "transformations": []
     },
     {
@@ -20027,9 +20027,9 @@
     },
     {
       "path": "tools/pure_linux/HEADLESS_RUNTIME.md",
-      "sha256": "83bc4f381aa004eb588d3a84b719b22df89d3a42525e4e795136dbd3d0301477",
-      "bytes": 12918,
-      "source_sha256": "83bc4f381aa004eb588d3a84b719b22df89d3a42525e4e795136dbd3d0301477",
+      "sha256": "9049971cd9a4c2915a03cb252d0c320fed329452fe1faf84194f4b7982fb941c",
+      "bytes": 14198,
+      "source_sha256": "9049971cd9a4c2915a03cb252d0c320fed329452fe1faf84194f4b7982fb941c",
       "transformations": []
     },
     {
@@ -20055,16 +20055,16 @@
     },
     {
       "path": "tools/pure_linux/run_headless_match.py",
-      "sha256": "836219acbd07c5612329811ecec8bf7039afb6cca8d2ffd9fdae26c8ce3c6042",
-      "source_sha256": "836219acbd07c5612329811ecec8bf7039afb6cca8d2ffd9fdae26c8ce3c6042",
-      "bytes": 13730,
+      "sha256": "947ff81f33a2a22e73af44261c717df9b73d19a611908ee6653e5e988f2c74a1",
+      "source_sha256": "947ff81f33a2a22e73af44261c717df9b73d19a611908ee6653e5e988f2c74a1",
+      "bytes": 14805,
       "transformations": []
     },
     {
       "path": "tools/pure_linux/test_run_headless_match.py",
-      "sha256": "87e0c0f71834d07f1a8eca1da653f92aa0eb6392299326ee94e48ae1403f6e52",
-      "source_sha256": "87e0c0f71834d07f1a8eca1da653f92aa0eb6392299326ee94e48ae1403f6e52",
-      "bytes": 10989,
+      "sha256": "4ac826b7a8ddf9c7d166f5cc1a545a4c8fd5099fb8c652b0cc7b51a2fb03bc54",
+      "source_sha256": "4ac826b7a8ddf9c7d166f5cc1a545a4c8fd5099fb8c652b0cc7b51a2fb03bc54",
+      "bytes": 11776,
       "transformations": []
     },
     {
@@ -20216,9 +20216,9 @@
     },
     {
       "path": "agent-handoff/README.md",
-      "sha256": "13f4534bcc07890cfa8e71f12bf25c3fb735c2a3baf88ac0cf5570f9b7da12e6",
-      "bytes": 2783,
-      "source_sha256": "13f4534bcc07890cfa8e71f12bf25c3fb735c2a3baf88ac0cf5570f9b7da12e6",
+      "sha256": "9b854546d2c3182babdceb0cfeabbdf8243a7ef98a210e8468228a6f879c5d0c",
+      "bytes": 2969,
+      "source_sha256": "9b854546d2c3182babdceb0cfeabbdf8243a7ef98a210e8468228a6f879c5d0c",
       "transformations": []
     },
     {
@@ -20380,6 +20380,41 @@
       "sha256": "1eeb5a7a14f45fd19fccd45329e019d103d18012dccc815bfbd0fc5b25fad844",
       "bytes": 725132,
       "source_sha256": "1eeb5a7a14f45fd19fccd45329e019d103d18012dccc815bfbd0fc5b25fad844",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/SERIAL_ARM64_NATIVE_PHASES_2026-10-31.md",
+      "sha256": "662cd7f5657a05134647d48ef51df3181caea67ce666408067963bd0c8571762",
+      "bytes": 6652,
+      "source_sha256": "662cd7f5657a05134647d48ef51df3181caea67ce666408067963bd0c8571762",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/serial-arm64-native-phases-evidence-20261031.json",
+      "sha256": "48f2484b2d3995e97a8f016aadbeac7ddf4d421bddecea16237f9f781ef6be48",
+      "bytes": 41749,
+      "source_sha256": "48f2484b2d3995e97a8f016aadbeac7ddf4d421bddecea16237f9f781ef6be48",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/headless_native_phases.h",
+      "sha256": "b175f0d5e00844d09cdea90013518607b87e2b5c5f3a58ec4e47232a187fbc46",
+      "bytes": 12015,
+      "source_sha256": "b175f0d5e00844d09cdea90013518607b87e2b5c5f3a58ec4e47232a187fbc46",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/summarize_headless_native_phases.py",
+      "sha256": "06c6c02402ed28e58a3fd1bf45544ec2ad6a2b355cc028ede02102f9664e0b96",
+      "bytes": 6084,
+      "source_sha256": "06c6c02402ed28e58a3fd1bf45544ec2ad6a2b355cc028ede02102f9664e0b96",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_headless_native_phases.py",
+      "sha256": "edc479dc38e589548e7a36e6c2174573d9c100d1cb80a72769c10648e506bb21",
+      "bytes": 4702,
+      "source_sha256": "edc479dc38e589548e7a36e6c2174573d9c100d1cb80a72769c10648e506bb21",
       "transformations": []
     }
   ]

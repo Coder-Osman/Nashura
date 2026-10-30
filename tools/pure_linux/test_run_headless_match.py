@@ -104,6 +104,20 @@ def test_snapshot_trace_can_be_disabled_for_lightweight_diagnostics(inputs):
     assert "NASHURA_TRACE_SNAPSHOTS" not in plan["environment"]
 
 
+def test_native_phases_require_explicit_single_unoptimized_diagnostic(inputs, monkeypatch):
+    settings, output = inputs
+    monkeypatch.setenv("NASHURA_NATIVE_PHASES", "1")
+    assert "NASHURA_NATIVE_PHASES" not in runner.build_plan(settings, output)["environment"]
+    plan = runner.build_plan(settings, output, native_phases=True)
+    assert plan["native_phases"] is True
+    assert plan["environment"]["NASHURA_NATIVE_PHASES"] == "1"
+    assert plan["environment"]["NASHURA_PHASE_TIMING"] == "1"
+    for kwargs in ({"benchmark_repeats": 116}, {"native_optimization": "hot-getters-v1"},
+                   {"record_hand_actions": True}):
+        with pytest.raises(ValueError, match="diagnostic-only"):
+            runner.build_plan(settings, output, native_phases=True, **kwargs)
+
+
 def test_phase_timing_is_opt_in_for_guest_plan(inputs, monkeypatch):
     settings, output = inputs
     monkeypatch.delenv("NASHURA_PHASE_TIMING", raising=False)

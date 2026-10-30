@@ -22,6 +22,7 @@
 #include <time.h>
 #include "headless_spatial_y_bound.h"
 #include "headless_hot_getters.h"
+#include "headless_native_phases.h"
 
 static uintptr_t base;
 static _Atomic int destroyed;
@@ -782,6 +783,7 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         const char *trace_file = getenv("NASHURA_TRACE_SNAPSHOTS");
         int trace_fd = trace_file ? open(trace_file, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, 0600) : -1;
         if (trace_file && (trace_fd < 0 || !trace_snapshot(trace_fd, state, tick_before))) return -52;
+        if (native_phases_installed) native_phase_reset();
         uint64_t elapsed_start = monotonic_ns(), total_step_ns = 0, worst_step_ns = 0;
         uint64_t min_step_ns = UINT64_MAX;
         uint64_t durations[10000];
@@ -850,6 +852,7 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
             }
         }
         uint64_t elapsed_ns = monotonic_ns() - elapsed_start;
+        native_phase_report();
         if (minimal_benchmark) {
             if (!timed_samples) {
                 if (trace_fd >= 0) close(trace_fd);
@@ -1123,6 +1126,11 @@ static void run_task(struct task *task) {
     if (requested_mode == 4) { task_status = construct_game_state(); return; }
     if (requested_mode >= 5 && requested_mode <= 10) {
         const char *optimization = getenv("NASHURA_NATIVE_OPTIMIZATION");
+        const char *native_phases = getenv("NASHURA_NATIVE_PHASES");
+        if (native_phases && (!strcmp(native_phases, "1"))) {
+            if (optimization || minimal_benchmark_requested() || getenv("NASHURA_RESET_REPEATS")
+                    || !install_native_phases(base)) { task_status = -56; return; }
+        }
         if (optimization) {
             int installed = !strcmp(optimization, "spatial-y-bound-v1")
                 ? install_spatial_y_bound(base) : !strcmp(optimization, "hot-getters-v1")

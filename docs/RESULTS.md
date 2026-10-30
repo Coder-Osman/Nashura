@@ -1,5 +1,16 @@
 # 阶段成果与证据索引
 
+## 2026-10-31：动作 dispatch 与状态更新诊断
+
+四组固定非空动作各运行原始、cmd 诊断、inject 诊断，共 12 局正常终局。
+主机独立复算与历史原始局的全部 serializer 帧和已观测状态，四组均一致。
+实际 mode 3 dispatch 50/49/22/19 次；mode 2 未命中，零返回不当作动作成功。
+对象集合窗口占 state inclusive 的 92.94%–94.03%，queue 为 1.94%–2.97%；
+均为含时钟/包装器开销的单次诊断，非 benchmark 或收益。完整计数支持下一步沿
+对象/组件/分配路径优化，不增加外围 Android 服务。安装失败及时间戳量化失败
+原样保留；整体目标继续进行。详见[报告](../agent-handoff/SERIAL_ARM64_NATIVE_PHASES_2026-10-31.md)
+与[机器摘要](../agent-handoff/serial-arm64-native-phases-evidence-20261031.json)。
+
 ## 2026-10-31：热 getter 内联的串行完整局对照
 
 固定 ARM64 build 的 11 个热 getter BL 调用点替换为原有 LDR；不缓存、不提前

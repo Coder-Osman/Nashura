@@ -1,5 +1,15 @@
 # Nashura
 
+## 2026-10-31：动作 dispatch 与状态更新归因
+
+新增默认关闭、与 benchmark 互斥的原始调用点诊断。四组固定输入共 12 个新完整局，
+全部 serializer 帧及已观测状态与历史原始路径一致。八个诊断局中，对象集合窗口
+占所测 state inclusive 约 92.94%–94.03%，queue 约 1.94%–2.97%；含插桩开销，
+不作性能收益结论。确认 mode 3 dispatch 为 50/49/22/19 次，输入总数不代替 apply
+次数。保留安装失败与时钟量化修正证据，后续优先对象/组件/分配路径。详见
+[报告](agent-handoff/SERIAL_ARM64_NATIVE_PHASES_2026-10-31.md)与
+[机器摘要](agent-handoff/serial-arm64-native-phases-evidence-20261031.json)。
+
 ## 2026-10-31：热 getter 候选的四组串行收益
 
 同一 observer 在 11 个热调用点内联原有字段读取，默认关闭且不叠加空间候选。

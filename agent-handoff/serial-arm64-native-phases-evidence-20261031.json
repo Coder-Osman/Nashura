@@ -1,0 +1,1126 @@
+{
+  "schema": "nashura.serial-arm64-native-phases.v1",
+  "status": "DIAGNOSTIC_ATTRIBUTION_WITH_FULL_FRAME_PARITY",
+  "date": "2026-10-31",
+  "base_commit": "95c3285017ce9e6c877d8d4b35d92e0cd43b5e69",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "whole_goal_complete": false,
+  "concurrency_tested": false,
+  "native_optimization_enabled": false,
+  "benchmark": false,
+  "guest": {
+    "architecture": "aarch64",
+    "vcpus": 2,
+    "memory_mib": 6144,
+    "affinity": [
+      0,
+      1
+    ],
+    "kernel": "Linux gujiga 6.8.0-138-generic #138~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  7 13:34:27 UTC  aarch64 aarch64 aarch64 GNU/Linux",
+    "configuration_changed": false,
+    "android_services_started": false,
+    "qemu_translation": false
+  },
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "observer_sha256": "430804674efc5c848e43a600b468471ea5857b1755e48e4b74c00628fdd6e180",
+  "source_sha256": {
+    "tools/pure_linux/headless_native_phases.h": "b175f0d5e00844d09cdea90013518607b87e2b5c5f3a58ec4e47232a187fbc46",
+    "tools/pure_linux/art_headless_task_bridge.c": "186f8e55dd53fc00fae9c1da48166c1e7c3b5d0bc5a85f98c1637e0daf614055",
+    "tools/pure_linux/run_headless_match.py": "947ff81f33a2a22e73af44261c717df9b73d19a611908ee6653e5e988f2c74a1",
+    "tools/pure_linux/summarize_headless_native_phases.py": "06c6c02402ed28e58a3fd1bf45544ec2ad6a2b355cc028ede02102f9664e0b96",
+    "tools/pure_linux/test_headless_native_phases.py": "edc479dc38e589548e7a36e6c2174573d9c100d1cb80a72769c10648e506bb21",
+    "tools/pure_linux/test_run_headless_match.py": "4ac826b7a8ddf9c7d166f5cc1a545a4c8fd5099fb8c652b0cc7b51a2fb03bc54"
+  },
+  "method": {
+    "routes_per_case": [
+      "new-original",
+      "cmd-diagnostic",
+      "inject-diagnostic"
+    ],
+    "new_complete_matches": 12,
+    "diagnostic_matches": 8,
+    "baseline": "historical pair-a original",
+    "full_frame_comparisons": 12,
+    "observed_route_logs": 16,
+    "native_sites": 8,
+    "phases": 6,
+    "correctness_instrumentation": true,
+    "diagnostic_clock": "CLOCK_MONOTONIC",
+    "diagnostic_overhead_included": true,
+    "exclusive_scope": "subtracts only instrumented child windows",
+    "mode2_covered": false,
+    "mode3_target_offset": "0xd30a00",
+    "object_collection_target_offset": "0xf26410",
+    "parse_enqueue_scope": "before step, not warm-loop online actions"
+  },
+  "cases": [
+    {
+      "case": "deck-a-seed-1",
+      "final_tick": 3601,
+      "serializer_records": 3602,
+      "observed_lines_per_route": 730,
+      "all_full_frames_equal": true,
+      "all_observed_lines_equal": true,
+      "routes": [
+        {
+          "path": "pair-a",
+          "stdout_sha256": "6606d35db4debe6ac663e6b8fd013f3ecae60a2c74133fee1becc63bbcde4820",
+          "snapshot_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+        },
+        {
+          "path": "original",
+          "stdout_sha256": "920c8dd23533ed11f2df4753c4e67de523595435cb91f56c82308b55f7a1d075",
+          "snapshot_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+        },
+        {
+          "path": "diagnostic",
+          "stdout_sha256": "5d00215c0f8ffb1b7b0b19732075051b75633c23ffcef26b61da42e02fbd3e66",
+          "snapshot_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+        },
+        {
+          "path": "injected-diagnostic",
+          "stdout_sha256": "db1a07e9f801322a67fda27474406b7dc00cc6074c579b95cd1837d91944e7ef",
+          "snapshot_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+        }
+      ],
+      "cmd_diagnostic": {
+        "schema": "nashura.headless-native-phases.v1",
+        "scope": "diagnostic-only",
+        "final_tick": 3601,
+        "phases": {
+          "game_state_update": {
+            "calls": 3601,
+            "inclusive_ns": 30283666,
+            "exclusive_ns": 574787,
+            "min_ns": 3166,
+            "max_ns": 157289,
+            "zero_results": 3601,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x1062274",
+            "mean_inclusive_ns": 8409.793390724799
+          },
+          "world_update": {
+            "calls": 3601,
+            "inclusive_ns": 28882943,
+            "exclusive_ns": 507164,
+            "min_ns": 2917,
+            "max_ns": 157040,
+            "zero_results": 3601,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xcef550",
+            "mean_inclusive_ns": 8020.811718966954
+          },
+          "object_collection_tick": {
+            "calls": 3601,
+            "inclusive_ns": 28375779,
+            "exclusive_ns": 28375779,
+            "min_ns": 2791,
+            "max_ns": 156914,
+            "zero_results": 3601,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xf26410",
+            "mean_inclusive_ns": 7879.97195223549
+          },
+          "command_queue": {
+            "calls": 3601,
+            "inclusive_ns": 825936,
+            "exclusive_ns": 299739,
+            "min_ns": 0,
+            "max_ns": 45832,
+            "zero_results": 3601,
+            "zero_duration_calls": 57,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd2f37c",
+            "mean_inclusive_ns": 229.3629547347959
+          },
+          "command_dispatch_mode2": {
+            "calls": 0,
+            "inclusive_ns": 0,
+            "exclusive_ns": 0,
+            "min_ns": 0,
+            "max_ns": 0,
+            "zero_results": 0,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x0",
+            "mean_inclusive_ns": null
+          },
+          "command_dispatch_mode3": {
+            "calls": 50,
+            "inclusive_ns": 526197,
+            "exclusive_ns": 526197,
+            "min_ns": 167,
+            "max_ns": 27374,
+            "zero_results": 48,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd30a00",
+            "mean_inclusive_ns": 10523.94
+          }
+        },
+        "parse_enqueue": {
+          "battle_json_parse_ns": 129665,
+          "game_state_load_ns": 140707,
+          "injected_logic_parse_ns": 0,
+          "injected_logic_append_ns": 0,
+          "loaded_commands": 52,
+          "injected_commands": 0,
+          "queue_at_step_start": 52,
+          "queue_at_end": 2,
+          "queue_removed": 50,
+          "queue_added": 0,
+          "queue_change_steps": 31,
+          "first_queue_change_tick": 21,
+          "last_queue_change_tick": 3521
+        },
+        "dispatch_calls": 50,
+        "zero_dispatch_results": 48,
+        "benchmark": false,
+        "whole_goal_complete": false,
+        "limitations": [
+          "counter and clock overhead are included; no speed comparison",
+          "nested inclusive times overlap; exclusive removes only instrumented child windows",
+          "dispatch result zero is raw native status, not proof of action success",
+          "zero-duration calls are below clock resolution, not free operations",
+          "only pinned call sites and fixture paths are covered"
+        ],
+        "stdout_sha256": "5d00215c0f8ffb1b7b0b19732075051b75633c23ffcef26b61da42e02fbd3e66"
+      },
+      "inject_diagnostic": {
+        "schema": "nashura.headless-native-phases.v1",
+        "scope": "diagnostic-only",
+        "final_tick": 3601,
+        "phases": {
+          "game_state_update": {
+            "calls": 3601,
+            "inclusive_ns": 33074635,
+            "exclusive_ns": 687282,
+            "min_ns": 3166,
+            "max_ns": 179081,
+            "zero_results": 3601,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x1062274",
+            "mean_inclusive_ns": 9184.847264648708
+          },
+          "world_update": {
+            "calls": 3601,
+            "inclusive_ns": 31405472,
+            "exclusive_ns": 546752,
+            "min_ns": 2916,
+            "max_ns": 178872,
+            "zero_results": 3601,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xcef550",
+            "mean_inclusive_ns": 8721.319633435156
+          },
+          "object_collection_tick": {
+            "calls": 3601,
+            "inclusive_ns": 30858720,
+            "exclusive_ns": 30858720,
+            "min_ns": 2791,
+            "max_ns": 178748,
+            "zero_results": 3601,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xf26410",
+            "mean_inclusive_ns": 8569.486253818384
+          },
+          "command_queue": {
+            "calls": 3601,
+            "inclusive_ns": 981881,
+            "exclusive_ns": 345469,
+            "min_ns": 0,
+            "max_ns": 60916,
+            "zero_results": 3601,
+            "zero_duration_calls": 32,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd2f37c",
+            "mean_inclusive_ns": 272.66898083865595
+          },
+          "command_dispatch_mode2": {
+            "calls": 0,
+            "inclusive_ns": 0,
+            "exclusive_ns": 0,
+            "min_ns": 0,
+            "max_ns": 0,
+            "zero_results": 0,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x0",
+            "mean_inclusive_ns": null
+          },
+          "command_dispatch_mode3": {
+            "calls": 50,
+            "inclusive_ns": 636412,
+            "exclusive_ns": 636412,
+            "min_ns": 208,
+            "max_ns": 37583,
+            "zero_results": 48,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd30a00",
+            "mean_inclusive_ns": 12728.24
+          }
+        },
+        "parse_enqueue": {
+          "battle_json_parse_ns": 217997,
+          "game_state_load_ns": 301829,
+          "injected_logic_parse_ns": 24374,
+          "injected_logic_append_ns": 1167,
+          "loaded_commands": 0,
+          "injected_commands": 52,
+          "queue_at_step_start": 52,
+          "queue_at_end": 2,
+          "queue_removed": 50,
+          "queue_added": 0,
+          "queue_change_steps": 31,
+          "first_queue_change_tick": 21,
+          "last_queue_change_tick": 3521
+        },
+        "dispatch_calls": 50,
+        "zero_dispatch_results": 48,
+        "benchmark": false,
+        "whole_goal_complete": false,
+        "limitations": [
+          "counter and clock overhead are included; no speed comparison",
+          "nested inclusive times overlap; exclusive removes only instrumented child windows",
+          "dispatch result zero is raw native status, not proof of action success",
+          "zero-duration calls are below clock resolution, not free operations",
+          "only pinned call sites and fixture paths are covered"
+        ],
+        "stdout_sha256": "db1a07e9f801322a67fda27474406b7dc00cc6074c579b95cd1837d91944e7ef"
+      }
+    },
+    {
+      "case": "deck-a-seed-7",
+      "final_tick": 3601,
+      "serializer_records": 3602,
+      "observed_lines_per_route": 761,
+      "all_full_frames_equal": true,
+      "all_observed_lines_equal": true,
+      "routes": [
+        {
+          "path": "pair-a",
+          "stdout_sha256": "10da098df6b17fb6045b5da30de6a5a7492ed8f99fe0469bbb22a964de7e07ae",
+          "snapshot_sha256": "06c0fbdd239ded1a6fac1af5c15860213a77d7b38ecfd7965b657fba85561101"
+        },
+        {
+          "path": "original",
+          "stdout_sha256": "19da18e8943d7c67500829020e2d6b3031f209dedecdda10a1e5f10a5a7b9bc4",
+          "snapshot_sha256": "06c0fbdd239ded1a6fac1af5c15860213a77d7b38ecfd7965b657fba85561101"
+        },
+        {
+          "path": "diagnostic",
+          "stdout_sha256": "ff085f49689ab1fcf9e866d083ce2968e2a03f3e7346c0e77c849b94ad44e87c",
+          "snapshot_sha256": "06c0fbdd239ded1a6fac1af5c15860213a77d7b38ecfd7965b657fba85561101"
+        },
+        {
+          "path": "injected-diagnostic",
+          "stdout_sha256": "7354fb22e60e9a681fd5cbfd33d496a452753dcb86995f280a073cd8f6ec3c22",
+          "snapshot_sha256": "06c0fbdd239ded1a6fac1af5c15860213a77d7b38ecfd7965b657fba85561101"
+        }
+      ],
+      "cmd_diagnostic": {
+        "schema": "nashura.headless-native-phases.v1",
+        "scope": "diagnostic-only",
+        "final_tick": 3601,
+        "phases": {
+          "game_state_update": {
+            "calls": 3601,
+            "inclusive_ns": 33143787,
+            "exclusive_ns": 615901,
+            "min_ns": 3208,
+            "max_ns": 144706,
+            "zero_results": 3601,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x1062274",
+            "mean_inclusive_ns": 9204.050819216884
+          },
+          "world_update": {
+            "calls": 3601,
+            "inclusive_ns": 31655296,
+            "exclusive_ns": 489369,
+            "min_ns": 2958,
+            "max_ns": 144456,
+            "zero_results": 3601,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xcef550",
+            "mean_inclusive_ns": 8790.695917800611
+          },
+          "object_collection_tick": {
+            "calls": 3601,
+            "inclusive_ns": 31165927,
+            "exclusive_ns": 31165927,
+            "min_ns": 2833,
+            "max_ns": 144290,
+            "zero_results": 3601,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xf26410",
+            "mean_inclusive_ns": 8654.797833935017
+          },
+          "command_queue": {
+            "calls": 3601,
+            "inclusive_ns": 872590,
+            "exclusive_ns": 310933,
+            "min_ns": 0,
+            "max_ns": 57833,
+            "zero_results": 3601,
+            "zero_duration_calls": 27,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd2f37c",
+            "mean_inclusive_ns": 242.31880033324077
+          },
+          "command_dispatch_mode2": {
+            "calls": 0,
+            "inclusive_ns": 0,
+            "exclusive_ns": 0,
+            "min_ns": 0,
+            "max_ns": 0,
+            "zero_results": 0,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x0",
+            "mean_inclusive_ns": null
+          },
+          "command_dispatch_mode3": {
+            "calls": 49,
+            "inclusive_ns": 561657,
+            "exclusive_ns": 561657,
+            "min_ns": 208,
+            "max_ns": 30499,
+            "zero_results": 47,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd30a00",
+            "mean_inclusive_ns": 11462.387755102041
+          }
+        },
+        "parse_enqueue": {
+          "battle_json_parse_ns": 113082,
+          "game_state_load_ns": 125790,
+          "injected_logic_parse_ns": 0,
+          "injected_logic_append_ns": 0,
+          "loaded_commands": 51,
+          "injected_commands": 0,
+          "queue_at_step_start": 51,
+          "queue_at_end": 2,
+          "queue_removed": 49,
+          "queue_added": 0,
+          "queue_change_steps": 30,
+          "first_queue_change_tick": 21,
+          "last_queue_change_tick": 3521
+        },
+        "dispatch_calls": 49,
+        "zero_dispatch_results": 47,
+        "benchmark": false,
+        "whole_goal_complete": false,
+        "limitations": [
+          "counter and clock overhead are included; no speed comparison",
+          "nested inclusive times overlap; exclusive removes only instrumented child windows",
+          "dispatch result zero is raw native status, not proof of action success",
+          "zero-duration calls are below clock resolution, not free operations",
+          "only pinned call sites and fixture paths are covered"
+        ],
+        "stdout_sha256": "ff085f49689ab1fcf9e866d083ce2968e2a03f3e7346c0e77c849b94ad44e87c"
+      },
+      "inject_diagnostic": {
+        "schema": "nashura.headless-native-phases.v1",
+        "scope": "diagnostic-only",
+        "final_tick": 3601,
+        "phases": {
+          "game_state_update": {
+            "calls": 3601,
+            "inclusive_ns": 33640183,
+            "exclusive_ns": 629877,
+            "min_ns": 3166,
+            "max_ns": 151373,
+            "zero_results": 3601,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x1062274",
+            "mean_inclusive_ns": 9341.900305470703
+          },
+          "world_update": {
+            "calls": 3601,
+            "inclusive_ns": 32104733,
+            "exclusive_ns": 545710,
+            "min_ns": 2916,
+            "max_ns": 151164,
+            "zero_results": 3601,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xcef550",
+            "mean_inclusive_ns": 8915.504859761177
+          },
+          "object_collection_tick": {
+            "calls": 3601,
+            "inclusive_ns": 31559023,
+            "exclusive_ns": 31559023,
+            "min_ns": 2750,
+            "max_ns": 150998,
+            "zero_results": 3601,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xf26410",
+            "mean_inclusive_ns": 8763.960844209942
+          },
+          "command_queue": {
+            "calls": 3601,
+            "inclusive_ns": 905573,
+            "exclusive_ns": 315206,
+            "min_ns": 0,
+            "max_ns": 59791,
+            "zero_results": 3601,
+            "zero_duration_calls": 16,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd2f37c",
+            "mean_inclusive_ns": 251.47820049986115
+          },
+          "command_dispatch_mode2": {
+            "calls": 0,
+            "inclusive_ns": 0,
+            "exclusive_ns": 0,
+            "min_ns": 0,
+            "max_ns": 0,
+            "zero_results": 0,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x0",
+            "mean_inclusive_ns": null
+          },
+          "command_dispatch_mode3": {
+            "calls": 49,
+            "inclusive_ns": 590367,
+            "exclusive_ns": 590367,
+            "min_ns": 167,
+            "max_ns": 32083,
+            "zero_results": 47,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd30a00",
+            "mean_inclusive_ns": 12048.30612244898
+          }
+        },
+        "parse_enqueue": {
+          "battle_json_parse_ns": 166164,
+          "game_state_load_ns": 144540,
+          "injected_logic_parse_ns": 21540,
+          "injected_logic_append_ns": 1125,
+          "loaded_commands": 0,
+          "injected_commands": 51,
+          "queue_at_step_start": 51,
+          "queue_at_end": 2,
+          "queue_removed": 49,
+          "queue_added": 0,
+          "queue_change_steps": 30,
+          "first_queue_change_tick": 21,
+          "last_queue_change_tick": 3521
+        },
+        "dispatch_calls": 49,
+        "zero_dispatch_results": 47,
+        "benchmark": false,
+        "whole_goal_complete": false,
+        "limitations": [
+          "counter and clock overhead are included; no speed comparison",
+          "nested inclusive times overlap; exclusive removes only instrumented child windows",
+          "dispatch result zero is raw native status, not proof of action success",
+          "zero-duration calls are below clock resolution, not free operations",
+          "only pinned call sites and fixture paths are covered"
+        ],
+        "stdout_sha256": "7354fb22e60e9a681fd5cbfd33d496a452753dcb86995f280a073cd8f6ec3c22"
+      }
+    },
+    {
+      "case": "deck-b-seed-1",
+      "final_tick": 2154,
+      "serializer_records": 2155,
+      "observed_lines_per_route": 539,
+      "all_full_frames_equal": true,
+      "all_observed_lines_equal": true,
+      "routes": [
+        {
+          "path": "pair-a",
+          "stdout_sha256": "25126200854e5767ca0a35d6beba57bc88fda62cfd4fdea26c1e0fe372ce3e92",
+          "snapshot_sha256": "7c6f93900bd0b5bb625fa1f0e4d25f8ef5b3e4cc566f81f5a7dc289cfb93e925"
+        },
+        {
+          "path": "original",
+          "stdout_sha256": "18015d72383402f0004a8ac40bc776904d67b470ef1436da71ecfaa6d87f010b",
+          "snapshot_sha256": "7c6f93900bd0b5bb625fa1f0e4d25f8ef5b3e4cc566f81f5a7dc289cfb93e925"
+        },
+        {
+          "path": "diagnostic",
+          "stdout_sha256": "f6ca0ce8d639b6acbcddcaa3837aa3e422faa35538a167bbf906d3d302859b73",
+          "snapshot_sha256": "7c6f93900bd0b5bb625fa1f0e4d25f8ef5b3e4cc566f81f5a7dc289cfb93e925"
+        },
+        {
+          "path": "injected-diagnostic",
+          "stdout_sha256": "72e79b56c9ee4a3172ac902a468b45338f9084cace778ba8cb276017522ecfd1",
+          "snapshot_sha256": "7c6f93900bd0b5bb625fa1f0e4d25f8ef5b3e4cc566f81f5a7dc289cfb93e925"
+        }
+      ],
+      "cmd_diagnostic": {
+        "schema": "nashura.headless-native-phases.v1",
+        "scope": "diagnostic-only",
+        "final_tick": 2154,
+        "phases": {
+          "game_state_update": {
+            "calls": 2154,
+            "inclusive_ns": 15360856,
+            "exclusive_ns": 344103,
+            "min_ns": 2833,
+            "max_ns": 159040,
+            "zero_results": 2154,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x1062274",
+            "mean_inclusive_ns": 7131.316620241411
+          },
+          "world_update": {
+            "calls": 2154,
+            "inclusive_ns": 14695261,
+            "exclusive_ns": 312026,
+            "min_ns": 2584,
+            "max_ns": 158831,
+            "zero_results": 2154,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xcef550",
+            "mean_inclusive_ns": 6822.312441968431
+          },
+          "object_collection_tick": {
+            "calls": 2154,
+            "inclusive_ns": 14383235,
+            "exclusive_ns": 14383235,
+            "min_ns": 2458,
+            "max_ns": 158664,
+            "zero_results": 2154,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xf26410",
+            "mean_inclusive_ns": 6677.453574744661
+          },
+          "command_queue": {
+            "calls": 2154,
+            "inclusive_ns": 321492,
+            "exclusive_ns": 122952,
+            "min_ns": 0,
+            "max_ns": 43874,
+            "zero_results": 2154,
+            "zero_duration_calls": 45,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd2f37c",
+            "mean_inclusive_ns": 149.2534818941504
+          },
+          "command_dispatch_mode2": {
+            "calls": 0,
+            "inclusive_ns": 0,
+            "exclusive_ns": 0,
+            "min_ns": 0,
+            "max_ns": 0,
+            "zero_results": 0,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x0",
+            "mean_inclusive_ns": null
+          },
+          "command_dispatch_mode3": {
+            "calls": 22,
+            "inclusive_ns": 198540,
+            "exclusive_ns": 198540,
+            "min_ns": 167,
+            "max_ns": 25124,
+            "zero_results": 20,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd30a00",
+            "mean_inclusive_ns": 9024.545454545454
+          }
+        },
+        "parse_enqueue": {
+          "battle_json_parse_ns": 77207,
+          "game_state_load_ns": 133789,
+          "injected_logic_parse_ns": 0,
+          "injected_logic_append_ns": 0,
+          "loaded_commands": 22,
+          "injected_commands": 0,
+          "queue_at_step_start": 22,
+          "queue_at_end": 0,
+          "queue_removed": 22,
+          "queue_added": 0,
+          "queue_change_steps": 17,
+          "first_queue_change_tick": 21,
+          "last_queue_change_tick": 2121
+        },
+        "dispatch_calls": 22,
+        "zero_dispatch_results": 20,
+        "benchmark": false,
+        "whole_goal_complete": false,
+        "limitations": [
+          "counter and clock overhead are included; no speed comparison",
+          "nested inclusive times overlap; exclusive removes only instrumented child windows",
+          "dispatch result zero is raw native status, not proof of action success",
+          "zero-duration calls are below clock resolution, not free operations",
+          "only pinned call sites and fixture paths are covered"
+        ],
+        "stdout_sha256": "f6ca0ce8d639b6acbcddcaa3837aa3e422faa35538a167bbf906d3d302859b73"
+      },
+      "inject_diagnostic": {
+        "schema": "nashura.headless-native-phases.v1",
+        "scope": "diagnostic-only",
+        "final_tick": 2154,
+        "phases": {
+          "game_state_update": {
+            "calls": 2154,
+            "inclusive_ns": 15581564,
+            "exclusive_ns": 443685,
+            "min_ns": 2750,
+            "max_ns": 149040,
+            "zero_results": 2154,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x1062274",
+            "mean_inclusive_ns": 7233.7808727948
+          },
+          "world_update": {
+            "calls": 2154,
+            "inclusive_ns": 14800287,
+            "exclusive_ns": 318453,
+            "min_ns": 2542,
+            "max_ns": 148832,
+            "zero_results": 2154,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xcef550",
+            "mean_inclusive_ns": 6871.071030640668
+          },
+          "object_collection_tick": {
+            "calls": 2154,
+            "inclusive_ns": 14481834,
+            "exclusive_ns": 14481834,
+            "min_ns": 2458,
+            "max_ns": 148664,
+            "zero_results": 2154,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xf26410",
+            "mean_inclusive_ns": 6723.228412256268
+          },
+          "command_queue": {
+            "calls": 2154,
+            "inclusive_ns": 337592,
+            "exclusive_ns": 133473,
+            "min_ns": 0,
+            "max_ns": 44250,
+            "zero_results": 2154,
+            "zero_duration_calls": 77,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd2f37c",
+            "mean_inclusive_ns": 156.72794800371403
+          },
+          "command_dispatch_mode2": {
+            "calls": 0,
+            "inclusive_ns": 0,
+            "exclusive_ns": 0,
+            "min_ns": 0,
+            "max_ns": 0,
+            "zero_results": 0,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x0",
+            "mean_inclusive_ns": null
+          },
+          "command_dispatch_mode3": {
+            "calls": 22,
+            "inclusive_ns": 204119,
+            "exclusive_ns": 204119,
+            "min_ns": 167,
+            "max_ns": 29624,
+            "zero_results": 20,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd30a00",
+            "mean_inclusive_ns": 9278.136363636364
+          }
+        },
+        "parse_enqueue": {
+          "battle_json_parse_ns": 62415,
+          "game_state_load_ns": 96665,
+          "injected_logic_parse_ns": 8125,
+          "injected_logic_append_ns": 500,
+          "loaded_commands": 0,
+          "injected_commands": 22,
+          "queue_at_step_start": 22,
+          "queue_at_end": 0,
+          "queue_removed": 22,
+          "queue_added": 0,
+          "queue_change_steps": 17,
+          "first_queue_change_tick": 21,
+          "last_queue_change_tick": 2121
+        },
+        "dispatch_calls": 22,
+        "zero_dispatch_results": 20,
+        "benchmark": false,
+        "whole_goal_complete": false,
+        "limitations": [
+          "counter and clock overhead are included; no speed comparison",
+          "nested inclusive times overlap; exclusive removes only instrumented child windows",
+          "dispatch result zero is raw native status, not proof of action success",
+          "zero-duration calls are below clock resolution, not free operations",
+          "only pinned call sites and fixture paths are covered"
+        ],
+        "stdout_sha256": "72e79b56c9ee4a3172ac902a468b45338f9084cace778ba8cb276017522ecfd1"
+      }
+    },
+    {
+      "case": "deck-b-seed-7",
+      "final_tick": 1989,
+      "serializer_records": 1990,
+      "observed_lines_per_route": 531,
+      "all_full_frames_equal": true,
+      "all_observed_lines_equal": true,
+      "routes": [
+        {
+          "path": "pair-a",
+          "stdout_sha256": "8a76998698968f39320807f1a12bff0591f691deb63672321499328f1551f5a6",
+          "snapshot_sha256": "2339ed81ed21fdddb5e00cf578f23e7d3b816bbb41dafe50ae6d8a567d420d87"
+        },
+        {
+          "path": "original",
+          "stdout_sha256": "0f71493c6c8310dec764069ad1a5d2e50a37773c85bd3b00e063d3d55cebf3ad",
+          "snapshot_sha256": "2339ed81ed21fdddb5e00cf578f23e7d3b816bbb41dafe50ae6d8a567d420d87"
+        },
+        {
+          "path": "diagnostic",
+          "stdout_sha256": "13b7e697276cc51df603a86525bfdf9263c37f6908ffb490532059a7e48d8309",
+          "snapshot_sha256": "2339ed81ed21fdddb5e00cf578f23e7d3b816bbb41dafe50ae6d8a567d420d87"
+        },
+        {
+          "path": "injected-diagnostic",
+          "stdout_sha256": "dbf04f2128487529035068aeb292c8563d16d1ae023a44efbe93f5969198efb2",
+          "snapshot_sha256": "2339ed81ed21fdddb5e00cf578f23e7d3b816bbb41dafe50ae6d8a567d420d87"
+        }
+      ],
+      "cmd_diagnostic": {
+        "schema": "nashura.headless-native-phases.v1",
+        "scope": "diagnostic-only",
+        "final_tick": 1989,
+        "phases": {
+          "game_state_update": {
+            "calls": 1989,
+            "inclusive_ns": 14511061,
+            "exclusive_ns": 330128,
+            "min_ns": 2791,
+            "max_ns": 123873,
+            "zero_results": 1989,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x1062274",
+            "mean_inclusive_ns": 7295.656611362494
+          },
+          "world_update": {
+            "calls": 1989,
+            "inclusive_ns": 13899933,
+            "exclusive_ns": 281530,
+            "min_ns": 2583,
+            "max_ns": 123623,
+            "zero_results": 1989,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xcef550",
+            "mean_inclusive_ns": 6988.402714932126
+          },
+          "object_collection_tick": {
+            "calls": 1989,
+            "inclusive_ns": 13618403,
+            "exclusive_ns": 13618403,
+            "min_ns": 2458,
+            "max_ns": 123456,
+            "zero_results": 1989,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xf26410",
+            "mean_inclusive_ns": 6846.8592257415785
+          },
+          "command_queue": {
+            "calls": 1989,
+            "inclusive_ns": 281000,
+            "exclusive_ns": 78919,
+            "min_ns": 0,
+            "max_ns": 47291,
+            "zero_results": 1989,
+            "zero_duration_calls": 318,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd2f37c",
+            "mean_inclusive_ns": 141.27702362996482
+          },
+          "command_dispatch_mode2": {
+            "calls": 0,
+            "inclusive_ns": 0,
+            "exclusive_ns": 0,
+            "min_ns": 0,
+            "max_ns": 0,
+            "zero_results": 0,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x0",
+            "mean_inclusive_ns": null
+          },
+          "command_dispatch_mode3": {
+            "calls": 19,
+            "inclusive_ns": 202081,
+            "exclusive_ns": 202081,
+            "min_ns": 167,
+            "max_ns": 26458,
+            "zero_results": 17,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd30a00",
+            "mean_inclusive_ns": 10635.842105263158
+          }
+        },
+        "parse_enqueue": {
+          "battle_json_parse_ns": 66958,
+          "game_state_load_ns": 105124,
+          "injected_logic_parse_ns": 0,
+          "injected_logic_append_ns": 0,
+          "loaded_commands": 19,
+          "injected_commands": 0,
+          "queue_at_step_start": 19,
+          "queue_at_end": 0,
+          "queue_removed": 19,
+          "queue_added": 0,
+          "queue_change_steps": 12,
+          "first_queue_change_tick": 21,
+          "last_queue_change_tick": 1821
+        },
+        "dispatch_calls": 19,
+        "zero_dispatch_results": 17,
+        "benchmark": false,
+        "whole_goal_complete": false,
+        "limitations": [
+          "counter and clock overhead are included; no speed comparison",
+          "nested inclusive times overlap; exclusive removes only instrumented child windows",
+          "dispatch result zero is raw native status, not proof of action success",
+          "zero-duration calls are below clock resolution, not free operations",
+          "only pinned call sites and fixture paths are covered"
+        ],
+        "stdout_sha256": "13b7e697276cc51df603a86525bfdf9263c37f6908ffb490532059a7e48d8309"
+      },
+      "inject_diagnostic": {
+        "schema": "nashura.headless-native-phases.v1",
+        "scope": "diagnostic-only",
+        "final_tick": 1989,
+        "phases": {
+          "game_state_update": {
+            "calls": 1989,
+            "inclusive_ns": 14630736,
+            "exclusive_ns": 332465,
+            "min_ns": 2917,
+            "max_ns": 125457,
+            "zero_results": 1989,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x1062274",
+            "mean_inclusive_ns": 7355.825037707391
+          },
+          "world_update": {
+            "calls": 1989,
+            "inclusive_ns": 13984222,
+            "exclusive_ns": 265613,
+            "min_ns": 2708,
+            "max_ns": 125206,
+            "zero_results": 1989,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xcef550",
+            "mean_inclusive_ns": 7030.780291603821
+          },
+          "object_collection_tick": {
+            "calls": 1989,
+            "inclusive_ns": 13718609,
+            "exclusive_ns": 13718609,
+            "min_ns": 2584,
+            "max_ns": 125040,
+            "zero_results": 1989,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xf26410",
+            "mean_inclusive_ns": 6897.239316239316
+          },
+          "command_queue": {
+            "calls": 1989,
+            "inclusive_ns": 314049,
+            "exclusive_ns": 83096,
+            "min_ns": 0,
+            "max_ns": 51666,
+            "zero_results": 1989,
+            "zero_duration_calls": 277,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd2f37c",
+            "mean_inclusive_ns": 157.89291101055807
+          },
+          "command_dispatch_mode2": {
+            "calls": 0,
+            "inclusive_ns": 0,
+            "exclusive_ns": 0,
+            "min_ns": 0,
+            "max_ns": 0,
+            "zero_results": 0,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0x0",
+            "mean_inclusive_ns": null
+          },
+          "command_dispatch_mode3": {
+            "calls": 19,
+            "inclusive_ns": 230953,
+            "exclusive_ns": 230953,
+            "min_ns": 166,
+            "max_ns": 30916,
+            "zero_results": 17,
+            "zero_duration_calls": 0,
+            "different_target_calls": 0,
+            "first_target_offset": "0xd30a00",
+            "mean_inclusive_ns": 12155.421052631578
+          }
+        },
+        "parse_enqueue": {
+          "battle_json_parse_ns": 55291,
+          "game_state_load_ns": 109415,
+          "injected_logic_parse_ns": 6958,
+          "injected_logic_append_ns": 583,
+          "loaded_commands": 0,
+          "injected_commands": 19,
+          "queue_at_step_start": 19,
+          "queue_at_end": 0,
+          "queue_removed": 19,
+          "queue_added": 0,
+          "queue_change_steps": 12,
+          "first_queue_change_tick": 21,
+          "last_queue_change_tick": 1821
+        },
+        "dispatch_calls": 19,
+        "zero_dispatch_results": 17,
+        "benchmark": false,
+        "whole_goal_complete": false,
+        "limitations": [
+          "counter and clock overhead are included; no speed comparison",
+          "nested inclusive times overlap; exclusive removes only instrumented child windows",
+          "dispatch result zero is raw native status, not proof of action success",
+          "zero-duration calls are below clock resolution, not free operations",
+          "only pinned call sites and fixture paths are covered"
+        ],
+        "stdout_sha256": "dbf04f2128487529035068aeb292c8563d16d1ae023a44efbe93f5969198efb2"
+      }
+    }
+  ],
+  "host_verification": {
+    "full_frames_equal": true,
+    "observed_lines_equal": true,
+    "phase_summaries_rederived": 8,
+    "nested_accounting_rederived": 8,
+    "verification_summary_sha256": "4ff01a13374479f45b8b88790bff087ca6e0c187cb1c0feb0d1b50ee9912385b"
+  },
+  "failed_attempts": {
+    "v1": "packaging/import failed before engine execution; separate private evidence retained",
+    "v2": [
+      {
+        "case": "deck-a-seed-1",
+        "error": "runtime exit code: 124"
+      },
+      {
+        "case": "deck-a-seed-7",
+        "error": "inconsistent populated phase counters"
+      },
+      {
+        "case": "deck-b-seed-1",
+        "error": "runtime exit code: 124"
+      },
+      {
+        "case": "deck-b-seed-7",
+        "error": "inconsistent populated phase counters"
+      }
+    ],
+    "v2_install_failure_precise_syscall": "not established; old installer returned generic task -56",
+    "fixes": [
+      "use process maps free-gap hints, validate returned island and branch reach; never MAP_FIXED",
+      "record zero_duration_calls and accept equal monotonic timestamps with strict counter checks"
+    ],
+    "v3_successes": 4
+  },
+  "raw_evidence": {
+    "archive_bytes": 11624927,
+    "archive_sha256": "a7701282c38e1b5b683ed749c67d8dd5c0ce6015817212016a358d88a042db52",
+    "tar_members": 288,
+    "regular_files": 158,
+    "archive_scope": "v2 failures, v3 original/cmd/inject logs, full snapshots, settings and controller logs",
+    "private_raw_material_published": false
+  },
+  "checks": {
+    "pure_linux": {
+      "passed": 1266,
+      "skipped": 1,
+      "controller_exit_code": 0,
+      "log_sha256": "3a88c1512c797ed7e3018991cd96f88a1b56ae03aaad82f143c952277331889f"
+    },
+    "public": {
+      "passed": 1104,
+      "skipped": 42,
+      "controller_exit_code": 0,
+      "log_sha256": "429637484f2d5f951821895b2c9b56d36c624365f88779df44ee0d65254fa12c"
+    },
+    "main_engine": {
+      "passed": 211,
+      "skipped": 0,
+      "controller_exit_code": 0,
+      "log_sha256": "6f8270996cc7c6e44ac66f6335cc7b33bdd3f8a4336c7665e182771bf1fd6671"
+    },
+    "gitleaks": {
+      "status": "passed",
+      "exit_code": 0,
+      "log_sha256": "6e43b60fcb1cf672d52c1cd949e00eb79a9421414190db028b613b2b1d7a278b"
+    },
+    "host_final_verifier": {
+      "status": "passed",
+      "native_logs_recomputed": 8,
+      "nested_accounting_enforced": true
+    },
+    "manifest": {
+      "status": "passed",
+      "source_files_verified": 2911,
+      "log_sha256": "21bae8a48e49f80e683ec9987cebd82cf6d0c811f6a1d52415a74f2f7375107e"
+    }
+  },
+  "limitations": [
+    "timings include diagnostic clock/wrapper overhead; no performance gain claim",
+    "one cmd and one inject diagnostic per case; not a statistical benchmark",
+    "zero native dispatch status is not an action-success claim",
+    "only serialized payload and observed state fields checked",
+    "mode2 dispatch, unhooked sites and other inputs not covered",
+    "hardware cycles/cache, allocation counts, synchronization/off-CPU and long stability remain incomplete",
+    "phase stack assumes the serial battle Mainloop; concurrent hooked callers are not certified"
+  ],
+  "remaining": [
+    "profile actual +0xf26410 object/component updates and temporary allocations",
+    "measure native optimization with diagnostic hooks disabled after full-frame parity",
+    "collect cycles/cache or document hardware limitations; synchronization/off-CPU and long-run stability"
+  ],
+  "publication": {
+    "target_branch": "codex/pure-linux-libg-headless-20261026",
+    "main_modified": false
+  },
+  "executed_guest_tool_sha256": {
+    "run_headless_match.py": "947ff81f33a2a22e73af44261c717df9b73d19a611908ee6653e5e988f2c74a1",
+    "summarize_headless_native_phases.py": "87659b923a18bf18cf45b2c540dbb7447773b9918448110a7bbdafeb69024b5b"
+  },
+  "host_verifier_note": "Final summarizer additionally enforces nested accounting and rejects mixed benchmark/error markers; all eight raw native logs revalidated."
+}

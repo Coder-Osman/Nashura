@@ -98,6 +98,24 @@ python3 tools/pure_linux/freeze_headless_actions.py "$EMPTY_REPLAY" "$RECORD_OUT
 固定 fixture 位于 `fixtures/headless-runtime-deck-{a,b}-seed-{1,7}.json`，它们覆盖两个
 实际不同的八卡集合，不代表全部卡牌、玩法或未序列化全局的等价性。
 
+## 独立 native 阶段诊断
+
+--native-phases 默认关闭，只用于固定 replay 的独立诊断，禁止与 benchmark、
+手牌记录或任意 native 优化同时启用。八个精确原始调用点经 guard 后进入包装器，
+仍调用原目标，保留 BL 和尾跳 B；进程内 RW→RX，不修改原始 libg 文件。
+从 maps 的空隙提供近分支岛 mmap 提示，验证实际返回地址，不覆盖已有映射；
+地址空间布局不满足时拒绝任务，不修改 guest 系统配置。
+
+六窗口覆盖 state/world/object collection、command queue 和 mode 2/3 dispatch；
+统计 inclusive/exclusive、原始返回值和零时长次数，exclusive 只扣已插桩子窗口。
+零时长代表时钟量化，零返回代表原始状态，两者均不等于免费或动作成功。
+runner 验证正常原生终局及队列/计数，写 native-phases.json。
+
+四组输入的原始、cmd 诊断和 inject 诊断全部全帧及已观测状态与历史一致。诊断
+包含计时与计数开销，不用于优化收益比较；解析/入队在 step 前，也不当作在线
+动作延迟。mode 2 未覆盖，业务语义、未序列化状态及其他 fixture 不外推。详见
+[阶段报告](../../agent-handoff/SERIAL_ARM64_NATIVE_PHASES_2026-10-31.md)。
+
 ## 实验性 native 优化
 
 `--native-optimization` 每次只选择一个候选，默认关闭；多个候选不叠加。
