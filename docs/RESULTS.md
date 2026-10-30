@@ -1,5 +1,22 @@
 # 阶段成果与证据索引
 
+## 2026-10-30：最小 headless 真实首局与固定 replay
+
+真实 ARM64 Ubuntu 中，原始 libg 以八卡组完成部署、扣费、移动、伤害与原生终局
+（tick3601，finalized=1）。52条固定命令原始loadReplay再次得到相同终局，
+661条采样字段一致。显式serializer适配在tick900保存、恢复并续演到终局，
+两次同进程GameState重建的终态摘要一致；原始wrapper空controller失败保留。
+原始客户端wrapper等价性和完整目标仍待验证。
+详见[报告](../agent-handoff/PURE_LINUX_FIRST_MATCH_2026-10-30.md)与
+[机器证据](../agent-handoff/pure-linux-first-match-evidence-20261030.json)。
+
+同版本Android API30 ARM64 headless基线已完成配对：3602个逐tick原始serializer
+payload字节完全一致。各30局单进程与1/2/4进程700局密度测量均通过终态检查；
+详见报告中的CPU配置差异和测量范围，完整目标继续进行。
+
+独立namespace入口已在缩减/dev与空/sys根视图下完成同一完整replay及3602帧字节
+配对；Binder启动前置与oldroot内SELinux残留可见性见报告，未宣称依赖已完全最小化。
+
 ## 2026-10-30：最小 headless 原生生命周期
 
 v17 在真实 ARM64 Ubuntu/Bionic/ART 中，以原始 APK DEX 和精确 libg，执行原始

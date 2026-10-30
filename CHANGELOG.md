@@ -1,5 +1,20 @@
 # 变更记录
 
+## 2026-10-30：真实首局、固定动作复演与快照适配
+
+- 新增版本绑定Mainloop任务桥、最小x8 ABI assembly桥与真实GameState探针。
+- 修正重复入队和空可部署卡组；selection由原始函数生成，保留真实验证与apply。
+- ARM64 Linux首局tick3601原生终局；52条固定命令复演，采样状态一致。
+- 保留原始snapshot空controller崩溃；显式原始serializer适配完成交战中恢复、
+  续演与两次同进程重建一致性；适配覆盖范围由同版本Android逐tick配对限定。
+- 撤回v35h2重复命令及漏ICU启动失败的过度解释，旧失败证据继续保留。
+
+- 新增独立namespace入口，裁剪根设备视图后完整replay仍与Android逐tick一致；
+  Binder启动前置和历史SELinux可见性保持显式限制。
+
+- 新增逐tick快照严格比较器及10项负向/完整性测试；同版本Android与Linux
+  3602个serializer payload字节一致；完成单进程及1/2/4进程限定性能对照。
+
 ## 2026-10-30：最小 headless 原生生命周期
 
 - 新增 APK 局部 Context、显式失败的 PackageManager 生成器及原始 JNI 生命周期探针；

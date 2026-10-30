@@ -1,0 +1,1719 @@
+{
+  "schema": "nashura.pure-linux-battle-first-match.v1",
+  "date": "2026-10-30",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "status": "NATIVE_FULL_MATCH_OBSERVED_LIMITED",
+  "android_correctness": "PAIRED_FULL_MATCH_SERIALIZED_STATE_EQUAL_LIMITED",
+  "performance": "MEASURED_LIMITED_DIFFERENT_VM_CPU_ALLOCATION",
+  "full_goal_complete": false,
+  "runs": {
+    "v35h1": {
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 38537,
+          "sha256": "aba8519728ac2bbe76bb362ccfa2188146b7e918fdfb36c55e3bebee18dda6ce"
+        },
+        {
+          "name": "check.txt",
+          "bytes": 71448,
+          "sha256": "7b30d0fd1f4efff945d3859698f95cef1ba122dc21769a73f1829708e53eda17"
+        },
+        {
+          "name": "guest-action-load.stderr",
+          "bytes": 2677,
+          "sha256": "025a7cd1529a31b53d82c00f427fd24c52e9ca12abafb3100f6293a4b32f02c0"
+        },
+        {
+          "name": "guest-action-load.stdout",
+          "bytes": 28133,
+          "sha256": "439c9c4075faf5375b92114db2a2ff186c39cc0b9661754e9ec56eb2aaa54436"
+        },
+        {
+          "name": "guest-action-load.strace",
+          "bytes": 330041,
+          "sha256": "f2a17f6c68a65a4eca11155daaad8b7e6eb91b0b82fc1ef75c09235d666dc2f6"
+        },
+        {
+          "name": "guest-observer.sha256",
+          "bytes": 122,
+          "sha256": "e25a08ce335ac89841f8d04740e4ba07b21237434edde7a771dc3a8e725b2d56"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "run-action-load-v35h1.sh",
+          "bytes": 1711,
+          "sha256": "83b21357952af9cbedb03a556633e5f868b2c0e52e6509d1e16a122fd868e278"
+        }
+      ],
+      "observations": []
+    },
+    "v35h2": {
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 39001,
+          "sha256": "4b8bb404e395c301ce5b6216bbb878274839b6c25b09f7470fde37d6e791e701"
+        },
+        {
+          "name": "guest-action-load.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest-action-load.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest-action-load.stdout",
+          "bytes": 30334,
+          "sha256": "dee9e8fb608c0d09c912ab2407cfbc18eb1edf8e490e5409058b6ba60d7ef7fe"
+        },
+        {
+          "name": "guest-action-load.strace",
+          "bytes": 334053,
+          "sha256": "482ba9fdc6bd0a931a5f56830373e2e5770a58acc246961a62e195f76c4df2d6"
+        },
+        {
+          "name": "guest-action-snapshot.exit",
+          "bytes": 4,
+          "sha256": "e726b440cc164001999e718b51780d80314709efe06e7857282377be9111127b"
+        },
+        {
+          "name": "guest-action-snapshot.stderr",
+          "bytes": 234,
+          "sha256": "26dbcd6f6338d791eba4309aa637f2c8a20f86ce55247c95bcd34145f8da24c2"
+        },
+        {
+          "name": "guest-action-snapshot.stdout",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "guest-action-step.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest-action-step.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest-action-step.stdout",
+          "bytes": 30424,
+          "sha256": "be2f3427f699ddb4ea6643d0c45f622cfb01e013cc9026375d38cc6e92d51aab"
+        },
+        {
+          "name": "guest-action-step.strace",
+          "bytes": 336241,
+          "sha256": "6c9657d2b0ae071182c59dfa873829e46287c6bab5e52e745c483f18a16c6694"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "run-action-load-v35h2.sh",
+          "bytes": 1740,
+          "sha256": "d37adefd080da41fa97e1e576958e51f2ec6cc3330ec8ce8f10fdc1f63adbc8f"
+        },
+        {
+          "name": "run-action-snapshot-v35h2.sh",
+          "bytes": 1729,
+          "sha256": "a3d3834342b8d9c540f7edf3c3f97d57908429a8e4662d06d7e5078d7979e2af"
+        },
+        {
+          "name": "run-action-step-v35h2.sh",
+          "bytes": 1750,
+          "sha256": "217da87f9454ef286f60ac6eb781f1e10fc56eb62fea94fe0e426ed8100e2c80"
+        }
+      ],
+      "observations": []
+    },
+    "v35h3": {
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 39353,
+          "sha256": "c2a7c5250f4b2a6ff1bbcd7535916b850fbccf10c461563bff41d67e1f84c12f"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest.stdout",
+          "bytes": 30433,
+          "sha256": "6c5cfd7847d58267d64394d016498dab5cc8357faa54245bde62ec07b4615bd4"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 333103,
+          "sha256": "671af2ba7f2d3c88faad139a3ec963dbc06263880d071be7e39f7c6a1efaeba4"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "replay-inject.json",
+          "bytes": 940,
+          "sha256": "0564db8f9aee4e4c542c667fb55814c2acf75a981cfb2d664d15dc00ba131e7d"
+        },
+        {
+          "name": "run-clean-action-step.sh",
+          "bytes": 1728,
+          "sha256": "001647c1fdeefe387a935afa8a7d08b14bdbaf4cbb0d5b147deffe886a465851"
+        }
+      ],
+      "observations": [
+        "HEADLESS_GAME_STATE_STEP_RETURN tick_before=0 tick_after=1",
+        "HEADLESS_GAME_STATE_BATTLE_TASK_STATUS=1",
+        "HEADLESS_BATTLE_READY=UNVERIFIED"
+      ],
+      "exit": "0"
+    },
+    "v36": {
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 42823,
+          "sha256": "7daa1ed7b6bb716a2a6e6fd4a253531b494055252a3064eeac48d7cbe5d99288"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest.stdout",
+          "bytes": 61580,
+          "sha256": "7b5bcb2c1af8aea82c4bfb6af6883870dc30ced46926912672e4f237fcebb847"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 331638,
+          "sha256": "e3532b4ae1f9abe5d0b50aeb39a5021c4fda07c797ac8f9cff665372d6778345"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1699,
+          "sha256": "2ac7e97def764ca6d895153e708a5dfc028a8d59ccadb173d43ed442cea80911"
+        }
+      ],
+      "observations": [
+        "HEADLESS_GAME_STATE_STEP_RETURN tick_before=0 tick_after=500 completed=500 requested=500 finalized=0",
+        "HEADLESS_GAME_STATE_BATTLE_TASK_STATUS=1",
+        "HEADLESS_BATTLE_READY=UNVERIFIED"
+      ],
+      "exit": "0"
+    },
+    "v37": {
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 46709,
+          "sha256": "005f27f44c22ecdccf5442fa0909fac832e0edde19bdf0800c57707eded882d6"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest.stdout",
+          "bytes": 76850,
+          "sha256": "0237cb4635988c8754d9f908e5c4a6e2465ff89331f0f068e56a91945d70cdc0"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 331773,
+          "sha256": "043de6e11e30b65c6a97173543b2ee9fd74e1f5270b9849cc437d225580b1438"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "replay-eight-card.json",
+          "bytes": 1077,
+          "sha256": "828731ae070df9648100774b7bc4c66217d5bfff34eeaa518100f210a99a4ac6"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1721,
+          "sha256": "049e42dbefd818111e12dea5f9506611439fb3a559fc1ed3c3dc5422a3149b19"
+        }
+      ],
+      "observations": [
+        "HEADLESS_GAME_STATE_STEP_RETURN tick_before=0 tick_after=1000 completed=1000 requested=1000 finalized=0",
+        "HEADLESS_GAME_STATE_BATTLE_TASK_STATUS=1",
+        "HEADLESS_BATTLE_READY=UNVERIFIED"
+      ],
+      "exit": "0"
+    },
+    "v37full": {
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 46709,
+          "sha256": "005f27f44c22ecdccf5442fa0909fac832e0edde19bdf0800c57707eded882d6"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest.stdout",
+          "bytes": 121765,
+          "sha256": "7bee23057e189f3cf48c13f6fe034e9a7dfd86eae2a8d9d369fb7731d3590c0c"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 334298,
+          "sha256": "c99e59849fa90dcdfbb4023738a8aeec589822becf3c7999dc88dbdc441d453e"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "replay-eight-card.json",
+          "bytes": 1077,
+          "sha256": "828731ae070df9648100774b7bc4c66217d5bfff34eeaa518100f210a99a4ac6"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1750,
+          "sha256": "d70108ba8d7ea9f18b3135681324fe15eb5a46ff8b9f73214a1983f2018bcb40"
+        }
+      ],
+      "observations": [
+        "HEADLESS_GAME_STATE_STEP_RETURN tick_before=0 tick_after=3601 completed=3601 requested=10000 finalized=1",
+        "HEADLESS_GAME_STATE_BATTLE_TASK_STATUS=1",
+        "HEADLESS_BATTLE_READY=UNVERIFIED"
+      ],
+      "exit": "0"
+    },
+    "v38replay": {
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 46709,
+          "sha256": "005f27f44c22ecdccf5442fa0909fac832e0edde19bdf0800c57707eded882d6"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest.stdout",
+          "bytes": 108313,
+          "sha256": "b34211e0c4f8b4148c612ead913204c8b25aa18b3a40a0e27e44f47392a76287"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 335661,
+          "sha256": "efd922cc98bf37a000dbbab8635e05cc9f63956c6ca444b5aab43575ed808c3f"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "replay-fixed.json",
+          "bytes": 7306,
+          "sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1742,
+          "sha256": "8f32762dbbd99e808584e19987d5a7dae3195ea63a6c25e2e3ce787e78c08f73"
+        }
+      ],
+      "observations": [
+        "HEADLESS_GAME_STATE_STEP_RETURN tick_before=0 tick_after=3601 completed=3601 requested=10000 finalized=1",
+        "HEADLESS_GAME_STATE_BATTLE_TASK_STATUS=1",
+        "HEADLESS_BATTLE_READY=UNVERIFIED"
+      ],
+      "exit": "0"
+    },
+    "v38snapshot": {
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 46709,
+          "sha256": "005f27f44c22ecdccf5442fa0909fac832e0edde19bdf0800c57707eded882d6"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 4,
+          "sha256": "690e07064753123c967bbac0180f32da6a753a5bd8b79a47644cef58e776d9f0"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1262,
+          "sha256": "61d86fd70a3c33a90be07015e527bd1e0bd1dfb4826e275174b4982f240d5212"
+        },
+        {
+          "name": "guest.stdout",
+          "bytes": 27814,
+          "sha256": "d91489992d8b87a5bae0578f745a692892079af7fd0308edc196d2908e9ca1fd"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 336062,
+          "sha256": "b38e79dd24d8e9b2c372236ba1d473383f7d727183c48739c8386ace18b67a57"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "replay-fixed.json",
+          "bytes": 7306,
+          "sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1758,
+          "sha256": "de13bcbdb9756d7e1e17ae8af23ea7166b3f0e71bece2dfc9b9a1aba07998c39"
+        }
+      ],
+      "observations": [],
+      "exit": "139"
+    },
+    "v39snapshot": {
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 48215,
+          "sha256": "75c6bf0cfd7da4885fbfc73c1b082110c5c7cc2acd3e8c601f57b8dbd7002d4f"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest.stdout",
+          "bytes": 62038,
+          "sha256": "f54f52984649b893e601f0cbb2d2bf652cbd94efbdb147fbfb77ea79853713f7"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 336798,
+          "sha256": "6376173a6cee4e5d4f12cddf75e3f546f0f74dc6bf5e6b31aafa10805f0a7a28"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "replay-fixed.json",
+          "bytes": 7306,
+          "sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1785,
+          "sha256": "791cfd70394ce631057b88d3f34ebcd63e7c45913e30eb33cd5276e149684c7a"
+        }
+      ],
+      "observations": [
+        "HEADLESS_GAME_STATE_STEP_RETURN tick_before=0 tick_after=100 completed=100 requested=100 finalized=0",
+        "HEADLESS_GAME_STATE_SNAPSHOT_RESTORE tick=0 expected_tick=0 bytes=3418 expected_bytes=3418 digest=86880ed1f661e0ed expected_digest=86880ed1f661e0ed verified=1",
+        "HEADLESS_GAME_STATE_BATTLE_TASK_STATUS=1",
+        "HEADLESS_BATTLE_READY=UNVERIFIED"
+      ],
+      "exit": "0"
+    },
+    "v40restore": {
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 51091,
+          "sha256": "53da6d75fcc6f9afa6d36142d116427c877e0e48996a4288fcc5eeebd06993be"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest.stdout",
+          "bytes": 190270,
+          "sha256": "9da2cd5a4e92aa42e6ae3bf9f27380798ba5d6ba6173681d8c14467c61acae0e"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 337245,
+          "sha256": "24b9ddc51c0baa8d5d244639bb7bf21d515476ad7998e84229912dbc84494bda"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "replay-fixed.json",
+          "bytes": 7306,
+          "sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1828,
+          "sha256": "eca16de1078b81c078cfc2f225198ce2773ea2ea4f80dfe0e2778fa8ead65110"
+        }
+      ],
+      "observations": [
+        "HEADLESS_GAME_STATE_STEP_RETURN tick_before=0 tick_after=3601 completed=3601 requested=10000 finalized=1",
+        "HEADLESS_GAME_STATE_SNAPSHOT_RESTORE tick=900 expected_tick=900 bytes=3889 expected_bytes=3889 digest=0118409b6a034473 expected_digest=0118409b6a034473 verified=1",
+        "HEADLESS_SNAPSHOT_CONTINUATION from=900 to=3601 expected_bytes=3091 actual_bytes=3091 expected_digest=6c959326dd2f09cc actual_digest=6c959326dd2f09cc equal=1",
+        "HEADLESS_BATTLE_RESET iteration=1 repeats=2 digest=6c959326dd2f09cc bytes=3091 equal=1",
+        "HEADLESS_GAME_STATE_STEP_RETURN tick_before=0 tick_after=3601 completed=3601 requested=10000 finalized=1",
+        "HEADLESS_GAME_STATE_SNAPSHOT_RESTORE tick=900 expected_tick=900 bytes=3889 expected_bytes=3889 digest=0118409b6a034473 expected_digest=0118409b6a034473 verified=1",
+        "HEADLESS_SNAPSHOT_CONTINUATION from=900 to=3601 expected_bytes=3091 actual_bytes=3091 expected_digest=6c959326dd2f09cc actual_digest=6c959326dd2f09cc equal=1",
+        "HEADLESS_BATTLE_RESET iteration=2 repeats=2 digest=6c959326dd2f09cc bytes=3091 equal=1",
+        "HEADLESS_GAME_STATE_BATTLE_TASK_STATUS=1",
+        "HEADLESS_BATTLE_READY=UNVERIFIED"
+      ],
+      "exit": "0"
+    },
+    "v41trace": {
+      "exit": "0",
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 53851,
+          "sha256": "cf99a5da1f465003270cfd8981b80f1a7b0dcb731a489144268c12a62edf2128"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest.stdout",
+          "bytes": 30411,
+          "sha256": "7b551112ee7cd16478d6915172fbf95bee65e125581dab672ddf1504c1927abd"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "libheadless_observer.so",
+          "bytes": 156688,
+          "sha256": "72ddff9eaeef140b474ef50839613ec0ff80783a7c10e0760f32d363832dbe48"
+        },
+        {
+          "name": "replay-fixed.json",
+          "bytes": 7306,
+          "sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1855,
+          "sha256": "97481ae575b8bdd0407fe29034c11d7c69ead3ec314323dfc3ed0a617f1002d7"
+        },
+        {
+          "name": "snapshots.bin",
+          "bytes": 12334754,
+          "sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+        }
+      ]
+    },
+    "v42perf": {
+      "exit": "0",
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 55140,
+          "sha256": "abd24fa5fcb8a35b7324db8ec9ca42077e2c7de40178ae8704b0a85d0fc8e2ba"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest.stdout",
+          "bytes": 92221,
+          "sha256": "551f8b78edce8ff0b65fe7c33f94f21102d6e5f67f582effc976d27c86d42d1d"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "libheadless_observer.so",
+          "bytes": 159320,
+          "sha256": "7e37667b31d57659c7aa120e4c1e27a64b52ba1a46c9770956caace854116206"
+        },
+        {
+          "name": "replay-fixed.json",
+          "bytes": 7306,
+          "sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1825,
+          "sha256": "5d71e42c28f70ba512e136b0ae0dcf9fb641895084437c10a47b8738a2876bb2"
+        }
+      ]
+    },
+    "v45final": {
+      "exit": "0",
+      "files": [
+        {
+          "name": "art_headless_observer.c",
+          "bytes": 9493,
+          "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961"
+        },
+        {
+          "name": "art_headless_task_bridge.c",
+          "bytes": 55854,
+          "sha256": "98c3085be116851856787d7c599c514157bb014abdb6554febda552acb4928d0"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest.stdout",
+          "bytes": 33330,
+          "sha256": "db7a53b06e56f89f947df369252063c0dc0dfec0d1ae0787e082265803369279"
+        },
+        {
+          "name": "headless_call_arm64.S",
+          "bytes": 1615,
+          "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd"
+        },
+        {
+          "name": "libheadless_observer.so",
+          "bytes": 160536,
+          "sha256": "38d5f938618998dd5a316c6edf719fde27a12e43744b24d6270ba9282edfa08b"
+        },
+        {
+          "name": "replay-fixed.json",
+          "bytes": 7306,
+          "sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1751,
+          "sha256": "3941f5237594c1c43a49c4c6feb6833068ec04142d832126cca0e16ea51fd16c"
+        }
+      ],
+      "observations": [
+        "HEADLESS_GAME_STATE_STEP_RETURN tick_before=0 tick_after=3601 completed=3601 requested=10000 finalized=1",
+        "HEADLESS_GAME_STATE_SNAPSHOT_RESTORE tick=900 expected_tick=900 bytes=3889 expected_bytes=3889 digest=0118409b6a034473 expected_digest=0118409b6a034473 verified=1",
+        "HEADLESS_SNAPSHOT_CONTINUATION from=900 to=3601 expected_bytes=3091 actual_bytes=3091 expected_digest=6c959326dd2f09cc actual_digest=6c959326dd2f09cc equal=1",
+        "HEADLESS_BATTLE_RESET iteration=1 repeats=2 digest=6c959326dd2f09cc bytes=3091 equal=1 validated=1",
+        "HEADLESS_GAME_STATE_STEP_RETURN tick_before=0 tick_after=3601 completed=3601 requested=10000 finalized=1",
+        "HEADLESS_GAME_STATE_SNAPSHOT_RESTORE tick=900 expected_tick=900 bytes=3889 expected_bytes=3889 digest=0118409b6a034473 expected_digest=0118409b6a034473 verified=1",
+        "HEADLESS_SNAPSHOT_CONTINUATION from=900 to=3601 expected_bytes=3091 actual_bytes=3091 expected_digest=6c959326dd2f09cc actual_digest=6c959326dd2f09cc equal=1",
+        "HEADLESS_BATTLE_RESET iteration=2 repeats=2 digest=6c959326dd2f09cc bytes=3091 equal=1 validated=1",
+        "HEADLESS_GAME_STATE_BATTLE_TASK_STATUS=1",
+        "HEADLESS_BATTLE_READY=UNVERIFIED"
+      ]
+    }
+  },
+  "sampled_live_vs_fixed": {
+    "rows": 661,
+    "equal": true,
+    "sha256": "feabd62f8fe4d83f2e26d9df9ad2d03fa3b75f51d10910d6b2d903f60a2ea6a1",
+    "scope": "sampled player/object fields only; not full-state or per-tick equivalence"
+  },
+  "fixed_commands": 52,
+  "paired_serialized_state": {
+    "schema": "nashura.headless-snapshot-comparison.v1",
+    "first_tick": 0,
+    "final_tick": 3601,
+    "records": 3602,
+    "equal": true,
+    "different_ticks": [],
+    "scope": "original serializer payloads; excludes process/global state outside serialization",
+    "archive_bytes": 12334754,
+    "archive_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+  },
+  "density": [
+    {
+      "platform": "linux",
+      "concurrency": 1,
+      "matches": 100,
+      "exit_codes": [
+        "0"
+      ],
+      "validated_matches": 100,
+      "native_finals": 100,
+      "active_window_seconds": 4.792639239,
+      "aggregate_ticks_per_second": 75136.05386144943,
+      "sum_observed_peak_pss_mib": 258.38671875,
+      "median_match_ms": 45.991021,
+      "median_p95_us": 29.604
+    },
+    {
+      "platform": "linux",
+      "concurrency": 2,
+      "matches": 200,
+      "exit_codes": [
+        "0",
+        "0"
+      ],
+      "validated_matches": 200,
+      "native_finals": 200,
+      "active_window_seconds": 4.743369579,
+      "aggregate_ticks_per_second": 151832.9929821393,
+      "sum_observed_peak_pss_mib": 399.17578125,
+      "median_match_ms": 45.612908,
+      "median_p95_us": 29.056
+    },
+    {
+      "platform": "linux",
+      "concurrency": 4,
+      "matches": 400,
+      "exit_codes": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "validated_matches": 400,
+      "native_finals": 400,
+      "active_window_seconds": 10.11223135,
+      "aggregate_ticks_per_second": 142441.36137174116,
+      "sum_observed_peak_pss_mib": 676.720703125,
+      "median_match_ms": 91.774784,
+      "median_p95_us": 34.139
+    },
+    {
+      "platform": "android",
+      "concurrency": 1,
+      "matches": 100,
+      "exit_codes": [
+        "0"
+      ],
+      "validated_matches": 100,
+      "native_finals": 100,
+      "active_window_seconds": 4.753256752,
+      "aggregate_ticks_per_second": 75758.58380645709,
+      "sum_observed_peak_pss_mib": 178.5673828125,
+      "median_match_ms": 45.7923125,
+      "median_p95_us": 29.438
+    },
+    {
+      "platform": "android",
+      "concurrency": 2,
+      "matches": 200,
+      "exit_codes": [
+        "0",
+        "0"
+      ],
+      "validated_matches": 200,
+      "native_finals": 200,
+      "active_window_seconds": 4.831755919,
+      "aggregate_ticks_per_second": 149055.5425550253,
+      "sum_observed_peak_pss_mib": 337.5703125,
+      "median_match_ms": 46.287167,
+      "median_p95_us": 29.3955
+    },
+    {
+      "platform": "android",
+      "concurrency": 4,
+      "matches": 400,
+      "exit_codes": [
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "validated_matches": 400,
+      "native_finals": 400,
+      "active_window_seconds": 5.029403169,
+      "aggregate_ticks_per_second": 286395.81111299054,
+      "sum_observed_peak_pss_mib": 651.2587890625,
+      "median_match_ms": 47.7144795,
+      "median_p95_us": 30.042
+    }
+  ],
+  "hardware": {
+    "linux_guest": {
+      "vcpus": 2,
+      "ram_mib": 6144
+    },
+    "android_avd": {
+      "vcpus": 6,
+      "ram_mib": 8192
+    },
+    "interpretation": "same Mac host; different virtualization and CPU allocations; no intrinsic platform speed or total VM memory advantage claim"
+  },
+  "single_process_performance": {
+    "linux": {
+      "matches": 30,
+      "native_finals": 30,
+      "median_match_ms": 45.4208635,
+      "ticks_per_second": 79075.22789489097,
+      "median_p50_us": 8.604,
+      "median_p95_us": 29.385,
+      "median_p99_us": 53.431,
+      "peak_rss_mib": 260.453125,
+      "scope": "step loop only, no per-tick snapshot or strace; excludes cold start/catalog/load/destruction; endpoint digest outside measured loop"
+    },
+    "android": {
+      "matches": 30,
+      "native_finals": 30,
+      "median_match_ms": 45.6845,
+      "ticks_per_second": 78603.32552880334,
+      "median_p50_us": 8.6045,
+      "median_p95_us": 29.1665,
+      "median_p99_us": 55.229,
+      "peak_rss_mib": 262.8515625,
+      "scope": "step loop only, no per-tick snapshot or strace; excludes cold start/catalog/load/destruction; endpoint digest outside measured loop"
+    }
+  },
+  "android_private_evidence_files": [
+    {
+      "name": "android-v2.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "android-v2.stderr",
+      "bytes": 1089,
+      "sha256": "5ec4a886f988f91283c4294bf59ef786bee871d135bde20af0daa9d36db87096"
+    },
+    {
+      "name": "android-v2.stdout",
+      "bytes": 190264,
+      "sha256": "d3fb311ed82fc33284382ec1c5a737eeeccfe1233b3f2dd1bdf55acd0e799785"
+    },
+    {
+      "name": "android-v3.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "android-v3.stderr",
+      "bytes": 1089,
+      "sha256": "5ec4a886f988f91283c4294bf59ef786bee871d135bde20af0daa9d36db87096"
+    },
+    {
+      "name": "android-v3.stdout",
+      "bytes": 30401,
+      "sha256": "36ec1207f80884f69ac01dd2004eec32263e64b5b4837b8f5a0fa0de89a084fb"
+    },
+    {
+      "name": "android-v4.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "android-v4.stderr",
+      "bytes": 1089,
+      "sha256": "5ec4a886f988f91283c4294bf59ef786bee871d135bde20af0daa9d36db87096"
+    },
+    {
+      "name": "android-v4.stdout",
+      "bytes": 92188,
+      "sha256": "b1632325142691467602dcda9d4b7178a9f447036861ded14c904b44e1f79c41"
+    },
+    {
+      "name": "android.exit",
+      "bytes": 4,
+      "sha256": "e3b9c2844b5a5c2677b3a2279db2ec8487491dd9a23d6b22fac153391b3bb63c"
+    },
+    {
+      "name": "android.stderr",
+      "bytes": 1833,
+      "sha256": "c49a89aa6855dcf2ee0c1ef112e05dc40b91e1ecf7c0ef7a6ebc97e5dc4567f2"
+    },
+    {
+      "name": "android.stdout",
+      "bytes": 478,
+      "sha256": "9ce5732cb8c8f9c91b8e98bda62a82e3009fbc1cdb6bc440333368c04a70559a"
+    }
+  ],
+  "density_private_evidence_files": [
+    {
+      "name": "android-density-v43-n1-p0.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "android-density-v43-n1-p0.sh",
+      "bytes": 1347,
+      "sha256": "82c40e8080d2da72b66b2a42de72c8b324ecdeb9187f03544a3c82744fe8290a"
+    },
+    {
+      "name": "android-density-v43-n1-p0.stderr",
+      "bytes": 1089,
+      "sha256": "5ec4a886f988f91283c4294bf59ef786bee871d135bde20af0daa9d36db87096"
+    },
+    {
+      "name": "android-density-v43-n1-p0.stdout",
+      "bytes": 250618,
+      "sha256": "deaadcd5a37e38e9a486da038b777378987622b0be40c92ee8ce925d62d6a0d6"
+    },
+    {
+      "name": "android-density-v43-n2-p0.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "android-density-v43-n2-p0.sh",
+      "bytes": 1347,
+      "sha256": "38f0e3cbe3d7cd3125a7901bf5516c70c71a8175e71917d4adfeab8a9a7845a1"
+    },
+    {
+      "name": "android-density-v43-n2-p0.stderr",
+      "bytes": 1089,
+      "sha256": "5ec4a886f988f91283c4294bf59ef786bee871d135bde20af0daa9d36db87096"
+    },
+    {
+      "name": "android-density-v43-n2-p0.stdout",
+      "bytes": 250618,
+      "sha256": "506ff0d6ad2c3148f0c65e80e6bb141861409659c35daf8b99a59684d6254f73"
+    },
+    {
+      "name": "android-density-v43-n2-p1.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "android-density-v43-n2-p1.sh",
+      "bytes": 1347,
+      "sha256": "9aeebb5f1b73d14fea3911ba2aab4796be4439e143126465d449ae9b8b1e6322"
+    },
+    {
+      "name": "android-density-v43-n2-p1.stderr",
+      "bytes": 1089,
+      "sha256": "5ec4a886f988f91283c4294bf59ef786bee871d135bde20af0daa9d36db87096"
+    },
+    {
+      "name": "android-density-v43-n2-p1.stdout",
+      "bytes": 250618,
+      "sha256": "5d3ab824e3ed7a85431218e020c9a32c64d67de61b1ad4a1a40be022eefacbe7"
+    },
+    {
+      "name": "android-density-v43-n4-p0.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "android-density-v43-n4-p0.sh",
+      "bytes": 1347,
+      "sha256": "3cd5ec1bd2751fbad089e6aecdcbcb01a4ffb4abc5e63d1e758f68b210213a96"
+    },
+    {
+      "name": "android-density-v43-n4-p0.stderr",
+      "bytes": 1089,
+      "sha256": "5ec4a886f988f91283c4294bf59ef786bee871d135bde20af0daa9d36db87096"
+    },
+    {
+      "name": "android-density-v43-n4-p0.stdout",
+      "bytes": 250118,
+      "sha256": "daa827786478e15ee5d0fbc901b633c7f24e055c42d2e6ea0d4357d787e9ef3e"
+    },
+    {
+      "name": "android-density-v43-n4-p1.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "android-density-v43-n4-p1.sh",
+      "bytes": 1347,
+      "sha256": "7518da35b3394332c3aa3a34124674f9e6635ce689f75ef96a8933293c4221be"
+    },
+    {
+      "name": "android-density-v43-n4-p1.stderr",
+      "bytes": 1089,
+      "sha256": "5ec4a886f988f91283c4294bf59ef786bee871d135bde20af0daa9d36db87096"
+    },
+    {
+      "name": "android-density-v43-n4-p1.stdout",
+      "bytes": 250619,
+      "sha256": "d08d0c097fa55e4a425a3451906f04294a6dbb6c2b918d2aff12748029519f3e"
+    },
+    {
+      "name": "android-density-v43-n4-p2.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "android-density-v43-n4-p2.sh",
+      "bytes": 1347,
+      "sha256": "8fcc8f5766e971c85ad50b37c8e2bb2f9de3bb889fb78847c8b302c8ba3ad37c"
+    },
+    {
+      "name": "android-density-v43-n4-p2.stderr",
+      "bytes": 1089,
+      "sha256": "5ec4a886f988f91283c4294bf59ef786bee871d135bde20af0daa9d36db87096"
+    },
+    {
+      "name": "android-density-v43-n4-p2.stdout",
+      "bytes": 250618,
+      "sha256": "050379eb7928e2775ef4f5d700cd764fc19d413fb49109f6b89d43fdb3ffec73"
+    },
+    {
+      "name": "android-density-v43-n4-p3.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "android-density-v43-n4-p3.sh",
+      "bytes": 1347,
+      "sha256": "0418aec44133ccde39d03e1ff5817cc7d8049de8cbb3ee16c4d53b8e397b673e"
+    },
+    {
+      "name": "android-density-v43-n4-p3.stderr",
+      "bytes": 1089,
+      "sha256": "5ec4a886f988f91283c4294bf59ef786bee871d135bde20af0daa9d36db87096"
+    },
+    {
+      "name": "android-density-v43-n4-p3.stdout",
+      "bytes": 250618,
+      "sha256": "e6651fd2ecffd46c4e1ba4368f975354d2f5a4bbc197a01f2b8772cc7884b891"
+    },
+    {
+      "name": "density-summary.json",
+      "bytes": 2344,
+      "sha256": "83e0268662afc29fa0bf0ecd61f78f227fa26225c13691de7a3216e3f107e678"
+    },
+    {
+      "name": "linux-density-v43-n1-p0.exit",
+      "bytes": 4,
+      "sha256": "e3b9c2844b5a5c2677b3a2279db2ec8487491dd9a23d6b22fac153391b3bb63c"
+    },
+    {
+      "name": "linux-density-v43-n1-p0.sh",
+      "bytes": 1749,
+      "sha256": "dc85903294f600d35ca9b2e493454e15fb58af4e7101f42f20d403c9cc680110"
+    },
+    {
+      "name": "linux-density-v43-n1-p0.stderr",
+      "bytes": 2996,
+      "sha256": "99f5fcb6454c3b6f1678f1175df99d5173557e86508bd1f1772bce8b8708bd0d"
+    },
+    {
+      "name": "linux-density-v43-n1-p0.stdout",
+      "bytes": 25989,
+      "sha256": "460bbc41f5ad5faf42bd3cb0b3ec610758d92f0a9119eba08995208fb7e1e26a"
+    },
+    {
+      "name": "linux-density-v43-n2-p0.exit",
+      "bytes": 4,
+      "sha256": "e3b9c2844b5a5c2677b3a2279db2ec8487491dd9a23d6b22fac153391b3bb63c"
+    },
+    {
+      "name": "linux-density-v43-n2-p0.sh",
+      "bytes": 1749,
+      "sha256": "f14ae4957758d0dc83aa6225c1b515d8f8bfe34af84d044ed269e6049861e7e6"
+    },
+    {
+      "name": "linux-density-v43-n2-p0.stderr",
+      "bytes": 2996,
+      "sha256": "b8d01a3f1f0c3471f5689d398a7407fa39604189c2e3bb757dad25bbdec05e69"
+    },
+    {
+      "name": "linux-density-v43-n2-p0.stdout",
+      "bytes": 25989,
+      "sha256": "f3525a31e168ba2232741ba8bbbdab830a6447ecd3394dd77263c901a82cd0b9"
+    },
+    {
+      "name": "linux-density-v43-n2-p1.exit",
+      "bytes": 4,
+      "sha256": "e3b9c2844b5a5c2677b3a2279db2ec8487491dd9a23d6b22fac153391b3bb63c"
+    },
+    {
+      "name": "linux-density-v43-n2-p1.sh",
+      "bytes": 1749,
+      "sha256": "ee61374dc3f9f15aa4204d09dafff5af6491f0185ad0539e66e477275a71f780"
+    },
+    {
+      "name": "linux-density-v43-n2-p1.stderr",
+      "bytes": 2996,
+      "sha256": "5bae05e2b591c29998d85a062175dd2197e95c059f189b530abccd7335fc1c19"
+    },
+    {
+      "name": "linux-density-v43-n2-p1.stdout",
+      "bytes": 25989,
+      "sha256": "e58431bae0a274f9b52e015841cfe2b03f17cc02f5c0f1f139ad4aa9a3308aac"
+    },
+    {
+      "name": "linux-density-v43-n4-p0.exit",
+      "bytes": 4,
+      "sha256": "e3b9c2844b5a5c2677b3a2279db2ec8487491dd9a23d6b22fac153391b3bb63c"
+    },
+    {
+      "name": "linux-density-v43-n4-p0.sh",
+      "bytes": 1749,
+      "sha256": "07e3988cff73e3d808a019f0a2a18ecedf4923d85a8628f91d6d984e0904b9e3"
+    },
+    {
+      "name": "linux-density-v43-n4-p0.stderr",
+      "bytes": 2996,
+      "sha256": "5a83ff84b0fc4bc15c4b26aa2d40d2316b22a9b8937720f44845d94babf9919e"
+    },
+    {
+      "name": "linux-density-v43-n4-p0.stdout",
+      "bytes": 25989,
+      "sha256": "e604385e81648ffcd4f44388fe8e90b16bb3440a031ae7a7b56c748f822ebd9a"
+    },
+    {
+      "name": "linux-density-v43-n4-p1.exit",
+      "bytes": 4,
+      "sha256": "e3b9c2844b5a5c2677b3a2279db2ec8487491dd9a23d6b22fac153391b3bb63c"
+    },
+    {
+      "name": "linux-density-v43-n4-p1.sh",
+      "bytes": 1749,
+      "sha256": "a2e905bc98909af684916f11c039414bbb0ecc2b450de48d6289ea8de042d051"
+    },
+    {
+      "name": "linux-density-v43-n4-p1.stderr",
+      "bytes": 2996,
+      "sha256": "70a0eedbba3e69af7a17ea114188b870ede5c15651bb6b52589813b4092e2620"
+    },
+    {
+      "name": "linux-density-v43-n4-p1.stdout",
+      "bytes": 25989,
+      "sha256": "471abc7b0dda7a932f526747a6554653fa605c68981a4c0cba40e4ebdbc699bc"
+    },
+    {
+      "name": "linux-density-v43-n4-p2.exit",
+      "bytes": 4,
+      "sha256": "e3b9c2844b5a5c2677b3a2279db2ec8487491dd9a23d6b22fac153391b3bb63c"
+    },
+    {
+      "name": "linux-density-v43-n4-p2.sh",
+      "bytes": 1749,
+      "sha256": "29b6a27f24efaad64af5e05ca24329a0da40c864a056030752919e410d99549b"
+    },
+    {
+      "name": "linux-density-v43-n4-p2.stderr",
+      "bytes": 2996,
+      "sha256": "35a4737969089efd54f3e13dbce0263d51eebbc4f2bde2c9dcb91fd3733c0bb7"
+    },
+    {
+      "name": "linux-density-v43-n4-p2.stdout",
+      "bytes": 25989,
+      "sha256": "eece66233f5487ff6336da48c6672f4cffefb6e9105ee7264e075c1aafd254f8"
+    },
+    {
+      "name": "linux-density-v43-n4-p3.exit",
+      "bytes": 4,
+      "sha256": "e3b9c2844b5a5c2677b3a2279db2ec8487491dd9a23d6b22fac153391b3bb63c"
+    },
+    {
+      "name": "linux-density-v43-n4-p3.sh",
+      "bytes": 1749,
+      "sha256": "9aa9d34aad3ae51b0a0f223776b5296cc526424efba89e77efa354aa47765361"
+    },
+    {
+      "name": "linux-density-v43-n4-p3.stderr",
+      "bytes": 2996,
+      "sha256": "7da6074ada1047c0f579fbe7253176241bb845c3a65bcdd0ba9527fff9b4b070"
+    },
+    {
+      "name": "linux-density-v43-n4-p3.stdout",
+      "bytes": 25989,
+      "sha256": "fbd7607e9406328ed693fb672448cb6614d8d1f2708cd9cf8ab011b2d5af4fb0"
+    },
+    {
+      "name": "linux-density-v44-n1-p0.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "linux-density-v44-n1-p0.sh",
+      "bytes": 1763,
+      "sha256": "30c090fdf32a183b1a15df389c62a29d1edd455f0464dbc2158cceaf1a58a133"
+    },
+    {
+      "name": "linux-density-v44-n1-p0.stderr",
+      "bytes": 1148,
+      "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+    },
+    {
+      "name": "linux-density-v44-n1-p0.stdout",
+      "bytes": 251622,
+      "sha256": "b79e216af1e2f314d817f9822194e9a65ef652bafb5a68ea792ce3a12b38fe96"
+    },
+    {
+      "name": "linux-density-v44-n2-p0.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "linux-density-v44-n2-p0.sh",
+      "bytes": 1763,
+      "sha256": "660802a1982161497fd580522aad914de530f83fb0204cbaddec9f98c9f1622e"
+    },
+    {
+      "name": "linux-density-v44-n2-p0.stderr",
+      "bytes": 1148,
+      "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+    },
+    {
+      "name": "linux-density-v44-n2-p0.stdout",
+      "bytes": 251622,
+      "sha256": "5bbc35aa4485b34ced2d0363f465e9c7695f6df0cb82cd82b890df549e2bafdc"
+    },
+    {
+      "name": "linux-density-v44-n2-p1.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "linux-density-v44-n2-p1.sh",
+      "bytes": 1763,
+      "sha256": "42d2bc02046cbf35b644124c7ad14d4465454ec56b5b7dec322f7410d052b888"
+    },
+    {
+      "name": "linux-density-v44-n2-p1.stderr",
+      "bytes": 1148,
+      "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+    },
+    {
+      "name": "linux-density-v44-n2-p1.stdout",
+      "bytes": 251622,
+      "sha256": "541478a7d876efc0dbb5d8d4579f573ae47210a0403705437c49c60710847014"
+    },
+    {
+      "name": "linux-density-v44-n4-p0.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "linux-density-v44-n4-p0.sh",
+      "bytes": 1763,
+      "sha256": "bba8185550b09471976859a57e71761516c7c80b75e8bed9d525d2d2608a0c98"
+    },
+    {
+      "name": "linux-density-v44-n4-p0.stderr",
+      "bytes": 1148,
+      "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+    },
+    {
+      "name": "linux-density-v44-n4-p0.stdout",
+      "bytes": 251817,
+      "sha256": "6378facfd36c7ecadf6de1d8d357c58a29bd69e5167a196584ff3db99b595641"
+    },
+    {
+      "name": "linux-density-v44-n4-p1.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "linux-density-v44-n4-p1.sh",
+      "bytes": 1763,
+      "sha256": "3c23f2519cf436fbc40b9dc92ab8a275e30dcbe994c00a17ae08018e05f90964"
+    },
+    {
+      "name": "linux-density-v44-n4-p1.stderr",
+      "bytes": 1148,
+      "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+    },
+    {
+      "name": "linux-density-v44-n4-p1.stdout",
+      "bytes": 251824,
+      "sha256": "0fd98ddf3918b05b2e13347579b1e1eb06b955dbf8fe7f7eb78390d851148d36"
+    },
+    {
+      "name": "linux-density-v44-n4-p2.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "linux-density-v44-n4-p2.sh",
+      "bytes": 1763,
+      "sha256": "f3ce00fe90153db3a911a4b4bd1924b44827c90c8509aa2d74820a1d0dc81ff3"
+    },
+    {
+      "name": "linux-density-v44-n4-p2.stderr",
+      "bytes": 1148,
+      "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+    },
+    {
+      "name": "linux-density-v44-n4-p2.stdout",
+      "bytes": 251852,
+      "sha256": "4bf26144a31ce28a0fbc367ae28fa646b87b4e4bd406b5cf446c29fd10397cff"
+    },
+    {
+      "name": "linux-density-v44-n4-p3.exit",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    {
+      "name": "linux-density-v44-n4-p3.sh",
+      "bytes": 1763,
+      "sha256": "a41b857fc3f03d0b064ef20afda829a27cc553aaca5045521cc520b46d703c25"
+    },
+    {
+      "name": "linux-density-v44-n4-p3.stderr",
+      "bytes": 1148,
+      "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+    },
+    {
+      "name": "linux-density-v44-n4-p3.stdout",
+      "bytes": 251845,
+      "sha256": "c5f523c8805f0fc42e4279d7c388c144140fc620b267c94dc6f197b9342eb21c"
+    },
+    {
+      "name": "paired-snapshot-comparison.json",
+      "bytes": 1057311,
+      "sha256": "3c65287fbd34e283e892a8cb76c51affa696514910ce475e4a6907b35d7522de"
+    },
+    {
+      "name": "run-summary-linux-v44.json",
+      "bytes": 447,
+      "sha256": "9088b138b8c1e831fb10f73bac9ed6885025b48e1f47db35abe7ba69ec957b31"
+    },
+    {
+      "name": "run-summary.json",
+      "bytes": 909,
+      "sha256": "12c6d370f5dad240f0771613a52cff8dc0687c02536944b1d70afdb35fa17fed"
+    }
+  ],
+  "remaining_requirements": [
+    "ResourceManager initialization identity and runtime boundary audit beyond populated catalog",
+    "original client snapshot wrapper context or formal minimal-adapter contract",
+    "portable reproducible runner with required input identity checks",
+    "broader fixtures and fair equal-CPU/whole-system performance comparison",
+    "historical strict catalog gate remains separate from runtime table observation"
+  ],
+  "engineering_validation_files": [
+    {
+      "name": "checks-affordability.xml",
+      "bytes": 4340,
+      "sha256": "2df38921b8a0004653f946d519241824a5e7a4f15a378518af9f277685f0d0f0",
+      "totals": {
+        "tests": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "name": "checks-collection-coordinator.xml",
+      "bytes": 12024,
+      "sha256": "46213e7dc74e8aac910b9e03ce1fdc4cda9cc96a9780e3fa690ba278d87f5fbf",
+      "totals": {
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "name": "checks-command-coordinates.xml",
+      "bytes": 8184,
+      "sha256": "1c7d327e0776fbfe0593fff2f35ecdc349baacf47337f1e4f32253bcddf0726e",
+      "totals": {
+        "tests": 41,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3
+      }
+    },
+    {
+      "name": "checks-dispatch-command.xml",
+      "bytes": 6406,
+      "sha256": "b68b35254be9a0974516208235e8dd0bc8608aa33f54f2ddbd4e141e8a56ed12",
+      "totals": {
+        "tests": 34,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3
+      }
+    },
+    {
+      "name": "checks-live-command.xml",
+      "bytes": 6370,
+      "sha256": "77fcb05e8aa394370673379118d4c457a0d66f0b951050f90bca3d7b0001594a",
+      "totals": {
+        "tests": 29,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 4
+      }
+    },
+    {
+      "name": "checks-position-guards.xml",
+      "bytes": 4244,
+      "sha256": "273e3e58c9851d1be53d0e6e252a1a6d9760515bb728b212fb82f84abdf1a346",
+      "totals": {
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3
+      }
+    },
+    {
+      "name": "checks-public.xml",
+      "bytes": 161225,
+      "sha256": "7e6d3443b18846804cc524fcfcc97b67d8b72a825031912b68072699cd688ed6",
+      "totals": {
+        "tests": 821,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 27
+      }
+    },
+    {
+      "name": "checks-pure-linux.log",
+      "bytes": 1409,
+      "sha256": "0bb88c08d4459395b4ea108ee2d7709f1258003f8ba3ed1db8fa4cdfa50f79dd"
+    },
+    {
+      "name": "checks-pure-linux.xml",
+      "bytes": 708767,
+      "sha256": "21f5bf507136a7df26a4e37ec03a42299fe46df962d9a02f787231fc21e12fbe",
+      "totals": {
+        "tests": 1151,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1
+      }
+    },
+    {
+      "name": "checks-reservation-mapping.xml",
+      "bytes": 6383,
+      "sha256": "beaf464a3d338e777b927f2c95469ad20edffa75aa155746fbd3612dcd4021c8",
+      "totals": {
+        "tests": 33,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2
+      }
+    },
+    {
+      "name": "checks-selection-timeout.xml",
+      "bytes": 14581,
+      "sha256": "73b3578d19e298968b69ccf146daa9bd9a1f04e55e5571dabd513d56fd356eb8",
+      "totals": {
+        "tests": 82,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "name": "classes.dex",
+      "bytes": 33684,
+      "sha256": "a34be5f5253a9207cd92a105bb385c3ea66577d18a512b222f44e5c9d7f16606"
+    },
+    {
+      "name": "gitleaks.log",
+      "bytes": 146,
+      "sha256": "167a132c26761e26ebcf63e5f3bebb34457956e70f5d23c0b6aed319232fcd1c"
+    },
+    {
+      "name": "libobserver-final.so",
+      "bytes": 160536,
+      "sha256": "38d5f938618998dd5a316c6edf719fde27a12e43744b24d6270ba9282edfa08b"
+    },
+    {
+      "name": "run_main_engine_checks.log",
+      "bytes": 261,
+      "sha256": "5a579aba0b0d56c4f3c3d4e6d155440fa03f0d0451dc1273a6e3ed01ce6e70ca"
+    },
+    {
+      "name": "run_main_engine_checks.py",
+      "bytes": 1010,
+      "sha256": "5539d69fdc7c4eb04ea7cf915e7350ca761d4024140b8b2ff85f14b5077eecc7"
+    },
+    {
+      "name": "run_public_checks.log",
+      "bytes": 2856,
+      "sha256": "101af4266d4c098f578c0a0ffce278c01692a7675e8103e6ab61f559e4aa49c3"
+    },
+    {
+      "name": "run_public_checks.py",
+      "bytes": 6188,
+      "sha256": "66475c6acbb2207f329501bd68edf3fa0cb4c631967538083e2dc1ae770683a8"
+    }
+  ],
+  "engineering_validation": {
+    "pure_linux": "1150 passed, 1 skipped",
+    "main_engine": "211 passed",
+    "public": "1104 passed, 42 skipped across 9 groups",
+    "gitleaks": "no leaks",
+    "build": "Java8/D8 and NDK -Wall -Wextra -Werror -Wl,-z,defs passed",
+    "own_cr_symbols_undefined": false
+  },
+  "dependency_pruning": {
+    "status": "MINIMAL_DEVICE_VIEW_MATCH_PARITY_LIMITED",
+    "namespace_entry": "tools/pure_linux/run_headless_namespace.sh",
+    "devices": [
+      "null",
+      "zero",
+      "random",
+      "urandom",
+      "binder",
+      "hwbinder"
+    ],
+    "root_view_absent": [
+      "vndbinder",
+      "graphics devices",
+      "SELinuxfs"
+    ],
+    "local_properties": "existing read-only files; no property service started",
+    "v46": {
+      "exit": 0,
+      "java_entered": false,
+      "battle_observed": false,
+      "verdict": "NOT_PASSED",
+      "scope": "multiple inputs removed together; no unique cause established",
+      "files": [
+        {
+          "name": "guest.stdout",
+          "bytes": 120,
+          "sha256": "914350dbc4c4a8dc6a237d77c50419bc004a2a5da3ec8a7640fea3f044af38ae"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 116640,
+          "sha256": "e0ec2a4d1fba52dc6b56eef3bbddc7decad95cbc9dd20dbc4898eb4d06e3cf2d"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1979,
+          "sha256": "cbfe9439b3335be49d8466910fcd26c25e3e19e87a71b4682937b007ad8d44e0"
+        }
+      ]
+    },
+    "v47": {
+      "exit": 134,
+      "java_entered": false,
+      "verdict": "STARTUP_BINDER_BOUNDARY",
+      "observation": "BINDER_VERSION on /dev/null returns ENOTTY before Java; no battle dependency inference",
+      "files": [
+        {
+          "name": "guest.stdout",
+          "bytes": 41,
+          "sha256": "6ba87743963efb00bf591f4ce23027040927e2621c9275a87c3c8a7a38181240"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 203,
+          "sha256": "7255dac90d8ce0ee1392ccdb7811fa72c50d52c6857373af4b4fd091f68ffdca"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 4,
+          "sha256": "e726b440cc164001999e718b51780d80314709efe06e7857282377be9111127b"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 159317,
+          "sha256": "f4d020dd9d81657a4a4b12f3a36a057caf4d9352c3facd98fd438e3446e80044"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1954,
+          "sha256": "bddfe4d8c5cd6395fadfdf368317c1229385e6be4019f37905050f91af391455"
+        }
+      ]
+    },
+    "v48": {
+      "exit": 0,
+      "final_tick": 3601,
+      "native_finalized": true,
+      "snapshot_records": 3602,
+      "archive_bytes": 12334754,
+      "archive_sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206",
+      "android_payloads_equal": true,
+      "performance_run": false,
+      "files": [
+        {
+          "name": "guest.stdout",
+          "bytes": 30640,
+          "sha256": "61ff237248668ddc83a23eed92aea606bfbeda6afbc573f4e89a1d8bc89a6d2c"
+        },
+        {
+          "name": "guest.stderr",
+          "bytes": 1148,
+          "sha256": "3904d359cf62a8e372f4f29c38a852da11bdc5a86c6aa45f53faf4a87b55f6cf"
+        },
+        {
+          "name": "guest.exit",
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        {
+          "name": "guest.strace",
+          "bytes": 357285,
+          "sha256": "a355263f211be76336307c8517c6cc5bcb71628f29edcd1681b351ad6df85f2f"
+        },
+        {
+          "name": "run-battle.sh",
+          "bytes": 1995,
+          "sha256": "bd4ffa4bdf25bb545df7d0a506f98e8e2f3c622a8bd078e839555806d899f055"
+        },
+        {
+          "name": "snapshots.bin",
+          "bytes": 12334754,
+          "sha256": "e5bc727424104a14059519ae097bccc6389137cbd1ae97397abea9eea40da206"
+        },
+        {
+          "name": "libheadless_observer.so",
+          "bytes": 160768,
+          "sha256": "e4c088af2aa0c92cb572203763f340e18f7b3a25b120c0cbacfc62ae14f87c7c"
+        }
+      ]
+    },
+    "limitations": [
+      "oldroot still exposes guest SELinuxfs; historical policy independence unverified",
+      "Binder/hwbinder are current app_process startup/cleanup dependencies, not proven battle services",
+      "ART/framework/DT_NEEDED library closure not minimized",
+      "single fixture and serializer coverage only"
+    ]
+  }
+}

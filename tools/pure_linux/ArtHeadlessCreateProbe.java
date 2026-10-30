@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 
 /** Direct original JNI startup; no Activity.onCreate, display, or service bootstrap. */
@@ -9,6 +10,12 @@ public final class ArtHeadlessCreateProbe {
     private static native void prepareObservations();
     private static native void finishObservations();
     private static native void inspectState();
+    private static native int runMainloopTask(boolean initialize);
+    private static native int runContentBootstrapTask();
+    private static native int runCatalogTask();
+    private static native int runGameStateConstructorTask();
+    private static native int runGameStateBattleTask(byte[] replayJson, int taskMode);
+    private static native void stopForDebugger();
     private static void mark(String value) {
         System.out.println(value);
         System.out.flush();
@@ -27,15 +34,49 @@ public final class ArtHeadlessCreateProbe {
         mark("HEADLESS_INPUT_SHA256=" + expected);
     }
 
+    private static byte[] readVerifiedReplay(String path, String expected) throws Exception {
+        byte[] content = Files.readAllBytes(new File(path).toPath());
+        if (content.length < 2 || content.length >= 64 * 1024) {
+            throw new IllegalArgumentException("Replay JSON must contain 2..65535 bytes");
+        }
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        StringBuilder value = new StringBuilder();
+        for (byte item : digest.digest(content)) value.append(String.format("%02x", item & 255));
+        if (!value.toString().equals(expected)) {
+            throw new IllegalArgumentException("Replay JSON identity mismatch");
+        }
+        mark("HEADLESS_REPLAY_JSON_SHA256=" + expected);
+        return content;
+    }
+
     public static void main(String[] args) throws Exception {
-        if ((args.length < 5 || args.length > 10)
+        boolean battleTask = args.length >= 11 && (args[10].equals("game-state-load")
+                || args[10].equals("game-state-load-gdb")
+                || args[10].equals("game-state-step")
+                || args[10].equals("game-state-step-gdb")
+                || args[10].equals("game-state-action-load")
+                || args[10].equals("game-state-action-step")
+                || args[10].equals("game-state-snapshot")
+                || args[10].equals("game-state-action-snapshot"));
+        if ((args.length < 5 || args.length > 13)
                 || !(args[4].equals("direct") || args[4].equals("callbacks"))
                 || (args.length >= 6 && !args[5].equals("apk-context"))
                 || (args.length >= 8 && !args[7].equals("native-create"))
                 || (args.length >= 9 && !args[8].equals("native-destroy"))
-                || (args.length == 10 && !args[9].equals("native-active"))) {
+                || (args.length >= 10 && !args[9].equals("native-active"))
+                || (args.length >= 11 && !(args[10].equals("queue-observe")
+                    || args[10].equals("native-init") || args[10].equals("native-init-gdb")
+                    || args[10].equals("content-bootstrap") || args[10].equals("content-bootstrap-gdb")
+                    || args[10].equals("catalog") || args[10].equals("catalog-gdb")
+                    || args[10].equals("game-state-construct") || args[10].equals("game-state-construct-gdb")
+                    || battleTask))
+                || args.length == 12
+                || (battleTask && args.length != 13)
+                || (args.length == 13 && (!battleTask || !args[11].startsWith("/")
+                    || !args[12].matches("[0-9a-f]{64}")))) {
             throw new IllegalArgumentException("Expected engine, VM observer, APK, new run root, "
-                + "direct|callbacks, [apk-context, [headless observer, [native-create, [native-destroy, [native-active]]]]]");
+                + "direct|callbacks, [apk-context, [headless observer, [native-create, [native-destroy, "
+                + "[native-active, [task-mode, [replay-json-path replay-json-sha256]]]]]]]");
         }
         for (int index = 0; index < 4; index++) {
             if (!args[index].startsWith("/")) throw new IllegalArgumentException("Absolute paths required");
@@ -111,7 +152,7 @@ public final class ArtHeadlessCreateProbe {
                 Thread.sleep(1000);
                 inspectState();
                 if (args.length >= 9) {
-                    if (args.length == 10) {
+                    if (args.length >= 10) {
                         // nOnResume's observed getIntent().getFlags() JNI path
                         // requires a local launch Intent; no external launch data.
                         android.content.Intent intent = new android.content.Intent();
@@ -126,10 +167,72 @@ public final class ArtHeadlessCreateProbe {
                         game.getMethod("nOnResume").invoke(null);
                         mark("HEADLESS_NATIVE_ON_RESUME_RETURN");
                     }
+                    if (args.length >= 11) {
+                        int queued = runMainloopTask(false);
+                        mark("HEADLESS_QUEUE_OBSERVATION_STATUS=" + queued);
+                        if (queued != 1) throw new IllegalStateException("Mainloop task did not complete: " + queued);
+                        if (args[10].startsWith("native-init")) {
+                            if (args[10].equals("native-init-gdb")) stopForDebugger();
+                            int initialized = runMainloopTask(true);
+                            mark("HEADLESS_INIT_TASK_STATUS=" + initialized);
+                            if (initialized != 1) throw new IllegalStateException("Mainloop init task did not complete: " + initialized);
+                            inspectState();
+                        } else if (args[10].startsWith("content-bootstrap") || args[10].startsWith("catalog")
+                                || args[10].startsWith("game-state-construct") || battleTask) {
+                            if (args[10].endsWith("-gdb") && !battleTask) stopForDebugger();
+                            int completed = runContentBootstrapTask();
+                            mark("HEADLESS_CONTENT_TASK_STATUS=" + completed);
+                            if (completed != 1) throw new IllegalStateException("Content task did not complete: " + completed);
+                            inspectState();
+                            if (args[10].startsWith("catalog") || args[10].startsWith("game-state-construct")
+                                    || battleTask) {
+                                int loaded = runCatalogTask();
+                                mark("HEADLESS_CATALOG_TASK_STATUS=" + loaded);
+                                if (loaded != 1) throw new IllegalStateException("Catalog task did not complete: " + loaded);
+                                inspectState();
+                                if (args[10].startsWith("game-state-construct")) {
+                                    int constructed = runGameStateConstructorTask();
+                                    mark("HEADLESS_GAME_STATE_CONSTRUCTOR_TASK_STATUS=" + constructed);
+                                    if (constructed != 1) throw new IllegalStateException("GameState task did not complete: " + constructed);
+                                } else if (battleTask) {
+                                    if (args[10].endsWith("-gdb")) stopForDebugger();
+                                    byte[] replayJson = readVerifiedReplay(args[11], args[12]);
+                                    int taskMode;
+                                    switch (args[10]) {
+                                    case "game-state-load":
+                                    case "game-state-load-gdb":
+                                        taskMode = 5;
+                                        break;
+                                    case "game-state-step":
+                                    case "game-state-step-gdb":
+                                        taskMode = 6;
+                                        break;
+                                    case "game-state-action-load":
+                                        taskMode = 7;
+                                        break;
+                                    case "game-state-action-step":
+                                        taskMode = 8;
+                                        break;
+                                    case "game-state-snapshot":
+                                        taskMode = 9;
+                                        break;
+                                    case "game-state-action-snapshot":
+                                        taskMode = 10;
+                                        break;
+                                    default:
+                                        throw new AssertionError("Unknown battle task mode: " + args[10]);
+                                    }
+                                    int battle = runGameStateBattleTask(replayJson, taskMode);
+                                    mark("HEADLESS_GAME_STATE_BATTLE_TASK_STATUS=" + battle);
+                                    if (battle != 1) throw new IllegalStateException("GameState battle task did not pass its runtime checks: " + battle);
+                                }
+                            }
+                        }
+                    }
                     Thread.sleep(9000);
                     mark("HEADLESS_STATE_AFTER_MS=10000");
                     inspectState();
-                    if (args.length == 10) {
+                    if (args.length >= 10) {
                         mark("HEADLESS_NATIVE_ON_PAUSE_ENTER");
                         game.getMethod("nOnPause").invoke(null);
                         mark("HEADLESS_NATIVE_ON_PAUSE_RETURN");

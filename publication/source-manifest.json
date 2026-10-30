@@ -17,9 +17,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "a4775456c790b8d35e6427d738263f900ec565b069fb3d167904f3482b800fa5",
-      "bytes": 60843,
-      "source_sha256": "a4775456c790b8d35e6427d738263f900ec565b069fb3d167904f3482b800fa5",
+      "sha256": "8e70b4f133b329de8cc89580aa4a6263f1ae90b7e32121a274c329bd6509f2b8",
+      "source_sha256": "8e70b4f133b329de8cc89580aa4a6263f1ae90b7e32121a274c329bd6509f2b8",
+      "bytes": 61849,
       "transformations": []
     },
     {
@@ -11391,9 +11391,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "04e1bcd976fce0fa537d3b11075519a4d47e4d1653cbd2d535f0003e6c35cff7",
-      "bytes": 96265,
-      "source_sha256": "04e1bcd976fce0fa537d3b11075519a4d47e4d1653cbd2d535f0003e6c35cff7",
+      "sha256": "e0668eb8be8867c83ab6ee9ad259861fa49b2a245d9803428710536b71fff172",
+      "source_sha256": "e0668eb8be8867c83ab6ee9ad259861fa49b2a245d9803428710536b71fff172",
+      "bytes": 97420,
       "transformations": []
     },
     {
@@ -19957,10 +19957,10 @@
     },
     {
       "path": "tools/pure_linux/ArtHeadlessCreateProbe.java",
-      "transformations": [],
-      "sha256": "0dd2d34cc6144136520750dfb085a5328df703459c751c7ece77ac1a6652de6c",
-      "source_sha256": "0dd2d34cc6144136520750dfb085a5328df703459c751c7ece77ac1a6652de6c",
-      "bytes": 9605
+      "sha256": "6a914fe70283d0693d4352934918d0b16656c317060966b1c11f6cca8dbba54d",
+      "source_sha256": "6a914fe70283d0693d4352934918d0b16656c317060966b1c11f6cca8dbba54d",
+      "bytes": 16503,
+      "transformations": []
     },
     {
       "path": "tools/pure_linux/HeadlessApkContext.java",
@@ -19971,10 +19971,10 @@
     },
     {
       "path": "tools/pure_linux/art_headless_observer.c",
-      "transformations": [],
-      "sha256": "556fc0b52841d15d97d3f24daa504f2502c02e31a505ac854143238c05e424a5",
-      "source_sha256": "556fc0b52841d15d97d3f24daa504f2502c02e31a505ac854143238c05e424a5",
-      "bytes": 8822
+      "sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961",
+      "source_sha256": "ce16132d1825a5551d01260168b2a6feacb431a203af1afb5fed812039579961",
+      "bytes": 9493,
+      "transformations": []
     },
     {
       "path": "tools/pure_linux/generate_headless_pm.py",
@@ -19996,10 +19996,73 @@
       "sha256": "96508ae402db68e983134d2f5c821b353f40e9431944afa41c6b3f1ec793ce06",
       "source_sha256": "96508ae402db68e983134d2f5c821b353f40e9431944afa41c6b3f1ec793ce06",
       "bytes": 51658
+    },
+    {
+      "path": "tools/pure_linux/art_headless_task_bridge.c",
+      "sha256": "0fc7997c81b493e160fac5da64d8e6638194548b0978791ba2096964a2bfd5ff",
+      "source_sha256": "0fc7997c81b493e160fac5da64d8e6638194548b0978791ba2096964a2bfd5ff",
+      "bytes": 55930,
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/headless_call_arm64.S",
+      "sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd",
+      "source_sha256": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd",
+      "bytes": 1615,
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/headless_init_crash_gdb.py",
+      "sha256": "8fc47f151886429af99e057b20438e5b1ec52026702251372dbd6e2682139a4c",
+      "source_sha256": "8fc47f151886429af99e057b20438e5b1ec52026702251372dbd6e2682139a4c",
+      "bytes": 2655,
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_FIRST_MATCH_2026-10-30.md",
+      "sha256": "a87a94db15f391fde50c6d048f3558a9dc337ff5204b96eada6292e571c673d7",
+      "source_sha256": "a87a94db15f391fde50c6d048f3558a9dc337ff5204b96eada6292e571c673d7",
+      "bytes": 9679,
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/pure-linux-first-match-evidence-20261030.json",
+      "sha256": "a8f07eea6a1ba8f8d739bfae051a19a2b1d74353c7be520562615b5be73c8866",
+      "source_sha256": "a8f07eea6a1ba8f8d739bfae051a19a2b1d74353c7be520562615b5be73c8866",
+      "bytes": 57040,
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/compare_headless_snapshots.py",
+      "sha256": "4c9ca0437e18ee48a58b5ef4075425966deb94cb9233a0dafc76ec8ad736c210",
+      "source_sha256": "4c9ca0437e18ee48a58b5ef4075425966deb94cb9233a0dafc76ec8ad736c210",
+      "bytes": 3192,
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_compare_headless_snapshots.py",
+      "sha256": "50de0189f6325f723ca549306b8f2557618fbf94b3ea7e5138b9b0d87c3165af",
+      "source_sha256": "50de0189f6325f723ca549306b8f2557618fbf94b3ea7e5138b9b0d87c3165af",
+      "bytes": 1863,
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/fixtures/headless-eight-card-replay.json",
+      "sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8",
+      "source_sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8",
+      "bytes": 7306,
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/run_headless_namespace.sh",
+      "sha256": "0049ca29364d084a97d5552f8eeef366af80009d6ecfb85ec6643ed272ebf7d1",
+      "source_sha256": "0049ca29364d084a97d5552f8eeef366af80009d6ecfb85ec6643ed272ebf7d1",
+      "bytes": 3063,
+      "transformations": []
     }
   ],
-  "file_count": 2846,
-  "source_bytes": 36595091,
+  "file_count": 2855,
+  "source_bytes": 36747164,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

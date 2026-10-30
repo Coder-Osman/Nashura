@@ -187,6 +187,16 @@ JNIEXPORT void JNICALL Java_ArtHeadlessCreateProbe_inspectState(JNIEnv *env, jcl
     pointer_state(fd, "OWNER", engine_base + 0x1a06ab8, &owner);
     pointer_state(fd, "HOLDER", owner, &holder);
     pointer_state(fd, "GAME", owner ? owner + 8 : 0, &game);
+    uintptr_t owner_context, game_context, holder_20;
+    pointer_state(fd, "OWNER_CONTEXT", owner ? owner + 0x10 : 0, &owner_context);
+    pointer_state(fd, "GAME_CONTEXT", game ? game + 8 : 0, &game_context);
+    pointer_state(fd, "HOLDER_RAW_20", holder ? holder + 0x20 : 0, &holder_20);
+    if (owner_context && game_context) {
+        printf("HEADLESS_OWNER_GAME_CONTEXT_EQUAL=%d\n", owner_context == game_context);
+    } else puts("HEADLESS_OWNER_GAME_CONTEXT_EQUAL=UNAVAILABLE");
+    if (owner_context && holder_20) {
+        printf("HEADLESS_OWNER_HOLDER_20_EQUAL=%d\n", owner_context == holder_20);
+    } else puts("HEADLESS_OWNER_HOLDER_20_EQUAL=UNAVAILABLE");
     pointer_state(fd, "FILESYSTEM", engine_base + 0x19f8d50, &filesystem);
     pointer_state(fd, "CONTENT_ROOT", engine_base + 0x19ad878, &root);
     pointer_state(fd, "CONTENT_CONTEXT", root ? root + 0x20 : 0, &context);
