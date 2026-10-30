@@ -13,7 +13,10 @@ def records(text, marker):
 
 
 def summarize(text, repeats=30, expected_tick=3601, expected_digest='6c959326dd2f09cc',
-              completion='HEADLESS_DIRECT_RUNTIME_PROBE_RETURN=1', warmup_matches=0):
+              completion='HEADLESS_DIRECT_RUNTIME_PROBE_RETURN=1', warmup_matches=0,
+              expected_bytes=3091):
+    if expected_tick < 1 or not re.fullmatch(r'[0-9a-f]{16}', expected_digest) or expected_bytes < 1:
+        raise ValueError('invalid expected terminal identity')
     metrics = [{key: int(value) for key, value in row.items()}
                for row in records(text, 'HEADLESS_BATTLE_METRICS')]
     memory = [{key: int(value) for key, value in row.items()}
@@ -38,7 +41,7 @@ def summarize(text, repeats=30, expected_tick=3601, expected_digest='6c959326dd2
             raise ValueError('invalid step percentiles')
         if (int(reset['iteration']) != index or int(reset['repeats']) != repeats
                 or reset['digest'] != expected_digest or reset['equal'] != '1'
-                or reset['validated'] != '1' or reset['bytes'] != '3091'):
+                or reset['validated'] != '1' or int(reset['bytes']) != expected_bytes):
             raise ValueError('terminal serialization validation failed')
         if (end['tick_before'] != '0' or int(end['tick_after']) != expected_tick
                 or int(end['completed']) != expected_tick or end['finalized'] != '1'):
@@ -71,7 +74,7 @@ def summarize(text, repeats=30, expected_tick=3601, expected_digest='6c959326dd2
     match_wall_ms = [row['wall_ns'] / 1e6 for row in measured]
     return dict(schema='nashura.headless-benchmark.v2', matches=repeats,
                 warmup_matches=warmup_matches, measured_matches=len(measured), tick=expected_tick,
-                terminal_digest=expected_digest, terminal_bytes=3091, trace=False,
+                terminal_digest=expected_digest, terminal_bytes=expected_bytes, trace=False,
                 median_match_ms=statistics.median(row['wall_ns'] for row in measured) / 1e6,
                 match_wall_percentiles_ms={f'p{percent}': percentile(match_wall_ms, percent)
                                            for percent in (50, 95, 99)},
@@ -104,11 +107,15 @@ def main():
     parser.add_argument('--repeats', type=int, default=30)
     parser.add_argument('--warmup-matches', type=int, default=0)
     parser.add_argument('--completion', default='HEADLESS_DIRECT_RUNTIME_PROBE_RETURN=1')
+    parser.add_argument('--expected-tick', type=int, default=3601)
+    parser.add_argument('--expected-digest', default='6c959326dd2f09cc')
+    parser.add_argument('--expected-bytes', type=int, default=3091)
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     content = args.log.read_bytes()
-    result = summarize(content.decode(), args.repeats, completion=args.completion,
-                       warmup_matches=args.warmup_matches)
+    result = summarize(content.decode(), args.repeats, expected_tick=args.expected_tick,
+                       expected_digest=args.expected_digest, completion=args.completion,
+                       warmup_matches=args.warmup_matches, expected_bytes=args.expected_bytes)
     result['log_sha256'] = hashlib.sha256(content).hexdigest()
     if args.output:
         with args.output.open('x') as stream:

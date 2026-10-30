@@ -1,5 +1,23 @@
 # 阶段成果与证据索引
 
+## 2026-10-30：温热串行 step 基线与 seed 复验
+
+ARM64 Ubuntu guest 中使用固定 52 命令和同一八卡组，单进程按序运行；没有并发测量。
+seed 1 的独立 30 局基线每局中位 28.088 ms，step p50/p95/p99 为
+5.500/21.835/72.858 微秒，6,780 个分层样本全部来自每 16 tick 采样。独立 resource
+批次为每局中位 27.930 ms，计时边界外另记子进程 CPU、缺页和上下文切换；两批次
+不是配对性能对照，不据其差值推断加速。
+
+保持卡组和 52 条命令不变，只改 replay 顶层 `rndSeed`，seed 7/19/41 各重复 30 局。
+三组均在各自真实终局结束，tick/digest/serializer 字节数分别为
+2846/`530ed75967cbc6e0`/3207、3214/`aac146c6e46ea067`/3406、
+3601/`5b4f9d94dbb4c59f`/2828；每组重复结果一致。该覆盖只有一个八卡组，
+不是多卡组验收。perf 采样受 guest sudo 交互认证限制，本轮没有取得新调用栈 profile，
+也没有应用引擎优化；READY 仍为 `UNVERIFIED`。
+
+详见[报告](../agent-handoff/SERIAL_WARM_STEP_PROFILE_2026-10-30.md)与
+[机器摘要](../agent-handoff/serial-warm-step-profile-evidence-20261030.json)。
+
 ## 2026-10-30：空间候选查询调用者静态审计
 
 固定 profile 对应的 `libg.so` 静态反汇编确认调用点传入坐标与范围，目标按二维定点

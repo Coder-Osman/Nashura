@@ -22,6 +22,24 @@ def test_validated_statistics_and_memory_units():
     assert result['memory_sample_counts'] == {'rss_kb': 1, 'pss_kb': 1}
 
 
+def test_fixture_specific_terminal_identity_is_configurable():
+    text = log().replace('digest=6c959326dd2f09cc bytes=3091',
+                         'digest=1234567890abcdef bytes=3072')
+    result = summarize(text, 1, expected_digest='1234567890abcdef', expected_bytes=3072)
+    assert result['terminal_digest'] == '1234567890abcdef'
+    assert result['terminal_bytes'] == 3072
+    with pytest.raises(ValueError, match='serialization'):
+        summarize(text, 1, expected_digest='1234567890abcdef')
+
+
+@pytest.mark.parametrize('kwargs', [
+    {'expected_tick': 0}, {'expected_digest': 'not-a-digest'}, {'expected_bytes': 0},
+])
+def test_invalid_fixture_terminal_identity_is_rejected(kwargs):
+    with pytest.raises(ValueError, match='expected terminal identity'):
+        summarize(log(), 1, **kwargs)
+
+
 def test_unavailable_proc_memory_is_null_not_negative_memory():
     result = summarize(log().replace('rss_kb=2048 pss_kb=1024', 'rss_kb=-1 pss_kb=-1'), 1)
     assert result['sampled_rss_peak_mib'] is None

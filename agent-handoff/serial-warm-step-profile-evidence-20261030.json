@@ -1,0 +1,125 @@
+{
+  "schema": "nashura.serial-warm-step-profile.v1",
+  "status": "SERIAL_WARM_STEP_VALIDATED_LIMITED",
+  "whole_goal_complete": false,
+  "concurrency_tested": false,
+  "guest": {
+    "os": "Ubuntu 22.04.5",
+    "arch": "aarch64",
+    "vcpus": 2,
+    "memory_mib": 6144,
+    "execution": "single-process serial; batches executed in sequence"
+  },
+  "observer_sha256": "b5dc8e2a6d40f5b6fb5c6034186682e85a6c97a3954bc1214759850043adb015",
+  "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+  "benchmark": {
+    "repeats_per_replay": 30,
+    "warmup_matches": 0,
+    "step_sample_every_ticks": 16,
+    "snapshot_trace": false,
+    "minimal_observer_hooks": true,
+    "step_percentile_method": "median of per-match stratified sampled step percentiles",
+    "readiness": "UNVERIFIED"
+  },
+  "fixed_fixture": {
+    "replay_sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8",
+    "commands": 52,
+    "deck0_card_ids": [26000000, 26000001, 26000005, 28000001, 28000000, 26000003, 26000014, 26000018],
+    "deck1_card_ids": [26000000, 26000001, 26000005, 28000001, 28000000, 26000003, 26000014, 26000018],
+    "seed1_baseline": {
+      "matches": 30,
+      "terminal_tick": 3601,
+      "terminal_digest": "6c959326dd2f09cc",
+      "terminal_bytes": 3091,
+      "median_match_ms": 28.0884855,
+      "match_wall_percentiles_ms": {"p50": 28.084652, "p95": 29.250388, "p99": 29.749},
+      "ticks_per_second": 127336.16392011374,
+      "step_percentiles_us": {"p50": 5.5, "p95": 21.8345, "p99": 72.858},
+      "total_step_samples": 6780,
+      "sampled_rss_peak_mib": 258.203125,
+      "sampled_pss_peak_mib": 257.9609375,
+      "stdout_sha256": "5d96e50c7fdbd42cee8322e87428b844909e83d2df71424d81f4cff41025a1a6"
+    },
+    "seed1_process_resource_batch": {
+      "matches": 30,
+      "terminal_tick": 3601,
+      "terminal_digest": "6c959326dd2f09cc",
+      "terminal_bytes": 3091,
+      "median_match_ms": 27.930346,
+      "ticks_per_second": 128608.71693597478,
+      "step_percentiles_us": {"p50": 5.5835, "p95": 20.6045, "p99": 72.0855},
+      "total_step_samples": 6780,
+      "runner_child_usage": {
+        "scope": "Python RUSAGE_CHILDREN delta around completed runner subprocess; outside warm-step timing",
+        "user_seconds": 1.802695,
+        "system_seconds": 0.152024,
+        "minor_faults": 78072,
+        "major_faults": 0,
+        "voluntary_context_switches": 1436,
+        "involuntary_context_switches": 39,
+        "max_rss_kb_high_water": 268644
+      },
+      "stdout_sha256": "3ed756b7137693177d474b86353ed19a08e0f149440603e3d51e6dc56fc2a5b8"
+    },
+    "seed_variants": [
+      {
+        "seed": 7,
+        "replay_sha256": "e89244779a3bbf64bcf733a50a985c537a9cfb3c11b7b96cbd3863b2bce15e83",
+        "matches": 30,
+        "terminal_tick": 2846,
+        "terminal_digest": "530ed75967cbc6e0",
+        "terminal_bytes": 3207,
+        "median_match_ms": 15.7330655,
+        "step_percentiles_us": {"p50": 3.8125, "p95": 12.146, "p99": 15.5835},
+        "total_step_samples": 5340
+      },
+      {
+        "seed": 19,
+        "replay_sha256": "dbb4296fb56f36fde352479f3a9a3d6b2ff9327fb26bf1b5e48c7aa00bfb61f8",
+        "matches": 30,
+        "terminal_tick": 3214,
+        "terminal_digest": "aac146c6e46ea067",
+        "terminal_bytes": 3406,
+        "median_match_ms": 23.1735905,
+        "step_percentiles_us": {"p50": 5.063, "p95": 16.6875, "p99": 44.7505},
+        "total_step_samples": 6030
+      },
+      {
+        "seed": 41,
+        "replay_sha256": "685025f478c2d15817914342c204fd878ba7e03aa028cf39acfd4a0bffcd5ac6",
+        "matches": 30,
+        "terminal_tick": 3601,
+        "terminal_digest": "5b4f9d94dbb4c59f",
+        "terminal_bytes": 2828,
+        "median_match_ms": 24.1843715,
+        "step_percentiles_us": {"p50": 5.25, "p95": 15.6875, "p99": 27.2085},
+        "total_step_samples": 6780
+      }
+    ],
+    "seed_variants_field_diff": ["rndSeed"],
+    "all_seed_terminal_serializers_stable_within_batch": true
+  },
+  "profiling_limits": {
+    "new_perf_callchain_profile": false,
+    "reason": "guest perf requires sudo; non-interactive guest authentication failed and SSH is unavailable",
+    "hardware_pmu_cycles_instructions_cache": "unsupported in this virtual PMU",
+    "optimization_applied": false,
+    "performance_gain_claimed": false
+  },
+  "coverage_limits": [
+    "one verified eight-card deck only",
+    "same fixed 52-command schedule across seeds",
+    "seed-specific terminal identity is validated per batch; cross-seed digest equality is not expected",
+    "no snapshot trace; serialized terminal digest is not complete game-state equivalence",
+    "no new dynamic attribution of the third-party spatial query",
+    "whole-goal readiness and model strength remain unverified"
+  ],
+  "validation": {
+    "summarizer_tests": "20 passed",
+    "public_checks": "1104 passed, 42 skipped",
+    "main_engine_checks": "211 passed",
+    "public_snapshot_files_verified": 2882,
+    "gitleaks": "passed",
+    "concurrency_tested": false
+  }
+}
