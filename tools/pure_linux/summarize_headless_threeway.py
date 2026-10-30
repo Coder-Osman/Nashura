@@ -36,9 +36,10 @@ def validate_terminal_archive(path, archive, reset):
         raise ValueError("correctness terminal identity differs from archived serializer")
 
 
-def validate_plan(plan, settings, variant, directory):
+def validate_plan(plan, settings, variant, directory, *, variants=None):
+    variants = VARIANTS if variants is None else variants
     env = plan["environment"]
-    if (plan["native_optimization"] != VARIANTS[variant] or plan["native_phases"]
+    if (plan["native_optimization"] != variants[variant] or plan["native_phases"]
             or plan["snapshot_trace"] or plan["record_hand_actions"]
             or plan["benchmark_repeats"] != 116 or plan["step_sample_every"] != 16
             or plan.get("thread_resources", False) or plan.get("serial_batches", 1) != 1
@@ -51,8 +52,8 @@ def validate_plan(plan, settings, variant, directory):
         "NASHURA_QUIET": "1", "NASHURA_BENCHMARK_MINIMAL": "1",
         "NASHURA_RESET_REPEATS": "116", "NASHURA_STEP_SAMPLE_EVERY": "16",
         "NASHURA_MEMORY_SAMPLE": "1", "NASHURA_TASK_TIMEOUT_MS": "120000"}
-    if VARIANTS[variant] is not None:
-        expected_env["NASHURA_NATIVE_OPTIMIZATION"] = VARIANTS[variant]
+    if variants[variant] is not None:
+        expected_env["NASHURA_NATIVE_OPTIMIZATION"] = variants[variant]
     if env != expected_env:
         raise ValueError("wrong benchmark environment")
     closure = Path(settings["closure"])

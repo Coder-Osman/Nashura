@@ -142,8 +142,7 @@ def test_native_optimization_is_explicit_and_version_limited(inputs, monkeypatch
 @pytest.mark.parametrize("optimization", runner.OPTIMIZATION_MARKERS)
 def test_optimized_run_requires_one_successful_native_installation(inputs, monkeypatch, markers, optimization):
     settings, output = inputs
-    marker = ("HEADLESS_NATIVE_OPTIMIZATION name=" + optimization
-              + " installed=1 " + runner.OPTIMIZATION_MARKERS[optimization] + "\n")
+    marker = "\n".join(runner.optimization_installation_markers(optimization)) + "\n"
     def execute(command, *, env, stdout, stderr):
         stdout.write((marker * markers + COMPLETE).encode())
         return SimpleNamespace(returncode=0)

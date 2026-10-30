@@ -35,7 +35,15 @@ OPTIMIZATION_MARKERS = {
     "hot-getters-v1": "sites=11",
     "component-getters-v1": "sites=52",
     "saturated-distance-v1": "functions=2",
+    "hot-distance-v1": "getter_sites=11 distance_functions=2",
 }
+
+
+def optimization_installation_markers(optimization):
+    names = (("hot-getters-v1", "saturated-distance-v1", optimization)
+             if optimization == "hot-distance-v1" else (optimization,))
+    return ["HEADLESS_NATIVE_OPTIMIZATION name=" + name + " installed=1 "
+            + OPTIMIZATION_MARKERS[name] for name in names]
 
 
 def sha256(path):
@@ -226,9 +234,9 @@ def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=No
     final_tick = verify_completion(result.returncode, (output / "stdout.log").read_text(),
                                    (benchmark_repeats or 1) * serial_batches)
     if native_optimization is not None:
-        marker = ("HEADLESS_NATIVE_OPTIMIZATION name=" + native_optimization
-                  + " installed=1 " + OPTIMIZATION_MARKERS[native_optimization])
-        if (output / "stdout.log").read_text().splitlines().count(marker) != 1:
+        markers = [line for line in (output / "stdout.log").read_text().splitlines()
+                   if line.startswith("HEADLESS_NATIVE_OPTIMIZATION ")]
+        if markers != optimization_installation_markers(native_optimization):
             raise ValueError("missing unique native optimization installation evidence")
     if native_phases:
         from summarize_headless_native_phases import summarize as summarize_native_phases

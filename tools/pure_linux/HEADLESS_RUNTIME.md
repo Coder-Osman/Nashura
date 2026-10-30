@@ -142,7 +142,8 @@ runner 验证正常原生终局及队列/计数，写 native-phases.json。
 
 ## 实验性 native 优化
 
-`--native-optimization` 每次只选择一个候选，默认关闭；多个候选不叠加。
+`--native-optimization` 每次选择一个显式候选，默认关闭；组合仅通过下述
+`hot-distance-v1` 入口启用，不能任意叠加其他候选。
 本机 ARM64 Linux guest 没有 QEMU 指令翻译层；本节与历史 x86 服务器的 QEMU
 复测分开。Linux guest 仍承载现有 ELF/Bionic/ART 依赖，不是 macOS 原生移植。
 
@@ -162,6 +163,22 @@ check_saturated_distance.c 用现有 ARM64/Bionic namespace 执行原始机器�
 
 原始 evidence 由操作者本地持有；公开摘要只含脱敏计数和 SHA。候选收益、批次
 顺序和统计边界见[阶段报告](../../agent-handoff/SERIAL_ARM64_SATURATED_DISTANCE_2026-10-31.md)。
+
+### 旧 getter 与饱和距离的显式组合
+
+`--native-optimization hot-distance-v1` 顺序调用旧 11 点 getter 与两个饱和距离
+安装器，保持各自原始字节 guard、RW/RX 分离与缓存刷新；两组写入范围不重叠。
+子安装失败即中止一次性进程，安装完成前不进入首局。三个安装标记必须精确匹配
+getter、距离、组合的顺序，各出现一次；缺失、重复或额外标记均拒绝验收。
+默认关闭，不包含 52 点组件扩展或空间候选，普通调用语义及固定构建边界沿用子候选。
+
+`summarize_headless_fourway.py ROOT --reference REFERENCE --output NEW_JSON` 从
+操作者本地原始归档独立复算四路径：a 原始、b 旧 getter、c 距离、d 两者组合。
+ROOT 的相邻 metadata 目录必须保存控制进程正常退出证据。16 个完整局门逐一
+解压 gzip serializer 归档，核对每帧、已观测状态与历史原始局；64 批按 abdc、
+bcad、cdba、dacb 顺序，每批 16 warmup + 100 measured。验证精确命令、环境、
+输入身份、终态、全部安装标记和保存摘要后，以四个批次为比较单位。报告分别给出
+组合相对原始及两单项的结果；不把历史百分比相加，终态门也不代替全帧门。
 
 ### 空间查询边界
 

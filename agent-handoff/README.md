@@ -2,6 +2,7 @@
 
 本目录用于跨助手、跨Codex任务共享**文字任务与证据**，不属于游戏引擎、Replay、权重或部署代码。与现有 `AGENTS.md`、冻结规范同级协作；不能替代它们。所有记录应注明日期、commit SHA、版本与证据状态。
 
+- [SERIAL_ARM64_HOT_DISTANCE_2026-10-31.md](SERIAL_ARM64_HOT_DISTANCE_2026-10-31.md)：旧 getter 与饱和距离显式组合、16 个完整局全帧门及 64 批平衡顺序四路径增量验证。
 - [SERIAL_ARM64_SATURATED_DISTANCE_2026-10-31.md](SERIAL_ARM64_SATURATED_DISTANCE_2026-10-31.md)：整数饱和距离指令对照、八个完整局门及四组交错串行收益。
 - [SERIAL_ARM64_THREAD_RESOURCES_2026-10-31.md](SERIAL_ARM64_THREAD_RESOURCES_2026-10-31.md)：线程资源边界、硬件 PMU 能力与 41280 局有界同进程串行稳定性。
 - [SERIAL_ARM64_COMPONENT_GETTERS_2026-10-31.md](SERIAL_ARM64_COMPONENT_GETTERS_2026-10-31.md)：对象临时分配/组件归因、16 完整局全帧复核、72 批三路径串行测量及未证实的增量收益。
