@@ -1,5 +1,17 @@
 # Nashura
 
+## 2026-10-31：串行 step 采样相位复核
+
+headless benchmark 现在在串行 reset 间轮转每 16 tick 的采样相位，并验证日志中的
+phase、phase period 与样本数。ARM64 guest 完成 16 局预热、30 局测量；46 局均到
+tick 3601，serializer 终态摘要一致。当前测量中位 68.67 ms、吞吐 52,404 tick/s，
+step p50/p95/p99 为 12.81/43.96/62.77 μs。与 10 月 30 日旧记录差异明显，observer
+与计时路径不同，不作前后性能结论；本轮没有改引擎。多卡组覆盖、优化收益和整体
+readiness 仍未完成。纯 Linux `1189 passed、1 skipped`、公开检查 `1104 passed、42 skipped`、
+主引擎 `211 passed`，公开源码清单 2,885 项和 gitleaks 均通过。详见
+[阶段报告](agent-handoff/SERIAL_ARM64_SAMPLE_PHASE_2026-10-31.md)
+和[机器证据](agent-handoff/serial-arm64-sample-phase-evidence-20261031.json)。
+
 ## 2026-10-30：空间查询调用者静态审计
 
 继续反汇编已归属的 ARM64 热点：坐标和范围进入二维网格候选查询；同一包装器有四个

@@ -28,6 +28,8 @@ def summarize(text, repeats=30, expected_tick=3601, expected_digest='6c959326dd2
         raise ValueError('incomplete or duplicated match records')
     sample_counts = []
     sample_intervals = []
+    sample_phases = []
+    sample_phase_periods = []
     for index, (metric, reset, end) in enumerate(zip(metrics, resets, ends), 1):
         if metric['completed'] != expected_tick or metric['trace'] != 0:
             raise ValueError('wrong tick count or trace enabled')
@@ -48,13 +50,25 @@ def summarize(text, repeats=30, expected_tick=3601, expected_digest='6c959326dd2
             raise ValueError('native finalization missing')
         sample_count = int(metric.get('sample_count', metric['completed']))
         sample_every = int(metric.get('sample_every', '1'))
-        if (sample_every < 1 or sample_count != (int(metric['completed']) + sample_every - 1) // sample_every):
+        if sample_every < 1:
+            raise ValueError('step timing sample contract failed')
+        completed = int(metric['completed'])
+        sample_phase = int(metric.get('sample_phase', '0'))
+        sample_phase_period = int(metric.get('sample_phase_period', str(sample_every)))
+        expected_phase = (index - 1) % sample_phase_period if sample_phase_period > 0 else -1
+        expected_count = (completed - sample_phase + sample_every - 1) // sample_every \
+            if sample_phase < completed else 0
+        if (not 1 <= sample_phase_period <= sample_every
+                or not 0 <= sample_phase < sample_phase_period or sample_count != expected_count
+                or ('sample_phase' in metric and sample_phase != expected_phase)):
             raise ValueError('step timing sample contract failed')
         if ('loaded_commands' in metric and 'injected_commands' in metric
                 and int(metric['loaded_commands']) + int(metric['injected_commands']) <= 0):
             raise ValueError('benchmark action sequence is empty')
         sample_counts.append(sample_count)
         sample_intervals.append(sample_every)
+        sample_phases.append(sample_phase)
+        sample_phase_periods.append(sample_phase_period)
     if (completion not in text.splitlines()
             or 'HEADLESS_REJECTED_PM_CALLS=0' not in text.splitlines()
             or 'HEADLESS_BATTLE_READY=UNVERIFIED' not in text.splitlines()):
@@ -88,9 +102,11 @@ def summarize(text, repeats=30, expected_tick=3601, expected_digest='6c959326dd2
                     'p90': percentile([row[key + '_ns'] / 1000 for row in measured], 90)}
                     for key in ('p50', 'p95', 'p99')},
                 step_sample_every_ticks=sample_intervals[0],
+                step_sample_phase_by_match=sample_phases,
+                step_sample_phase_period_by_match=sample_phase_periods,
                 step_samples_per_match_median=statistics.median(sample_counts[warmup_matches:]),
                 total_step_samples=sum(sample_counts[warmup_matches:]),
-                step_percentile_method='median of per-match stratified sampled step percentiles',
+                step_percentile_method='median of per-match percentiles from deterministic rotating-phase samples',
                 peak_rss_mib=max(row['peak_rss_kb'] for row in measured) / 1024,
                 sampled_rss_peak_mib=sampled_peak('rss_kb'),
                 sampled_pss_peak_mib=sampled_peak('pss_kb'),

@@ -49,7 +49,9 @@ def test_unavailable_proc_memory_is_null_not_negative_memory():
 
 def repeated_log(iteration, start):
     text = log()
-    text = text.replace("wall_ns=1000 step_total_ns=900", "wall_ns=1000 step_total_ns=900 sample_count=226 sample_every=16 loaded_commands=52 injected_commands=0")
+    phase = (iteration - 1) % 16
+    sample_count = (3601 - phase + 15) // 16
+    text = text.replace("wall_ns=1000 step_total_ns=900", f"wall_ns=1000 step_total_ns=900 sample_count={sample_count} sample_every=16 sample_phase={phase} sample_phase_period=16 loaded_commands=52 injected_commands=0")
     text = text.replace("start_ns=100 end_ns=1100", f"start_ns={start} end_ns={start + 1000}")
     text = text.replace("iteration=1 repeats=1", f"iteration={iteration} repeats=2")
     return text
@@ -82,8 +84,10 @@ def test_minimal_sampled_benchmark_excludes_warmup_and_checks_nonempty_actions()
     assert result['schema'] == 'nashura.headless-benchmark.v2'
     assert result['warmup_matches'] == 1
     assert result['measured_matches'] == 1
-    assert result['total_step_samples'] == 226
+    assert result['total_step_samples'] == 225
     assert result['step_sample_every_ticks'] == 16
+    assert result['step_sample_phase_by_match'] == [0, 1]
+    assert result['step_sample_phase_period_by_match'] == [16, 16]
     assert result['step_percentiles_us']['p95'] == 0.02
     assert result['median_match_ms'] == 0.001
     with pytest.raises(ValueError, match='action sequence'):
@@ -94,3 +98,15 @@ def test_minimal_sampled_benchmark_rejects_wrong_sample_count():
     text = repeated_log(1, 100) + chr(10) + repeated_log(2, 1200)
     with pytest.raises(ValueError, match='sample contract'):
         summarize(text.replace('sample_count=226', 'sample_count=225'), 2)
+
+
+def test_minimal_sampled_benchmark_rejects_wrong_rotating_phase():
+    text = repeated_log(1, 100) + chr(10) + repeated_log(2, 1200)
+    with pytest.raises(ValueError, match='sample contract'):
+        summarize(text.replace('sample_phase=1', 'sample_phase=2'), 2)
+
+
+def test_minimal_sampled_benchmark_rejects_invalid_phase_period():
+    text = repeated_log(1, 100) + chr(10) + repeated_log(2, 1200)
+    with pytest.raises(ValueError, match='sample contract'):
+        summarize(text.replace('sample_phase_period=16', 'sample_phase_period=17'), 2)

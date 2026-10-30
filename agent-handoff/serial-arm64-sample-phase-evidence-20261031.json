@@ -1,0 +1,90 @@
+{
+  "schema": "nashura.serial-arm64-sample-phase-evidence.v1",
+  "date": "2026-10-31",
+  "status": "BENCHMARK_SAMPLING_METHOD_VALIDATED_LIMITED",
+  "whole_goal_complete": false,
+  "guest": {
+    "os": "Ubuntu 22.04.5 ARM64",
+    "vcpus": 2,
+    "memory_mib": 6144,
+    "preflight_load_average": [0.02, 0.03, 0.0],
+    "preflight_available_memory_mib": 2578,
+    "swap_mib": 0,
+    "concurrent_workloads": 0
+  },
+  "inputs": {
+    "seed": 1,
+    "deck_count": 1,
+    "loaded_commands": 52,
+    "replay_sha256": "fec6da6425549e1c62ef3709a3517826b4000ee27f98566122d0966ec6e0d0f8",
+    "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+    "observer_sha256": "39c5a13103daeb41eaee3455c92a6e37a9e0c0fedf5d013f68b3342821f80ca7"
+  },
+  "measurement": {
+    "processes": 1,
+    "warmup_matches": 16,
+    "measured_matches": 30,
+    "step_sample_every_ticks": 16,
+    "step_sample_phase_period": 16,
+    "measured_phase_sequence": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    "total_step_samples": 6752,
+    "step_percentile_method": "median of per-match sampled percentiles",
+    "snapshot_trace": false,
+    "frida": false,
+    "rea": false,
+    "ghidra": false,
+    "strace": false,
+    "per_tick_detailed_logs": false,
+    "memory_rollup_per_match_after_timing": true
+  },
+  "results": {
+    "final_tick_all_matches": 3601,
+    "terminal_digest_all_matches": "6c959326dd2f09cc",
+    "terminal_bytes_all_matches": 3091,
+    "match_median_ms": 68.6722555,
+    "match_p50_p95_p99_ms": [68.666318, 70.160448, 70.216242],
+    "ticks_per_second": 52404.418201315195,
+    "step_p50_p95_p99_us": [12.8125, 43.9595, 62.773],
+    "step_p50_repeat_p10_p90_us": [10.375, 11.958],
+    "step_p95_repeat_p10_p90_us": [33.71, 48.46],
+    "step_p99_repeat_p10_p90_us": [44.335, 114.712],
+    "step_samples_per_match_median": 225,
+    "peak_rss_mib": 258.85546875
+  },
+  "evidence": {
+    "exit_code": 0,
+    "stdout_sha256": "2be8304bbcc01f0f1b9374cba719620b2213731e8e65d897206b19882647905e",
+    "stderr_sha256": "385eeba10d646980e927ec84087adf590beedc4879fb3a2feeb35a6c4a86b60a",
+    "plan_sha256": "41ac2ac7553ed187b79e578a4d6c0bdd1b8c3adaabd6c772a34a88b36dc20022",
+    "result_sha256": "c8db4384112f9c12bfe7ca4400230612d62d250afa0fc3e5d845299374fd21f5",
+    "summary_sha256": "58799f277de097c16a75bd5dd9b4baa48f868b76f02892d9ad5e9c26c2764796"
+  },
+  "validation": {
+    "python_3_13_5": {
+      "pure_linux_passed": 1189,
+      "pure_linux_skipped": 1,
+      "public_passed": 1104,
+      "public_skipped": 42,
+      "main_engine_passed": 211
+    },
+    "python_3_9_6_initial_run": {
+      "passed": 1172,
+      "skipped": 2,
+      "environment_failures": 16,
+      "reason": "cryptography module absent"
+    },
+    "arm64_ndk_compile": "passed",
+    "public_snapshot_verified_files": 2885,
+    "gitleaks": "no leaks found",
+    "git_diff_check": "passed"
+  },
+  "comparability": {
+    "previous_reported_match_median_ms": 28.088,
+    "direct_before_after_comparison": false,
+    "reason": "observer and timing implementations differ; two independent new 46-match runs also varied",
+    "optimization_claim": false
+  },
+  "overall_readiness": "UNVERIFIED"
+}

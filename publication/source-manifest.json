@@ -1,5 +1,6 @@
 {
   "schema": "hashura.public-source-snapshot.v1",
+  "file_count": 2885,
   "files": [
     {
       "path": ".tmp_remote_edit/compact_patch/resident.cpp",
@@ -17,16 +18,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "0cc028cbf274f64d3e511ec17d2c8321f7a523694c877a198a72ef45749586bc",
-      "bytes": 66265,
-      "source_sha256": "0cc028cbf274f64d3e511ec17d2c8321f7a523694c877a198a72ef45749586bc",
+      "sha256": "81cda8b1b5a3403e4457e731855458e8013e0e78fe4286ff41915f4046cc2508",
+      "bytes": 67092,
+      "source_sha256": "81cda8b1b5a3403e4457e731855458e8013e0e78fe4286ff41915f4046cc2508",
       "transformations": []
     },
     {
       "path": "README.md",
-      "sha256": "fd38a4ec31b451576f86d0d9849c03bab48f3eb4c49f3f9ec11c28806ea76bd1",
-      "bytes": 64484,
-      "source_sha256": "fd38a4ec31b451576f86d0d9849c03bab48f3eb4c49f3f9ec11c28806ea76bd1",
+      "sha256": "824db517c3140c7d1279c082bd61a62be40aeb941ad86ac4b4997bf1d1b06bdc",
+      "bytes": 65387,
+      "source_sha256": "824db517c3140c7d1279c082bd61a62be40aeb941ad86ac4b4997bf1d1b06bdc",
       "transformations": []
     },
     {
@@ -11391,9 +11392,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "c08f52d04fb4495f42b2aa156c917f33cf506734e1e6e2ee66b321091e7f3e20",
-      "bytes": 102951,
-      "source_sha256": "c08f52d04fb4495f42b2aa156c917f33cf506734e1e6e2ee66b321091e7f3e20",
+      "sha256": "c7218eb82caf5c71f435c45ae10792539fd60ae4798b3ddefd4889bd1d001e98",
+      "bytes": 104316,
+      "source_sha256": "c7218eb82caf5c71f435c45ae10792539fd60ae4798b3ddefd4889bd1d001e98",
       "transformations": []
     },
     {
@@ -17805,129 +17806,66 @@
     },
     {
       "path": "publication/checks-affordability.xml",
-      "sha256": "e42e8149ef767e19429235900465286941b4b9ed71d25d148a67c4a92256fc56",
+      "sha256": "078942614b471e3a838c19d010f8062b24e4f3a63edfec85c06484fcf4cbfe66",
       "bytes": 4340,
-      "source_sha256": "e42e8149ef767e19429235900465286941b4b9ed71d25d148a67c4a92256fc56",
-      "transformations": [
-        "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage",
-        "2026-10-29: refresh pytest report for system-service dependency stage",
-        "2026-10-30: refresh pytest report after headless diagnostic verification",
-        "2026-10-30: refresh pytest report after serial ARM64 CPU profile analysis",
-        "2026-10-30: refresh pytest report after serial warm-step and seed verification"
-      ]
+      "source_sha256": "078942614b471e3a838c19d010f8062b24e4f3a63edfec85c06484fcf4cbfe66",
+      "transformations": []
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
-      "sha256": "6741ddfd3ec65cd759b627b51ff5ad4ea5e43ed275ad50ae523cbbe51df012ec",
+      "sha256": "585214caceefd054c9002d56be60d6174f04d7c4027edf5f066c5d32bba0a0ca",
       "bytes": 12024,
-      "source_sha256": "6741ddfd3ec65cd759b627b51ff5ad4ea5e43ed275ad50ae523cbbe51df012ec",
-      "transformations": [
-        "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage",
-        "2026-10-29: refresh pytest report for system-service dependency stage",
-        "2026-10-30: refresh pytest report after headless diagnostic verification",
-        "2026-10-30: refresh pytest report after serial ARM64 CPU profile analysis",
-        "2026-10-30: refresh pytest report after serial warm-step and seed verification"
-      ]
+      "source_sha256": "585214caceefd054c9002d56be60d6174f04d7c4027edf5f066c5d32bba0a0ca",
+      "transformations": []
     },
     {
       "path": "publication/checks-command-coordinates.xml",
-      "sha256": "3ce22f3fcfc5a63f4e73722663b12e5aac4a72ab7c545cf7a2ef353a9dcb852b",
+      "sha256": "0f2b64b3c2d4d569a6587ea082274ea751430be405cbec7da986a5c744e98648",
       "bytes": 8184,
-      "source_sha256": "3ce22f3fcfc5a63f4e73722663b12e5aac4a72ab7c545cf7a2ef353a9dcb852b",
-      "transformations": [
-        "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage",
-        "2026-10-29: refresh pytest report for system-service dependency stage",
-        "2026-10-30: refresh pytest report after headless diagnostic verification",
-        "2026-10-30: refresh pytest report after serial ARM64 CPU profile analysis",
-        "2026-10-30: refresh pytest report after serial warm-step and seed verification"
-      ]
+      "source_sha256": "0f2b64b3c2d4d569a6587ea082274ea751430be405cbec7da986a5c744e98648",
+      "transformations": []
     },
     {
       "path": "publication/checks-dispatch-command.xml",
-      "sha256": "93dbfb74f94f01f43101d331cbd2ed1c308f920c0d2436b846e7fb3952e058d4",
+      "sha256": "73a08a356d34f4874d8c4b9d0ca22699029711a5c826bff1b202b9ac26e97331",
       "bytes": 6406,
-      "source_sha256": "93dbfb74f94f01f43101d331cbd2ed1c308f920c0d2436b846e7fb3952e058d4",
-      "transformations": [
-        "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage",
-        "2026-10-29: refresh pytest report for system-service dependency stage",
-        "2026-10-30: refresh pytest report after headless diagnostic verification",
-        "2026-10-30: refresh pytest report after serial ARM64 CPU profile analysis",
-        "2026-10-30: refresh pytest report after serial warm-step and seed verification"
-      ]
+      "source_sha256": "73a08a356d34f4874d8c4b9d0ca22699029711a5c826bff1b202b9ac26e97331",
+      "transformations": []
     },
     {
       "path": "publication/checks-live-command.xml",
-      "sha256": "b76d6e6916023ecb9d95637bbcc95ae85cf2ee803042f36741f83340ce1ee21d",
+      "sha256": "2ada3c426282a65fc3a12251568e74bcc0e64653cfc2d17f19e62b3f99426926",
       "bytes": 6370,
-      "source_sha256": "b76d6e6916023ecb9d95637bbcc95ae85cf2ee803042f36741f83340ce1ee21d",
-      "transformations": [
-        "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage",
-        "2026-10-29: refresh pytest report for system-service dependency stage",
-        "2026-10-30: refresh pytest report after headless diagnostic verification",
-        "2026-10-30: refresh pytest report after serial ARM64 CPU profile analysis",
-        "2026-10-30: refresh pytest report after serial warm-step and seed verification"
-      ]
+      "source_sha256": "2ada3c426282a65fc3a12251568e74bcc0e64653cfc2d17f19e62b3f99426926",
+      "transformations": []
     },
     {
       "path": "publication/checks-position-guards.xml",
-      "sha256": "70c4c844d891ea89da57236afacb7112904ef5bfb036ea824037a5f9b9a37cfe",
+      "sha256": "04e51d128d1c3b4fcbb15c694ad2886daa132cc1cc5fce4e63f5532f9d2cd1bb",
       "bytes": 4244,
-      "source_sha256": "70c4c844d891ea89da57236afacb7112904ef5bfb036ea824037a5f9b9a37cfe",
-      "transformations": [
-        "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage",
-        "2026-10-29: refresh pytest report for system-service dependency stage",
-        "2026-10-30: refresh pytest report after headless diagnostic verification",
-        "2026-10-30: refresh pytest report after serial ARM64 CPU profile analysis",
-        "2026-10-30: refresh pytest report after serial warm-step and seed verification"
-      ]
+      "source_sha256": "04e51d128d1c3b4fcbb15c694ad2886daa132cc1cc5fce4e63f5532f9d2cd1bb",
+      "transformations": []
     },
     {
       "path": "publication/checks-public.xml",
-      "sha256": "684be9fcfdc11ff80633b6580c54e8b45e1d55dfaeef85489ef1e76f6986b2ce",
+      "sha256": "d8da1432f1d745545e56d92fb4a9c1e10c3f67e22b33aaa8ffa870a8196d977c",
       "bytes": 161225,
-      "source_sha256": "684be9fcfdc11ff80633b6580c54e8b45e1d55dfaeef85489ef1e76f6986b2ce",
-      "transformations": [
-        "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage",
-        "2026-10-29: refresh pytest report for system-service dependency stage",
-        "2026-10-30: refresh pytest report after headless diagnostic verification",
-        "2026-10-30: refresh pytest report after serial ARM64 CPU profile analysis",
-        "2026-10-30: refresh pytest report after serial warm-step and seed verification"
-      ]
+      "source_sha256": "d8da1432f1d745545e56d92fb4a9c1e10c3f67e22b33aaa8ffa870a8196d977c",
+      "transformations": []
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
-      "sha256": "c96f1d658ca8f3822c15ad9afcfbaae95a639001f267f09d6c300fd4393022ab",
+      "sha256": "0ae7469dfdf7f25b60dc3821e6e578e7ec7aad7fae8d87a379bd5ded7064da5a",
       "bytes": 6383,
-      "source_sha256": "c96f1d658ca8f3822c15ad9afcfbaae95a639001f267f09d6c300fd4393022ab",
-      "transformations": [
-        "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage",
-        "2026-10-29: refresh pytest report for system-service dependency stage",
-        "2026-10-30: refresh pytest report after headless diagnostic verification",
-        "2026-10-30: refresh pytest report after serial ARM64 CPU profile analysis",
-        "2026-10-30: refresh pytest report after serial warm-step and seed verification"
-      ]
+      "source_sha256": "0ae7469dfdf7f25b60dc3821e6e578e7ec7aad7fae8d87a379bd5ded7064da5a",
+      "transformations": []
     },
     {
       "path": "publication/checks-selection-timeout.xml",
-      "sha256": "44b74ab461860da9e9ae02bb2cc47037ed03c2aadad98cb5086f05651680a56d",
-      "bytes": 14581,
-      "source_sha256": "44b74ab461860da9e9ae02bb2cc47037ed03c2aadad98cb5086f05651680a56d",
-      "transformations": [
-        "2026-10-29: refresh pytest report after public verification",
-        "2026-10-29: refresh pytest report for original init property-service stage",
-        "2026-10-29: refresh pytest report for system-service dependency stage",
-        "2026-10-30: refresh pytest report after headless diagnostic verification",
-        "2026-10-30: refresh pytest report after serial ARM64 CPU profile analysis",
-        "2026-10-30: refresh pytest report after serial warm-step and seed verification"
-      ]
+      "sha256": "e9537b1339ddd1cadbc949ea46e986ca8633f49159d3c3b36b413274f77bd332",
+      "bytes": 14580,
+      "source_sha256": "e9537b1339ddd1cadbc949ea46e986ca8633f49159d3c3b36b413274f77bd332",
+      "transformations": []
     },
     {
       "path": "tools/pure_linux/ArtEngineLoadProbe.java",
@@ -20026,9 +19964,9 @@
     },
     {
       "path": "tools/pure_linux/art_headless_task_bridge.c",
-      "sha256": "acd3bb99fb3d93ba324150b21238f7453c440a873ca2d52df871609d012c5282",
-      "bytes": 64336,
-      "source_sha256": "acd3bb99fb3d93ba324150b21238f7453c440a873ca2d52df871609d012c5282",
+      "sha256": "d85497bf0b55a18e2e5c325a4d34a38d9315f99753b88eb32ef60310e516ac36",
+      "bytes": 65250,
+      "source_sha256": "d85497bf0b55a18e2e5c325a4d34a38d9315f99753b88eb32ef60310e516ac36",
       "transformations": []
     },
     {
@@ -20089,9 +20027,9 @@
     },
     {
       "path": "tools/pure_linux/HEADLESS_RUNTIME.md",
-      "sha256": "07595c5063d0f2b9da7c8428095b07eedd79fe7b2ce97447e8ca22a4095a0f80",
-      "bytes": 6195,
-      "source_sha256": "07595c5063d0f2b9da7c8428095b07eedd79fe7b2ce97447e8ca22a4095a0f80",
+      "sha256": "1473d09b39713f5dfe007293a382773974c922a691b1b3eb1cf3b6644567c969",
+      "bytes": 6676,
+      "source_sha256": "1473d09b39713f5dfe007293a382773974c922a691b1b3eb1cf3b6644567c969",
       "transformations": []
     },
     {
@@ -20187,16 +20125,16 @@
     },
     {
       "path": "tools/pure_linux/summarize_headless_benchmark.py",
-      "sha256": "5415f08cc0ee9d15fe1af892b257a729061684e4d3f8c00f20b316ef45544261",
-      "bytes": 7574,
-      "source_sha256": "5415f08cc0ee9d15fe1af892b257a729061684e4d3f8c00f20b316ef45544261",
+      "sha256": "9d113b3cab12d4fe5c54e0d5c0880d0ec42a672d8c645ae319eb6fa6db376c3d",
+      "bytes": 8519,
+      "source_sha256": "9d113b3cab12d4fe5c54e0d5c0880d0ec42a672d8c645ae319eb6fa6db376c3d",
       "transformations": []
     },
     {
       "path": "tools/pure_linux/test_summarize_headless_benchmark.py",
-      "sha256": "34a2ea9683737f409e3db5442e7c638bcd97207f506541d3c011bfd0380ae208",
-      "bytes": 4399,
-      "source_sha256": "34a2ea9683737f409e3db5442e7c638bcd97207f506541d3c011bfd0380ae208",
+      "sha256": "4665bd24d52dbfce445f66d223bf6eded45baf6aa4ecf123cee044e23e98189a",
+      "bytes": 5208,
+      "source_sha256": "4665bd24d52dbfce445f66d223bf6eded45baf6aa4ecf123cee044e23e98189a",
       "transformations": []
     },
     {
@@ -20275,23 +20213,27 @@
       "bytes": 5046,
       "source_sha256": "116ac446c9da935e638ea5cbc30df27e586155007f8c18133426a82977f99d65",
       "transformations": []
+    },
+    {
+      "path": "agent-handoff/README.md",
+      "sha256": "28d5c15f99591f07236b26471095d265c73dc045345368f92934a19b5788c5ac",
+      "bytes": 2250,
+      "source_sha256": "28d5c15f99591f07236b26471095d265c73dc045345368f92934a19b5788c5ac",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/SERIAL_ARM64_SAMPLE_PHASE_2026-10-31.md",
+      "sha256": "29b88a2170c96fd2990cba03896ab41b952f7503725e2332f98f1021cc65b9f6",
+      "bytes": 4258,
+      "source_sha256": "29b88a2170c96fd2990cba03896ab41b952f7503725e2332f98f1021cc65b9f6",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/serial-arm64-sample-phase-evidence-20261031.json",
+      "sha256": "3e51cf7d02aa632214c09cddf8e5665527eafdff1cbd9f990099e557a4f03756",
+      "bytes": 3407,
+      "source_sha256": "3e51cf7d02aa632214c09cddf8e5665527eafdff1cbd9f990099e557a4f03756",
+      "transformations": []
     }
-  ],
-  "file_count": 2882,
-  "source_bytes": 36987996,
-  "excluded_selected_candidates": {
-    "binary_or_unselected_format": 14,
-    "local_environment": 1,
-    "oversized_generated_file": 1
-  },
-  "excluded_categories": [
-    "credentials",
-    "private game audits",
-    "raw episodes",
-    "model weights",
-    "third-party game binaries and resources",
-    "generated native binaries",
-    "runtime environments"
-  ],
-  "evidence_note": "Original evidence manifests retain original hashes; omitted external artifacts are not bundled."
+  ]
 }

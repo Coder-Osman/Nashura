@@ -1,5 +1,23 @@
 # 阶段成果与证据索引
 
+## 2026-10-31：串行 step 采样相位复核
+
+benchmark 对重复局的每 16 tick 定时采样增加确定性相位轮转，并在汇总时校验
+phase period、相位顺序和每局样本数。ARM64 Ubuntu guest 使用相同的 seed 1、52 条
+命令、八卡组与固定引擎，单进程运行 16 局预热加 30 局测量；46 局全部到 tick 3601，
+终态 serializer 均为 `6c959326dd2f09cc` / 3091 字节。测量中位每局 68.67 ms、
+吞吐 52,404 tick/s；step p50/p95/p99 为 12.81/43.96/62.77 μs，6752 个 sampled
+step。没有运行并发 workload，也没有改动引擎。
+
+与 10 月 30 日记录的 28.088 ms 中位值明显不同；旧数据来自不同 observer/计时路径，
+两批新 46 局执行自身也出现中位波动。当前数据独立登记，不当作前后对照或优化收益；
+CPU/虚拟机调度差异尚未归因。整体目标、跨卡组复验和优化收益仍未完成。详见
+[阶段报告](../agent-handoff/SERIAL_ARM64_SAMPLE_PHASE_2026-10-31.md)与
+[机器摘要](../agent-handoff/serial-arm64-sample-phase-evidence-20261031.json)。
+Python 3.13.5 下纯 Linux `1189 passed、1 skipped`，公开检查 `1104 passed、42 skipped`，
+主引擎 `211 passed`。系统 Python 3.9.6 首次运行因缺少 `cryptography` 有 16 项环境失败；
+使用已安装该依赖的 Python 3.13.5 完整重跑通过。
+
 ## 2026-10-30：温热串行 step 基线与 seed 复验
 
 ARM64 Ubuntu guest 中使用固定 52 命令和同一八卡组，单进程按序运行；没有并发测量。

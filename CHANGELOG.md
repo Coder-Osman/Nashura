@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-31：串行 step 采样相位复核
+
+- native benchmark 在串行 reset 间轮转采样相位，记录 `sample_phase` 与 period，并在汇总器中核对相位、采样数和动作序列契约。
+- ARM64 guest 16 局预热加 30 局测量，全部 46 局复现相同 tick 3601 终态；6752 个 step 样本覆盖全部 16 个相位。
+- 当前中位每局 68.67 ms；与旧记录差异明显且 observer/计时实现不同，不据此宣称加速；本轮没有改引擎或测并发。
+- Python 3.13.5 下纯 Linux `1189 passed、1 skipped`、公开检查 `1104 passed、42 skipped`、主引擎 `211 passed`；Python 3.9 的依赖缺失失败单独留痕。
+- 公开源码清单 2,885 项、gitleaks 与 `git diff --check` 通过。
+- 多卡组完整对局、优化前后配对及整体 readiness 仍待完成。
+
 ## 2026-10-30：温热串行 step 基线与 seed 复验
 
 - 新增 fixture 专属 serializer 字节长度参数和终局身份参数校验，支持严格汇总随机终局。

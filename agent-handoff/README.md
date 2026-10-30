@@ -2,6 +2,8 @@
 
 本目录用于跨助手、跨Codex任务共享**文字任务与证据**，不属于游戏引擎、Replay、权重或部署代码。与现有 `AGENTS.md`、冻结规范同级协作；不能替代它们。所有记录应注明日期、commit SHA、版本与证据状态。
 
+- [SERIAL_ARM64_SAMPLE_PHASE_2026-10-31.md](SERIAL_ARM64_SAMPLE_PHASE_2026-10-31.md)：串行 warm-step 采样相位复核及旧基线可比性边界。
+
 ## 文件约定
 
 - [ASSISTANT_TO_CODEX_2026-10-22.md](ASSISTANT_TO_CODEX_2026-10-22.md)：此次修复与合并工作的明确请求，包含四项改动和不允许做的事。

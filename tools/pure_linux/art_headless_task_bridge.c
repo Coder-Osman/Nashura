@@ -633,7 +633,8 @@ static int prewarm_location(uintptr_t context, int32_t location_id, int allow_en
     return tilemap_after != NULL;
 }
 
-static int run_game_state_battle(int step_once, int allow_commands, int snapshot_mode) {
+static int run_game_state_battle(int step_once, int allow_commands, int snapshot_mode,
+                                int benchmark_match_index) {
     void *root = NULL, *battle = NULL, *commands = NULL, *injected_commands = NULL, *events = NULL;
     void *context_a, *context_b, *world, *queue;
     void *location_data = NULL, *tilemap_before = NULL, *tilemap_after = NULL;
@@ -766,11 +767,15 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         if (phase.enabled) phase.queue_at_step_start = queue_count(queue);
         int completed = 0;
         int sample_every = 1;
+        int sample_phase = 0;
+        int sample_phase_period = 1;
         int timed_samples = 0;
         if (minimal_benchmark) {
             const char *sample_text = getenv("NASHURA_STEP_SAMPLE_EVERY");
             sample_every = sample_text ? atoi(sample_text) : 16;
             if (sample_every < 1 || sample_every > 10000) return -53;
+            sample_phase_period = sample_every < steps ? sample_every : steps;
+            sample_phase = benchmark_match_index % sample_phase_period;
         }
         const char *trace_file = getenv("NASHURA_TRACE_SNAPSHOTS");
         int trace_fd = trace_file ? open(trace_file, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, 0600) : -1;
@@ -779,7 +784,8 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         uint64_t min_step_ns = UINT64_MAX;
         uint64_t durations[10000];
         if (minimal_benchmark) {
-            int sample_countdown = 0;
+            /* Rotate tick phase across serial repeats to avoid periodic aliasing. */
+            int sample_countdown = sample_phase;
             for (; completed < steps && !finalized; ++completed) {
                 int measure_step = sample_countdown == 0;
                 uint64_t step_start = measure_step ? monotonic_ns() : 0;
@@ -843,6 +849,15 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         }
         uint64_t elapsed_ns = monotonic_ns() - elapsed_start;
         if (minimal_benchmark) {
+            if (!timed_samples) {
+                if (trace_fd >= 0) close(trace_fd);
+                if (snapshot) ((state_snapshot_delete_fn)(base + 0x105e8bc))(snapshot);
+                ((game_destroy_fn)(base + 0x10610b0))(state);
+                ((game_destroy_fn)(base + 0x988844))(state);
+                ((game_delete_fn)(base + 0x17e4b50))(state);
+                release_json_object(root);
+                return -55;
+            }
             tick_after = ((game_tick_fn)(base + 0x1062bc0))(state);
             uintptr_t final_world = pointer_at((uintptr_t)state + 0xa8);
             finalized = final_world ? *(unsigned char *)(final_world + 0x1e0) : -1;
@@ -857,11 +872,12 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         struct rusage usage;
         memset(&usage, 0, sizeof(usage));
         getrusage(RUSAGE_SELF, &usage);
-        printf("HEADLESS_BATTLE_METRICS completed=%d wall_ns=%llu step_total_ns=%llu step_min_ns=%llu step_max_ns=%llu p50_ns=%llu p95_ns=%llu p99_ns=%llu sample_count=%d sample_every=%d loaded_commands=%d injected_commands=%d peak_rss_kb=%ld trace=%d start_ns=%llu end_ns=%llu\n",
+        printf("HEADLESS_BATTLE_METRICS completed=%d wall_ns=%llu step_total_ns=%llu step_min_ns=%llu step_max_ns=%llu p50_ns=%llu p95_ns=%llu p99_ns=%llu sample_count=%d sample_every=%d sample_phase=%d sample_phase_period=%d loaded_commands=%d injected_commands=%d peak_rss_kb=%ld trace=%d start_ns=%llu end_ns=%llu\n",
                completed, (unsigned long long)elapsed_ns, (unsigned long long)total_step_ns,
                (unsigned long long)min_step_ns, (unsigned long long)worst_step_ns,
                (unsigned long long)p50, (unsigned long long)p95, (unsigned long long)p99,
-               timed_samples, sample_every, loaded_command_count, command_count,
+               timed_samples, sample_every, sample_phase, sample_phase_period,
+               loaded_command_count, command_count,
                usage.ru_maxrss, trace_file != NULL, (unsigned long long)elapsed_start,
                (unsigned long long)(elapsed_start + elapsed_ns));
         if (getenv("NASHURA_MEMORY_SAMPLE")) {
@@ -1114,7 +1130,7 @@ static void run_task(struct task *task) {
         uint64_t expected_digest = 0;
         int32_t expected_bytes = 0;
         for (int repeat = 0; repeat < repeats; ++repeat) {
-            task_status = run_game_state_battle(step_once, allow_commands, snapshot_mode);
+            task_status = run_game_state_battle(step_once, allow_commands, snapshot_mode, repeat);
             if (task_status != 1) return;
             int equal = repeat == 0 || (expected_digest == last_battle_digest && expected_bytes == last_battle_bytes);
             printf("HEADLESS_BATTLE_RESET iteration=%d repeats=%d digest=%016llx bytes=%d equal=%d validated=%d\n",

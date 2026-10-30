@@ -66,6 +66,12 @@ stdout、stderr、真实退出码、逐tick归档及结果。完整终局、Java
 结果只声明原生终局已观察，不声明产生或校验了归档。trace关闭不会放宽终局、Java
 正常返回或PM零拒绝条件。诊断开关不改变service依赖边界。
 
+`--benchmark-repeats`启用最小 step 计时并关闭逐tick trace。每局按
+`--step-sample-every`抽样；重复局的起始相位确定性轮转，并在 metrics 行记录
+`sample_phase`/`sample_phase_period`。汇总器核对相位次序、样本数和非空动作序列，
+避免固定 replay 在每次 reset 中只采到相同的 tick 模相位。计时数据仍只覆盖 warm
+step loop；不同 observer 构建或计时实现的结果不应直接作前后性能对照。
+
 ## 已验证与未闭合
 
 v52直接入口exit0，strace零Binder设备打开及零Binder ioctl；v53/v54使用仓库runner，
