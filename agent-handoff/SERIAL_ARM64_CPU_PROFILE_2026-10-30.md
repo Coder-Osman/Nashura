@@ -2,7 +2,7 @@
 
 ## 结论
 
-固定 replay 的 ARM64 headless workload 中，串行 `cpu-clock:u` profile 捕获 2,569 个样本，零丢样。热点函数范围为 `libg.so+0xf34b3c..0xf35064`，共命中 294 个样本，约占 11.45%；单个最热指令 `+0xf34c60` 命中 53 个样本。
+固定 replay 的 ARM64 headless workload 中，串行 `cpu-clock:u` profile 捕获 2,569 个样本，零丢样。热点函数范围为 `libg.so+0xf34b3c..0xf35064`，共命中 294 个样本，占全部样本 11.44%；单个最热指令 `+0xf34c60` 命中 53 个样本。
 
 同一 ARM64 ELF 的 AArch64 反汇编显示，该范围把定点坐标按 `2^10` 缩放到二维格坐标，遍历格区间、读取候选对象列表并执行对象状态/虚调用过滤，随后维护结果集合。基于指令形态，将其归为“空间格候选查询”是有证据的行为推断；具体业务函数名和它代表碰撞、寻敌或其他玩法子系统尚未确认。
 
@@ -17,7 +17,13 @@
 - FDE 边界为 `+0xf34b3c` 至下一函数入口 `+0xf35064`；范围长度 1,320 字节。局部符号缺失，按 guest 映射和 ELF 地址恢复偏移。
 - Python 3.13.5 下纯 Linux 全集 `1183 passed、1 skipped`，公开检查合计 `1104 passed、42 skipped`，主引擎 `211 passed`；公开快照校验和 gitleaks 通过。系统 Python 3.9 的首次收集失败是解释器不兼容，失败 JUnit 留在本机。
 
-机器可读摘要见[证据文件](serial-arm64-cpu-profile-evidence-20261030.json)。原始 perf 数据、完整 callchain、映射文本和第三方 `libg.so` 留在本机临时目录，没有进入公开快照。
+机器可读摘要见[证据文件](serial-arm64-cpu-profile-evidence-20261030.json)。转换后的 perf script（含 callchain）与映射文本、第三方 `libg.so` 留在本机临时目录，没有进入公开快照；原始 guest `perf.data` 未能取回。
+
+## 离线样本复核
+
+2026-10-30 对保留的 `perf script` 与 `PERF_RECORD_MMAP2` 文本做了离线复算，没有重跑 workload。2,569 个事件头均解析出 sample IP；2,079 个事件属于 `Mainloop`，1,890 个 sample IP 映射进 `libg.so`。查询函数范围内的 294 个 sample IP 全部来自 `Mainloop`，热点指令计数复现为 `+0xf34c60`/53、`+0xf34c7c`/43、`+0xf34c78`/40、`+0xf34c90`/35、`+0xf34c98`/27。复算输入 SHA-256 分别记录在机器证据中。
+
+VMware Tools 拒绝读取 guest 内原始 `perf.data`，返回文件权限错误；本次复核只使用已保留的脚本与映射文本，没有修改 guest 文件。较早的 v2 报告虽有 988 个样本，但缺少可核对的 run plan、raw data 和映射 ELF 身份，不与本 profile 合并或用作代码归因依据。
 
 ## 适用边界与后续
 

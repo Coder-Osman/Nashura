@@ -32,6 +32,8 @@ seed 1 的独立 30 局基线每局中位 28.088 ms，step p50/p95/p99 为
 `libg.so+0xf34b3c..0xf35064` 范围命中 294 个样本。AArch64 指令表明它遍历二维
 定点坐标格并筛选候选对象，推断为战斗执行路径中的空间候选查询；具体玩法语义
 仍未知。profile 来自单 guest 串行运行，没有运行并发，也未实施优化。
+离线复核保留的 script/maps 得到相同 294 个命中，且全部来自 `Mainloop`；该复核未重跑
+workload。原始 guest `perf.data` 读取被文件权限拒绝，较早 v2 报告仍未完成输入身份绑定。
 同 fixture 独立基线为每局中位 28.280 ms、p95 30.306 ms，不与采样 profile
 做速度比较。多 seed、跨卡组和整体验收仍未完成。详见[报告](../agent-handoff/SERIAL_ARM64_CPU_PROFILE_2026-10-30.md)
 与[机器摘要](../agent-handoff/serial-arm64-cpu-profile-evidence-20261030.json)。Python 3.13.5

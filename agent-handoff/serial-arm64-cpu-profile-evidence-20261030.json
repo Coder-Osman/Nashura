@@ -43,7 +43,7 @@
     "end_offset_exclusive": "0xf35064",
     "range_bytes": 1320,
     "leaf_samples_in_range": 294,
-    "share_of_all_samples_percent": 11.45,
+    "share_of_all_samples_percent": 11.44,
     "hot_instruction_samples": [
       {"offset": "0xf34c60", "samples": 53},
       {"offset": "0xf34c7c", "samples": 43},
@@ -57,6 +57,27 @@
     ],
     "behavior_inference": "fixed-point x/y cell-range traversal, candidate-list reads, object filters and virtual calls; probable spatial candidate query, exact gameplay role unconfirmed",
     "optimization_applied": false
+  },
+  "offline_reanalysis": {
+    "date": "2026-10-30",
+    "method": "offline parse of retained perf script and MMAP2 records; workload not rerun",
+    "script_sha256": "e806d8aacac0efb6db74466fa0ba2f87e3fbcf6fcd0dc0fa88074ecd77e29ea8",
+    "maps_sha256": "f569425ac7b649ce3f33b9d8d82691d2a8572f6b47e1de8f7eb0efce937c70ba",
+    "parsed_event_records": 2569,
+    "records_with_sample_ip": 2569,
+    "mainloop_records": 2079,
+    "libg_sampled_ips": 1890,
+    "query_range_sample_ips": 294,
+    "query_range_mainloop_sample_ips": 294,
+    "query_range_share_of_all_samples_percent": 11.44,
+    "hot_instruction_samples": [
+      {"offset": "0xf34c60", "samples": 53},
+      {"offset": "0xf34c7c", "samples": 43},
+      {"offset": "0xf34c78", "samples": 40},
+      {"offset": "0xf34c90", "samples": 35},
+      {"offset": "0xf34c98", "samples": 27}
+    ],
+    "raw_perf_data_copy": "VMware guest file permission denied; no host copy recovered"
   },
   "limitations": [
     "one fixture and one replay only",

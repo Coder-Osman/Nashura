@@ -17,9 +17,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "47d10099be8ba0f9d21170de30866d5878c1fa835be129cf6d81e4ca56824497",
-      "bytes": 66039,
-      "source_sha256": "47d10099be8ba0f9d21170de30866d5878c1fa835be129cf6d81e4ca56824497",
+      "sha256": "0cc028cbf274f64d3e511ec17d2c8321f7a523694c877a198a72ef45749586bc",
+      "bytes": 66265,
+      "source_sha256": "0cc028cbf274f64d3e511ec17d2c8321f7a523694c877a198a72ef45749586bc",
       "transformations": []
     },
     {
@@ -11391,9 +11391,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "df281c5b501ff245fe830dfccbb690a52a933dc4c4768eb29a88d4bc988e4e9e",
-      "bytes": 102724,
-      "source_sha256": "df281c5b501ff245fe830dfccbb690a52a933dc4c4768eb29a88d4bc988e4e9e",
+      "sha256": "c08f52d04fb4495f42b2aa156c917f33cf506734e1e6e2ee66b321091e7f3e20",
+      "bytes": 102951,
+      "source_sha256": "c08f52d04fb4495f42b2aa156c917f33cf506734e1e6e2ee66b321091e7f3e20",
       "transformations": []
     },
     {
@@ -17805,9 +17805,9 @@
     },
     {
       "path": "publication/checks-affordability.xml",
-      "sha256": "a7eef107b459d64e96ede4f637ce6051e2c136377a36f0ecfd53a2221f4bdef4",
+      "sha256": "e42e8149ef767e19429235900465286941b4b9ed71d25d148a67c4a92256fc56",
       "bytes": 4340,
-      "source_sha256": "ed6541fac1ee54b0e543d98e0297520b86ca59a95480783eec5c501753352a75",
+      "source_sha256": "e42e8149ef767e19429235900465286941b4b9ed71d25d148a67c4a92256fc56",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "2026-10-29: refresh pytest report for original init property-service stage",
@@ -17819,9 +17819,9 @@
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
-      "sha256": "f94cc25228f0351f746be579b98901095b6c94128cc77a8f82a0077cf91bc6d8",
+      "sha256": "6741ddfd3ec65cd759b627b51ff5ad4ea5e43ed275ad50ae523cbbe51df012ec",
       "bytes": 12024,
-      "source_sha256": "5e7d184f83664142c0d403631627d53e7092168680f9e18a85d5a92f61284a4c",
+      "source_sha256": "6741ddfd3ec65cd759b627b51ff5ad4ea5e43ed275ad50ae523cbbe51df012ec",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "2026-10-29: refresh pytest report for original init property-service stage",
@@ -17833,9 +17833,9 @@
     },
     {
       "path": "publication/checks-command-coordinates.xml",
-      "sha256": "dc4b7cb99ec04718cf4ddf9dbf67e2b6c867ade69b8db9f7d26fd1f8210d568e",
+      "sha256": "3ce22f3fcfc5a63f4e73722663b12e5aac4a72ab7c545cf7a2ef353a9dcb852b",
       "bytes": 8184,
-      "source_sha256": "a4e9cec4d99b75d2ef79b01d993b9a04795e45ea6f661fe8dc73fd81301e8658",
+      "source_sha256": "3ce22f3fcfc5a63f4e73722663b12e5aac4a72ab7c545cf7a2ef353a9dcb852b",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "2026-10-29: refresh pytest report for original init property-service stage",
@@ -17847,9 +17847,9 @@
     },
     {
       "path": "publication/checks-dispatch-command.xml",
-      "sha256": "536174c2596d9e295266f0991f6f11be48c1a2afbcd738ef0c566758240b7e74",
+      "sha256": "93dbfb74f94f01f43101d331cbd2ed1c308f920c0d2436b846e7fb3952e058d4",
       "bytes": 6406,
-      "source_sha256": "f1cbc3b728b4427400c7ba2f6faf366881db6e4ef561b7fd700c2eb612860305",
+      "source_sha256": "93dbfb74f94f01f43101d331cbd2ed1c308f920c0d2436b846e7fb3952e058d4",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "2026-10-29: refresh pytest report for original init property-service stage",
@@ -17861,9 +17861,9 @@
     },
     {
       "path": "publication/checks-live-command.xml",
-      "sha256": "dc7459b68113054731e93670acbcf37ea6058e24026db6e722b34712f6b1eeea",
+      "sha256": "b76d6e6916023ecb9d95637bbcc95ae85cf2ee803042f36741f83340ce1ee21d",
       "bytes": 6370,
-      "source_sha256": "b6dfa3b3539472c83e03eff210e080300abeae05ec7df4c59a1c5a9f9c31fbee",
+      "source_sha256": "b76d6e6916023ecb9d95637bbcc95ae85cf2ee803042f36741f83340ce1ee21d",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "2026-10-29: refresh pytest report for original init property-service stage",
@@ -17875,9 +17875,9 @@
     },
     {
       "path": "publication/checks-position-guards.xml",
-      "sha256": "74b2d9a764b4e1f8ba821ec098279b2d575794f590c607d71f016f69b7af2417",
+      "sha256": "70c4c844d891ea89da57236afacb7112904ef5bfb036ea824037a5f9b9a37cfe",
       "bytes": 4244,
-      "source_sha256": "da79f2a8eb0e8eded49b8b7e93cb74b1c0bf4dc982f8abd974f5296630c3a644",
+      "source_sha256": "70c4c844d891ea89da57236afacb7112904ef5bfb036ea824037a5f9b9a37cfe",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "2026-10-29: refresh pytest report for original init property-service stage",
@@ -17889,9 +17889,9 @@
     },
     {
       "path": "publication/checks-public.xml",
-      "sha256": "ce93d500196cce70f4f163ed6315b7aa13a6545a4521c2473a99f9b82e37ce57",
+      "sha256": "684be9fcfdc11ff80633b6580c54e8b45e1d55dfaeef85489ef1e76f6986b2ce",
       "bytes": 161225,
-      "source_sha256": "0f3ecaae3fada7588b8895763fb4d9b89d899372201db148f510ca955326a0c2",
+      "source_sha256": "684be9fcfdc11ff80633b6580c54e8b45e1d55dfaeef85489ef1e76f6986b2ce",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "2026-10-29: refresh pytest report for original init property-service stage",
@@ -17903,9 +17903,9 @@
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
-      "sha256": "5f6224624c852b59a45c0ae62a75d5735932f27ba7d34d2f9e19a6e31085c50b",
+      "sha256": "c96f1d658ca8f3822c15ad9afcfbaae95a639001f267f09d6c300fd4393022ab",
       "bytes": 6383,
-      "source_sha256": "e08e156cb9098f73d3277d00fc362ea08235b04299f93f7c3d53f546dbf329c8",
+      "source_sha256": "c96f1d658ca8f3822c15ad9afcfbaae95a639001f267f09d6c300fd4393022ab",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "2026-10-29: refresh pytest report for original init property-service stage",
@@ -17917,9 +17917,9 @@
     },
     {
       "path": "publication/checks-selection-timeout.xml",
-      "sha256": "03fbfedcc800e0645bc395dde75e93f6dcd6317bea21d11e115f1c3b75057fc2",
-      "bytes": 14580,
-      "source_sha256": "7968099b866349417b4cdc269be6df76d570059ee2d584c1c6b8b1d2d6ab8d6a",
+      "sha256": "44b74ab461860da9e9ae02bb2cc47037ed03c2aadad98cb5086f05651680a56d",
+      "bytes": 14581,
+      "source_sha256": "44b74ab461860da9e9ae02bb2cc47037ed03c2aadad98cb5086f05651680a56d",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "2026-10-29: refresh pytest report for original init property-service stage",
@@ -20236,16 +20236,16 @@
     },
     {
       "path": "agent-handoff/SERIAL_ARM64_CPU_PROFILE_2026-10-30.md",
-      "sha256": "c89fe0bb7770854dc194062e3580f07bd2b214fdada3a681e1156141385676bf",
-      "bytes": 3205,
-      "source_sha256": "c89fe0bb7770854dc194062e3580f07bd2b214fdada3a681e1156141385676bf",
+      "sha256": "ca2b76cfa67ea2c46b6f595fcd849be4dd7c75a4ef5e187e49763abd0662d332",
+      "bytes": 4085,
+      "source_sha256": "ca2b76cfa67ea2c46b6f595fcd849be4dd7c75a4ef5e187e49763abd0662d332",
       "transformations": []
     },
     {
       "path": "agent-handoff/serial-arm64-cpu-profile-evidence-20261030.json",
-      "sha256": "08926da868ad576a3c7d2b8f96279a6e4b21c880d9fc04521d4c0446703a5978",
-      "bytes": 2598,
-      "source_sha256": "08926da868ad576a3c7d2b8f96279a6e4b21c880d9fc04521d4c0446703a5978",
+      "sha256": "083ccd22a5fc2541f5159f9a04023a4b15f0f5b6ad306725f2581e3aca78df3b",
+      "bytes": 3540,
+      "source_sha256": "083ccd22a5fc2541f5159f9a04023a4b15f0f5b6ad306725f2581e3aca78df3b",
       "transformations": []
     },
     {
