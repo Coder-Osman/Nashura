@@ -1,5 +1,14 @@
 # Nashura
 
+## 2026-10-30：ARM64 headless 串行 profile 热点归属
+
+单 fixture 固定 replay 的 `cpu-clock:u` profile 捕获 2,569 个样本、零丢样；
+`libg.so+0xf34b3c..0xf35064` 范围命中 294 个样本。反汇编支持“二维空间格候选
+查询”的行为推断，具体玩法名称仍未确认。该函数在 `Mainloop` 的固定 replay
+调用路径中；没有做多 seed、并发测量或优化。详见[报告](agent-handoff/SERIAL_ARM64_CPU_PROFILE_2026-10-30.md)
+和[证据](agent-handoff/serial-arm64-cpu-profile-evidence-20261030.json)。Python 3.13.5
+下纯 Linux 1183 项、公开检查 1104 项和主引擎 211 项通过；整体目标仍未完成。
+
 ## 2026-10-30：Headless replay 路径诊断
 
 原始 replay 与 `cmd` 注入 replay 在同一 ARM64 fixture 均到 tick 3601 原生终局，

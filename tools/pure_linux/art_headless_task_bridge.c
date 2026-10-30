@@ -271,6 +271,11 @@ static int phase_timing_requested(void) {
     return value && !strcmp(value, "1");
 }
 
+static int minimal_benchmark_requested(void) {
+    const char *value = getenv("NASHURA_BENCHMARK_MINIMAL");
+    return value && !strcmp(value, "1");
+}
+
 static int32_t i32_at(uintptr_t address) {
     int32_t value;
     memcpy(&value, (const void *)address, sizeof(value));
@@ -642,6 +647,7 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
     int32_t snapshot_bytes = -1;
     struct phase_metrics phase = {0};
     phase.enabled = phase_timing_requested();
+    const int minimal_benchmark = minimal_benchmark_requested();
     phase.first_queue_change_tick = -1;
     phase.last_queue_change_tick = -1;
     const uint64_t canary = UINT64_C(0x93e726ac415bd80f);
@@ -759,66 +765,103 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         if (finalized < 0) return -46;
         if (phase.enabled) phase.queue_at_step_start = queue_count(queue);
         int completed = 0;
+        int sample_every = 1;
+        int timed_samples = 0;
+        if (minimal_benchmark) {
+            const char *sample_text = getenv("NASHURA_STEP_SAMPLE_EVERY");
+            sample_every = sample_text ? atoi(sample_text) : 16;
+            if (sample_every < 1 || sample_every > 10000) return -53;
+        }
         const char *trace_file = getenv("NASHURA_TRACE_SNAPSHOTS");
         int trace_fd = trace_file ? open(trace_file, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, 0600) : -1;
         if (trace_file && (trace_fd < 0 || !trace_snapshot(trace_fd, state, tick_before))) return -52;
         uint64_t elapsed_start = monotonic_ns(), total_step_ns = 0, worst_step_ns = 0;
         uint64_t min_step_ns = UINT64_MAX;
         uint64_t durations[10000];
-        for (; completed < steps && !finalized; ++completed) {
-            int previous = tick_after;
-            if (getenv("NASHURA_DEPLOY_HAND") && previous % 100 == 0) {
-                for (int owner = 0; owner < 2; ++owner)
-                    if (queue_hand_deploy(state, owner) < 0) return -48;
+        if (minimal_benchmark) {
+            int sample_countdown = 0;
+            for (; completed < steps && !finalized; ++completed) {
+                int measure_step = sample_countdown == 0;
+                uint64_t step_start = measure_step ? monotonic_ns() : 0;
+                ((game_step_fn)(base + 0x10620a4))(state);
+                if (measure_step) {
+                    uint64_t step_ns = monotonic_ns() - step_start;
+                    durations[timed_samples++] = step_ns;
+                    total_step_ns += step_ns;
+                    if (step_ns > worst_step_ns) worst_step_ns = step_ns;
+                    if (step_ns < min_step_ns) min_step_ns = step_ns;
+                    sample_countdown = sample_every - 1;
+                } else {
+                    --sample_countdown;
+                }
+                uintptr_t current_world = pointer_at((uintptr_t)state + 0xa8);
+                finalized = current_world ? *(unsigned char *)(current_world + 0x1e0) : -1;
+                tick_after = tick_before + completed + 1;
+                if (finalized < 0 || finalized > 1) return -46;
             }
-            int32_t queue_before = phase.enabled ? queue_count(queue) : -1;
-            uint64_t step_start = monotonic_ns();
-            ((game_step_fn)(base + 0x10620a4))(state);
-            uint64_t step_ns = monotonic_ns() - step_start;
-            int32_t queue_after = phase.enabled ? queue_count(queue) : -1;
-            if (phase.enabled && queue_before != queue_after) {
-                if (queue_after < queue_before) phase.queue_removed += queue_before - queue_after;
-                else phase.queue_added += queue_after - queue_before;
-                ++phase.queue_change_steps;
-                if (phase.first_queue_change_tick < 0) phase.first_queue_change_tick = previous + 1;
-                phase.last_queue_change_tick = previous + 1;
-            }
-            total_step_ns += step_ns;
-            durations[completed] = step_ns;
-            if (step_ns > worst_step_ns) worst_step_ns = step_ns;
-            if (step_ns < min_step_ns) min_step_ns = step_ns;
-            tick_after = ((game_tick_fn)(base + 0x1062bc0))(state);
-            if (tick_after != previous + 1) {
-                printf("HEADLESS_BATTLE_STEP_STALLED previous=%d current=%d\n", previous, tick_after);
-                fflush(stdout);
-                return -47;
-            }
-            uintptr_t current_world = pointer_at((uintptr_t)state + 0xa8);
-            finalized = current_world ? *(unsigned char *)(current_world + 0x1e0) : -1;
-            if (tick_after <= 30 || tick_after % 100 == 0 || finalized)
-                finalized = observe_battle(state, "step");
-            if (finalized < 0 || finalized > 1) return -46;
-            if (trace_fd >= 0 && !trace_snapshot(trace_fd, state, tick_after)) return -52;
-            if (snapshot_mode && !snapshot && tick_after == snapshot_at) {
-                if (!create_snapshot(state, &snapshot, &snapshot_hash, &snapshot_bytes)) return -38;
-                ((byte_stream_reset_fn)(base + 0x121221c))((unsigned char *)snapshot + 0x08);
-                snapshot_tick = tick_after;
+        } else {
+            for (; completed < steps && !finalized; ++completed) {
+                int previous = tick_after;
+                if (getenv("NASHURA_DEPLOY_HAND") && previous % 100 == 0) {
+                    for (int owner = 0; owner < 2; ++owner)
+                        if (queue_hand_deploy(state, owner) < 0) return -48;
+                }
+                int32_t queue_before = phase.enabled ? queue_count(queue) : -1;
+                uint64_t step_start = monotonic_ns();
+                ((game_step_fn)(base + 0x10620a4))(state);
+                uint64_t step_ns = monotonic_ns() - step_start;
+                durations[timed_samples++] = step_ns;
+                total_step_ns += step_ns;
+                if (step_ns > worst_step_ns) worst_step_ns = step_ns;
+                if (step_ns < min_step_ns) min_step_ns = step_ns;
+                int32_t queue_after = phase.enabled ? queue_count(queue) : -1;
+                if (phase.enabled && queue_before != queue_after) {
+                    if (queue_after < queue_before) phase.queue_removed += queue_before - queue_after;
+                    else phase.queue_added += queue_after - queue_before;
+                    ++phase.queue_change_steps;
+                    if (phase.first_queue_change_tick < 0) phase.first_queue_change_tick = previous + 1;
+                    phase.last_queue_change_tick = previous + 1;
+                }
+                tick_after = ((game_tick_fn)(base + 0x1062bc0))(state);
+                if (tick_after != previous + 1) {
+                    printf("HEADLESS_BATTLE_STEP_STALLED previous=%d current=%d\n", previous, tick_after);
+                    fflush(stdout);
+                    return -47;
+                }
+                uintptr_t current_world = pointer_at((uintptr_t)state + 0xa8);
+                finalized = current_world ? *(unsigned char *)(current_world + 0x1e0) : -1;
+                if (tick_after <= 30 || tick_after % 100 == 0 || finalized)
+                    finalized = observe_battle(state, "step");
+                if (finalized < 0 || finalized > 1) return -46;
+                if (trace_fd >= 0 && !trace_snapshot(trace_fd, state, tick_after)) return -52;
+                if (snapshot_mode && !snapshot && tick_after == snapshot_at) {
+                    if (!create_snapshot(state, &snapshot, &snapshot_hash, &snapshot_bytes)) return -38;
+                    ((byte_stream_reset_fn)(base + 0x121221c))((unsigned char *)snapshot + 0x08);
+                    snapshot_tick = tick_after;
+                }
             }
         }
         uint64_t elapsed_ns = monotonic_ns() - elapsed_start;
+        if (minimal_benchmark) {
+            tick_after = ((game_tick_fn)(base + 0x1062bc0))(state);
+            uintptr_t final_world = pointer_at((uintptr_t)state + 0xa8);
+            finalized = final_world ? *(unsigned char *)(final_world + 0x1e0) : -1;
+            if (tick_after != tick_before + completed || finalized < 0 || finalized > 1) return -47;
+        }
         if (phase.enabled) phase.queue_at_end = queue_count(queue);
         if (trace_fd >= 0) close(trace_fd);
-        qsort(durations, (size_t)completed, sizeof(durations[0]), compare_duration);
-        uint64_t p50 = completed ? durations[(completed - 1) * 50 / 100] : 0;
-        uint64_t p95 = completed ? durations[(completed - 1) * 95 / 100] : 0;
-        uint64_t p99 = completed ? durations[(completed - 1) * 99 / 100] : 0;
+        qsort(durations, (size_t)timed_samples, sizeof(durations[0]), compare_duration);
+        uint64_t p50 = timed_samples ? durations[(timed_samples - 1) * 50 / 100] : 0;
+        uint64_t p95 = timed_samples ? durations[(timed_samples - 1) * 95 / 100] : 0;
+        uint64_t p99 = timed_samples ? durations[(timed_samples - 1) * 99 / 100] : 0;
         struct rusage usage;
         memset(&usage, 0, sizeof(usage));
         getrusage(RUSAGE_SELF, &usage);
-        printf("HEADLESS_BATTLE_METRICS completed=%d wall_ns=%llu step_total_ns=%llu step_min_ns=%llu step_max_ns=%llu p50_ns=%llu p95_ns=%llu p99_ns=%llu peak_rss_kb=%ld trace=%d start_ns=%llu end_ns=%llu\n",
+        printf("HEADLESS_BATTLE_METRICS completed=%d wall_ns=%llu step_total_ns=%llu step_min_ns=%llu step_max_ns=%llu p50_ns=%llu p95_ns=%llu p99_ns=%llu sample_count=%d sample_every=%d loaded_commands=%d injected_commands=%d peak_rss_kb=%ld trace=%d start_ns=%llu end_ns=%llu\n",
                completed, (unsigned long long)elapsed_ns, (unsigned long long)total_step_ns,
                (unsigned long long)min_step_ns, (unsigned long long)worst_step_ns,
                (unsigned long long)p50, (unsigned long long)p95, (unsigned long long)p99,
+               timed_samples, sample_every, loaded_command_count, command_count,
                usage.ru_maxrss, trace_file != NULL, (unsigned long long)elapsed_start,
                (unsigned long long)(elapsed_start + elapsed_ns));
         if (getenv("NASHURA_MEMORY_SAMPLE")) {

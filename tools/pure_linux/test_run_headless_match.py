@@ -35,6 +35,14 @@ def test_nonzero_exit_preserves_failure_even_after_full_battle():
         runner.verify_completion(70, COMPLETE)
 
 
+def test_expected_repeated_native_finalizations_are_validated():
+    step = COMPLETE.splitlines()[0]
+    assert runner.verify_completion(0, COMPLETE + "\n" + step, expected_repeats=2) == 3601
+    with pytest.raises(ValueError, match="finalization"):
+        runner.verify_completion(0, COMPLETE + "\n" + step.replace("tick_after=3601", "tick_after=3600"),
+                                 expected_repeats=2)
+
+
 def test_changed_or_unpinned_input_rejected_before_output(tmp_path):
     closure = tmp_path / "closure"
     closure.mkdir()
@@ -108,6 +116,24 @@ def test_battle_state_observations_are_opt_in(inputs, monkeypatch):
     assert runner.build_plan(settings, output)["environment"]["NASHURA_QUIET"] == "1"
     monkeypatch.setenv("NASHURA_BATTLE_OBSERVATIONS", "1")
     assert "NASHURA_QUIET" not in runner.build_plan(settings, output)["environment"]
+
+
+def test_minimal_benchmark_plan_disables_trace_and_observers(inputs, monkeypatch):
+    settings, output = inputs
+    monkeypatch.setenv("NASHURA_PHASE_TIMING", "1")
+    monkeypatch.setenv("NASHURA_BATTLE_OBSERVATIONS", "1")
+    plan = runner.build_plan(settings, output, benchmark_repeats=20,
+                             step_sample_every=16, timeout_seconds=180)
+    assert plan["snapshot_trace"] is False
+    assert plan["benchmark_repeats"] == 20
+    assert plan["step_sample_every"] == 16
+    assert plan["command"][3] == "180s"
+    assert plan["environment"]["NASHURA_BENCHMARK_MINIMAL"] == "1"
+    assert plan["environment"]["NASHURA_RESET_REPEATS"] == "20"
+    assert plan["environment"]["NASHURA_MEMORY_SAMPLE"] == "1"
+    assert plan["environment"]["NASHURA_QUIET"] == "1"
+    assert "NASHURA_TRACE_SNAPSHOTS" not in plan["environment"]
+    assert "NASHURA_PHASE_TIMING" not in plan["environment"]
 
 
 def test_mutation_after_identity_capture_is_rejected(inputs):

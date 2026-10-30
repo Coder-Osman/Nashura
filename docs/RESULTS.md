@@ -1,5 +1,17 @@
 # 阶段成果与证据索引
 
+## 2026-10-30：ARM64 headless 串行热点归属
+
+固定 replay 的 `cpu-clock:u` profile 捕获 2,569 个样本且零丢样；
+`libg.so+0xf34b3c..0xf35064` 范围命中 294 个样本。AArch64 指令表明它遍历二维
+定点坐标格并筛选候选对象，推断为战斗执行路径中的空间候选查询；具体玩法语义
+仍未知。profile 来自单 guest 串行运行，没有运行并发，也未实施优化。
+同 fixture 独立基线为每局中位 28.280 ms、p95 30.306 ms，不与采样 profile
+做速度比较。多 seed、跨卡组和整体验收仍未完成。详见[报告](../agent-handoff/SERIAL_ARM64_CPU_PROFILE_2026-10-30.md)
+与[机器摘要](../agent-handoff/serial-arm64-cpu-profile-evidence-20261030.json)。Python 3.13.5
+下纯 Linux `1183 passed、1 skipped`、公开检查 `1104 passed、42 skipped`、主引擎
+`211 passed`；快照校验 2,878 项通过，gitleaks 无发现。
+
 ## 2026-10-30：Headless replay 路径诊断
 
 原始 replay 和把相同 52 条命令转为显式注入的路径均到 tick 3601 原生终局，

@@ -13,15 +13,18 @@ def records(text, marker):
 
 
 def summarize(text, repeats=30, expected_tick=3601, expected_digest='6c959326dd2f09cc',
-              completion='HEADLESS_DIRECT_RUNTIME_PROBE_RETURN=1'):
+              completion='HEADLESS_DIRECT_RUNTIME_PROBE_RETURN=1', warmup_matches=0):
     metrics = [{key: int(value) for key, value in row.items()}
                for row in records(text, 'HEADLESS_BATTLE_METRICS')]
     memory = [{key: int(value) for key, value in row.items()}
               for row in records(text, 'HEADLESS_BATTLE_MEMORY')]
     resets = records(text, 'HEADLESS_BATTLE_RESET')
     ends = records(text, 'HEADLESS_GAME_STATE_STEP_RETURN')
-    if repeats < 1 or not all(len(rows) == repeats for rows in (metrics, memory, resets, ends)):
+    if (repeats < 1 or not 0 <= warmup_matches < repeats
+            or not all(len(rows) == repeats for rows in (metrics, memory, resets, ends))):
         raise ValueError('incomplete or duplicated match records')
+    sample_counts = []
+    sample_intervals = []
     for index, (metric, reset, end) in enumerate(zip(metrics, resets, ends), 1):
         if metric['completed'] != expected_tick or metric['trace'] != 0:
             raise ValueError('wrong tick count or trace enabled')
@@ -40,28 +43,58 @@ def summarize(text, repeats=30, expected_tick=3601, expected_digest='6c959326dd2
         if (end['tick_before'] != '0' or int(end['tick_after']) != expected_tick
                 or int(end['completed']) != expected_tick or end['finalized'] != '1'):
             raise ValueError('native finalization missing')
+        sample_count = int(metric.get('sample_count', metric['completed']))
+        sample_every = int(metric.get('sample_every', '1'))
+        if (sample_every < 1 or sample_count != (int(metric['completed']) + sample_every - 1) // sample_every):
+            raise ValueError('step timing sample contract failed')
+        if ('loaded_commands' in metric and 'injected_commands' in metric
+                and int(metric['loaded_commands']) + int(metric['injected_commands']) <= 0):
+            raise ValueError('benchmark action sequence is empty')
+        sample_counts.append(sample_count)
+        sample_intervals.append(sample_every)
     if (completion not in text.splitlines()
             or 'HEADLESS_REJECTED_PM_CALLS=0' not in text.splitlines()
             or 'HEADLESS_BATTLE_READY=UNVERIFIED' not in text.splitlines()):
         raise ValueError('normal completion or explicit readiness boundary missing')
-    total_ns = sum(row['wall_ns'] for row in metrics)
+    measured = metrics[warmup_matches:]
+    measured_memory = memory[warmup_matches:]
+    measured_ns = sum(row['wall_ns'] for row in measured)
+
+    def percentile(values, percent):
+        ordered = sorted(values)
+        return ordered[(len(ordered) - 1) * percent // 100]
+
     def sampled_peak(key):
-        available = [row[key] for row in memory if row[key] >= 0]
+        available = [row[key] for row in measured_memory if row[key] >= 0]
         return max(available) / 1024 if available else None
-    return dict(schema='nashura.headless-benchmark.v1', matches=repeats, tick=expected_tick,
+
+    match_wall_ms = [row['wall_ns'] / 1e6 for row in measured]
+    return dict(schema='nashura.headless-benchmark.v2', matches=repeats,
+                warmup_matches=warmup_matches, measured_matches=len(measured), tick=expected_tick,
                 terminal_digest=expected_digest, terminal_bytes=3091, trace=False,
-                median_match_ms=statistics.median(row['wall_ns'] for row in metrics) / 1e6,
-                timed_seconds=total_ns / 1e9, ticks_per_second=repeats * expected_tick * 1e9 / total_ns,
-                matches_per_second=repeats * 1e9 / total_ns,
-                step_percentiles_us={key: statistics.median(row[key + '_ns'] for row in metrics) / 1000
+                median_match_ms=statistics.median(row['wall_ns'] for row in measured) / 1e6,
+                match_wall_percentiles_ms={f'p{percent}': percentile(match_wall_ms, percent)
+                                           for percent in (50, 95, 99)},
+                timed_seconds=measured_ns / 1e9,
+                ticks_per_second=len(measured) * expected_tick * 1e9 / measured_ns,
+                matches_per_second=len(measured) * 1e9 / measured_ns,
+                step_percentiles_us={key: statistics.median(row[key + '_ns'] for row in measured) / 1000
                                      for key in ('p50', 'p95', 'p99')},
-                peak_rss_mib=max(row['peak_rss_kb'] for row in metrics) / 1024,
+                step_percentile_repeat_spread_us={key: {
+                    'p10': percentile([row[key + '_ns'] / 1000 for row in measured], 10),
+                    'p90': percentile([row[key + '_ns'] / 1000 for row in measured], 90)}
+                    for key in ('p50', 'p95', 'p99')},
+                step_sample_every_ticks=sample_intervals[0],
+                step_samples_per_match_median=statistics.median(sample_counts[warmup_matches:]),
+                total_step_samples=sum(sample_counts[warmup_matches:]),
+                step_percentile_method='median of per-match stratified sampled step percentiles',
+                peak_rss_mib=max(row['peak_rss_kb'] for row in measured) / 1024,
                 sampled_rss_peak_mib=sampled_peak('rss_kb'),
                 sampled_pss_peak_mib=sampled_peak('pss_kb'),
-                memory_sample_counts={key: sum(row[key] >= 0 for row in memory)
+                memory_sample_counts={key: sum(row[key] >= 0 for row in measured_memory)
                                       for key in ('rss_kb', 'pss_kb')},
                 samples=metrics, memory_samples=memory,
-                scope='step loop only; initialization, reset and terminal validation excluded',
+                scope='warm step loop only; initialization, reset, terminal validation, and warmup matches excluded from timing summary',
                 readiness='UNVERIFIED')
 
 
@@ -69,11 +102,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('log', type=Path)
     parser.add_argument('--repeats', type=int, default=30)
+    parser.add_argument('--warmup-matches', type=int, default=0)
     parser.add_argument('--completion', default='HEADLESS_DIRECT_RUNTIME_PROBE_RETURN=1')
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     content = args.log.read_bytes()
-    result = summarize(content.decode(), args.repeats, completion=args.completion)
+    result = summarize(content.decode(), args.repeats, completion=args.completion,
+                       warmup_matches=args.warmup_matches)
     result['log_sha256'] = hashlib.sha256(content).hexdigest()
     if args.output:
         with args.output.open('x') as stream:

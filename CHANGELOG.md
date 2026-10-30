@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-10-30：ARM64 headless 串行 profile 热点归属
+
+- 关联 ARM64 guest 映射、精确 `libg.so` SHA、DWARF unwind 边界和 AArch64 指令，定位 `+0xf34b3c..+0xf35064`。
+- 该范围在 2,569 个软件 CPU 时钟样本中命中 294 个；代码呈现定点二维格遍历、候选对象过滤和虚调用。
+- 将“空间格候选查询”记录为行为推断，保留具体玩法语义未知；没有修改或分发第三方引擎二进制。
+- 保留单 fixture、单 guest、串行 profile 的边界；未测并发、多 seed/卡组，也未执行优化。
+- Python 3.13.5 下纯 Linux `1183 passed、1 skipped`，公开检查 `1104 passed、42 skipped`，主引擎 `211 passed`；快照清单与 gitleaks 均通过。
+- 整体目标继续未完成。
+
 ## 2026-10-30：Headless replay 阶段诊断
 
 - 增加默认关闭的阶段计时和战斗状态观测；增加关闭逐 tick snapshot trace 的 runner 选项。

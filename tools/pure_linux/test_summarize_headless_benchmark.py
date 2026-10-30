@@ -29,6 +29,14 @@ def test_unavailable_proc_memory_is_null_not_negative_memory():
     assert result['memory_sample_counts'] == {'rss_kb': 0, 'pss_kb': 0}
 
 
+def repeated_log(iteration, start):
+    text = log()
+    text = text.replace("wall_ns=1000 step_total_ns=900", "wall_ns=1000 step_total_ns=900 sample_count=226 sample_every=16 loaded_commands=52 injected_commands=0")
+    text = text.replace("start_ns=100 end_ns=1100", f"start_ns={start} end_ns={start + 1000}")
+    text = text.replace("iteration=1 repeats=1", f"iteration={iteration} repeats=2")
+    return text
+
+
 @pytest.mark.parametrize('old,new', [
     ('trace=0', 'trace=1'), ('finalized=1', 'finalized=0'),
     ('equal=1', 'equal=0'), ('validated=1', 'validated=0'),
@@ -48,3 +56,23 @@ def test_reject_incomplete_or_duplicate_matches():
         summarize(log(), 30)
     with pytest.raises(ValueError):
         summarize(log() + chr(10) + log(), 1)
+
+
+def test_minimal_sampled_benchmark_excludes_warmup_and_checks_nonempty_actions():
+    text = repeated_log(1, 100) + chr(10) + repeated_log(2, 1200)
+    result = summarize(text, 2, warmup_matches=1)
+    assert result['schema'] == 'nashura.headless-benchmark.v2'
+    assert result['warmup_matches'] == 1
+    assert result['measured_matches'] == 1
+    assert result['total_step_samples'] == 226
+    assert result['step_sample_every_ticks'] == 16
+    assert result['step_percentiles_us']['p95'] == 0.02
+    assert result['median_match_ms'] == 0.001
+    with pytest.raises(ValueError, match='action sequence'):
+        summarize(text.replace('loaded_commands=52', 'loaded_commands=0'), 2, warmup_matches=1)
+
+
+def test_minimal_sampled_benchmark_rejects_wrong_sample_count():
+    text = repeated_log(1, 100) + chr(10) + repeated_log(2, 1200)
+    with pytest.raises(ValueError, match='sample contract'):
+        summarize(text.replace('sample_count=226', 'sample_count=225'), 2)

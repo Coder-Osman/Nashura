@@ -1,0 +1,69 @@
+{
+  "schema": "nashura.serial-arm64-cpu-profile.v1",
+  "status": "PROFILE_ATTRIBUTED_LIMITED",
+  "whole_goal_complete": false,
+  "concurrency_tested": false,
+  "workload": {
+    "guest_arch": "aarch64",
+    "execution": "single process, single vCPU, serial",
+    "matches": 60,
+    "ticks_per_match": 3601,
+    "loaded_replay_commands": 52,
+    "terminal_digest": "6c959326dd2f09cc",
+    "terminal_bytes": 3091,
+    "fixture_scope": "one fixed replay"
+  },
+  "separate_serial_baseline": {
+    "warmup_matches": 10,
+    "measured_matches": 50,
+    "median_match_ms": 28.2801215,
+    "p95_match_ms": 30.306339,
+    "comparison_to_profile_run": "not performed; profiling overhead differs"
+  },
+  "profile": {
+    "event": "cpu-clock:u",
+    "samples": 2569,
+    "lost_samples": 0,
+    "thread_observed": "Mainloop",
+    "mapped_object": "/data/local/tmp/libg-input/libg.so",
+    "mapped_object_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "mapping_base": "0xe6878ba1d000"
+  },
+  "validation": {
+    "python_version": "3.13.5",
+    "pure_linux": "1183 passed, 1 skipped",
+    "public_checks": "1104 passed, 42 skipped",
+    "main_engine": "211 passed",
+    "public_snapshot_files_verified": 2878,
+    "gitleaks": "passed",
+    "python39_initial_collection_failure": "interpreter incompatibility; raw JUnit retained locally outside the public snapshot"
+  },
+  "focus": {
+    "start_offset": "0xf34b3c",
+    "end_offset_exclusive": "0xf35064",
+    "range_bytes": 1320,
+    "leaf_samples_in_range": 294,
+    "share_of_all_samples_percent": 11.45,
+    "hot_instruction_samples": [
+      {"offset": "0xf34c60", "samples": 53},
+      {"offset": "0xf34c7c", "samples": 43},
+      {"offset": "0xf34c78", "samples": 40},
+      {"offset": "0xf34c90", "samples": 35},
+      {"offset": "0xf34c98", "samples": 27}
+    ],
+    "static_call_sites": [
+      {"caller_offset": "0xf5d9d8", "target_offset": "0xf34afc"},
+      {"caller_offset": "0xf34b2c", "target_offset": "0xf34b3c"}
+    ],
+    "behavior_inference": "fixed-point x/y cell-range traversal, candidate-list reads, object filters and virtual calls; probable spatial candidate query, exact gameplay role unconfirmed",
+    "optimization_applied": false
+  },
+  "limitations": [
+    "one fixture and one replay only",
+    "no multi-seed or multi-deck validation",
+    "no concurrency measurement",
+    "hardware PMU cycles, instructions and cache events unavailable",
+    "no local symbols; function business name remains unknown",
+    "profile sample shares do not establish per-instruction latency or causal speedup"
+  ]
+}

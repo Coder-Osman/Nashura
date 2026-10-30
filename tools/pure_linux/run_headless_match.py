@@ -97,12 +97,21 @@ def validate(settings, output):
     return paths, output
 
 
-def build_plan(settings, output, snapshot_trace=True):
+def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
+               step_sample_every=16, timeout_seconds=45):
     paths, output = validate(settings, output)
+    if benchmark_repeats is not None and not 2 <= benchmark_repeats <= 1000:
+        raise ValueError("benchmark repeats must be between 2 and 1000")
+    if not 1 <= step_sample_every <= 10000:
+        raise ValueError("step sample interval must be between 1 and 10000")
+    if not 5 <= timeout_seconds <= 600:
+        raise ValueError("timeout must be between 5 and 600 seconds")
+    if benchmark_repeats is not None:
+        snapshot_trace = False
     closure = paths["closure"]
     inside = lambda path: "/" + str(path.relative_to(closure))
     outside = lambda path: "/oldroot" + str(path)
-    command = ["timeout", "-k", "3s", "45s", "unshare", "-Ur", "-m", "-n", "-i",
+    command = ["timeout", "-k", "3s", str(timeout_seconds) + "s", "unshare", "-Ur", "-m", "-n", "-i",
                "/bin/sh", str(paths["namespace"]), str(closure), str(paths["linker_config"]),
                inside(paths["runtime"]), "-Xbootclasspath:" + ":".join(BOOT),
                "-Djava.library.path=/data/local/tmp/libg-input", "--probe-args",
@@ -117,19 +126,27 @@ def build_plan(settings, output, snapshot_trace=True):
                    "NASHURA_QUIET_SNAPSHOTS": "1", "NASHURA_BENCHMARK_VALIDATE": "1"}
     if os.environ.get("NASHURA_BATTLE_OBSERVATIONS") != "1":
         environment["NASHURA_QUIET"] = "1"
+    if benchmark_repeats is not None:
+        environment["NASHURA_QUIET"] = "1"
+        environment["NASHURA_BENCHMARK_MINIMAL"] = "1"
+        environment["NASHURA_RESET_REPEATS"] = str(benchmark_repeats)
+        environment["NASHURA_STEP_SAMPLE_EVERY"] = str(step_sample_every)
+        environment["NASHURA_MEMORY_SAMPLE"] = "1"
     if snapshot_trace:
         environment["NASHURA_TRACE_SNAPSHOTS"] = outside(output / "snapshots.bin")
-    if os.environ.get("NASHURA_PHASE_TIMING") == "1":
+    if benchmark_repeats is None and os.environ.get("NASHURA_PHASE_TIMING") == "1":
         environment["NASHURA_PHASE_TIMING"] = "1"
     return {"schema": "nashura.headless-local-run.v1", "command": command,
             "environment": environment, "identities": settings["identities"],
             "output": str(output),
             "snapshot_trace": snapshot_trace,
+            "benchmark_repeats": benchmark_repeats,
+            "step_sample_every": step_sample_every if benchmark_repeats is not None else None,
             "snapshot_scope": "explicit original-serializer adapter" if snapshot_trace else "not captured",
             "whole_goal_complete": False}
 
 
-def verify_completion(exit_code, stdout):
+def verify_completion(exit_code, stdout, expected_repeats=1):
     if exit_code != 0:
         raise ValueError("runtime exit code: " + str(exit_code))
     required = ("HEADLESS_DIRECT_RUNTIME_PROBE_RETURN=1",
@@ -139,13 +156,16 @@ def verify_completion(exit_code, stdout):
         raise ValueError("missing direct-entry completion evidence")
     matches = re.findall(r"^HEADLESS_GAME_STATE_STEP_RETURN .*tick_after=(\d+) .*finalized=1$",
                          stdout, re.MULTILINE)
-    if len(matches) != 1 or int(matches[0]) <= 0:
+    if (len(matches) != expected_repeats or not matches
+            or len(set(matches)) != 1 or int(matches[0]) <= 0):
         raise ValueError("missing unique native finalization evidence")
     return int(matches[0])
 
 
-def run(settings, output, apply=False, snapshot_trace=True):
-    plan = build_plan(settings, output, snapshot_trace)
+def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=None,
+        step_sample_every=16, timeout_seconds=45):
+    plan = build_plan(settings, output, snapshot_trace, benchmark_repeats,
+                      step_sample_every, timeout_seconds)
     if not apply:
         return plan
     from compare_headless_snapshots import inspect_archive
@@ -157,9 +177,11 @@ def run(settings, output, apply=False, snapshot_trace=True):
     with (output / "stdout.log").open("xb") as stdout, (output / "stderr.log").open("xb") as stderr:
         result = subprocess.run(plan["command"], env=plan["environment"], stdout=stdout, stderr=stderr)
     (output / "exit.txt").write_text(str(result.returncode) + "\n")
-    final_tick = verify_completion(result.returncode, (output / "stdout.log").read_text())
+    final_tick = verify_completion(result.returncode, (output / "stdout.log").read_text(),
+                                   benchmark_repeats or 1)
     summary = {"status": "NATIVE_FINAL_OBSERVED_LIMITED",
                "final_tick": final_tick, "snapshot_trace": plan["snapshot_trace"],
+               "matches": benchmark_repeats or 1,
                "whole_goal_complete": False}
     if plan["snapshot_trace"]:
         archive = inspect_archive(output / "snapshots.bin", final_tick)
@@ -177,9 +199,15 @@ def main():
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--apply", action="store_true")
     parser.add_argument("--without-snapshot-trace", action="store_true")
+    parser.add_argument("--benchmark-repeats", type=int)
+    parser.add_argument("--step-sample-every", type=int, default=16)
+    parser.add_argument("--timeout-seconds", type=int, default=45)
     args = parser.parse_args()
     print(json.dumps(run(json.loads(args.settings.read_text()), args.output, args.apply,
-                         snapshot_trace=not args.without_snapshot_trace), indent=2))
+                         snapshot_trace=not args.without_snapshot_trace,
+                         benchmark_repeats=args.benchmark_repeats,
+                         step_sample_every=args.step_sample_every,
+                         timeout_seconds=args.timeout_seconds), indent=2))
 
 
 if __name__ == "__main__":
