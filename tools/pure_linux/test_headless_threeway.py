@@ -67,6 +67,22 @@ def test_exact_quiet_plan_matches_runner(inputs, monkeypatch, variant):
     threeway.validate_plan(plan, settings, variant, output)
 
 
+@pytest.mark.parametrize("repeats,batches,timeout", [(216, 1, 120), (516, 24, 600)])
+def test_explicit_compressed_followup_plan_preserves_native_wait_cap(inputs, monkeypatch,
+                                                                    repeats, batches, timeout):
+    settings, output = inputs
+    monkeypatch.setattr(threeway, "ENGINE_SHA256", runner.ENGINE_SHA256)
+    variants = {"original": None, "combined": "hot-distance-v1"}
+    plan = runner.run(settings, output, benchmark_repeats=repeats, serial_batches=batches,
+                      timeout_seconds=timeout, native_optimization="hot-distance-v1", compress_stdout=True)
+    threeway.validate_plan(plan, settings, "combined", output, variants=variants,
+        benchmark_repeats=repeats, serial_batches=batches, timeout_seconds=timeout, compress_stdout=True)
+    assert plan["environment"]["NASHURA_TASK_TIMEOUT_MS"] == "120000"
+    with pytest.raises(ValueError):
+        threeway.validate_plan(plan, settings, "combined", output, variants=variants,
+            benchmark_repeats=repeats, serial_batches=batches, timeout_seconds=timeout)
+
+
 @pytest.mark.parametrize("mutation", ["trace", "phases", "profiler", "timeout", "replay",
                                      "unquiet", "identities", "optimization", "output",
                                      "resources", "serial_batches"])

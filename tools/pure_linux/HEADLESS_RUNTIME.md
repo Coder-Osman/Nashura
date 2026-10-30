@@ -43,6 +43,11 @@ observer同时编译art_headless_observer.c、art_headless_task_bridge.c和headl
 
 ## guest本地复验
 
+磁盘有限时可显式使用 --compress-stdout。引擎仍直接写普通文件，进程退出并
+记录退出码后才 gzip 压缩，重新解压计算 SHA 与原文件一致后回收 raw 副本。
+压缩失败保留原始日志，非零引擎退出仍保留 gzip 证据并拒绝验收；默认输出不变。
+该选项不会在 warm step 期间启动压缩管道，不删除历史归档或未验证证据。
+
 ```sh
 python3 tools/pure_linux/run_headless_match.py "$SETTINGS" --output "$NEW_OUTPUT"
 python3 tools/pure_linux/run_headless_match.py "$SETTINGS" --output "$NEW_OUTPUT" --apply
@@ -97,6 +102,12 @@ BEGIN/END，全部局仍校验正常原生终态；summarize_headless_stability.
 共享进程与固定输入，不当作独立实验，不从终态 digest 外推全部 serializer 帧或
 未序列化状态，也不将有限运行外推为全天或无限期稳定性。正式速度测量继续关闭
 上述诊断，使用独立交错对照；固定 original→hot 顺序只用于稳定性观察。
+
+组合候选另以八个新完整局、32 批 ABBA/BAAB 和四进程各 24 task × 516 局
+独立复测；主机工程检查先结束，再启动 guest，原始归档取回后由
+verify_combined_followup.py 核对精确计划、安装标记、固定 replay/动作计数、
+结果字段、全帧、终态和 Mainloop 身份。每进程实际观察 163.97–374.45 秒，
+不外推全天或无泄漏；详见[报告](../../agent-handoff/SERIAL_ARM64_COMBINED_FOLLOWUP_2026-10-31.md)。
 
 ## 冻结多 seed / 卡组动作
 

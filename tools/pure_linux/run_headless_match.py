@@ -6,11 +6,13 @@ The extracted ART closure is operator supplied; its transitive libraries are
 not certified minimal by this runner. No Android service is started.
 """
 import argparse
+import gzip
 import hashlib
 import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 
 
@@ -217,9 +219,12 @@ def verify_completion(exit_code, stdout, expected_repeats=1):
 
 def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=None,
         step_sample_every=16, timeout_seconds=45, record_hand_actions=False,
-        native_optimization=None, native_phases=False, thread_resources=False, serial_batches=1):
+        native_optimization=None, native_phases=False, thread_resources=False, serial_batches=1,
+        compress_stdout=False):
     plan = build_plan(settings, output, snapshot_trace, benchmark_repeats,
                       step_sample_every, timeout_seconds, record_hand_actions, native_optimization, native_phases, thread_resources, serial_batches)
+    if compress_stdout:
+        plan["stdout_encoding"] = "gzip-after-process-exit"
     if not apply:
         return plan
     from compare_headless_snapshots import inspect_archive
@@ -231,16 +236,28 @@ def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=No
     with (output / "stdout.log").open("xb") as stdout, (output / "stderr.log").open("xb") as stderr:
         result = subprocess.run(plan["command"], env=plan["environment"], stdout=stdout, stderr=stderr)
     (output / "exit.txt").write_text(str(result.returncode) + "\n")
-    final_tick = verify_completion(result.returncode, (output / "stdout.log").read_text(),
+    text = (output / "stdout.log").read_text()
+    if compress_stdout:
+        raw, packed = output / "stdout.log", output / "stdout.log.gz"
+        with raw.open("rb") as source, gzip.open(packed, "xb", compresslevel=5) as target:
+            shutil.copyfileobj(source, target)
+        with gzip.open(packed, "rb") as source:
+            restored = hashlib.sha256()
+            for block in iter(lambda: source.read(1024 * 1024), b""):
+                restored.update(block)
+        if restored.hexdigest() != sha256(raw):
+            raise ValueError("lossless stdout compression failed")
+        raw.unlink()
+    final_tick = verify_completion(result.returncode, text,
                                    (benchmark_repeats or 1) * serial_batches)
     if native_optimization is not None:
-        markers = [line for line in (output / "stdout.log").read_text().splitlines()
+        markers = [line for line in text.splitlines()
                    if line.startswith("HEADLESS_NATIVE_OPTIMIZATION ")]
         if markers != optimization_installation_markers(native_optimization):
             raise ValueError("missing unique native optimization installation evidence")
     if native_phases:
         from summarize_headless_native_phases import summarize as summarize_native_phases
-        phases = summarize_native_phases((output / "stdout.log").read_text())
+        phases = summarize_native_phases(text)
         with (output / "native-phases.json").open("x") as stream:
             json.dump(phases, stream, indent=2)
             stream.write("\n")
@@ -280,6 +297,8 @@ def main():
                         help="independent warm-loop CPU/fault/switch boundary diagnostics")
     parser.add_argument("--serial-batches", type=int, default=1,
                         help="bounded repeated tasks in one engine process for stability")
+    parser.add_argument("--compress-stdout", action="store_true",
+                        help="lossless gzip after process exit; verify restored SHA before removing raw copy")
     parser.add_argument("--step-sample-every", type=int, default=16)
     parser.add_argument("--timeout-seconds", type=int, default=45)
     args = parser.parse_args()
@@ -291,7 +310,7 @@ def main():
                          record_hand_actions=args.record_hand_actions,
                          native_optimization=args.native_optimization,
                          native_phases=args.native_phases, thread_resources=args.thread_resources,
-                         serial_batches=args.serial_batches), indent=2))
+                         serial_batches=args.serial_batches, compress_stdout=args.compress_stdout), indent=2))
 
 
 if __name__ == "__main__":

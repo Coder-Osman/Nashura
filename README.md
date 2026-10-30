@@ -1,5 +1,17 @@
 # Nashura
 
+## 2026-10-31：组合候选独立复测与有界串行稳定性
+
+本轮全部工程检查结束后才启动 guest，并保持计时期间无本轮工程测试。八个新
+完整局的 22698 个 serializer 帧及已观测状态一致；32 批 ABBA/BAAB 共 6912 局、
+6400 测量局主机独立复算，组合相对原始耗时下降 6.32%–7.68%，吞吐提高
+6.82%–8.73%。另四进程各 24 个串行 task，共 49536 局通过，实际观察
+163.97–374.45 秒/进程；RSS 首尾变化 -4 至 +72 KiB，不据此证明长期无泄漏。
+候选默认关闭，固定 2 vCPU / 6144 MiB，不测并发、不扩张 Android 服务；
+当前 Fusion ARM64 路线无 QEMU 指令翻译，整体目标继续进行。详见
+[报告](agent-handoff/SERIAL_ARM64_COMBINED_FOLLOWUP_2026-10-31.md)与
+[机器摘要](agent-handoff/serial-arm64-combined-followup-evidence-20261031.json)。
+
 ## 2026-10-31：旧 getter 与饱和距离的组合增量
 
 新增默认关闭的 hot-distance-v1，显式组合旧 11 点 getter 与两个饱和距离函数。

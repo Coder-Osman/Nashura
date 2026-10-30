@@ -1,4 +1,5 @@
 from pathlib import Path
+import gzip
 import json
 from types import SimpleNamespace
 
@@ -35,6 +36,41 @@ def test_zero_exit_does_not_replace_runtime_evidence(text):
 def test_nonzero_exit_preserves_failure_even_after_full_battle():
     with pytest.raises(ValueError, match="runtime exit code"):
         runner.verify_completion(70, COMPLETE)
+
+
+@pytest.mark.parametrize("exit_code", [0, 70])
+def test_stdout_compression_is_lossless_and_runs_after_process_exit(inputs, monkeypatch, exit_code):
+    settings, output = inputs
+    raw = (COMPLETE + "\n" + "raw evidence\n" * 1000).encode()
+    def execute(command, *, env, stdout, stderr):
+        assert not (output / "stdout.log.gz").exists()
+        stdout.write(raw)
+        return SimpleNamespace(returncode=exit_code)
+    monkeypatch.setattr(runner.subprocess, "run", execute)
+    if exit_code:
+        with pytest.raises(ValueError, match="runtime exit code"):
+            runner.run(settings, output, apply=True, snapshot_trace=False, compress_stdout=True)
+        assert not (output / "result.json").exists()
+    else:
+        result = runner.run(settings, output, apply=True, snapshot_trace=False, compress_stdout=True)
+        assert result["final_tick"] == 3601
+    assert gzip.decompress((output / "stdout.log.gz").read_bytes()) == raw
+    assert not (output / "stdout.log").exists()
+    assert (output / "exit.txt").read_text().strip() == str(exit_code)
+    assert json.loads((output / "plan.json").read_text())["stdout_encoding"] == "gzip-after-process-exit"
+
+
+def test_corrupt_compression_keeps_original_evidence(inputs, monkeypatch):
+    settings, output = inputs
+    def execute(command, *, env, stdout, stderr):
+        stdout.write(COMPLETE.encode())
+        return SimpleNamespace(returncode=0)
+    monkeypatch.setattr(runner.subprocess, "run", execute)
+    monkeypatch.setattr(runner.shutil, "copyfileobj", lambda source, target: target.write(b"changed"))
+    with pytest.raises(ValueError, match="lossless stdout"):
+        runner.run(settings, output, apply=True, snapshot_trace=False, compress_stdout=True)
+    assert (output / "stdout.log").read_text() == COMPLETE
+    assert not (output / "result.json").exists()
 
 
 def test_expected_repeated_native_finalizations_are_validated():

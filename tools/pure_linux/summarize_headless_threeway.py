@@ -36,13 +36,16 @@ def validate_terminal_archive(path, archive, reset):
         raise ValueError("correctness terminal identity differs from archived serializer")
 
 
-def validate_plan(plan, settings, variant, directory, *, variants=None):
+def validate_plan(plan, settings, variant, directory, *, variants=None,
+                  benchmark_repeats=116, serial_batches=1, timeout_seconds=120,
+                  compress_stdout=False):
     variants = VARIANTS if variants is None else variants
     env = plan["environment"]
     if (plan["native_optimization"] != variants[variant] or plan["native_phases"]
             or plan["snapshot_trace"] or plan["record_hand_actions"]
-            or plan["benchmark_repeats"] != 116 or plan["step_sample_every"] != 16
-            or plan.get("thread_resources", False) or plan.get("serial_batches", 1) != 1
+            or plan["benchmark_repeats"] != benchmark_repeats or plan["step_sample_every"] != 16
+            or plan.get("thread_resources", False) or plan.get("serial_batches", 1) != serial_batches
+            or plan.get("stdout_encoding") != ("gzip-after-process-exit" if compress_stdout else None)
             or FORBIDDEN_ENV.intersection(env)):
         raise ValueError("diagnostic or wrong timing plan")
     expected_env = {"PATH": "/usr/sbin:/usr/bin:/sbin:/bin", "LANG": "C",
@@ -50,14 +53,16 @@ def validate_plan(plan, settings, variant, directory, *, variants=None):
         "NASHURA_BATTLE_STEPS": "10000", "NASHURA_SNAPSHOT_ADAPTER": "1",
         "NASHURA_QUIET_SNAPSHOTS": "1", "NASHURA_BENCHMARK_VALIDATE": "1",
         "NASHURA_QUIET": "1", "NASHURA_BENCHMARK_MINIMAL": "1",
-        "NASHURA_RESET_REPEATS": "116", "NASHURA_STEP_SAMPLE_EVERY": "16",
-        "NASHURA_MEMORY_SAMPLE": "1", "NASHURA_TASK_TIMEOUT_MS": "120000"}
+        "NASHURA_RESET_REPEATS": str(benchmark_repeats), "NASHURA_STEP_SAMPLE_EVERY": "16",
+        "NASHURA_MEMORY_SAMPLE": "1", "NASHURA_TASK_TIMEOUT_MS": str(min(timeout_seconds * 1000, 120000))}
+    if serial_batches > 1:
+        expected_env["NASHURA_SERIAL_BATCHES"] = str(serial_batches)
     if variants[variant] is not None:
         expected_env["NASHURA_NATIVE_OPTIMIZATION"] = variants[variant]
     if env != expected_env:
         raise ValueError("wrong benchmark environment")
     closure = Path(settings["closure"])
-    expected_command = ["timeout", "-k", "3s", "120s", "unshare", "-Ur", "-m", "-n", "-i",
+    expected_command = ["timeout", "-k", "3s", str(timeout_seconds) + "s", "unshare", "-Ur", "-m", "-n", "-i",
         "/bin/sh", settings["namespace"], str(closure), settings["linker_config"],
         "/" + str(Path(settings["runtime"]).relative_to(closure)),
         "-Xbootclasspath:" + ":".join(BOOT), "-Djava.library.path=/data/local/tmp/libg-input",
