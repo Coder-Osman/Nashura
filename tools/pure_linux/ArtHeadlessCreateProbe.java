@@ -49,6 +49,22 @@ public final class ArtHeadlessCreateProbe {
         return content;
     }
 
+    private static int serialBatches() {
+        String value = System.getenv("NASHURA_SERIAL_BATCHES");
+        int batches = value == null ? 1 : Integer.parseInt(value);
+        if (batches < 1 || batches > 240) {
+            throw new IllegalArgumentException("Serial batches must be between 1 and 240");
+        }
+        if (batches > 1 && (!"1".equals(System.getenv("NASHURA_BENCHMARK_MINIMAL"))
+                || System.getenv("NASHURA_RESET_REPEATS") == null
+                || System.getenv("NASHURA_TRACE_SNAPSHOTS") != null
+                || System.getenv("NASHURA_NATIVE_PHASES") != null
+                || System.getenv("NASHURA_THREAD_RESOURCES") != null)) {
+            throw new IllegalArgumentException("Serial batches require quiet repeated warm loops");
+        }
+        return batches;
+    }
+
     public static void main(String[] args) throws Exception {
         boolean battleTask = args.length >= 11 && (args[10].equals("game-state-load")
                 || args[10].equals("game-state-load-gdb")
@@ -222,9 +238,14 @@ public final class ArtHeadlessCreateProbe {
                                     default:
                                         throw new AssertionError("Unknown battle task mode: " + args[10]);
                                     }
-                                    int battle = runGameStateBattleTask(replayJson, taskMode);
-                                    mark("HEADLESS_GAME_STATE_BATTLE_TASK_STATUS=" + battle);
-                                    if (battle != 1) throw new IllegalStateException("GameState battle task did not pass its runtime checks: " + battle);
+                                    int batches = serialBatches();
+                                    for (int batch = 1; batch <= batches; batch++) {
+                                        if (batches > 1) mark("HEADLESS_SERIAL_BATCH_BEGIN index=" + batch + " batches=" + batches);
+                                        int battle = runGameStateBattleTask(replayJson, taskMode);
+                                        mark("HEADLESS_GAME_STATE_BATTLE_TASK_STATUS=" + battle);
+                                        if (battle != 1) throw new IllegalStateException("GameState battle task did not pass its runtime checks: " + battle);
+                                        if (batches > 1) mark("HEADLESS_SERIAL_BATCH_END index=" + batch + " batches=" + batches + " status=1");
+                                    }
                                 }
                             }
                         }

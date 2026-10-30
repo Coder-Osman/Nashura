@@ -41,6 +41,7 @@ def validate_plan(plan, settings, variant, directory):
     if (plan["native_optimization"] != VARIANTS[variant] or plan["native_phases"]
             or plan["snapshot_trace"] or plan["record_hand_actions"]
             or plan["benchmark_repeats"] != 116 or plan["step_sample_every"] != 16
+            or plan.get("thread_resources", False) or plan.get("serial_batches", 1) != 1
             or FORBIDDEN_ENV.intersection(env)):
         raise ValueError("diagnostic or wrong timing plan")
     expected_env = {"PATH": "/usr/sbin:/usr/bin:/sbin:/bin", "LANG": "C",

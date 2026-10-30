@@ -68,7 +68,8 @@ def test_exact_quiet_plan_matches_runner(inputs, monkeypatch, variant):
 
 
 @pytest.mark.parametrize("mutation", ["trace", "phases", "profiler", "timeout", "replay",
-                                     "unquiet", "identities", "optimization", "output"])
+                                     "unquiet", "identities", "optimization", "output",
+                                     "resources", "serial_batches"])
 def test_reject_plan_drift(inputs, monkeypatch, mutation):
     settings, output = inputs
     monkeypatch.setattr(threeway, "ENGINE_SHA256", runner.ENGINE_SHA256)
@@ -89,6 +90,10 @@ def test_reject_plan_drift(inputs, monkeypatch, mutation):
         plan["identities"] = {}
     elif mutation == "optimization":
         plan["environment"]["NASHURA_NATIVE_OPTIMIZATION"] = "component-getters-v1"
+    elif mutation == "resources":
+        plan["thread_resources"] = True
+    elif mutation == "serial_batches":
+        plan["serial_batches"] = 2
     else:
         plan["output"] = "/tmp/other-batch"
     with pytest.raises(ValueError):

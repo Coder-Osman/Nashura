@@ -1,5 +1,19 @@
 # 阶段成果与证据索引
 
+## 2026-10-31：线程资源与有界同进程串行稳定性
+
+四组资源诊断各测 200 局，Mainloop CPU / 包围墙钟为 99.970%–99.987%，主动
+切换、major fault、块 I/O 均为零；不据此推断所有线程无等待。当前 guest 无硬件
+PMU，cycles/instructions/cache 输出 not supported，退出 0 不计作取得计数。
+八个原始/旧 11 点优化进程共 80 批、41280 局全部正常退出；每进程实际观察
+71.247–169.511 秒，RSS 首尾未增长，不外推长期无泄漏。新 DEX 下八个完整局
+全部 serializer 帧及已观测状态与历史一致；稳定性局仅验证终态，不冒充全帧门。
+主机独立复算全部原始记录，保留初始解析失败。纯 Linux 1323 passed / 1 skipped、
+公开 1104 passed / 42 skipped、主工程 211 passed。不测并发、不扩张服务、不改 VM
+配置；原始后优化顺序不作新性能收益结论，整体目标继续进行。详见
+[报告](../agent-handoff/SERIAL_ARM64_THREAD_RESOURCES_2026-10-31.md)与
+[机器摘要](../agent-handoff/serial-arm64-thread-resources-evidence-20261031.json)。
+
 ## 2026-10-31：对象分配诊断与组件 getter 三路径对照
 
 9 窗口 / 11 调用点独立诊断显示，四组临时 new[]/delete[] 仅占对象窗口

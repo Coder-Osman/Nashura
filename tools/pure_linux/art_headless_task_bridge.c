@@ -23,6 +23,7 @@
 #include "headless_spatial_y_bound.h"
 #include "headless_hot_getters.h"
 #include "headless_native_phases.h"
+#include "headless_thread_resources.h"
 
 static uintptr_t base;
 static _Atomic int destroyed;
@@ -652,6 +653,9 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
     struct phase_metrics phase = {0};
     phase.enabled = phase_timing_requested();
     const int minimal_benchmark = minimal_benchmark_requested();
+    const char *resource_text = getenv("NASHURA_THREAD_RESOURCES");
+    const int thread_resources = resource_text && !strcmp(resource_text, "1");
+    if (thread_resources && !minimal_benchmark) return -57;
     phase.first_queue_change_tick = -1;
     phase.last_queue_change_tick = -1;
     const uint64_t canary = UINT64_C(0x93e726ac415bd80f);
@@ -784,6 +788,8 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         int trace_fd = trace_file ? open(trace_file, O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC, 0600) : -1;
         if (trace_file && (trace_fd < 0 || !trace_snapshot(trace_fd, state, tick_before))) return -52;
         if (native_phases_installed) native_phase_reset();
+        struct thread_resources resources_before = {0};
+        if (thread_resources) resources_before = read_thread_resources();
         uint64_t elapsed_start = monotonic_ns(), total_step_ns = 0, worst_step_ns = 0;
         uint64_t min_step_ns = UINT64_MAX;
         uint64_t durations[10000];
@@ -852,6 +858,8 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
             }
         }
         uint64_t elapsed_ns = monotonic_ns() - elapsed_start;
+        if (thread_resources && !report_thread_resources(resources_before, read_thread_resources(),
+                elapsed_start, elapsed_start + elapsed_ns)) return -57;
         native_phase_report();
         if (minimal_benchmark) {
             if (!timed_samples) {

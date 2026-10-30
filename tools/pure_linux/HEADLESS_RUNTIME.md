@@ -77,6 +77,27 @@ step loop；不同 observer 构建或计时实现的结果不应直接作前后�
 避免较长的串行批次触发原生默认约五秒等待；外层进程 timeout 仍独立生效，
 不保证一定等到 task 的完整上限。此设置只改变控制线程的等待契约，不改变 step。
 
+## 独立线程资源诊断与有界串行稳定性
+
+`--thread-resources --benchmark-repeats 216` 显式启用独立诊断，默认关闭。
+仅在 warm loop 两端读取线程 CPU 时钟与 RUSAGE_THREAD，逐 step 不新增系统调用；
+输出包围 loop 的边界、user/system、缺页、上下文切换与块 I/O 计数。
+summarize_headless_resources.py 要求计数非负、边界有序且与每局计时及终态一致。
+边界含测量成本，线程 CPU 不是硬件 cycles，wall-minus-CPU 不解释为锁或 Binder
+等待；资源诊断与安静基线分开运行，不直接用于加速对照。
+
+`--serial-batches 10 --benchmark-repeats 516 --timeout-seconds 600` 在同一个
+已初始化引擎进程内串行提交十个 Mainloop task。默认仍只有一个 task；显式多批
+限制为 2..240，每批 repeats 仍为 2..1000，task 等待仍不超过 120 秒。
+多批禁止混入 native/线程资源诊断、手牌记录及逐 tick trace。每个 task 记录
+BEGIN/END，全部局仍校验正常原生终态；summarize_headless_stability.py 进一步
+核对唯一合法 create 返回、同一 Mainloop TID、批次顺序、时钟和正常进程完成。
+
+稳定性汇总按每批剔除 warmup，报告实际观察时长、RSS 和终态身份。连续 task
+共享进程与固定输入，不当作独立实验，不从终态 digest 外推全部 serializer 帧或
+未序列化状态，也不将有限运行外推为全天或无限期稳定性。正式速度测量继续关闭
+上述诊断，使用独立交错对照；固定 original→hot 顺序只用于稳定性观察。
+
 ## 冻结多 seed / 卡组动作
 
 `--record-hand-actions --without-snapshot-trace` 仅用于独立诊断运行，要求输入

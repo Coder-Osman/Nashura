@@ -1,5 +1,15 @@
 # Nashura
 
+## 2026-10-31：线程资源诊断与有界串行稳定性
+
+四组 warm-loop 独立诊断中，Mainloop 线程 CPU / 包围墙钟约 99.970%–99.987%，
+未观察到主动切换、major fault 或块 I/O；当前 guest 没有取得硬件 PMU 计数。
+八个同进程串行运行共 80 批、41280 局，全部正常终局退出；新 DEX 的八个原始/
+旧 11 点优化完整局全帧与已观测状态均一致。有限观察时长及 RSS 不代替长期无
+泄漏证明，原始后优化顺序不作新加速结论。VM 配置与最小服务边界保持不变，
+整体目标继续进行。详见[报告](agent-handoff/SERIAL_ARM64_THREAD_RESOURCES_2026-10-31.md)与
+[机器摘要](agent-handoff/serial-arm64-thread-resources-evidence-20261031.json)。
+
 ## 2026-10-31：对象更新分解与组件 getter 三路径实测
 
 新增对象临时分配与组件更新独立诊断；四组分配/释放仅占对象诊断窗口约

@@ -2,6 +2,7 @@
 
 本目录用于跨助手、跨Codex任务共享**文字任务与证据**，不属于游戏引擎、Replay、权重或部署代码。与现有 `AGENTS.md`、冻结规范同级协作；不能替代它们。所有记录应注明日期、commit SHA、版本与证据状态。
 
+- [SERIAL_ARM64_THREAD_RESOURCES_2026-10-31.md](SERIAL_ARM64_THREAD_RESOURCES_2026-10-31.md)：线程资源边界、硬件 PMU 能力与 41280 局有界同进程串行稳定性。
 - [SERIAL_ARM64_COMPONENT_GETTERS_2026-10-31.md](SERIAL_ARM64_COMPONENT_GETTERS_2026-10-31.md)：对象临时分配/组件归因、16 完整局全帧复核、72 批三路径串行测量及未证实的增量收益。
 - [SERIAL_ARM64_NATIVE_PHASES_2026-10-31.md](SERIAL_ARM64_NATIVE_PHASES_2026-10-31.md)：四组原始/诊断/inject 全帧复验、真实 command dispatch 与对象集合更新归因。
 - [SERIAL_ARM64_WARM_WINDOW_2026-10-31.md](SERIAL_ARM64_WARM_WINDOW_2026-10-31.md)：仅 warm-step 窗口的 CPU 归因、长串行 task 等待修复与同构建重复基线。

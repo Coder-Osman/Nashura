@@ -104,8 +104,13 @@ def validate(settings, output):
 
 def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
                step_sample_every=16, timeout_seconds=45, record_hand_actions=False,
-               native_optimization=None, native_phases=False):
+               native_optimization=None, native_phases=False, thread_resources=False, serial_batches=1):
     paths, output = validate(settings, output)
+    if thread_resources and benchmark_repeats is None:
+        raise ValueError("thread resources require an independent repeated warm-loop diagnostic")
+    if not 1 <= serial_batches <= 240 or (serial_batches > 1 and
+            (benchmark_repeats is None or thread_resources or native_phases or record_hand_actions)):
+        raise ValueError("serial batches require quiet repeated warm loops; range 1..240")
     if native_optimization is not None and native_optimization not in OPTIMIZATION_MARKERS:
         raise ValueError("unknown native optimization")
     if native_phases and (benchmark_repeats is not None or native_optimization is not None
@@ -143,6 +148,10 @@ def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
                    "NASHURA_QUIET_SNAPSHOTS": "1", "NASHURA_BENCHMARK_VALIDATE": "1"}
     if native_optimization is not None:
         environment["NASHURA_NATIVE_OPTIMIZATION"] = native_optimization
+    if thread_resources:
+        environment["NASHURA_THREAD_RESOURCES"] = "1"
+    if serial_batches > 1:
+        environment["NASHURA_SERIAL_BATCHES"] = str(serial_batches)
     if native_phases:
         environment["NASHURA_NATIVE_PHASES"] = "1"
         environment["NASHURA_PHASE_TIMING"] = "1"
@@ -173,6 +182,8 @@ def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
             "record_hand_actions": record_hand_actions,
             "native_optimization": native_optimization,
             "native_phases": native_phases,
+            "thread_resources": thread_resources,
+            "serial_batches": serial_batches,
             "benchmark_repeats": benchmark_repeats,
             "step_sample_every": step_sample_every if benchmark_repeats is not None else None,
             "snapshot_scope": "explicit original-serializer adapter" if snapshot_trace else "not captured",
@@ -197,9 +208,9 @@ def verify_completion(exit_code, stdout, expected_repeats=1):
 
 def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=None,
         step_sample_every=16, timeout_seconds=45, record_hand_actions=False,
-        native_optimization=None, native_phases=False):
+        native_optimization=None, native_phases=False, thread_resources=False, serial_batches=1):
     plan = build_plan(settings, output, snapshot_trace, benchmark_repeats,
-                      step_sample_every, timeout_seconds, record_hand_actions, native_optimization, native_phases)
+                      step_sample_every, timeout_seconds, record_hand_actions, native_optimization, native_phases, thread_resources, serial_batches)
     if not apply:
         return plan
     from compare_headless_snapshots import inspect_archive
@@ -212,7 +223,7 @@ def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=No
         result = subprocess.run(plan["command"], env=plan["environment"], stdout=stdout, stderr=stderr)
     (output / "exit.txt").write_text(str(result.returncode) + "\n")
     final_tick = verify_completion(result.returncode, (output / "stdout.log").read_text(),
-                                   benchmark_repeats or 1)
+                                   (benchmark_repeats or 1) * serial_batches)
     if native_optimization is not None:
         marker = ("HEADLESS_NATIVE_OPTIMIZATION name=" + native_optimization
                   + " installed=1 " + OPTIMIZATION_MARKERS[native_optimization])
@@ -226,10 +237,12 @@ def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=No
             stream.write("\n")
     summary = {"status": "NATIVE_FINAL_OBSERVED_LIMITED",
                "final_tick": final_tick, "snapshot_trace": plan["snapshot_trace"],
-               "matches": benchmark_repeats or 1,
+               "matches": (benchmark_repeats or 1) * serial_batches,
                "record_hand_actions": record_hand_actions,
                "native_optimization": native_optimization,
                "native_phases": native_phases,
+               "thread_resources": thread_resources,
+               "serial_batches": serial_batches,
                "whole_goal_complete": False}
     if plan["snapshot_trace"]:
         archive = inspect_archive(output / "snapshots.bin", final_tick)
@@ -254,6 +267,10 @@ def main():
                         help="experimental pinned-build optimization; default keeps original code")
     parser.add_argument("--native-phases", action="store_true",
                         help="diagnostic-only call-site attribution; forbidden in benchmarks")
+    parser.add_argument("--thread-resources", action="store_true",
+                        help="independent warm-loop CPU/fault/switch boundary diagnostics")
+    parser.add_argument("--serial-batches", type=int, default=1,
+                        help="bounded repeated tasks in one engine process for stability")
     parser.add_argument("--step-sample-every", type=int, default=16)
     parser.add_argument("--timeout-seconds", type=int, default=45)
     args = parser.parse_args()
@@ -264,7 +281,8 @@ def main():
                          timeout_seconds=args.timeout_seconds,
                          record_hand_actions=args.record_hand_actions,
                          native_optimization=args.native_optimization,
-                         native_phases=args.native_phases), indent=2))
+                         native_phases=args.native_phases, thread_resources=args.thread_resources,
+                         serial_batches=args.serial_batches), indent=2))
 
 
 if __name__ == "__main__":
