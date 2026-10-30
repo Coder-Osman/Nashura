@@ -1,5 +1,19 @@
 # 阶段成果与证据索引
 
+## 2026-10-30：最小 headless 原生生命周期
+
+v17 在真实 ARM64 Ubuntu/Bionic/ART 中，以原始 APK DEX 和精确 libg，执行原始
+native create/start/resume/pause/stop/destroy 并自然退出0。使用 APK 局部元数据、
+真实 AssetManager/Resources 和 flags=0 的本地 Intent；本轮未启动 system_server、
+Display、SurfaceFlinger、GPU/EGL 或原始 init。holder/game 对象非空、虚表匹配已知
+Android 对象，Mainloop 位于事件循环；销毁后 owner/filesystem 清空、Mainloop 消失。
+内容 root 仍为空；状态 `HEADLESS_NATIVE_LIFECYCLE_OBSERVED_LIMITED`，严格 catalog
+及 ResourceManager、GameState、reset/step、动作、快照、完整对局、基线对照和性能
+保持未验证。v12/v13 将带标签指针读取失败当作空对象的结论撤回；v14 显式报错，
+v15 修正读取偏移后取得真实对象。历史日志保持原样。
+详见[报告](../agent-handoff/PURE_LINUX_HEADLESS_LIFECYCLE_2026-10-30.md)和
+[机器摘要](../agent-handoff/pure-linux-headless-lifecycle-evidence-20261030.json)。
+
 ## 2026-10-30：Display statsd linker 依赖复验
 
 在同一 ARM64 Ubuntu guest 的已加载 permissive policy 和隔离 namespace 中，

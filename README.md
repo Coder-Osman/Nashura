@@ -1,5 +1,15 @@
 # Nashura
 
+## 2026-10-30：最小 headless 原生生命周期
+
+停止将完整系统/图形服务作为战斗默认依赖。真实 ARM64 Linux 中，以原始 APK DEX、
+精确 libg、APK 局部 Context/Resources 和本地 Intent 执行原始 native
+create/start/resume/pause/stop/destroy，进程自然退出0；holder/game 对象实际建立，
+销毁后 Mainloop 消失。内容 root 仍为空，严格 catalog、ResourceManager、GameState、
+reset/step/action/snapshot、完整对局与性能继续未验证。修正 ARM64 带标签指针的
+观察器误读并保留全部失败历史。详见[报告](agent-handoff/PURE_LINUX_HEADLESS_LIFECYCLE_2026-10-30.md)
+和[证据](agent-handoff/pure-linux-headless-lifecycle-evidence-20261030.json)。
+
 ## 2026-10-30：Display 服务依赖边界
 
 v25 在用户目录输出、复用 service-v2 工具链后，原始 `apexd-bootstrap` 成功挂载 5 个

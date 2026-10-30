@@ -135,3 +135,27 @@ ARM64 Linux + Binder + Bionic/ART [真实 Java/JNI PASS_LIMITED]
 ```
 
 见[ART 报告](PURE_LINUX_ART_JAVAVM_2026-10-29.md)和[holder 报告](PURE_LINUX_HOLDER_SETUP_REAL_ART_2026-10-29.md)。
+
+## 2026-10-30：最小 headless 生命周期与依赖准入
+
+此前系统/显示服务探索属于外围启动依赖调查，未证明位于战斗路径，不列入默认
+headless 前置条件。只依据真实引擎调用补最小边界；服务自身的失败不驱动无限补齐。
+
+```text
+ARM64 Linux + 既有 Binder + Bionic/ART [本轮复用，整体最小性未证]
+  └─ 原始 APK DEX / 精确 libg / 原始 JNI 注册
+      └─ APK 局部 Context + 真实 AssetManager/Resources + 本地空 Intent
+          └─ native create/start/resume/pause/stop/destroy [v17 exit0]
+              ├─ holder / 引擎 game 对象非空 [VTABLE 18c8be0 / 17ea568]
+              ├─ Mainloop 事件循环 [PC/LR 采样，非完整覆盖]
+              ├─ content root [NULL；CATALOG_READY_PASS=false]
+              └─ ResourceManager → 战斗 GameState → reset/step/action/snapshot
+                  → 完整对局 → Android 正确性与性能对照 [未验证]
+```
+
+APK 元数据仅当前包 flags=0；HPE=false 仅对应不具备 HPE 的当前 fixture；Resources
+固定 720×1280/dpi320/Locale.US；Intent 无外部启动数据。未知 PackageManager 和系统
+服务显式失败。未启动 Display/SurfaceFlinger/GPU 服务，也未证明其战斗必要性。
+v12/v13 的 holder/game=null 旧推断由 v14 的 READ_FAILED 和 v15 的 tagged-pointer
+修正撤回。原始输入、失败及快照 SHA 见[本轮报告](PURE_LINUX_HEADLESS_LIFECYCLE_2026-10-30.md)
+和[证据](pure-linux-headless-lifecycle-evidence-20261030.json)。

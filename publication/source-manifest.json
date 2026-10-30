@@ -17,16 +17,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "1f80b902f55573b624fe0e7b5ac049085f5d1a52da369f8d5ff3ea58129a4501",
-      "bytes": 60055,
-      "source_sha256": "b888e1acf573062e983483fb3d25b54c3eabb1f8b2b9c87bf0ec3631e1962f66",
+      "sha256": "a4775456c790b8d35e6427d738263f900ec565b069fb3d167904f3482b800fa5",
+      "bytes": 60843,
+      "source_sha256": "a4775456c790b8d35e6427d738263f900ec565b069fb3d167904f3482b800fa5",
       "transformations": []
     },
     {
       "path": "README.md",
-      "sha256": "3d8b63bdc3fbdfb2e62b13480067a59b1693288669babe00b969d68244811c3b",
-      "bytes": 60620,
-      "source_sha256": "93a56d6fee970d60056f7d04f029507aee83e4e665ab8d693db5138f4b1b9bbe",
+      "sha256": "fc6f0aa4063f04b737053a4b7887575cc7f982bd9e4f973f50f37d0c610e9ea0",
+      "bytes": 61359,
+      "source_sha256": "fc6f0aa4063f04b737053a4b7887575cc7f982bd9e4f973f50f37d0c610e9ea0",
       "transformations": []
     },
     {
@@ -10331,9 +10331,9 @@
     },
     {
       "path": "agent-handoff/DEPENDENCY_MAP.md",
-      "sha256": "761c04c8bf98946f2b72125bce1a5845db355a9a3430e58a1529bfc56560a8ed",
-      "bytes": 8610,
-      "source_sha256": "761c04c8bf98946f2b72125bce1a5845db355a9a3430e58a1529bfc56560a8ed",
+      "sha256": "f492d0d4ab432b2f40151c652d92fc96949304d66109c05d2c20fe17e39add7f",
+      "bytes": 10176,
+      "source_sha256": "f492d0d4ab432b2f40151c652d92fc96949304d66109c05d2c20fe17e39add7f",
       "transformations": []
     },
     {
@@ -11391,9 +11391,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "91d4647f34dcc0015ed1b90d6a36195126edc9f24efb42e72c67a47b89a9139b",
-      "bytes": 95184,
-      "source_sha256": "92ad464c1f667d705dbd9f571df48ac980552b3dab1990d9285069ff296f0840",
+      "sha256": "04e1bcd976fce0fa537d3b11075519a4d47e4d1653cbd2d535f0003e6c35cff7",
+      "bytes": 96265,
+      "source_sha256": "04e1bcd976fce0fa537d3b11075519a4d47e4d1653cbd2d535f0003e6c35cff7",
       "transformations": []
     },
     {
@@ -19954,10 +19954,52 @@
       "bytes": 753,
       "source_sha256": "2f543eec0e0258b55fb9ae0eeccc867f1ac568d4e8a32383a9692c1fa5e66a23",
       "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/ArtHeadlessCreateProbe.java",
+      "transformations": [],
+      "sha256": "0dd2d34cc6144136520750dfb085a5328df703459c751c7ece77ac1a6652de6c",
+      "source_sha256": "0dd2d34cc6144136520750dfb085a5328df703459c751c7ece77ac1a6652de6c",
+      "bytes": 9605
+    },
+    {
+      "path": "tools/pure_linux/HeadlessApkContext.java",
+      "transformations": [],
+      "sha256": "bf50ffecec6a126607f31e2b8fed9cdc3fa09f9d8226adc2c437e49f5c445d9b",
+      "source_sha256": "bf50ffecec6a126607f31e2b8fed9cdc3fa09f9d8226adc2c437e49f5c445d9b",
+      "bytes": 5631
+    },
+    {
+      "path": "tools/pure_linux/art_headless_observer.c",
+      "transformations": [],
+      "sha256": "556fc0b52841d15d97d3f24daa504f2502c02e31a505ac854143238c05e424a5",
+      "source_sha256": "556fc0b52841d15d97d3f24daa504f2502c02e31a505ac854143238c05e424a5",
+      "bytes": 8822
+    },
+    {
+      "path": "tools/pure_linux/generate_headless_pm.py",
+      "transformations": [],
+      "sha256": "7832a13e2c2325653ecaa9122943f2b92b995eee333595c4194baa1b569ae95a",
+      "source_sha256": "7832a13e2c2325653ecaa9122943f2b92b995eee333595c4194baa1b569ae95a",
+      "bytes": 2789
+    },
+    {
+      "path": "agent-handoff/PURE_LINUX_HEADLESS_LIFECYCLE_2026-10-30.md",
+      "transformations": [],
+      "sha256": "6f842de71378d761e35e77bfa1a82891ee90d30ab10ff7001b57b5a122e223c1",
+      "source_sha256": "6f842de71378d761e35e77bfa1a82891ee90d30ab10ff7001b57b5a122e223c1",
+      "bytes": 8789
+    },
+    {
+      "path": "agent-handoff/pure-linux-headless-lifecycle-evidence-20261030.json",
+      "transformations": [],
+      "sha256": "96508ae402db68e983134d2f5c821b353f40e9431944afa41c6b3f1ec793ce06",
+      "source_sha256": "96508ae402db68e983134d2f5c821b353f40e9431944afa41c6b3f1ec793ce06",
+      "bytes": 51658
     }
   ],
-  "file_count": 2840,
-  "source_bytes": 36503623,
+  "file_count": 2846,
+  "source_bytes": 36595091,
   "excluded_selected_candidates": {
     "binary_or_unselected_format": 14,
     "local_environment": 1,

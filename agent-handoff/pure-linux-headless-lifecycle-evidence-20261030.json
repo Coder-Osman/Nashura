@@ -1,0 +1,1610 @@
+{
+  "schema": "nashura-pure-linux-headless-lifecycle.v1",
+  "status": "HEADLESS_NATIVE_LIFECYCLE_OBSERVED_LIMITED",
+  "date": "2026-10-30",
+  "baseline": "25a1f90",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "machine": "aarch64",
+  "kernel": "6.8.0-138-generic",
+  "input_sha256": {
+    "nashura-original-game-20261030.apk": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "nashura-headless-create-20261030-v17.dex": "4f76fa5a277b42991006b67970dd02ef30402051826c8efa01e63c9b6805df43",
+    "current-game-classes.dex": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+    "libg.so": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "libheadless_observer-20261030-v16.so": "148eb10264787f7a9c56d27d22a805b514af56ef370246e02cf2c6b214bfc5b0"
+  },
+  "guest_postflight_sha256": "25ae94986a990240501f8f6366296dd712bde8cc0dd9f73764b59ef826052b00",
+  "guest_relevant_processes_after_run": [],
+  "guest_selinux_enforce": "0",
+  "source_sha256": {
+    "ArtHeadlessCreateProbe.java": "0dd2d34cc6144136520750dfb085a5328df703459c751c7ece77ac1a6652de6c",
+    "HeadlessApkContext.java": "bf50ffecec6a126607f31e2b8fed9cdc3fa09f9d8226adc2c437e49f5c445d9b",
+    "generate_headless_pm.py": "7832a13e2c2325653ecaa9122943f2b92b995eee333595c4194baa1b569ae95a",
+    "art_headless_observer.c": "556fc0b52841d15d97d3f24daa504f2502c02e31a505ac854143238c05e424a5"
+  },
+  "runs": [
+    {
+      "id": "v1",
+      "exit_code": 139,
+      "note": "linker libart export crash",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "run.stderr": {
+          "sha256": "82ae085cadb585de048aa003263756513c10ea75c18cc9afc5d5236fd8f7703c",
+          "bytes": 178
+        },
+        "run.exit": {
+          "sha256": "690e07064753123c967bbac0180f32da6a753a5bd8b79a47644cef58e776d9f0",
+          "bytes": 4
+        },
+        "run.strace": {
+          "sha256": "ac3255255f09ccbb020fc9e5c7a5fcd90ceff8d64c76d9c529bc6cff454e93d0",
+          "bytes": 114184
+        },
+        "classes.dex": {
+          "sha256": "ecdd08ad7496358b6f7ddf9123a6a8c4ac599be198fcc400c17a21727a20aed2",
+          "bytes": 7176
+        },
+        "command.json": {
+          "sha256": "97737c270ac1ced1f61adcc7907a234c18bd985fcb131980db4c31c3c6ea59de",
+          "bytes": 1376
+        },
+        "run.sh": {
+          "sha256": "5286a6c9fac6b7737ed649b6ff4faba342cf054f09aceecc4c2f39b7ed51eb5d",
+          "bytes": 1317
+        }
+      },
+      "states": [],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": false,
+        "NATIVE_ON_CREATE": false,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v2",
+      "exit_code": 134,
+      "note": "null Activity base Context",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "f6823aae37e8b279ce84f2325f88718eb3a9d4c32cb38a1fe3dc36f37670342c",
+          "bytes": 562
+        },
+        "run.stderr": {
+          "sha256": "3da4efc26ee2ac968b164d39feae3404745e16fd7694197acdca004572ef0845",
+          "bytes": 1520
+        },
+        "run.exit": {
+          "sha256": "e726b440cc164001999e718b51780d80314709efe06e7857282377be9111127b",
+          "bytes": 4
+        },
+        "run.strace": {
+          "sha256": "ec83b866b3fe128af2a94daf0391bd985b72513616a1f34fe54677e831bb361e",
+          "bytes": 180585
+        },
+        "command.json": {
+          "sha256": "fb89b33d7d1bea0676ca97a396611c8316e61049e31221dcdad8847b1ef87eee",
+          "bytes": 1460
+        },
+        "run.sh": {
+          "sha256": "032ebaa2443e9027c2a601fd8b93e07436c93c0404cc59cd3b1ea416e1e35d73",
+          "bytes": 1391
+        }
+      },
+      "states": [],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": false,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v3",
+      "exit_code": 3,
+      "note": "APK metadata parser boundary",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "01691c91a2c0f0ccd2f3e10049954797ff96aa1a2825cdf9bec0b5ad3e7938e3",
+          "bytes": 315
+        },
+        "run.stderr": {
+          "sha256": "52efb91da38e8ab0c7389421abf8fa873f1cfc371358cb2738767f137058cc0e",
+          "bytes": 457
+        },
+        "run.exit": {
+          "sha256": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+          "bytes": 2
+        },
+        "run.strace": {
+          "sha256": "7ff8042be847e29307aebf47d106d4c3e20c4782ad3683d9686f2d654bdfc56e",
+          "bytes": 160845
+        },
+        "classes.dex": {
+          "sha256": "16c069914927252a4c032757233df4c27c93275e9c5dbc7b32cc79d1a63d986f",
+          "bytes": 25692
+        },
+        "command.json": {
+          "sha256": "eb8064c2bfc40ec6d5ea24c0ba22fe9fea28c4b13606ae76edbba70ebf0a8f19",
+          "bytes": 1479
+        },
+        "run.sh": {
+          "sha256": "10d5f32cc6d8d563f6ee98d4649dfaa21286ed2415b2fc6ac7cd6c33d0acba6a",
+          "bytes": 1403
+        }
+      },
+      "states": [],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": false,
+        "NATIVE_ON_CREATE": false,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v4",
+      "exit_code": 3,
+      "note": "Activity autofill attach boundary",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "db8021cb663ea1a4811c78a5d4bc93f94450053ec92ec3804b62af7beb3c1a9e",
+          "bytes": 372
+        },
+        "run.stderr": {
+          "sha256": "44736b51ce22e6ba44280f63a5299777f1134cba33dc2a60eca4997528464a54",
+          "bytes": 591
+        },
+        "run.exit": {
+          "sha256": "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2",
+          "bytes": 2
+        },
+        "run.strace": {
+          "sha256": "285ec5ae7982ca4c34fdd5c5a895efcdb9f3d5d46f49ee53f55af9a9b0922d2b",
+          "bytes": 159571
+        },
+        "classes.dex": {
+          "sha256": "2cfd598028cccacd985bfaa0b4b898c29964a49e8910a02a5df4942a5339b46e",
+          "bytes": 26416
+        },
+        "command.json": {
+          "sha256": "c6039dc5909002b753f0cf0598da822a1c56e8949283d30a4670d6aafbd62232",
+          "bytes": 1479
+        },
+        "run.sh": {
+          "sha256": "8a9b7dec7d11a3908b4e24147541ceaaf9f9a96d88ab519f7ec6a7d28a6602d9",
+          "bytes": 1403
+        }
+      },
+      "states": [],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": false,
+        "NATIVE_ON_CREATE": false,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v5",
+      "exit_code": 0,
+      "note": "unsupported HPE query swallowed; exit0 is not readiness",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "5e615741e14fee2df44c530e22bef1a2999098731ffffbc35a83e08b352f0ab7",
+          "bytes": 818
+        },
+        "run.stderr": {
+          "sha256": "140e6cf7ee8e4485236f1e85ca6a0b09ffb10cce170fe37bbdc0b64a7906fe76",
+          "bytes": 1422
+        },
+        "run.exit": {
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        },
+        "run.strace": {
+          "sha256": "bc288ed6ee89f58099d77cc34a3489501c2e79f78cd7585d6d73ab96fb3394dd",
+          "bytes": 168301
+        },
+        "classes.dex": {
+          "sha256": "29666bfcfca5f238337290bb5ea89eb453802318b08a66a680482982b12c02ea",
+          "bytes": 26344
+        },
+        "command.json": {
+          "sha256": "12cc8817d86c4e11150a5447ca391fa7e4c91473632a05282ce445f8f548d31a",
+          "bytes": 1479
+        },
+        "run.sh": {
+          "sha256": "1f83da9d1c196cb56d3acc196a68a9b843ddd86e1861443081081e0c6574cf28",
+          "bytes": 1403
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "09ebb5b39f608c2c48b005be8e9df6c5e17f40c3f9812ffd91ff62bd993c2c11",
+          "bytes": 5650
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "c0e44eec6a5b81062da7f64cdcb92bf248e6a5de9cff5b14f852767a7a0174bd",
+          "bytes": 4393
+        }
+      },
+      "states": [],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": false,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v6",
+      "exit_code": 0,
+      "note": "unsupported HPE query recorded; exit0 is not readiness",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "c75cd4384e8678098145826057f86b2dfa8452cf714fea308cd22883ebc85d77",
+          "bytes": 892
+        },
+        "run.stderr": {
+          "sha256": "d1586db8f40fdc30de8d978575b2e2645fb6b2bf4bc6591104cb5e235b119a10",
+          "bytes": 1504
+        },
+        "run.exit": {
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        },
+        "run.strace": {
+          "sha256": "a7ad955897f35e7e1577622179a942f30490ce98eeb02b55dea85e83d8b5cce6",
+          "bytes": 168193
+        },
+        "classes.dex": {
+          "sha256": "458260ecc5f040fe31dcefe4cc05cc0add9ac8407a23a9d0c5559d324d7f1c02",
+          "bytes": 26480
+        },
+        "command.json": {
+          "sha256": "37b2f45d092b25bff503a6834180548afb6fe17be39547e024839f96e2dd8c67",
+          "bytes": 1479
+        },
+        "run.sh": {
+          "sha256": "5bedced9c77a18ba38f0f99125dff4b94c7085e83f2c13b6b838cf26c500c2c5",
+          "bytes": 1403
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "09ebb5b39f608c2c48b005be8e9df6c5e17f40c3f9812ffd91ff62bd993c2c11",
+          "bytes": 5650
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "9cc9cd3c46fd4fb0ecfb5f0db82be20568b13cf9f00cc1b08ef06461ae5f0c01",
+          "bytes": 4619
+        }
+      },
+      "states": [],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": false,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v7",
+      "exit_code": 137,
+      "note": "generated PM observation field mismatch",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "340625fd6d355cac3e7cef576ed178b59b2b35a73423a26a8e8230d0a5a611fe",
+          "bytes": 939
+        },
+        "run.stderr": {
+          "sha256": "0b0434bed41dd9708406fc39574b4c92e8d7ce9fcd021d0634f2faec3b47601e",
+          "bytes": 821
+        },
+        "run.exit": {
+          "sha256": "e3b9c2844b5a5c2677b3a2279db2ec8487491dd9a23d6b22fac153391b3bb63c",
+          "bytes": 4
+        },
+        "run.strace": {
+          "sha256": "ff7bfdc1bae9a57cac3833d2c173e82b8e821b2ebaef84fd203b3681ea05a1c6",
+          "bytes": 168142
+        },
+        "classes.dex": {
+          "sha256": "fc08c7a4a11cb63b8cb456478c5a2aeb8d0e7529c6b91d3d46fa9691d15195b0",
+          "bytes": 27304
+        },
+        "command.json": {
+          "sha256": "a8c1fd74ebac63d7abe045f9b2923e8d7dbee3763038c12d5c0c52a281681a8b",
+          "bytes": 1479
+        },
+        "run.sh": {
+          "sha256": "fcfc64245caf708ab9a582c4aa71e6e34c4f75f7009a0b06ea95bae74e16dd5a",
+          "bytes": 1403
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "b42c9d94bce4ea2ccdcc7c112c851f20ba5569d81c0b223f39d0b4a56ad149f2",
+          "bytes": 6495
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "74924935cc696ff2d23e42fa6c33298ad3a8a051b5dbffea1eae56cf8bd50e9b",
+          "bytes": 4863
+        }
+      },
+      "states": [],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": false,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v8",
+      "exit_code": 0,
+      "note": "APK-local create returned",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "5549233e70a2d097aa9c0cc53f34dfacc4baf8929d0e1cfc3fcec24a62124458",
+          "bytes": 968
+        },
+        "run.stderr": {
+          "sha256": "3b5d8ce0740e33fcd6389093654443f196d88efa996006f8aba23da643a1f5a1",
+          "bytes": 814
+        },
+        "run.exit": {
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        },
+        "run.strace": {
+          "sha256": "7c8472bb5b4d8e1e0afa3086ba24fe425d0bad128199b8945fd0c52f9925f3f0",
+          "bytes": 168597
+        },
+        "classes.dex": {
+          "sha256": "642a41a454e2c5313334caed57b12c6437fd69f181bbe3ce97a6f300248f8afa",
+          "bytes": 27432
+        },
+        "command.json": {
+          "sha256": "99e4f105a07d92da8b56ea526f8f831c77942e6008ab040a777a906c303e6593",
+          "bytes": 1479
+        },
+        "run.sh": {
+          "sha256": "9644f9e693654ebbad9990dbfcdcc2a0b87d6b6b145e471b0f3ceddeb4adcdf4",
+          "bytes": 1403
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "b42c9d94bce4ea2ccdcc7c112c851f20ba5569d81c0b223f39d0b4a56ad149f2",
+          "bytes": 6495
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "74924935cc696ff2d23e42fa6c33298ad3a8a051b5dbffea1eae56cf8bd50e9b",
+          "bytes": 4863
+        }
+      },
+      "states": [],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": false,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v9",
+      "exit_code": 0,
+      "note": "original JNI registrations observed",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "c69699582a53d0cab1ab2c7ab13910edb6c06ec7afd9892cd82bdca7f0f272f4",
+          "bytes": 8797
+        },
+        "run.stderr": {
+          "sha256": "a539a9969647e8d55ddedb43f9b9d5a0313a219e2a340bbd1765a15eb7398de5",
+          "bytes": 875
+        },
+        "run.exit": {
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        },
+        "run.strace": {
+          "sha256": "c0d7a1e12cdaf30d392589cb057a882e988ab30569de9688de51614d0bc755ad",
+          "bytes": 169102
+        },
+        "classes.dex": {
+          "sha256": "c2378af0e2e7acade5800d6f43fce7c44d2042253d0491506eaf8bbbe391db4b",
+          "bytes": 27572
+        },
+        "command.json": {
+          "sha256": "0dd918d7c83312303770079d3f35b58e09e66af2e73ff40868975cea173a69ed",
+          "bytes": 1538
+        },
+        "run.sh": {
+          "sha256": "52cda5a2a4481f4be9ea0d08b7d4d667dae7b917730108f800309f829c926abc",
+          "bytes": 1455
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "c6dbdf2797056cef4c9a3a1b41f39f641a87070f96e774341be70ebe68b00d34",
+          "bytes": 6783
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "74924935cc696ff2d23e42fa6c33298ad3a8a051b5dbffea1eae56cf8bd50e9b",
+          "bytes": 4863
+        },
+        "libheadless_observer.so": {
+          "sha256": "ea9aeae12940a16ffdc7204c4e7f4ab231da3e8c322529f5db893af5116afeeb",
+          "bytes": 7704
+        }
+      },
+      "states": [],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": false,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v10",
+      "exit_code": 134,
+      "note": "Mainloop Resources null object abort",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "66b7e11025a2b4dd736fea4de6a66268fa0c08cdc8e3351cada5f411b9b18152",
+          "bytes": 8800
+        },
+        "run.stderr": {
+          "sha256": "9ddc1a23a7322c7734de2e19a752dd6b5bce165bc4662be6d9222cf208a74738",
+          "bytes": 43940
+        },
+        "run.exit": {
+          "sha256": "e726b440cc164001999e718b51780d80314709efe06e7857282377be9111127b",
+          "bytes": 4
+        },
+        "run.strace": {
+          "sha256": "5123023593a0dce626d6f673576e32ac43333d43a58564d18083889df72a3d50",
+          "bytes": 179464
+        },
+        "classes.dex": {
+          "sha256": "1cea9b9d2fda4aadea77aa12e0e346997160f3023e4b44f594e9434929cf96b0",
+          "bytes": 27916
+        },
+        "command.json": {
+          "sha256": "aa0c233cb43b60ecb2c415e952044bedc88c64122b5ff3adbfe59e8baf8c2a12",
+          "bytes": 1562
+        },
+        "run.sh": {
+          "sha256": "72ff18f947182b15ed21a9a71ab96ecb2bbed1332cb063779269708f4f35c72a",
+          "bytes": 1475
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "2c78914ebf1b5086c018d98bcac7664df16b6a5446d55b82b8fa3ac014df1787",
+          "bytes": 7183
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "74924935cc696ff2d23e42fa6c33298ad3a8a051b5dbffea1eae56cf8bd50e9b",
+          "bytes": 4863
+        }
+      },
+      "states": [],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": true,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v11",
+      "exit_code": 124,
+      "note": "native threads outlived Java main; timeout",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "fc26398678450ce26faece3cc625c8165e7d85c9188602baab36114c28829b45",
+          "bytes": 8959
+        },
+        "run.stderr": {
+          "sha256": "b8d7d32c5605575bd6e6f2b002c5cbdaacaadf1eefa294a28e551c47d06088d5",
+          "bytes": 875
+        },
+        "run.exit": {
+          "sha256": "ca2ebdf97d7469496b1f4b78958f9dc8447efdcb623953fee7b6996b762f6fff",
+          "bytes": 4
+        },
+        "run.strace": {
+          "sha256": "3732b448dda78a0edc74913a70106cb9c970c055c19570d9fc1ec8167770cdac",
+          "bytes": 170064
+        },
+        "classes.dex": {
+          "sha256": "ae87a42b3a0ee4c73e6f2df15a95b22baa6b1fc8bd91fe7655ede20d2907341d",
+          "bytes": 28540
+        },
+        "command.json": {
+          "sha256": "3b0647772b3565cdafa376a88b32694b0f59b746be316c40888046788e1723bc",
+          "bytes": 1562
+        },
+        "run.sh": {
+          "sha256": "6f99ddf80c076841c50037d7adac631f4b67c2007bbceb6f78bd84a774113ee9",
+          "bytes": 1475
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "2c78914ebf1b5086c018d98bcac7664df16b6a5446d55b82b8fa3ac014df1787",
+          "bytes": 7183
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "bf50ffecec6a126607f31e2b8fed9cdc3fa09f9d8226adc2c437e49f5c445d9b",
+          "bytes": 5631
+        }
+      },
+      "states": [],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": true,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v12",
+      "exit_code": 124,
+      "note": "timeout; holder/game null inference invalid due tagged pointers",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "e46d607e89f5cfcba8285c51981fe6bca72ee81be2daeee9e05015013304b728",
+          "bytes": 9138
+        },
+        "run.stderr": {
+          "sha256": "c226a5de9d46f0afc111cb2e3ee79788e35c6a8971e6be6f94589e1e4898620b",
+          "bytes": 875
+        },
+        "run.exit": {
+          "sha256": "ca2ebdf97d7469496b1f4b78958f9dc8447efdcb623953fee7b6996b762f6fff",
+          "bytes": 4
+        },
+        "run.strace": {
+          "sha256": "2fb4020454497ddb1ec2a993b06a2a2b89d8a791f25d416be086b3cb447b0115",
+          "bytes": 169534
+        },
+        "classes.dex": {
+          "sha256": "968e86969cc30fcc7b33a47aa2c4307010c24feeb5eadb96850829b65afffa32",
+          "bytes": 28580
+        },
+        "command-native.json": {
+          "sha256": "96e50622ea6c19bb9d911c10d1e4193386f3da6a52224e9e05e88699debfd94b",
+          "bytes": 1563
+        },
+        "command.json": {
+          "sha256": "25389130312f2917cf2740959608b4513b28331426c5c2776a8f028540156a19",
+          "bytes": 1482
+        },
+        "run-native.sh": {
+          "sha256": "927ff3934fad46f9a1b5733f3c62a3780fc39954020fe335ac296484bb26f23d",
+          "bytes": 1476
+        },
+        "run.sh": {
+          "sha256": "3b4342a19a71eb3ccaa85ece7ec7b24ce7b27ff678a08814ec41705e80bc846d",
+          "bytes": 1409
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "f264a0dcd7abf7128c3388b3db929926dfc269174b844b1c97ca3983db3f72d0",
+          "bytes": 7262
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "bf50ffecec6a126607f31e2b8fed9cdc3fa09f9d8226adc2c437e49f5c445d9b",
+          "bytes": 5631
+        },
+        "libheadless_observer.so": {
+          "sha256": "d4304c736fb08a76d20d91c1bbe649d002aeb19a195f0ced29c7448dbbec3919",
+          "bytes": 10000
+        }
+      },
+      "states": [
+        {
+          "OWNER_NONNULL": [
+            "1"
+          ],
+          "HOLDER_NONNULL": [
+            "0"
+          ],
+          "GAME_NONNULL": [
+            "0"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "1"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ]
+        }
+      ],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": true,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v13",
+      "exit_code": 0,
+      "note": "native destroy returned; old holder/game reads invalid",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "996718f88f6e4cd20fe7eccda9f6628f01529e6bfdeb87feb6c7dfcb57d27f19",
+          "bytes": 9593
+        },
+        "run.stderr": {
+          "sha256": "0ff386f54b100b446e7242f7a8d544bb6e49341617e80212f94c3714cd8ca38f",
+          "bytes": 1020
+        },
+        "run.exit": {
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        },
+        "run.strace": {
+          "sha256": "d7251f8c7cd18a2ff5e5818d7e239702840d0372ca30a76325fed9ec5e1a9d3a",
+          "bytes": 171677
+        },
+        "classes.dex": {
+          "sha256": "5a38a13a96ef4e2f05fe219916657329f7db5f173dc894b03768d02222201f4f",
+          "bytes": 28908
+        },
+        "command-native.json": {
+          "sha256": "102eab0be28ddc3fd82e9cc137621d984ffc49f57feb2c6eb34b1c47c31ab0e3",
+          "bytes": 1585
+        },
+        "command.json": {
+          "sha256": "f03bbcd17448dd84dc4884ab333d22333a45aca8cdf1f0456d0672e70d26c536",
+          "bytes": 1482
+        },
+        "run-native.sh": {
+          "sha256": "465e6050d200dc25729b10bdf93088408b36703789d327b2d1383096166ccf52",
+          "bytes": 1491
+        },
+        "run.sh": {
+          "sha256": "98ae6136fadca076b49647eb1f239382a67d851a7d7ad917c749bfca2dcc9d28",
+          "bytes": 1409
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "a5b5c965b11eaf8a87481e8afd597e500f46d1b6874905ea71e6d37eba97d07f",
+          "bytes": 7993
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "bf50ffecec6a126607f31e2b8fed9cdc3fa09f9d8226adc2c437e49f5c445d9b",
+          "bytes": 5631
+        }
+      },
+      "states": [
+        {
+          "OWNER_NONNULL": [
+            "1"
+          ],
+          "HOLDER_NONNULL": [
+            "0"
+          ],
+          "GAME_NONNULL": [
+            "0"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "1"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ]
+        },
+        {
+          "OWNER_NONNULL": [
+            "1"
+          ],
+          "HOLDER_NONNULL": [
+            "0"
+          ],
+          "GAME_NONNULL": [
+            "0"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "1"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ]
+        },
+        {
+          "OWNER_NONNULL": [
+            "0"
+          ],
+          "HOLDER_NONNULL": [
+            "0"
+          ],
+          "GAME_NONNULL": [
+            "0"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "0"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ]
+        }
+      ],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": true,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": true
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v14",
+      "exit_code": 0,
+      "note": "explicit READ_FAILED; Mainloop event loop sampled",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "02a3ef2a8608cffdbdbfbb7c944e8971b365af9b84bf6b58f38897db6d833192",
+          "bytes": 11251
+        },
+        "run.stderr": {
+          "sha256": "0ff386f54b100b446e7242f7a8d544bb6e49341617e80212f94c3714cd8ca38f",
+          "bytes": 1020
+        },
+        "run.exit": {
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        },
+        "run.strace": {
+          "sha256": "cabb56a1cf88900d1d12a33c18aef4e42e65a078e738bc73083995a0cda98846",
+          "bytes": 174933
+        },
+        "classes.dex": {
+          "sha256": "5a38a13a96ef4e2f05fe219916657329f7db5f173dc894b03768d02222201f4f",
+          "bytes": 28908
+        },
+        "command-native.json": {
+          "sha256": "2249a033badb7f40fdefc25dd7e0d4d8efc0e8247a46b1d65fcaceebfd7a05cb",
+          "bytes": 1585
+        },
+        "command.json": {
+          "sha256": "878e19265400ab71e0226cdc2bcd918c939345b91e16063aea82556cb0853758",
+          "bytes": 1482
+        },
+        "run-native.sh": {
+          "sha256": "2a764e2a9d002bd7c68fec0891a90e873fadb3d5a4bb8ab55194d2898fe7f38b",
+          "bytes": 1491
+        },
+        "run.sh": {
+          "sha256": "be3af6c7d131002122839a30671d265f4d4128f8e0c1e09d661996cddeb37b46",
+          "bytes": 1409
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "a5b5c965b11eaf8a87481e8afd597e500f46d1b6874905ea71e6d37eba97d07f",
+          "bytes": 7993
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "bf50ffecec6a126607f31e2b8fed9cdc3fa09f9d8226adc2c437e49f5c445d9b",
+          "bytes": 5631
+        },
+        "art_headless_observer.c": {
+          "sha256": "94add6093ae7ae7b3cd6664aa543d9995b7c00f87de044e0aae71f14b7544023",
+          "bytes": 7482
+        },
+        "libheadless_observer.so": {
+          "sha256": "ebc1388db23ec2e6f66d6d8df70fb69d3ba7cf8c084a7e0e47f3e525d0e4668c",
+          "bytes": 13520
+        }
+      },
+      "states": [
+        {
+          "OWNER_NONNULL": [
+            "1"
+          ],
+          "HOLDER_NONNULL": [
+            "READ_FAILED"
+          ],
+          "GAME_NONNULL": [
+            "READ_FAILED"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "1"
+          ],
+          "CONTENT_ROOT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ],
+          "MAINLOOP_SAMPLE": [
+            "CAPTURED"
+          ],
+          "MAINLOOP_FRAME": [
+            "0 module=libc.so offset=0x4af10",
+            "1 module=libc.so offset=0x4eaf8",
+            "2 module=libc.so offset=0xaed98",
+            "3 module=libc++_shared.so offset=0xdf450",
+            "4 module=UNRESOLVED",
+            "5 module=libg.so offset=0x130f76c",
+            "6 module=libg.so offset=0x130fb68",
+            "7 module=libg.so offset=0x139e5bc",
+            "8 module=libg.so offset=0x13a10c8",
+            "9 module=libc.so offset=0xaf90c",
+            "10 module=libc.so offset=0x4fe4c",
+            "11 module=UNRESOLVED"
+          ]
+        },
+        {
+          "OWNER_NONNULL": [
+            "1"
+          ],
+          "HOLDER_NONNULL": [
+            "READ_FAILED"
+          ],
+          "GAME_NONNULL": [
+            "READ_FAILED"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "1"
+          ],
+          "CONTENT_ROOT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ],
+          "MAINLOOP_SAMPLE": [
+            "CAPTURED"
+          ],
+          "MAINLOOP_FRAME": [
+            "0 module=libc.so offset=0x4af10",
+            "1 module=libc.so offset=0x4eaf8",
+            "2 module=libc.so offset=0xaed98",
+            "3 module=libc++_shared.so offset=0xdf450",
+            "4 module=UNRESOLVED",
+            "5 module=libg.so offset=0x130f76c",
+            "6 module=libg.so offset=0x130fb68",
+            "7 module=libg.so offset=0x139e5bc",
+            "8 module=libg.so offset=0x13a10c8",
+            "9 module=libc.so offset=0xaf90c",
+            "10 module=libc.so offset=0x4fe4c",
+            "11 module=UNRESOLVED"
+          ]
+        },
+        {
+          "OWNER_NONNULL": [
+            "0"
+          ],
+          "HOLDER_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "GAME_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "0"
+          ],
+          "CONTENT_ROOT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ],
+          "MAINLOOP_SAMPLE": [
+            "NO_THREAD"
+          ]
+        }
+      ],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": true,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": true
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v15",
+      "exit_code": 0,
+      "note": "untagged read offsets confirm holder/game; native destroy returned",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "4a6a7bf56a8f05a74cec373de9f083bcd84ce569a04249282b4345918aea0d21",
+          "bytes": 11211
+        },
+        "run.stderr": {
+          "sha256": "0ff386f54b100b446e7242f7a8d544bb6e49341617e80212f94c3714cd8ca38f",
+          "bytes": 1020
+        },
+        "run.exit": {
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        },
+        "run.strace": {
+          "sha256": "73a7e732d8309fb5d1430490f1fca4aa41ff8316e4746f53ebea2ba487300bfb",
+          "bytes": 174325
+        },
+        "classes.dex": {
+          "sha256": "5a38a13a96ef4e2f05fe219916657329f7db5f173dc894b03768d02222201f4f",
+          "bytes": 28908
+        },
+        "command-native.json": {
+          "sha256": "663cbce5ecaa43089ca59255cf8a719d74f50e8e4960eb878fb983bdae60d20c",
+          "bytes": 1585
+        },
+        "command.json": {
+          "sha256": "678f35be6c096b053f0c13fd39cd02b4d5512043f01e840690ddf15b78bc2221",
+          "bytes": 1482
+        },
+        "run-native.sh": {
+          "sha256": "5fe3dcc35eab75d6debb0766ab0bf2bf3717b2656a7c597e99c473a231037919",
+          "bytes": 1491
+        },
+        "run.sh": {
+          "sha256": "9f2cef329e8a356347c9bde22fdfc785a2f0d14dcdb5f34dfed73af52598b52e",
+          "bytes": 1409
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "a5b5c965b11eaf8a87481e8afd597e500f46d1b6874905ea71e6d37eba97d07f",
+          "bytes": 7993
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "bf50ffecec6a126607f31e2b8fed9cdc3fa09f9d8226adc2c437e49f5c445d9b",
+          "bytes": 5631
+        },
+        "art_headless_observer.c": {
+          "sha256": "e6f52d62f39e7506d07e088211871a0d967390ec81c00f7b7299df2ac546ac68",
+          "bytes": 7768
+        },
+        "libheadless_observer.so": {
+          "sha256": "1b7e46e2cc9f174649fd29f2051778d75bdc1789e7451e42a4aab7c76c0f4345",
+          "bytes": 13552
+        }
+      },
+      "states": [
+        {
+          "OWNER_NONNULL": [
+            "1"
+          ],
+          "HOLDER_NONNULL": [
+            "1"
+          ],
+          "GAME_NONNULL": [
+            "1"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "1"
+          ],
+          "CONTENT_ROOT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ],
+          "MAINLOOP_SAMPLE": [
+            "CAPTURED"
+          ],
+          "MAINLOOP_FRAME": [
+            "0 module=libc.so offset=0x4af10",
+            "1 module=libc.so offset=0x4eaf8",
+            "2 module=libc.so offset=0xaed98",
+            "3 module=libc++_shared.so offset=0xdf450",
+            "4 module=UNRESOLVED",
+            "5 module=libg.so offset=0x130f76c",
+            "6 module=libg.so offset=0x130fb68",
+            "7 module=libg.so offset=0x139e5bc",
+            "8 module=libg.so offset=0x13a10c8",
+            "9 module=libc.so offset=0xaf90c",
+            "10 module=libc.so offset=0x4fe4c",
+            "11 module=UNRESOLVED"
+          ]
+        },
+        {
+          "OWNER_NONNULL": [
+            "1"
+          ],
+          "HOLDER_NONNULL": [
+            "1"
+          ],
+          "GAME_NONNULL": [
+            "1"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "1"
+          ],
+          "CONTENT_ROOT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ],
+          "MAINLOOP_SAMPLE": [
+            "CAPTURED"
+          ],
+          "MAINLOOP_FRAME": [
+            "0 module=libc.so offset=0x4af10",
+            "1 module=libc.so offset=0x4eaf8",
+            "2 module=libc.so offset=0xaed98",
+            "3 module=libc++_shared.so offset=0xdf450",
+            "4 module=UNRESOLVED",
+            "5 module=libg.so offset=0x130f76c",
+            "6 module=libg.so offset=0x130fb68",
+            "7 module=libg.so offset=0x139e5bc",
+            "8 module=libg.so offset=0x13a10c8",
+            "9 module=libc.so offset=0xaf90c",
+            "10 module=libc.so offset=0x4fe4c",
+            "11 module=UNRESOLVED"
+          ]
+        },
+        {
+          "OWNER_NONNULL": [
+            "0"
+          ],
+          "HOLDER_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "GAME_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "0"
+          ],
+          "CONTENT_ROOT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ],
+          "MAINLOOP_SAMPLE": [
+            "NO_THREAD"
+          ]
+        }
+      ],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": true,
+        "NATIVE_ON_START": false,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": true
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v16",
+      "exit_code": 134,
+      "note": "native resume null Intent abort",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "c066ce98552131e1a5823247babd63ac79544b936a974abf8943d532dadd647b",
+          "bytes": 10052
+        },
+        "run.stderr": {
+          "sha256": "bd8d705455b45637e1d618b5b3b6e86c4e7cb6420f56dd00fedcc8382187fe2c",
+          "bytes": 52861
+        },
+        "run.exit": {
+          "sha256": "e726b440cc164001999e718b51780d80314709efe06e7857282377be9111127b",
+          "bytes": 4
+        },
+        "run.strace": {
+          "sha256": "226a186ec7435ba91746682ddca296f0ca3f14d8f20e8cda5c36cfbf31c81456",
+          "bytes": 185201
+        },
+        "classes.dex": {
+          "sha256": "6c510d325edaa27be9dc67515a952d9a3c4568174cbb4e97e2a41f6cecd34abb",
+          "bytes": 29544
+        },
+        "command-native.json": {
+          "sha256": "b2b88b53badf0ee50232aeac72c3922f09d93f44949958aff7b44d4550b0190b",
+          "bytes": 1606
+        },
+        "command.json": {
+          "sha256": "470f4cfe3c636534c594adf20a88fe339c72633bbe3d6554af49cf60ee3b4ad2",
+          "bytes": 1482
+        },
+        "run-native.sh": {
+          "sha256": "76d2c1d5180cd590b98e43347d88af29799558ec34b9ae22ba43f9a70fbbc564",
+          "bytes": 1505
+        },
+        "run.sh": {
+          "sha256": "e5999b32c53fe9465c584cecded6615bb5f1d0fca669a5627d6b981fb13cffe3",
+          "bytes": 1409
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "3f77dd02df82ab411abf61fab1fdaa70b74af4a7afa32a08f103cf26dc9bb21d",
+          "bytes": 9163
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "bf50ffecec6a126607f31e2b8fed9cdc3fa09f9d8226adc2c437e49f5c445d9b",
+          "bytes": 5631
+        },
+        "art_headless_observer.c": {
+          "sha256": "556fc0b52841d15d97d3f24daa504f2502c02e31a505ac854143238c05e424a5",
+          "bytes": 8822
+        },
+        "libheadless_observer.so": {
+          "sha256": "148eb10264787f7a9c56d27d22a805b514af56ef370246e02cf2c6b214bfc5b0",
+          "bytes": 14096
+        }
+      },
+      "states": [
+        {
+          "OWNER_NONNULL": [
+            "1"
+          ],
+          "HOLDER_NONNULL": [
+            "1"
+          ],
+          "GAME_NONNULL": [
+            "1"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "1"
+          ],
+          "CONTENT_ROOT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "HOLDER_VTABLE_OFFSET": [
+            "0x18c8be0"
+          ],
+          "GAME_VTABLE_OFFSET": [
+            "0x17ea568"
+          ],
+          "OWNER_RAW_50": [
+            "0"
+          ],
+          "OWNER_RAW_7b": [
+            "0"
+          ],
+          "OWNER_RAW_7d": [
+            "0"
+          ],
+          "GAME_RAW_C8": [
+            "0"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ],
+          "MAINLOOP_SAMPLE": [
+            "CAPTURED"
+          ],
+          "MAINLOOP_FRAME": [
+            "0 module=libc.so offset=0x4af10",
+            "1 module=libc.so offset=0x4eaf8",
+            "2 module=libc.so offset=0xaed98",
+            "3 module=libc++_shared.so offset=0xdf450",
+            "4 module=UNRESOLVED",
+            "5 module=libg.so offset=0x130f76c",
+            "6 module=libg.so offset=0x130fb68",
+            "7 module=libg.so offset=0x139e5bc",
+            "8 module=libg.so offset=0x13a10c8",
+            "9 module=libc.so offset=0xaf90c",
+            "10 module=libc.so offset=0x4fe4c",
+            "11 module=UNRESOLVED"
+          ]
+        }
+      ],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": true,
+        "NATIVE_ON_START": true,
+        "NATIVE_ON_RESUME": false,
+        "NATIVE_ON_PAUSE": false,
+        "NATIVE_ON_STOP": false,
+        "NATIVE_ON_DESTROY": false
+      },
+      "listed_peripheral_service_exec_calls": 0
+    },
+    {
+      "id": "v17",
+      "exit_code": 0,
+      "note": "local Intent flags0; original native lifecycle returned; natural exit0",
+      "artifacts": {
+        "run.stdout": {
+          "sha256": "3642e110a3adf29550ab3c29f562a4187a34fe95953be297cbe605ba6dc101b7",
+          "bytes": 11841
+        },
+        "run.stderr": {
+          "sha256": "de1a589031a338a5d07152e5f85888b719d02992df01b6d1f986c9017746a74d",
+          "bytes": 1020
+        },
+        "run.exit": {
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        },
+        "run.strace": {
+          "sha256": "b7a54762e5bea7cffa5cc47f335a6463ab36db3aa0cff0369432e076237d4d0a",
+          "bytes": 174233
+        },
+        "classes.dex": {
+          "sha256": "4f76fa5a277b42991006b67970dd02ef30402051826c8efa01e63c9b6805df43",
+          "bytes": 29732
+        },
+        "command-native.json": {
+          "sha256": "3a086a210d8615877dd870a83bfa910d5052f9815a39c9ace62ae584af26009d",
+          "bytes": 1606
+        },
+        "command.json": {
+          "sha256": "d42038da0dda4583124cd455a44d7fb3314de6ae8b18c613420e5ba76f288245",
+          "bytes": 1482
+        },
+        "run-native.sh": {
+          "sha256": "92977d4caa94bc906d3de309e0e5b8529d04356bb608223aacc43f7adb0951c8",
+          "bytes": 1505
+        },
+        "run.sh": {
+          "sha256": "5fb30a126618e23ddd456ffae8f63a9c1eb17224049342625b8311b6bb035535",
+          "bytes": 1409
+        },
+        "ArtHeadlessCreateProbe.java": {
+          "sha256": "0dd2d34cc6144136520750dfb085a5328df703459c751c7ece77ac1a6652de6c",
+          "bytes": 9605
+        },
+        "HeadlessApkContext.java": {
+          "sha256": "bf50ffecec6a126607f31e2b8fed9cdc3fa09f9d8226adc2c437e49f5c445d9b",
+          "bytes": 5631
+        }
+      },
+      "states": [
+        {
+          "OWNER_NONNULL": [
+            "1"
+          ],
+          "HOLDER_NONNULL": [
+            "1"
+          ],
+          "GAME_NONNULL": [
+            "1"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "1"
+          ],
+          "CONTENT_ROOT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "HOLDER_VTABLE_OFFSET": [
+            "0x18c8be0"
+          ],
+          "GAME_VTABLE_OFFSET": [
+            "0x17ea568"
+          ],
+          "OWNER_RAW_50": [
+            "0"
+          ],
+          "OWNER_RAW_7b": [
+            "0"
+          ],
+          "OWNER_RAW_7d": [
+            "0"
+          ],
+          "GAME_RAW_C8": [
+            "0"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ],
+          "MAINLOOP_SAMPLE": [
+            "CAPTURED"
+          ],
+          "MAINLOOP_FRAME": [
+            "0 module=libc.so offset=0x4af10",
+            "1 module=libc.so offset=0x4eaf8",
+            "2 module=libc.so offset=0xaed98",
+            "3 module=libc++_shared.so offset=0xdf450",
+            "4 module=UNRESOLVED",
+            "5 module=libg.so offset=0x130f76c",
+            "6 module=libg.so offset=0x130fb68",
+            "7 module=libg.so offset=0x139e5bc",
+            "8 module=libg.so offset=0x13a10c8",
+            "9 module=libc.so offset=0xaf90c",
+            "10 module=libc.so offset=0x4fe4c",
+            "11 module=UNRESOLVED"
+          ]
+        },
+        {
+          "OWNER_NONNULL": [
+            "1"
+          ],
+          "HOLDER_NONNULL": [
+            "1"
+          ],
+          "GAME_NONNULL": [
+            "1"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "1"
+          ],
+          "CONTENT_ROOT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "HOLDER_VTABLE_OFFSET": [
+            "0x18c8be0"
+          ],
+          "GAME_VTABLE_OFFSET": [
+            "0x17ea568"
+          ],
+          "OWNER_RAW_50": [
+            "0"
+          ],
+          "OWNER_RAW_7b": [
+            "0"
+          ],
+          "OWNER_RAW_7d": [
+            "0"
+          ],
+          "GAME_RAW_C8": [
+            "0"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ],
+          "MAINLOOP_SAMPLE": [
+            "CAPTURED"
+          ],
+          "MAINLOOP_FRAME": [
+            "0 module=libc.so offset=0x4af10",
+            "1 module=libc.so offset=0x4eaf8",
+            "2 module=libc.so offset=0xaed98",
+            "3 module=libc++_shared.so offset=0xdf450",
+            "4 module=UNRESOLVED",
+            "5 module=libg.so offset=0x130f76c",
+            "6 module=libg.so offset=0x130fb68",
+            "7 module=libg.so offset=0x139e5bc",
+            "8 module=libg.so offset=0x13a10c8",
+            "9 module=libc.so offset=0xaf90c",
+            "10 module=libc.so offset=0x4fe4c",
+            "11 module=UNRESOLVED"
+          ]
+        },
+        {
+          "OWNER_NONNULL": [
+            "0"
+          ],
+          "HOLDER_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "GAME_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "FILESYSTEM_NONNULL": [
+            "0"
+          ],
+          "CONTENT_ROOT_NONNULL": [
+            "0"
+          ],
+          "CONTENT_CONTEXT_NONNULL": [
+            "UNAVAILABLE_PARENT"
+          ],
+          "CONTENT_READY_RAW": [
+            "UNAVAILABLE"
+          ],
+          "MAINLOOP_SAMPLE": [
+            "NO_THREAD"
+          ]
+        }
+      ],
+      "callback_return_markers": {
+        "APPLICATION_CALLBACK": true,
+        "NATIVE_ON_CREATE": true,
+        "NATIVE_ON_START": true,
+        "NATIVE_ON_RESUME": true,
+        "NATIVE_ON_PAUSE": true,
+        "NATIVE_ON_STOP": true,
+        "NATIVE_ON_DESTROY": true
+      },
+      "listed_peripheral_service_exec_calls": 0
+    }
+  ],
+  "gates": {
+    "native_lifecycle_observed_limited": true,
+    "catalog_ready_pass": false,
+    "resource_manager": "NOT_RUN",
+    "battle_game_state": "NOT_RUN",
+    "reset": "NOT_RUN",
+    "step": "NOT_RUN",
+    "action": "NOT_RUN",
+    "snapshot": "NOT_RUN",
+    "complete_match": "NOT_RUN",
+    "android_correctness_comparison": "NOT_RUN",
+    "performance": "NOT_RUN"
+  },
+  "limitations": [
+    "Client engine game object is not battle GameState",
+    "v12/v13 holder/game null inferences withdrawn; failed reads were folded into zero",
+    "v14 distinguishes failed reads; v15+ remove ARM64 top-byte tags only from read offsets",
+    "APK metadata limited to current package flags0; fixed metrics and Locale.US; HPE=false in current fixture; empty local Intent flags0",
+    "Signal sampling perturbs scheduling and only yields readable frame chain; not performance evidence",
+    "Historical peripheral service startup work did not establish battle necessity",
+    "Existing permissive guest policy retained; complete ART/framework closure minimality unproven",
+    "Original UnityAdsTitan ClassNotFoundException remains",
+    "Third-party binaries, original DEX/APK, full commands and raw traces remain private"
+  ],
+  "engineering_validation": {
+    "junit": {
+      "public/checks-affordability.xml": {
+        "tests": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 23,
+        "sha256": "5eb48040f3031eccb9b0ced5eb02257c2c4b402dbf626aa17943e09fff7ff049"
+      },
+      "public/checks-collection-coordinator.xml": {
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 65,
+        "sha256": "cbd81dce017727fc8a8b5376cc3eacdacb9618dbb9efed3dd62e86ca964c1535"
+      },
+      "public/checks-command-coordinates.xml": {
+        "tests": 41,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "passed": 38,
+        "sha256": "5aedb696a7d001c10ea61fcf659afacfe8e1e0bd074a1452ef5eb526b26da2cf"
+      },
+      "public/checks-dispatch-command.xml": {
+        "tests": 34,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "passed": 31,
+        "sha256": "89f823baf8bf1fdc0e8b09428ddb34de0fce789fd5181d86f137fb9d06a81a9c"
+      },
+      "public/checks-live-command.xml": {
+        "tests": 29,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 4,
+        "passed": 25,
+        "sha256": "481cd00a13a5511a3d9fd4a4b94987b23766cf7bdf83e64977969e0d774c06de"
+      },
+      "public/checks-position-guards.xml": {
+        "tests": 18,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 3,
+        "passed": 15,
+        "sha256": "ee75cb3b985d5ee82e11f2ee39b2224983941fddd7cd01e163ea26796722659a"
+      },
+      "public/checks-public.xml": {
+        "tests": 821,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 27,
+        "passed": 794,
+        "sha256": "a06a9ff52c784533818972320cf019be8325d760615bb745eddbd595bebe35a8"
+      },
+      "public/checks-reservation-mapping.xml": {
+        "tests": 33,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2,
+        "passed": 31,
+        "sha256": "de5efd59810e43d9246021a8bb356ddb176b306947d5d605644d12b664dad4f4"
+      },
+      "public/checks-selection-timeout.xml": {
+        "tests": 82,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 82,
+        "sha256": "281cf10881669ca28dbeb76a804e9970ce19dbcdd7209ea95a49b9a8280f1b98"
+      },
+      "pure/results.xml": {
+        "tests": 1141,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1,
+        "passed": 1140,
+        "sha256": "385da118bee670514fec062ce1b435bf21cbcb1592cbeebe0f73b21e42e0e947"
+      }
+    },
+    "main_engine": {
+      "passed": 211,
+      "log_sha256": "4f73f6754fe1e2a53ac5e66e91ee47b761caf649eaf597129ed7c006025aa030"
+    },
+    "logs": {
+      "gitleaks.log": "8d221efca2ec34ca64d4eeb2d68f3eaaa5172bbc74465bc78ae93c8168dfb2af",
+      "public.log": "62a04faa9aec7908b032a1fb087846a1ec7bc50a26db748e61a12e75fb35e856",
+      "pure.log": "35bde1a264951cc6a36ec11f84409edd01fd52c31619c61019fd0c6e9cb55fd8",
+      "main.log": "4f73f6754fe1e2a53ac5e66e91ee47b761caf649eaf597129ed7c006025aa030"
+    },
+    "pm_generated_source_matches_run": true,
+    "pm_generated_source_sha256": "f24b30b73dd95f49f3653ba6459594cf2020ee8637ffce9de3b8912109f34e9f",
+    "public_script_xml_outputs_redirected_to_new_private_directory": true,
+    "public_snapshot_source_files_verified": 2846,
+    "gitleaks": "no leaks found"
+  }
+}

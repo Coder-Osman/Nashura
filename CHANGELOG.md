@@ -1,5 +1,16 @@
 # 变更记录
 
+## 2026-10-30：最小 headless 原生生命周期
+
+- 新增 APK 局部 Context、显式失败的 PackageManager 生成器及原始 JNI 生命周期探针；
+  Resources、HPE 查询和本地 Intent 均按真实调用缺口补入，并记录固定 fixture 边界。
+- 新增进程内日志、JNI 注册观察及 Mainloop PC/LR/帧链采样；修正 ARM64 顶字节标签
+  导致的内存读取误判，区分 null、读取失败与空父槽。
+- v17 在真实 ARM64 Linux 完成原始 native 生命周期并自然退出0；holder/game 已建立，
+  内容 root 仍为空，战斗初始化与 reset/step 尚未打通。
+- 正式纠偏系统/图形服务路线：历史服务依赖不作为战斗必需证据，保留失败与误读历史，
+  后续沿内容与战斗调用链推进。
+
 ## 2026-10-30：Display statsd linker 依赖复验
 
 - 扩展纯 Linux namespace launcher，允许图形服务输入及 vendor 图形根只读 bind，并
