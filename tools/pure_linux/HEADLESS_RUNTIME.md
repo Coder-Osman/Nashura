@@ -264,6 +264,13 @@ PT_LOAD 后再解释为虚拟地址/函数范围；frame-pointer callchain 中�
 采样 IP。样本比例只用于热点优先级，不是函数耗时、cache miss、cycles 或优化收益。
 速度基线另用同一构建、不带 profiler 的串行运行测量。
 
+verify_combined_profile.py ROOT --correctness FULL_FRAME_ROOT --engine EXACT_ELF
+--output NEW_JSON 复核四组组合路径的采样、精确外层命令、uid/gid 1000 workload、
+安装标记、固定动作数、退出和全帧参考。精确 ELF 的 GNU_EH_FRAME 索引与 FDE
+共同确定已观察热点范围；固定编码不符即拒绝。替换后的距离及 getter 调用点
+按进程补丁身份解释，原始函数字节 SHA 仅识别 build。此工具输出归因，不输出
+优化速度收益；详见[报告](../../agent-handoff/SERIAL_ARM64_COMBINED_PROFILE_2026-10-31.md)。
+
 ## 已验证与未闭合
 
 v52直接入口exit0，strace零Binder设备打开及零Binder ioctl；v53/v54使用仓库runner，

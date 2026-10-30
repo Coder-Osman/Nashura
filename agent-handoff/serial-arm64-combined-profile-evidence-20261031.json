@@ -1,0 +1,2016 @@
+{
+  "schema": "nashura.serial-arm64-combined-profile-evidence.v1",
+  "date": "2026-10-31",
+  "base_commit": "d3b606766a71caa2d26f793422da5de8ed49b92e",
+  "branch": "codex/pure-linux-libg-headless-20261026",
+  "candidate": "hot-distance-v1",
+  "default_enabled": false,
+  "vm": {
+    "vcpus": 2,
+    "memory_mib": 6144,
+    "configuration_changed": false
+  },
+  "build": {
+    "sources": {
+      "art_headless_observer.c": "7fc004bf430df742edc0cac39525c2d64a41d41954a6ebba7f52930ad5376e15",
+      "art_headless_task_bridge.c": "6e4563679b39e9520e12b04e72ad5cbadba4c50e4a8daf7722289bfb802b1b90",
+      "headless_call_arm64.S": "ed4f98b1478b298fbb7fe2fb20c1f92d1cb666d8731a2765d8f1e5d471108bdd",
+      "headless_combined_hot_distance.h": "1f6c6329eb1f2686e6c0b4d7eb69d03283554f1e0a752a1b2681a61e05ce2e3f",
+      "headless_hot_getters.h": "97634914618aa1becf0691b8afc869342314bdb81988f09e7022d1d4f068fb4b",
+      "headless_saturated_distance.h": "e136338ae0fbca631173701a5d1d264f4efdc9cb96a5fc4766514890c35854c3",
+      "run_headless_match.py": "5a915d9558d7cd5153681ab0b568804e4a220b0486a60dce2043341edb273170",
+      "compare_headless_snapshots.py": "4c9ca0437e18ee48a58b5ef4075425966deb94cb9233a0dafc76ec8ad736c210",
+      "summarize_headless_benchmark.py": "9d113b3cab12d4fe5c54e0d5c0880d0ec42a672d8c645ae319eb6fa6db376c3d",
+      "summarize_headless_stability.py": "f25abeaf71320317604d431a16a88496dc30ef5913a64d2280c6ba0d98c59e3d"
+    },
+    "observer_sha256": "f78cca8e2dc6c6a440737278de2d25c693ae3893b175609467a57a82d9d0f887"
+  },
+  "profile": {
+    "schema": "nashura.combined-profile.v1",
+    "host_recomputed": true,
+    "cases": [
+      {
+        "schema": "nashura.headless-warm-perf.v1",
+        "whole_goal_complete": false,
+        "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+        "clock": "CLOCK_MONOTONIC",
+        "event": "cpu-clock:u",
+        "raw_sample_count": 7178,
+        "lost_samples": 0,
+        "warmup_matches": 16,
+        "measured_matches": 200,
+        "sample_regions": {
+          "outside_step_windows": 1331,
+          "warmup_step_windows": 433,
+          "measured_step_windows": 5414
+        },
+        "measured_samples_by_match": [
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          26,
+          27,
+          27,
+          26,
+          27,
+          27,
+          28,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          26,
+          27,
+          26,
+          26,
+          27,
+          26,
+          27,
+          27,
+          27,
+          27,
+          26,
+          26,
+          27,
+          26,
+          27,
+          27,
+          26,
+          26,
+          27,
+          26,
+          27,
+          27,
+          27,
+          27,
+          26,
+          27,
+          26,
+          26,
+          27,
+          27,
+          27,
+          26,
+          27,
+          26,
+          27,
+          26,
+          27,
+          26,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          26,
+          27,
+          26,
+          27,
+          27,
+          26,
+          26,
+          27,
+          26,
+          26,
+          27,
+          26,
+          26,
+          27,
+          26,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          26,
+          27,
+          27,
+          26,
+          27,
+          26,
+          27,
+          26,
+          29,
+          26,
+          27,
+          27,
+          27,
+          26,
+          27,
+          26,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          26,
+          27,
+          27,
+          26,
+          27,
+          27,
+          26,
+          27,
+          26,
+          27,
+          27,
+          27,
+          30,
+          28,
+          31,
+          30,
+          28,
+          28,
+          28,
+          28,
+          28,
+          27,
+          26,
+          27,
+          28,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          27,
+          28,
+          27,
+          28,
+          28,
+          27,
+          27,
+          27,
+          27,
+          28,
+          27,
+          27,
+          28,
+          28,
+          28,
+          27,
+          27,
+          27,
+          31,
+          31,
+          30,
+          28,
+          29,
+          29,
+          28,
+          28,
+          28,
+          28,
+          27,
+          30,
+          30,
+          27,
+          28,
+          27,
+          27,
+          27,
+          27,
+          27
+        ],
+        "measured_thread_samples": {
+          "Mainloop": 5413,
+          "main": 1
+        },
+        "measured_leaf_dso_samples": {
+          "libg.so": 5359,
+          "libc.so": 49,
+          "[vdso]": 2,
+          "libc++_shared.so": 2,
+          "nashura-headless-hot-distance-20261031-v1.so": 2
+        },
+        "mainloop_libg_leaf_samples": 5359,
+        "libg_leaf_top": [
+          {
+            "file_offset": "0xf34c60",
+            "samples": 187
+          },
+          {
+            "file_offset": "0xf348a8",
+            "samples": 161
+          },
+          {
+            "file_offset": "0x121b860",
+            "samples": 160
+          },
+          {
+            "file_offset": "0x115d540",
+            "samples": 135
+          },
+          {
+            "file_offset": "0xf34c7c",
+            "samples": 134
+          },
+          {
+            "file_offset": "0xf67024",
+            "samples": 127
+          },
+          {
+            "file_offset": "0xf34c78",
+            "samples": 123
+          },
+          {
+            "file_offset": "0x115d590",
+            "samples": 118
+          },
+          {
+            "file_offset": "0xf34c98",
+            "samples": 113
+          },
+          {
+            "file_offset": "0x115d5fc",
+            "samples": 106
+          },
+          {
+            "file_offset": "0xf34c90",
+            "samples": 101
+          },
+          {
+            "file_offset": "0xe379e4",
+            "samples": 92
+          },
+          {
+            "file_offset": "0xf20210",
+            "samples": 88
+          },
+          {
+            "file_offset": "0x121b878",
+            "samples": 83
+          },
+          {
+            "file_offset": "0x115d974",
+            "samples": 81
+          },
+          {
+            "file_offset": "0xf171b4",
+            "samples": 76
+          },
+          {
+            "file_offset": "0xf347fc",
+            "samples": 60
+          },
+          {
+            "file_offset": "0xf67104",
+            "samples": 52
+          },
+          {
+            "file_offset": "0xf2fea8",
+            "samples": 48
+          },
+          {
+            "file_offset": "0xdc2600",
+            "samples": 47
+          },
+          {
+            "file_offset": "0xdccc68",
+            "samples": 46
+          },
+          {
+            "file_offset": "0xf34c38",
+            "samples": 46
+          },
+          {
+            "file_offset": "0xf1b9e0",
+            "samples": 44
+          },
+          {
+            "file_offset": "0xf34dcc",
+            "samples": 42
+          },
+          {
+            "file_offset": "0x115d5cc",
+            "samples": 42
+          }
+        ],
+        "libg_callchain_top": [
+          {
+            "file_offset": "0x130f838",
+            "samples": 5413
+          },
+          {
+            "file_offset": "0x130fb68",
+            "samples": 5413
+          },
+          {
+            "file_offset": "0x139e5bc",
+            "samples": 5413
+          },
+          {
+            "file_offset": "0x13a10c8",
+            "samples": 5413
+          },
+          {
+            "file_offset": "0x1062148",
+            "samples": 5394
+          },
+          {
+            "file_offset": "0x10623ec",
+            "samples": 5214
+          },
+          {
+            "file_offset": "0xcf04e8",
+            "samples": 5152
+          },
+          {
+            "file_offset": "0xf26624",
+            "samples": 4122
+          },
+          {
+            "file_offset": "0xf61508",
+            "samples": 1881
+          },
+          {
+            "file_offset": "0xf657ac",
+            "samples": 1450
+          },
+          {
+            "file_offset": "0xf65a00",
+            "samples": 1439
+          },
+          {
+            "file_offset": "0xf34b30",
+            "samples": 1072
+          },
+          {
+            "file_offset": "0xf5d9dc",
+            "samples": 1022
+          },
+          {
+            "file_offset": "0xf34e4f",
+            "samples": 850
+          },
+          {
+            "file_offset": "0xf65bbc",
+            "samples": 455
+          },
+          {
+            "file_offset": "0xf5de90",
+            "samples": 452
+          },
+          {
+            "file_offset": "0xf5ca58",
+            "samples": 445
+          },
+          {
+            "file_offset": "0xf670eb",
+            "samples": 399
+          },
+          {
+            "file_offset": "0xf67083",
+            "samples": 365
+          },
+          {
+            "file_offset": "0xf67064",
+            "samples": 352
+          },
+          {
+            "file_offset": "0x115bfec",
+            "samples": 346
+          },
+          {
+            "file_offset": "0xf67063",
+            "samples": 279
+          },
+          {
+            "file_offset": "0xf26504",
+            "samples": 255
+          },
+          {
+            "file_offset": "0x115d5a3",
+            "samples": 220
+          },
+          {
+            "file_offset": "0xf2669c",
+            "samples": 214
+          }
+        ],
+        "spatial_query_leaf_samples": 1010,
+        "spatial_query_callchain_samples": 1111,
+        "scope": "only samples in measured warm step-loop windows; initialization, warmup, reset and terminal serialization excluded",
+        "limitations": [
+          "sample shares are not per-function latency or causal speedup",
+          "callchain addresses are return PCs; inclusive totals can overlap",
+          "file offsets require ELF PT_LOAD verification before interpreting as virtual offsets",
+          "profiled timing is not a performance baseline"
+        ],
+        "case": "deck-a-seed-1",
+        "region_leaf_samples": {
+          "component-update": 429,
+          "object-update": 436,
+          "query": 1010,
+          "grid-clear": 163,
+          "pointer-distance": 251,
+          "getter": 88,
+          "scalar-distance": 35
+        },
+        "source_sha256": {
+          "command.json": "0c514794b64c111af986bc22cf02fa4beb1e1836c9bb9655ff5d5d7e6ef57f1b",
+          "environment.json": "c809f144288c86e7c9e8f91acccb983ace31256630a9d16d0db2d5f2d281a73a",
+          "perf-evlist.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-evlist.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-evlist.txt.gz": "f84921de8189d0e004c6163e2a686246f2467164db3ad2bb96b3c938f0f5f6f1",
+          "perf-maps.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-maps.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-maps.txt.gz": "88289a19111d7738888c9a576bfa2eb2a04859bc8d6e89b598e3ea7db8ffef38",
+          "perf-record.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-report.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-report.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-report.txt.gz": "09f14d36c17a2beeb614c915fa615af48df43a8d38f25573c1df674fa2ec8013",
+          "perf-script.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-script.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-script.txt.gz": "11776d5559706b8e6e96cb8c2ea644acb51c71c347eb8b4666f9867e997bb9b8",
+          "perf.data.gz": "ba52a2e9d6bea1508f3c6cf6b8d76cc41572a460dc225bc93afbf07a5473ebf2",
+          "perf.stderr": "8a0294df740b5810745d4970af57f974d24b4443dd031400ea0ce56500ee6600",
+          "perf.stdout": "ab1e72faa2c5082560c208409b4c85c333b5c7bcf92b71e58f6b4d0e583ca86c",
+          "run/exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "run/plan.json": "f00e8cd66027ce55d592e8fa13ab1fdc57699eb656ae77a2b78f18c0f48eb8a5",
+          "run/result.json": "ab1e72faa2c5082560c208409b4c85c333b5c7bcf92b71e58f6b4d0e583ca86c",
+          "run/stderr.log": "ee014a1412079e83423fd59521ebe2ffcb3a983232738a38d1cc351f79b86ba7",
+          "run/stdout.log": "3620a8b4d29d66b0be46fff5c2640084abf7a31fa6b45d9cb7983ed496584d6e"
+        }
+      },
+      {
+        "schema": "nashura.headless-warm-perf.v1",
+        "whole_goal_complete": false,
+        "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+        "clock": "CLOCK_MONOTONIC",
+        "event": "cpu-clock:u",
+        "raw_sample_count": 7564,
+        "lost_samples": 0,
+        "warmup_matches": 16,
+        "measured_matches": 200,
+        "sample_regions": {
+          "outside_step_windows": 1283,
+          "warmup_step_windows": 475,
+          "measured_step_windows": 5806
+        },
+        "measured_samples_by_match": [
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          30,
+          30,
+          30,
+          30,
+          30,
+          29,
+          30,
+          29,
+          29,
+          29,
+          29,
+          29,
+          30,
+          30,
+          28,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          29,
+          29,
+          30,
+          30,
+          29,
+          30,
+          29,
+          30,
+          29,
+          30,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          30,
+          30,
+          29,
+          30,
+          29,
+          30,
+          30,
+          30,
+          30,
+          30,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          30,
+          29,
+          30,
+          30,
+          29,
+          30,
+          29,
+          30,
+          29,
+          30,
+          28,
+          29,
+          29,
+          28,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          28,
+          28,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          30,
+          29,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          28,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29
+        ],
+        "measured_thread_samples": {
+          "Mainloop": 5806
+        },
+        "measured_leaf_dso_samples": {
+          "libg.so": 5737,
+          "libc.so": 61,
+          "[vdso]": 2,
+          "nashura-headless-hot-distance-20261031-v1.so": 2,
+          "libc++_shared.so": 4
+        },
+        "mainloop_libg_leaf_samples": 5737,
+        "libg_leaf_top": [
+          {
+            "file_offset": "0xf34c60",
+            "samples": 227
+          },
+          {
+            "file_offset": "0x121b860",
+            "samples": 199
+          },
+          {
+            "file_offset": "0xf34c7c",
+            "samples": 156
+          },
+          {
+            "file_offset": "0x115d540",
+            "samples": 153
+          },
+          {
+            "file_offset": "0xf67024",
+            "samples": 151
+          },
+          {
+            "file_offset": "0xf34c98",
+            "samples": 139
+          },
+          {
+            "file_offset": "0x115d590",
+            "samples": 134
+          },
+          {
+            "file_offset": "0x115d5fc",
+            "samples": 133
+          },
+          {
+            "file_offset": "0xf348a8",
+            "samples": 112
+          },
+          {
+            "file_offset": "0xf34c90",
+            "samples": 112
+          },
+          {
+            "file_offset": "0x121b878",
+            "samples": 106
+          },
+          {
+            "file_offset": "0x115d974",
+            "samples": 94
+          },
+          {
+            "file_offset": "0xf20210",
+            "samples": 87
+          },
+          {
+            "file_offset": "0xf34c78",
+            "samples": 86
+          },
+          {
+            "file_offset": "0xe379e4",
+            "samples": 85
+          },
+          {
+            "file_offset": "0xf171b4",
+            "samples": 76
+          },
+          {
+            "file_offset": "0xdc2600",
+            "samples": 74
+          },
+          {
+            "file_offset": "0xf670b8",
+            "samples": 69
+          },
+          {
+            "file_offset": "0xf347fc",
+            "samples": 68
+          },
+          {
+            "file_offset": "0xf34dcc",
+            "samples": 62
+          },
+          {
+            "file_offset": "0xf1b9e0",
+            "samples": 55
+          },
+          {
+            "file_offset": "0xf2d294",
+            "samples": 54
+          },
+          {
+            "file_offset": "0xdccc68",
+            "samples": 49
+          },
+          {
+            "file_offset": "0xf34de0",
+            "samples": 49
+          },
+          {
+            "file_offset": "0x121b8d8",
+            "samples": 48
+          }
+        ],
+        "libg_callchain_top": [
+          {
+            "file_offset": "0x130f838",
+            "samples": 5806
+          },
+          {
+            "file_offset": "0x130fb68",
+            "samples": 5806
+          },
+          {
+            "file_offset": "0x139e5bc",
+            "samples": 5806
+          },
+          {
+            "file_offset": "0x13a10c8",
+            "samples": 5806
+          },
+          {
+            "file_offset": "0x1062148",
+            "samples": 5794
+          },
+          {
+            "file_offset": "0x10623ec",
+            "samples": 5588
+          },
+          {
+            "file_offset": "0xcf04e8",
+            "samples": 5510
+          },
+          {
+            "file_offset": "0xf26624",
+            "samples": 4483
+          },
+          {
+            "file_offset": "0xf61508",
+            "samples": 1898
+          },
+          {
+            "file_offset": "0xf65a00",
+            "samples": 1665
+          },
+          {
+            "file_offset": "0xf657ac",
+            "samples": 1634
+          },
+          {
+            "file_offset": "0xf34b30",
+            "samples": 1176
+          },
+          {
+            "file_offset": "0xf5d9dc",
+            "samples": 1096
+          },
+          {
+            "file_offset": "0xf34e4f",
+            "samples": 960
+          },
+          {
+            "file_offset": "0xf670eb",
+            "samples": 403
+          },
+          {
+            "file_offset": "0xf67083",
+            "samples": 398
+          },
+          {
+            "file_offset": "0xf67064",
+            "samples": 363
+          },
+          {
+            "file_offset": "0xf5de90",
+            "samples": 334
+          },
+          {
+            "file_offset": "0xf5ca58",
+            "samples": 321
+          },
+          {
+            "file_offset": "0xf67063",
+            "samples": 290
+          },
+          {
+            "file_offset": "0xf65bbc",
+            "samples": 273
+          },
+          {
+            "file_offset": "0xf26504",
+            "samples": 247
+          },
+          {
+            "file_offset": "0x115d5a3",
+            "samples": 243
+          },
+          {
+            "file_offset": "0xf2669c",
+            "samples": 227
+          },
+          {
+            "file_offset": "0xf34c60",
+            "samples": 227
+          }
+        ],
+        "spatial_query_leaf_samples": 1118,
+        "spatial_query_callchain_samples": 1219,
+        "scope": "only samples in measured warm step-loop windows; initialization, warmup, reset and terminal serialization excluded",
+        "limitations": [
+          "sample shares are not per-function latency or causal speedup",
+          "callchain addresses are return PCs; inclusive totals can overlap",
+          "file offsets require ELF PT_LOAD verification before interpreting as virtual offsets",
+          "profiled timing is not a performance baseline"
+        ],
+        "case": "deck-a-seed-7",
+        "region_leaf_samples": {
+          "getter": 87,
+          "component-update": 502,
+          "query": 1118,
+          "pointer-distance": 314,
+          "object-update": 523,
+          "grid-clear": 114,
+          "scalar-distance": 51
+        },
+        "source_sha256": {
+          "command.json": "c5070240263b60e1a4e706f57a10e03203a8746bccf7218fc25870bc5f5ff06d",
+          "environment.json": "89581fbcd57410f659020e2983b42f5c7279b454266dd8ffc508d04e8a2bef9a",
+          "perf-evlist.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-evlist.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-evlist.txt.gz": "e401c47b062ae9dd5722489a73b1029057a4e00c18d1f93544a8eb4db8fa3a12",
+          "perf-maps.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-maps.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-maps.txt.gz": "594ded90808250370eeecee7e8c801a36957594803feaf18af4cec06cec5d98f",
+          "perf-record.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-report.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-report.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-report.txt.gz": "851b4ee59527e29fe90a1747872658b9b09869ba70dd0f517abf340fc296a478",
+          "perf-script.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-script.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-script.txt.gz": "c3fa7be4c413d6ce3c3a75019ddc6836a9d7d39a8e5abdd971ec2151e9ef83f6",
+          "perf.data.gz": "83399bc1e2733c821e1e8c422826010917ef364827e808e492d77c3d142a5ead",
+          "perf.stderr": "644332db8f8e8c4fb34659c172250ae299578c0fb74fd18506c2c61172c00345",
+          "perf.stdout": "ab1e72faa2c5082560c208409b4c85c333b5c7bcf92b71e58f6b4d0e583ca86c",
+          "run/exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "run/plan.json": "f9bf18b6058fd454e0fae7bae84a71f920328c53653c2e6e81512f5399b8a08e",
+          "run/result.json": "ab1e72faa2c5082560c208409b4c85c333b5c7bcf92b71e58f6b4d0e583ca86c",
+          "run/stderr.log": "ee014a1412079e83423fd59521ebe2ffcb3a983232738a38d1cc351f79b86ba7",
+          "run/stdout.log": "9cbb8ac78417d80c8fc87eeda1715dad3e17dc8d0bc8b69d2c59a60530023d72"
+        }
+      },
+      {
+        "schema": "nashura.headless-warm-perf.v1",
+        "whole_goal_complete": false,
+        "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+        "clock": "CLOCK_MONOTONIC",
+        "event": "cpu-clock:u",
+        "raw_sample_count": 4149,
+        "lost_samples": 0,
+        "warmup_matches": 16,
+        "measured_matches": 200,
+        "sample_regions": {
+          "outside_step_windows": 1295,
+          "warmup_step_windows": 216,
+          "measured_step_windows": 2638
+        },
+        "measured_samples_by_match": [
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          14,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          14,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          14,
+          15,
+          17,
+          14,
+          13,
+          14,
+          14,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          14,
+          13,
+          13,
+          13,
+          13,
+          14,
+          14,
+          13,
+          14,
+          14,
+          13,
+          13,
+          14,
+          14,
+          13,
+          13,
+          13,
+          13,
+          14,
+          14,
+          13,
+          13,
+          14,
+          14,
+          13,
+          14,
+          14,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          14,
+          13,
+          13,
+          13,
+          13,
+          13,
+          14,
+          14,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          14,
+          14,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          14,
+          14,
+          14,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          12,
+          13
+        ],
+        "measured_thread_samples": {
+          "Mainloop": 2638
+        },
+        "measured_leaf_dso_samples": {
+          "libg.so": 2603,
+          "libc.so": 33,
+          "libc++_shared.so": 2
+        },
+        "mainloop_libg_leaf_samples": 2603,
+        "libg_leaf_top": [
+          {
+            "file_offset": "0xf34c60",
+            "samples": 100
+          },
+          {
+            "file_offset": "0xf34c7c",
+            "samples": 87
+          },
+          {
+            "file_offset": "0xf348a8",
+            "samples": 77
+          },
+          {
+            "file_offset": "0xf34c78",
+            "samples": 66
+          },
+          {
+            "file_offset": "0x121b860",
+            "samples": 62
+          },
+          {
+            "file_offset": "0xf67024",
+            "samples": 60
+          },
+          {
+            "file_offset": "0x115d5fc",
+            "samples": 57
+          },
+          {
+            "file_offset": "0xf34c90",
+            "samples": 56
+          },
+          {
+            "file_offset": "0xf34c98",
+            "samples": 55
+          },
+          {
+            "file_offset": "0x115d590",
+            "samples": 51
+          },
+          {
+            "file_offset": "0x115d540",
+            "samples": 48
+          },
+          {
+            "file_offset": "0xf171b4",
+            "samples": 45
+          },
+          {
+            "file_offset": "0xf20210",
+            "samples": 39
+          },
+          {
+            "file_offset": "0xf347fc",
+            "samples": 39
+          },
+          {
+            "file_offset": "0x115d974",
+            "samples": 39
+          },
+          {
+            "file_offset": "0xe379e4",
+            "samples": 35
+          },
+          {
+            "file_offset": "0x121b878",
+            "samples": 33
+          },
+          {
+            "file_offset": "0xdc2600",
+            "samples": 29
+          },
+          {
+            "file_offset": "0xf34dcc",
+            "samples": 26
+          },
+          {
+            "file_offset": "0xf2fea8",
+            "samples": 25
+          },
+          {
+            "file_offset": "0xf693e0",
+            "samples": 24
+          },
+          {
+            "file_offset": "0xdccc68",
+            "samples": 23
+          },
+          {
+            "file_offset": "0xf1b9e0",
+            "samples": 23
+          },
+          {
+            "file_offset": "0xf34c6c",
+            "samples": 21
+          },
+          {
+            "file_offset": "0xf34de0",
+            "samples": 21
+          }
+        ],
+        "libg_callchain_top": [
+          {
+            "file_offset": "0x130f838",
+            "samples": 2638
+          },
+          {
+            "file_offset": "0x130fb68",
+            "samples": 2638
+          },
+          {
+            "file_offset": "0x139e5bc",
+            "samples": 2638
+          },
+          {
+            "file_offset": "0x13a10c8",
+            "samples": 2638
+          },
+          {
+            "file_offset": "0x1062148",
+            "samples": 2628
+          },
+          {
+            "file_offset": "0x10623ec",
+            "samples": 2555
+          },
+          {
+            "file_offset": "0xcf04e8",
+            "samples": 2517
+          },
+          {
+            "file_offset": "0xf26624",
+            "samples": 1972
+          },
+          {
+            "file_offset": "0xf61508",
+            "samples": 851
+          },
+          {
+            "file_offset": "0xf657ac",
+            "samples": 649
+          },
+          {
+            "file_offset": "0xf65a00",
+            "samples": 588
+          },
+          {
+            "file_offset": "0xf34b30",
+            "samples": 549
+          },
+          {
+            "file_offset": "0xf5d9dc",
+            "samples": 513
+          },
+          {
+            "file_offset": "0xf34e4f",
+            "samples": 451
+          },
+          {
+            "file_offset": "0xf670eb",
+            "samples": 161
+          },
+          {
+            "file_offset": "0xf65bbc",
+            "samples": 158
+          },
+          {
+            "file_offset": "0xf67064",
+            "samples": 149
+          },
+          {
+            "file_offset": "0xf67083",
+            "samples": 148
+          },
+          {
+            "file_offset": "0xf26504",
+            "samples": 140
+          },
+          {
+            "file_offset": "0xf2669c",
+            "samples": 130
+          },
+          {
+            "file_offset": "0xf5de90",
+            "samples": 115
+          },
+          {
+            "file_offset": "0xf5ca58",
+            "samples": 111
+          },
+          {
+            "file_offset": "0x115bfec",
+            "samples": 109
+          },
+          {
+            "file_offset": "0xf67063",
+            "samples": 105
+          },
+          {
+            "file_offset": "0xf34c60",
+            "samples": 100
+          }
+        ],
+        "spatial_query_leaf_samples": 532,
+        "spatial_query_callchain_samples": 566,
+        "scope": "only samples in measured warm step-loop windows; initialization, warmup, reset and terminal serialization excluded",
+        "limitations": [
+          "sample shares are not per-function latency or causal speedup",
+          "callchain addresses are return PCs; inclusive totals can overlap",
+          "file offsets require ELF PT_LOAD verification before interpreting as virtual offsets",
+          "profiled timing is not a performance baseline"
+        ],
+        "case": "deck-b-seed-1",
+        "region_leaf_samples": {
+          "query": 532,
+          "grid-clear": 77,
+          "scalar-distance": 21,
+          "component-update": 180,
+          "getter": 39,
+          "object-update": 168,
+          "pointer-distance": 97
+        },
+        "source_sha256": {
+          "command.json": "62ea9065666379b6261e07e94b54309989a094695d27d84c0aa774df0c70d403",
+          "environment.json": "0f03d5da5622f9b08e7532d25caf867907f5963c78884879f30646297e5bb2cf",
+          "perf-evlist.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-evlist.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-evlist.txt.gz": "1bb3e0a07493c441c6fcd98fb3102f00ec8b7e58b889b279f3961a627391feef",
+          "perf-maps.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-maps.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-maps.txt.gz": "c1618639de7d1ba1bfd41640589aab1b7cbeb630d74cdceeae4661ecd69140f2",
+          "perf-record.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-report.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-report.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-report.txt.gz": "cdf710e2a1de93d0b1be6a9baa26810cdf0d69e815a2812c940bc520625ce332",
+          "perf-script.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-script.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-script.txt.gz": "6b7f127c3f987f528550e29fbb7c715f3ba6019282f35de89476bc959869429c",
+          "perf.data.gz": "5b574ceff97326bada02628a331c352d88952bc00376cda988d0831c69fdcdc0",
+          "perf.stderr": "5a2cc39f859f26351530352081b90e8759a6b00844a340bc3c9f76083b118a60",
+          "perf.stdout": "8527a8fbba8bedd0775cd726596bf6cab7b244cae5f125e3290d4d0a37093fa8",
+          "run/exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "run/plan.json": "5de3e3a3584a4e444963d8ddf48847c54c78a5a198cae20bb49274402afa0557",
+          "run/result.json": "8527a8fbba8bedd0775cd726596bf6cab7b244cae5f125e3290d4d0a37093fa8",
+          "run/stderr.log": "ee014a1412079e83423fd59521ebe2ffcb3a983232738a38d1cc351f79b86ba7",
+          "run/stdout.log": "f317d31cf9e3ce45cc1b69f91949dd73062d10adaeea602abcf36a8d14f55a9b"
+        }
+      },
+      {
+        "schema": "nashura.headless-warm-perf.v1",
+        "whole_goal_complete": false,
+        "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+        "clock": "CLOCK_MONOTONIC",
+        "event": "cpu-clock:u",
+        "raw_sample_count": 3969,
+        "lost_samples": 0,
+        "warmup_matches": 16,
+        "measured_matches": 200,
+        "sample_regions": {
+          "outside_step_windows": 1276,
+          "warmup_step_windows": 199,
+          "measured_step_windows": 2494
+        },
+        "measured_samples_by_match": [
+          13,
+          13,
+          12,
+          12,
+          12,
+          13,
+          13,
+          12,
+          12,
+          12,
+          12,
+          13,
+          13,
+          12,
+          12,
+          13,
+          13,
+          12,
+          13,
+          13,
+          12,
+          12,
+          12,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          12,
+          13,
+          13,
+          12,
+          12,
+          13,
+          13,
+          12,
+          12,
+          13,
+          13,
+          13,
+          12,
+          12,
+          12,
+          13,
+          13,
+          13,
+          12,
+          12,
+          12,
+          12,
+          13,
+          13,
+          13,
+          12,
+          12,
+          12,
+          12,
+          13,
+          13,
+          12,
+          12,
+          12,
+          12,
+          12,
+          12,
+          13,
+          13,
+          13,
+          12,
+          12,
+          12,
+          13,
+          13,
+          12,
+          12,
+          13,
+          13,
+          13,
+          13,
+          12,
+          13,
+          12,
+          13,
+          13,
+          12,
+          12,
+          12,
+          13,
+          13,
+          13,
+          12,
+          12,
+          12,
+          12,
+          13,
+          13,
+          12,
+          12,
+          12,
+          12,
+          13,
+          13,
+          12,
+          12,
+          12,
+          12,
+          12,
+          13,
+          13,
+          12,
+          12,
+          12,
+          13,
+          13,
+          13,
+          12,
+          12,
+          13,
+          13,
+          13,
+          12,
+          12,
+          12,
+          13,
+          13,
+          13,
+          12,
+          12,
+          13,
+          13,
+          12,
+          13,
+          12,
+          13,
+          13,
+          12,
+          13,
+          12,
+          12,
+          13,
+          12,
+          13,
+          13,
+          13,
+          12,
+          12,
+          12,
+          13,
+          13,
+          12,
+          12,
+          12,
+          12,
+          13,
+          13,
+          12,
+          12,
+          13,
+          13,
+          12,
+          13,
+          13,
+          12,
+          12,
+          13,
+          13,
+          12,
+          12,
+          12,
+          12,
+          13,
+          13,
+          13,
+          12,
+          12,
+          12,
+          12,
+          12,
+          12,
+          12,
+          13,
+          13,
+          12,
+          12,
+          12,
+          12,
+          13,
+          13,
+          13,
+          12,
+          12,
+          12,
+          13,
+          12,
+          13,
+          13,
+          12,
+          13,
+          13
+        ],
+        "measured_thread_samples": {
+          "Mainloop": 2494
+        },
+        "measured_leaf_dso_samples": {
+          "libg.so": 2467,
+          "libc++_shared.so": 2,
+          "libc.so": 23,
+          "[vdso]": 1,
+          "nashura-headless-hot-distance-20261031-v1.so": 1
+        },
+        "mainloop_libg_leaf_samples": 2467,
+        "libg_leaf_top": [
+          {
+            "file_offset": "0xf34c60",
+            "samples": 100
+          },
+          {
+            "file_offset": "0xf34c7c",
+            "samples": 76
+          },
+          {
+            "file_offset": "0x121b860",
+            "samples": 75
+          },
+          {
+            "file_offset": "0xf348a8",
+            "samples": 66
+          },
+          {
+            "file_offset": "0xf67024",
+            "samples": 64
+          },
+          {
+            "file_offset": "0xf34c98",
+            "samples": 63
+          },
+          {
+            "file_offset": "0x115d540",
+            "samples": 54
+          },
+          {
+            "file_offset": "0x115d5fc",
+            "samples": 54
+          },
+          {
+            "file_offset": "0x115d590",
+            "samples": 52
+          },
+          {
+            "file_offset": "0xf34c78",
+            "samples": 49
+          },
+          {
+            "file_offset": "0xf34c90",
+            "samples": 45
+          },
+          {
+            "file_offset": "0x115d974",
+            "samples": 38
+          },
+          {
+            "file_offset": "0x121b878",
+            "samples": 37
+          },
+          {
+            "file_offset": "0xe379e4",
+            "samples": 35
+          },
+          {
+            "file_offset": "0xdc2600",
+            "samples": 33
+          },
+          {
+            "file_offset": "0xf171b4",
+            "samples": 33
+          },
+          {
+            "file_offset": "0xf347fc",
+            "samples": 31
+          },
+          {
+            "file_offset": "0xf20210",
+            "samples": 29
+          },
+          {
+            "file_offset": "0xdccc68",
+            "samples": 25
+          },
+          {
+            "file_offset": "0xf2d294",
+            "samples": 25
+          },
+          {
+            "file_offset": "0xf670ec",
+            "samples": 24
+          },
+          {
+            "file_offset": "0xf34de0",
+            "samples": 23
+          },
+          {
+            "file_offset": "0x121b8d8",
+            "samples": 21
+          },
+          {
+            "file_offset": "0xf2fea8",
+            "samples": 20
+          },
+          {
+            "file_offset": "0xf34c38",
+            "samples": 20
+          }
+        ],
+        "libg_callchain_top": [
+          {
+            "file_offset": "0x130f838",
+            "samples": 2494
+          },
+          {
+            "file_offset": "0x130fb68",
+            "samples": 2494
+          },
+          {
+            "file_offset": "0x139e5bc",
+            "samples": 2494
+          },
+          {
+            "file_offset": "0x13a10c8",
+            "samples": 2494
+          },
+          {
+            "file_offset": "0x1062148",
+            "samples": 2486
+          },
+          {
+            "file_offset": "0x10623ec",
+            "samples": 2398
+          },
+          {
+            "file_offset": "0xcf04e8",
+            "samples": 2355
+          },
+          {
+            "file_offset": "0xf26624",
+            "samples": 1854
+          },
+          {
+            "file_offset": "0xf61508",
+            "samples": 757
+          },
+          {
+            "file_offset": "0xf657ac",
+            "samples": 656
+          },
+          {
+            "file_offset": "0xf65a00",
+            "samples": 656
+          },
+          {
+            "file_offset": "0xf34b30",
+            "samples": 516
+          },
+          {
+            "file_offset": "0xf5d9dc",
+            "samples": 484
+          },
+          {
+            "file_offset": "0xf34e4f",
+            "samples": 403
+          },
+          {
+            "file_offset": "0xf670eb",
+            "samples": 171
+          },
+          {
+            "file_offset": "0xf67064",
+            "samples": 132
+          },
+          {
+            "file_offset": "0xf67083",
+            "samples": 132
+          },
+          {
+            "file_offset": "0xf26504",
+            "samples": 117
+          },
+          {
+            "file_offset": "0xf2669c",
+            "samples": 106
+          },
+          {
+            "file_offset": "0xf34c60",
+            "samples": 100
+          },
+          {
+            "file_offset": "0xf67063",
+            "samples": 94
+          },
+          {
+            "file_offset": "0x115d5a3",
+            "samples": 93
+          },
+          {
+            "file_offset": "0xf2670c",
+            "samples": 91
+          },
+          {
+            "file_offset": "0xf34c7c",
+            "samples": 76
+          },
+          {
+            "file_offset": "0xf2fe44",
+            "samples": 75
+          }
+        ],
+        "spatial_query_leaf_samples": 470,
+        "spatial_query_callchain_samples": 524,
+        "scope": "only samples in measured warm step-loop windows; initialization, warmup, reset and terminal serialization excluded",
+        "limitations": [
+          "sample shares are not per-function latency or causal speedup",
+          "callchain addresses are return PCs; inclusive totals can overlap",
+          "file offsets require ELF PT_LOAD verification before interpreting as virtual offsets",
+          "profiled timing is not a performance baseline"
+        ],
+        "case": "deck-b-seed-7",
+        "region_leaf_samples": {
+          "query": 470,
+          "object-update": 224,
+          "component-update": 198,
+          "pointer-distance": 115,
+          "getter": 29,
+          "grid-clear": 71,
+          "scalar-distance": 21
+        },
+        "source_sha256": {
+          "command.json": "a05f877f5b2b099f91425c2491a485a5e1c0b21ab9ff3fc25fa3f61745188538",
+          "environment.json": "19c11eeabaabe20a35c3983f392b3560a66116a3c385a8bc2fbf84c73794e428",
+          "perf-evlist.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-evlist.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-evlist.txt.gz": "20b78bb1961ff627f51ee8a237a88b76d37369da6266c8b4b23a7dffed992b28",
+          "perf-maps.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-maps.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-maps.txt.gz": "a3a46457f85f6f1a2c7309bc74895aa9db67bdfa4f52007877fb668210ffb383",
+          "perf-record.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-report.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-report.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-report.txt.gz": "0385842af19c666da24c0ee74ba3c0fd9967652c3d155ea80274ce15fd471fb4",
+          "perf-script.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "perf-script.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "perf-script.txt.gz": "7273ccf186713dda9163c498a73d92623d772c08272315a499b263e6a8be6572",
+          "perf.data.gz": "8e7e6cf3747222adfb5d1e49ec305f3a53163212a1a0cfdece5fdcc2aa000a4e",
+          "perf.stderr": "64894f976e14f91a2d972efbd37ae15893058292644b89841e9ae1fad5b80921",
+          "perf.stdout": "08a32b1e45270cf5953a695ee2a73c4ae9911360abfb306a3dab6bb9b94daa74",
+          "run/exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "run/plan.json": "5b468cc82c287fa5fa6666ce119b371a825528c1bc20301921f775fbddbbebc3",
+          "run/result.json": "08a32b1e45270cf5953a695ee2a73c4ae9911360abfb306a3dab6bb9b94daa74",
+          "run/stderr.log": "ee014a1412079e83423fd59521ebe2ffcb3a983232738a38d1cc351f79b86ba7",
+          "run/stdout.log": "3031f56fef8fec9ac6702565cbe3a7e117d1ab4bc2bf293dcb7635a5e90b7185"
+        }
+      }
+    ],
+    "regions": {
+      "query": {
+        "start": "0xf34b3c",
+        "end": "0xf35064",
+        "original_bytes_sha256": "58d69a2b2486ae89a747312b7258493eb6b2d491e084370b1175542cb485a3f6"
+      },
+      "grid-clear": {
+        "start": "0xf34864",
+        "end": "0xf348d4",
+        "original_bytes_sha256": "ae2795aee69c1f576b0596c3efa95c1fc92605039f4a05e0a90a5b4691042438"
+      },
+      "object-update": {
+        "start": "0xf66e30",
+        "end": "0xf672b4",
+        "original_bytes_sha256": "3ab2de92e69f3f8399cb3b556976f6ca1836db659b9c2e561f91962275c6bcdd"
+      },
+      "component-update": {
+        "start": "0x115d540",
+        "end": "0x115d604",
+        "original_bytes_sha256": "5e57b618942c644ba363ddee823c8034f1f6f5d2c824ec238aff157857941f29"
+      },
+      "getter": {
+        "start": "0xf20210",
+        "end": "0xf20218",
+        "original_bytes_sha256": "94152e462f3e98d8d99662739e87c91ff06eb16d5afefc0047346c214bd99ac8"
+      },
+      "pointer-distance": {
+        "start": "0x121b860",
+        "end": "0x121b8bc",
+        "original_bytes_sha256": "391b200948f568fbe7afcbc9a43e676cac1146c453c6f044937fdadc15f1a8b6"
+      },
+      "scalar-distance": {
+        "start": "0x121b8bc",
+        "end": "0x121b910",
+        "original_bytes_sha256": "a28f8c01c69c18501c79baea977d086de618352bff52cddbb55be6d442dc20b3"
+      }
+    },
+    "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "scope": "four fixed inputs, combined candidate, software CPU-clock attribution only",
+    "limitations": [
+      "one profile per fixture; sampled shares are not function latency or causal speedup",
+      "optimized function addresses refer to patched process instructions, original hashes identify the pinned ELF",
+      "fixed unwind encodings and exact ELF only; behavioral labels are not recovered original class names",
+      "hardware cycles, instructions and cache events remain unavailable; no off-CPU exclusion claim"
+    ],
+    "whole_goal_complete": false
+  },
+  "private_archive": {
+    "bytes": 1801874,
+    "sha256": "cd8a030a428e2b095d694af316d526d213be7af7e64e36374bfa58926349d03f"
+  },
+  "full_frame_reference_archive": {
+    "bytes": 7295462,
+    "sha256": "043814ab37384cb06e879406effa94f28aa8d468e26f4855475475ffc71c6964"
+  },
+  "verifier_sha256": "754dc32cd27d2ce1d3997a3c9aa691d11650812f9969778ece1ea171ede01114",
+  "private_metadata_identities": {
+    "nashura-combined-profile-archive-20261031-v1.py": "0309baf090095b632e98356da5672a0e2f87b536cd41d0af56f0e1e70fe1039d",
+    "nashura-combined-profile-20261031-v1.py": "e8fe08d2b8cf70aa5ed906c2c84db4239d366de0fe903f2a9da6ea68fbc7c520",
+    "nashura-combined-profile-launch-20261031-v1.sh": "66adef7827e9fd01bc621284eaba74bb450dfc6251816f15c19cdf2b3fa1228d"
+  },
+  "checks": {
+    "pure_linux": {
+      "passed": 1401,
+      "skipped": 1
+    },
+    "public": {
+      "passed": 1104,
+      "skipped": 42
+    },
+    "main_engine": {
+      "passed": 211,
+      "skipped": 0
+    }
+  },
+  "whole_goal_complete": false
+}

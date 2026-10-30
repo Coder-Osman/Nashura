@@ -1,5 +1,17 @@
 # 阶段成果与证据索引
 
+## 2026-10-31：组合路径的剩余 warm-step 热点
+
+相同 hot-distance-v1 构建、四个固定输入独立软件 CPU-clock 采样，排除初始化、
+warmup、reset、终态验证；后 200 局各获得 5414 / 5806 / 2638 / 2494 个窗口样本，
+零丢样。空间查询约占 18.66%–20.17%，对象更新 6.37%–9.01%、组件更新
+6.82%–8.65%；仅为 Mainloop/libg 叶样本占全部窗口样本，不能解释为函数耗时、
+cycles、cache miss 或新的速度收益。精确 ELF 展开索引和 FDE 确定热点范围，
+区分替换后代码与原始函数字节身份。完整四组原始归档和参考快照经主机独立
+复算；pure_linux 1401 passed / 1 skipped。下一优先级仍为空间候选过滤与对象/
+组件路径，没有新增外围服务。详见[报告](../agent-handoff/SERIAL_ARM64_COMBINED_PROFILE_2026-10-31.md)与
+[机器摘要](../agent-handoff/serial-arm64-combined-profile-evidence-20261031.json)。
+
 ## 2026-10-31：组合候选独立复测与串行稳定性
 
 工程检查结束后才启动 guest，本轮计时期间没有再启动工程测试；该边界不等于
