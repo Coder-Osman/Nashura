@@ -84,6 +84,15 @@ step loop；不同 observer 构建或计时实现的结果不应直接作前后�
 
 ## 独立线程资源诊断与有界串行稳定性
 
+--native-phases --action-distributions 在单局原始引擎上额外记录有界动作样本，
+默认关闭。仅诊断时在step前分配4096条容量，逐动作记录既有parse/append计时及
+mode2/3原始dispatch窗口，全部step结束后输出。溢出拒绝进程，不截断样本。
+summarize_headless_actions.py逐项核对调用数、总时长、范围、零时长、返回值、
+原始目标、顺序和队列变化；分位数使用sorted floor((n-1)*p/100)。
+inject解析和入队仍在step前，cmd解析仍包含在GameState load；不据此声明在线输入
+延迟或独立cmd parser耗时。mode2未命中时保留空分布，不填零成本。时钟/包装器/
+诊断开销包含在分布中，仅作路径归因；禁止与benchmark或native优化同时启用。
+
 `--thread-resources --benchmark-repeats 216` 显式启用独立诊断，默认关闭。
 仅在 warm loop 两端读取线程 CPU 时钟与 RUSAGE_THREAD，逐 step 不新增系统调用；
 输出包围 loop 的边界、user/system、缺页、上下文切换与块 I/O 计数。

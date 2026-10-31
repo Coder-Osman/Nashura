@@ -138,8 +138,10 @@ def validate(settings, output):
 def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
                step_sample_every=16, timeout_seconds=45, record_hand_actions=False,
                native_optimization=None, native_phases=False, thread_resources=False, serial_batches=1,
-               memory_lifecycle_every=None):
+               memory_lifecycle_every=None, action_distributions=False):
     paths, output = validate(settings, output)
+    if action_distributions and not native_phases:
+        raise ValueError("action distributions require explicit native phases diagnostic")
     if memory_lifecycle_every is not None and (type(memory_lifecycle_every) is not int
             or not 1 <= memory_lifecycle_every <= 1000000 or benchmark_repeats is None
             or thread_resources or native_phases or record_hand_actions):
@@ -196,6 +198,8 @@ def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
     if native_phases:
         environment["NASHURA_NATIVE_PHASES"] = "1"
         environment["NASHURA_PHASE_TIMING"] = "1"
+    if action_distributions:
+        environment["NASHURA_ACTION_DISTRIBUTIONS"] = "1"
     if record_hand_actions:
         # The existing native selection builder supplies packed card/slot data.
         # Record in a separate diagnostic run, then replay fixed commands for timing.
@@ -233,6 +237,8 @@ def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
             "whole_goal_complete": False}
     if memory_lifecycle_every is not None:
         plan["measurement_scope"] = "memory-lifecycle-diagnostic-only"
+    if action_distributions:
+        plan["action_distributions"] = True
     return plan
 
 
@@ -255,9 +261,9 @@ def verify_completion(exit_code, stdout, expected_repeats=1):
 def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=None,
         step_sample_every=16, timeout_seconds=45, record_hand_actions=False,
         native_optimization=None, native_phases=False, thread_resources=False, serial_batches=1,
-        compress_stdout=False, memory_lifecycle_every=None):
+        compress_stdout=False, memory_lifecycle_every=None, action_distributions=False):
     plan = build_plan(settings, output, snapshot_trace, benchmark_repeats,
-                      step_sample_every, timeout_seconds, record_hand_actions, native_optimization, native_phases, thread_resources, serial_batches, memory_lifecycle_every)
+                      step_sample_every, timeout_seconds, record_hand_actions, native_optimization, native_phases, thread_resources, serial_batches, memory_lifecycle_every, action_distributions)
     if compress_stdout:
         plan["stdout_encoding"] = "gzip-after-process-exit"
     if not apply:
@@ -296,6 +302,12 @@ def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=No
         with (output / "native-phases.json").open("x") as stream:
             json.dump(phases, stream, indent=2)
             stream.write("\n")
+    if action_distributions:
+        from summarize_headless_actions import summarize as summarize_actions
+        actions = summarize_actions(text)
+        with (output / "action-distributions.json").open("x") as stream:
+            json.dump(actions, stream, indent=2)
+            stream.write("\n")
     summary = {"status": "NATIVE_FINAL_OBSERVED_LIMITED",
                "final_tick": final_tick, "snapshot_trace": plan["snapshot_trace"],
                "matches": (benchmark_repeats or 1) * serial_batches,
@@ -307,6 +319,8 @@ def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=No
                "whole_goal_complete": False}
     if memory_lifecycle_every is not None:
         summary["measurement_scope"] = "memory-lifecycle-diagnostic-only"
+    if action_distributions:
+        summary["action_distributions"] = True
     if plan["snapshot_trace"]:
         archive = inspect_archive(output / "snapshots.bin", final_tick)
         summary.update(records=len(archive["frames"]), archive_bytes=archive["bytes"],
@@ -330,6 +344,8 @@ def main():
                         help="experimental pinned-build optimization; default keeps original code")
     parser.add_argument("--native-phases", action="store_true",
                         help="diagnostic-only call-site attribution; forbidden in benchmarks")
+    parser.add_argument("--action-distributions", action="store_true",
+                        help="bounded per-action samples; requires native phases, no benchmark")
     parser.add_argument("--thread-resources", action="store_true",
                         help="independent warm-loop CPU/fault/switch boundary diagnostics")
     parser.add_argument("--serial-batches", type=int, default=1,
@@ -350,7 +366,8 @@ def main():
                          native_optimization=args.native_optimization,
                          native_phases=args.native_phases, thread_resources=args.thread_resources,
                          serial_batches=args.serial_batches, compress_stdout=args.compress_stdout,
-                         memory_lifecycle_every=args.memory_lifecycle_every), indent=2))
+                         memory_lifecycle_every=args.memory_lifecycle_every,
+                         action_distributions=args.action_distributions), indent=2))
 
 
 if __name__ == "__main__":

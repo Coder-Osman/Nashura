@@ -359,8 +359,11 @@ static int parse_and_append_commands(void *manager, void *commands, void *queue,
         uint64_t started = metrics && metrics->enabled ? monotonic_ns() : 0;
         cr_call_logic_command_parse(json_command, context, &logic_command,
                                     (void *)(base + 0xd2fe78));
-        if (metrics && metrics->enabled)
-            metrics->logic_command_parse_ns += monotonic_ns() - started;
+        if (metrics && metrics->enabled) {
+            uint64_t elapsed = monotonic_ns() - started;
+            metrics->logic_command_parse_ns += elapsed;
+            action_sample_add(AS_PARSE, elapsed, 0xd2fe78, index, -1, logic_command != NULL, -1, -1);
+        }
         printf("HEADLESS_GAME_STATE_COMMAND_PARSE index=%d json=%p result=%p\n",
                index, json_command, logic_command);
         fflush(stdout);
@@ -368,9 +371,14 @@ static int parse_and_append_commands(void *manager, void *commands, void *queue,
         int32_t queue_before = queue_count(queue);
         started = metrics && metrics->enabled ? monotonic_ns() : 0;
         ((logic_command_append_fn)(base + 0xd2eef0))(queue, &logic_command);
-        if (metrics && metrics->enabled)
-            metrics->logic_command_append_ns += monotonic_ns() - started;
+        uint64_t append_elapsed = 0;
+        if (metrics && metrics->enabled) {
+            append_elapsed = monotonic_ns() - started;
+            metrics->logic_command_append_ns += append_elapsed;
+        }
         int32_t queue_after = queue_count(queue);
+        if (metrics && metrics->enabled)
+            action_sample_add(AS_APPEND, append_elapsed, 0xd2eef0, index, -1, 1, queue_before, queue_after);
         printf("HEADLESS_GAME_STATE_COMMAND_APPEND index=%d owner_after=%p queue_before=%d queue_after=%d\n",
                index, logic_command, queue_before, queue_after);
         fflush(stdout);
@@ -660,6 +668,7 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
     struct phase_metrics phase = {0};
     phase.enabled = phase_timing_requested();
     const int minimal_benchmark = minimal_benchmark_requested();
+    if (!action_samples_begin(native_phases_installed && phase.enabled && !minimal_benchmark)) return -59;
     const char *resource_text = getenv("NASHURA_THREAD_RESOURCES");
     const int thread_resources = resource_text && !strcmp(resource_text, "1");
     if (thread_resources && !minimal_benchmark) return -57;
@@ -934,6 +943,7 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
                    phase.queue_removed, phase.queue_added, phase.queue_change_steps,
                    phase.first_queue_change_tick, phase.last_queue_change_tick);
         }
+        action_samples_report();
         fflush(stdout);
     } else {
         tick_after = tick_before;

@@ -11,6 +11,7 @@
 #include <sys/mman.h>
 #include <time.h>
 #include <unistd.h>
+#include "headless_action_distributions.h"
 
 enum native_phase { NP_STATE, NP_WORLD, NP_OBJECTS, NP_QUEUE, NP_APPLY_2, NP_APPLY_3,
     NP_ARRAY_NEW, NP_ARRAY_DELETE, NP_COMPONENT, NP_COUNT };
@@ -44,7 +45,7 @@ static void native_phase_begin(enum native_phase phase, uintptr_t target) {
     native_phase_stack[native_phase_depth++] =
         (struct native_phase_frame){ phase, native_phase_clock(), 0 };
 }
-static void native_phase_end(enum native_phase phase, int result) {
+static uint64_t native_phase_end(enum native_phase phase, int result) {
     uint64_t ended = native_phase_clock();
     if (!native_phase_depth) { native_phase_failed = 1; _exit(126); }
     struct native_phase_frame frame = native_phase_stack[--native_phase_depth];
@@ -61,6 +62,7 @@ static void native_phase_end(enum native_phase phase, int result) {
     if (result == 0) ++stat->zero_results;
     if (elapsed == 0) ++stat->zero_duration_calls;
     if (native_phase_depth) native_phase_stack[native_phase_depth - 1].children += elapsed;
+    return elapsed;
 }
 static void native_phase_reset(void) {
     memset(native_phase_stats, 0, sizeof(native_phase_stats));
@@ -117,17 +119,21 @@ static __attribute__((noinline)) void native_queue_phase(void *queue) {
 static __attribute__((noinline)) int32_t native_apply2_phase(void *command, void *state,
         int32_t mode, int32_t flag, uintptr_t target) {
     if (mode != 2 || flag != 0) { native_phase_failed = 1; _exit(126); }
+    int32_t tick = action_samples ? ((int32_t (*)(void *))(native_phase_engine + 0x1062bc0))(state) : -1;
     native_phase_begin(NP_APPLY_2, target);
     int32_t result = ((native_apply_fn)target)(command, state, mode, flag);
-    native_phase_end(NP_APPLY_2, result);
+    uint64_t elapsed = native_phase_end(NP_APPLY_2, result);
+    action_sample_add(AS_MODE2, elapsed, target - native_phase_engine, -1, tick, result, -1, -1);
     return result;
 }
 static __attribute__((noinline)) int32_t native_apply3_phase(void *command, void *state,
         int32_t mode, int32_t flag, uintptr_t target) {
     if (mode != 3 || flag != 0) { native_phase_failed = 1; _exit(126); }
+    int32_t tick = action_samples ? ((int32_t (*)(void *))(native_phase_engine + 0x1062bc0))(state) : -1;
     native_phase_begin(NP_APPLY_3, target);
     int32_t result = ((native_apply_fn)target)(command, state, mode, flag);
-    native_phase_end(NP_APPLY_3, result);
+    uint64_t elapsed = native_phase_end(NP_APPLY_3, result);
+    action_sample_add(AS_MODE3, elapsed, target - native_phase_engine, -1, tick, result, -1, -1);
     return result;
 }
 static __attribute__((noinline)) void *native_array_new_phase(size_t bytes) {

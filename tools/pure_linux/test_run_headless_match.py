@@ -162,6 +162,21 @@ def test_phase_timing_is_opt_in_for_guest_plan(inputs, monkeypatch):
     assert runner.build_plan(settings, output)["environment"]["NASHURA_PHASE_TIMING"] == "1"
 
 
+def test_action_distributions_are_explicit_and_diagnostic_only(inputs, monkeypatch):
+    settings, output = inputs
+    monkeypatch.setenv("NASHURA_ACTION_DISTRIBUTIONS", "1")
+    assert "NASHURA_ACTION_DISTRIBUTIONS" not in runner.build_plan(settings, output)["environment"]
+    with pytest.raises(ValueError, match="explicit native phases"):
+        runner.build_plan(settings, output, action_distributions=True)
+    plan = runner.build_plan(settings, output, native_phases=True, action_distributions=True)
+    assert plan["action_distributions"] is True
+    assert plan["environment"]["NASHURA_ACTION_DISTRIBUTIONS"] == "1"
+    for kwargs in ({"benchmark_repeats": 116}, {"native_optimization": "hot-getters-v1"},
+                   {"record_hand_actions": True}, {"thread_resources": True}):
+        with pytest.raises(ValueError):
+            runner.build_plan(settings, output, native_phases=True, action_distributions=True, **kwargs)
+
+
 @pytest.mark.parametrize("optimization", runner.OPTIMIZATION_MARKERS)
 def test_native_optimization_is_explicit_and_version_limited(inputs, monkeypatch, optimization):
     settings, output = inputs
