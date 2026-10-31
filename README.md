@@ -1,5 +1,11 @@
 # Nashura
 
+## 搜索训练框架快速导读
+
+这套方案用 PUCT 搜索为 2.6 速猪策略生成教师目标，再把教师损失与独立的 PPO 自博弈数据合并更新策略。PUCT 是教师数据生成器，不会接管正式 PPO 对局中的动作选择。代码记录的 108 局、每局 32 次模拟原型批次已完成；正式教师周期和 200 次训练更新仍是启动门槛与计划。
+
+从[搜索训练框架导读](agent-handoff/SEARCH_TRAINING_FRAMEWORK_OVERVIEW_2026-10-31.md)开始，可了解数据流、模块入口、验收状态，以及 Mac 开发与 ARM Linux 运行之间的边界。
+
 ## 2026-10-31：暂停优化后的 AVD / ARM64 Linux guest 同引擎基线
 
 两轮反序串行对照中，Android ARM64 AVD 为 82,865 tick/s，Fusion Ubuntu ARM64

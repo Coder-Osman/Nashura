@@ -1,6 +1,6 @@
 {
   "schema": "hashura.public-source-snapshot.v1",
-  "file_count": 3013,
+  "file_count": 3014,
   "files": [
     {
       "path": ".tmp_remote_edit/compact_patch/resident.cpp",
@@ -18,16 +18,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "deea07f5c373028b18633a9940a727c4d38b9e45383924babc6b9cc89fe05156",
-      "bytes": 84084,
-      "source_sha256": "deea07f5c373028b18633a9940a727c4d38b9e45383924babc6b9cc89fe05156",
+      "sha256": "116d8c77d702afc9d4ceade755daaf7cc17cdeaf4160788cd8c50191a3bfbcc5",
+      "bytes": 84481,
+      "source_sha256": "116d8c77d702afc9d4ceade755daaf7cc17cdeaf4160788cd8c50191a3bfbcc5",
       "transformations": []
     },
     {
       "path": "README.md",
-      "sha256": "d84b04574cd84aa846caf36b5f082989946a99a4259b9d22364b509e51d47a9a",
-      "bytes": 81834,
-      "source_sha256": "d84b04574cd84aa846caf36b5f082989946a99a4259b9d22364b509e51d47a9a",
+      "sha256": "bf11ba0082dea2b38ad1acd1f33ef7c37d88ca52287f07580871f04a2fb247f4",
+      "bytes": 82442,
+      "source_sha256": "bf11ba0082dea2b38ad1acd1f33ef7c37d88ca52287f07580871f04a2fb247f4",
       "transformations": []
     },
     {
@@ -21129,6 +21129,13 @@
       "sha256": "7ab39982e35e41d6f07cc1c29f8413ce829081e2fff11a25a6f4a6726a396dbc",
       "source_sha256": "7ab39982e35e41d6f07cc1c29f8413ce829081e2fff11a25a6f4a6726a396dbc",
       "bytes": 3795,
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/SEARCH_TRAINING_FRAMEWORK_OVERVIEW_2026-10-31.md",
+      "sha256": "156a27f412097e3410b202778d075dc271c96c460ac70b4efaaf485592244500",
+      "source_sha256": "156a27f412097e3410b202778d075dc271c96c460ac70b4efaaf485592244500",
+      "bytes": 7237,
       "transformations": []
     }
   ]
