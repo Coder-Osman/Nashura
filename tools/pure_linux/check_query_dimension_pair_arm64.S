@@ -10,10 +10,12 @@ query_dimension_invoke:
     stp x19, x22, [sp, #32]
     stp x23, x24, [sp, #48]
     stp x25, x27, [sp, #64]
+    str x28, [sp, #80]
     mov x16, x0
     mov x23, x1
     mov w24, w2
     mov w27, w3
+    mov w28, w3
     str w4, [sp, #16]
     str x5, [sp, #24]
     mov x8, #0x555
@@ -32,6 +34,7 @@ query_dimension_invoke:
     ldp x19, x22, [sp, #32]
     ldp x23, x24, [sp, #48]
     ldp x25, x27, [sp, #64]
+    ldr x28, [sp, #80]
     ldp x29, x30, [sp], #112
     ret
 .size query_dimension_invoke, .-query_dimension_invoke

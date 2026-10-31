@@ -38,7 +38,7 @@ def validate_command(command, case):
     require_equal(command, expected)
 
 
-def function_regions(data):
+def function_regions(data, targets=None):
     if hashlib.sha256(data).hexdigest() != ENGINE_SHA256:
         raise ValueError("exact pinned ELF required")
     elf = Elf64(data)
@@ -58,7 +58,7 @@ def function_regions(data):
     if starts != sorted(set(starts)):
         raise ValueError("unordered unwind table")
     regions = {}
-    for name, target in TARGETS.items():
+    for name, target in (TARGETS if targets is None else targets).items():
         index = bisect_right(starts, target) - 1
         if not 0 <= index < len(entries) - 1:
             raise ValueError("target outside unwind table")

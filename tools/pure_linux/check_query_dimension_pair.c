@@ -4,7 +4,15 @@
 #define _GNU_SOURCE
 #include <inttypes.h>
 #include <stdlib.h>
+#ifdef QUERY_SIGNED_HEIGHT_CHECK
+#include "headless_query_signed_height.h"
+#define install_candidate install_query_signed_height
+#define CHECK_LABEL "QUERY_SIGNED_HEIGHT_CHECK"
+#else
 #include "headless_query_dimension_pair.h"
+#define install_candidate install_query_dimension_pair
+#define CHECK_LABEL "QUERY_DIMENSION_PAIR_CHECK"
+#endif
 extern void query_dimension_invoke(void *, void *, uint32_t, uint32_t, uint32_t, uint64_t *);
 static uint64_t rng = UINT64_C(0x71d20261031);
 static uint32_t random32(void) {
@@ -14,7 +22,13 @@ static uint32_t random32(void) {
 static void put32(void *p, uint32_t v) { memcpy(p, &v, 4); }
 static void putptr(void *p, void *v) { memcpy(p, &v, sizeof(v)); }
 static void stubs(unsigned char *base) {
+#ifdef QUERY_SIGNED_HEIGHT_CHECK
+    const uintptr_t offsets[] = {0xf34c38, 0xf34dac, 0xf34cdc};
+    const uint32_t reject[]={0x6b1c037f,0x1100077b,0x54fffe80};
+    memcpy(base+0xf34c60,reject,sizeof(reject));
+#else
     const uintptr_t offsets[] = {0xf34c60, 0xf34dac, 0xf34cdc};
+#endif
     for (unsigned i = 0; i < 3; ++i) {
         uint32_t code[] = {UINT32_C(0x52800000) | (i << 5), UINT32_C(0xd65f03c0)};
         memcpy(base + offsets[i], code, sizeof(code));
@@ -45,12 +59,17 @@ static int check(unsigned char *old, unsigned char *candidate, unsigned char *gr
     query_dimension_invoke(candidate + 0xf34c6c, grid, x, y, filter, b);
     // w9 is dead on width/y rejection; early height load intentionally differs.
     if ((int32_t)width <= (int32_t)x || (int32_t)y < 0) a[1] = b[1] = 0;
+#ifdef QUERY_SIGNED_HEIGHT_CHECK
+    /* In the real reject target +0xf34c60, CMP replaces NZCV and w9 is dead. */
+    if (reject) { a[1]=b[1]=0; a[5]=b[5]=0; }
+#endif
     uint64_t expected = reject || null_cell || (int32_t)count < 1 ? 0 : filter ? 2 : 1;
     return !memcmp(a, b, sizeof(a)) && a[6] == expected
         && !memcmp(grid, saved_grid, sizeof(saved_grid))
         && !memcmp(cell, saved_cell, sizeof(saved_cell));
 }
 int main(void) {
+    (void)install_query_dimension_pair;
     long page = sysconf(_SC_PAGESIZE);
     if (page < 64 || (page & (page - 1))) return 2;
     size_t span = (0xf35000 + page - 1) & ~((size_t)page - 1);
@@ -65,16 +84,16 @@ int main(void) {
             || mprotect(table+table_bytes,page,PROT_NONE)) return 4;
     stubs(old); stubs(candidate);
     candidate[0xf34c58] ^= 1;
-    if (install_query_dimension_pair((uintptr_t)candidate)) return 5;
+    if (install_candidate((uintptr_t)candidate)) return 5;
     candidate[0xf34c58] ^= 1; candidate[0xf34c6c] ^= 1;
-    if (install_query_dimension_pair((uintptr_t)candidate)) return 6;
+    if (install_candidate((uintptr_t)candidate)) return 6;
     candidate[0xf34c6c] ^= 1;
     __builtin___clear_cache((char *)old + 0xf34000, (char *)old + 0xf35000);
     __builtin___clear_cache((char *)candidate + 0xf34000, (char *)candidate + 0xf35000);
     uintptr_t code_page = ((uintptr_t)old + 0xf34c6c) & ~((uintptr_t)page-1);
     if (mprotect((void *)code_page,page,PROT_READ|PROT_EXEC)) return 7;
-    if (!install_query_dimension_pair((uintptr_t)candidate)
-            || !install_query_dimension_pair((uintptr_t)candidate)) return 8;
+    if (!install_candidate((uintptr_t)candidate)
+            || !install_candidate((uintptr_t)candidate)) return 8;
     uint64_t cases = 0;
     const uint32_t edges[] = {0,1,2,31,32,0x7fffffff,0x80000000,0xffffffff};
     const uint32_t counts[] = {0,1,2,0x7fffffff,0x80000000,0xffffffff};
@@ -96,7 +115,7 @@ int main(void) {
                 w,h,x,y,counts[random32()%6],random32()&1,random32()&1)) return 10;
         ++cases;
     }
-    printf("QUERY_DIMENSION_PAIR_CHECK cases=%" PRIu64
+    printf(CHECK_LABEL " cases=%" PRIu64
         " original_and_candidate=equal guard_pages=passed signed_rejection=covered null_cell=covered count_edges=covered exits=3\n",cases);
     return 0;
 }

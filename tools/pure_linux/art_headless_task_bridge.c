@@ -29,6 +29,7 @@
 #include "headless_combined_grid_clear.h"
 #include "headless_combined_query_pair.h"
 #include "headless_combined_component_guard.h"
+#include "headless_combined_signed_height.h"
 #include "headless_memory_lifecycle.h"
 
 static uintptr_t base;
@@ -1165,7 +1166,9 @@ static void run_task(struct task *task) {
                 ? install_query_dimension_pair(base) : !strcmp(optimization, "hot-distance-query-v1")
                 ? install_combined_query_pair(base) : !strcmp(optimization, "component-guard-v1")
                 ? install_component_guard(base, 0) : !strcmp(optimization, "hot-distance-component-v1")
-                ? install_combined_component_guard(base) : 0;
+                ? install_combined_component_guard(base) : !strcmp(optimization, "query-signed-height-v1")
+                ? install_query_signed_height(base) : !strcmp(optimization, "hot-distance-component-height-v1")
+                ? install_combined_signed_height(base) : 0;
             if (!installed) { task_status = -55; return; }
         }
         const int step_once = requested_mode == 6 || requested_mode == 8 ||

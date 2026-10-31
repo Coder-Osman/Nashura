@@ -1,5 +1,24 @@
 # Nashura
 
+## 2026-10-31：查询高度比较的双轮固定输入增益
+
+沿真实profile首位空间查询，仅合并有符号height/y条件，新增默认关闭的
+query-signed-height-v1 / hot-distance-component-height-v1。相对当前组件组合，首轮四组
+中位耗时下降1.87%–3.49%，同构建反向确认下降2.60%–3.32%；两轮16个block与
+采样p50/p95/p99均改善。64批/13824局、12800测量局与24完整局68094帧经主机
+独立复算通过，逐轮309实验文件/346工具文件核验一致。限定固定四输入和普通有效grid，
+不外推全部内部状态或长期稳定性；整体目标继续。Mac当前链路为Fusion ARM64 Linux，
+无QEMU指令翻译；不测并发、不扩外围Android服务。详见[报告](agent-handoff/SERIAL_ARM64_QUERY_SIGNED_HEIGHT_2026-10-31.md)与
+[机器摘要](agent-handoff/serial-arm64-query-signed-height-evidence-20261031.json)。
+
+## 2026-10-31：组件组合的双轮热点归因
+
+8次串行软件CPU-clock采样主机复算通过，空间查询均第一，占18.54%–22.66%；
+其中cell循环占查询样本72.75%–79.55%，对象更新均第二。全部叶样本经ELF/FDE或
+严格间接跳板形状归属且守恒；此为诊断，不是速度或硬件cycles/cache结论。详见
+[报告](agent-handoff/SERIAL_ARM64_COMPONENT_PROFILE_2026-10-31.md)与
+[机器摘要](agent-handoff/serial-arm64-component-profile-evidence-20261031.json)。
+
 ## 2026-10-31：生命周期诊断缩小内存增长来源
 
 固定VM/引擎/四输入，33024局独立串行诊断及8完整局22698帧通过，主机核验92实验文件
