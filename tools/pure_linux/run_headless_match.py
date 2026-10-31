@@ -131,8 +131,13 @@ def validate(settings, output):
 
 def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
                step_sample_every=16, timeout_seconds=45, record_hand_actions=False,
-               native_optimization=None, native_phases=False, thread_resources=False, serial_batches=1):
+               native_optimization=None, native_phases=False, thread_resources=False, serial_batches=1,
+               memory_lifecycle_every=None):
     paths, output = validate(settings, output)
+    if memory_lifecycle_every is not None and (type(memory_lifecycle_every) is not int
+            or not 1 <= memory_lifecycle_every <= 1000000 or benchmark_repeats is None
+            or thread_resources or native_phases or record_hand_actions):
+        raise ValueError("memory lifecycle requires an independent repeated diagnostic; interval 1..1000000")
     if thread_resources and benchmark_repeats is None:
         raise ValueError("thread resources require an independent repeated warm-loop diagnostic")
     if not 1 <= serial_batches <= 240 or (serial_batches > 1 and
@@ -203,9 +208,11 @@ def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
         environment["NASHURA_TASK_TIMEOUT_MS"] = str(min(timeout_seconds * 1000, 120000))
     if snapshot_trace:
         environment["NASHURA_TRACE_SNAPSHOTS"] = outside(output / "snapshots.bin")
+    if memory_lifecycle_every is not None:
+        environment["NASHURA_MEMORY_LIFECYCLE_EVERY"] = str(memory_lifecycle_every)
     if benchmark_repeats is None and os.environ.get("NASHURA_PHASE_TIMING") == "1":
         environment["NASHURA_PHASE_TIMING"] = "1"
-    return {"schema": "nashura.headless-local-run.v1", "command": command,
+    plan = {"schema": "nashura.headless-local-run.v1", "command": command,
             "environment": environment, "identities": settings["identities"],
             "output": str(output),
             "snapshot_trace": snapshot_trace,
@@ -218,6 +225,9 @@ def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
             "step_sample_every": step_sample_every if benchmark_repeats is not None else None,
             "snapshot_scope": "explicit original-serializer adapter" if snapshot_trace else "not captured",
             "whole_goal_complete": False}
+    if memory_lifecycle_every is not None:
+        plan["measurement_scope"] = "memory-lifecycle-diagnostic-only"
+    return plan
 
 
 def verify_completion(exit_code, stdout, expected_repeats=1):
@@ -239,9 +249,9 @@ def verify_completion(exit_code, stdout, expected_repeats=1):
 def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=None,
         step_sample_every=16, timeout_seconds=45, record_hand_actions=False,
         native_optimization=None, native_phases=False, thread_resources=False, serial_batches=1,
-        compress_stdout=False):
+        compress_stdout=False, memory_lifecycle_every=None):
     plan = build_plan(settings, output, snapshot_trace, benchmark_repeats,
-                      step_sample_every, timeout_seconds, record_hand_actions, native_optimization, native_phases, thread_resources, serial_batches)
+                      step_sample_every, timeout_seconds, record_hand_actions, native_optimization, native_phases, thread_resources, serial_batches, memory_lifecycle_every)
     if compress_stdout:
         plan["stdout_encoding"] = "gzip-after-process-exit"
     if not apply:
@@ -289,6 +299,8 @@ def run(settings, output, apply=False, snapshot_trace=True, benchmark_repeats=No
                "thread_resources": thread_resources,
                "serial_batches": serial_batches,
                "whole_goal_complete": False}
+    if memory_lifecycle_every is not None:
+        summary["measurement_scope"] = "memory-lifecycle-diagnostic-only"
     if plan["snapshot_trace"]:
         archive = inspect_archive(output / "snapshots.bin", final_tick)
         summary.update(records=len(archive["frames"]), archive_bytes=archive["bytes"],
@@ -316,6 +328,8 @@ def main():
                         help="independent warm-loop CPU/fault/switch boundary diagnostics")
     parser.add_argument("--serial-batches", type=int, default=1,
                         help="bounded repeated tasks in one engine process for stability")
+    parser.add_argument("--memory-lifecycle-every", type=int,
+                        help="independent diagnostic: sample process-global heap/smaps every N matches")
     parser.add_argument("--compress-stdout", action="store_true",
                         help="lossless gzip after process exit; verify restored SHA before removing raw copy")
     parser.add_argument("--step-sample-every", type=int, default=16)
@@ -329,7 +343,8 @@ def main():
                          record_hand_actions=args.record_hand_actions,
                          native_optimization=args.native_optimization,
                          native_phases=args.native_phases, thread_resources=args.thread_resources,
-                         serial_batches=args.serial_batches, compress_stdout=args.compress_stdout), indent=2))
+                         serial_batches=args.serial_batches, compress_stdout=args.compress_stdout,
+                         memory_lifecycle_every=args.memory_lifecycle_every), indent=2))
 
 
 if __name__ == "__main__":

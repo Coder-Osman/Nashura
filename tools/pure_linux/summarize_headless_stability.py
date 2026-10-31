@@ -23,7 +23,8 @@ def summarize(text, batches, repeats, expected_tick, expected_digest, expected_b
             or lines.index(creates[0]) >= begins[0]
             or len([x for x in lines[begins[0]:] if x.startswith("HEADLESS_TASK_TID=")]) != batches
             or lines.count("HEADLESS_GAME_STATE_BATTLE_TASK_STATUS=1") != batches
-            or any(x.startswith(("HEADLESS_NATIVE_PHASE", "HEADLESS_PHASE_TIMING ",
+            or any(x.startswith(("HEADLESS_NATIVE_PHASE", "HEADLESS_MEMORY_LIFECYCLE ",
+                    "HEADLESS_MEMORY_MAPPING ", "HEADLESS_PHASE_TIMING ",
                     "HEADLESS_WARM_RESOURCES ", "HEADLESS_BATTLE_OBSERVATION ",
                     "HEADLESS_BATTLE_OBJECT ", "HEADLESS_BATTLE_PLAYER ")) for x in lines)):
         raise ValueError("wrong engine lifecycle or diagnostics mixed into stability")

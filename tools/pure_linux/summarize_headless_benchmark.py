@@ -15,6 +15,9 @@ def records(text, marker):
 def summarize(text, repeats=30, expected_tick=3601, expected_digest='6c959326dd2f09cc',
               completion='HEADLESS_DIRECT_RUNTIME_PROBE_RETURN=1', warmup_matches=0,
               expected_bytes=3091):
+    if any(line.startswith(('HEADLESS_MEMORY_LIFECYCLE', 'HEADLESS_MEMORY_MAPPING '))
+           for line in text.splitlines()):
+        raise ValueError('memory lifecycle diagnostics are excluded from benchmark summaries')
     if expected_tick < 1 or not re.fullmatch(r'[0-9a-f]{16}', expected_digest) or expected_bytes < 1:
         raise ValueError('invalid expected terminal identity')
     metrics = [{key: int(value) for key, value in row.items()}

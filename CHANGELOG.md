@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-10-31：独立生命周期内存诊断
+
+- 增加默认关闭的五边界mallinfo/smaps采样与严格顺序/时钟/分类验收；正式benchmark/stability拒绝诊断混入。
+- 四输入33024局、8完整局22698帧及主机92实验文件/336工具文件核验通过；热身后native堆首末差0，ART命名RSS/PSS增长16–20KiB。
+- a7两次只读映射将4KiB增长定位到dalvik-main space；无具体对象泄漏、无泄漏或新速度收益结论，不调GC/allocator。
+- pure_linux1503passed/1skip、公开1104passed/42skip、主工程211passed；历史132096局原始验收完全一致，整体目标继续。
+
 ## 2026-10-31：组件组合的持续运行趋势验收
 
 - 同一native/DEX和固定VM，4进程串行132096局、128000测量局；仅多task外层上限扩至1800秒，native每task120秒不变。

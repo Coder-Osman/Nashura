@@ -1,6 +1,6 @@
 {
   "schema": "hashura.public-source-snapshot.v1",
-  "file_count": 2982,
+  "file_count": 2989,
   "files": [
     {
       "path": ".tmp_remote_edit/compact_patch/resident.cpp",
@@ -18,16 +18,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "ee1e36f9ea798b63a07a6e973f10eb4bc2034b504bb6d7de63082de208b83ca3",
-      "bytes": 80149,
-      "source_sha256": "ee1e36f9ea798b63a07a6e973f10eb4bc2034b504bb6d7de63082de208b83ca3",
+      "sha256": "6ea7c3f169e206a576fb7befc3c737396e029278a9e46c77263c07fc5ee3d5ff",
+      "bytes": 80784,
+      "source_sha256": "6ea7c3f169e206a576fb7befc3c737396e029278a9e46c77263c07fc5ee3d5ff",
       "transformations": []
     },
     {
       "path": "README.md",
-      "sha256": "a6b3e1de60ff3cf4e959b31cd3f0aa4d5556cfb511f78edeedb409c44bfd5403",
-      "bytes": 77452,
-      "source_sha256": "a6b3e1de60ff3cf4e959b31cd3f0aa4d5556cfb511f78edeedb409c44bfd5403",
+      "sha256": "f730de7f071cf8c4ecb39dda623d93a60a941f610bccb13847c174374ce18200",
+      "bytes": 78199,
+      "source_sha256": "f730de7f071cf8c4ecb39dda623d93a60a941f610bccb13847c174374ce18200",
       "transformations": []
     },
     {
@@ -11392,9 +11392,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "dc8503dd7e15e91ec9e53cbfaf5eb59c487dcd9eaa978becbb01988fe571d782",
-      "bytes": 120463,
-      "source_sha256": "dc8503dd7e15e91ec9e53cbfaf5eb59c487dcd9eaa978becbb01988fe571d782",
+      "sha256": "2d7adc6b0c34c3a91666d04f61487a6794dfa63c3cb54b1cf31b2878c9bab07d",
+      "bytes": 121216,
+      "source_sha256": "2d7adc6b0c34c3a91666d04f61487a6794dfa63c3cb54b1cf31b2878c9bab07d",
       "transformations": []
     },
     {
@@ -17806,65 +17806,65 @@
     },
     {
       "path": "publication/checks-affordability.xml",
-      "sha256": "6a6c6d28ee5f860f2f7c1141de732859f4ffd389e4601596f9a2a5baf26f021e",
+      "sha256": "35b8ee5ebd0fb322f3b81b51af25ce6f119623c4487cea53997226c0ce9ce14f",
       "bytes": 4340,
-      "source_sha256": "6a6c6d28ee5f860f2f7c1141de732859f4ffd389e4601596f9a2a5baf26f021e",
+      "source_sha256": "35b8ee5ebd0fb322f3b81b51af25ce6f119623c4487cea53997226c0ce9ce14f",
       "transformations": []
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
-      "sha256": "af2ea08fbc000adce0c4cf5a7d40016c35ed4ca5d934eb313e10c704a8a3d8d0",
+      "sha256": "5fdf2bcf5ac11a150e88b9873e0433467399c1dbfd0d67f8ea30629cd0fea9ba",
       "bytes": 12024,
-      "source_sha256": "af2ea08fbc000adce0c4cf5a7d40016c35ed4ca5d934eb313e10c704a8a3d8d0",
+      "source_sha256": "5fdf2bcf5ac11a150e88b9873e0433467399c1dbfd0d67f8ea30629cd0fea9ba",
       "transformations": []
     },
     {
       "path": "publication/checks-command-coordinates.xml",
-      "sha256": "87f7335f1fd975643e39db525cd132860ba14f046ae61d46fc344be3d5334813",
+      "sha256": "240f4076d940efadb3b13ddd40fb9d91ac2126880908656db8da2c28675a93e8",
       "bytes": 8184,
-      "source_sha256": "87f7335f1fd975643e39db525cd132860ba14f046ae61d46fc344be3d5334813",
+      "source_sha256": "240f4076d940efadb3b13ddd40fb9d91ac2126880908656db8da2c28675a93e8",
       "transformations": []
     },
     {
       "path": "publication/checks-dispatch-command.xml",
-      "sha256": "26cf09b110b9ef6ae4111ec96148fc8750a91f4e4ca6547aa39762da5d4d3d57",
+      "sha256": "bbe00f78ab74eb3434f1449a6d400d1a39b526121e730824a9f3d767341ef498",
       "bytes": 6406,
-      "source_sha256": "26cf09b110b9ef6ae4111ec96148fc8750a91f4e4ca6547aa39762da5d4d3d57",
+      "source_sha256": "bbe00f78ab74eb3434f1449a6d400d1a39b526121e730824a9f3d767341ef498",
       "transformations": []
     },
     {
       "path": "publication/checks-live-command.xml",
-      "sha256": "07e8ccee3bd3ddd11fed529caafa79cf21c6d058584da56cb860fc27aea576d3",
+      "sha256": "4fcd06d656ccfe161ad187c02310136af20c407b9746db41c7bc4accc38705c8",
       "bytes": 6370,
-      "source_sha256": "07e8ccee3bd3ddd11fed529caafa79cf21c6d058584da56cb860fc27aea576d3",
+      "source_sha256": "4fcd06d656ccfe161ad187c02310136af20c407b9746db41c7bc4accc38705c8",
       "transformations": []
     },
     {
       "path": "publication/checks-position-guards.xml",
-      "sha256": "987d7bfffc07f1dc16f0360106a9cf36d6a5741660b93ee7026a01e3cdade45e",
+      "sha256": "18f413dac19ed5168721c76a6e65a69313132522bee62aff06973bbe30ca2ffd",
       "bytes": 4244,
-      "source_sha256": "987d7bfffc07f1dc16f0360106a9cf36d6a5741660b93ee7026a01e3cdade45e",
+      "source_sha256": "18f413dac19ed5168721c76a6e65a69313132522bee62aff06973bbe30ca2ffd",
       "transformations": []
     },
     {
       "path": "publication/checks-public.xml",
-      "sha256": "d0b48bab104ac0df5102b8475df7b7ea0253b382d525fd16194e38655eb1293a",
+      "sha256": "5582e61812f71d8d9427c3b70ff7af67b1a0bc9740e37f86a488697fb8b81ecd",
       "bytes": 161225,
-      "source_sha256": "d0b48bab104ac0df5102b8475df7b7ea0253b382d525fd16194e38655eb1293a",
+      "source_sha256": "5582e61812f71d8d9427c3b70ff7af67b1a0bc9740e37f86a488697fb8b81ecd",
       "transformations": []
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
-      "sha256": "611a23a04db2484a0c2f438d47fbaac8ee977b24507c653599c1e76be8180389",
+      "sha256": "907c49861a71596e8951cdfd792136f8c662a1bd9af6410ae5724891a4a217e8",
       "bytes": 6383,
-      "source_sha256": "611a23a04db2484a0c2f438d47fbaac8ee977b24507c653599c1e76be8180389",
+      "source_sha256": "907c49861a71596e8951cdfd792136f8c662a1bd9af6410ae5724891a4a217e8",
       "transformations": []
     },
     {
       "path": "publication/checks-selection-timeout.xml",
-      "sha256": "40a478606265b1a348c8e10bcb425007b3b51dc65d02c27f4fee4aca8dd77dec",
+      "sha256": "2ee0bf9f6aabd4e5fe0ee06781a1d41e94f360fb11fdfc236fed844e37bb48f4",
       "bytes": 14580,
-      "source_sha256": "40a478606265b1a348c8e10bcb425007b3b51dc65d02c27f4fee4aca8dd77dec",
+      "source_sha256": "2ee0bf9f6aabd4e5fe0ee06781a1d41e94f360fb11fdfc236fed844e37bb48f4",
       "transformations": []
     },
     {
@@ -19964,9 +19964,9 @@
     },
     {
       "path": "tools/pure_linux/art_headless_task_bridge.c",
-      "sha256": "6f31e1f70cd2fcf2b109bc4a083c42c95ec0067066c3276162e2ec56f5b2f47a",
-      "bytes": 67821,
-      "source_sha256": "6f31e1f70cd2fcf2b109bc4a083c42c95ec0067066c3276162e2ec56f5b2f47a",
+      "sha256": "eec5b0928bb9ff3c7216e5ae90d645d4f010ba49d6636af2d1f67fe14131868d",
+      "bytes": 68506,
+      "source_sha256": "eec5b0928bb9ff3c7216e5ae90d645d4f010ba49d6636af2d1f67fe14131868d",
       "transformations": []
     },
     {
@@ -20055,9 +20055,9 @@
     },
     {
       "path": "tools/pure_linux/run_headless_match.py",
-      "sha256": "3c9ad379be0fe32c5a2da0a6acfdef6929b3c86e9e35c90be9eb5cd347154b5b",
-      "source_sha256": "3c9ad379be0fe32c5a2da0a6acfdef6929b3c86e9e35c90be9eb5cd347154b5b",
-      "bytes": 18764,
+      "sha256": "aabb5509e1ea423bd414dafc643d83b3a67837265ea1605132ff447d722433fa",
+      "bytes": 19837,
+      "source_sha256": "aabb5509e1ea423bd414dafc643d83b3a67837265ea1605132ff447d722433fa",
       "transformations": []
     },
     {
@@ -20125,9 +20125,9 @@
     },
     {
       "path": "tools/pure_linux/summarize_headless_benchmark.py",
-      "sha256": "9d113b3cab12d4fe5c54e0d5c0880d0ec42a672d8c645ae319eb6fa6db376c3d",
-      "bytes": 8519,
-      "source_sha256": "9d113b3cab12d4fe5c54e0d5c0880d0ec42a672d8c645ae319eb6fa6db376c3d",
+      "sha256": "f7fe94d8b3b173760e00b534a94db18fcec9036702677de676351bd000412d74",
+      "bytes": 8743,
+      "source_sha256": "f7fe94d8b3b173760e00b534a94db18fcec9036702677de676351bd000412d74",
       "transformations": []
     },
     {
@@ -20482,9 +20482,9 @@
     },
     {
       "path": "tools/pure_linux/summarize_headless_stability.py",
-      "sha256": "f25abeaf71320317604d431a16a88496dc30ef5913a64d2280c6ba0d98c59e3d",
-      "bytes": 6459,
-      "source_sha256": "f25abeaf71320317604d431a16a88496dc30ef5913a64d2280c6ba0d98c59e3d",
+      "sha256": "540207771236acdf2b484a23343f9e6de35812c4acbc3fdcc71573c7f05b5986",
+      "bytes": 6537,
+      "source_sha256": "540207771236acdf2b484a23343f9e6de35812c4acbc3fdcc71573c7f05b5986",
       "transformations": []
     },
     {
@@ -20912,6 +20912,55 @@
       "sha256": "9ffbaeda2c1316032f150faad68dfcfdcefbb6b3a95fdebd690833bfcfb70bc5",
       "bytes": 598316,
       "source_sha256": "9ffbaeda2c1316032f150faad68dfcfdcefbb6b3a95fdebd690833bfcfb70bc5",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/SERIAL_ARM64_MEMORY_LIFECYCLE_2026-10-31.md",
+      "sha256": "d84d7ae4d9a56ded07ead16b4e0a52cd5ef8c33ff1e1fa391f3cf4bf5544ac2a",
+      "bytes": 6496,
+      "source_sha256": "d84d7ae4d9a56ded07ead16b4e0a52cd5ef8c33ff1e1fa391f3cf4bf5544ac2a",
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/serial-arm64-memory-lifecycle-evidence-20261031.json",
+      "sha256": "1ddbd906cc621541426bf187c471a02d1dd799c009eb9ff2674a84b212619790",
+      "bytes": 348456,
+      "source_sha256": "1ddbd906cc621541426bf187c471a02d1dd799c009eb9ff2674a84b212619790",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/headless_memory_lifecycle.h",
+      "sha256": "18b2cb60553933a8a0045ca0d5bf9c861ebb1637fdebe6dfd0ad3687aa725769",
+      "bytes": 4972,
+      "source_sha256": "18b2cb60553933a8a0045ca0d5bf9c861ebb1637fdebe6dfd0ad3687aa725769",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/summarize_headless_memory_lifecycle.py",
+      "sha256": "ad20dcff1b1283b98596d998169356f25b6c5a04b6fce3a6c94c9aa65516fc11",
+      "bytes": 7527,
+      "source_sha256": "ad20dcff1b1283b98596d998169356f25b6c5a04b6fce3a6c94c9aa65516fc11",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_headless_memory_lifecycle.py",
+      "sha256": "86e179e1f4bcdf54ee2e39e641f82cacef24722ddc45a78d2057c7467e705fde",
+      "bytes": 6746,
+      "source_sha256": "86e179e1f4bcdf54ee2e39e641f82cacef24722ddc45a78d2057c7467e705fde",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/test_verify_memory_lifecycle.py",
+      "sha256": "5b5d413ba2bbaecfd3da09cd2c3cfc275634ad785fc7c555f84144c9d9a534f9",
+      "bytes": 4783,
+      "source_sha256": "5b5d413ba2bbaecfd3da09cd2c3cfc275634ad785fc7c555f84144c9d9a534f9",
+      "transformations": []
+    },
+    {
+      "path": "tools/pure_linux/verify_memory_lifecycle.py",
+      "sha256": "3453f347d8a017522bc38a08cbaed540f92c3134839f3353e8631e74ecdec858",
+      "bytes": 9541,
+      "source_sha256": "3453f347d8a017522bc38a08cbaed540f92c3134839f3353e8631e74ecdec858",
       "transformations": []
     }
   ]

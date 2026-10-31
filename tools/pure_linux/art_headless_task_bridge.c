@@ -29,6 +29,7 @@
 #include "headless_combined_grid_clear.h"
 #include "headless_combined_query_pair.h"
 #include "headless_combined_component_guard.h"
+#include "headless_memory_lifecycle.h"
 
 static uintptr_t base;
 static _Atomic int destroyed;
@@ -661,6 +662,10 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
     const char *resource_text = getenv("NASHURA_THREAD_RESOURCES");
     const int thread_resources = resource_text && !strcmp(resource_text, "1");
     if (thread_resources && !minimal_benchmark) return -57;
+    uint64_t memory_sequence = 0;
+    const int memory_lifecycle = memory_lifecycle_begin(&memory_sequence);
+    if (memory_lifecycle < 0) return -58;
+    if (memory_lifecycle && !memory_lifecycle_sample(memory_sequence, "pre_create")) return -58;
     phase.first_queue_change_tick = -1;
     phase.last_queue_change_tick = -1;
     const uint64_t canary = UINT64_C(0x93e726ac415bd80f);
@@ -795,6 +800,7 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         if (native_phases_installed) native_phase_reset();
         struct thread_resources resources_before = {0};
         if (thread_resources) resources_before = read_thread_resources();
+        if (memory_lifecycle && !memory_lifecycle_sample(memory_sequence, "pre_step")) return -58;
         uint64_t elapsed_start = monotonic_ns(), total_step_ns = 0, worst_step_ns = 0;
         uint64_t min_step_ns = UINT64_MAX;
         uint64_t durations[10000];
@@ -863,6 +869,7 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
             }
         }
         uint64_t elapsed_ns = monotonic_ns() - elapsed_start;
+        if (memory_lifecycle && !memory_lifecycle_sample(memory_sequence, "post_step")) return -58;
         if (thread_resources && !report_thread_resources(resources_before, read_thread_resources(),
                 elapsed_start, elapsed_start + elapsed_ns)) return -57;
         native_phase_report();
@@ -978,10 +985,12 @@ static int run_game_state_battle(int step_once, int allow_commands, int snapshot
         if (!create_snapshot(state, &verification, &last_battle_digest, &last_battle_bytes)) return -38;
         ((state_snapshot_delete_fn)(base + 0x105e8bc))(verification);
     }
+    if (memory_lifecycle && !memory_lifecycle_sample(memory_sequence, "post_terminal")) return -58;
     ((game_destroy_fn)(base + 0x10610b0))(state);
     ((game_destroy_fn)(base + 0x988844))(state);
     ((game_delete_fn)(base + 0x17e4b50))(state);
     release_json_object(root);
+    if (memory_lifecycle && !memory_lifecycle_sample(memory_sequence, "post_destroy")) return -58;
     printf("HEADLESS_GAME_STATE_RELEASE_RETURN step_once=%d tick=%d command_count=%d snapshot_status=%d\n",
            step_once, tick_after, command_count, snapshot_status);
     fflush(stdout);
