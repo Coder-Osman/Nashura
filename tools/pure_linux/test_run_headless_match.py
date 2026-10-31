@@ -260,6 +260,22 @@ def test_serial_benchmark_task_wait_tracks_outer_bound_and_native_cap(inputs, ti
     assert "NASHURA_TASK_TIMEOUT_MS" not in runner.build_plan(settings, output)["environment"]
 
 
+def test_sustained_serial_process_bound_preserves_native_task_cap(inputs):
+    settings, output = inputs
+    plan = runner.build_plan(settings, output, benchmark_repeats=516,
+                             serial_batches=64, timeout_seconds=1800)
+    assert plan["command"][3] == "1800s"
+    assert plan["environment"]["NASHURA_TASK_TIMEOUT_MS"] == "120000"
+    assert plan["environment"]["NASHURA_SERIAL_BATCHES"] == "64"
+    assert plan["snapshot_trace"] is False
+    with pytest.raises(ValueError, match="600 seconds"):
+        runner.build_plan(settings, output, benchmark_repeats=516, timeout_seconds=601)
+    with pytest.raises(ValueError, match="1800 seconds"):
+        runner.build_plan(settings, output, benchmark_repeats=516,
+                          serial_batches=64, timeout_seconds=1801)
+    assert not output.exists()
+
+
 def test_mutation_after_identity_capture_is_rejected(inputs):
     settings, output = inputs
     Path(settings["observer"]).write_bytes(b"changed observer")

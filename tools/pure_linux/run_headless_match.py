@@ -153,8 +153,11 @@ def build_plan(settings, output, snapshot_trace=True, benchmark_repeats=None,
         raise ValueError("benchmark repeats must be between 2 and 1000")
     if not 1 <= step_sample_every <= 10000:
         raise ValueError("step sample interval must be between 1 and 10000")
-    if not 5 <= timeout_seconds <= 600:
-        raise ValueError("timeout must be between 5 and 600 seconds")
+    # A sustained run contains independently bounded native tasks. Extend only
+    # its process lifetime; single-task runs retain the existing outer limit.
+    maximum_timeout = 1800 if serial_batches > 1 else 600
+    if not 5 <= timeout_seconds <= maximum_timeout:
+        raise ValueError(f"timeout must be between 5 and {maximum_timeout} seconds")
     if benchmark_repeats is not None:
         snapshot_trace = False
     closure = paths["closure"]
