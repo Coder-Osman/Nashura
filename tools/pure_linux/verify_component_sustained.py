@@ -38,54 +38,61 @@ def validate_environment(env):
         raise ValueError("fixed VM environment required")
 
 
-def verify(root, reference):
+def verify(root, reference, *, variants=None, guest_root=None, observer=None,
+           observer_sha256=None, instruction_validator=None, schema=
+           "nashura.component-sustained.v1"):
+    variants = VARIANTS if variants is None else variants
+    guest_root = GUEST_ROOT if guest_root is None else Path(guest_root)
+    observer = OBSERVER if observer is None else observer
+    observer_sha256 = OBSERVER_SHA256 if observer_sha256 is None else observer_sha256
+    instruction_validator = validate_instruction if instruction_validator is None else instruction_validator
     root, reference = Path(root), Path(reference)
     if (root / "controller.exit").read_text().strip() != "0":
         raise ValueError("normal controller exit required")
     stage, done = read(root / "stage-plan.json"), read(root / "done.json")
     require_equal(stage, {"cases": list(CASES), "serial_batches": BATCHES,
         "benchmark_repeats": REPEATS, "warmup_matches": WARMUP,
-        "optimization": VARIANTS["candidate"], "observer_sha256": OBSERVER_SHA256,
+        "optimization": variants["candidate"], "observer_sha256": observer_sha256,
         "profiling": False, "concurrency": False, "engineering_checks_finished_before_launch": True})
-    require_equal(done, {"sustained_runs": len(CASES), "post_full_runs": len(CASES) * len(VARIANTS),
-                         "successes": len(CASES) * (1 + len(VARIANTS))})
+    require_equal(done, {"sustained_runs": len(CASES), "post_full_runs": len(CASES) * len(variants),
+                         "successes": len(CASES) * (1 + len(variants))})
     for file, when in (("instruction-precheck.json", "before_formal_timing"),
                        ("instruction-check.json", "after_formal_timing")):
-        validate_instruction(read(root / file), when)
+        instruction_validator(read(root / file), when)
     rows, gates = read(root / "sustained-results.json"), read(root / "correctness-results.json")
     if ([x["case"] for x in rows] != list(CASES)
-            or [(x["case"], x["variant"]) for x in gates] != [(c, v) for c in CASES for v in VARIANTS]):
+            or [(x["case"], x["variant"]) for x in gates] != [(c, v) for c in CASES for v in variants]):
         raise ValueError("complete ordered sustained and post-full graph required")
     results, correctness, previous_end = [], [], 0
     for name, row in zip(CASES, rows):
         case = root / name
         settings, prior_settings = read(case / "settings.json"), read(reference / name / "settings.json")
         expected = json.loads(json.dumps(prior_settings))
-        expected["observer"] = OBSERVER
-        expected["identities"][OBSERVER] = OBSERVER_SHA256
+        expected["observer"] = observer
+        expected["identities"][observer] = observer_sha256
         require_equal(settings, expected)
         fixture = Path(__file__).with_name("fixtures") / ("headless-runtime-" + name + ".json")
         if settings["identities"][settings["replay"]] != sha256(fixture):
             raise ValueError("fixed replay identity required")
         replay = read(fixture)
         original = reference / name / "full-original"
-        baseline = stdout(original, "original", variants=VARIANTS)
+        baseline = stdout(original, "original", variants=variants)
         tick = verify_completion(int((original / "exit.txt").read_text()), baseline)
         reset = records(baseline, "HEADLESS_BATTLE_RESET")
         observations = [line for line in baseline.splitlines() if line.startswith(OBSERVATIONS)]
         if len(reset) != 1 or not observations:
             raise ValueError("reference terminal and observed states required")
         directory = case / "sustained-candidate"
-        text = stdout(directory, "candidate", timing=True, variants=VARIANTS)
+        text = stdout(directory, "candidate", timing=True, variants=variants)
         validate_actions(text, replay)
         if verify_completion(int((directory / "exit.txt").read_text()), text, BATCHES * REPEATS) != tick:
             raise ValueError("sustained final tick differs")
         plan = read(directory / "plan.json")
-        validate_plan(plan, settings, "candidate", GUEST_ROOT / name / directory.name,
-            variants=VARIANTS, benchmark_repeats=REPEATS, serial_batches=BATCHES,
+        validate_plan(plan, settings, "candidate", guest_root / name / directory.name,
+            variants=variants, benchmark_repeats=REPEATS, serial_batches=BATCHES,
             timeout_seconds=1800, compress_stdout=True)
         result = read(directory / "result.json")
-        expected_result = result_expected("candidate", tick, variants=VARIANTS)
+        expected_result = result_expected("candidate", tick, variants=variants)
         expected_result.update(matches=BATCHES * REPEATS, serial_batches=BATCHES)
         require_equal(result, expected_result)
         require_equal(row["result"], result)
@@ -106,22 +113,22 @@ def verify(root, reference):
             if archive["sha256"] != read(original / "result.json")["archive_sha256"]:
                 raise ValueError("reference serializer archive changed")
             validate_terminal_archive(raw_ref, archive, reset[0])
-            for variant in VARIANTS:
+            for variant in variants:
                 directory = case / ("post-full-" + variant)
-                text = stdout(directory, variant, variants=VARIANTS)
+                text = stdout(directory, variant, variants=variants)
                 validate_actions(text, replay)
                 if (verify_completion(int((directory / "exit.txt").read_text()), text) != tick
                         or [x for x in text.splitlines() if x.startswith(OBSERVATIONS)] != observations):
                     raise ValueError("post-full observed state differs")
                 prior, plan = read(original / "plan.json"), read(directory / "plan.json")
                 expected_plan = json.loads(json.dumps(prior))
-                expected_plan["command"] = [x.replace(prior["output"], plan["output"]).replace(prior_settings["observer"], OBSERVER) for x in prior["command"]]
+                expected_plan["command"] = [x.replace(prior["output"], plan["output"]).replace(prior_settings["observer"], observer) for x in prior["command"]]
                 expected_plan["environment"] = {k: v.replace(prior["output"], plan["output"]) for k, v in prior["environment"].items()}
-                if VARIANTS[variant]:
-                    expected_plan["environment"]["NASHURA_NATIVE_OPTIMIZATION"] = VARIANTS[variant]
-                expected_plan.update(output=plan["output"], identities=settings["identities"], native_optimization=VARIANTS[variant])
+                if variants[variant]:
+                    expected_plan["environment"]["NASHURA_NATIVE_OPTIMIZATION"] = variants[variant]
+                expected_plan.update(output=plan["output"], identities=settings["identities"], native_optimization=variants[variant])
                 require_equal(plan, expected_plan)
-                if Path(plan["output"]) != GUEST_ROOT / name / directory.name:
+                if Path(plan["output"]) != guest_root / name / directory.name:
                     raise ValueError("wrong post-full output path")
                 raw = Path(temporary) / (variant + ".bin")
                 raw.write_bytes(gzip.decompress((directory / "snapshots.bin.gz").read_bytes()))
@@ -129,7 +136,7 @@ def verify(root, reference):
                 if not pair["equal"]:
                     raise ValueError("post-full serializer payload differs")
                 result = read(directory / "result.json")
-                require_equal(result, result_expected(variant, tick, pair=pair, variants=VARIANTS))
+                require_equal(result, result_expected(variant, tick, pair=pair, variants=variants))
                 gate = next(x for x in gates if (x["case"], x["variant"]) == (name, variant))
                 require_equal(gate["result"], result)
                 if (gate["snapshot_gzip_sha256"] != sha256(directory / "snapshots.bin.gz")
@@ -141,8 +148,8 @@ def verify(root, reference):
     validate_environment(first_post)
     if first_post["epoch_ns"] <= previous_end:
         raise ValueError("post-full diagnostics must follow all sustained timing")
-    return {"schema": "nashura.component-sustained.v1", "host_recomputed": True,
-        "observer_sha256": OBSERVER_SHA256, "cases": results, "post_full": correctness,
+    return {"schema": schema, "host_recomputed": True,
+        "observer_sha256": observer_sha256, "cases": results, "post_full": correctness,
         "total_matches": len(CASES) * BATCHES * REPEATS,
         "measured_matches": len(CASES) * BATCHES * (REPEATS - WARMUP),
         "whole_goal_complete": False,
