@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-10-31：AVD 与 ARM64 Linux guest 同引擎吞吐基线
+
+- 暂停优化后，使用相同 ARM64 `libg.so` / DEX / observer 完成两轮反序串行对照；每个平台240局、680700 tick。
+- AVD 82865 tick/s，Fusion Ubuntu ARM64 guest 82379 tick/s；AVD高0.59%，两轮分别高0.81%和0.38%，差距很小。
+- 四组固定 replay 的 serializer 帧和已观测状态逐帧一致；每组30次/轮，native优化关闭、未测并发。
+- 明确这不是macOS原生运行比较；双方依赖ART/Bionic，headless探针未创建EGL/GPU context。整体headless目标仍未完成。
+- 详见 `agent-handoff/AVD_ARM64_LINUX_GUEST_THROUGHPUT_2026-10-31.md` 及配套机器摘要。
+
 ## 2026-10-31：有界逐动作诊断
 
 - 新增显式默认关闭action distributions，4096条有界缓冲、step后输出、超限拒绝；与benchmark/优化互斥。

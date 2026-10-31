@@ -1,0 +1,93 @@
+{
+  "schema": "nashura.avd-linux-guest-throughput-evidence.v1",
+  "date": "2026-10-31",
+  "comparison": "Android ARM64 AVD versus Fusion Ubuntu ARM64 guest using the same Android engine and ART/Bionic runtime closure",
+  "optimization_status": "paused; native_optimization=null",
+  "input_identity": {
+    "apk_sha256": "a3708aa65005be7e8295a23ecbf61cb85d3951b64a41efbb38bc55eccb93a79f",
+    "game_dex_sha256": "c781c71b622aaee4c0c1b94f8ae0c9aa639e228d66fb929a0c9c4672a5f81aa6",
+    "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "observer_sha256": "a08963a25738a0af173d25fda75999e928c5ecff01392816c091f8011276a667",
+    "probe_dex_sha256": "2c31ef981e0a63a2bb595233b7fad99f0d228499e254eaa10844c567e360bc5e",
+    "input_manifest_sha256": "20b9244ad5d80380d440194a72447873bf51e01b508d4b3f39f91427ac88624a"
+  },
+  "configuration": {
+    "android_avd": {
+      "api": 30,
+      "abi": "arm64-v8a",
+      "cpus": 2,
+      "memory_mib": 6144,
+      "read_only_instance": true
+    },
+    "linux_guest": {
+      "os": "Ubuntu ARM64",
+      "hypervisor": "VMware Fusion",
+      "vcpus": 2,
+      "memory_mib": 6144,
+      "qemu_instruction_translation": false
+    },
+    "engine_runtime": "ART and Bionic on both platforms",
+    "egl_or_gpu_context_created": false,
+    "online_actions": false,
+    "observer_hooks_during_timing": false,
+    "snapshot_tracing_during_timing": false,
+    "correctness_replay_trace": true,
+    "concurrency_test": false
+  },
+  "method": {
+    "rounds": 2,
+    "platform_order_reversed_between_rounds": true,
+    "serial_repeats_per_input_per_round": 30,
+    "inputs_per_round": 4,
+    "matches_per_platform": 240,
+    "ticks_per_platform": 680700,
+    "timed_scope": "warm step loop; excludes initialization, reset, terminal validation, and warmup"
+  },
+  "results": {
+    "round_1": {
+      "matches_per_platform": 120,
+      "ticks_per_platform": 340350,
+      "android_avd_seconds": 4.094310001,
+      "android_avd_ticks_per_second": 83127.5599,
+      "linux_guest_seconds": 4.127314076,
+      "linux_guest_ticks_per_second": 82462.8302,
+      "avd_relative_advantage_percent": 0.81
+    },
+    "round_2": {
+      "matches_per_platform": 120,
+      "ticks_per_platform": 340350,
+      "android_avd_seconds": 4.120240548,
+      "android_avd_ticks_per_second": 82604.4004,
+      "linux_guest_seconds": 4.135745736,
+      "linux_guest_ticks_per_second": 82294.7110,
+      "avd_relative_advantage_percent": 0.38
+    },
+    "combined": {
+      "matches_per_platform": 240,
+      "ticks_per_platform": 680700,
+      "android_avd_seconds": 8.214550549,
+      "android_avd_ticks_per_second": 82865.1545,
+      "linux_guest_seconds": 8.263059812,
+      "linux_guest_ticks_per_second": 82378.6848,
+      "avd_relative_advantage_percent": 0.59
+    }
+  },
+  "correctness": {
+    "scope": "serialized per-frame payload and observed state only",
+    "all_cases_full_frames_equal": true,
+    "all_cases_observed_equal": true,
+    "cases": [
+      {"id": "deck-a-seed-1", "final_tick": 3601, "records": 3602},
+      {"id": "deck-a-seed-7", "final_tick": 3601, "records": 3602},
+      {"id": "deck-b-seed-1", "final_tick": 2154, "records": 2155},
+      {"id": "deck-b-seed-7", "final_tick": 1989, "records": 1990}
+    ],
+    "cross_runtime_correctness_summary_sha256": "1f9598afd2c4e6c41c041b1fb3a55b639f3580ab690ac3419c715b18e1ad96bd"
+  },
+  "limitations": [
+    "This is not a macOS-native libg.so comparison; the engine requires an Android-compatible ART/Bionic runtime.",
+    "Four fixed inputs and two rounds do not establish a generally faster platform.",
+    "No EGL/GPU work, online-action path, concurrency, or overall headless readiness was tested.",
+    "Serialized equality excludes process/global state outside the serializer."
+  ]
+}

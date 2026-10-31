@@ -1,5 +1,15 @@
 # Nashura
 
+## 2026-10-31：暂停优化后的 AVD / ARM64 Linux guest 同引擎基线
+
+两轮反序串行对照中，Android ARM64 AVD 为 82,865 tick/s，Fusion Ubuntu ARM64
+guest 为 82,379 tick/s；AVD 高 0.59%，两轮分别高 0.81% 与 0.38%，本负载下基本持平。
+双方使用相同 `libg.so`、DEX、observer 和四组 replay；每个平台共 240 局、680,700 tick。
+四组 serializer 帧及已观测状态逐帧相同。该结果不是 macOS 原生运行对比：引擎仍依赖
+ART/Bionic；本轮暂停优化、不测并发，也未创建 EGL/GPU context。详见
+[报告](agent-handoff/AVD_ARM64_LINUX_GUEST_THROUGHPUT_2026-10-31.md)与
+[机器摘要](agent-handoff/avd-arm64-linux-guest-throughput-evidence-20261031.json)。
+
 ## 2026-10-31：固定动作延迟分布诊断
 
 固定VM/四输入，20完整局56745帧及已观测状态一致；两轮16诊断局得到560 dispatch、

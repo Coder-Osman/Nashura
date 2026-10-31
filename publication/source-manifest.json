@@ -1,6 +1,6 @@
 {
   "schema": "hashura.public-source-snapshot.v1",
-  "file_count": 3011,
+  "file_count": 3013,
   "files": [
     {
       "path": ".tmp_remote_edit/compact_patch/resident.cpp",
@@ -18,16 +18,16 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "481115cb18ed96162c37d235c1ae9eb7d32be6a4392e3d633a332eb7626c61a2",
-      "bytes": 83390,
-      "source_sha256": "481115cb18ed96162c37d235c1ae9eb7d32be6a4392e3d633a332eb7626c61a2",
+      "sha256": "deea07f5c373028b18633a9940a727c4d38b9e45383924babc6b9cc89fe05156",
+      "bytes": 84084,
+      "source_sha256": "deea07f5c373028b18633a9940a727c4d38b9e45383924babc6b9cc89fe05156",
       "transformations": []
     },
     {
       "path": "README.md",
-      "sha256": "2eb504bba951e13a943bbab385028d84f379c93c1afda458badaadab914dc9a7",
-      "bytes": 81095,
-      "source_sha256": "2eb504bba951e13a943bbab385028d84f379c93c1afda458badaadab914dc9a7",
+      "sha256": "d84b04574cd84aa846caf36b5f082989946a99a4259b9d22364b509e51d47a9a",
+      "bytes": 81834,
+      "source_sha256": "d84b04574cd84aa846caf36b5f082989946a99a4259b9d22364b509e51d47a9a",
       "transformations": []
     },
     {
@@ -21115,6 +21115,20 @@
       "sha256": "f9886200856431cc502c76a5b010a98d24217cd789ee7eeb345ed2b28ecc0c11",
       "source_sha256": "f9886200856431cc502c76a5b010a98d24217cd789ee7eeb345ed2b28ecc0c11",
       "bytes": 10904,
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/AVD_ARM64_LINUX_GUEST_THROUGHPUT_2026-10-31.md",
+      "sha256": "45da5472ab9018c80090913e489e08b2f481c8663210efb5a4f040649e3338dd",
+      "source_sha256": "45da5472ab9018c80090913e489e08b2f481c8663210efb5a4f040649e3338dd",
+      "bytes": 3047,
+      "transformations": []
+    },
+    {
+      "path": "agent-handoff/avd-arm64-linux-guest-throughput-evidence-20261031.json",
+      "sha256": "7ab39982e35e41d6f07cc1c29f8413ce829081e2fff11a25a6f4a6726a396dbc",
+      "source_sha256": "7ab39982e35e41d6f07cc1c29f8413ce829081e2fff11a25a6f4a6726a396dbc",
+      "bytes": 3795,
       "transformations": []
     }
   ]
