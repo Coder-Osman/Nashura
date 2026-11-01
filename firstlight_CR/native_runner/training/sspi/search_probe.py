@@ -76,7 +76,7 @@ class TrackedOpeningBeliefProvider(OpeningBeliefProvider):
         return world
 
 
-def run(root_port, belief_port, *, seed=20261101, simulations=1024, transport="legacy"):
+def run(root_port, belief_port, *, seed=20261101, simulations=128, transport="legacy"):
     if (type(root_port) is not int or type(belief_port) is not int or root_port == belief_port
             or type(seed) is not int or seed < 0 or simulations not in SEARCH_BUDGETS.values()
             or transport not in ("legacy", "persistent")):
@@ -189,7 +189,7 @@ def main():
     parser.add_argument("--root-port", type=int, required=True)
     parser.add_argument("--belief-port", type=int, required=True)
     parser.add_argument("--seed", type=int, default=20261101)
-    parser.add_argument("--simulations", type=int, choices=(128, 1024), default=1024)
+    parser.add_argument("--simulations", type=int, choices=(128,), default=128)
     parser.add_argument("--transport", choices=("legacy", "persistent"), default="legacy")
     args = parser.parse_args()
     print(json.dumps(run(args.root_port, args.belief_port, seed=args.seed,

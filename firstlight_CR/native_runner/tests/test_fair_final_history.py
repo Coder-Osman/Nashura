@@ -171,6 +171,45 @@ def test_hidden_plan_due_on_public_tick_is_not_misread_as_preempted():
     assert session._opponent_action(info, history) == FullAction(11, 0, 3)
 
 
+def test_public_play_after_wait_deadline_can_be_reconstructed_from_next_boundary():
+    observation, _ = opening_fixture()
+    card = HOG_DECK[0]
+    environment = SimpleNamespace(action_mask=lambda owner: SimpleNamespace(
+        placement_masks={"0": {"model_subcell_offset": None}}))
+    session = object.__new__(HistoryReplaySession)
+    session.seed, session.maximum_plan_attempts = 17, 3
+    session.rollout = SimpleNamespace(runtime=SimpleNamespace(clock=SimpleNamespace(wait_ticks=20),
+        environment=environment, frozen={0: observation}))
+    session.opponent = SimpleNamespace(sample=lambda info, generator: FullAction())
+    info = SimpleNamespace(tick=90, owner=0, legality=SimpleNamespace(
+        card_ids=(), plays=torch.empty((0, 576, 5), dtype=torch.bool),
+        legal=lambda action: action == FullAction()))
+    history = SimpleNamespace(root_tick=118,
+        deployments=(PublicDeployment(114, 0, card, 1500, 2500),))
+
+    assert session._opponent_action(info, history) == FullAction()
+
+
+def test_unmappable_public_play_before_wait_deadline_still_quarantines():
+    observation, _ = opening_fixture()
+    card = HOG_DECK[0]
+    environment = SimpleNamespace(action_mask=lambda owner: SimpleNamespace(
+        placement_masks={"0": {"model_subcell_offset": None}}))
+    session = object.__new__(HistoryReplaySession)
+    session.seed, session.maximum_plan_attempts = 17, 3
+    session.rollout = SimpleNamespace(runtime=SimpleNamespace(clock=SimpleNamespace(wait_ticks=20),
+        environment=environment, frozen={0: observation}))
+    session.opponent = SimpleNamespace(sample=lambda *args: pytest.fail("invalid replay must quarantine"))
+    info = SimpleNamespace(tick=90, owner=0, legality=SimpleNamespace(
+        card_ids=(), plays=torch.empty((0, 576, 5), dtype=torch.bool),
+        legal=lambda action: True))
+    history = SimpleNamespace(root_tick=118,
+        deployments=(PublicDeployment(108, 0, card, 1500, 2500),))
+
+    with pytest.raises(IncompatibleHistory, match="no legal reservation"):
+        session._opponent_action(info, history)
+
+
 def test_hidden_plan_sampling_deadline_and_budget_are_bounded():
     session = object.__new__(HistoryReplaySession)
     session.seed, session.maximum_plan_attempts = 17, 3

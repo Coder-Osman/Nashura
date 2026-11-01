@@ -251,7 +251,7 @@ class SSPILegality:
 
     @classmethod
     def from_native(cls, environment, observation, frame, owner, *, catalog,
-            hand_state: HandState | None = None) -> "SSPILegality":
+            hand_state: HandState | None = None, require_boundary=True) -> "SSPILegality":
         if (observation.tier != ObservationTier.FAIR or observation.owner != owner
                 or observation.tick != environment.current_tick):
             raise ValueError("legality requires this owner's current observation")
@@ -263,7 +263,7 @@ class SSPILegality:
         legacy = legal_event_actions(environment, observation, frame, owner, catalog=catalog,
             card_count=count, cell_count=576, board_width=18, board_height=32,
             delay_offset_ms=tuple(range(0, 3001, 100)))
-        if not legacy.decision_ready:
+        if require_boundary and not legacy.decision_ready:
             raise ValueError("legality requested outside a decision boundary")
         ready = set(hand_state.ready_card_ids)
         rows = [row for row in range(count) if bool(frame.own_cards.mask[0, row])

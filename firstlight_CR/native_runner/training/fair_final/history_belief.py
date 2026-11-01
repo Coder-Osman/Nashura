@@ -103,7 +103,7 @@ class HistoryReplaySession:
             action = deployment_action(self.rollout, information, next_play)
             if action is not None:
                 return action
-            if next_play.tick <= information.tick + 60:
+            if next_play.tick <= information.tick + self.rollout.runtime.clock.wait_ticks:
                 raise IncompatibleHistory("public play has no legal reservation from the preceding boundary")
         cutoff = min(first_tick, history.root_tick)
         generator = torch.Generator().manual_seed(split_seed(self.seed, f"hidden-plan:{information.tick}"))

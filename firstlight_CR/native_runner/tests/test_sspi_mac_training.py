@@ -6,6 +6,7 @@ from torch import nn
 
 from native_runner.training.fair_search.config import HOG_DECK
 from native_runner.training.sspi.learning import (
+    SEARCH_BUDGETS,
     TrainingRow,
     WDLLabel,
     create_optimizer,
@@ -27,6 +28,14 @@ from native_runner.training.sspi.protocol import (
     to_full_action,
 )
 from native_runner.training.fair_final.rollout import FinalRollout
+from native_runner.training.fair_final.policy import FullAction
+from native_runner.training.sspi.collector import (
+    ARM_CONFIG,
+    SearchNative,
+    _native_execution_action,
+    decision_gate,
+)
+from native_runner.training.sspi.experiment import exposure_batches, paired_score_interval
 from native_runner.training.sspi.search import SSPIJointPolicy, budget_search_sha
 from native_runner.training.fair_final.candidates import structured_candidates
 from native_runner.training.fair_final.search import SearchLimits
@@ -163,6 +172,32 @@ def test_ability_pointer_and_tagged_action_roundtrip_are_versionable():
         assert to_full_action(action).delay_slot == delay_slot
 
 
+def test_collector_transport_is_explicit_and_legacy_remains_default():
+    legacy = SearchNative("127.0.0.1", 26789)
+    persistent = SearchNative("127.0.0.1", 26789, transport="persistent")
+    assert legacy._persistent_transport_requested is False
+    assert persistent._persistent_transport_requested is True
+    with pytest.raises(ValueError, match="transport"):
+        SearchNative("127.0.0.1", 26789, transport="unknown")
+    legacy.close_transport()
+    persistent.close_transport()
+
+
+def test_sspi_training_has_only_the_5_percent_128_configuration():
+    assert SEARCH_BUDGETS == {"A_5PCT_128": 128}
+    assert ARM_CONFIG == {"A_5PCT_128": (0.05, 128)}
+
+
+def test_collector_accepts_direct_full_actions_and_normalizes_tagged_actions():
+    tagged = SSPIAction.play(HOG_DECK[0], 17, 3)
+    native_action = to_full_action(tagged)
+    assert isinstance(_native_execution_action(tagged, mode="DIRECT"), FullAction)
+    assert _native_execution_action(native_action, mode="DIRECT") is native_action
+    assert _native_execution_action(native_action, mode="SEARCH") is native_action
+    with pytest.raises(TypeError, match="incompatible action type"):
+        _native_execution_action(tagged, mode="SEARCH")
+
+
 def test_sspi_policy_projects_only_five_legal_delays_into_puct_candidates():
     legality = one_play_legality()
 
@@ -185,25 +220,26 @@ def test_sspi_policy_projects_only_five_legal_delays_into_puct_candidates():
     assert adapter.sample(torch.Generator().manual_seed(3))[0].delay_slot in (None, 6)
 
 
-def test_explicit_sspi_search_budget_runs_all_1024_effective_simulations():
+def test_sspi_search_budget_runs_all_128_effective_simulations():
     from native_runner.tests.test_fair_final_search import search_fixture
 
     limits = SearchLimits(root_noise=.25, root_noise_mode="training")
     search, info, arguments = search_fixture(limits=limits)
-    arguments["identity"]["search_protocol_sha"] = budget_search_sha(limits, 1024)
-    outcome = search.run(info, simulation_budget=1024, **arguments)
-    assert outcome.result["valid_simulations"] == 1024
-    assert sum(entry["visits"] for entry in outcome.result["candidates"]) == 1024
-    assert sum(count for _, count in outcome.policy_target) == 1024
-    assert outcome.result["search_protocol_sha"] == budget_search_sha(limits, 1024)
+    arguments["identity"]["search_protocol_sha"] = budget_search_sha(limits, 128)
+    outcome = search.run(info, simulation_budget=128, **arguments)
+    assert outcome.result["valid_simulations"] == 128
+    assert sum(entry["visits"] for entry in outcome.result["candidates"]) == 128
+    assert sum(count for _, count in outcome.policy_target) == 128
+    assert outcome.result["search_protocol_sha"] == budget_search_sha(limits, 128)
     assert search.belief.world.closed
 
 
-def test_search_budget_identities_are_separate_and_fixed():
+def test_search_budget_is_fixed_to_128():
     limits = SearchLimits(root_noise=.25, root_noise_mode="training")
-    assert budget_search_sha(limits, 1024) != budget_search_sha(limits, 128)
-    with pytest.raises(ValueError, match="budget"):
-        budget_search_sha(limits, 256)
+    assert budget_search_sha(limits, 128)
+    for budget in (256, 1024):
+        with pytest.raises(ValueError, match="128"):
+            budget_search_sha(limits, budget)
 
 
 class TinyPolicyValue(nn.Module):
@@ -238,7 +274,7 @@ def one_play_legality():
 def test_direct_rows_contribute_to_neither_loss_or_gradient():
     legality = one_play_legality()
     search = TrainingRow("SEARCH", legality, WDLLabel.WIN, "SEARCH",
-        ((SSPIAction.play(HOG_DECK[0], 17, 2), 1024),), 1024)
+        ((SSPIAction.play(HOG_DECK[0], 17, 2), 128),), 128)
     direct = TrainingRow("DIRECT_SENTINEL", legality, WDLLabel.LOSS, "DIRECT")
     model = TinyPolicyValue()
     mixed = search_root_loss(model, [search, direct])
@@ -286,3 +322,34 @@ def test_fresh_model_has_no_history_parameters_and_neutral_wdl_bias():
     assert torch.count_nonzero(model.wdl_head[-1].bias) == 0
     assert all(torch.equal(value, same_seed.state_dict()[name])
         for name, value in model.state_dict().items())
+
+
+def test_no_search_evaluation_gate_is_deterministically_direct():
+    selected, gate_seed = decision_gate(20261101, run_id="run", arm="A_5PCT_128",
+        game_id="E-game-0001", owner=0, decision_index=12, probability=0.)
+    repeated, repeated_seed = decision_gate(20261101, run_id="run", arm="A_5PCT_128",
+        game_id="E-game-0001", owner=0, decision_index=12, probability=0.)
+    assert selected is repeated is False
+    assert gate_seed == repeated_seed
+
+
+def test_exposure_schedule_uses_full_batches_unique_roots_and_respects_cap():
+    roots = list(range(300))
+    schedule = exposure_batches(roots, seed=20261101, exposure_limit=2, batch_size=128)
+    assert len(schedule) == 4
+    exposure_counts = [0] * len(roots)
+    for batch in schedule:
+        indices = [index for index, _exposure in batch]
+        assert len(indices) == 128 and len(set(indices)) == 128
+        for index in indices:
+            exposure_counts[index] += 1
+    assert max(exposure_counts) == 2
+
+
+def test_paired_bootstrap_interval_is_seeded_and_reports_pair_mean():
+    scores = [0., 0.5, 1., 0.5]
+    first = paired_score_interval(scores, seed=44, replicates=200)
+    second = paired_score_interval(scores, seed=44, replicates=200)
+    assert first == second
+    assert first["mean"] == pytest.approx(0.5)
+    assert 0. <= first["low"] <= first["mean"] <= first["high"] <= 1.

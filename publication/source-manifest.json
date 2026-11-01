@@ -10194,55 +10194,17 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "5244d168c18f39b84f4d6dd51fbc54537cd73ac2833d492859ca4d6bd2eeec97",
-      "bytes": 55442,
-      "source_sha256": "5244d168c18f39b84f4d6dd51fbc54537cd73ac2833d492859ca4d6bd2eeec97",
-      "transformations": [
-        "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
-        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
-        "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved",
-        "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
-        "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
-        "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
-        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
-        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
-        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate",
-        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
-        "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED.",
-        "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
-        "2026-10-28: bounded Linux catalog resource trace audit",
-        "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
-        "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
-        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence",
-        "2026-10-29: record Android ART closure and guest Binder startup boundary",
-        "manually maintained public file updated in publication worktree"
-      ]
+      "sha256": "7c6aaedf012419ca3e36fcbcafe88a03c5b2f52ebda33657c484c2bd217629b3",
+      "bytes": 56150,
+      "source_sha256": "7c6aaedf012419ca3e36fcbcafe88a03c5b2f52ebda33657c484c2bd217629b3",
+      "transformations": []
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "c8daeb64cce08257caf352d508f1d83acc977fe1be405b2ee6e0bef20c0e2ad5",
-      "bytes": 88886,
-      "source_sha256": "c8daeb64cce08257caf352d508f1d83acc977fe1be405b2ee6e0bef20c0e2ad5",
-      "transformations": [
-        "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
-        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
-        "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved",
-        "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
-        "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
-        "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
-        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
-        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
-        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate",
-        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
-        "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED.",
-        "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
-        "2026-10-28: bounded Linux catalog resource trace audit",
-        "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
-        "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
-        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence",
-        "2026-10-29: record Android ART closure and guest Binder startup boundary",
-        "manually maintained public file updated in publication worktree"
-      ]
+      "sha256": "b60be4df32cfcc8097d14364886ec8fa519f6c943c7fce14e1677443c78b3235",
+      "bytes": 89589,
+      "source_sha256": "b60be4df32cfcc8097d14364886ec8fa519f6c943c7fce14e1677443c78b3235",
+      "transformations": []
     },
     {
       "path": "firstlight_CR/.clang-format",
@@ -12731,9 +12693,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/tests/test_fair_final_history.py",
-      "sha256": "868c25aeeb2b686871478ef0893e8ce914d8622f42e81303772da665ff787412",
-      "bytes": 14590,
-      "source_sha256": "868c25aeeb2b686871478ef0893e8ce914d8622f42e81303772da665ff787412",
+      "sha256": "eb159e8ae41bd6c6d6fbfc7f05c81a5f494f6cc529aa3a0f8178c65cde0169e2",
+      "bytes": 16671,
+      "source_sha256": "eb159e8ae41bd6c6d6fbfc7f05c81a5f494f6cc529aa3a0f8178c65cde0169e2",
       "transformations": []
     },
     {
@@ -14033,9 +13995,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/history_belief.py",
-      "sha256": "2da10470ca4d312d87402f04f67bf2ba19b5210b3f12b77200984a74b8bb04b3",
-      "bytes": 14128,
-      "source_sha256": "2da10470ca4d312d87402f04f67bf2ba19b5210b3f12b77200984a74b8bb04b3",
+      "sha256": "8d1ad618263a87480afd967dcdc574015745a752fed4463a50258742854ebaa8",
+      "bytes": 14163,
+      "source_sha256": "8d1ad618263a87480afd967dcdc574015745a752fed4463a50258742854ebaa8",
       "transformations": []
     },
     {
@@ -16653,29 +16615,10 @@
     },
     {
       "path": "README.md",
-      "sha256": "de43bee736d0c6347a375e9fdd9f313ff9a9882334ee4c991ec06414230bb219",
-      "bytes": 55429,
-      "source_sha256": "de43bee736d0c6347a375e9fdd9f313ff9a9882334ee4c991ec06414230bb219",
-      "transformations": [
-        "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
-        "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
-        "2026-10-28 repository-maintained Backup pending queue evidence; original source identity preserved",
-        "2026-10-28 passive Backup branch observation and exact journal/scheduler review; original source identity and historical evidence preserved",
-        "2026-10-28: add real Backup journal limited-parity result; retain historical evidence and blocked catalog boundary",
-        "2026-10-28: add real Backup service branch evidence; preserve original source identity and blocked catalog gate",
-        "2026-10-28: add limited real Backup JobService callback evidence; preserve original source identity, crash history and blocked catalog gate",
-        "2026-10-28: add nonempty owned-fixture Backup and queue-drain evidence; preserve historical source identity and blocked Linux catalog gate",
-        "2026-10-28: add owned-agent failure/requeue/retry evidence; preserve original source identity and blocked Linux catalog gate",
-        "2026-10-28: explicit native Backup candidate binding and bounded evidence; strict configuration/catalog gates remain BLOCKED.",
-        "2026-10-28: current-runtime preference binding and one-transaction byte parity; historical source identity preserved; strict catalog BLOCKED.",
-        "2026-10-28: correct encrypted preference key counting and document bounded native recheck",
-        "2026-10-28: bounded Linux catalog resource trace audit",
-        "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
-        "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
-        "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence",
-        "2026-10-29: record Android ART closure and guest Binder startup boundary",
-        "manually maintained public file updated in publication worktree"
-      ]
+      "sha256": "c9513c423824bd21c306682ef05a9a02c54d8bbb168443f89b1d2894250a9dd9",
+      "bytes": 56137,
+      "source_sha256": "c9513c423824bd21c306682ef05a9a02c54d8bbb168443f89b1d2894250a9dd9",
+      "transformations": []
     },
     {
       "path": "tools/pure_linux/arm64_smoke.c",
@@ -19657,9 +19600,9 @@
     },
     {
       "path": "docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md",
-      "sha256": "3ffbfd13326a68da1d53818a7a70046a32513ea9b9c99ff16724ee8dc4b8b766",
-      "bytes": 40003,
-      "source_sha256": "3ffbfd13326a68da1d53818a7a70046a32513ea9b9c99ff16724ee8dc4b8b766",
+      "sha256": "807c3d5ee0ab8dd196741b43dfd2a747f75c68e7841d873a4c400c143b6d8ccd",
+      "bytes": 40791,
+      "source_sha256": "807c3d5ee0ab8dd196741b43dfd2a747f75c68e7841d873a4c400c143b6d8ccd",
       "transformations": []
     },
     {
@@ -19671,16 +19614,16 @@
     },
     {
       "path": "firstlight_CR/native_runner/tests/test_sspi_mac_training.py",
-      "sha256": "d70380fb3c117f79fc00dc559098677694da72fbab0a70780507fac6904be90e",
-      "bytes": 12905,
-      "source_sha256": "d70380fb3c117f79fc00dc559098677694da72fbab0a70780507fac6904be90e",
+      "sha256": "f0b0fb36105e0f836c1437861967c7bdb1e4a763fc6c94f33ef9e5c00a8f7998",
+      "bytes": 15765,
+      "source_sha256": "f0b0fb36105e0f836c1437861967c7bdb1e4a763fc6c94f33ef9e5c00a8f7998",
       "transformations": []
     },
     {
       "path": "firstlight_CR/native_runner/training/sspi/learning.py",
-      "sha256": "661f299656a7c4cb79555d671b466f09d1933f0a8d2148a590355a8f5f52fda0",
-      "bytes": 13135,
-      "source_sha256": "661f299656a7c4cb79555d671b466f09d1933f0a8d2148a590355a8f5f52fda0",
+      "sha256": "b7c392a2154a57426a4e6d3c14a0e36aa2f095bedd72ada49e27c60b09f9270d",
+      "bytes": 20291,
+      "source_sha256": "b7c392a2154a57426a4e6d3c14a0e36aa2f095bedd72ada49e27c60b09f9270d",
       "transformations": []
     },
     {
@@ -19699,9 +19642,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/sspi/protocol.py",
-      "sha256": "97b924fbf8866f24a568698974c0eaa4c39a3eb22728dc8b1e525028ac073cc0",
-      "bytes": 19071,
-      "source_sha256": "97b924fbf8866f24a568698974c0eaa4c39a3eb22728dc8b1e525028ac073cc0",
+      "sha256": "3b8407abe056b1cc2bb0819f52de13e415e7d819da82712ab2f97fbd74a727a8",
+      "bytes": 19115,
+      "source_sha256": "3b8407abe056b1cc2bb0819f52de13e415e7d819da82712ab2f97fbd74a727a8",
       "transformations": []
     },
     {
@@ -19713,16 +19656,16 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/sspi/search.py",
-      "sha256": "7f91570c8959188e79cad57e3bdabad14ac626de2300e9e7d2a2a2d7e2c1fffe",
-      "bytes": 6613,
-      "source_sha256": "7f91570c8959188e79cad57e3bdabad14ac626de2300e9e7d2a2a2d7e2c1fffe",
+      "sha256": "ee7f1f6e5ccb5598d7832ab1b0b31e277b79c11ac0e4c5ea6b645cc9cc39654a",
+      "bytes": 6593,
+      "source_sha256": "ee7f1f6e5ccb5598d7832ab1b0b31e277b79c11ac0e4c5ea6b645cc9cc39654a",
       "transformations": []
     },
     {
       "path": "firstlight_CR/native_runner/training/sspi/search_probe.py",
-      "sha256": "24b9092b01bac9e44542c02723b0d3351822177d0b5dd3bce24879411c2bef22",
-      "bytes": 10887,
-      "source_sha256": "24b9092b01bac9e44542c02723b0d3351822177d0b5dd3bce24879411c2bef22",
+      "sha256": "8893d3cb868e447f5d7a815e966a14c80c057b92d6205a5f82bfe1ba38f3222c",
+      "bytes": 10880,
+      "source_sha256": "8893d3cb868e447f5d7a815e966a14c80c057b92d6205a5f82bfe1ba38f3222c",
       "transformations": []
     },
     {
@@ -19745,10 +19688,45 @@
       "bytes": 3707,
       "source_sha256": "45b6654603275bf46fdba6c2b103cea7730b892d1c04debe6ee54187b250325f",
       "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/tests/test_sspi_temporal_augmentation.py",
+      "sha256": "b5c44b3ca919d2c77a16a118bbd41c0060fcededf510c5dea4c57f995578266c",
+      "bytes": 16196,
+      "source_sha256": "b5c44b3ca919d2c77a16a118bbd41c0060fcededf510c5dea4c57f995578266c",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/augmentation.py",
+      "sha256": "9e3ba55b40db64651ed9e37675a66e845d33db8cdd29b289903bce175edbcedf",
+      "bytes": 6776,
+      "source_sha256": "9e3ba55b40db64651ed9e37675a66e845d33db8cdd29b289903bce175edbcedf",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/collector.py",
+      "sha256": "288a232a399047bb74995229eaedee2e85f50f9f7c1566f41c161c26edbfd151",
+      "bytes": 28505,
+      "source_sha256": "288a232a399047bb74995229eaedee2e85f50f9f7c1566f41c161c26edbfd151",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/experiment.py",
+      "sha256": "a1f3dae8d27f1cbdde7bfc665c22d8fa2c806e73a3348b4609d799f2cccf84c1",
+      "bytes": 19855,
+      "source_sha256": "a1f3dae8d27f1cbdde7bfc665c22d8fa2c806e73a3348b4609d799f2cccf84c1",
+      "transformations": []
+    },
+    {
+      "path": "docs/SSPI_TEMPORAL_AUGMENTATION_2026-11-02.md",
+      "sha256": "6c26413719e42a197eeb9ce42bb74871c9c4ec96ad096d0536a85c9d1b8ed383",
+      "bytes": 3743,
+      "source_sha256": "6c26413719e42a197eeb9ce42bb74871c9c4ec96ad096d0536a85c9d1b8ed383",
+      "transformations": []
     }
   ],
-  "file_count": 2805,
-  "source_bytes": 36377309,
+  "file_count": 2810,
+  "source_bytes": 36467440,
   "excluded_selected_candidates": {},
   "excluded_categories": [
     "credentials",

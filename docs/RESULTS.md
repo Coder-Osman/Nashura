@@ -1,5 +1,9 @@
 # 阶段成果与证据索引
 
+## 2026-11-02：SSPI 已执行动作的中间观测增密（工程验证）
+
+实现 200 ms 中间观测采样：仅保留最终执行的 SEARCH PLAY 计划，使用剩余延迟动作与实际终局 WDL 训练。用户确认每组原根权重 0.5、所有派生点均分另外 0.5；没有派生点时原根权重 1，曝光额度仍按源根计算。新增采集器、序列化及学习器对接，旧 episode 兼容；运行中的冻结部署保持原样。普通策略时钟模拟、真实 FAIR 张量化及完整模型反向更新等定向检查 66 passed；未运行新原生整局或胜率评估，未宣称实战提升。详见[实现与测试记录](SSPI_TEMPORAL_AUGMENTATION_2026-11-02.md)。
+
 ## 2026-11-01：SSPI搜索性能优化（限定工程子项，实机验证通过）
 
 新增条件概率缓存、向量化稳定候选排序、候选/树选择时间、真实tick/RPC及对手推理计时，并在M4 Max Android AVD完成同FAIR根1024对照。base legacy 486.01秒、PR legacy 470.88秒、PR persistent 403.81秒；三组完整访问分布和selected action一致、均1024/1024有效。session-v1跨snapshot/restore/observe-atomic状态等价门通过，默认仍为legacy。性能与嵌套时间证据见[实测记录](SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md)。工程子项`SEARCH_PERFORMANCE_CONTROLLED_AVD_PASS`；P2完整混合对局、P3参数更新/checkpoint恢复和P4关闭MCTS评测仍未运行，不构成整体训练验收或模型强度结论。

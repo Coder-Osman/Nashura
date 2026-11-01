@@ -1,5 +1,9 @@
 # Nashura
 
+## 2026-11-02：SSPI 已执行动作的中间观测增密（工程验证）
+
+实现 200 ms 中间观测采样：仅保留最终执行的 SEARCH PLAY 计划，使用剩余延迟动作与实际终局 WDL 训练。用户确认每组原根权重 0.5、所有派生点均分另外 0.5；没有派生点时原根权重 1，曝光额度仍按源根计算。新增采集器、序列化及学习器对接，旧 episode 兼容；运行中的冻结部署保持原样。普通策略时钟模拟、真实 FAIR 张量化及完整模型反向更新等定向检查 66 passed；未运行新原生整局或胜率评估，未宣称实战提升。详见[实现与测试记录](docs/SSPI_TEMPORAL_AUGMENTATION_2026-11-02.md)。
+
 ## 2026-11-01：SSPI搜索性能优化完成Mac受控实测（训练未完成）
 
 在Mac M4 Max + `astral-api30` AVD 上完成相同FAIR冻结决策状态的1024根对照：base legacy 486.01秒，PR legacy 470.88秒，PR显式persistent `session-v1` 403.81秒。三组均1024/1024有效且完整根访问分布、动作和搜索身份一致；persistent相对PR legacy墙钟减少14.2%。默认transport仍为legacy，P2完整训练对局、参数更新及无搜索评估仍未完成。详见[性能实测与复核记录](docs/SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md)。

@@ -9,8 +9,8 @@ from .protocol import ActionMode, DELAY_SLOTS, SSPIAction, from_full_action, to_
 
 
 def budget_search_sha(limits: SearchLimits, simulations: int) -> str:
-    if type(simulations) is not int or simulations not in (128, 1024):
-        raise ValueError("SSPI completed search budget must be 128 or 1024")
+    if type(simulations) is not int or simulations != 128:
+        raise ValueError("SSPI pilot search budget is fixed at 128")
     from ..fair_search.contracts import semantic_digest
 
     return semantic_digest(dict(schema="fair-final-explicit-budget-search.v1",

@@ -1,4 +1,4 @@
-"""Search-root-only SSPI policy/value losses and portable checkpoints."""
+"""SSPI search-root losses, grouped continuation supervision, and checkpoints."""
 
 from __future__ import annotations
 
@@ -13,14 +13,15 @@ import tempfile
 import torch
 import torch.nn.functional as F
 
-from ..fair_search.contracts import semantic_digest, unpack
+from ..fair_search.contracts import semantic_digest
 from .model import SSPIModel
-from .protocol import (HandSlot, HandState, PendingRefill, SSPIAction,
-    SSPILegality, SSPIInformation)
+from .protocol import (SSPIAction, SSPILegality, SSPIInformation, ActionMode, DELAY_MS)
+from .augmentation import (TEMPORAL_AUX_WEIGHT, TEMPORAL_SCHEMA,
+    SAMPLE_INTERVAL_TICKS, deserialize_information)
 
 
 CHECKPOINT_SCHEMA = "sspi-mac-pilot-checkpoint.v2"
-SEARCH_BUDGETS = {"A_5PCT_1024": 1024, "B_40PCT_128": 128}
+SEARCH_BUDGETS = {"A_5PCT_128": 128}
 EFFECTIVE_BATCH = 128
 MICROBATCH = 4
 ACCUMULATION_STEPS = EFFECTIVE_BATCH // MICROBATCH
@@ -33,6 +34,20 @@ class WDLLabel(IntEnum):
 
 
 @dataclass(frozen=True)
+class ContinuationRow:
+    frame: SSPIInformation
+    action: SSPIAction
+    final_wdl: WDLLabel
+
+    def __post_init__(self):
+        if (not isinstance(self.frame, SSPIInformation)
+                or self.action.mode != ActionMode.PLAY
+                or not self.frame.legality.legal(self.action)):
+            raise ValueError("continuation requires a current FAIR state and legal PLAY target")
+        object.__setattr__(self, "final_wdl", WDLLabel(self.final_wdl))
+
+
+@dataclass(frozen=True)
 class TrainingRow:
     frame: object
     legality: SSPILegality
@@ -40,6 +55,7 @@ class TrainingRow:
     search_mode: str
     visits: tuple[tuple[SSPIAction, int], ...] = ()
     simulations: int = 0
+    continuations: tuple[ContinuationRow, ...] = ()
 
     def __post_init__(self):
         if self.search_mode not in ("DIRECT", "SEARCH"):
@@ -47,7 +63,7 @@ class TrainingRow:
         if not isinstance(self.final_wdl, WDLLabel):
             object.__setattr__(self, "final_wdl", WDLLabel(self.final_wdl))
         if self.search_mode == "DIRECT":
-            if self.visits or self.simulations:
+            if self.visits or self.simulations or self.continuations:
                 raise ValueError("DIRECT rows must not carry search targets")
             return
         if self.simulations not in SEARCH_BUDGETS.values() or not self.visits:
@@ -57,6 +73,12 @@ class TrainingRow:
                     for action, count in self.visits)
                 or sum(count for _, count in self.visits) != self.simulations):
             raise ValueError("SEARCH visits must be unique, legal, positive, and complete")
+        if self.continuations and (not isinstance(self.frame, SSPIInformation)
+                or len(self.continuations) > len(DELAY_MS) - 1
+                or len({row.frame.tick for row in self.continuations}) != len(self.continuations)
+                or any(row.final_wdl != self.final_wdl or row.frame.owner != self.frame.owner
+                    or row.frame.tick <= self.frame.tick for row in self.continuations)):
+            raise ValueError("continuations must belong to one source root and terminal label")
 
 
 def terminal_wdl(owner: int, winner: int | None) -> WDLLabel:
@@ -71,14 +93,20 @@ def create_optimizer(model: SSPIModel):
     return torch.optim.AdamW(model.parameters(), lr=1e-4, weight_decay=1e-4)
 
 
-def search_root_loss(model: SSPIModel, rows: list[TrainingRow] | tuple[TrainingRow, ...]):
-    """Compute both losses only after removing every DIRECT row."""
+def search_root_loss(model: SSPIModel, rows: list[TrainingRow] | tuple[TrainingRow, ...],
+        *, temporal_aux_weight=TEMPORAL_AUX_WEIGHT):
+    """Compute SEARCH loss plus bounded within-root continuation supervision."""
     if not rows:
         raise ValueError("training batch is empty")
+    if not 0. <= temporal_aux_weight <= 1.:
+        raise ValueError("continuation group weight must be between zero and one")
     search_rows = [row for row in rows if row.search_mode == "SEARCH"]
     if not search_rows:
         raise ValueError("batch has no eligible SEARCH roots")
     policy_losses, value_logits, labels = [], [], []
+    auxiliary_policy, auxiliary_value = [], []
+    source_weights = []
+    continuation_rows = 0
     for row in search_rows:
         policies, logits = model(row.frame, [row.legality])
         policy = policies[0]
@@ -87,14 +115,41 @@ def search_root_loss(model: SSPIModel, rows: list[TrainingRow] | tuple[TrainingR
         policy_losses.append(policy_loss)
         value_logits.append(logits[0])
         labels.append(int(row.final_wdl))
-    policy_loss = torch.stack(policy_losses).mean()
+        source_weights.append(1. - temporal_aux_weight if row.continuations else 1.)
+        if row.continuations and temporal_aux_weight:
+            group_policy, group_value = [], []
+            for extra in row.continuations:
+                extra_policies, extra_logits = model(extra.frame, [extra.frame.legality])
+                group_policy.append(-extra_policies[0].log_prob(extra.action))
+                target = torch.tensor([int(extra.final_wdl)], dtype=torch.long,
+                    device=extra_logits.device)
+                group_value.append(F.cross_entropy(extra_logits, target))
+            auxiliary_policy.append(torch.stack(group_policy).mean())
+            auxiliary_value.append(torch.stack(group_value).mean())
+            continuation_rows += len(row.continuations)
+    per_root_policy = torch.stack(policy_losses)
     logits = torch.stack(value_logits)
     targets = torch.tensor(labels, dtype=torch.long, device=logits.device)
-    value_loss = F.cross_entropy(logits, targets)
+    per_root_value = F.cross_entropy(logits, targets, reduction="none")
+    root_policy_loss, root_value_loss = per_root_policy.mean(), per_root_value.mean()
+    weights = per_root_policy.new_tensor(source_weights)
+    policy_loss = (per_root_policy * weights).mean()
+    value_loss = (per_root_value * weights).mean()
+    # Divide by all source roots, including roots without eligible samples.
+    # The exposure scheduler still sees exactly one item per SEARCH root.
+    aux_policy = (torch.stack(auxiliary_policy).sum() / len(search_rows)
+        if auxiliary_policy else policy_loss.new_zeros(()))
+    aux_value = (torch.stack(auxiliary_value).sum() / len(search_rows)
+        if auxiliary_value else value_loss.new_zeros(()))
+    policy_loss = policy_loss + temporal_aux_weight * aux_policy
+    value_loss = value_loss + temporal_aux_weight * aux_value
     loss = policy_loss + value_loss
     if not bool(torch.isfinite(loss)):
         raise ValueError("SSPI policy/value loss is nonfinite")
     return dict(loss=loss, policy_loss=policy_loss, value_loss=value_loss,
+        root_policy_loss=root_policy_loss, root_value_loss=root_value_loss,
+        continuation_loss=temporal_aux_weight * (aux_policy + aux_value),
+        continuation_rows=continuation_rows,
         search_rows=len(search_rows), direct_rows=len(rows) - len(search_rows))
 
 
@@ -125,7 +180,8 @@ def train_generation_step(model: SSPIModel, optimizer, rows):
         raise TypeError("SSPI pilot requires AdamW")
     model.train()
     optimizer.zero_grad(set_to_none=True)
-    policy_total = value_total = loss_total = 0.
+    policy_total = value_total = loss_total = auxiliary_total = 0.
+    continuation_rows = 0
     try:
         for offset in range(0, EFFECTIVE_BATCH, MICROBATCH):
             micro = search_root_loss(model, rows[offset:offset + MICROBATCH])
@@ -133,6 +189,8 @@ def train_generation_step(model: SSPIModel, optimizer, rows):
             loss_total += float(micro["loss"].detach().cpu()) / ACCUMULATION_STEPS
             policy_total += float(micro["policy_loss"].detach().cpu()) / ACCUMULATION_STEPS
             value_total += float(micro["value_loss"].detach().cpu()) / ACCUMULATION_STEPS
+            auxiliary_total += float(micro["continuation_loss"].detach().cpu()) / ACCUMULATION_STEPS
+            continuation_rows += micro["continuation_rows"]
         norm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
         if not bool(torch.isfinite(norm)):
             raise ValueError("SSPI generation gradient norm is nonfinite")
@@ -144,7 +202,8 @@ def train_generation_step(model: SSPIModel, optimizer, rows):
     return dict(loss=loss_total, policy_loss=policy_total, value_loss=value_total,
         gradient_norm=float(norm.detach().cpu()), optimizer_steps=1,
         search_rows=EFFECTIVE_BATCH, direct_rows=0, microbatch=MICROBATCH,
-        accumulation_steps=ACCUMULATION_STEPS)
+        accumulation_steps=ACCUMULATION_STEPS, continuation_rows=continuation_rows,
+        continuation_loss=auxiliary_total)
 
 
 def _action_from_key(key):
@@ -158,40 +217,107 @@ def _action_from_key(key):
     raise ValueError("serialized SSPI visit has an invalid tagged action key")
 
 
-def load_episode_training_rows(directory):
-    """Load only checksummed SEARCH roots from a naturally completed episode."""
+def _load_continuations(root, metadata, ledger):
+    samples = root.get("continuations", ())
+    if not samples:
+        return ()
+    if not isinstance(samples, (list, tuple)) or len(samples) > len(DELAY_MS) - 1:
+        raise ValueError("invalid continuation group size")
+    contract = metadata.get("temporal_augmentation") or {}
+    if (contract.get("schema") != TEMPORAL_SCHEMA
+            or contract.get("interval_ticks") != SAMPLE_INTERVAL_TICKS
+            or contract.get("source_weight_with_samples") != 1. - TEMPORAL_AUX_WEIGHT
+            or contract.get("auxiliary_group_weight") != TEMPORAL_AUX_WEIGHT):
+        raise ValueError("continuation episode contract changed")
+    selected = _action_from_key(root["selected_action"])
+    if selected.mode != ActionMode.PLAY:
+        raise ValueError("continuations require a PLAY source")
+    source_tick, due_tick = root["tick"], root["due_tick"]
+    execution = dict(reservation=root["reservation"], owner=root["owner"],
+        tick=due_tick, reason="executed")
+    result = metadata.get("result") or {}
+    if (due_tick != source_tick + DELAY_MS[selected.delay_index] // 50
+            or root.get("continuation_execution") != execution
+            or execution not in ledger.get("reservation_evidence", ())
+            or due_tick > result.get("terminal_tick", -1)
+            or root["wdl"] != result.get("labels", [None, None])[root["owner"]]
+            or not any(item.get("owner") == root["owner"] and item.get("tick") == source_tick
+                and item.get("decision_index") == root["decision_index"]
+                and item.get("mode") == "SEARCH" and item.get("action") == selected.key
+                and item.get("fair_sha256") == root["fair_sha256"]
+                for item in ledger.get("rows", ()))):
+        raise ValueError("continuation source lacks matching execution/terminal evidence")
+    rows, seen = [], set()
+    for sample in samples:
+        information = deserialize_information(sample)
+        action = _action_from_key(sample["action"])
+        elapsed = information.tick - source_tick
+        if (sample.get("schema") != TEMPORAL_SCHEMA
+                or sample.get("source_root_id") != root["root_id"]
+                or sample.get("reservation") != root["reservation"]
+                or sample.get("source_tick") != source_tick or sample.get("due_tick") != due_tick
+                or information.owner != root["owner"] or information.tick in seen
+                or elapsed <= 0 or elapsed % SAMPLE_INTERVAL_TICKS or information.tick >= due_tick
+                or action.mode != ActionMode.PLAY or action.card_id != selected.card_id
+                or action.cell != selected.cell
+                or DELAY_MS[action.delay_index] != (due_tick - information.tick) * 50
+                or sample.get("wdl") != root["wdl"]):
+            raise ValueError("continuation timing, action, source, or terminal label changed")
+        seen.add(information.tick)
+        rows.append(ContinuationRow(information, action, WDLLabel[sample["wdl"]]))
+    return tuple(rows)
+
+
+def _load_episode_rows(directory, *, expected_kind):
+    """Load checksummed SEARCH roots from a naturally completed episode."""
     directory = Path(directory)
     manifest = torch.load(directory / "episode.pt", weights_only=True, map_location="cpu")
     manifest_path = directory / "episode.json"
     import json
     metadata = json.loads(manifest_path.read_text())
     checksum = hashlib.sha256((directory / "episode.pt").read_bytes()).hexdigest()
+    admissible = expected_kind == "training"
     if (metadata.get("schema") != "sspi-mac-pilot-episode.v1"
-            or metadata.get("status") != "complete" or metadata.get("training_admissible") is not True
+            or metadata.get("status") != "complete"
+            or metadata.get("episode_kind", "training") != expected_kind
+            or metadata.get("training_admissible", True) is not admissible
             or metadata.get("tensor_sha256") != checksum
             or manifest.get("schema") != metadata["schema"]
             or manifest.get("identity") != metadata.get("identity")):
         raise ValueError("SSPI episode is incomplete, quarantined, or checksum-invalid")
     rows = []
+    ledger = {}
+    has_continuations = any(root.get("continuations") for root in manifest.get("roots", ()))
+    if has_continuations:
+        content = (directory / "actions.json").read_bytes()
+        if hashlib.sha256(content).hexdigest() != metadata.get("actions_sha256"):
+            raise ValueError("continuation execution ledger checksum changed")
+        ledger = json.loads(content)
     for root in manifest.get("roots", ()):
         if root.get("simulations") not in SEARCH_BUDGETS.values():
             raise ValueError("SSPI episode contains an incomplete or unsupported search root")
-        slots = tuple(HandSlot(**item) for item in root["hand"]["slots"])
-        hand = HandState(deck=tuple(tuple(item) for item in root["hand"]["deck"]),
-            slots=slots, known_next_card_id=root["hand"]["known_next_card_id"],
-            cycle=tuple(tuple(item) for item in root["hand"]["cycle"]),
-            pending_refills=tuple(PendingRefill(**item) for item in root["hand"]["pending_refills"]))
-        legality = SSPILegality(root["card_ids"], root["plays"], wait=root["wait"])
+        information = deserialize_information(root)
+        legality = information.legality
         visits = tuple((_action_from_key(key), int(count)) for key, count in root["visits"])
-        information = SSPIInformation(owner=root["owner"], tick=root["tick"],
-            frame=unpack(root["frame"]), hand=hand, legality=legality)
-        if information.sha256 != root["fair_sha256"]:
-            raise ValueError("serialized SEARCH root FAIR digest changed")
         rows.append(TrainingRow(information, legality, WDLLabel[root["wdl"]], "SEARCH",
-            visits=visits, simulations=root["simulations"]))
+            visits=visits, simulations=root["simulations"],
+            continuations=_load_continuations(root, metadata, ledger)))
     if len(rows) != metadata.get("search_roots"):
         raise ValueError("SSPI episode search-root count differs from its metadata")
+    contract = metadata.get("temporal_augmentation")
+    if contract is not None and sum(len(row.continuations) for row in rows) != contract.get("retained"):
+        raise ValueError("continuation count differs from its episode metadata")
     return rows
+
+
+def load_episode_training_rows(directory):
+    """Load only checksummed SEARCH roots from a training-admissible episode."""
+    return _load_episode_rows(directory, expected_kind="training")
+
+
+def load_episode_validation_rows(directory):
+    """Load checksummed SEARCH roots from an isolated validation episode."""
+    return _load_episode_rows(directory, expected_kind="validation")
 
 
 def _optimizer_to(optimizer, device):
