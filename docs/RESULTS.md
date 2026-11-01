@@ -6,7 +6,9 @@
 
 环境已修订为macOS本机 ARM64 Android Emulator（AVD），参照 [既有Mac实测记录](../firstlight_CR/docs/local_mac_capture_training.md)，不使用VMware Ubuntu，也不预设MPS优于CPU。**当前这次修订没有实机检查现有AVD是否仍可用**。
 
-状态：`DESIGN_REVISED / MAC_AVD_NOT_RECHECKED / IMPLEMENTATION_NOT_RUN / NATIVE_1024_NOT_RUN / LEARNING_NOT_RUN`。未在用户Mac上运行或完成性能验收；不声明胜率提升，也不修改旧报告的历史结论。
+训练规格 v1.3 取消所有硬性墙钟时长限制：三代/16+4局为初始观察里程碑，之后按真实学习曲线及机器资源状态继续，允许在完整边界停止并保存证据；不把时间额度当作训练完成判据。
+
+状态：`DESIGN_REVISED_NO_TIME_CAP / MAC_AVD_NOT_RECHECKED / IMPLEMENTATION_NOT_RUN / NATIVE_1024_NOT_RUN / LEARNING_NOT_RUN`。未在用户Mac上运行或完成性能验收；不声明胜率提升，也不修改旧报告的历史结论。
 
 
 ## 2026-10-29：Android ART 闭包启动与 Binder 阻塞
