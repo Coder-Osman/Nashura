@@ -115,13 +115,23 @@ class CompletedBoundarySearch:
         self.belief, self.inference, self.opponent = belief, inference, opponent
         self.limits = limits or SearchLimits()
 
-    def run(self, information, *, seed, behavior_seed, codec, identity, mode="FULL", deadline=None):
+    def run(self, information, *, seed, behavior_seed, codec, identity, mode="FULL", deadline=None,
+            simulation_budget=None):
         if mode not in ("FULL", "FAST"):
             raise ValueError("search requires FULL or FAST")
+        if simulation_budget is None:
+            budget = 128 if mode == "FULL" else 16
+            search_protocol_sha = self.limits.sha256
+        else:
+            if mode != "FULL" or type(simulation_budget) is not int or simulation_budget not in (128, 1024):
+                raise ValueError("explicit completed search budget must be 128 or 1024")
+            budget = simulation_budget
+            search_protocol_sha = semantic_digest(dict(schema="fair-final-explicit-budget-search.v1",
+                base_limits_sha=self.limits.sha256, valid_simulations=budget))
         limits = self.limits
         opponent_key = "controller_red_sha" if information.owner == 0 else "controller_blue_sha"
         checkpoint_key = "checkpoint_blue_sha" if information.owner == 0 else "checkpoint_red_sha"
-        if (identity["search_protocol_sha"] != limits.sha256
+        if (identity["search_protocol_sha"] != search_protocol_sha
                 or identity["root_belief_prior_sha"] != self.belief.sampler_sha
                 or identity[opponent_key] != self.opponent.controller_sha
                 or identity[checkpoint_key] != self.inference.checkpoint_sha):
@@ -134,8 +144,6 @@ class CompletedBoundarySearch:
         timings = dict(belief=0., restore=0., inference=0., transition=0.)
         completed = invalid = discarded = attempts = 0
         lifecycle = {}
-        budget = 128 if mode == "FULL" else 16
-
         def check_deadline():
             if deadline is not None and time.monotonic() >= deadline:
                 raise TimeoutError("search deadline before complete effective budget")
@@ -237,7 +245,7 @@ class CompletedBoundarySearch:
                     for entry in root.candidates]
                 result = dict(schema=SEARCH_SCHEMA, root_fair_state_sha=root_sha, root_player=information.owner,
                     value_perspective=information.owner, world_sampler_sha=self.belief.sampler_sha,
-                    world_commitment=world.commitment, search_protocol_sha=limits.sha256,
+                    world_commitment=world.commitment, search_protocol_sha=search_protocol_sha,
                     opponent_controller_sha=self.opponent.controller_sha, valid_simulations=completed,
                     invalid_attempts=invalid, unfinished_edge_backups=0, candidates=candidates,
                     mode_mass=root.mode_mass, noise_fraction=limits.root_noise)

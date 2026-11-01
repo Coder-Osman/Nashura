@@ -36,11 +36,13 @@ class HistoryCycleCursor:
 
 
 class PriorHistoryBeliefFactory(HistoryBeliefFactory):
-    def __init__(self, native_factory, *, prior, catalog, opponent, sidecar_factory):
+    def __init__(self, native_factory, *, prior, catalog, opponent, sidecar_factory,
+            rollout_factory=FinalRollout):
         if (not isinstance(prior, FrozenDeckPrior) or len(prior.entries) != 1
                 or prior.entries[0].cards != tuple(sorted(HOG_DECK))):
             raise ValueError("native prior integration currently supports only the verified base Hog deck")
-        super().__init__(native_factory, catalog=catalog, opponent=opponent, sidecar_factory=sidecar_factory)
+        super().__init__(native_factory, catalog=catalog, opponent=opponent, sidecar_factory=sidecar_factory,
+            rollout_factory=rollout_factory)
         self.prior, self.cursors, self.closed = prior, {}, False
         self.sampler_sha = semantic_digest(dict(schema="fair-final-native-prior-history.v1",
             prior_sha=prior.sha256, cycle_schema="fair-final-public-cycle-sampler.v1",
@@ -87,7 +89,8 @@ class PriorHistoryBeliefFactory(HistoryBeliefFactory):
             if actual_draw != completion.initial_draw:
                 raise ValueError("sampled prior draw changed during native conditional initialization")
             native.start_atomic_steps()
-            rollout = FinalRollout(environment, catalog=self.catalog, execution_seed=split_seed(seed, "rollout"))
+            rollout = self.rollout_factory(environment, catalog=self.catalog,
+                execution_seed=split_seed(seed, "rollout"))
             session = HistoryReplaySession(rollout, opening=history.opening, opponent=self.opponent,
                 seed=split_seed(seed, "opponent-history"), sidecar_factory=self.sidecar_factory)
             session.draw_completion = completion

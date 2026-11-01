@@ -1,5 +1,9 @@
 # 阶段成果与证据索引
 
+## 2026-11-01：SSPI 动作协议与真实 1024 搜索根（限定工程子项）
+
+在 Apple M4 Max 的 macOS ARM64 Android Emulator 上完成 SSPI Hog 动作/手牌协议定向回归和首个真实 PUCT 搜索根：7,874,126 参数，1024/1024 有效模拟，712.48 秒，0 次未完成边丢弃；根 FAIR 状态恢复一致，独立信念快照已释放。成本分项为转移495.44秒、推理94.34秒、快照恢复16.62秒、信念构造1.92秒。CPU/MPS 小型梯度步中位数为0.174/0.217秒，选用CPU。定向测试73 passed，编译与差异检查通过。该根为 `training_admissible=false` 的独立工程验收；完整混合对局、终局训练更新、checkpoint恢复和关闭MCTS评估未运行，不构成整体门或模型强度结论。详见[阶段报告](SSPI_MAC_SEARCH_P0_P1_2026-11-01.md)。
+
 ## 2026-11-01：SSPI Mac Pilot 设计状态（非实战结果）
 
 已完成文档修订：本轮仅固定2.6速猪、无英雄技能；3模式动作协议保留ABILITY扩展入口且当前始终掩码；2/3张手牌与延迟补牌仍是正确性门槛。详见 [训练规格 v1.1](SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md) 与 [术语](../CONTEXT.md)。
@@ -8,7 +12,7 @@
 
 训练规格 v1.3 取消所有硬性墙钟时长限制：三代/16+4局为初始观察里程碑，之后按真实学习曲线及机器资源状态继续，允许在完整边界停止并保存证据；不把时间额度当作训练完成判据。
 
-状态：`DESIGN_REVISED_NO_TIME_CAP / MAC_AVD_NOT_RECHECKED / IMPLEMENTATION_NOT_RUN / NATIVE_1024_NOT_RUN / LEARNING_NOT_RUN`。未在用户Mac上运行或完成性能验收；不声明胜率提升，也不修改旧报告的历史结论。
+当时状态：`DESIGN_REVISED_NO_TIME_CAP / MAC_AVD_NOT_RECHECKED / IMPLEMENTATION_NOT_RUN / NATIVE_1024_NOT_RUN / LEARNING_NOT_RUN`。这些标记描述该文档提交时的状态；后续实测与未完成项见本节前的当前阶段记录。
 
 
 ## 2026-10-29：Android ART 闭包启动与 Binder 阻塞

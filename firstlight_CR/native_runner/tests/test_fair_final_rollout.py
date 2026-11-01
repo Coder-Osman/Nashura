@@ -6,6 +6,7 @@ import torch
 
 from native_runner.tests.test_fair_final_runtime import TickEnvironment
 from native_runner.training.fair_final import rollout as rollout_module
+from native_runner.training.fair_final import native as final_native_module
 from native_runner.training.fair_final.policy import FullAction, LegalPrefixes
 from native_runner.training.fair_final.rollout import FinalRollout, RolloutSnapshot
 from native_runner.training.fair_final.timing import DecisionClock
@@ -158,3 +159,56 @@ def test_partial_tensorization_fails_closed_until_full_snapshot_restore(rollout)
         rollout.tensorizers[1].tensorize = original
         snapshot.restore()
         assert set(rollout.freeze_due_information()) == {0, 1}
+
+
+def test_final_snapshot_uses_native_snapshot_receipt_digest(monkeypatch):
+    from native_runner.training.fair_search.native import NativeBeliefWorld
+
+    class Native:
+        def __init__(self):
+            self.released = []
+
+        def create_snapshot(self):
+            return dict(handle=7, digest="b87792d5aad4fb93")
+
+        def restore(self, handle):
+            assert handle["handle"] == 7
+            return dict(tick=0, restore=dict(generation=2, stateEpoch=3, tick=0,
+                digest="b87792d5aad4fb93"))
+
+        def release_snapshot(self, handle):
+            self.released.append(handle["handle"])
+
+        def _request(self, command):
+            raise AssertionError(f"unexpected native request {command}")
+
+    class Environment:
+        episode_id = "snapshot-test"
+        current_tick = 0
+        raw_observation = {"tick": 0}
+
+        def _invalidate_rich_cache(self):
+            pass
+
+        def _rich_snapshot_for(self, _observation):
+            return object()
+
+    environment = Environment()
+    native = Native()
+    environment.native = native
+    clock = SimpleNamespace(capture=lambda: {"tick": 0})
+    runtime = SimpleNamespace(failed=False, ended=False, truncated=False,
+        environment=environment, clock=clock, frozen={})
+    sidecar = SimpleNamespace(capture=lambda: {"sidecar": True},
+        restore=lambda state, *, receipt: None)
+    monkeypatch.setattr(final_native_module.DecisionClock, "restore",
+        lambda _state: SimpleNamespace(tick=0))
+    monkeypatch.setattr(NativeBeliefWorld, "_rebase_native_cursors",
+        lambda _self, _snapshot, _receipt: None)
+
+    snapshot = final_native_module.FinalSnapshot(runtime, lambda _environment: sidecar)
+    snapshot.restore()
+    assert runtime.clock.tick == 0 and runtime.failed is False
+    assert environment._raw == {"tick": 0}
+    snapshot.close()
+    assert native.released == [7]

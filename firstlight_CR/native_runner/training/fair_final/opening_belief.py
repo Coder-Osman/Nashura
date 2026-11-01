@@ -41,9 +41,11 @@ class OpeningBeliefProvider:
         scope="no-action-opening-only", deck_prior=list(HOG_DECK),
         prior_source="fixed-hog-experiment-not-general-empirical-prior", conditioning="own-visible-draw"))
 
-    def __init__(self, native_factory, *, evidence, catalog, sidecar_factory):
+    def __init__(self, native_factory, *, evidence, catalog, sidecar_factory,
+            rollout_factory=FinalRollout):
         self.native_factory, self.evidence = native_factory, evidence
         self.catalog, self.sidecar_factory = catalog, sidecar_factory
+        self.rollout_factory = rollout_factory
 
     def build(self, information, *, seed):
         evidence = self.evidence
@@ -67,7 +69,8 @@ class OpeningBeliefProvider:
                 options=dict(render_mode="headless", decision_ticks=1, event_driven_decisions=False,
                     allow_initial_remaining_runtime_rejections=True))
             native.start_atomic_steps()
-            rollout = FinalRollout(environment, catalog=self.catalog, execution_seed=split_seed(seed, "rollout"))
+            rollout = self.rollout_factory(environment, catalog=self.catalog,
+                execution_seed=split_seed(seed, "rollout"))
             root = rollout.freeze_due_information()[evidence.owner]
             if root.sha256 != information.sha256:
                 raise ValueError("independently initialized belief changed the root FAIR state")

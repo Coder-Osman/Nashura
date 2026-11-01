@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from copy import deepcopy
 import hashlib
 
@@ -25,11 +25,17 @@ class DecisionInformation:
 
 
 class FinalRollout:
-    def __init__(self, environment, *, catalog, execution_seed):
+    def __init__(self, environment, *, catalog, execution_seed, wait_ticks=60,
+            wake_refills=False, information_factory=None):
         if type(execution_seed) is not int or execution_seed < 0:
             raise ValueError("execution RNG requires an independent nonnegative seed")
-        self.runtime = FinalDecisionRuntime(environment)
+        if type(wait_ticks) is not int or wait_ticks < 1 or type(wake_refills) is not bool:
+            raise ValueError("invalid rollout wake clock")
+        if information_factory is not None and not callable(information_factory):
+            raise TypeError("information factory must be callable")
+        self.runtime = FinalDecisionRuntime(environment, wait_ticks=wait_ticks, wake_refills=wake_refills)
         self.catalog = catalog
+        self.information_factory = information_factory
         self.generators = {}
         for owner in (0, 1):
             identity = f"fair-final-execution.v1:{execution_seed}:{owner}".encode()
@@ -55,13 +61,18 @@ class FinalRollout:
                 information = {}
                 for owner, observation in observations.items():
                     frame = canonicalize_event_observation(self.tensorizers[owner].tensorize(observation, validate=True))
-                    legality = legal_prefixes(self.runtime.environment, observation, frame, owner, catalog=self.catalog)
-                    information[owner] = DecisionInformation(owner, observation.tick, frame, legality)
+                    if self.information_factory is None:
+                        legality = legal_prefixes(self.runtime.environment, observation, frame, owner,
+                            catalog=self.catalog)
+                        information[owner] = DecisionInformation(owner, observation.tick, frame, legality)
+                    else:
+                        information[owner] = self.information_factory(self.runtime.environment, observation,
+                            frame, owner, catalog=self.catalog)
                 self.information = information
             except Exception:
                 self.runtime.failed = True
                 raise
-        return {owner: DecisionInformation(info.owner, info.tick, unpack(pack(info.frame)), deepcopy(info.legality))
+        return {owner: replace(info, frame=unpack(pack(info.frame)), legality=deepcopy(info.legality))
             for owner, info in self.information.items()}
 
     def commit_simultaneous(self, actions):
@@ -101,8 +112,13 @@ class RolloutSnapshot:
 
     @staticmethod
     def _copy_information(information):
-        return {owner: DecisionInformation(info.owner, info.tick, unpack(pack(info.frame)),
-            deepcopy(info.legality)) for owner, info in information.items()}
+        copied = {}
+        for owner, info in information.items():
+            values = dict(frame=unpack(pack(info.frame)), legality=deepcopy(info.legality))
+            if hasattr(info, "hand"):
+                values["hand"] = deepcopy(info.hand)
+            copied[owner] = replace(info, **values)
+        return copied
 
     def restore(self):
         rollout = self.rollout

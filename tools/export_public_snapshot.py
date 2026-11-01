@@ -3,6 +3,7 @@ import gzip
 import hashlib
 import json
 import os
+import subprocess
 from collections import Counter
 from pathlib import Path
 
@@ -65,6 +66,13 @@ def source_files(root):
 
 def selected_files(workspace):
     yield from source_files(workspace / "firstlight_CR")
+    for name in (
+        "docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md",
+        "docs/SSPI_MAC_SEARCH_P0_P1_2026-11-01.md",
+    ):
+        path = workspace / name
+        if path.is_file():
+            yield path
     versions = workspace / "_spec_work/versions"
     for version in sorted(versions.iterdir()):
         if version.is_dir():
@@ -99,12 +107,16 @@ def selected_files(workspace):
             yield workspace / name
 
 
-def export(workspace, destination):
+def export(workspace, destination, *, excluded_files=()):
     secrets = local_secrets(workspace)
+    excluded_files = {Path(path) for path in excluded_files}
     entries = []
     exclusions = Counter()
     for path in sorted(set(selected_files(workspace))):
         relative = path.relative_to(workspace)
+        if relative in excluded_files:
+            exclusions["explicitly_excluded"] += 1
+            continue
         if path.name.startswith(".env") and not path.name.endswith(".example"):
             exclusions["local_environment"] += 1
             continue
@@ -143,6 +155,69 @@ def export(workspace, destination):
             target.write_bytes(content)
         entries.append({"path": relative.as_posix(), "sha256": digest(content), "bytes": len(content),
             "source_sha256": original_sha, "transformations": transformations})
+    manifest_path = destination / "publication/source-manifest.json"
+    previous_entries = {}
+    previous_order = []
+    if manifest_path.exists():
+        previous = json.loads(manifest_path.read_text())
+        for entry in previous.get("files", ()):
+            previous_entries[entry["path"]] = entry
+            previous_order.append(entry["path"])
+    try:
+        baseline = subprocess.run(["git", "show", "HEAD:publication/source-manifest.json"],
+            cwd=destination, check=True, capture_output=True, text=True)
+        baseline_manifest = json.loads(baseline.stdout)
+        for entry in baseline_manifest.get("files", ()):
+            path = entry["path"]
+            current = previous_entries.get(path)
+            if current is None or (current["sha256"] == entry["sha256"]
+                    and current["bytes"] == entry["bytes"]):
+                previous_entries[path] = entry
+            else:
+                transformations = list(entry.get("transformations", ()))
+                transformations.extend(item for item in current.get("transformations", ())
+                    if item not in transformations)
+                previous_entries[path] = dict(current, transformations=transformations)
+        baseline_order = [entry["path"] for entry in baseline_manifest.get("files", ())]
+        previous_order = baseline_order + [path for path in previous_order if path not in baseline_order]
+    except (OSError, subprocess.CalledProcessError, json.JSONDecodeError):
+        pass
+    if previous_entries:
+        for entry in entries:
+            old_entry = previous_entries.get(entry["path"])
+            if old_entry is None:
+                continue
+            transformations = list(old_entry.get("transformations", ()))
+            transformations.extend(item for item in entry.get("transformations", ())
+                if item not in transformations)
+            entry["transformations"] = transformations
+            if (entry["sha256"] == old_entry["sha256"]
+                    and entry["bytes"] == old_entry["bytes"]):
+                entry["source_sha256"] = old_entry["source_sha256"]
+        selected = {entry["path"] for entry in entries}
+        for path, old_entry in sorted(previous_entries.items()):
+            if path in selected:
+                continue
+            target = destination / path
+            if not target.is_file() or target.is_symlink():
+                raise ValueError("previously published file is missing; review before snapshot: " + path)
+            content = target.read_bytes()
+            preserved = dict(old_entry)
+            current_sha = digest(content)
+            if (current_sha != old_entry["sha256"]
+                    or len(content) != old_entry["bytes"]):
+                preserved["sha256"] = current_sha
+                preserved["source_sha256"] = current_sha
+                preserved["bytes"] = len(content)
+                preserved["transformations"] = list(old_entry.get("transformations", ()))
+                if "manually maintained public file updated in publication worktree" not in preserved["transformations"]:
+                    preserved["transformations"].append(
+                        "manually maintained public file updated in publication worktree")
+            entries.append(preserved)
+        entries_by_path = {entry["path"]: entry for entry in entries}
+        ordered_paths = [path for path in previous_order if path in entries_by_path]
+        ordered_paths.extend(sorted(set(entries_by_path) - set(ordered_paths)))
+        entries = [entries_by_path[path] for path in ordered_paths]
     manifest = {
         "schema": "hashura.public-source-snapshot.v1",
         "files": entries,
@@ -153,7 +228,6 @@ def export(workspace, destination):
             "third-party game binaries and resources", "generated native binaries", "runtime environments"],
         "evidence_note": "Original evidence manifests retain original hashes; omitted external artifacts are not bundled.",
     }
-    manifest_path = destination / "publication/source-manifest.json"
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps({"files": manifest["file_count"], "bytes": manifest["source_bytes"],
@@ -164,12 +238,13 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--workspace", required=True, type=Path)
     parser.add_argument("--destination", required=True, type=Path)
+    parser.add_argument("--exclude-file", action="append", default=[], type=Path)
     arguments = parser.parse_args()
     workspace = arguments.workspace.resolve()
     destination = arguments.destination.resolve()
     if workspace == destination:
         raise ValueError("publication must use a separate directory")
-    export(workspace, destination)
+    export(workspace, destination, excluded_files=arguments.exclude_file)
 
 
 if __name__ == "__main__":

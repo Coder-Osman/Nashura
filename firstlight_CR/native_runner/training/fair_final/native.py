@@ -153,9 +153,12 @@ class FinalBattleEnv(BattleEnvV1):
 class FinalDecisionRuntime:
     wake_protocol = "public-deployment-own-deadline.v1"
 
-    def __init__(self, environment):
+    def __init__(self, environment, *, wait_ticks=60, wake_refills=False):
         self.environment = environment
-        self.clock = DecisionClock()
+        self.clock = DecisionClock(wait_ticks=wait_ticks)
+        self.wake_refills = bool(wake_refills)
+        self.wake_protocol = ("public-deployment-own-deadline-and-own-refill.v1"
+            if self.wake_refills else type(self).wake_protocol)
         self.failed = False
         self.ended = False
         self.truncated = False
@@ -193,6 +196,9 @@ class FinalDecisionRuntime:
             raise BattleEnvError("advance requires a live runtime with all decisions committed")
         try:
             target = self.clock.tick + 1
+            before_hands = ({int(player["owner"]): {
+                    (int(card["deckSlot"]), int(card["cardId"])) for card in player["hand"]}
+                for player in self.environment.raw_observation["players"]} if self.wake_refills else {})
             plans = tuple(plan for plan in self.clock.pending.values()
                 if plan.due_tick == target and plan.action.card_id is not None)
             outcomes, result = self.environment.advance_reservations(plans)
@@ -205,12 +211,17 @@ class FinalDecisionRuntime:
                 and event.data.get("private_to") is None
                 and all(event_visible_to_owner(event, owner) for owner in (0, 1))
                 for event in self.environment.action_outcomes())
-            owners = (0, 1) if public_play else ()
+            owners = {0, 1} if public_play else set()
+            if self.wake_refills:
+                after_hands = {int(player["owner"]): {
+                        (int(card["deckSlot"]), int(card["cardId"])) for card in player["hand"]}
+                    for player in self.environment.raw_observation["players"]}
+                owners.update(owner for owner in (0, 1) if after_hands[owner] - before_hands[owner])
             if self.ended or self.truncated or not getattr(self.environment, "policy_actions_open", True):
                 self.clock.finish(target, outcomes=outcomes)
                 self.frozen = {}
             else:
-                self._freeze(target, owners, outcomes)
+                self._freeze(target, tuple(sorted(owners)), outcomes)
             return outcomes
         except Exception:
             self.failed = True
@@ -232,8 +243,13 @@ class FinalSnapshot:
         self.clock = runtime.clock.capture()
         self.frozen = deepcopy(runtime.frozen)
         self.match_id = self.environment.episode_id
-        self.digest = self.native._request("state-digest")["sha256"]
         self.handle = self.native.create_snapshot()
+        self.digest = self.handle.get("digest")
+        if (not isinstance(self.digest, str) or len(self.digest) != 16
+                or any(character not in "0123456789abcdef" for character in self.digest)):
+            self.native.release_snapshot(self.handle)
+            self.handle = None
+            raise BattleEnvError("native snapshot has no valid state digest")
 
     def restore(self):
         if self.handle is None or self.runtime.environment is not self.environment:
@@ -242,12 +258,12 @@ class FinalSnapshot:
             raise BattleEnvError("snapshot belongs to a different match")
         try:
             observation = self.native.restore(self.handle)
-            digest = self.native._request("state-digest")["sha256"]
-            if digest != self.digest:
+            native_receipt = observation.get("restore", {})
+            if native_receipt.get("digest") != self.digest:
                 raise BattleEnvError("snapshot restoration changed native state")
-            native_receipt = observation["restore"]
             receipt = SimpleNamespace(generation=int(native_receipt["generation"]),
-                state_epoch=int(native_receipt["stateEpoch"]), tick=int(native_receipt["tick"]), native_digest=digest)
+                state_epoch=int(native_receipt["stateEpoch"]), tick=int(native_receipt["tick"]),
+                native_digest=self.digest)
             self.sidecar.restore(self.battle_state, receipt=receipt)
             self.environment._raw = {key: value for key, value in observation.items() if key != "restore"}
             self.environment._invalidate_rich_cache()

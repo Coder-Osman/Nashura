@@ -10194,9 +10194,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "5a845a0d06e10ba0c863638b450c2af8b0ce24c16704575f94c9b95bc2dac2a6",
-      "bytes": 52316,
-      "source_sha256": "d12ae431fcb26011c336e50a81a75853196b6510ba1c4854365275d453ff55bd",
+      "sha256": "2605745a27bd07f148a938b327f499cff834dcf973745f75c092530a2a461517",
+      "bytes": 54524,
+      "source_sha256": "2605745a27bd07f148a938b327f499cff834dcf973745f75c092530a2a461517",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -10214,14 +10214,15 @@
         "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
         "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
         "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence",
-        "2026-10-29: record Android ART closure and guest Binder startup boundary"
+        "2026-10-29: record Android ART closure and guest Binder startup boundary",
+        "manually maintained public file updated in publication worktree"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "7ff08b887b162b2fbe35b6eb0d093bf70b6dd95964c72d7bb5802d553f376bf1",
-      "bytes": 86150,
-      "source_sha256": "8fb78c645d00a2c95af39be154e70d0de92382e6dbf1322e56d79d7489ff8724",
+      "sha256": "73b9005f44b91e4ae6fc70815eca49be9af37d714befb7aae7dd3b3644012c49",
+      "bytes": 88102,
+      "source_sha256": "73b9005f44b91e4ae6fc70815eca49be9af37d714befb7aae7dd3b3644012c49",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -10239,7 +10240,8 @@
         "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
         "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
         "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence",
-        "2026-10-29: record Android ART closure and guest Binder startup boundary"
+        "2026-10-29: record Android ART closure and guest Binder startup boundary",
+        "manually maintained public file updated in publication worktree"
       ]
     },
     {
@@ -12869,16 +12871,16 @@
     },
     {
       "path": "firstlight_CR/native_runner/tests/test_fair_final_rollout.py",
-      "sha256": "633009d9debeb80f8438d89b9a78cb7d1a36d4c6a2e1436d4ff90c1e7aa1ea0e",
-      "bytes": 6807,
-      "source_sha256": "633009d9debeb80f8438d89b9a78cb7d1a36d4c6a2e1436d4ff90c1e7aa1ea0e",
+      "sha256": "72a016119de48c60018fb1c49a3d280ae7c99afd1a029f547ffb9c702bb60a45",
+      "bytes": 8781,
+      "source_sha256": "72a016119de48c60018fb1c49a3d280ae7c99afd1a029f547ffb9c702bb60a45",
       "transformations": []
     },
     {
       "path": "firstlight_CR/native_runner/tests/test_fair_final_runtime.py",
-      "sha256": "8fa50317cbec8a757c89dcdee51d86c42d715ad059021c40c5bdbc7f17ae6fe4",
-      "bytes": 4919,
-      "source_sha256": "8fa50317cbec8a757c89dcdee51d86c42d715ad059021c40c5bdbc7f17ae6fe4",
+      "sha256": "cb8ccf895e5e63ecff6cb441634ca09c6b8dd721b64e1738535700a7c3fb9433",
+      "bytes": 5638,
+      "source_sha256": "cb8ccf895e5e63ecff6cb441634ca09c6b8dd721b64e1738535700a7c3fb9433",
       "transformations": []
     },
     {
@@ -14031,9 +14033,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/history_belief.py",
-      "sha256": "6f8bb95d97b6414792efc5f3a275bc7816ce84c21a4dcc8c9fe03bd23132cf15",
-      "bytes": 13746,
-      "source_sha256": "6f8bb95d97b6414792efc5f3a275bc7816ce84c21a4dcc8c9fe03bd23132cf15",
+      "sha256": "2da10470ca4d312d87402f04f67bf2ba19b5210b3f12b77200984a74b8bb04b3",
+      "bytes": 14128,
+      "source_sha256": "2da10470ca4d312d87402f04f67bf2ba19b5210b3f12b77200984a74b8bb04b3",
       "transformations": []
     },
     {
@@ -14080,16 +14082,16 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/native.py",
-      "sha256": "aeed14c71ffd3dd154170ea1f7ec8f5987c73e50fb961a748efa8396d35166f2",
-      "bytes": 14374,
-      "source_sha256": "aeed14c71ffd3dd154170ea1f7ec8f5987c73e50fb961a748efa8396d35166f2",
+      "sha256": "f5c935a32e7195e87099e379494bd38b995941d0c6dfbf2b3ec83e11e01e2250",
+      "bytes": 15547,
+      "source_sha256": "f5c935a32e7195e87099e379494bd38b995941d0c6dfbf2b3ec83e11e01e2250",
       "transformations": []
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/opening_belief.py",
-      "sha256": "fcecb729e624e8618219084a9d9cb703b95ef783f18d27eb9cf72a7da9835b6f",
-      "bytes": 4672,
-      "source_sha256": "fcecb729e624e8618219084a9d9cb703b95ef783f18d27eb9cf72a7da9835b6f",
+      "sha256": "0dfcfaaad93139e8f1a78292ffc460583ccdd2f7c23588e8d44ef7dbd0767df3",
+      "bytes": 4785,
+      "source_sha256": "0dfcfaaad93139e8f1a78292ffc460583ccdd2f7c23588e8d44ef7dbd0767df3",
       "transformations": []
     },
     {
@@ -14101,9 +14103,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/prior_history.py",
-      "sha256": "d7671b2b5bd6ff8a8621e973393d2fc6f8e5d2bf236b1a67ef5b1dc9ef8f6dd8",
-      "bytes": 7771,
-      "source_sha256": "d7671b2b5bd6ff8a8621e973393d2fc6f8e5d2bf236b1a67ef5b1dc9ef8f6dd8",
+      "sha256": "638338f7daa2196c6ad0b3dc604ca0f1946361dbf03d7480fe3299464fbecb67",
+      "bytes": 7882,
+      "source_sha256": "638338f7daa2196c6ad0b3dc604ca0f1946361dbf03d7480fe3299464fbecb67",
       "transformations": []
     },
     {
@@ -14143,23 +14145,23 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/rollout.py",
-      "sha256": "c60adda093a4114e0819fff623191b231eaec092d92659fb20a765b9cefbb843",
-      "bytes": 6324,
-      "source_sha256": "c60adda093a4114e0819fff623191b231eaec092d92659fb20a765b9cefbb843",
+      "sha256": "dffdaca22dfb7fc6d5e5b2d4c8893fa5310f910ef0024f4558eae667e87d851e",
+      "bytes": 7246,
+      "source_sha256": "dffdaca22dfb7fc6d5e5b2d4c8893fa5310f910ef0024f4558eae667e87d851e",
       "transformations": []
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/search_runtime.py",
-      "sha256": "96dc2e568b93c93c46152071f9b959328944121df1eac8214c7d7a6d283b1aae",
-      "bytes": 6469,
-      "source_sha256": "96dc2e568b93c93c46152071f9b959328944121df1eac8214c7d7a6d283b1aae",
+      "sha256": "45fd6b3448a882d26a05b65171cc3ae78dad91ab028cd44d71036972cab5394a",
+      "bytes": 6763,
+      "source_sha256": "45fd6b3448a882d26a05b65171cc3ae78dad91ab028cd44d71036972cab5394a",
       "transformations": []
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/search.py",
-      "sha256": "e1e9fbefe71375786bd59491fe839a80fed94bffc40fed6ee57a35c8b572b65b",
-      "bytes": 14417,
-      "source_sha256": "e1e9fbefe71375786bd59491fe839a80fed94bffc40fed6ee57a35c8b572b65b",
+      "sha256": "80404ccbf8f0e0cc25e03e80c01f862a53c20894fd4b3d9da136706f2beed739",
+      "bytes": 14991,
+      "source_sha256": "80404ccbf8f0e0cc25e03e80c01f862a53c20894fd4b3d9da136706f2beed739",
       "transformations": []
     },
     {
@@ -14171,9 +14173,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/timing.py",
-      "sha256": "864f46397f6dfcd3c58f4803714ff6744bf209ad5afede1c03f160b9c7e17e88",
-      "bytes": 6271,
-      "source_sha256": "864f46397f6dfcd3c58f4803714ff6744bf209ad5afede1c03f160b9c7e17e88",
+      "sha256": "16898ac350ac00b80b950e1e08f2bc5011f92a56ab08fe11a926ba5864073b9c",
+      "bytes": 7037,
+      "source_sha256": "16898ac350ac00b80b950e1e08f2bc5011f92a56ab08fe11a926ba5864073b9c",
       "transformations": []
     },
     {
@@ -16651,9 +16653,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "4dd896e14f316a12e1e5bae6190726127c2570cc1061638a92e33c11b7052bfc",
-      "bytes": 53368,
-      "source_sha256": "8ae14dbb13dd932bd21ccd98b2a35eb91686abd66e33b5e2f4043a2acc5fc0bb",
+      "sha256": "764432e68e4695e51f863da673aad5f0415fdef2c53db832bfd0d563d12f7cff",
+      "bytes": 54849,
+      "source_sha256": "764432e68e4695e51f863da673aad5f0415fdef2c53db832bfd0d563d12f7cff",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -16671,7 +16673,8 @@
         "2026-10-28: native resource invalid-file and cleanup fix; bounded routing matrix",
         "2026-10-29: record Linux native holder setup implementation and blocked guest execution",
         "2026-10-29: record real Linux holder setup execution and JavaVM fault evidence",
-        "2026-10-29: record Android ART closure and guest Binder startup boundary"
+        "2026-10-29: record Android ART closure and guest Binder startup boundary",
+        "manually maintained public file updated in publication worktree"
       ]
     },
     {
@@ -19548,63 +19551,81 @@
       "sha256": "d3b2591436d0a68750b72931d84cdbd35e6d6f7d69951a7b974a54440682dc6d",
       "bytes": 4340,
       "source_sha256": "ed6541fac1ee54b0e543d98e0297520b86ca59a95480783eec5c501753352a75",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
       "sha256": "32651ea20ac1d0d679db76acfe8b7fec2c9187748553fee9bd78161221e3e579",
       "bytes": 12024,
       "source_sha256": "5e7d184f83664142c0d403631627d53e7092168680f9e18a85d5a92f61284a4c",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-command-coordinates.xml",
       "sha256": "eeb655741e84fed0a99bfbdfe0a546bb2b2929f1e2466b23025d057398adb1e1",
       "bytes": 8184,
       "source_sha256": "a4e9cec4d99b75d2ef79b01d993b9a04795e45ea6f661fe8dc73fd81301e8658",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-dispatch-command.xml",
       "sha256": "503f912305ea9ac17d17af4df09512578f580de22b622341fadde2572ce93dc0",
       "bytes": 6406,
       "source_sha256": "f1cbc3b728b4427400c7ba2f6faf366881db6e4ef561b7fd700c2eb612860305",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-live-command.xml",
       "sha256": "8f2ba185607af0eb38a3e0d2a18ebe0fe00a5c9c1a424b2ee5e9b93d583b24f1",
       "bytes": 6370,
       "source_sha256": "b6dfa3b3539472c83e03eff210e080300abeae05ec7df4c59a1c5a9f9c31fbee",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-position-guards.xml",
       "sha256": "0df715f2306e2db6915e00edacf990bf1b98e7b0daf3fd123f43a39536dd5696",
       "bytes": 4244,
       "source_sha256": "da79f2a8eb0e8eded49b8b7e93cb74b1c0bf4dc982f8abd974f5296630c3a644",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-public.xml",
       "sha256": "36fbf0d43e1a33e86dba5225f1e297bbadb74c85020000c7564278d8678c8963",
       "bytes": 161225,
       "source_sha256": "0f3ecaae3fada7588b8895763fb4d9b89d899372201db148f510ca955326a0c2",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
       "sha256": "acc8b50cc08a44ec984f4239ec568d6e42408774e584a740c830c782d6838ff5",
       "bytes": 6383,
       "source_sha256": "e08e156cb9098f73d3277d00fc362ea08235b04299f93f7c3d53f546dbf329c8",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "publication/checks-selection-timeout.xml",
       "sha256": "bf83441a71d1799e2b971d7bddd0428e464f3d5f9e647ec8ce4ac18babc931ae",
       "bytes": 14581,
       "source_sha256": "7968099b866349417b4cdc269be6df76d570059ee2d584c1c6b8b1d2d6ab8d6a",
-      "transformations": ["2026-10-29: refresh pytest report after public verification"]
+      "transformations": [
+        "2026-10-29: refresh pytest report after public verification"
+      ]
     },
     {
       "path": "agent-handoff/PURE_LINUX_HOLDER_SETUP_JAVAVM_BLOCK_2026-10-29.md",
@@ -19633,14 +19654,82 @@
       "bytes": 2755,
       "source_sha256": "2c003bd3decf64e25c1712a127d9eee0ec956f022f6e0cb09ef9e8c3eebf0c26",
       "transformations": []
+    },
+    {
+      "path": "docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md",
+      "sha256": "3ffbfd13326a68da1d53818a7a70046a32513ea9b9c99ff16724ee8dc4b8b766",
+      "bytes": 40003,
+      "source_sha256": "3ffbfd13326a68da1d53818a7a70046a32513ea9b9c99ff16724ee8dc4b8b766",
+      "transformations": []
+    },
+    {
+      "path": "docs/SSPI_MAC_SEARCH_P0_P1_2026-11-01.md",
+      "sha256": "5b8d1ca61d65447616a45b9f8e7123d236d00a2c1fbfe6ffa161c03604da96a8",
+      "bytes": 2258,
+      "source_sha256": "5b8d1ca61d65447616a45b9f8e7123d236d00a2c1fbfe6ffa161c03604da96a8",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/tests/test_sspi_mac_training.py",
+      "sha256": "d70380fb3c117f79fc00dc559098677694da72fbab0a70780507fac6904be90e",
+      "bytes": 12905,
+      "source_sha256": "d70380fb3c117f79fc00dc559098677694da72fbab0a70780507fac6904be90e",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/learning.py",
+      "sha256": "661f299656a7c4cb79555d671b466f09d1933f0a8d2148a590355a8f5f52fda0",
+      "bytes": 13135,
+      "source_sha256": "661f299656a7c4cb79555d671b466f09d1933f0a8d2148a590355a8f5f52fda0",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/model.py",
+      "sha256": "846309fe5adaee1c64fc07fe759adc85b84448ec82cfd7ff1c7522e2f3a75991",
+      "bytes": 12876,
+      "source_sha256": "846309fe5adaee1c64fc07fe759adc85b84448ec82cfd7ff1c7522e2f3a75991",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/native_probe.py",
+      "sha256": "c4b670c8fe2c02c8d2cdc00a0ab2290198bbab8a9aa4f68f899d387c28fa43e1",
+      "bytes": 6440,
+      "source_sha256": "c4b670c8fe2c02c8d2cdc00a0ab2290198bbab8a9aa4f68f899d387c28fa43e1",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/protocol.py",
+      "sha256": "97b924fbf8866f24a568698974c0eaa4c39a3eb22728dc8b1e525028ac073cc0",
+      "bytes": 19071,
+      "source_sha256": "97b924fbf8866f24a568698974c0eaa4c39a3eb22728dc8b1e525028ac073cc0",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/rollout.py",
+      "sha256": "e08e8b9b7c3c0629ba4838f1815a09f72b1d701faa656607fca6090cd2a4f3d0",
+      "bytes": 1156,
+      "source_sha256": "e08e8b9b7c3c0629ba4838f1815a09f72b1d701faa656607fca6090cd2a4f3d0",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/search.py",
+      "sha256": "8e6de80df178fec88209b8b29ff7257afc9297296edc3e59cd24f7b6a086d1c0",
+      "bytes": 6234,
+      "source_sha256": "8e6de80df178fec88209b8b29ff7257afc9297296edc3e59cd24f7b6a086d1c0",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/search_probe.py",
+      "sha256": "db910bf33eaf57b234b322263379faf2759c1e6017305113abb393bc968fc517",
+      "bytes": 7450,
+      "source_sha256": "db910bf33eaf57b234b322263379faf2759c1e6017305113abb393bc968fc517",
+      "transformations": []
     }
   ],
-  "file_count": 2792,
-  "source_bytes": 36218302,
+  "file_count": 2802,
+  "source_bytes": 36352499,
   "excluded_selected_candidates": {
-    "binary_or_unselected_format": 14,
-    "local_environment": 1,
-    "oversized_generated_file": 1
+    "explicitly_excluded": 1
   },
   "excluded_categories": [
     "credentials",

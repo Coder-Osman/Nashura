@@ -122,3 +122,18 @@ def test_wait_timeout_has_no_private_opponent_wakeup():
     runtime.advance()
     assert runtime.clock.tick == 160
     assert [entry['reason'] for entry in runtime.clock.evidence] == ['wait_expired', 'wait_expired']
+
+
+def test_sspi_wait_uses_one_second_and_snapshot_keeps_its_clock():
+    from native_runner.training.fair_final.timing import DecisionClock
+
+    clock = DecisionClock(wait_ticks=20)
+    clock.begin_tick(100, wake_owners=(0, 1), adjudicate_due=lambda *args: {},
+        freeze=lambda owner, tick: (owner, tick))
+    clock.commit({0: FullAction(), 1: FullAction()}, legal=lambda *args: True)
+    assert [clock.pending[owner].due_tick for owner in (0, 1)] == [120, 120]
+    assert DecisionClock.restore(clock.capture()).wait_ticks == 20
+    mismatched = clock.capture()
+    mismatched["pending"][0]["wait_ticks"] = 60
+    with pytest.raises(ValueError, match="invalid restored"):
+        DecisionClock.restore(mismatched)

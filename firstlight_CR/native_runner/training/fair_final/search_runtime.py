@@ -10,11 +10,13 @@ from .visibility import validate_fair_view
 
 
 class FrozenSearchInference:
-    def __init__(self, model, *, checkpoint_sha, controller_sha, source_adapter=False):
+    def __init__(self, model, *, checkpoint_sha, controller_sha, source_adapter=False,
+            policy_adapter=None):
         self.model = model
         self.checkpoint_sha = require_sha(checkpoint_sha)
         self.controller_sha = require_sha(controller_sha)
         self.source_adapter = source_adapter
+        self.policy_adapter = policy_adapter
         if any(module.training for module in model.modules()):
             raise ValueError("search requires a frozen eval-mode model")
 
@@ -24,8 +26,12 @@ class FrozenSearchInference:
         with torch.inference_mode():
             if self.source_adapter:
                 return source_policy(self.model, information.frame, information.legality)
-            policies, logits = self.model(information.frame, [information.legality])
-            return policies[0], logits
+            model_input = information if hasattr(information, "hand") else information.frame
+            policies, logits = self.model(model_input, [information.legality])
+            policy = policies[0]
+            if self.policy_adapter is not None:
+                policy = self.policy_adapter(policy)
+            return policy, logits
 
     def sample(self, information, generator):
         with torch.inference_mode():

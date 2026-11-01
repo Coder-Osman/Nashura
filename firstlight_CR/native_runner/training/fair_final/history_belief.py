@@ -14,6 +14,7 @@ from ..fair_search.contracts import semantic_digest
 from .history import FairHistory, PublicDeployment
 from .native import FinalBattleEnv
 from .policy import FullAction
+from ..sspi.protocol import DELAY_SLOT_TO_INDEX
 from .rollout import FinalRollout
 from .search import split_seed
 from .visibility import event_visible_to_owner, validate_fair_view
@@ -62,8 +63,13 @@ def deployment_action(rollout, information, event):
     matches = []
     if event.card_id not in information.legality.card_ids:
         return None
+    delay_bin = duration // 2
+    if information.legality.plays.shape[-1] == 5:
+        delay_bin = DELAY_SLOT_TO_INDEX.get(delay_bin, -1)
     card_index = information.legality.card_ids.index(event.card_id)
-    for cell in torch.where(information.legality.plays[card_index, :, duration // 2])[0].tolist():
+    if not 0 <= delay_bin < information.legality.plays.shape[-1]:
+        return None
+    for cell in torch.where(information.legality.plays[card_index, :, delay_bin])[0].tolist():
         grid = event_cell_to_native(cell, owner=information.owner, board_width=18)
         command = ActionV1.play(information.owner, int(slot), grid, subcell_offset=offset, card_id=event.card_id)
         if tuple(environment._world_target(command)) == (event.x, event.y):
@@ -188,9 +194,11 @@ class HistoryBeliefFactory:
         prior="uniform-compatible-fixed-hog-initial-permutations", deck=list(HOG_DECK),
         execution="legal-reservations-only", hidden_plan="frozen-policy-conditioned-on-public-prefix"))
 
-    def __init__(self, native_factory, *, catalog, opponent, sidecar_factory):
+    def __init__(self, native_factory, *, catalog, opponent, sidecar_factory,
+            rollout_factory=FinalRollout):
         self.native_factory, self.catalog = native_factory, catalog
         self.opponent, self.sidecar_factory = opponent, sidecar_factory
+        self.rollout_factory = rollout_factory
 
     def create(self, history, *, seed):
         if not isinstance(history, FairHistory):
@@ -222,7 +230,8 @@ class HistoryBeliefFactory:
                     if player["owner"] == opponent))[0] != draw:
                 raise ValueError("conditioned opponent shuffle changed its semantics")
             native.start_atomic_steps()
-            rollout = FinalRollout(environment, catalog=self.catalog, execution_seed=split_seed(seed, "rollout"))
+            rollout = self.rollout_factory(environment, catalog=self.catalog,
+                execution_seed=split_seed(seed, "rollout"))
             return HistoryReplaySession(rollout, opening=history.opening, opponent=self.opponent,
                 seed=split_seed(seed, "opponent-history"), sidecar_factory=self.sidecar_factory)
         except BaseException:

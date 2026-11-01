@@ -1,8 +1,12 @@
 # Nashura
 
+## 2026-11-01：SSPI Mac Pilot 首个搜索根已验证
+
+已完成固定动作/手牌协议的定向验证，并在 macOS 宿主 + ARM64 Android Emulator 的真实原生引擎上完成一个 1024/1024 有效模拟搜索根，实测 712.48 秒；此根仅用于工程验收，不进入训练。CPU/MPS 小型对照选择 CPU。完整混合对局、自然终局 WDL 更新、checkpoint 恢复和无搜索评估仍待完成。详情见[阶段记录](docs/SSPI_MAC_SEARCH_P0_P1_2026-11-01.md)和[训练规格](docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md)。
+
 ## 2026-11-01：Mac 单机 SSPI 设计修订（仅文档）
 
-本轮训练设计固定为无英雄的 **2.6速猪**，不进行英雄技能执行或相关原生验收；模型和数据合同预留 `WAIT/PLAY/ABILITY` 三模式接口，本轮 `ABILITY` 始终掩码禁用。保留2/3张手牌空槽和延迟补牌、200ms五档出牌延迟、5%×1024稀疏搜索训练，另以40%×128作唯一框架对照。仅针对M4 Max 36GB Mac进行验证规划，**取消任何总训练时长、每实验组时长及自动到期停训硬限制**；引擎使用macOS上ARM64 Android Emulator，禁止把本实验转去VMware Ubuntu，并先复核仓库已有 [Mac本机AVD手册](firstlight_CR/docs/local_mac_capture_training.md)。详见 [SSPI Mac Pilot 训练规格](docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md)。**尚未修改训练代码或运行实验**。
+本轮训练设计固定为无英雄的 **2.6速猪**，不进行英雄技能执行或相关原生验收；模型和数据合同预留 `WAIT/PLAY/ABILITY` 三模式接口，本轮 `ABILITY` 始终掩码禁用。保留2/3张手牌空槽和延迟补牌、200ms五档出牌延迟、5%×1024稀疏搜索训练，另以40%×128作唯一框架对照。仅针对M4 Max 36GB Mac进行验证规划，**取消任何总训练时长、每实验组时长及自动到期停训硬限制**；引擎使用macOS上ARM64 Android Emulator，禁止把本实验转去VMware Ubuntu，并先复核仓库已有 [Mac本机AVD手册](firstlight_CR/docs/local_mac_capture_training.md)。详见 [SSPI Mac Pilot 训练规格](docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md)。该文档提交时尚未修改训练代码或运行实验；随后实测进度见本文件顶部阶段记录。
 
 
 ## 2026-10-29：Android ART 闭包启动边界

@@ -11,14 +11,16 @@ class Reservation:
     action: FullAction
     created_tick: int
     due_tick: int
+    wait_ticks: int = 60
 
     def __post_init__(self):
         if (type(self.identity) is not int or self.identity < 0 or type(self.owner) is not int
                 or self.owner not in (0, 1) or not isinstance(self.action, FullAction)
                 or type(self.created_tick) is not int or self.created_tick < 0
-                or type(self.due_tick) is not int):
+                or type(self.due_tick) is not int or type(self.wait_ticks) is not int
+                or self.wait_ticks < 1):
             raise ValueError("invalid reservation identity or timestamp")
-        duration = 60 if self.action.card_id is None else 2 * self.action.delay_slot
+        duration = self.wait_ticks if self.action.card_id is None else 2 * self.action.delay_slot
         if self.due_tick != self.created_tick + duration:
             raise ValueError("reservation deadline differs from its action")
 
@@ -26,7 +28,10 @@ class Reservation:
 class DecisionClock:
     schema = "fair-final-decision-clock.v1"
 
-    def __init__(self):
+    def __init__(self, *, wait_ticks=60):
+        if type(wait_ticks) is not int or wait_ticks < 1:
+            raise ValueError("positive WAIT duration required")
+        self.wait_ticks = wait_ticks
         self.tick = -1
         self.next_identity = 0
         self.pending = {}
@@ -71,8 +76,9 @@ class DecisionClock:
         if any(not isinstance(action, FullAction) or not legal(owner, action) for owner, action in actions.items()):
             raise ValueError("illegal decision; no reservation committed")
         for owner, action in sorted(actions.items()):
-            ticks = 60 if action.card_id is None else action.delay_slot * 2
-            self.pending[owner] = Reservation(self.next_identity, owner, action, self.tick, self.tick + ticks)
+            ticks = self.wait_ticks if action.card_id is None else action.delay_slot * 2
+            self.pending[owner] = Reservation(self.next_identity, owner, action, self.tick,
+                self.tick + ticks, wait_ticks=self.wait_ticks)
             self.next_identity += 1
         self.ready.clear()
 
@@ -96,21 +102,28 @@ class DecisionClock:
 
     def capture(self):
         return deepcopy(dict(schema=self.schema, tick=self.tick, next_identity=self.next_identity,
-            pending=[asdict(plan) for plan in self.pending.values()], ready=sorted(self.ready), evidence=self.evidence))
+            wait_ticks=self.wait_ticks, pending=[asdict(plan) for plan in self.pending.values()],
+            ready=sorted(self.ready), evidence=self.evidence))
 
     @classmethod
     def restore(cls, payload):
-        if set(payload) != {"schema", "tick", "next_identity", "pending", "ready", "evidence"} or payload["schema"] != cls.schema:
+        base_fields = {"schema", "tick", "next_identity", "pending", "ready", "evidence"}
+        if (set(payload) not in (base_fields, base_fields | {"wait_ticks"})
+                or payload["schema"] != cls.schema):
             raise ValueError("decision clock snapshot identity differs")
-        result = cls()
+        result = cls(wait_ticks=payload.get("wait_ticks", 60))
         result.tick, result.next_identity = payload["tick"], payload["next_identity"]
         if (type(result.tick) is not int or result.tick < -1 or type(result.next_identity) is not int
                 or result.next_identity < 0):
             raise ValueError("invalid restored clock counters")
         identities = set()
         for raw in payload["pending"]:
-            plan = Reservation(**{**raw, "action": FullAction(**raw["action"])})
-            if (plan.owner in result.pending or plan.due_tick <= result.tick or plan.identity >= result.next_identity
+            if raw.get("wait_ticks", 60) != result.wait_ticks:
+                raise ValueError("invalid restored reservation clock")
+            plan = Reservation(**{**raw, "wait_ticks": raw.get("wait_ticks", 60),
+                "action": FullAction(**raw["action"])})
+            if (plan.wait_ticks != result.wait_ticks or plan.owner in result.pending
+                    or plan.due_tick <= result.tick or plan.identity >= result.next_identity
                     or plan.created_tick > result.tick or plan.identity in identities):
                 raise ValueError("invalid restored reservation")
             identities.add(plan.identity)
