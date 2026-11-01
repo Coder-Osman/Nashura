@@ -1,10 +1,12 @@
 # 阶段成果与证据索引
 
-## 2026-11-02：SSPI 终局后自动流水线与续代恢复（工程验证；真实局进行中）
+## 2026-11-02：SSPI 终局自动流水线、配对评测恢复与续代（工程验证；真实局进行中）
 
-`experiment` 自动编排器等待首个采集器 PID 自然退出，并要求 episode manifest 为完整、可训练终局；当前运行 `sspi-mac-5pct128-20261101-v1` 使用 M4 Max macOS + ARM64 Android Emulator、CPU、`A_5PCT_128`（5% × 128）、seed `20261101` 和 persistent transport。采集器与编排器仍存活，状态为 `waiting/natural_terminal`，首局目录尚无终局清单。自然终局后会自动采集首代训练/验证局、执行搜索根 policy CE + terminal WDL CE 更新、保存并恢复 checkpoint，随后进行 32 组共 64 局关闭 MCTS 对局。上述后续阶段尚未实际启动，本记录不构成真实训练更新或评测结果。
+`experiment` 自动编排器等待首个采集器 PID 自然退出，并要求 episode manifest 为完整、可训练终局。当前运行 `sspi-mac-5pct128-20261101-v1` 使用 M4 Max macOS + ARM64 Android Emulator、CPU、`A_5PCT_128`（5% × 128）、seed `20261101` 和 persistent transport。最近只读检查时，采集器与首轮编排器仍存活，状态为 `waiting/natural_terminal`，首局目录未产生终局清单；现有进程使用启动时加载的旧代码。自然终局后，旧编排器会完成训练/验证采集、搜索根 policy CE + terminal WDL CE 更新、checkpoint 保存与恢复及原始关闭 MCTS 评测。原 `evaluation.json` 不足以证明换边局共享随机流。
 
-新增 `run_next_generation` 恢复入口：按身份和文件 SHA 校验父代记录/checkpoint，恢复模型与 AdamW 状态，在采集期冻结父策略，并将累计 optimizer step 写入下一代 checkpoint。隔离模拟验证覆盖父策略冻结、下一代实际梯度更新、checkpoint 恢复和 optimizer 状态续接；SSPI 定向测试 `25 passed`。公开历史回归 `821 tests, 0 failures, 27 skipped`，其他历史专项分别记录在 `publication/checks-*.xml`；这些历史检查不包含本次 SSPI 定向测试，也不代替真实引擎闭环。主工程检查 `212 passed`（23.82 秒），源码清单 2810 项通过，gitleaks 扫描约 38.57 MB 未发现凭据。续代入口尚未用于真实训练，关闭 MCTS 评测尚无结果。
+新增 `episode_seed_identity` 与 `random_stream_id`，把每对换边局的实际原生 match seed、rollout seed以及决策/搜索/行为随机流绑定为同一随机身份；增加 `--evaluate-generation N`，在核验 generation 记录、checkpoint SHA、optimizer恢复及 theta0 初始化后，补跑固定 32 对/64 局的严格无搜索评测。未来运行的首轮和续代编排器都直接调用同一评测器，只有训练更新、checkpoint恢复和配对评测完成才标记该代完整。对已有完整 episode 会核对 game、策略 SHA、seed、MCTS根数和运行身份；隔离或不完整目录不会被当成平局或覆盖。
+
+续代入口继续按身份及文件 SHA 校验父代 checkpoint，恢复模型与 AdamW 状态，采集期间冻结父策略，并将累计 optimizer step 写入下一代 checkpoint。隔离模拟覆盖父策略冻结、实际梯度更新、checkpoint恢复、theta0拒绝错误及两席共享 seed 配对；SSPI/时序增强定向测试 `53 passed`，Python 编译检查通过。发布检查通过：公开历史主组 `794 passed/27 skipped`，affordability `23 passed`、selection-timeout `82 passed`、position guards `15 passed/3 skipped`、live `25 passed/4 skipped`、dispatch `31 passed/3 skipped`、reservation `31 passed/2 skipped`、coordinates `38 passed/3 skipped`、collection-coordinator `65 passed`；主工程 `212 passed`，源码清单 `2810` 项，gitleaks 扫描 `38.64 MB` 无发现。真实 Mac 首局尚未自然终局，因此没有本次真实训练更新或配对评测证据，也不形成模型强度结论。
 
 ## 2026-11-02：SSPI 已执行动作的中间观测增密（工程验证）
 

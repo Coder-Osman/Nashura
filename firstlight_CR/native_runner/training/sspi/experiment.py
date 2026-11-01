@@ -15,7 +15,7 @@ import time
 import torch
 
 from native_runner.training.fair_search.contracts import semantic_digest
-from native_runner.training.sspi.collector import collect_episode
+from native_runner.training.sspi.collector import collect_episode, episode_seed_identity
 from native_runner.training.sspi.augmentation import TEMPORAL_AUX_WEIGHT, TEMPORAL_SCHEMA
 from native_runner.training.sspi.learning import (
     EFFECTIVE_BATCH,
@@ -149,7 +149,7 @@ def _write_status(run_dir, status, stage, **fields):
 
 
 def _collect_one(*, run_config, run_dir, game_id, episode_kind, model, device,
-        actual_port, belief_port, transport):
+        actual_port, belief_port, transport, random_stream_id=None):
     output = run_dir / "episodes" / game_id
     shared_model = None if isinstance(model, dict) else model
     owner_models = model if isinstance(model, dict) else None
@@ -159,6 +159,7 @@ def _collect_one(*, run_config, run_dir, game_id, episode_kind, model, device,
         transport=transport, episode_kind=episode_kind,
         search_probability=0. if episode_kind == "evaluation" else 0.05,
         temporal_augmentation=run_config.get("temporal_augmentation", True),
+        random_stream_id=random_stream_id,
         models_by_owner=owner_models, device=device,
         progress=lambda row: print(json.dumps(row, sort_keys=True, allow_nan=False), flush=True))
     return output, episode
@@ -169,6 +170,182 @@ def _generation_episode_id(kind, generation, index):
             or type(index) is not int or index < 1:
         raise ValueError("invalid continuation episode identity")
     return f"{kind}-g{generation:04d}-game-{index:04d}"
+
+
+def paired_scores_from_results(results, *, expected_pairs):
+    if type(expected_pairs) is not int or expected_pairs < 1 or len(results) != expected_pairs * 2:
+        raise ValueError("paired evaluation requires exactly two complete games per pair")
+    grouped, game_ids = {}, set()
+    for result in results:
+        pair = result.get("pair_index")
+        side = result.get("side")
+        score = result.get("score")
+        game_id = result.get("game_id")
+        if (type(pair) is not int or not 1 <= pair <= expected_pairs
+                or type(side) is not int or side not in (0, 1)
+                or result.get("trained_owner") != side
+                or type(game_id) is not str or not game_id or game_id in game_ids
+                or type(score) not in (int, float) or not 0. <= score <= 1.
+                or type(result.get("search_roots")) is not int
+                or result.get("search_roots") != 0
+                or result.get("search_probability") != 0.):
+            raise ValueError("paired evaluation result has an invalid side, score, or search count")
+        game_ids.add(game_id)
+        grouped.setdefault(pair, []).append(result)
+
+    pair_scores, stream_ids, native_seed_pairs = [], set(), set()
+    for pair in range(1, expected_pairs + 1):
+        games = grouped.get(pair, [])
+        if len(games) != 2 or {game.get("side") for game in games} != {0, 1}:
+            raise ValueError("paired evaluation is missing a side-swapped game")
+        first, second = sorted(games, key=lambda game: game["side"])
+        if ({first.get("trained_owner"), second.get("trained_owner")} != {0, 1}
+                or type(first.get("random_stream_id")) is not str
+                or not first.get("random_stream_id")
+                or first.get("random_stream_id") != second.get("random_stream_id")
+                or type(first.get("actual_match_seed")) is not int
+                or type(first.get("actual_rollout_seed")) is not int
+                or first.get("actual_match_seed") != second.get("actual_match_seed")
+                or first.get("actual_rollout_seed") != second.get("actual_rollout_seed")):
+            raise ValueError("side-swapped games do not share the same recorded random streams")
+        if first["random_stream_id"] in stream_ids:
+            raise ValueError("independent evaluation pairs reused a random stream identity")
+        stream_ids.add(first["random_stream_id"])
+        native_seeds = (first["actual_match_seed"], first["actual_rollout_seed"])
+        if native_seeds in native_seed_pairs:
+            raise ValueError("independent evaluation pairs reused an actual native seed pair")
+        native_seed_pairs.add(native_seeds)
+        pair_scores.append((first["score"] + second["score"]) / 2.)
+    return pair_scores
+
+
+def _run_paired_evaluation(*, run_config, run_dir, generation, trained_model,
+        trained_model_sha, theta0_model, theta0_sha, checkpoint_sha, actual_port,
+        belief_port, transport, evaluation_pairs, output_name):
+    if type(evaluation_pairs) is not int or evaluation_pairs < 1:
+        raise ValueError("paired evaluation requires at least one independent seed pair")
+    run_dir = Path(run_dir)
+    output_path = run_dir / output_name
+    if output_path.exists():
+        raise ValueError(f"paired evaluation output already exists: {output_path}")
+
+    results = []
+    for pair_index in range(evaluation_pairs):
+        pair_number = pair_index + 1
+        stream_id = f"sspi-eval-g{generation:04d}-pair-{pair_number:04d}"
+        for side in (0, 1):
+            game_number = pair_index * 2 + side + 1
+            game_id = f"E-paired-g{generation:04d}-game-{game_number:04d}"
+            trained_owner = side
+            models = {trained_owner: trained_model, 1 - trained_owner: theta0_model}
+            expected_models = {str(trained_owner): trained_model_sha,
+                str(1 - trained_owner): theta0_sha}
+            directory = run_dir / "episodes" / game_id
+            if directory.exists():
+                manifest = directory / "episode.json"
+                quarantine = directory / "quarantine.json"
+                if quarantine.exists() or not manifest.is_file():
+                    raise RuntimeError(f"paired evaluation episode needs inspection: {directory}")
+                metadata = json.loads(manifest.read_text())
+            else:
+                directory, metadata = _collect_one(run_config=run_config, run_dir=run_dir,
+                    game_id=game_id, episode_kind="evaluation", model=models, device="cpu",
+                    actual_port=actual_port, belief_port=belief_port, transport=transport,
+                    random_stream_id=stream_id)
+            _validate_episode(metadata, run_config=run_config, model_sha=theta0_sha,
+                episode_kind="evaluation", search_probability=0.)
+            identity = metadata["identity"]
+            if (identity.get("random_stream_id") != stream_id
+                    or identity.get("game_id") != game_id
+                    or identity.get("model_sha256_by_owner") != expected_models
+                    or type(identity.get("actual_match_seed")) is not int
+                    or type(identity.get("actual_rollout_seed")) is not int
+                    or type(metadata.get("search_roots")) is not int
+                    or metadata.get("search_roots") != 0):
+                raise ValueError("paired evaluation episode identity differs from its planned side/stream")
+            expected_seed_identity = episode_seed_identity(run_config["seed"],
+                run_id=run_config["run_id"], arm=run_config["arm"], game_id=game_id,
+                random_stream_id=stream_id)
+            if any(identity.get(key) != value for key, value in expected_seed_identity.items()):
+                raise ValueError("paired evaluation episode recorded unexpected random stream seeds")
+            winner = metadata["result"]["winner"]
+            if winner is not None and (type(winner) is not int or winner not in (0, 1)):
+                raise ValueError("paired evaluation episode has an invalid terminal winner")
+            score = 0.5 if winner is None else 1. if winner == trained_owner else 0.
+            result = dict(pair_index=pair_number, side=side, game_id=game_id,
+                trained_owner=trained_owner, winner=winner, score=score,
+                random_stream_id=identity["random_stream_id"],
+                actual_match_seed=identity["actual_match_seed"],
+                actual_rollout_seed=identity["actual_rollout_seed"],
+                search_roots=metadata["search_roots"],
+                search_probability=metadata["search_probability"],
+                episode=str(directory.relative_to(run_dir)),
+                episode_manifest_sha256=hashlib.sha256((directory / "episode.json").read_bytes()).hexdigest())
+            results.append(result)
+            _emit("paired_evaluation_game_complete", generation=generation,
+                pair=pair_number, side=side, games=len(results),
+                total_games=evaluation_pairs * 2, winner=winner, score=score)
+            _write_status(run_dir, "running", "paired_evaluation", generation=generation,
+                games=len(results), target_games=evaluation_pairs * 2,
+                completed_pairs=len({item["pair_index"] for item in results}))
+
+    pair_scores = paired_scores_from_results(results, expected_pairs=evaluation_pairs)
+    score = paired_score_interval(pair_scores,
+        seed=run_config["seed"] ^ generation ^ 0x53535049)
+    record = dict(schema="sspi-mac-pilot-paired-evaluation.v1",
+        run_id=run_config["run_id"], generation=generation,
+        trained_checkpoint_sha256=checkpoint_sha, theta0_sha256=theta0_sha,
+        protocol=dict(search_probability=0., temperature=1., paired_seeds=evaluation_pairs,
+            games=len(results), games_per_seed=2, pairing_key="random_stream_id",
+            deck=list(run_config["deck"])), pair_scores=pair_scores, score=score,
+        results=results)
+    _atomic_json(output_path, record)
+    return record
+
+
+def evaluate_generation(*, run_dir, generation, actual_port=26789, belief_port=26790,
+        evaluation_pairs=32, transport=None):
+    """Restore a completed generation and run its resumable no-search seed-pair evaluation."""
+    run_dir = Path(run_dir)
+    config = json.loads((run_dir / "run_config.json").read_text())
+    if (type(generation) is not int or generation < 1
+            or config.get("schema") != "sspi-mac-pilot-run.v1"
+            or config.get("arm") != "A_5PCT_128" or config.get("device") != "cpu"
+            or type(evaluation_pairs) is not int or evaluation_pairs < 1):
+        raise ValueError("generation evaluation identity or execution plan differs from the Mac run")
+    status_path = run_dir / "postgame_status.json"
+    status = json.loads(status_path.read_text()) if status_path.exists() else {}
+    if status.get("status") == "running":
+        owner_pid = status.get("owner_pid")
+        if type(owner_pid) is not int:
+            raise RuntimeError("cannot verify the owner of the active SSPI orchestrator")
+        if _pid_command(owner_pid):
+            raise RuntimeError("an SSPI postgame or continuation orchestrator is still running")
+    if transport is not None and transport != config.get("transport"):
+        raise ValueError("generation evaluation transport differs from the frozen run configuration")
+    bundle = production_semantic_bundle()
+    trained_model, _optimizer, generation_record, restored = _restore_generation_checkpoint(
+        run_dir, generation, config["run_id"], bundle=bundle)
+    baseline = initialize_fresh_model(config["seed"], device="cpu", bundle=bundle).eval()
+    baseline_sha = semantic_digest(baseline.state_dict())
+    initialization = config.get("initialization", {})
+    initialization_path = Path(initialization.get("path", ""))
+    if (not initialization_path.is_file()
+            or hashlib.sha256(initialization_path.read_bytes()).hexdigest() != initialization.get("file_sha")
+            or baseline_sha != initialization.get("model_sha")
+            or baseline_sha != generation_record.get("theta0_sha256")):
+        raise ValueError("restored theta0 differs from the run initialization identity")
+    for model in (trained_model, baseline):
+        model.eval()
+        for parameter in model.parameters():
+            parameter.requires_grad_(False)
+    output_name = f"evaluation-paired-generation-{generation:04d}.json"
+    return _run_paired_evaluation(run_config=config, run_dir=run_dir, generation=generation,
+        trained_model=trained_model, trained_model_sha=restored["model_sha"],
+        theta0_model=baseline, theta0_sha=baseline_sha,
+        checkpoint_sha=restored["file_sha"], actual_port=actual_port,
+        belief_port=belief_port, transport=config["transport"],
+        evaluation_pairs=evaluation_pairs, output_name=output_name)
 
 
 def _restore_generation_checkpoint(run_dir, generation, run_id, *, bundle):
@@ -201,8 +378,8 @@ def _restore_generation_checkpoint(run_dir, generation, run_id, *, bundle):
 
 
 def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
-        belief_port=26790, train_games=16, validation_games=4):
-    """Collect one frozen-policy generation, update it, and verify its checkpoint."""
+        belief_port=26790, train_games=16, validation_games=4, evaluation_pairs=32):
+    """Collect, train, restore, and no-search evaluate one frozen-policy generation."""
     run_dir = Path(run_dir)
     config = json.loads((run_dir / "run_config.json").read_text())
     status_path = run_dir / "postgame_status.json"
@@ -223,7 +400,8 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
                 and status.get("generation") != parent_generation)
             or (status.get("status") == "failed"
                 and status.get("generation") not in (None, parent_generation))
-            or train_games < 1 or validation_games < 1):
+            or train_games < 1 or validation_games < 1
+            or type(evaluation_pairs) is not int or evaluation_pairs < 1):
         raise ValueError("continuation identity or parent completion state differs")
     generation = parent_generation + 1
     generation_record = run_dir / f"generation-{generation:04d}.json"
@@ -361,8 +539,25 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
         exposure_limit=2, max_observed_exposure=max(exposure_counts),
         temporal_augmentation=collection_config["temporal_augmentation"])
     _atomic_json(generation_record, record)
+    baseline = initialize_fresh_model(config["seed"], device="cpu", bundle=bundle).eval()
+    baseline_sha = semantic_digest(baseline.state_dict())
+    if baseline_sha != initialization_model_sha:
+        raise ValueError("continuation theta0 differs from the original initialization")
+    for parameter in baseline.parameters():
+        parameter.requires_grad_(False)
+    evaluation = _run_paired_evaluation(run_config=config, run_dir=run_dir,
+        generation=generation, trained_model=restored, trained_model_sha=checkpoint["model_sha"],
+        theta0_model=baseline, theta0_sha=baseline_sha,
+        checkpoint_sha=checkpoint["file_sha"], actual_port=actual_port,
+        belief_port=belief_port, transport=config["transport"],
+        evaluation_pairs=evaluation_pairs,
+        output_name=f"evaluation-paired-generation-{generation:04d}.json")
+    record["evaluation"] = dict(path=f"evaluation-paired-generation-{generation:04d}.json",
+        score=evaluation["score"], games=evaluation["protocol"]["games"])
+    _atomic_json(generation_record, record)
     _write_status(run_dir, "complete", "generation_complete", generation=generation,
-        training_record=generation_record.name, parent_generation=parent_generation)
+        training_record=generation_record.name, evaluation_record=record["evaluation"]["path"],
+        parent_generation=parent_generation)
     _emit("continuation_generation_complete", generation=generation,
         checkpoint=str(checkpoint_path), model_sha=checkpoint["model_sha"],
         optimizer_steps=restoration["optimizer_steps"], search_roots=len(train_rows))
@@ -496,45 +691,20 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
     _emit("checkpoint_restored", path=str(checkpoint_path), model_sha=checkpoint["model_sha"],
         optimizer_steps=len(updates), validation_roots=len(validation_rows))
 
-    evaluation_root = run_dir / "episodes"
-    pair_scores, game_results = [], []
-    _write_status(run_dir, "running", "evaluation", games=0, target_games=evaluation_pairs * 2)
-    for pair_index in range(evaluation_pairs):
-        scores = []
-        for side in (0, 1):
-            game_index = pair_index * 2 + side + 1
-            game_id = f"E-game-{game_index:04d}"
-            trained_owner = side
-            models = {trained_owner: restored, 1 - trained_owner: baseline}
-            directory, metadata = _collect_one(run_config=config, run_dir=run_dir,
-                game_id=game_id, episode_kind="evaluation", model=models, device="cpu",
-                actual_port=actual_port, belief_port=belief_port, transport=config["transport"])
-            if metadata["search_roots"] != 0 or metadata["search_probability"] != 0.:
-                raise ValueError("no-search evaluation unexpectedly ran MCTS")
-            _validate_episode(metadata, run_config=config, model_sha=baseline_sha,
-                episode_kind="evaluation", search_probability=0.)
-            winner = metadata["result"]["winner"]
-            score = 0.5 if winner is None else 1. if winner == trained_owner else 0.
-            scores.append(score)
-            game_results.append(dict(game_id=game_id, trained_owner=trained_owner,
-                winner=winner, score=score, episode=str(directory.relative_to(evaluation_root.parent))))
-            _emit("evaluation_game_complete", game_id=game_id, pair=pair_index + 1,
-                games=len(game_results), total_games=evaluation_pairs * 2, winner=winner,
-                trained_owner=trained_owner, score=score)
-            _write_status(run_dir, "running", "evaluation", games=len(game_results),
-                target_games=evaluation_pairs * 2, completed_pairs=len(pair_scores))
-        pair_scores.append(sum(scores) / 2.)
-
-    interval = paired_score_interval(pair_scores, seed=config["seed"] ^ 0x53535049)
-    evaluation_record = dict(schema="sspi-mac-pilot-evaluation.v1", run_id=config["run_id"],
-        generation=1, trained_checkpoint_sha256=checkpoint["file_sha"], theta0_sha256=baseline_sha,
-        protocol=dict(search_probability=0., temperature=1., paired_seeds=evaluation_pairs,
-            games=len(game_results), games_per_seed=2, deck=list(config["deck"])),
-        pair_scores=pair_scores, score=interval, results=game_results)
-    _atomic_json(run_dir / "evaluation.json", evaluation_record)
+    evaluation_record = _run_paired_evaluation(run_config=config, run_dir=run_dir,
+        generation=1, trained_model=restored, trained_model_sha=checkpoint["model_sha"],
+        theta0_model=baseline, theta0_sha=baseline_sha,
+        checkpoint_sha=checkpoint["file_sha"], actual_port=actual_port,
+        belief_port=belief_port, transport=config["transport"],
+        evaluation_pairs=evaluation_pairs, output_name="evaluation-paired-generation-0001.json")
+    training_record["evaluation"] = dict(path="evaluation-paired-generation-0001.json",
+        score=evaluation_record["score"], games=evaluation_record["protocol"]["games"])
+    _atomic_json(run_dir / "generation-0001.json", training_record)
     _write_status(run_dir, "complete", "finished", generation=1,
-        training_record="generation-0001.json", evaluation_record="evaluation.json")
-    _emit("postgame_pipeline_complete", score=interval, games=len(game_results),
+        training_record="generation-0001.json",
+        evaluation_record="evaluation-paired-generation-0001.json")
+    _emit("postgame_pipeline_complete", score=evaluation_record["score"],
+        games=evaluation_record["protocol"]["games"],
         checkpoint=str(checkpoint_path))
     return dict(training=training_record, evaluation=evaluation_record)
 
@@ -544,7 +714,9 @@ def main():
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--first-episode-dir", type=Path)
     parser.add_argument("--wait-pid", type=int)
-    parser.add_argument("--parent-generation", type=int)
+    generation_mode = parser.add_mutually_exclusive_group()
+    generation_mode.add_argument("--parent-generation", type=int)
+    generation_mode.add_argument("--evaluate-generation", type=int)
     parser.add_argument("--actual-port", type=int, default=26789)
     parser.add_argument("--belief-port", type=int, default=26790)
     parser.add_argument("--train-games", type=int, default=16)
@@ -553,10 +725,20 @@ def main():
     parser.add_argument("--poll-seconds", type=float, default=15.)
     args = parser.parse_args()
     try:
-        if args.parent_generation is not None:
+        if args.evaluate_generation is not None:
+            record = evaluate_generation(run_dir=args.run_dir,
+                generation=args.evaluate_generation, actual_port=args.actual_port,
+                belief_port=args.belief_port, evaluation_pairs=args.evaluation_pairs)
+            _write_status(args.run_dir, "complete", "generation_evaluation_complete",
+                generation=args.evaluate_generation,
+                evaluation_record=f"evaluation-paired-generation-{args.evaluate_generation:04d}.json")
+            _emit("generation_evaluation_complete", generation=args.evaluate_generation,
+                score=record["score"], games=record["protocol"]["games"])
+        elif args.parent_generation is not None:
             run_next_generation(run_dir=args.run_dir, parent_generation=args.parent_generation,
                 actual_port=args.actual_port, belief_port=args.belief_port,
-                train_games=args.train_games, validation_games=args.validation_games)
+                train_games=args.train_games, validation_games=args.validation_games,
+                evaluation_pairs=args.evaluation_pairs)
         else:
             if args.first_episode_dir is None or args.wait_pid is None:
                 parser.error("initial postgame run requires --first-episode-dir and --wait-pid")

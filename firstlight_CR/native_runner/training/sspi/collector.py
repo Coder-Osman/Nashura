@@ -70,6 +70,16 @@ def decision_gate(seed, *, run_id, arm, game_id, owner, decision_index, probabil
     return random.Random(gate_seed).random() < probability, gate_seed
 
 
+def episode_seed_identity(seed, *, run_id, arm, game_id, random_stream_id=None):
+    stream_id = game_id if random_stream_id is None else random_stream_id
+    if (type(stream_id) is not str or not stream_id or len(stream_id) > 160
+            or stream_id.strip() != stream_id):
+        raise ValueError("random stream identity must be a non-empty canonical string")
+    return dict(random_stream_id=stream_id,
+        actual_match_seed=split_seed(seed, "actual-match", run_id, arm, stream_id) % (2**31 - 1),
+        actual_rollout_seed=split_seed(seed, "actual-rollout", run_id, arm, stream_id))
+
+
 def _atomic_json(path, value):
     destination = Path(path)
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -168,7 +178,7 @@ def _observe_histories(rollout, histories):
 def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_id,
         seed=20261101, model=None, models_by_owner=None, device="cpu", host="127.0.0.1",
         transport="legacy", search_probability=None, episode_kind="training", progress=None,
-        temporal_augmentation=True):
+        temporal_augmentation=True, random_stream_id=None):
     """Collect one complete native match; incomplete matches are quarantined."""
     if (arm not in ARM_CONFIG or actual_port == belief_port or type(seed) is not int or seed < 0
             or transport not in ("legacy", "persistent")):
@@ -190,6 +200,8 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
     if ((episode_kind == "evaluation") != (search_probability == 0.)
             or (episode_kind == "training" and search_probability == 0.)):
         raise ValueError("only evaluation episodes may disable MCTS")
+    seed_identity = episode_seed_identity(seed, run_id=run_id, arm=arm, game_id=game_id,
+        random_stream_id=random_stream_id)
     training_admissible = episode_kind == "training"
     if model is not None and models_by_owner is not None:
         raise ValueError("provide either one shared model or owner-specific models")
@@ -231,8 +243,12 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         wait_ticks=20, wake_refills=True, search_sha=search_sha, source_sha=_source_sha(),
         search_probability=search_probability, episode_kind=episode_kind,
         temporal_augmentation=TEMPORAL_SCHEMA if augmenter is not None else None,
+        random_stream_id=seed_identity["random_stream_id"],
+        actual_match_seed=seed_identity["actual_match_seed"],
+        actual_rollout_seed=seed_identity["actual_rollout_seed"],
         native_transport=transport))
     identity = dict(run_id=run_id, arm=arm, game_id=game_id, seed=seed,
+        **seed_identity,
         model_sha256=model_sha, controller_sha256=controller_sha,
         model_sha256_by_owner=model_sha_by_owner,
         controller_sha256_by_owner={str(key): value for key, value in controller_sha_by_owner.items()},
@@ -253,7 +269,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
     started = time.monotonic()
     try:
         environment.reset(match_config=MatchConfig(deck0=HOG_DECK, deck1=HOG_DECK,
-                seed=split_seed(seed, "actual-match", run_id, arm, game_id) % (2**31 - 1),
+                seed=seed_identity["actual_match_seed"],
                 end_tick=NATIVE_FINALIZATION_DEADLINE_TICK, **tournament_level_kwargs()),
             options=dict(render_mode="headless", decision_ticks=1, event_driven_decisions=False,
                 allow_initial_remaining_runtime_rejections=True))
@@ -261,7 +277,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         engine_sha = actual_native.attest().libg_sha256
         identity["engine_sha256"] = engine_sha
         rollout = make_sspi_rollout(environment, catalog=bundle.card_catalog,
-            execution_seed=split_seed(seed, "actual-rollout", run_id, arm, game_id))
+            execution_seed=seed_identity["actual_rollout_seed"])
         opening_information = rollout.freeze_due_information()
         if set(opening_information) != {0, 1}:
             raise ValueError("native opening did not freeze both players")
@@ -297,7 +313,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                     hand_count = str(information.hand.ready_hand_count)
                     counters["ready_hand_counts"][hand_count] = counters["ready_hand_counts"].get(hand_count, 0) + 1
                     search_selected, gate_seed = decision_gate(seed, run_id=run_id, arm=arm,
-                        game_id=game_id, owner=owner, decision_index=index,
+                        game_id=seed_identity["random_stream_id"], owner=owner, decision_index=index,
                         probability=search_probability)
                     if search_selected:
                         history = histories[owner].capture(information)
@@ -311,13 +327,15 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                                 sidecar_factory=BattleEnvSidecar,
                                 rollout_factory=make_sspi_rollout)
                             belief_provider = SSPIHistorySearchProvider(factory, history=history,
-                                seed=split_seed(seed, "history-provider", run_id, arm, game_id, owner))
+                                seed=split_seed(seed, "history-provider", run_id, arm,
+                                    seed_identity["random_stream_id"], owner))
                             belief_owner = owner
                         else:
                             belief_provider.update_history(history)
-                        search_seed = split_seed(seed, "sspi-search.v1", run_id, arm, game_id, owner, index)
+                        search_seed = split_seed(seed, "sspi-search.v1", run_id, arm,
+                            seed_identity["random_stream_id"], owner, index)
                         behavior_seed = split_seed(seed, "sspi-search-behavior.v1", run_id, arm,
-                            game_id, owner, index)
+                            seed_identity["random_stream_id"], owner, index)
                         outcome = CompletedBoundarySearch(belief_provider,
                             inference_by_owner[0], inference_by_owner[1],
                             limits=limits).run(information, seed=search_seed,
@@ -347,13 +365,14 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                         selection_seed = behavior_seed
                     else:
                         action_generator = torch.Generator(device="cpu").manual_seed(
-                            split_seed(seed, "sspi-direct-action.v1", run_id, arm, game_id, owner, index))
+                            split_seed(seed, "sspi-direct-action.v1", run_id, arm,
+                                seed_identity["random_stream_id"], owner, index))
                         policy, _ = inference_by_owner[owner].predict(information)
                         action, _ = policy.sample(action_generator)
                         counters["direct"][str(owner)] += 1
                         decision_mode = "DIRECT"
                         selection_seed = split_seed(seed, "sspi-direct-action.v1", run_id, arm,
-                            game_id, owner, index)
+                            seed_identity["random_stream_id"], owner, index)
                     action = _native_execution_action(action, mode=decision_mode)
                     if not information.legality.legal(action):
                         raise ValueError("SSPI actor selected an illegal native action")
@@ -484,6 +503,7 @@ def main():
     parser.add_argument("--arm", choices=tuple(ARM_CONFIG), default="A_5PCT_128")
     parser.add_argument("--game-id", required=True)
     parser.add_argument("--seed", type=int, default=20261101)
+    parser.add_argument("--random-stream-id")
     parser.add_argument("--device", choices=("cpu", "mps"), default="cpu")
     parser.add_argument("--transport", choices=("legacy", "persistent"), default="legacy")
     parser.add_argument("--host", default="127.0.0.1")
@@ -495,6 +515,7 @@ def main():
     result = collect_episode(actual_port=args.actual_port, belief_port=args.belief_port,
         output_dir=args.output_dir, run_id=args.run_id, arm=args.arm,
         game_id=args.game_id, seed=args.seed, device=args.device, host=args.host,
+        random_stream_id=args.random_stream_id,
         transport=args.transport, progress=progress,
         temporal_augmentation=not args.no_temporal_augmentation)
     print(json.dumps(result, sort_keys=True), flush=True)

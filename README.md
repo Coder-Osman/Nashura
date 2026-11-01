@@ -2,7 +2,7 @@
 
 ## 2026-11-02：SSPI 自然终局后自动闭环（首局运行中）
 
-Mac 单机 `A_5PCT_128` 流水线已启动并等待首局自然终局；只有完整且 `training_admissible=true` 的清单才会触发后续流程。终局后将自动完成冻结策略训练/验证采集、首代搜索根更新、checkpoint 保存与恢复，以及关闭 MCTS 的 32 组共 64 局评测。当前尚无终局、参数更新、checkpoint 或评测结果。新增后续代际 checkpoint 恢复入口，并以模拟代际测试验证父策略冻结和 optimizer 状态续接；这不代表真实续代或模型强度提升。发布检查：SSPI 定向测试 25 passed、公开历史套件 821 passed/27 skipped、主工程 212 passed、源码清单 2810 项通过，gitleaks 未发现凭据。详情见[阶段记录](docs/RESULTS.md)。
+Mac 单机 `A_5PCT_128` 流水线正在等待首局自然终局；完整、可训练的 episode 才会触发冻结策略下的训练/验证采集、搜索根更新、checkpoint 保存与恢复。补齐严格配对评测恢复入口：从已验证代际 checkpoint 恢复 trained policy 与随机初始化 `theta0`，按同一原生 match/rollout seed 换边执行 32 对共 64 局无搜索评测；首轮和后续代完成训练、验证、checkpoint 恢复与配对评测后才标记完成。当前真实首局及启动时的旧编排器仍在运行，尚无真实训练更新或评测结果；heartbeat 会在旧首轮结束后检查 checkpoint 并自动补跑严格配对评测，再续接完整代际。SSPI/时序增强定向测试 53 passed；本次公开历史主组 794 passed/27 skipped、附加专项 310 passed/15 skipped，主工程 212 passed、源码清单 2810 项，gitleaks 扫描 38.64 MB 无发现。详情见[阶段记录](docs/RESULTS.md)。
 
 ## 2026-11-02：SSPI 已执行动作的中间观测增密（工程验证）
 

@@ -1,10 +1,11 @@
 # 变更记录
 
-## 2026-11-02：SSPI 终局自动后续与 checkpoint 续代入口
+## 2026-11-02：SSPI 终局自动后续与配对评测恢复
 
-- 首局自然完整终局后自动进入训练/验证采集、首代搜索根更新、checkpoint 保存/恢复和关闭 MCTS 的 32 组/64 局评测；截断局不准入。
-- 新增后续代际父 checkpoint SHA/身份校验、冻结采集、optimizer 状态恢复与累计 step 验证。
-- SSPI 定向测试 25 passed；公开历史回归 821 passed、27 skipped、0 failed；主工程 212 passed；源码清单 2810 项通过；gitleaks 未发现凭据。自动流程目前等待首局自然终局，未产生真实更新、checkpoint 或评测结论。
+- 自然完整终局后自动执行训练/验证采集、搜索根更新、checkpoint 保存/恢复及关闭 MCTS 评测；截断局不准入。
+- 配对评测现在通过 `random_stream_id` 派生实际原生 match/rollout seeds，使每个 seed pair 两场换边局共享同一原生随机流；每个完整 generation checkpoint 可用 `--evaluate-generation` 独立恢复并继续评测。
+- 后续代际从父 checkpoint 恢复模型和 AdamW 状态，采集期间冻结策略；每代在有效更新、checkpoint 保存/恢复和 32 对/64 局无搜索评测完成后才标记完成。
+- SSPI/时序增强定向测试 53 passed；本次公开历史主组 794 passed/27 skipped、附加专项 310 passed/15 skipped，主工程 212 passed，源码清单 2810 项通过，gitleaks 扫描 38.64 MB 无发现。真实 Mac 首局仍在运行，尚无本次真实更新或配对评测结果。
 
 ## 2026-11-02：SSPI 已执行动作的中间观测增密（工程验证）
 
