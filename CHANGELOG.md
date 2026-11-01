@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-11-01：SSPI Mac Pilot 设计缩窄为 Hog-only
+
+- 修订 `docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md` 至 v1.1：只训练固定2.6速猪，删除本轮真实英雄执行、英雄轮转与技能回执的验收要求。
+- 保留 `WAIT/PLAY/ABILITY` 版本化动作类型、空能力候选/掩码以及未来来源指针接口，使未来新增英雄不需要重设计网络主干和训练损失。
+- 保留2/3张实际手牌、延迟补入和 MCTS 与真实对局一致性检查；Mac单机、单模型、5%×1024与40%×128对照不变。
+- **仅文档变更、未执行新训练与原生实测；冻结实验未修改。**
+
+
 ## 2026-10-29：Android ART 闭包与 app_process Binder 阻塞
 
 - 在同构 Ubuntu ARM64 guest 的 user/mount namespace 中重建含 boot image 的 ART 闭包；`/proc` bind mount、`pivot_root` 和 linker NEEDED 解析通过。

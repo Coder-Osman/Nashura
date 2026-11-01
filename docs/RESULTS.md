@@ -1,5 +1,12 @@
 # 阶段成果与证据索引
 
+## 2026-11-01：SSPI Mac Pilot 设计状态（非实战结果）
+
+已完成文档修订：本轮仅固定2.6速猪、无英雄技能；3模式动作协议保留ABILITY扩展入口且当前始终掩码；2/3张手牌与延迟补牌仍是正确性门槛。详见 [训练规格 v1.1](SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md) 与 [术语](../CONTEXT.md)。
+
+状态：`DESIGN_REVISED / IMPLEMENTATION_NOT_RUN / NATIVE_1024_NOT_RUN / LEARNING_NOT_RUN`。未在用户Mac上运行或完成性能验收；不声明胜率提升，也不修改旧报告的历史结论。
+
+
 ## 2026-10-29：Android ART 闭包启动与 Binder 阻塞
 
 同构 Ubuntu ARM64 guest 中，ART 闭包完成 `/proc` bind mount、`pivot_root` 及 linker
