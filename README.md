@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-11-01：SSPI搜索性能优化完成Mac受控实测（训练未完成）
+
+在Mac M4 Max + `astral-api30` AVD 上完成相同FAIR冻结决策状态的1024根对照：base legacy 486.01秒，PR legacy 470.88秒，PR显式persistent `session-v1` 403.81秒。三组均1024/1024有效且完整根访问分布、动作和搜索身份一致；persistent相对PR legacy墙钟减少14.2%。默认transport仍为legacy，P2完整训练对局、参数更新及无搜索评估仍未完成。详见[性能实测与复核记录](docs/SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md)。
+
+
 ## 2026-11-01：SSPI Mac Pilot 首个搜索根已验证
 
 已完成固定动作/手牌协议的定向验证，并在 macOS 宿主 + ARM64 Android Emulator 的真实原生引擎上完成一个 1024/1024 有效模拟搜索根，实测 712.48 秒；此根仅用于工程验收，不进入训练。CPU/MPS 小型对照选择 CPU。完整混合对局、自然终局 WDL 更新、checkpoint 恢复和无搜索评估仍待完成。详情见[阶段记录](docs/SSPI_MAC_SEARCH_P0_P1_2026-11-01.md)和[训练规格](docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md)。

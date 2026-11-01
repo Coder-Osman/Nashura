@@ -1,5 +1,10 @@
 # 阶段成果与证据索引
 
+## 2026-11-01：SSPI搜索性能优化（限定工程子项，实机验证通过）
+
+新增条件概率缓存、向量化稳定候选排序、候选/树选择时间、真实tick/RPC及对手推理计时，并在M4 Max Android AVD完成同FAIR根1024对照。base legacy 486.01秒、PR legacy 470.88秒、PR persistent 403.81秒；三组完整访问分布和selected action一致、均1024/1024有效。session-v1跨snapshot/restore/observe-atomic状态等价门通过，默认仍为legacy。性能与嵌套时间证据见[实测记录](SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md)。工程子项`SEARCH_PERFORMANCE_CONTROLLED_AVD_PASS`；P2完整混合对局、P3参数更新/checkpoint恢复和P4关闭MCTS评测仍未运行，不构成整体训练验收或模型强度结论。
+
+
 ## 2026-11-01：SSPI 动作协议与真实 1024 搜索根（限定工程子项）
 
 在 Apple M4 Max 的 macOS ARM64 Android Emulator 上完成 SSPI Hog 动作/手牌协议定向回归和首个真实 PUCT 搜索根：7,874,126 参数，1024/1024 有效模拟，712.48 秒，0 次未完成边丢弃；根 FAIR 状态恢复一致，独立信念快照已释放。成本分项为转移495.44秒、推理94.34秒、快照恢复16.62秒、信念构造1.92秒。CPU/MPS 小型梯度步中位数为0.174/0.217秒，选用CPU。定向测试73 passed，编译与差异检查通过。该根为 `training_admissible=false` 的独立工程验收；完整混合对局、终局训练更新、checkpoint恢复和关闭MCTS评估未运行，不构成整体门或模型强度结论。详见[阶段报告](SSPI_MAC_SEARCH_P0_P1_2026-11-01.md)。

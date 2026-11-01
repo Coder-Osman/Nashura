@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-11-01：SSPI 搜索性能优化与 M4 Max AVD 受控验证
+
+- 每个SSPI策略实例缓存条件概率，减少候选生成中重复的mode/card/cell/delay计算；将稳定排序改为PyTorch向量化实现，保留同分索引升序。
+- 1024次搜索审计候选生成、PUCT选择、真实推进tick、native RPC及对手推理嵌套时间；支持探针显式选择legacy或session-v1持久控制连接，默认legacy。
+- Mac M4 Max/ARM64 AVD同FAIR决策状态完整根对照：base legacy 486.01秒、PR legacy 470.88秒、PR persistent 403.81秒，三组1024/1024有效且完整访问分布相同；persistent较PR legacy节省14.2%。
+- 快照/restore/observe-atomic及socket复用等价检查、性能口径和局限记录见[实测报告](docs/SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md)。训练协议、搜索预算、FAIR可见性及原生游戏逻辑保持不变；P2/P3/P4仍未完成。
+
+
 ## 2026-11-01：SSPI Mac Pilot P0/P1 搜索阶段
 
 - 新增阶段实现和证据摘要：Hog-only tagged action/hand-refill 协议、固定 1024/128 完成搜索预算接口及定向回归。
