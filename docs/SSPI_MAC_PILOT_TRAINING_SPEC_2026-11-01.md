@@ -1,9 +1,9 @@
 # Nashura：Mac 单机稀疏搜索训练验证规格
 
-> 版本：`sspi-mac-pilot.v1.1` · 2026-11-01  
+> 版本：`sspi-mac-pilot.v1.2` · 2026-11-01  
 > 定位：实施用训练设计，不是已实现、已跑通或已证明有效的训练结果。  
 > 代码阅读基准：`Coder-Osman/Nashura main@5da75d6591fd5cf68c168d293a3b8d7078a2d96a`。  
-> 唯一计算设备：用户的 Apple M4 Max / 36 GB 统一内存 Mac。不得假定远程 GPU、五机集群或额外服务器可用。  
+> 唯一计算设备：用户的 Apple M4 Max / 36 GB 统一内存 Mac；真实原生游戏引擎**优先使用 macOS 上运行的 ARM64 Android Emulator（AVD）**，不是 VMware Ubuntu。不得假定远程 GPU、五机集群或额外服务器可用。  
 > 本文取代此前 SSPI v1/v2 中的多架构、多参数量、历史 token、GRU、海量评测与集群部署建议；不修改历史实验事实。
 
 ## 1. 本次究竟验证什么
@@ -229,29 +229,52 @@ train/validation/test以整局及配对种子组划分，双方同局不跨分�
 
 随机WDL可能让1024次模拟稳定放大错误估值，全部draw也可能令学习停滞。记录自然胜/平/负、根Q/访问熵、终局叶比例和实际前瞻游戏时长。没有学习信号时诚实归类为冷启动/标签质量瓶颈，不临时加载旧模型或把95%直出步加入训练。
 
-## 9. Mac 单机部署与成本边界
+## 9. Mac 单机 Android Emulator 部署与成本边界
 
-### 9.1 拓扑固定，不做并发扫描
+### 9.1 运行拓扑：Mac 宿主 + 本机 ARM64 Android Emulator（**不使用 Ubuntu VMware**）
 
 ```text
-Mac 宿主：单个 Python 调度/推理/训练进程，PyTorch MPS（通过检查后）
-    ↕ 复用已有本机通信协议
-本机已可用 ARM64 引擎环境：一局真实比赛 + 按需信念分支
+macOS / Apple Silicon M4 Max / 36 GB Unified Memory
+  ├─ Python 控制器、冻结 Policy/Value 推理、训练器（CPU 或 MPS，按实测）
+  └─ adb forward / localhost TCP 接口
+        ↓
+本机 Android Emulator：arm64-v8a AVD（既有 astral-api30 优先）
+  ├─ Engine 0：真实完整对局
+  ├─ Engine 1：玩家0独立信念世界
+  └─ Engine 2：玩家1独立信念世界
 ```
 
-复用用户现有可运行的 ARM64 Linux guest/原生引擎闭包，不为本实验重新推进Binder清理、macOS原生移植或重写战斗引擎。ARM64指令集相同不代表Android ELF `.so`可以不做运行时适配直接由macOS加载。
+**硬约束**：不启动或 SSH 连接 VMware Fusion 的 Ubuntu/Linux guest，不使用 `vmrun`、`ssh` 到该 guest、Linux/Bionic headless 运行包或 QEMU x86 ARM 翻译链路作为本次训练入口。它们属于此前**独立的脱离 Android 研究主线**，与本次 Mac AVD Pilot 隔离。已有 Linux guest/实例不要关闭、清理、重建或改动。若 AVD 路径经实测不可用，仅记录具体阻塞，只有用户明确批准才能改用 VMware 或其他后端。
 
-默认一个实际对局actor；最多保留双方各一个信念引擎，即最多三个独占引擎会话。内存不足时复用一个按需重建的信念会话，保持相同信息和搜索语义；不增加并发寻找极限。若既有后端必须独占slot0进行全局快照，不混用其槽位。
+**不是从零部署**：仓库已经有 [M4 Max 本机 ARM64 AVD 实测手册](../firstlight_CR/docs/local_mac_capture_training.md)，记录了 `~/Library/Android/sdk`、`system-images;android-30;google_apis;arm64-v8a`、`astral-api30`、`adb`、原生 probe 的 ARM64 TBI tag 兼容与 `configure_emulator_engine_guests.py`。这份手册是**历史已运行记录**，本机实际 AVD、APK、资源和进程状态先检查，不能假设今天全部仍就绪。
 
-训练与采集串行分阶段；训练阶段不继续跑自博弈，推理使用冻结模型。不要在没有GPU透传证据的Linux虚拟机里假定能用宿主MPS；MPS模型在macOS宿主运行。[S8]
+最小只读预检（确认可用工具真实位置后执行，勿修改原有AVD数据）：
 
-### 9.2 内存与后端
+```bash
+uname -m                             # 应为 arm64
+ls "$HOME/Library/Android/sdk/emulator/emulator"
+"$HOME/Library/Android/sdk/emulator/emulator" -list-avds
+"$HOME/Library/Android/sdk/platform-tools/adb" devices -l
+# 已启动目标 AVD 才查询；示例 serial 按实际输出替换
+adb -s emulator-5554 shell getprop ro.product.cpu.abi
+adb -s emulator-5554 shell getprop sys.boot_completed
+```
 
-36GB是CPU、GPU、虚拟机和系统共用的容量，不是36GB显存另加36GB RAM。初始把整体实验工作集目标控制在约24GiB以内并保留系统余量；这是运行策略而非内存实测保证。虚拟机、模型激活、replay和native snapshots都计入。出现持续新增swap或内存压力警告即停止发新局、保存检查点，不能靠关闭MPS内存保护硬撑。[S9]
+使用 Android ARM64 镜像，macOS Hypervisor.framework 加速，不走 x86/ARM 指令转换；必要时 AVD 可使用 `-no-window -no-audio`（仅隐藏窗口/声音，仍是完整 Android 环境），**先验证原生 Engine/FAIR/1024根在该模式下可运行**。不把 `-no-window` 冒充省略 Android 系统层或真实无显示战斗引擎。
 
-FP32先跑通，不做量化、CUDA Graph、`torch.compile`或混合精度专项。启动时检查 `torch.backends.mps.is_available()`，真实跑一次包含scatter/attention/空技能候选mask的前向反向。CPU可作为数值参考和显式后备；不默认开启静默CPU fallback，使用后备必须记录并重新估算成本。[S8][S9]
+优先复用既有 AVD 和引擎的 localhost TCP 接口。历史文档使用 `adb forward` 将 guest 引擎端口映射到宿主 `26789...`，原生客户端现有 `NativeClashEnv(host,port)` 可参考。若复用 `configure_emulator_engine_guests.py`，注意它检查 `nproc==--engines`、会 `am force-stop` 并重启 App：**先检查现存会话，不能直接用 `--engines 3` 去重配历史6-vCPU AVD，更不能打断其他实验**。只从当前已验收、独占的会话中分配实际比赛与两方信念世界，不追加无意义并发。
 
-单个1024根可能很慢，所以先测真实根而不是承诺吞吐。测量只需固定几类代表根，不做大规模benchmark：常规根、2张手牌根、3张手牌根；记录完整根耗时、有效模拟、native tick、推理时间和峰值内存。
+训练和数据采集分阶段执行：训练阶段停止自博弈采集，推理仍使用冻结 checkpoint。macOS 不直接 `dlopen` Android ELF `libg.so`；它运行在 Android ARM64 AVD 内。不得因此再套一层 Ubuntu VM。
+
+### 9.2 内存与推理后端：CPU/MPS **按真实基准选择**
+
+36GB 是 macOS、Android AVD、Python/模型、缓存和快照共享的统一内存，**不是**单独的36GB GPU显存。目标工作集先控制在约24GiB内并保留系统余量；出现持续 swap 或内存压力警告就暂停启动新局并保存 checkpoint。
+
+首次只做一次小型正确性与吞吐对比：相同随机权重、真实 FAIR 张量、scatter/attention/五档动作掩码、前向和反向，分别在 `cpu` 与 `mps` 上测试兼容性、loss/梯度有限性以及中位耗时。先以 CPU 跑通最小闭环；如果 MPS 通过数值检查且更快，再切 MPS。记录实测选型、设备/torch 版本，不要因为硬件有 GPU 就假设 MPS 比 CPU 快，也不静默开 CPU fallback。
+
+历史 [Mac训练实测手册](../firstlight_CR/docs/local_mac_capture_training.md) 在**另一种事件预训练负载**中记录 6 batch CPU 24.2s、MPS 57.9s；这是该负载的历史数据，不能直接推断新网络也慢2.4倍。FP32先跑通，不做量化、混合精度、CUDA Graph 或 `torch.compile` 的额外专项。[S8][S9][S10]
+
+单个1024根可能很慢。先测真实 AVD 根：常规根、2张手牌、3张手牌；记录完整根耗时、有效模拟、native tick、host/guest 请求往返、推理时间和峰值内存。优先优化真实热路径，不重新搭建Linux headless后台。
 
 ### 9.3 预算是停止条件，不是承诺
 
@@ -263,10 +286,11 @@ FP32先跑通，不做量化、CUDA Graph、`torch.compile`或混合精度专项
 
 ## 10. 最小检查：只验证真正会改变实验结论的路径
 
-不重新做五机预检、全英雄矩阵或多平台性能竞赛。受影响代码做小范围单元测试，加真实原生Hog对局关键回归；fixture不能代替真实完整终局。
+不重新做五机预检、全英雄矩阵或多平台性能竞赛。**先只读确认当前 Mac ARM64 AVD 与本地引擎 endpoint，不接触 Ubuntu VM**；受影响代码做小范围单元测试，加真实原生Hog对局关键回归；fixture不能代替真实完整终局。
 
 | 必要检查 | 最小通过条件 |
 |---|---|
+| 本机引擎接入 | macOS ARM64 Android Emulator 中真实游戏启动，adb/localhost 端口合法连接、原生 FAIR 观测与状态快照可用；不依赖 VMware Ubuntu |
 | 动作与掩码 | WAIT/PLAY五档 tick正确；三模式归一化；Hog能力候选为空、ABILITY概率和被采样次数均为0；无牌只WAIT；完整条件概率合法 |
 | 未来扩展接口（仅合成） | 用虚构合法技能候选验证 action codec、mask、来源指针log_prob和搜索访问记录的类型语义；**不执行真实英雄，也不作为训练样本** |
 | 手牌/补牌 | 原生Hog状态真的有3/2张时正常决策、多个空槽FIFO补齐；下一张未到不出；原生手牌位置与card identity对应；补牌唤醒不漏 |
@@ -317,7 +341,7 @@ FP32先跑通，不做量化、CUDA Graph、`torch.compile`或混合精度专项
 
 复用现有模块，只新增一个小型 `training/sspi_mac/` 实验包；不要照前稿把所有组件拆成十几个新框架文件。可按 `config/model/actions/collector/learner/evaluate` 六个职责组织；能稳定复用的底层接口直接引用，改协议的部分有独立版本。
 
-建议实施顺序：**动作/补牌适配 → 快照和单根搜索 → 固定模型与只搜根loss → 单局闭环 → 两臂小试验**。不要先做大dashboard、分布式服务、自动调参或长期任务系统。
+建议实施顺序：**复核仓库已有Mac AVD链路 → 动作/补牌适配 → 快照和单根搜索 → 固定模型与只搜根loss → 单局闭环 → 两臂小试验**。不要先做大dashboard、分布式服务、自动调参或长期任务系统。
 
 只要求这些产物：
 
@@ -355,5 +379,7 @@ checkpoint原子保存后读回；收集权重固定，恢复验证模型/动作
 - [S7] 用户提供的 `SEARCH_TRAINING_FRAMEWORK_OVERVIEW_2026-10-31.md`、前稿 `Nashura_SSPI_Design_2026-11-01.md` 与 `Nashura_SSPI_v2_Network_Architecture_2026-11-01.md`。前稿为设计而非已实现事实；本文件明确锁定Hog-only训练、无神经记忆、保留未来技能协议和Mac单机预算。
 - [S8] [PyTorch MPS后端说明](https://docs.pytorch.org/docs/stable/notes/mps.html)、[MPS可用性API](https://docs.pytorch.org/docs/stable/backends.html)。本机采用已验证可工作的PyTorch版本，不为“最新”强制升级。
 - [S9] [PyTorch MPS环境变量](https://docs.pytorch.org/docs/stable/mps_environment_variables.html)，含CPU fallback与内存水位限制说明。
+- [S10] [仓库已有 M4 Max 本机 Android ARM64 AVD/采集与训练实测指南](../firstlight_CR/docs/local_mac_capture_training.md)；[现成的 AVD引擎配置入口](../firstlight_CR/native_runner/training/v4/configure_emulator_engine_guests.py)。
+- [S11] [Android 官方 Apple Silicon/ARM64 VM加速](https://developer.android.com/studio/run/emulator-acceleration) 与 [模拟器命令行 no-window](https://developer.android.com/studio/run/emulator-commandline)。
 
-本次交付只新增训练设计和术语文档，没有训练代码修改，没有在用户Mac上执行，没有新实战数据。未实测精确参数量、MPS兼容性、Hog原生1024根耗时或Hog自然终局训练；这些是第10节的小型实施前检查，不是可以用措辞宣布通过的结果。真实英雄执行明确延后，不再作为本轮阻塞项。
+本次交付只新增训练设计和术语文档，没有训练代码修改，没有在用户Mac上执行，没有新实战数据。尚未对当前机器重新执行 AVD/endpoint 可用性核验、精确参数量、CPU/MPS基准、Hog原生1024根耗时或Hog自然终局训练；这些是第10节的小型实施前检查，不是可以用措辞宣布通过的结果。真实英雄执行明确延后，不再作为本轮阻塞项。

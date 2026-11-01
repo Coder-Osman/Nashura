@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-11-01：SSPI Mac Pilot 本机引擎环境纠正
+
+- 修订训练规格至 v1.2：**运行在macOS上的ARM64 Android Emulator**，不通过VMware Ubuntu；复用仓库已有M4 Max AVD实测文档、ADB/localhost原生引擎接口。
+- 本轮引擎接入优先只读检查既有 `astral-api30`/SDK/endpoint；避免误重启、改动旧Linux VM或打断其他实验。
+- 取消不加验证直接优先MPS的假设；对该新模型做一次CPU/MPS正确性与微基准，再选择快的后端。没有执行用户Mac实测或新训练。
+
 ## 2026-11-01：SSPI Mac Pilot 设计缩窄为 Hog-only
 
 - 修订 `docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md` 至 v1.1：只训练固定2.6速猪，删除本轮真实英雄执行、英雄轮转与技能回执的验收要求。

@@ -4,7 +4,9 @@
 
 已完成文档修订：本轮仅固定2.6速猪、无英雄技能；3模式动作协议保留ABILITY扩展入口且当前始终掩码；2/3张手牌与延迟补牌仍是正确性门槛。详见 [训练规格 v1.1](SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md) 与 [术语](../CONTEXT.md)。
 
-状态：`DESIGN_REVISED / IMPLEMENTATION_NOT_RUN / NATIVE_1024_NOT_RUN / LEARNING_NOT_RUN`。未在用户Mac上运行或完成性能验收；不声明胜率提升，也不修改旧报告的历史结论。
+环境已修订为macOS本机 ARM64 Android Emulator（AVD），参照 [既有Mac实测记录](../firstlight_CR/docs/local_mac_capture_training.md)，不使用VMware Ubuntu，也不预设MPS优于CPU。**当前这次修订没有实机检查现有AVD是否仍可用**。
+
+状态：`DESIGN_REVISED / MAC_AVD_NOT_RECHECKED / IMPLEMENTATION_NOT_RUN / NATIVE_1024_NOT_RUN / LEARNING_NOT_RUN`。未在用户Mac上运行或完成性能验收；不声明胜率提升，也不修改旧报告的历史结论。
 
 
 ## 2026-10-29：Android ART 闭包启动与 Binder 阻塞
