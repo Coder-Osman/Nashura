@@ -1,5 +1,11 @@
 # 阶段成果与证据索引
 
+## 2026-11-02：SSPI 终局后自动流水线与续代恢复（工程验证；真实局进行中）
+
+`experiment` 自动编排器等待首个采集器 PID 自然退出，并要求 episode manifest 为完整、可训练终局；当前运行 `sspi-mac-5pct128-20261101-v1` 使用 M4 Max macOS + ARM64 Android Emulator、CPU、`A_5PCT_128`（5% × 128）、seed `20261101` 和 persistent transport。采集器与编排器仍存活，状态为 `waiting/natural_terminal`，首局目录尚无终局清单。自然终局后会自动采集首代训练/验证局、执行搜索根 policy CE + terminal WDL CE 更新、保存并恢复 checkpoint，随后进行 32 组共 64 局关闭 MCTS 对局。上述后续阶段尚未实际启动，本记录不构成真实训练更新或评测结果。
+
+新增 `run_next_generation` 恢复入口：按身份和文件 SHA 校验父代记录/checkpoint，恢复模型与 AdamW 状态，在采集期冻结父策略，并将累计 optimizer step 写入下一代 checkpoint。隔离模拟验证覆盖父策略冻结、下一代实际梯度更新、checkpoint 恢复和 optimizer 状态续接；SSPI 定向测试 `25 passed`。公开历史回归 `821 tests, 0 failures, 27 skipped`，其他历史专项分别记录在 `publication/checks-*.xml`；这些历史检查不包含本次 SSPI 定向测试，也不代替真实引擎闭环。主工程检查 `212 passed`（23.82 秒），源码清单 2810 项通过，gitleaks 扫描约 38.57 MB 未发现凭据。续代入口尚未用于真实训练，关闭 MCTS 评测尚无结果。
+
 ## 2026-11-02：SSPI 已执行动作的中间观测增密（工程验证）
 
 实现 200 ms 中间观测采样：仅保留最终执行的 SEARCH PLAY 计划，使用剩余延迟动作与实际终局 WDL 训练。用户确认每组原根权重 0.5、所有派生点均分另外 0.5；没有派生点时原根权重 1，曝光额度仍按源根计算。新增采集器、序列化及学习器对接，旧 episode 兼容；运行中的冻结部署保持原样。普通策略时钟模拟、真实 FAIR 张量化及完整模型反向更新等定向检查 66 passed；未运行新原生整局或胜率评估，未宣称实战提升。详见[实现与测试记录](SSPI_TEMPORAL_AUGMENTATION_2026-11-02.md)。

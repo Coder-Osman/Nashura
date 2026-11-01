@@ -1,4 +1,5 @@
 from copy import deepcopy
+import json
 
 import pytest
 import torch
@@ -35,7 +36,13 @@ from native_runner.training.sspi.collector import (
     _native_execution_action,
     decision_gate,
 )
-from native_runner.training.sspi.experiment import exposure_batches, paired_score_interval
+from native_runner.training.sspi.experiment import (
+    _generation_episode_id,
+    _restore_generation_checkpoint,
+    exposure_batches,
+    paired_score_interval,
+    run_next_generation,
+)
 from native_runner.training.sspi.search import SSPIJointPolicy, budget_search_sha
 from native_runner.training.fair_final.candidates import structured_candidates
 from native_runner.training.fair_final.search import SearchLimits
@@ -310,6 +317,141 @@ def test_checkpoint_restores_fresh_model_and_optimizer_state(tmp_path):
     assert loaded["optimizer_steps"] == 1
     assert all(torch.equal(value, expected[name]) for name, value in restored.state_dict().items())
     assert restored_optimizer.state
+
+
+def test_continuation_generation_identity_and_parent_checkpoint_restore(tmp_path):
+    assert _generation_episode_id("A", 2, 1) == "A-g0002-game-0001"
+    assert _generation_episode_id("V", 12, 4) == "V-g0012-game-0004"
+    with pytest.raises(ValueError, match="identity"):
+        _generation_episode_id("E", 2, 1)
+
+    model = initialize_fresh_model(20261101)
+    optimizer = create_optimizer(model)
+    next(model.parameters()).square().sum().backward()
+    optimizer.step()
+    optimizer.zero_grad(set_to_none=True)
+    checkpoint_path = tmp_path / "checkpoints" / "generation-0001.pt"
+    identity = dict(run_id="continuation-test", generation=1, seed=20261101,
+        architecture_sha=model.architecture_sha)
+    saved = save_checkpoint(checkpoint_path, model, optimizer, identity=identity,
+        optimizer_steps=1)
+    record = dict(schema="sspi-mac-pilot-generation.v1", run_id="continuation-test",
+        generation=1, theta0_sha256="theta0", checkpoint=saved)
+    (tmp_path / "generation-0001.json").write_text(json.dumps(record))
+
+    restored, restored_optimizer, parent, metadata = _restore_generation_checkpoint(
+        tmp_path, 1, "continuation-test", bundle=None)
+
+    assert parent["theta0_sha256"] == "theta0"
+    assert metadata["model_sha"] == saved["model_sha"]
+    assert metadata["optimizer_steps"] == 1
+    assert restored_optimizer.state
+    assert all(torch.equal(value, model.state_dict()[name])
+        for name, value in restored.state_dict().items())
+
+
+def test_continuation_parent_checkpoint_rejects_mismatched_record_checksum(tmp_path):
+    model = initialize_fresh_model(20261101)
+    optimizer = create_optimizer(model)
+    checkpoint_path = tmp_path / "checkpoints" / "generation-0001.pt"
+    saved = save_checkpoint(checkpoint_path, model, optimizer,
+        identity=dict(run_id="continuation-test", generation=1, seed=20261101,
+            architecture_sha=model.architecture_sha), optimizer_steps=0)
+    saved["file_sha"] = "0" * 64
+    record = dict(schema="sspi-mac-pilot-generation.v1", run_id="continuation-test",
+        generation=1, checkpoint=saved)
+    (tmp_path / "generation-0001.json").write_text(json.dumps(record))
+
+    with pytest.raises(ValueError, match="checkpoint identity"):
+        _restore_generation_checkpoint(tmp_path, 1, "continuation-test", bundle=None)
+
+
+def test_next_generation_freezes_parent_then_trains_and_restores_checkpoint(monkeypatch, tmp_path):
+    import native_runner.training.sspi.experiment as experiment
+    from native_runner.training.fair_search.contracts import semantic_digest
+
+    seed = 20261101
+    run_id = "continuation-run"
+    parent = initialize_fresh_model(seed)
+    optimizer = create_optimizer(parent)
+    parameter = next(parent.parameters())
+    parameter.square().sum().backward()
+    optimizer.step()
+    optimizer.zero_grad(set_to_none=True)
+    parent_sha = semantic_digest(parent.state_dict())
+    identity = dict(run_id=run_id, generation=1, seed=seed,
+        architecture_sha=parent.architecture_sha)
+    checkpoint_path = tmp_path / "checkpoints" / "generation-0001.pt"
+    checkpoint = save_checkpoint(checkpoint_path, parent, optimizer,
+        identity=identity, optimizer_steps=1)
+    (tmp_path / "generation-0001.json").write_text(json.dumps(dict(
+        schema="sspi-mac-pilot-generation.v1", run_id=run_id, generation=1,
+        theta0_sha256="theta0", checkpoint=checkpoint)))
+    (tmp_path / "run_config.json").write_text(json.dumps(dict(
+        schema="sspi-mac-pilot-run.v1", run_id=run_id, arm="A_5PCT_128",
+        device="cpu", seed=seed, transport="persistent", deck=list(HOG_DECK))))
+    (tmp_path / "postgame_status.json").write_text(json.dumps(dict(
+        status="complete", generation=1)))
+
+    collection_models = []
+
+    def collect(**kwargs):
+        model = kwargs["model"]
+        assert all(not item.requires_grad for item in model.parameters())
+        assert semantic_digest(model.state_dict()) == parent_sha
+        collection_models.append(model)
+        destination = kwargs["run_dir"] / "episodes" / kwargs["game_id"]
+        destination.mkdir(parents=True)
+        kind = kwargs["episode_kind"]
+        metadata = dict(schema="sspi-mac-pilot-episode.v1", status="complete",
+            episode_kind=kind, training_admissible=(kind == "training"),
+            search_probability=0.05, identity=dict(run_id=run_id, arm="A_5PCT_128",
+                seed=seed, device="cpu", source_sha256="source",
+                model_sha256_by_owner={"0": parent_sha, "1": parent_sha}))
+        (destination / "episode.json").write_text(json.dumps(metadata))
+        return destination, metadata
+
+    def train_step(model, optim, rows):
+        optim.zero_grad(set_to_none=True)
+        next(model.parameters()).grad = torch.ones_like(next(model.parameters()))
+        norm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
+        optim.step()
+        optim.zero_grad(set_to_none=True)
+        return dict(loss=1., policy_loss=.5, value_loss=.5, gradient_norm=float(norm),
+            optimizer_steps=1, search_rows=128, direct_rows=0, microbatch=4,
+            accumulation_steps=32, continuation_rows=0, continuation_loss=0.)
+
+    monkeypatch.setattr(experiment, "_collect_one", collect)
+    monkeypatch.setattr(experiment, "production_semantic_bundle", lambda: None)
+    monkeypatch.setattr(experiment, "load_episode_training_rows", lambda _path: [object()])
+    monkeypatch.setattr(experiment, "load_episode_validation_rows", lambda _path: [object()])
+    monkeypatch.setattr(experiment, "EFFECTIVE_BATCH", 1)
+    monkeypatch.setattr(experiment, "exposure_batches", lambda *_args, **_kwargs: [[(0, 0)]])
+    monkeypatch.setattr(experiment, "train_generation_step", train_step)
+    monkeypatch.setattr(experiment, "search_root_loss", lambda *_args: {
+        "loss": torch.tensor(.75), "policy_loss": torch.tensor(.25),
+        "value_loss": torch.tensor(.5), "continuation_loss": torch.tensor(0.),
+        "continuation_rows": 0})
+
+    result = run_next_generation(run_dir=tmp_path, parent_generation=1,
+        train_games=1, validation_games=1)
+
+    assert len(collection_models) == 2
+    assert result["generation"] == 2
+    assert result["parent_model_sha256"] == parent_sha
+    assert result["checkpoint_restore"]["optimizer_steps"] == 2
+    assert result["temporal_augmentation"] is False
+    status = json.loads((tmp_path / "postgame_status.json").read_text())
+    assert status["status"] == "complete" and status["generation"] == 2
+
+
+def test_continuation_rejects_running_orchestrator_without_owner_pid(tmp_path):
+    (tmp_path / "run_config.json").write_text(json.dumps(dict(
+        schema="sspi-mac-pilot-run.v1", arm="A_5PCT_128", device="cpu")))
+    (tmp_path / "postgame_status.json").write_text(json.dumps(dict(status="running")))
+
+    with pytest.raises(RuntimeError, match="owner"):
+        run_next_generation(run_dir=tmp_path, parent_generation=1)
 
 
 def test_fresh_model_has_no_history_parameters_and_neutral_wdl_bias():

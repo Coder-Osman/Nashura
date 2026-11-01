@@ -142,6 +142,8 @@ def _validate_episode(metadata, *, run_config, model_sha, episode_kind, search_p
 
 
 def _write_status(run_dir, status, stage, **fields):
+    if status == "running":
+        fields.setdefault("owner_pid", os.getpid())
     _atomic_json(Path(run_dir) / "postgame_status.json",
         dict(status=status, stage=stage, **fields))
 
@@ -160,6 +162,211 @@ def _collect_one(*, run_config, run_dir, game_id, episode_kind, model, device,
         models_by_owner=owner_models, device=device,
         progress=lambda row: print(json.dumps(row, sort_keys=True, allow_nan=False), flush=True))
     return output, episode
+
+
+def _generation_episode_id(kind, generation, index):
+    if kind not in ("A", "V") or type(generation) is not int or generation < 2 \
+            or type(index) is not int or index < 1:
+        raise ValueError("invalid continuation episode identity")
+    return f"{kind}-g{generation:04d}-game-{index:04d}"
+
+
+def _restore_generation_checkpoint(run_dir, generation, run_id, *, bundle):
+    record_path = Path(run_dir) / f"generation-{generation:04d}.json"
+    record = json.loads(record_path.read_text())
+    saved = record.get("checkpoint") or {}
+    checkpoint_path = Path(run_dir) / "checkpoints" / f"generation-{generation:04d}.pt"
+    if (record.get("schema") != "sspi-mac-pilot-generation.v1"
+            or record.get("run_id") != run_id or record.get("generation") != generation
+            or saved.get("path") != str(checkpoint_path)
+            or not checkpoint_path.is_file()
+            or hashlib.sha256(checkpoint_path.read_bytes()).hexdigest() != saved.get("file_sha")):
+        raise ValueError("parent generation record or checkpoint identity differs")
+
+    envelope = torch.load(checkpoint_path, weights_only=True, map_location="cpu")
+    payload = envelope.get("payload") if isinstance(envelope, dict) else None
+    identity = payload.get("identity") if isinstance(payload, dict) else None
+    if (not isinstance(identity, dict) or identity.get("run_id") != run_id
+            or identity.get("generation") != generation):
+        raise ValueError("parent checkpoint does not identify the requested generation")
+    model = initialize_fresh_model(identity["seed"], device="cpu", bundle=bundle)
+    optimizer = create_optimizer(model)
+    restored = load_checkpoint(checkpoint_path, model, optimizer,
+        expected_identity=identity, device="cpu")
+    if (restored["file_sha"] != saved["file_sha"]
+            or restored["model_sha"] != saved.get("model_sha")
+            or not optimizer.state):
+        raise ValueError("parent checkpoint failed model and optimizer restoration")
+    return model, optimizer, record, restored
+
+
+def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
+        belief_port=26790, train_games=16, validation_games=4):
+    """Collect one frozen-policy generation, update it, and verify its checkpoint."""
+    run_dir = Path(run_dir)
+    config = json.loads((run_dir / "run_config.json").read_text())
+    status_path = run_dir / "postgame_status.json"
+    status = json.loads(status_path.read_text()) if status_path.exists() else {}
+    if status.get("status") == "running":
+        owner_pid = status.get("owner_pid")
+        if type(owner_pid) is not int:
+            raise RuntimeError("cannot verify the owner of the active SSPI orchestrator")
+        command = _pid_command(owner_pid)
+        if command and "native_runner.training.sspi.experiment" in command \
+                and str(run_dir) in command:
+            raise RuntimeError("an SSPI postgame or continuation orchestrator is still running")
+    if (type(parent_generation) is not int or parent_generation < 1
+            or config.get("schema") != "sspi-mac-pilot-run.v1"
+            or config.get("arm") != "A_5PCT_128" or config.get("device") != "cpu"
+            or status.get("status") not in ("complete", "failed", "running")
+            or (status.get("status") == "complete"
+                and status.get("generation") != parent_generation)
+            or (status.get("status") == "failed"
+                and status.get("generation") not in (None, parent_generation))
+            or train_games < 1 or validation_games < 1):
+        raise ValueError("continuation identity or parent completion state differs")
+    generation = parent_generation + 1
+    generation_record = run_dir / f"generation-{generation:04d}.json"
+    checkpoint_path = run_dir / "checkpoints" / f"generation-{generation:04d}.pt"
+    if generation_record.exists():
+        raise ValueError("next generation is already complete; continue from its checkpoint")
+
+    bundle = production_semantic_bundle()
+    model, optimizer, parent_record, parent_restore = _restore_generation_checkpoint(
+        run_dir, parent_generation, config["run_id"], bundle=bundle)
+    parent_checkpoint_sha = parent_restore["file_sha"]
+    parent_model_sha = parent_restore["model_sha"]
+    for parameter in model.parameters():
+        parameter.requires_grad_(False)
+    model.eval()
+
+    # Preserve the active run's collection protocol when its manifest predates this field.
+    collection_config = dict(config)
+    collection_config["temporal_augmentation"] = bool(config.get("temporal_augmentation", False))
+    train_dirs, train_rows = [], []
+    _write_status(run_dir, "running", "continuation_training_collection",
+        generation=generation, parent_generation=parent_generation, games=0,
+        search_roots=0, target_games=train_games)
+    index = 1
+    while len(train_dirs) < train_games or len(train_rows) < EFFECTIVE_BATCH:
+        game_id = _generation_episode_id("A", generation, index)
+        directory = run_dir / "episodes" / game_id
+        if directory.exists():
+            metadata_path = directory / "episode.json"
+            if not metadata_path.is_file():
+                raise RuntimeError(f"incomplete continuation episode needs recovery: {directory}")
+            metadata = json.loads(metadata_path.read_text())
+        else:
+            directory, metadata = _collect_one(run_config=collection_config, run_dir=run_dir,
+                game_id=game_id, episode_kind="training", model=model, device="cpu",
+                actual_port=actual_port, belief_port=belief_port, transport=config["transport"])
+        _validate_episode(metadata, run_config=config, model_sha=parent_model_sha,
+            episode_kind="training", search_probability=0.05)
+        train_dirs.append(directory)
+        train_rows.extend(load_episode_training_rows(directory))
+        index += 1
+        _write_status(run_dir, "running", "continuation_training_collection",
+            generation=generation, parent_generation=parent_generation, games=len(train_dirs),
+            search_roots=len(train_rows), target_games=train_games)
+
+    validation_dirs, validation_rows = [], []
+    _write_status(run_dir, "running", "continuation_validation_collection",
+        generation=generation, games=0, target_games=validation_games)
+    for index in range(1, validation_games + 1):
+        game_id = _generation_episode_id("V", generation, index)
+        directory = run_dir / "episodes" / game_id
+        if directory.exists():
+            metadata_path = directory / "episode.json"
+            if not metadata_path.is_file():
+                raise RuntimeError(f"incomplete continuation episode needs recovery: {directory}")
+            metadata = json.loads(metadata_path.read_text())
+        else:
+            directory, metadata = _collect_one(run_config=collection_config, run_dir=run_dir,
+                game_id=game_id, episode_kind="validation", model=model, device="cpu",
+                actual_port=actual_port, belief_port=belief_port, transport=config["transport"])
+        _validate_episode(metadata, run_config=config, model_sha=parent_model_sha,
+            episode_kind="validation", search_probability=0.05)
+        validation_dirs.append(directory)
+        validation_rows.extend(load_episode_validation_rows(directory))
+        _write_status(run_dir, "running", "continuation_validation_collection",
+            generation=generation, games=len(validation_dirs), target_games=validation_games)
+
+    schedule = exposure_batches(train_rows, seed=config["seed"] ^ generation,
+        exposure_limit=2)
+    if not schedule:
+        raise ValueError("continuation generation has no complete effective batch")
+    for parameter in model.parameters():
+        parameter.requires_grad_(True)
+    _write_status(run_dir, "running", "continuation_training", generation=generation,
+        search_roots=len(train_rows), updates=len(schedule))
+    updates = []
+    exposure_counts = [0] * len(train_rows)
+    for step, tokens in enumerate(schedule, start=1):
+        indices = [index for index, _exposure in tokens]
+        for index in indices:
+            exposure_counts[index] += 1
+        update = train_generation_step(model, optimizer,
+            [train_rows[index] for index in indices])
+        updates.append(update)
+        _emit("continuation_optimizer_update", generation=generation,
+            step=step, updates_available=len(schedule), **update)
+    if max(exposure_counts, default=0) > 2:
+        raise ValueError("continuation exceeded the search-root exposure cap")
+
+    model.eval()
+    with torch.no_grad():
+        validation = search_root_loss(model, validation_rows)
+    validation_metrics = {key: float(value.detach().cpu()) if isinstance(value, torch.Tensor) else value
+        for key, value in validation.items()}
+    train_episode_shas = {path.name: hashlib.sha256((path / "episode.json").read_bytes()).hexdigest()
+        for path in train_dirs}
+    validation_episode_shas = {path.name: hashlib.sha256((path / "episode.json").read_bytes()).hexdigest()
+        for path in validation_dirs}
+    source_shas = sorted({json.loads((path / "episode.json").read_text())
+        ["identity"]["source_sha256"] for path in train_dirs + validation_dirs})
+    initialization_model_sha = parent_record.get("theta0_sha256")
+    if not initialization_model_sha:
+        raise ValueError("parent generation omitted the fresh initialization identity")
+    checkpoint_identity = dict(run_id=config["run_id"], generation=generation,
+        seed=config["seed"], architecture_sha=model.architecture_sha,
+        initialization_model_sha=initialization_model_sha,
+        parent_checkpoint_sha256=parent_checkpoint_sha, parent_model_sha256=parent_model_sha,
+        train_episode_sha256=train_episode_shas,
+        validation_episode_sha256=validation_episode_shas, source_sha256=source_shas,
+        action_schema="sspi-tagged-action.v1", training_protocol="5pct-x-128-search-roots.v1",
+        temporal_augmentation=collection_config["temporal_augmentation"])
+    checkpoint = save_checkpoint(checkpoint_path, model, optimizer, identity=checkpoint_identity,
+        optimizer_steps=parent_restore["optimizer_steps"] + len(updates),
+        run_state=dict(generation=generation, parent_checkpoint_sha256=parent_checkpoint_sha,
+            training_games=[path.name for path in train_dirs],
+            validation_games=[path.name for path in validation_dirs],
+            search_roots=len(train_rows), exposure_limit=2,
+            exposure_counts=exposure_counts))
+    restored = initialize_fresh_model(config["seed"], device="cpu", bundle=bundle)
+    restored_optimizer = create_optimizer(restored)
+    restoration = load_checkpoint(checkpoint_path, restored, restored_optimizer,
+        expected_identity=checkpoint_identity, device="cpu")
+    if (semantic_digest(restored.state_dict()) != checkpoint["model_sha"]
+            or restoration["optimizer_steps"] != parent_restore["optimizer_steps"] + len(updates)
+            or not restored_optimizer.state):
+        raise ValueError("continuation checkpoint did not restore model and optimizer state")
+
+    record = dict(schema="sspi-mac-pilot-generation.v1", run_id=config["run_id"],
+        generation=generation, parent_generation=parent_generation,
+        parent_checkpoint_sha256=parent_checkpoint_sha, parent_model_sha256=parent_model_sha,
+        theta0_sha256=initialization_model_sha, checkpoint=checkpoint,
+        checkpoint_restore=restoration, training_games=[path.name for path in train_dirs],
+        validation_games=[path.name for path in validation_dirs], search_roots=len(train_rows),
+        validation_roots=len(validation_rows), updates=updates, validation_loss=validation_metrics,
+        exposure_limit=2, max_observed_exposure=max(exposure_counts),
+        temporal_augmentation=collection_config["temporal_augmentation"])
+    _atomic_json(generation_record, record)
+    _write_status(run_dir, "complete", "generation_complete", generation=generation,
+        training_record=generation_record.name, parent_generation=parent_generation)
+    _emit("continuation_generation_complete", generation=generation,
+        checkpoint=str(checkpoint_path), model_sha=checkpoint["model_sha"],
+        optimizer_steps=restoration["optimizer_steps"], search_roots=len(train_rows))
+    return record
 
 
 def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
@@ -335,8 +542,9 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
 def main():
     parser = argparse.ArgumentParser(description="Continue an SSPI Mac pilot after a live episode")
     parser.add_argument("--run-dir", type=Path, required=True)
-    parser.add_argument("--first-episode-dir", type=Path, required=True)
-    parser.add_argument("--wait-pid", type=int, required=True)
+    parser.add_argument("--first-episode-dir", type=Path)
+    parser.add_argument("--wait-pid", type=int)
+    parser.add_argument("--parent-generation", type=int)
     parser.add_argument("--actual-port", type=int, default=26789)
     parser.add_argument("--belief-port", type=int, default=26790)
     parser.add_argument("--train-games", type=int, default=16)
@@ -345,12 +553,19 @@ def main():
     parser.add_argument("--poll-seconds", type=float, default=15.)
     args = parser.parse_args()
     try:
-        _write_status(args.run_dir, "waiting", "natural_terminal", wait_pid=args.wait_pid,
-            episode_dir=str(args.first_episode_dir))
-        run_postgame(run_dir=args.run_dir, first_episode_dir=args.first_episode_dir,
-            wait_pid=args.wait_pid, actual_port=args.actual_port, belief_port=args.belief_port,
-            train_games=args.train_games, validation_games=args.validation_games,
-            evaluation_pairs=args.evaluation_pairs, poll_seconds=args.poll_seconds)
+        if args.parent_generation is not None:
+            run_next_generation(run_dir=args.run_dir, parent_generation=args.parent_generation,
+                actual_port=args.actual_port, belief_port=args.belief_port,
+                train_games=args.train_games, validation_games=args.validation_games)
+        else:
+            if args.first_episode_dir is None or args.wait_pid is None:
+                parser.error("initial postgame run requires --first-episode-dir and --wait-pid")
+            _write_status(args.run_dir, "waiting", "natural_terminal", wait_pid=args.wait_pid,
+                episode_dir=str(args.first_episode_dir))
+            run_postgame(run_dir=args.run_dir, first_episode_dir=args.first_episode_dir,
+                wait_pid=args.wait_pid, actual_port=args.actual_port, belief_port=args.belief_port,
+                train_games=args.train_games, validation_games=args.validation_games,
+                evaluation_pairs=args.evaluation_pairs, poll_seconds=args.poll_seconds)
     except BaseException as error:
         run_dir = args.run_dir
         _atomic_json(run_dir / "postgame_status.json", dict(status="failed",
