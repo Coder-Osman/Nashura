@@ -15,7 +15,11 @@ import time
 import torch
 
 from native_runner.training.fair_search.contracts import semantic_digest
-from native_runner.training.sspi.collector import collect_episode, episode_seed_identity
+from native_runner.training.sspi.collector import (
+    collect_episode,
+    episode_seed_identity,
+    resolve_belief_ports,
+)
 from native_runner.training.sspi.augmentation import TEMPORAL_AUX_WEIGHT, TEMPORAL_SCHEMA
 from native_runner.training.sspi.learning import (
     EFFECTIVE_BATCH,
@@ -153,6 +157,11 @@ def _collect_one(*, run_config, run_dir, game_id, episode_kind, model, device,
     output = run_dir / "episodes" / game_id
     shared_model = None if isinstance(model, dict) else model
     owner_models = model if isinstance(model, dict) else None
+    configured_belief_ports = run_config.get("ports", {}).get("belief_by_owner")
+    if isinstance(configured_belief_ports, dict):
+        configured_belief_ports = {int(owner): port
+            for owner, port in configured_belief_ports.items()}
+    belief_ports = resolve_belief_ports(actual_port, belief_port, configured_belief_ports)
     episode = collect_episode(actual_port=actual_port, belief_port=belief_port,
         output_dir=output, run_id=run_config["run_id"], arm=run_config["arm"],
         game_id=game_id, seed=run_config["seed"], model=shared_model,
@@ -161,6 +170,7 @@ def _collect_one(*, run_config, run_dir, game_id, episode_kind, model, device,
         temporal_augmentation=run_config.get("temporal_augmentation", True),
         random_stream_id=random_stream_id,
         models_by_owner=owner_models, device=device,
+        belief_ports=belief_ports,
         progress=lambda row: print(json.dumps(row, sort_keys=True, allow_nan=False), flush=True))
     return output, episode
 

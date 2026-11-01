@@ -32,10 +32,13 @@ from native_runner.training.fair_final.rollout import FinalRollout
 from native_runner.training.fair_final.policy import FullAction
 from native_runner.training.sspi.collector import (
     ARM_CONFIG,
+    OwnerBeliefProviders,
     SearchNative,
     _native_execution_action,
     decision_gate,
     episode_seed_identity,
+    preflight_native_endpoints,
+    resolve_belief_ports,
 )
 from native_runner.training.sspi.experiment import (
     _generation_episode_id,
@@ -49,6 +52,7 @@ from native_runner.training.sspi.experiment import (
 from native_runner.training.sspi.search import SSPIJointPolicy, budget_search_sha
 from native_runner.training.fair_final.candidates import structured_candidates
 from native_runner.training.fair_final.search import SearchLimits
+import native_runner.training.sspi.experiment as experiment_module
 
 
 def native_player(holes=()):
@@ -191,6 +195,133 @@ def test_collector_transport_is_explicit_and_legacy_remains_default():
         SearchNative("127.0.0.1", 26789, transport="unknown")
     legacy.close_transport()
     persistent.close_transport()
+
+
+def test_owner_belief_providers_keep_independent_history_cursors_and_close_all():
+    calls = []
+
+    class Provider:
+        def __init__(self, owner, port, history):
+            self.owner = owner
+            self.port = port
+            self.histories = [history]
+            self.closed = 0
+
+        def update_history(self, history):
+            self.histories.append(history)
+
+        def close(self):
+            self.closed += 1
+
+    def factory(owner, port, history):
+        provider = Provider(owner, port, history)
+        calls.append(provider)
+        return provider
+
+    providers = OwnerBeliefProviders(resolve_belief_ports(26789, 26790), factory)
+    first_zero = providers.for_search(0, "zero-opening")
+    first_one = providers.for_search(1, "one-opening")
+    assert providers.for_search(0, "zero-later") is first_zero
+    assert providers.for_search(1, "one-later") is first_one
+    assert [(item.owner, item.port, item.histories) for item in calls] == [
+        (0, 26790, ["zero-opening", "zero-later"]),
+        (1, 26791, ["one-opening", "one-later"]),
+    ]
+
+    providers.close()
+    providers.close()
+    assert [item.closed for item in calls] == [1, 1]
+
+
+def test_belief_port_identity_requires_three_distinct_native_endpoints():
+    assert resolve_belief_ports(26789, 26790) == {0: 26790, 1: 26791}
+    assert resolve_belief_ports(26789, 26790, {0: 26791, 1: 26792}) == {
+        0: 26791, 1: 26792}
+    for actual, default, mapping in (
+            (26789, 26790, {0: 26790, 1: 26790}),
+            (26789, 26790, {0: 26789, 1: 26791}),
+            (26789, 65535, None),
+            (True, 26790, None)):
+        with pytest.raises(ValueError, match="port"):
+            resolve_belief_ports(actual, default, mapping)
+
+
+def test_native_preflight_checks_readable_observations_and_matching_artifacts(monkeypatch):
+    calls = []
+
+    class FakeNative:
+        def __init__(self, host, port, *, transport, timeout):
+            self.port = port
+            calls.append(("open", host, port, transport, timeout))
+
+        def status(self):
+            calls.append(("status", self.port))
+            return {"ready": True}
+
+        def observe(self):
+            calls.append(("observe", self.port))
+            return {"ok": True}
+
+        def attest(self, ruleset_manifest=None):
+            calls.append(("attest", self.port))
+            return type("Attestation", (), {
+                "libg_sha256": "a" * 64, "probe_sha256": "b" * 64})()
+
+        def close_transport(self):
+            calls.append(("close", self.port))
+
+    monkeypatch.setattr("native_runner.training.sspi.collector.SearchNative", FakeNative)
+    result = preflight_native_endpoints("127.0.0.1", 26789,
+        {0: 26790, 1: 26792}, transport="persistent")
+
+    assert set(result) == {"actual", "belief_owner_0", "belief_owner_1"}
+    assert all(item == {"libg_sha256": "a" * 64, "probe_sha256": "b" * 64}
+        for item in result.values())
+    assert [call[0] for call in calls].count("observe") == 3
+    assert [call[0] for call in calls].count("close") == 3
+
+
+def test_native_preflight_rejects_truncated_observation_and_closes_transport(monkeypatch):
+    closed = []
+
+    class FakeNative:
+        def __init__(self, *_args, **_kwargs):
+            pass
+
+        def status(self):
+            return {"ready": True}
+
+        def observe(self):
+            raise ValueError("invalid native runner response to 'observe'")
+
+        def close_transport(self):
+            closed.append(True)
+
+    monkeypatch.setattr("native_runner.training.sspi.collector.SearchNative", FakeNative)
+    with pytest.raises(ValueError, match="invalid native runner response"):
+        preflight_native_endpoints("127.0.0.1", 26789,
+            {0: 26790, 1: 26792}, transport="persistent")
+    assert closed == [True]
+
+
+def test_experiment_routes_run_config_owner_ports_into_episode(monkeypatch, tmp_path):
+    captured = {}
+
+    def collect_episode(**kwargs):
+        captured.update(kwargs)
+        return {"status": "complete"}
+
+    monkeypatch.setattr(experiment_module, "collect_episode", collect_episode)
+    run_config = dict(run_id="ports-test", arm="A_5PCT_128", seed=20261102,
+        ports={"belief_by_owner": {"0": 26791, "1": 26792}})
+    output, episode = experiment_module._collect_one(run_config=run_config,
+        run_dir=tmp_path, game_id="A-game-0001", episode_kind="training",
+        model=object(), device="cpu", actual_port=26789, belief_port=26790,
+        transport="persistent")
+
+    assert output == tmp_path / "episodes" / "A-game-0001"
+    assert episode["status"] == "complete"
+    assert captured["belief_ports"] == {0: 26791, 1: 26792}
 
 
 def test_sspi_training_has_only_the_5_percent_128_configuration():

@@ -1,12 +1,16 @@
 # 阶段成果与证据索引
 
-## 2026-11-02：SSPI 终局自动流水线、配对评测恢复与续代（工程验证；真实局进行中）
+## 2026-11-02：SSPI 终局自动流水线、worker 预检与 owner provider 复用（真实局进行中）
 
-`experiment` 自动编排器等待首个采集器 PID 自然退出，并要求 episode manifest 为完整、可训练终局。当前运行 `sspi-mac-5pct128-20261101-v1` 使用 M4 Max macOS + ARM64 Android Emulator、CPU、`A_5PCT_128`（5% × 128）、seed `20261101` 和 persistent transport。最近只读检查时，采集器与首轮编排器仍存活，状态为 `waiting/natural_terminal`，首局目录未产生终局清单；现有进程使用启动时加载的旧代码。自然终局后，旧编排器会完成训练/验证采集、搜索根 policy CE + terminal WDL CE 更新、checkpoint 保存与恢复及原始关闭 MCTS 评测。原 `evaluation.json` 不足以证明换边局共享随机流。
+`experiment` orchestrator 等待完整自然终局后，自动执行冻结策略训练采集、验证、仅搜索根的 policy CE/WDL CE 更新、checkpoint 保存与恢复及关闭 MCTS 的 32 对/64 局严格配对评测。完整评测后 heartbeat 按同一协议续接后代；三代只是首次观察里程碑，没有固定墙钟上限。评测恢复入口验证 generation 记录、checkpoint 文件 SHA、optimizer 状态及 theta0 初始化。截断局只隔离，不作为平局或训练标签。
 
-新增 `episode_seed_identity` 与 `random_stream_id`，把每对换边局的实际原生 match seed、rollout seed以及决策/搜索/行为随机流绑定为同一随机身份；增加 `--evaluate-generation N`，在核验 generation 记录、checkpoint SHA、optimizer恢复及 theta0 初始化后，补跑固定 32 对/64 局的严格无搜索评测。未来运行的首轮和续代编排器都直接调用同一评测器，只有训练更新、checkpoint恢复和配对评测完成才标记该代完整。对已有完整 episode 会核对 game、策略 SHA、seed、MCTS根数和运行身份；隔离或不完整目录不会被当成平局或覆盖。
+采集器为 owner 0/1 分别保留独立 `SSPIHistorySearchProvider` 和 native belief 端口；owner 切换后复用对应 FAIR 历史游标，结束或异常路径释放全部 provider。实际端口映射进入 runtime SHA 和 episode identity。新增 reset 前的三端预检：验证 ready、只读观测可完整解析、ruleset manifest 与 native libg/probe identity 一致。SSPI Mac training/时序增强回归 `58 passed`。
 
-续代入口继续按身份及文件 SHA 校验父代 checkpoint，恢复模型与 AdamW 状态，采集期间冻结父策略，并将累计 optimizer step 写入下一代 checkpoint。隔离模拟覆盖父策略冻结、实际梯度更新、checkpoint恢复、theta0拒绝错误及两席共享 seed 配对；SSPI/时序增强定向测试 `53 passed`，Python 编译检查通过。发布检查通过：公开历史主组 `794 passed/27 skipped`，affordability `23 passed`、selection-timeout `82 passed`、position guards `15 passed/3 skipped`、live `25 passed/4 skipped`、dispatch `31 passed/3 skipped`、reservation `31 passed/2 skipped`、coordinates `38 passed/3 skipped`、collection-coordinator `65 passed`；主工程 `212 passed`，源码清单 `2810` 项，gitleaks 扫描 `38.64 MB` 无发现。真实 Mac 首局尚未自然终局，因此没有本次真实训练更新或配对评测证据，也不形成模型强度结论。
+v3 使用 7,874,126 参数 CPU 模型及 seed `20261103`，但在 owner 1 belief 端口 26791 的 `observe` 返回截断 JSON 后隔离；该端口复测 status 成功但 observe 稳定失败。v4 因独立进程缺少 `CR_PROBE` 环境变量，在 native reset 前因 ruleset manifest 未绑定 probe 而失败。两者均无完整 episode、训练更新或可用 checkpoint，未纳入训练。修复后的预检在 26789/26790/26792 上通过完整 ruleset attestation，libg SHA `110aa2…959783`、probe SHA `f5a691…f346f` 一致。
+
+v5 为全新 run ID/目录，使用未训练随机初始化 seed `20261103`，明确固定本机已验收 probe 路径和健康端口 26790/26792。当前 collector PID 37526 和 orchestrator PID 37559 均存活；最新日志推进至原生 tick=1243，完成 8 个 SEARCH 根。自然终局尚未产生，所以完整训练样本、参数更新、checkpoint 恢复、配对评测和模型强度仍未验证。CPU/MPS 小型更新对照此前均通过，CPU `0.105s/update`、MPS `0.215s/update`，选择 CPU。
+
+本次完整发布检查通过：SSPI Mac training/时序增强 `58 passed`；公开测试合计 `1,104 passed, 42 skipped`（历史 FAIR 主组 794/27、affordability 23、selection-timeout 82、position guards 15/3、live command 25/4、dispatch 31/3、reservation mapping 31/2、command coordinates 38/3、collection coordinator 65）；主引擎 `212 passed`；源码清单 `2,810` 项；gitleaks 扫描 38.95 MB 未发现泄露；`git diff --check` 通过。
 
 ## 2026-11-02：SSPI 已执行动作的中间观测增密（工程验证）
 

@@ -1,8 +1,12 @@
 # Nashura
 
-## 2026-11-02：SSPI 自然终局后自动闭环（首局运行中）
+## 2026-11-02：SSPI 终局后自动闭环（v5 首局进行中）
 
-Mac 单机 `A_5PCT_128` 流水线正在等待首局自然终局；完整、可训练的 episode 才会触发冻结策略下的训练/验证采集、搜索根更新、checkpoint 保存与恢复。补齐严格配对评测恢复入口：从已验证代际 checkpoint 恢复 trained policy 与随机初始化 `theta0`，按同一原生 match/rollout seed 换边执行 32 对共 64 局无搜索评测；首轮和后续代完成训练、验证、checkpoint 恢复与配对评测后才标记完成。当前真实首局及启动时的旧编排器仍在运行，尚无真实训练更新或评测结果；heartbeat 会在旧首轮结束后检查 checkpoint 并自动补跑严格配对评测，再续接完整代际。SSPI/时序增强定向测试 53 passed；本次公开历史主组 794 passed/27 skipped、附加专项 310 passed/15 skipped，主工程 212 passed、源码清单 2810 项，gitleaks 扫描 38.64 MB 无发现。详情见[阶段记录](docs/RESULTS.md)。
+自然终局后由独立 orchestrator 自动执行冻结策略下的训练/验证采集、搜索根更新、checkpoint 保存与模型/AdamW 恢复、关闭 MCTS 的 32 对/64 局换边评测；完整评测后按固定协议继续代际，不设钟点停训。v3 在 owner 1 的端口 26791 收到截断 `observe` JSON 后隔离；该端口的只读复测仍失败。v4 因 detached collector 未继承 `CR_PROBE`，在 native reset 前触发 ruleset attestation 失败。两次均未产生完整训练样本或更新，证据各自保留。
+
+v5 使用独立 run ID 与空白目录，重用未训练随机初始化 seed `20261103`；明确传入已验收 probe SHA `f5a691…`，belief 端口为 26790/26792。26789、26790、26792 的完整 ruleset attestation、只读观测及 libg/probe 身份一致性均通过。当前 collector 和 postgame orchestrator 正常运行；截至本次记录，已推进至原生 tick 1243 并完成 8 个 SEARCH 根，首局仍在进行，尚无自然终局、完整 episode、参数更新、checkpoint 恢复或评测结果。
+
+新增三端规则集绑定预检，在 reset 前校验 ready、完整观测和 native artifact 身份。对应 SSPI Mac training/时序增强回归 `58 passed`。已有模型 CPU/MPS 梯度更新对照为 CPU `0.105s/update`、MPS `0.215s/update`，本轮选择 CPU；heartbeat 已改为监控 v5 并在资源稳定时续接代际。详情见[阶段记录](docs/RESULTS.md)。
 
 ## 2026-11-02：SSPI 已执行动作的中间观测增密（工程验证）
 

@@ -1,6 +1,7 @@
 """Single-actor SSPI self-play collection on the FAIR native rollout runtime."""
 
 from dataclasses import asdict
+from collections.abc import Mapping
 import hashlib
 import io
 import json
@@ -57,6 +58,88 @@ class SearchNative(NativeClashEnv):
 
     def start_atomic_steps(self):
         return None
+
+
+def resolve_belief_ports(actual_port, belief_port, belief_ports=None):
+    if type(actual_port) is not int or not 1 <= actual_port <= 65535:
+        raise ValueError("SSPI actual native port must be a valid TCP port")
+    if belief_ports is None:
+        if type(belief_port) is not int or not 1 <= belief_port < 65535:
+            raise ValueError("SSPI belief port must leave room for both owner workers")
+        belief_ports = {0: belief_port, 1: belief_port + 1}
+    elif isinstance(belief_ports, Mapping):
+        belief_ports = dict(belief_ports)
+    else:
+        raise ValueError("SSPI belief ports must map both owners to native ports")
+    if (set(belief_ports) != {0, 1}
+            or any(type(owner) is not int for owner in belief_ports)
+            or any(type(port) is not int or not 1 <= port <= 65535
+                for port in belief_ports.values())
+            or len(set(belief_ports.values())) != 2
+            or actual_port in belief_ports.values()):
+        raise ValueError("SSPI requires distinct actual and per-owner belief ports")
+    return {owner: belief_ports[owner] for owner in (0, 1)}
+
+
+def preflight_native_endpoints(host, actual_port, belief_ports, *, transport, ruleset_manifest=None):
+    endpoints = [("actual", actual_port),
+        ("belief_owner_0", belief_ports[0]), ("belief_owner_1", belief_ports[1])]
+    attestations = {}
+    expected_identity = None
+    for role, port in endpoints:
+        native = SearchNative(host, port, transport=transport, timeout=90.)
+        try:
+            status = native.status()
+            if status.get("ready") is not True:
+                raise ValueError(f"SSPI native {role} endpoint is not ready on port {port}")
+            observation = native.observe()
+            if observation.get("ok") is not True:
+                raise ValueError(f"SSPI native {role} endpoint returned an invalid observation")
+            attestation = native.attest(ruleset_manifest)
+            identity = dict(libg_sha256=attestation.libg_sha256,
+                probe_sha256=attestation.probe_sha256)
+            if any(not isinstance(value, str) or len(value) != 64 for value in identity.values()):
+                raise ValueError(f"SSPI native {role} endpoint has an incomplete attestation")
+            if expected_identity is not None and identity != expected_identity:
+                raise ValueError("SSPI native endpoints do not share the same engine and probe")
+            expected_identity = identity
+            attestations[role] = identity
+        finally:
+            native.close_transport()
+    return attestations
+
+
+class OwnerBeliefProviders:
+    """Keep each player's public-history cursor warm across alternating searches."""
+
+    def __init__(self, ports, factory):
+        if set(ports) != {0, 1} or not callable(factory):
+            raise ValueError("belief provider cache requires both owner ports and a factory")
+        self.ports = dict(ports)
+        self.factory = factory
+        self.providers = {}
+
+    def for_search(self, owner, history):
+        if type(owner) is not int or owner not in (0, 1):
+            raise ValueError("belief provider owner must be zero or one")
+        provider = self.providers.get(owner)
+        if provider is None:
+            provider = self.factory(owner, self.ports[owner], history)
+            self.providers[owner] = provider
+        else:
+            provider.update_history(history)
+        return provider
+
+    def close(self):
+        providers, self.providers = self.providers, {}
+        failures = []
+        for provider in providers.values():
+            try:
+                provider.close()
+            except Exception as error:
+                failures.append(error)
+        if failures:
+            raise RuntimeError("one or more owner belief providers failed to close") from failures[0]
 
 
 def decision_gate(seed, *, run_id, arm, game_id, owner, decision_index, probability):
@@ -178,9 +261,13 @@ def _observe_histories(rollout, histories):
 def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_id,
         seed=20261101, model=None, models_by_owner=None, device="cpu", host="127.0.0.1",
         transport="legacy", search_probability=None, episode_kind="training", progress=None,
-        temporal_augmentation=True, random_stream_id=None):
+        temporal_augmentation=True, random_stream_id=None, belief_ports=None):
     """Collect one complete native match; incomplete matches are quarantined."""
-    if (arm not in ARM_CONFIG or actual_port == belief_port or type(seed) is not int or seed < 0
+    try:
+        belief_ports = resolve_belief_ports(actual_port, belief_port, belief_ports)
+    except ValueError:
+        raise
+    if (arm not in ARM_CONFIG or type(seed) is not int or seed < 0
             or transport not in ("legacy", "persistent")):
         raise ValueError("SSPI collection requires a fixed arm, distinct native ports, and explicit seed")
     if device not in ("cpu", "mps") or (device == "mps" and not torch.backends.mps.is_available()):
@@ -246,7 +333,9 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         random_stream_id=seed_identity["random_stream_id"],
         actual_match_seed=seed_identity["actual_match_seed"],
         actual_rollout_seed=seed_identity["actual_rollout_seed"],
-        native_transport=transport))
+        native_transport=transport,
+        native_ports=dict(actual=actual_port,
+            belief_by_owner={str(owner): port for owner, port in belief_ports.items()})))
     identity = dict(run_id=run_id, arm=arm, game_id=game_id, seed=seed,
         **seed_identity,
         model_sha256=model_sha, controller_sha256=controller_sha,
@@ -254,13 +343,23 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         controller_sha256_by_owner={str(key): value for key, value in controller_sha_by_owner.items()},
         search_protocol_sha256=search_sha, runtime_sha256=runtime_sha,
         source_sha256=_source_sha(), device=device, engine_sha256=None,
-        episode_kind=episode_kind, search_probability=search_probability)
+        episode_kind=episode_kind, search_probability=search_probability,
+        native_ports=dict(actual=actual_port,
+            belief_by_owner={str(owner): port for owner, port in belief_ports.items()}))
 
     actual_native = SearchNative(host, actual_port, transport=transport, timeout=90.)
     environment = _make_environment(actual_native, bundle)
     rollout = None
-    belief_provider = None
-    belief_owner = None
+    def make_belief_provider(owner, port, history):
+        factory = HistoryBeliefFactory(
+            lambda: SearchNative(host, port, transport=transport, timeout=90.),
+            catalog=bundle.card_catalog, opponent=inference_by_owner[1 - owner],
+            sidecar_factory=BattleEnvSidecar, rollout_factory=make_sspi_rollout)
+        return SSPIHistorySearchProvider(factory, history=history,
+            seed=split_seed(seed, "history-provider", run_id, arm,
+                seed_identity["random_stream_id"], owner))
+
+    belief_providers = OwnerBeliefProviders(belief_ports, make_belief_provider)
     roots, action_log = [], []
     counters = dict(decisions={"0": 0, "1": 0}, search={"0": 0, "1": 0},
         direct={"0": 0, "1": 0}, play={"0": 0, "1": 0}, wait={"0": 0, "1": 0},
@@ -268,6 +367,10 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         refill_events=0, groups=0)
     started = time.monotonic()
     try:
+        worker_attestations = preflight_native_endpoints(host, actual_port, belief_ports,
+            transport=transport, ruleset_manifest=environment.ruleset_manifest)
+        identity["native_worker_attestations"] = worker_attestations
+        identity["engine_sha256"] = worker_attestations["actual"]["libg_sha256"]
         environment.reset(match_config=MatchConfig(deck0=HOG_DECK, deck1=HOG_DECK,
                 seed=seed_identity["actual_match_seed"],
                 end_tick=NATIVE_FINALIZATION_DEADLINE_TICK, **tournament_level_kwargs()),
@@ -275,6 +378,8 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                 allow_initial_remaining_runtime_rejections=True))
         actual_native.start_atomic_steps()
         engine_sha = actual_native.attest().libg_sha256
+        if engine_sha != identity["engine_sha256"]:
+            raise ValueError("actual SSPI engine identity changed after endpoint preflight")
         identity["engine_sha256"] = engine_sha
         rollout = make_sspi_rollout(environment, catalog=bundle.card_catalog,
             execution_seed=seed_identity["actual_rollout_seed"])
@@ -317,21 +422,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                         probability=search_probability)
                     if search_selected:
                         history = histories[owner].capture(information)
-                        if belief_provider is not None and belief_owner != owner:
-                            belief_provider.close()
-                            belief_provider = None
-                        if belief_provider is None:
-                            factory = HistoryBeliefFactory(
-                                lambda: SearchNative(host, belief_port, transport=transport, timeout=90.),
-                                catalog=bundle.card_catalog, opponent=inference_by_owner[1 - owner],
-                                sidecar_factory=BattleEnvSidecar,
-                                rollout_factory=make_sspi_rollout)
-                            belief_provider = SSPIHistorySearchProvider(factory, history=history,
-                                seed=split_seed(seed, "history-provider", run_id, arm,
-                                    seed_identity["random_stream_id"], owner))
-                            belief_owner = owner
-                        else:
-                            belief_provider.update_history(history)
+                        belief_provider = belief_providers.for_search(owner, history)
                         search_seed = split_seed(seed, "sspi-search.v1", run_id, arm,
                             seed_identity["random_stream_id"], owner, index)
                         behavior_seed = split_seed(seed, "sspi-search-behavior.v1", run_id, arm,
@@ -433,10 +524,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                 or rollout.runtime.clock.tick != result["terminal_tick"]
                 or any(event["reason"] == "rejected" for event in rollout.runtime.clock.evidence)):
             raise ValueError("SSPI game did not reach a clean native terminal boundary")
-        if belief_provider is not None:
-            belief_provider.close()
-            belief_provider = None
-            belief_owner = None
+        belief_providers.close()
         for root in roots:
             root["wdl"] = result["labels"][root["owner"]]
             for sample in root.get("continuations", ()):
@@ -481,11 +569,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
             pass
         raise
     finally:
-        if belief_provider is not None:
-            try:
-                belief_provider.close()
-            finally:
-                belief_provider = None
+        belief_providers.close()
         if rollout is not None:
             rollout.runtime.frozen.clear()
             rollout.information.clear()
@@ -498,6 +582,7 @@ def main():
     parser = argparse.ArgumentParser(description="Collect one frozen-model SSPI native Hog episode")
     parser.add_argument("--actual-port", type=int, required=True)
     parser.add_argument("--belief-port", type=int, required=True)
+    parser.add_argument("--belief-port-owner-1", type=int)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--run-id", required=True)
     parser.add_argument("--arm", choices=tuple(ARM_CONFIG), default="A_5PCT_128")
@@ -517,7 +602,9 @@ def main():
         game_id=args.game_id, seed=args.seed, device=args.device, host=args.host,
         random_stream_id=args.random_stream_id,
         transport=args.transport, progress=progress,
-        temporal_augmentation=not args.no_temporal_augmentation)
+        temporal_augmentation=not args.no_temporal_augmentation,
+        belief_ports=None if args.belief_port_owner_1 is None else
+            {0: args.belief_port, 1: args.belief_port_owner_1})
     print(json.dumps(result, sort_keys=True), flush=True)
 
 

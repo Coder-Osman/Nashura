@@ -1,11 +1,26 @@
 # 变更记录
 
+## 2026-11-02：SSPI native worker 预检与终局自动闭环续接
+
+- collector 在 native reset 前对 actual 与两个 owner belief 端点执行只读 status/observe 和 ruleset 绑定 attestation；拒绝截断观测、未就绪端点及 engine/probe 身份不一致，避免已知损坏 worker 消耗整局。
+- v3 因 belief 端口 26791 截断 observe 而隔离；v4 因 detached collector 未带 `CR_PROBE`、ruleset 未绑定 probe 而在 native reset 前失败。二者均不含可训练完整局。
+- v5 使用独立目录和 run ID，固定已验证 probe SHA 与端口 26789/26790/26792；自然终局后自动采集、训练、保存并恢复 checkpoint、完成 32 对/64 局无 MCTS 评测。Heartbeat 负责评测后按同一规格续代，不设固定墙钟限制。
+- collector/编排状态仍在真实 AVD 验证中；SSPI Mac training/时序增强回归 `58 passed`，最新日志推进至 tick 1243、完成 8 个 SEARCH 根，首局未终局，无完整局、训练更新或评测结论。
+- 本轮公开检查合计 `1,104 passed, 42 skipped`，主引擎 `212 passed`，源码清单 `2,810` 项，gitleaks 扫描 38.95 MB 无发现，差异空白检查通过。
+
+## 2026-11-02：SSPI 按 owner 保留独立 belief provider
+
+- 每个玩家持有自己的历史搜索 provider 和 native belief 端口；交替搜索时复用已建立的 FAIR 历史游标，不再关闭另一方 provider 并冷重建历史。
+- 将 actual/belief 端口映射加入 runtime 与 episode 身份；所有 provider 在自然终局及异常清理路径中关闭。
+- 新增独立端口验证、provider 复用/释放和 run_config 路由回归。SSPI Mac training、FAIR history/provider/rollout/search 及性能测试共 `129 passed`。
+- M4 Max 新模型 CPU/MPS 小型更新对照通过：3 次更新均有有限梯度与参数变化；CPU `0.105s`、MPS `0.215s` 中位耗时，本轮选择 CPU。真实 v3 对局仍在运行；不报告训练更新、checkpoint 恢复或评测结果。
+
 ## 2026-11-02：SSPI 终局自动后续与配对评测恢复
 
 - 自然完整终局后自动执行训练/验证采集、搜索根更新、checkpoint 保存/恢复及关闭 MCTS 评测；截断局不准入。
 - 配对评测现在通过 `random_stream_id` 派生实际原生 match/rollout seeds，使每个 seed pair 两场换边局共享同一原生随机流；每个完整 generation checkpoint 可用 `--evaluate-generation` 独立恢复并继续评测。
 - 后续代际从父 checkpoint 恢复模型和 AdamW 状态，采集期间冻结策略；每代在有效更新、checkpoint 保存/恢复和 32 对/64 局无搜索评测完成后才标记完成。
-- SSPI/时序增强定向测试 53 passed；本次公开历史主组 794 passed/27 skipped、附加专项 310 passed/15 skipped，主工程 212 passed，源码清单 2810 项通过，gitleaks 扫描 38.64 MB 无发现。真实 Mac 首局仍在运行，尚无本次真实更新或配对评测结果。
+- 原 postgame 编排实现的工程测试为 SSPI/时序增强定向 `53 passed`；本次 provider 生命周期修复的完整发布检查结果由顶部新记录更新。真实 Mac v3 首局仍在运行，尚无本次真实更新或配对评测结果。
 
 ## 2026-11-02：SSPI 已执行动作的中间观测增密（工程验证）
 
