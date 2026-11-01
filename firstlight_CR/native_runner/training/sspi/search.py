@@ -60,9 +60,17 @@ class SSPIJointPolicy:
         return result.index_copy(0, torch.tensor(DELAY_SLOTS, device=mask.device), mask)
 
     def topk_conditionals(self, prefix, count):
+        if type(count) is not int or count < 1:
+            raise ValueError("positive top-k required")
         probabilities = self.conditionals(prefix)
-        indices = torch.where(torch.isfinite(probabilities))[0].tolist()
-        return sorted(indices, key=lambda index: (-float(probabilities[index].detach()), index))[:count]
+        indices = torch.where(torch.isfinite(probabilities))[0]
+        if indices.numel() == 0:
+            return []
+        # Preserve the old order exactly: descending score, ascending index
+        # for ties. One stable tensor sort avoids per-cell Python float reads.
+        ranking = torch.argsort(probabilities.index_select(0, indices),
+            descending=True, stable=True)
+        return indices.index_select(0, ranking[:count]).tolist()
 
     def log_prob(self, action: FullAction):
         if not isinstance(action, FullAction):

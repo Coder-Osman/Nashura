@@ -116,9 +116,15 @@ class SSPIPolicy:
     def __init__(self, logits, legality: SSPILegality):
         self.logits = logits
         self.legality = legality
+        # A policy is created for one immutable forward pass. Cache per-prefix
+        # normalizers: root candidate generation asks for identical card/cell
+        # probabilities repeatedly. Cached tensors keep their autograd graph.
+        self._conditional_cache = {}
 
     def conditionals(self, prefix=()):
         prefix = tuple(prefix)
+        if prefix in self._conditional_cache:
+            return self._conditional_cache[prefix]
         mask = self.legality.mask(prefix)
         logits = self.logits(prefix)
         mask = mask.to(logits.device)
@@ -128,7 +134,9 @@ class SSPIPolicy:
             raise ValueError("cannot normalize an empty SSPI action branch")
         if not bool(torch.isfinite(logits[mask]).all()):
             raise ValueError("nonfinite legal SSPI action logit")
-        return logits.masked_fill(~mask, -torch.inf).log_softmax(-1)
+        result = logits.masked_fill(~mask, -torch.inf).log_softmax(-1)
+        self._conditional_cache[prefix] = result
+        return result
 
     def log_prob(self, action: SSPIAction):
         if not self.legality.legal(action):

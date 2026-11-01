@@ -1,5 +1,10 @@
 # Nashura
 
+## 2026-11-01：SSPI搜索低风险代码优化（待Mac实测）
+
+在独立审核分支加入当前策略的条件概率缓存、稳定向量化搜索候选排序、1024根真实tick/RPC及候选生成计时，尚未切换Android原生传输协议。新增定向测试和 [Codex后续实测/优化交接](docs/SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md)。**此项仅完成代码修改和局部静态验证；未声称通过Mac真实根回归或性能加速。**
+
+
 ## 2026-11-01：SSPI Mac Pilot 首个搜索根已验证
 
 已完成固定动作/手牌协议的定向验证，并在 macOS 宿主 + ARM64 Android Emulator 的真实原生引擎上完成一个 1024/1024 有效模拟搜索根，实测 712.48 秒；此根仅用于工程验收，不进入训练。CPU/MPS 小型对照选择 CPU。完整混合对局、自然终局 WDL 更新、checkpoint 恢复和无搜索评估仍待完成。详情见[阶段记录](docs/SSPI_MAC_SEARCH_P0_P1_2026-11-01.md)和[训练规格](docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md)。

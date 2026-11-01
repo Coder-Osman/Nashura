@@ -141,7 +141,10 @@ class CompletedBoundarySearch:
         root_sha = information.sha256
         world = None
         started = time.perf_counter()
-        timings = dict(belief=0., restore=0., inference=0., transition=0.)
+        # Top-level stages are disjoint; nested native/opponent RPC measurements
+        # must not be added to them again when calculating unattributed time.
+        timings = dict(belief=0., restore=0., inference=0., transition=0.,
+            candidate_generation=0., tree_selection=0.)
         completed = invalid = discarded = attempts = 0
         lifecycle = {}
         def check_deadline():
@@ -164,7 +167,8 @@ class CompletedBoundarySearch:
                 raise ValueError("single belief world differs from FAIR root")
             with torch.inference_mode():
                 policy, logits = timed("inference", self.inference.predict, information)
-                root = SearchNode(policy, logits, limits=limits, seed=split_seed(seed, "candidate", root_sha), noise=True)
+                root = timed("candidate_generation", SearchNode, policy, logits, limits=limits,
+                    seed=split_seed(seed, "candidate", root_sha), noise=True)
                 nodes = {root_sha: root}
                 while completed < budget:
                     check_deadline()
@@ -183,7 +187,7 @@ class CompletedBoundarySearch:
                         if decisions >= limits.soft_decisions or current.tick - information.tick >= limits.soft_ticks:
                             leaf = node.value
                             break
-                        action = node.select(limits)
+                        action = timed("tree_selection", node.select, limits)
                         if not current.legality.legal(action):
                             raise ValueError("search selected an illegal action")
                         transition = timed("transition", world.transition, action, opponent=self.opponent,
@@ -221,8 +225,8 @@ class CompletedBoundarySearch:
                         history = semantic_digest([history, action.key, current.sha256])
                         if history not in nodes:
                             policy, logits = timed("inference", self.inference.predict, current)
-                            nodes[history] = SearchNode(policy, logits, limits=limits,
-                                seed=split_seed(seed, "candidate", history))
+                            nodes[history] = timed("candidate_generation", SearchNode,
+                                policy, logits, limits=limits, seed=split_seed(seed, "candidate", history))
                             leaf = nodes[history].value
                             break
                         node = nodes[history]

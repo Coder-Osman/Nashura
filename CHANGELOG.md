@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-11-01：SSPI 搜索性能观测与候选计算优化（验证中）
+
+- 每个SSPI策略实例缓存条件概率，减少候选生成中重复的mode/card/cell/delay计算；将稳定排序改为PyTorch向量化实现，保留同分索引升序。
+- 1024次搜索审计新计时：候选生成、PUCT选择；修复search_probe错误的native_ticks统计，新增按信念rollout计的真实推进tick、native RPC以及对手推理嵌套时间。
+- 新增不依赖AVD的定向测试和 [性能实测交接](docs/SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md)。保留旧SSPI预算与战斗/FAIR协议，**尚未在Mac实测优化后性能，也未启用持久连接/compact**。
+
+
 ## 2026-11-01：SSPI Mac Pilot P0/P1 搜索阶段
 
 - 新增阶段实现和证据摘要：Hog-only tagged action/hand-refill 协议、固定 1024/128 完成搜索预算接口及定向回归。

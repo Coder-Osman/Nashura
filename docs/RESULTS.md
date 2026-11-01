@@ -1,5 +1,10 @@
 # 阶段成果与证据索引
 
+## 2026-11-01：SSPI搜索性能修改的验收状态（未跑新根）
+
+新增条件概率缓存、向量化稳定候选排序、候选/树选择时间以及真实tick/native RPC/对手抽样计数，附独立定向测试与 [Codex实测交接](SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md)。旧1024根712.48秒仍是基准，**没有新实测结果，不能声称已加速**。状态：`CODE_REVIEW_BRANCH / LOCAL_HARDWARE_TEST_NOT_RUN / SEARCH1024_REPLAY_NOT_RUN`。P2/P3/P4的历史未完成状态保持不变。
+
+
 ## 2026-11-01：SSPI 动作协议与真实 1024 搜索根（限定工程子项）
 
 在 Apple M4 Max 的 macOS ARM64 Android Emulator 上完成 SSPI Hog 动作/手牌协议定向回归和首个真实 PUCT 搜索根：7,874,126 参数，1024/1024 有效模拟，712.48 秒，0 次未完成边丢弃；根 FAIR 状态恢复一致，独立信念快照已释放。成本分项为转移495.44秒、推理94.34秒、快照恢复16.62秒、信念构造1.92秒。CPU/MPS 小型梯度步中位数为0.174/0.217秒，选用CPU。定向测试73 passed，编译与差异检查通过。该根为 `training_admissible=false` 的独立工程验收；完整混合对局、终局训练更新、checkpoint恢复和关闭MCTS评估未运行，不构成整体门或模型强度结论。详见[阶段报告](SSPI_MAC_SEARCH_P0_P1_2026-11-01.md)。
