@@ -11,6 +11,7 @@ from native_runner.training.sspi.performance import (
 from native_runner.training.sspi.model import SSPIPolicy
 from native_runner.training.sspi.protocol import ActionMode, SSPIAction, SSPILegality
 from native_runner.training.sspi.search import SSPIJointPolicy
+from native_runner.training.sspi.search_probe import run as run_search_probe
 from native_runner.tests.test_fair_final_search import search_fixture
 
 
@@ -134,3 +135,14 @@ def test_completed_search_audit_separately_times_candidate_generation():
     assert "tree_selection" in result.audit["timings"]
     assert result.audit["timings"]["candidate_generation"] >= 0.0
     assert result.audit["timings"]["tree_selection"] >= 0.0
+
+
+@pytest.mark.parametrize("transport", ("legacy", "persistent"))
+def test_search_probe_accepts_only_explicit_known_transports(transport):
+    with pytest.raises(ValueError, match="invalid independent ports"):
+        run_search_probe(1, 1, simulations=128, transport=transport)
+
+
+def test_search_probe_rejects_unknown_transport_before_native_io():
+    with pytest.raises(ValueError, match="invalid independent ports"):
+        run_search_probe(1, 1, simulations=128, transport="batch")

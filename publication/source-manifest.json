@@ -10194,9 +10194,9 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "2605745a27bd07f148a938b327f499cff834dcf973745f75c092530a2a461517",
-      "bytes": 54524,
-      "source_sha256": "2605745a27bd07f148a938b327f499cff834dcf973745f75c092530a2a461517",
+      "sha256": "5244d168c18f39b84f4d6dd51fbc54537cd73ac2833d492859ca4d6bd2eeec97",
+      "bytes": 55442,
+      "source_sha256": "5244d168c18f39b84f4d6dd51fbc54537cd73ac2833d492859ca4d6bd2eeec97",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -10220,9 +10220,9 @@
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "73b9005f44b91e4ae6fc70815eca49be9af37d714befb7aae7dd3b3644012c49",
-      "bytes": 88102,
-      "source_sha256": "73b9005f44b91e4ae6fc70815eca49be9af37d714befb7aae7dd3b3644012c49",
+      "sha256": "c8daeb64cce08257caf352d508f1d83acc977fe1be405b2ee6e0bef20c0e2ad5",
+      "bytes": 88886,
+      "source_sha256": "c8daeb64cce08257caf352d508f1d83acc977fe1be405b2ee6e0bef20c0e2ad5",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -14159,9 +14159,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/fair_final/search.py",
-      "sha256": "80404ccbf8f0e0cc25e03e80c01f862a53c20894fd4b3d9da136706f2beed739",
-      "bytes": 14991,
-      "source_sha256": "80404ccbf8f0e0cc25e03e80c01f862a53c20894fd4b3d9da136706f2beed739",
+      "sha256": "9642fe6867464a47fc21b09903efd7d2979d9040c013bb0f9e9bf66250e0c675",
+      "bytes": 15313,
+      "source_sha256": "9642fe6867464a47fc21b09903efd7d2979d9040c013bb0f9e9bf66250e0c675",
       "transformations": []
     },
     {
@@ -16653,9 +16653,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "764432e68e4695e51f863da673aad5f0415fdef2c53db832bfd0d563d12f7cff",
-      "bytes": 54849,
-      "source_sha256": "764432e68e4695e51f863da673aad5f0415fdef2c53db832bfd0d563d12f7cff",
+      "sha256": "de43bee736d0c6347a375e9fdd9f313ff9a9882334ee4c991ec06414230bb219",
+      "bytes": 55429,
+      "source_sha256": "de43bee736d0c6347a375e9fdd9f313ff9a9882334ee4c991ec06414230bb219",
       "transformations": [
         "2026-10-28 repository-maintained loading observer scope correction and read-only evidence; original exported source identity preserved",
         "2026-10-28 repository-maintained real loading disk transaction audit; original source identity preserved",
@@ -19685,9 +19685,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/sspi/model.py",
-      "sha256": "846309fe5adaee1c64fc07fe759adc85b84448ec82cfd7ff1c7522e2f3a75991",
-      "bytes": 12876,
-      "source_sha256": "846309fe5adaee1c64fc07fe759adc85b84448ec82cfd7ff1c7522e2f3a75991",
+      "sha256": "4697db41cf71f0bde0f510e1f406ee50cc242ae4a1ab05f677b1515297fd10a5",
+      "bytes": 13318,
+      "source_sha256": "4697db41cf71f0bde0f510e1f406ee50cc242ae4a1ab05f677b1515297fd10a5",
       "transformations": []
     },
     {
@@ -19713,24 +19713,43 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/sspi/search.py",
-      "sha256": "8e6de80df178fec88209b8b29ff7257afc9297296edc3e59cd24f7b6a086d1c0",
-      "bytes": 6234,
-      "source_sha256": "8e6de80df178fec88209b8b29ff7257afc9297296edc3e59cd24f7b6a086d1c0",
+      "sha256": "7f91570c8959188e79cad57e3bdabad14ac626de2300e9e7d2a2a2d7e2c1fffe",
+      "bytes": 6613,
+      "source_sha256": "7f91570c8959188e79cad57e3bdabad14ac626de2300e9e7d2a2a2d7e2c1fffe",
       "transformations": []
     },
     {
       "path": "firstlight_CR/native_runner/training/sspi/search_probe.py",
-      "sha256": "db910bf33eaf57b234b322263379faf2759c1e6017305113abb393bc968fc517",
-      "bytes": 7450,
-      "source_sha256": "db910bf33eaf57b234b322263379faf2759c1e6017305113abb393bc968fc517",
+      "sha256": "24b9092b01bac9e44542c02723b0d3351822177d0b5dd3bce24879411c2bef22",
+      "bytes": 10887,
+      "source_sha256": "24b9092b01bac9e44542c02723b0d3351822177d0b5dd3bce24879411c2bef22",
+      "transformations": []
+    },
+    {
+      "path": "docs/SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md",
+      "sha256": "90d17d7f9ae1a9328dbd92f68bbadf1eca0b5e68e78756775248c83000517aa0",
+      "bytes": 8487,
+      "source_sha256": "90d17d7f9ae1a9328dbd92f68bbadf1eca0b5e68e78756775248c83000517aa0",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/tests/test_sspi_search_performance.py",
+      "sha256": "6931391d1e14a07db79452b871ae9b6dc7d183c2da043b31bc4d481b724cbed9",
+      "bytes": 5754,
+      "source_sha256": "6931391d1e14a07db79452b871ae9b6dc7d183c2da043b31bc4d481b724cbed9",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/performance.py",
+      "sha256": "45b6654603275bf46fdba6c2b103cea7730b892d1c04debe6ee54187b250325f",
+      "bytes": 3707,
+      "source_sha256": "45b6654603275bf46fdba6c2b103cea7730b892d1c04debe6ee54187b250325f",
       "transformations": []
     }
   ],
-  "file_count": 2802,
-  "source_bytes": 36352499,
-  "excluded_selected_candidates": {
-    "explicitly_excluded": 1
-  },
+  "file_count": 2805,
+  "source_bytes": 36377309,
+  "excluded_selected_candidates": {},
   "excluded_categories": [
     "credentials",
     "private game audits",

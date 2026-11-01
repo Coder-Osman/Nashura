@@ -1,8 +1,8 @@
 # Nashura
 
-## 2026-11-01：SSPI搜索低风险代码优化（待Mac实测）
+## 2026-11-01：SSPI搜索性能优化完成Mac受控实测（训练未完成）
 
-在独立审核分支加入当前策略的条件概率缓存、稳定向量化搜索候选排序、1024根真实tick/RPC及候选生成计时，尚未切换Android原生传输协议。新增定向测试和 [Codex后续实测/优化交接](docs/SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md)。**此项仅完成代码修改和局部静态验证；未声称通过Mac真实根回归或性能加速。**
+在Mac M4 Max + `astral-api30` AVD 上完成相同FAIR冻结决策状态的1024根对照：base legacy 486.01秒，PR legacy 470.88秒，PR显式persistent `session-v1` 403.81秒。三组均1024/1024有效且完整根访问分布、动作和搜索身份一致；persistent相对PR legacy墙钟减少14.2%。默认transport仍为legacy，P2完整训练对局、参数更新及无搜索评估仍未完成。详见[性能实测与复核记录](docs/SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md)。
 
 
 ## 2026-11-01：SSPI Mac Pilot 首个搜索根已验证

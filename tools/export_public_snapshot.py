@@ -67,8 +67,12 @@ def source_files(root):
 def selected_files(workspace):
     yield from source_files(workspace / "firstlight_CR")
     for name in (
+        "README.md",
+        "CHANGELOG.md",
+        "docs/RESULTS.md",
         "docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md",
         "docs/SSPI_MAC_SEARCH_P0_P1_2026-11-01.md",
+        "docs/SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md",
     ):
         path = workspace / name
         if path.is_file():

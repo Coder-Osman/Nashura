@@ -76,19 +76,22 @@ class TrackedOpeningBeliefProvider(OpeningBeliefProvider):
         return world
 
 
-def run(root_port, belief_port, *, seed=20261101, simulations=1024):
+def run(root_port, belief_port, *, seed=20261101, simulations=1024, transport="legacy"):
     if (type(root_port) is not int or type(belief_port) is not int or root_port == belief_port
-            or type(seed) is not int or seed < 0 or simulations not in SEARCH_BUDGETS.values()):
+            or type(seed) is not int or seed < 0 or simulations not in SEARCH_BUDGETS.values()
+            or transport not in ("legacy", "persistent")):
         raise ValueError("invalid independent ports, seed, or SSPI fixed search budget")
     torch.set_num_threads(1)
     torch.use_deterministic_algorithms(True)
     bundle = production_semantic_bundle()
     actual_native = LegacySearchNative("127.0.0.1", root_port, timeout=90.)
+    actual_native._persistent_transport_requested = transport == "persistent"
     environment = FinalBattleEnv(native=actual_native, card_catalog=bundle.native_card_catalog,
         semantic_subset_contract=bundle.semantic_subset_contract,
         effect_catalog=RuntimeEffectCatalog.from_catalog(bundle.native_effect_catalog))
     belief = None
     rollout = None
+    belief_natives = []
     try:
         environment.reset(match_config=MatchConfig(deck0=HOG_DECK, deck1=HOG_DECK,
             seed=split_seed(seed, "actual-match") % (2**31 - 1),
@@ -111,11 +114,11 @@ def run(root_port, belief_port, *, seed=20261101, simulations=1024):
             delay_ms=[200, 400, 600, 800, 1000], wait_ticks=20, device="cpu"))
         inference = TimedSearchInference(make_search_inference(
             model, checkpoint_sha=model_sha, controller_sha=controller_sha))
-        belief_natives = []
         tick_counter = NativeTickCounter()
 
         def new_belief_native():
             native = LegacySearchNative("127.0.0.1", belief_port, timeout=90.)
+            native._persistent_transport_requested = transport == "persistent"
             belief_natives.append(native)
             return native
 
@@ -163,13 +166,18 @@ def run(root_port, belief_port, *, seed=20261101, simulations=1024):
             native_ticks=tick_counter.actual_ticks, performance=profiling,
             seconds=elapsed, audit=outcome.audit,
             selected_action=outcome.selected.__dict__, owner=information.owner, tick=information.tick,
-            fair_sha256=information.sha256, native_root_digest_unchanged=True,
+            fair_sha256=information.sha256, search_protocol_sha=outcome.result["search_protocol_sha"],
+            native_root_digest_before=before_native, native_root_digest_after=after_native,
+            native_root_digest_unchanged=True, candidate_distribution=outcome.result["candidates"],
             independent_belief_lease_released=belief.last_world.closed,
             engine_sha256=actual_native.attest().libg_sha256, model_sha256=model_sha,
             controller_sha256=controller_sha, search_sha256=search_sha,
             belief_sampler_sha256=belief.sampler_sha, parameters=model.parameter_count,
-            seed=seed, devices={"policy": "cpu", "engine": "android-arm64-avd"})
+            seed=seed, transport=transport,
+            devices={"policy": "cpu", "engine": "android-arm64-avd"})
     finally:
+        for native in belief_natives:
+            native.close_transport()
         if rollout is not None:
             rollout.runtime.frozen.clear()
             rollout.information.clear()
@@ -182,9 +190,10 @@ def main():
     parser.add_argument("--belief-port", type=int, required=True)
     parser.add_argument("--seed", type=int, default=20261101)
     parser.add_argument("--simulations", type=int, choices=(128, 1024), default=1024)
+    parser.add_argument("--transport", choices=("legacy", "persistent"), default="legacy")
     args = parser.parse_args()
     print(json.dumps(run(args.root_port, args.belief_port, seed=args.seed,
-        simulations=args.simulations), sort_keys=True), flush=True)
+        simulations=args.simulations, transport=args.transport), sort_keys=True), flush=True)
 
 
 if __name__ == "__main__":

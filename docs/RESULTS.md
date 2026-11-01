@@ -1,8 +1,8 @@
 # 阶段成果与证据索引
 
-## 2026-11-01：SSPI搜索性能修改的验收状态（未跑新根）
+## 2026-11-01：SSPI搜索性能优化（限定工程子项，实机验证通过）
 
-新增条件概率缓存、向量化稳定候选排序、候选/树选择时间以及真实tick/native RPC/对手抽样计数，附独立定向测试与 [Codex实测交接](SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md)。旧1024根712.48秒仍是基准，**没有新实测结果，不能声称已加速**。状态：`CODE_REVIEW_BRANCH / LOCAL_HARDWARE_TEST_NOT_RUN / SEARCH1024_REPLAY_NOT_RUN`。P2/P3/P4的历史未完成状态保持不变。
+新增条件概率缓存、向量化稳定候选排序、候选/树选择时间、真实tick/RPC及对手推理计时，并在M4 Max Android AVD完成同FAIR根1024对照。base legacy 486.01秒、PR legacy 470.88秒、PR persistent 403.81秒；三组完整访问分布和selected action一致、均1024/1024有效。session-v1跨snapshot/restore/observe-atomic状态等价门通过，默认仍为legacy。性能与嵌套时间证据见[实测记录](SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md)。工程子项`SEARCH_PERFORMANCE_CONTROLLED_AVD_PASS`；P2完整混合对局、P3参数更新/checkpoint恢复和P4关闭MCTS评测仍未运行，不构成整体训练验收或模型强度结论。
 
 
 ## 2026-11-01：SSPI 动作协议与真实 1024 搜索根（限定工程子项）
