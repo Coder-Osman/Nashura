@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 from pathlib import Path
 import sys
 import time
@@ -14,6 +15,8 @@ sys.path.insert(0, str(PROJECT / "research" / "puct-runtime"))
 from native_adapter import BattleEnvSidecar
 from native_runner.cr_native_env import NativeClashEnv
 from native_runner.match_factory import MatchConfig, NATIVE_FINALIZATION_DEADLINE_TICK, tournament_level_kwargs
+from native_runner.paths import PACKAGE_ROOT
+from native_runner.local_config import setting
 from native_runner.training.fair_final.codec import ActionCodec
 from native_runner.training.fair_final.history import FairHistoryRecorder
 from native_runner.training.fair_final.native import FinalBattleEnv
@@ -29,6 +32,7 @@ from native_runner.training.sspi.rollout import WAIT_TICKS, make_sspi_informatio
 from native_runner.training.sspi.protocol import ACTION_SCHEMA, HogRefillClock
 from native_runner.training.sspi.performance import NativeRequestProfiler, NativeTickCounter, TimedSearchInference
 from native_runner.training.sspi.search import budget_search_sha, make_search_inference
+from native_runner.training.sspi.collector import EventBatchedSSPINative
 from native_runner.training.v4.factory import production_semantic_bundle
 
 
@@ -39,7 +43,7 @@ class LegacySearchNative(NativeClashEnv):
         super().__init__(*args, **kwargs)
         self.rpc_profile = NativeRequestProfiler()
 
-    def start_atomic_steps(self):
+    def start_atomic_steps(self, *, initial_tick=None):
         return None
 
     def _request(self, command, *, _read_retry_count=2):
@@ -51,6 +55,36 @@ class LegacySearchNative(NativeClashEnv):
             return result
         finally:
             self.rpc_profile.record(command, time.perf_counter() - started, succeeded)
+
+
+class ProfiledEventBatchedSearchNative(EventBatchedSSPINative):
+    def __init__(self, *args, **kwargs):
+        kwargs["persistent_control"] = True
+        super().__init__(*args, **kwargs)
+        self.rpc_profile = NativeRequestProfiler()
+
+    def _request(self, command, *, _read_retry_count=2):
+        started = time.perf_counter()
+        succeeded = False
+        try:
+            result = super()._request(command, _read_retry_count=_read_retry_count)
+            succeeded = True
+            return result
+        finally:
+            self.rpc_profile.record(command, time.perf_counter() - started, succeeded)
+
+
+def cleanup_owned_event_worker(native):
+    """Return an exclusive event-test endpoint to legacy cold mode."""
+    native.close_transport()
+    resident = native.resident_status()
+    slots = resident.get("slots", ())
+    owned = (resident.get("mode") == "resident-headless"
+        and resident.get("occupied") == len(slots) and len(slots) <= 1
+        and all(slot.get("envId") == native.env_id for slot in slots))
+    if owned:
+        return native._raw_request("multi-stop")
+    return None
 
 
 class MeasuredSSPIRollout(FinalRollout):
@@ -81,13 +115,21 @@ class TrackedOpeningBeliefProvider(OpeningBeliefProvider):
         return world
 
 
-def run(root_port, belief_port, *, seed=20261101, simulations=128, transport="legacy"):
+def run(root_port, belief_port, *, seed=20261101, simulations=128, transport="legacy",
+        belief_transport=None, probe_path=None):
+    belief_transport = transport if belief_transport is None else belief_transport
     if (type(root_port) is not int or type(belief_port) is not int or root_port == belief_port
             or type(seed) is not int or seed < 0 or simulations not in SEARCH_BUDGETS.values()
-            or transport not in ("legacy", "persistent", "persistent-delta")):
+            or transport not in ("legacy", "persistent", "persistent-delta")
+            or belief_transport not in ("legacy", "persistent", "persistent-delta", "event-json", "event-json-delta")):
         raise ValueError("invalid independent ports, seed, or SSPI fixed search budget")
     torch.set_num_threads(1)
     torch.use_deterministic_algorithms(True)
+    probe_path = Path(probe_path or setting("CR_PROBE", setting("CR_PPO_PROBE",
+        str(PACKAGE_ROOT / "probe" / "out" / "libcrprobe.so")))).resolve()
+    if not probe_path.is_file():
+        raise ValueError(f"SSPI search probe requires an existing explicitly attested probe: {probe_path}")
+    os.environ["CR_PROBE"] = str(probe_path)
     bundle = production_semantic_bundle()
     actual_native = LegacySearchNative("127.0.0.1", root_port, timeout=90.)
     actual_native._persistent_transport_requested = transport in ("persistent", "persistent-delta")
@@ -123,9 +165,13 @@ def run(root_port, belief_port, *, seed=20261101, simulations=128, transport="le
         tick_counter = NativeTickCounter()
 
         def new_belief_native():
-            native = LegacySearchNative("127.0.0.1", belief_port, timeout=90.)
-            native._persistent_transport_requested = transport in ("persistent", "persistent-delta")
-            native.json_event_deltas = transport == "persistent-delta"
+            if belief_transport in ("event-json", "event-json-delta"):
+                native = ProfiledEventBatchedSearchNative("127.0.0.1", belief_port, timeout=90.,
+                    event_deltas=belief_transport == "event-json-delta")
+            else:
+                native = LegacySearchNative("127.0.0.1", belief_port, timeout=90.)
+                native._persistent_transport_requested = belief_transport in ("persistent", "persistent-delta")
+                native.json_event_deltas = belief_transport == "persistent-delta"
             belief_natives.append(native)
             return native
 
@@ -161,12 +207,15 @@ def run(root_port, belief_port, *, seed=20261101, simulations=128, transport="le
         # Only disjoint top-level search stages are additive. Native request
         # and opponent inference counters below are nested diagnostics.
         unclassified = max(0., outcome.audit["seconds"] - sum(stage_seconds.values()))
+        belief_batch = [native.finish_capture_profile() for native in belief_natives
+            if isinstance(native, EventBatchedSSPINative)]
         profiling = dict(schema="sspi-real-search-performance.v1",
             stage_seconds=stage_seconds, unattributed_search_seconds=unclassified,
             native_ticks=tick_counter.summary(),
             opponent_inference=inference.summary(),
             actual_root_native_rpc=actual_native.rpc_profile.summary(),
             belief_native_rpc=[native.rpc_profile.summary() for native in belief_natives],
+            belief_event_batch=belief_batch,
             note="RPC and opponent times are nested in the measured search stages; do not sum twice")
         return dict(status="passed", mode="SEARCH", simulations=simulations,
             valid_simulations=outcome.result["valid_simulations"], attempts=outcome.audit["attempts"],
@@ -180,11 +229,14 @@ def run(root_port, belief_port, *, seed=20261101, simulations=128, transport="le
             engine_sha256=actual_native.attest().libg_sha256, model_sha256=model_sha,
             controller_sha256=controller_sha, search_sha256=search_sha,
             belief_sampler_sha256=belief.sampler_sha, parameters=model.parameter_count,
-            seed=seed, transport=transport,
+            seed=seed, transport=transport, belief_transport=belief_transport,
             devices={"policy": "cpu", "engine": "android-arm64-avd"})
     finally:
         for native in belief_natives:
-            native.close_transport()
+            if isinstance(native, EventBatchedSSPINative):
+                cleanup_owned_event_worker(native)
+            else:
+                native.close_transport()
         if rollout is not None:
             rollout.runtime.frozen.clear()
             rollout.information.clear()
@@ -198,9 +250,15 @@ def main():
     parser.add_argument("--seed", type=int, default=20261101)
     parser.add_argument("--simulations", type=int, choices=(128,), default=128)
     parser.add_argument("--transport", choices=("legacy", "persistent", "persistent-delta"), default="legacy")
+    parser.add_argument("--belief-transport", choices=("same", "legacy", "persistent", "persistent-delta",
+        "event-json", "event-json-delta"), default="same")
+    parser.add_argument("--probe-path", default=None)
     args = parser.parse_args()
     print(json.dumps(run(args.root_port, args.belief_port, seed=args.seed,
-        simulations=args.simulations, transport=args.transport), sort_keys=True), flush=True)
+        simulations=args.simulations, transport=args.transport,
+        belief_transport=None if args.belief_transport == "same" else args.belief_transport,
+        probe_path=args.probe_path),
+        sort_keys=True), flush=True)
 
 
 if __name__ == "__main__":

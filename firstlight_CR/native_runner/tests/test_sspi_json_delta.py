@@ -165,7 +165,7 @@ def test_event_batch_failed_restore_preserves_confirmed_delivery_cursor(monkeypa
     native._json_cursors[3].validate(full_capture())
     before = deepcopy(native._json_cursors[3].__dict__)
     monkeypatch.setattr(native, "resident_status",
-        lambda: {"occupied": 1, "slots": [{"envId": 3}]})
+        lambda: {"occupied": 1, "slots": [{"envId": 3}], "residentSnapshotRestore": True})
     def rejected(*_a, **_k):
         raise RunnerError("restore rejected")
     monkeypatch.setattr(native, "_raw_request", rejected)
@@ -177,6 +177,36 @@ def test_event_batch_failed_restore_preserves_confirmed_delivery_cursor(monkeypa
     assert native._json_cursors[3].__dict__ == before
     native._request("restore 1")
     assert native._json_cursors[3].wire() == (0,) * 9
+
+
+def test_event_batch_restore_rebases_tick_and_delta_cursor(monkeypatch):
+    from native_runner.cr_native_env import NativeClashEnv
+    from native_runner.training.sspi.collector import EventBatchedSSPINative
+
+    native = EventBatchedSSPINative("127.0.0.1", 1, env_id=3, event_deltas=True,
+        persistent_control=True)
+    native.start_atomic_steps(initial_tick=7)
+    native._last_tick = 90
+    native.last_advance_boundary = object()
+    native._json_cursors[3].validate(full_capture())
+    monkeypatch.setattr(native, "resident_status",
+        lambda: {"occupied": 1, "slots": [{"envId": 3}], "residentSnapshotRestore": True})
+
+    def request(_self, command, *, _read_retry_count=2):
+        if command == "env 3 restore 1":
+            return {"ok": True, "generation": 2, "stateEpoch": 4, "tick": 42}
+        if command == "env 3 observe":
+            return {"ok": True, "tick": 42, "players": []}
+        raise AssertionError(f"unexpected native command {command!r}")
+
+    monkeypatch.setattr(NativeClashEnv, "_request", request)
+    observation = native.restore(1)
+
+    assert observation["tick"] == 42
+    assert native._last_tick == 42
+    assert native.last_advance_boundary is None
+    assert native._json_cursors[3].wire() == (0,) * 9
+    assert native._persistent_transport_requested
 
 
 @pytest.mark.parametrize("public_consumer,expected_floor", [(False, 2), (True, 1)])

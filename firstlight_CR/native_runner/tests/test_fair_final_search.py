@@ -31,16 +31,21 @@ class World:
     commitment = "c" * 64
     manifest = {"source": "unit-test-independent-world"}
 
-    def __init__(self, info, *, fail_first=0, incomplete_after=None, terminal=None):
+    def __init__(self, info, *, fail_first=0, incomplete_after=None, terminal=None, dirty_incomplete=False):
         self.root = self.current = info
         self.closed = False
+        self.needs_root_restore = False
         self.calls = 0
+        self.restore_calls = 0
         self.depth = 0
         self.fail_first = fail_first
         self.incomplete_after = incomplete_after
         self.terminal = terminal
+        self.dirty_incomplete = dirty_incomplete
 
     def root_information(self):
+        if self.needs_root_restore:
+            raise ValueError("dirty search world requires root restoration")
         return self.current
 
     root_owner_information = root_information
@@ -48,10 +53,15 @@ class World:
     def restore_root(self):
         self.current = self.root
         self.depth = 0
+        self.needs_root_restore = False
+        self.restore_calls += 1
 
     def transition(self, action, **kwargs):
         self.calls += 1
         if self.calls <= self.fail_first or self.incomplete_after == self.depth:
+            if self.dirty_incomplete:
+                self.needs_root_restore = True
+                return Transition(False, 1, 1, prior_boundary_restored=False)
             return Transition(False, 1, 1)
         self.depth += 1
         if self.terminal is not None:
@@ -60,6 +70,8 @@ class World:
         return Transition(True, 1, 2, information=self.current, reason="preempted")
 
     def close(self):
+        self.current = self.root
+        self.needs_root_restore = False
         self.closed = True
 
 
@@ -130,6 +142,20 @@ def test_incomplete_descendant_backs_up_only_completed_prefix():
     assert outcome.result["invalid_attempts"] == 0
     assert sum(outcome.audit["completed_lifecycle"].values()) == 128
     assert len(search.inference.frames) == outcome.audit["nodes"]
+
+
+def test_dirty_incomplete_descendant_is_discarded_then_root_restored():
+    clean, info, arguments = search_fixture(incomplete_after=1)
+    dirty, _, _ = search_fixture(incomplete_after=1, dirty_incomplete=True)
+
+    clean_outcome = clean.run(info, **arguments)
+    dirty_outcome = dirty.run(info, **arguments)
+
+    assert dirty_outcome.result == clean_outcome.result
+    assert dirty_outcome.selected == clean_outcome.selected
+    assert dirty_outcome.policy_target == clean_outcome.policy_target
+    assert dirty.belief.world.restore_calls == clean.belief.world.restore_calls
+    assert not dirty.belief.world.needs_root_restore
 
 
 @pytest.mark.parametrize("value", [-1., 0., 1.])
@@ -213,7 +239,16 @@ class WaitingOpponent:
 
 
 def test_runtime_same_tick_sampling_precedes_any_commit_and_completed_edge(rollout):
+    snapshots = []
+    original_snapshot = rollout.snapshot
+
+    def capture_snapshot(factory):
+        snapshots.append(factory)
+        return original_snapshot(factory)
+
+    rollout.snapshot = capture_snapshot
     with_world = runtime_world(rollout)
+    root_snapshot_count = len(snapshots)
     opponent = WaitingOpponent(rollout)
     try:
         transition = with_world.transition(FullAction(11, 0, 1), opponent=opponent,
@@ -221,18 +256,24 @@ def test_runtime_same_tick_sampling_precedes_any_commit_and_completed_edge(rollo
         assert transition.completed and transition.ticks == 2 and transition.reason == "executed"
         assert transition.information.owner == 0
         assert len(opponent.seen) == 1
+        assert len(snapshots) == root_snapshot_count
     finally:
         with_world.close()
     assert rollout.runtime.clock.tick == 100 and not rollout.runtime.clock.pending
 
 
-def test_runtime_hard_limit_restores_boundary_and_pending_edge_gets_no_value(rollout):
+def test_runtime_hard_limit_marks_branch_dirty_until_root_restore(rollout):
     world = runtime_world(rollout)
     before = world.root_information().sha256
     try:
         transition = world.transition(FullAction(), opponent=WaitingOpponent(rollout),
             generator=torch.Generator(), hard_tick=101, maximum_decisions=6, check_deadline=lambda: None)
         assert not transition.completed and transition.information is None and transition.terminal_value is None
+        assert transition.prior_boundary_restored is False and world.needs_root_restore
+        with pytest.raises(ValueError, match="dirty search world"):
+            world.root_owner_information()
+        world.restore_root()
+        assert not world.needs_root_restore
         assert world.root_owner_information().sha256 == before
         assert rollout.runtime.clock.evidence == [] and rollout.runtime.clock.pending == {}
     finally:
@@ -302,6 +343,8 @@ def test_separate_opponent_events_preserve_own_pending_until_settled(rollout):
             hard_tick=200, maximum_decisions=2, check_deadline=lambda: None)
         assert seen == [100, 102]
         assert not result.completed and result.decisions == 2 and result.ticks == 4
+        assert result.prior_boundary_restored is False and world.needs_root_restore
+        world.restore_root()
         assert world.root_owner_information().tick == 100
         assert not rollout.runtime.clock.pending and not rollout.runtime.clock.evidence
     finally:

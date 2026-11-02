@@ -73,8 +73,12 @@ class EventBatchedSSPINative(ResidentNativeClashEnv):
         "receive_ns", "decode_ns", "total_ns",
     )
 
-    def __init__(self, host, port, *, env_id=0, timeout=90., event_deltas=False):
+    def __init__(self, host, port, *, env_id=0, timeout=90., event_deltas=False,
+            persistent_control=False):
         super().__init__(env_id, host=host, port=port, timeout=timeout)
+        if type(persistent_control) is not bool:
+            raise ValueError("SSPI event-batch control transport switch must be boolean")
+        self._persistent_transport_requested = persistent_control
         self._batch_channel = None
         self._json_cursors = {env_id: JsonEventCursor()}
         self.event_deltas = bool(event_deltas)
@@ -107,19 +111,34 @@ class EventBatchedSSPINative(ResidentNativeClashEnv):
                 if (status.get("occupied") != 1 or len(slots) != 1
                         or slots[0].get("envId") != self.env_id):
                     raise RunnerError("SSPI batched control requires exactly one resident slot")
-                result = self._raw_request(command, _read_retry_count=_read_retry_count)
+                if status.get("residentSnapshotRestore") is not True:
+                    raise RunnerError("SSPI event-batched MCTS requires resident snapshot/restore support")
+                result = super()._request(command, _read_retry_count=_read_retry_count)
             else:
                 result = super()._request(command, _read_retry_count=_read_retry_count)
-            if command == "reset" or command.startswith(
-                    ("configure ", "configure-native ", "restore ")):
+            if command == "reset" or command.startswith(("configure ", "configure-native ")):
+                self._json_cursors[self.env_id] = JsonEventCursor()
+                self._last_tick = None
+                self.last_advance_boundary = None
+            elif command.startswith("restore "):
                 self._json_cursors[self.env_id] = JsonEventCursor()
             return result
+
+    def restore(self, handle):
+        observation = super().restore(handle)
+        tick = observation.get("tick")
+        if type(tick) is not int or tick < 0:
+            raise RunnerError("SSPI event-batch restore returned an invalid native tick")
+        with self._lock:
+            self._last_tick = tick
+            self.last_advance_boundary = None
+        return observation
 
     def start_atomic_steps(self, *, initial_tick=None):
         with self._lock:
             self._capture = None
             self.last_advance_boundary = None
-            if initial_tick is not None and (type(initial_tick) is not int or initial_tick < 0):
+            if type(initial_tick) is not int or initial_tick < 0:
                 raise ValueError("initial native tick must be a nonnegative integer")
             self._last_tick = initial_tick
             self._atomic_steps = True
@@ -230,6 +249,13 @@ def resolve_belief_ports(actual_port, belief_port, belief_ports=None):
     return {owner: belief_ports[owner] for owner in (0, 1)}
 
 
+def make_belief_native(host, port, *, transport, timeout=90.):
+    if transport in ("event-json", "event-json-delta"):
+        return EventBatchedSSPINative(host, port, timeout=timeout,
+            event_deltas=transport == "event-json-delta", persistent_control=True)
+    return SearchNative(host, port, transport=transport, timeout=timeout)
+
+
 def preflight_native_endpoints(host, actual_port, belief_ports, *, transport, actual_env_id=0,
         ruleset_manifest=None, include_belief=True):
     if type(actual_env_id) is not int or not 0 <= actual_env_id < 16:
@@ -245,6 +271,7 @@ def preflight_native_endpoints(host, actual_port, belief_ports, *, transport, ac
     attestations = {}
     expected_identity = None
     for role, port in endpoints:
+        cold_belief_worker = False
         if transport in ("event-json", "event-json-delta") and role == "actual":
             probe = SearchNative(host, port, transport="persistent", timeout=90.)
             try:
@@ -257,16 +284,36 @@ def preflight_native_endpoints(host, actual_port, belief_ports, *, transport, ac
                     or not any(slot.get("envId") == actual_env_id for slot in slots)):
                 raise RunnerError("event-json requires the selected existing resident actual match")
             native = ResidentNativeClashEnv(actual_env_id, host, port, timeout=90.)
+        elif transport in ("event-json", "event-json-delta"):
+            event_native = make_belief_native(host, port, transport=transport, timeout=90.)
+            resident = event_native.resident_status()
+            slots = resident.get("slots", ())
+            if (resident.get("mode") == "resident-headless" and resident.get("occupied") == 1
+                    and len(slots) == 1 and slots[0].get("envId") == event_native.env_id
+                    and slots[0].get("ended") is True):
+                native = event_native
+            elif (resident.get("mode") == "legacy-headless" and resident.get("active") is False
+                    and resident.get("occupied") == 0 and not slots):
+                event_native.close_transport()
+                native = SearchNative(host, port, transport="persistent", timeout=90.)
+                cold_belief_worker = True
+            else:
+                event_native.close_transport()
+                raise RunnerError(f"SSPI event-batched belief endpoint must have one resident slot on port {port}")
         else:
-            selected_transport = "persistent" if transport in ("event-json", "event-json-delta") else transport
-            native = SearchNative(host, port, transport=selected_transport, timeout=90.)
+            native = SearchNative(host, port, transport=transport, timeout=90.)
         try:
             status = native.status()
-            if status.get("ready") is not True:
+            if cold_belief_worker:
+                if (status.get("ready") is not False or status.get("coldReady") is not True
+                        or status.get("configured") is not False or status.get("tick") != -1):
+                    raise ValueError(f"SSPI event-batched belief endpoint is not cold on port {port}")
+            elif status.get("ready") is not True:
                 raise ValueError(f"SSPI native {role} endpoint is not ready on port {port}")
-            observation = native.observe()
-            if observation.get("ok") is not True:
-                raise ValueError(f"SSPI native {role} endpoint returned an invalid observation")
+            if not cold_belief_worker:
+                observation = native.observe()
+                if observation.get("ok") is not True:
+                    raise ValueError(f"SSPI native {role} endpoint returned an invalid observation")
             attestation = native.attest(ruleset_manifest)
             identity = dict(libg_sha256=attestation.libg_sha256,
                 probe_sha256=attestation.probe_sha256)
@@ -507,9 +554,11 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
             parameter.requires_grad_(False)
     model_sha_by_owner = {str(owner): semantic_digest(item.state_dict())
         for owner, item in sorted(models_by_owner.items())}
+    belief_transport = transport
     controller_sha_by_owner = {owner: semantic_digest(dict(model_sha=model_sha_by_owner[str(owner)],
         action_schema=ACTION_SCHEMA, delay_ms=[200, 400, 600, 800, 1000],
-        wait_ticks=20, device=device, deck=list(HOG_DECK), native_transport=transport))
+        wait_ticks=20, device=device, deck=list(HOG_DECK), native_transport=transport,
+        belief_transport=belief_transport))
         for owner in (0, 1)}
     inference_by_owner = {owner: make_search_inference(models_by_owner[owner],
         checkpoint_sha=model_sha_by_owner[str(owner)], controller_sha=controller_sha_by_owner[owner])
@@ -530,6 +579,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         actual_match_seed=seed_identity["actual_match_seed"],
         actual_rollout_seed=seed_identity["actual_rollout_seed"],
         native_transport=transport,
+        belief_transport=belief_transport,
         actual_env_id=actual_env_id,
         native_ports=dict(actual=actual_port,
             belief_by_owner={str(owner): port for owner, port in belief_ports.items()})))
@@ -542,6 +592,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         source_sha256=_source_sha(), device=device, engine_sha256=None,
         episode_kind=episode_kind, search_probability=search_probability,
         native_transport=transport,
+        belief_transport=belief_transport,
         actual_env_id=actual_env_id,
         native_ports=dict(actual=actual_port,
             belief_by_owner={str(owner): port for owner, port in belief_ports.items()}))
@@ -553,12 +604,9 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
     environment = _make_environment(actual_native, bundle)
     rollout = None
 
-    belief_transport = ("persistent-delta" if transport == "event-json-delta" else
-                        "persistent" if transport == "event-json" else transport)
-
     def make_belief_provider(owner, port, history):
         factory = HistoryBeliefFactory(
-            lambda: SearchNative(host, port, transport=belief_transport, timeout=90.),
+            lambda: make_belief_native(host, port, transport=belief_transport, timeout=90.),
             catalog=bundle.card_catalog, opponent=inference_by_owner[1 - owner],
             sidecar_factory=BattleEnvSidecar, rollout_factory=make_sspi_rollout)
         return SSPIHistorySearchProvider(factory, history=history,

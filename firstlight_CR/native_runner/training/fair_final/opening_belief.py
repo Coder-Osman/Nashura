@@ -68,7 +68,7 @@ class OpeningBeliefProvider:
             environment.reset(match_config=match(*decks, engine_seed),
                 options=dict(render_mode="headless", decision_ticks=1, event_driven_decisions=False,
                     allow_initial_remaining_runtime_rejections=True))
-            native.start_atomic_steps()
+            native.start_atomic_steps(initial_tick=environment.current_tick)
             rollout = self.rollout_factory(environment, catalog=self.catalog,
                 execution_seed=split_seed(seed, "rollout"))
             root = rollout.freeze_due_information()[evidence.owner]

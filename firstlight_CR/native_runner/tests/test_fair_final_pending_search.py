@@ -89,7 +89,7 @@ def test_pending_plan_settlement_and_sampling_replay_identically(rollout, owner,
 @pytest.mark.parametrize("owner", [0, 1])
 @pytest.mark.parametrize("hard_tick,maximum_decisions,ticks,decisions,samples", [
     (159, 6, 57, 1, 0), (160, 6, 58, 2, 1), (200, 1, 58, 1, 0)])
-def test_pending_edge_at_limits_restores_root_without_leaf(rollout, owner, hard_tick,
+def test_pending_edge_at_limits_marks_branch_dirty_without_leaf(rollout, owner, hard_tick,
         maximum_decisions, ticks, decisions, samples):
     world, information = pending_world(rollout, owner, FullAction())
     original_clock = rollout.runtime.clock.capture()
@@ -109,6 +109,9 @@ def test_pending_edge_at_limits_restores_root_without_leaf(rollout, owner, hard_
         assert not result.completed and result.information is None and result.terminal_value is None
         assert (result.ticks, result.decisions) == (ticks, decisions)
         assert len(sampled) == samples
+        assert result.prior_boundary_restored is False
+        assert world.needs_root_restore
+        world.restore_root()
         assert rollout.runtime.clock.capture() == original_clock
         assert world.root_information().sha256 == information.sha256
     finally:

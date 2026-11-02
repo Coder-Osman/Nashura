@@ -1,5 +1,42 @@
 # 阶段成果与证据索引
 
+## 2026-11-02：MCTS belief event-batched transport 与 resident 快照原生验收
+
+为 SSPI 搜索探针和 belief factory 增加显式 `event-json` transport。`EventBatchedSSPINative` 仍使用原生 `step_until_event` 捕获，游戏的每个 native tick 都由引擎执行；宿主只在边界取得完整、校验过的 JSON 状态。搜索 transition 按下一次 WAIT/PLAY 预约和可信补牌到达 tick 限定跨度，公共部署和终局仍会提前停止。reset/restore 后重设 `_last_tick` 与 JSON 事件游标；对照只改变 belief transport，实际 root、模型、随机流与 CPU 推理设置不变。
+
+受控 persistent 基线：M4 Max/macOS 宿主、ARM64 AVD、seed `20261101`、CPU、7,869,902 参数、128/128 有效模拟，墙钟 `14.3827 s`，有效 belief native ticks `2,368`。模型 SHA `abf803e21b6990874c98920ca88b84dea81ec21da5fe13f174f53de422cca0fe`；root FAIR SHA `b446c18f23ea9c87f7f9e262c6b3e1ad88bc616e2da6ed3e1ebc1fd591a90c08`；native root digest 搜索前后均为 `72725c1fce3d5fc8872edb74c7dc05a38ca9d9efbae8904e9766b867049ad12c`。访问分布合计128，belief lease 释放成功，root 状态未变。完整结果保存在本机 `.tmp/sspi-transition-event-batch-20261102/persistent-baseline.json`，原始 episode/权重不发布。
+
+此前 event-json 对照在第一个搜索模拟前失败。resident belief match 配置成功后，root `snapshot-create` 返回 `native manager changed while processing snapshot request`；有效模拟数为0。源码确认当前部署的快照队列依赖 legacy worker，而 resident 启动会停止该 worker。通用 attestation 的 `snapshot_restore=true` 不代表 resident 模式支持快照。
+
+现已在 `resident_multimatch.inc` 实现 slot 级同步 snapshot create/restore/release，句柄绑定 slot manager、generation 和 config revision；restore 会校验 tick、摘要、字节数，重建 telemetry epoch 并恢复 tower-troop runtime。Resident status 提供 capability bit，Python 控制路由只对唯一自有 slot发请求，并在 capability 不存在时快速失败。搜索事件捕获仍让原生执行全部 tick，只减少宿主观测往返。
+
+Android NDK 27.3 的 ARM64 编译通过，候选 SHA256 为 `f79ba9344a9599483c7283e7cde756a3a77f2982741f0c83467eee68a1f28e64`。当前主 AVD `emulator-5554` 由未带 `-read-only` 的实例占用，同名第二实例启动被模拟器拒绝；因此使用 APFS copy-on-write 在 `/tmp` 建立独立 AVD `sspi-isolated`，以 `emulator-5556` 启动并只在其上安装候选 probe。配置工具显式使用 `--serials emulator-5556 --host-bases 26889 --engines 6`；六个端点均 attested `production_ready=true`，`libg` SHA 为 `110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783`。原 `emulator-5554` 的六个引擎与 26789–26794 转发保持运行，probe SHA 仍为 `f5a6910107b718877a2b8edc0ce6f8164e951f8de2ef3f856c09040ec57f346f`。
+
+在新 AVD 的 26889 根端口和 26890 belief 端口顺序运行 persistent、event-json、event-json、persistent 四根诊断搜索。每根固定 seed `20261101`、CPU、7,869,902 参数随机模型，模型 SHA `abf803e21b6990874c98920ca88b84dea81ec21da5fe13f174f53de422cca0fe`、根 FAIR SHA `b446c18f23ea9c87f7f9e262c6b3e1ad88bc616e2da6ed3e1ebc1fd591a90c08`、搜索协议 SHA `1310b685bf0b0927edd6d83a833d09cf2fee516bdf3b694313eb3f3fc9725ae5`。两组只改变 belief transport；四根都完成 128/128 有效模拟，实际 belief 推进 2,368 ticks，无 discarded edge；32项候选动作、顺序、先验和访问数完全相同，实际动作均为 WAIT。两个候选的 Q 值有最大 `1.49e-8` 的单精度末位差异，未改变选择或访问。每次 root native digest 在本轮前后相同，belief lease 释放，root snapshotHandles=0；跨独立 reset 的原始 native digest 不要求相同。
+
+| 指标 | persistent 两根 / 中位数 | event-json 两根 / 中位数 |
+| --- | ---: | ---: |
+| 完整根墙钟 | 14.372 / 14.889 / **14.631 s** | 10.693 / 10.617 / **10.655 s** |
+| transition 顶层阶段 | **10.204 s** | **5.857 s** |
+| restore 顶层阶段 | **0.930 s** | **1.313 s** |
+| native ticks / advance 调用 | 2,368 / 2,368 | 2,368 / 335 |
+| belief step / observe-atomic / observe RPC | 2,369 / 2,499 / 281 | 1 / 131 / 140 |
+| batch 捕获 / 避免的宿主逐 tick 捕获 | 0 / 0 | 335 / 2,033 |
+
+完整根中位耗时减少3.976秒（27.2%），对应约1.37倍吞吐。event-json 每根的 batch 连接建立累计约0.40秒，包含控制请求导致的重连；两组原生 ticks相同，收益来自减少宿主 RPC、捕获、解码和重复验证。inference中位数为1.444/1.414秒，未随 transport 明显变化。RPC、batch和对手推理时间嵌套在顶层阶段中，不与完整根或 transition 重复相加。原始 JSON 证据仅留本机 `/tmp/nashura-sspi-isolated-avd-20261102/`：四根 SHA256 依次为 `399140fa1554ed8aabf36be713e65099cb69e74a5b1de08f2b10e56903fe314c`、`a5526a50bf1d58589bcc002625eee757e1997061c7cc1ca28c9fdd77b6418e99`、`e75927c4a111eb3a3d72af2dbe3dab332efe5d627e3b903f45d159c696a5c1fd`、`670c1a714b7bdaf850db8e63dad5ec6987d18aa2226595ca69b4ae257dc75fef`，分别对应上述运行顺序。此结果只证明一个开局 FAIR 根的搜索优化，不代表整局采集吞吐、训练更新或策略强度。
+
+相关 SSPI、resident batch、事件游标和普通快照回归 `234 passed`；主引擎 `278 passed`；公开九套件 `1104 passed、42 skipped`；源码清单 `2829` 项通过，gitleaks 扫描约 `40.9 MB` 无发现；ARM64 probe 候选编译、Python `compileall` 与 `git diff --check` 通过。另一个独立的 `test_fair_final_phase_snapshot.py` 仍依赖仓库外、公开导出排除的 `artifacts/.../build/phase_runtime_telemetry.inc`，单独运行时因该文件缺失失败；它不在本次 234 项集合内。公开检查和主引擎检查均未运行该测试。
+
+## 2026-11-02：SSPI transition 成功边快照削减（工程验证）
+
+已有同根原生基线为128次有效模拟、24.675秒；transition累计18.272秒（约74%）。该根记录213次 snapshot-create/release、130次 restore、0个 discarded edge；约212次局部边快照在成功边上创建后释放，没有执行回滚。原生create/release RPC合计约0.496秒，Python sidecar、clock、frozen FAIR信息和tensorizer状态复制另有本地开销。
+
+MCTS `RolloutSearchWorld.transition()` 已不再为每条边创建局部快照。完整边直接留在当前模拟路径；时域或最大决策数截断时返回无信息、无终局值的未完成边，并设置 dirty 状态。`CompletedBoundarySearch` 丢弃该边、不回传 visit/value；下一次模拟会先执行既有 `restore_root()`。脏状态无法读取为根信息或继续 transition；异常和 world close 仍通过 root snapshot 恢复。该方式保持完整模拟路径、随机采样和备份逻辑，只改变被丢弃分支的恢复时机。
+
+相关10个定向测试文件 `286 passed`，覆盖128模拟完整预算、dirty descendant 丢弃后访问分布等价、hard-limit pending 边、异常清理、双侧 FAIR 与 snapshot/rollout 恢复；`compileall` 与 `git diff --check` 通过。**本轮没有执行原生 128 次对照，因此没有新墙钟、tick/RPC 或实际提速结论。**原生 24.675 秒基线不是新代码的成绩。现有 worker 只做了只读状态核对；没有重启 AVD、改变转发或改动引擎状态。
+
+后续最高价值路径仍是 MCTS belief worker 的 resident event-batched capture：它减少宿主 step/atomic-capture 往返，但保持相同 native ticks。接入前须解决每次控制请求关闭 batch socket造成的重连、初始化与 restore 后 `_last_tick`/JSON cursor 重定基，并验证相同根下完整128模拟、部署/补牌边界、FAIR SHA、访问分布、所选动作和快照句柄。详见[优化空间调查](SSPI_SEARCH_OPTIMIZATION_RESEARCH_2026-11-02.md)。
+
 ## 2026-11-02：SSPI 搜索剩余优化空间调查（只读）
 
 复核静态编码/FAIR 摘要优化后的原生搜索记录：128 次有效模拟根墙钟中位数 24.675 秒，transition 18.272 秒；同根推进 2,812 native ticks、2,813 次 `step`、2,943 次 `observe-atomic`。优化后 RPC 累计计时分别为 2.961 秒和 3.267 秒，属于嵌套计时，未重复加入 transition。

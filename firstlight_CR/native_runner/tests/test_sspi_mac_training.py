@@ -43,6 +43,7 @@ from native_runner.training.sspi.collector import (
     _observe_histories,
     decision_gate,
     episode_seed_identity,
+    make_belief_native,
     preflight_native_endpoints,
     resolve_belief_ports,
 )
@@ -344,6 +345,14 @@ def test_event_batch_snapshot_controls_require_one_resident_slot(monkeypatch):
         native._request("snapshot-create")
 
 
+def test_event_batch_snapshot_controls_require_attested_resident_support(monkeypatch):
+    native = EventBatchedSSPINative("127.0.0.1", 26789)
+    monkeypatch.setattr(ResidentNativeClashEnv, "resident_status",
+        lambda _self: {"occupied": 1, "slots": [{"envId": 0}], "residentSnapshotRestore": False})
+    with pytest.raises(RunnerError, match="requires resident snapshot/restore support"):
+        native._request("snapshot-create")
+
+
 def test_event_batch_transport_routes_its_configured_resident_slot(monkeypatch):
     calls = []
     capture = {"tick": 9, "ordinary": {"tick": 9}, "rich": {"tick": 9}}
@@ -373,16 +382,16 @@ def test_event_batch_transport_routes_its_configured_resident_slot(monkeypatch):
     native.close_transport()
 
 
-def test_event_batch_snapshot_routes_single_slot_digest_through_global_control(monkeypatch):
+def test_event_batch_snapshot_routes_single_slot_digest_through_resident_control(monkeypatch):
     calls = []
     native = EventBatchedSSPINative("127.0.0.1", 26789)
     monkeypatch.setattr(ResidentNativeClashEnv, "resident_status",
-        lambda _self: {"occupied": 1, "slots": [{"envId": 0}]})
+        lambda _self: {"occupied": 1, "slots": [{"envId": 0}], "residentSnapshotRestore": True})
     monkeypatch.setattr(NativeClashEnv, "_request",
         lambda _self, command, **_options: calls.append(command) or {"ok": True})
 
     assert native._request("snapshot-create") == {"ok": True}
-    assert calls == ["snapshot-create"]
+    assert calls == ["env 0 snapshot-create"]
 
 
 def test_owner_belief_providers_keep_independent_history_cursors_and_close_all():
@@ -585,14 +594,129 @@ def test_event_json_preflight_selects_resident_slot_without_rebinding_frozen_slo
         def close_transport(self):
             calls.append(("resident-close", self.port))
 
+    class EventBelief:
+        env_id = 0
+
+        def __init__(self, port):
+            self.port = port
+            calls.append(("belief-event", port))
+
+        def resident_status(self):
+            calls.append(("belief-resident-status", self.port))
+            return {"mode": "resident-headless", "occupied": 1,
+                "slots": [{"envId": self.env_id, "ended": True}]}
+
+        def status(self):
+            return {"ready": True}
+
+        def observe(self):
+            return {"ok": True}
+
+        def attest(self, _ruleset=None):
+            return type("Attestation", (), {
+                "libg_sha256": "a" * 64, "probe_sha256": "b" * 64})()
+
+        def close_transport(self):
+            calls.append(("belief-close", self.port))
+
     monkeypatch.setattr("native_runner.training.sspi.collector.SearchNative", Probe)
     monkeypatch.setattr("native_runner.training.sspi.collector.ResidentNativeClashEnv", Resident)
+    monkeypatch.setattr("native_runner.training.sspi.collector.make_belief_native",
+        lambda _host, port, **_kwargs: EventBelief(port))
 
     result = preflight_native_endpoints("127.0.0.1", 26789,
         {0: 26790, 1: 26792}, transport=transport, actual_env_id=1)
 
     assert calls[2] == ("resident", 1, 26789)
     assert set(result) == {"actual", "belief_owner_0", "belief_owner_1"}
+    assert [call[0] for call in calls].count("belief-event") == 2
+    assert [call[0] for call in calls].count("belief-resident-status") == 2
+    assert [call[0] for call in calls].count("belief-close") == 2
+
+
+def test_event_json_preflight_accepts_only_cold_legacy_belief_workers(monkeypatch):
+    calls = []
+
+    class Probe:
+        def __init__(self, host, port, *, transport, timeout):
+            self.port = port
+            calls.append(("probe", port, transport))
+
+        def _request(self, command):
+            assert command == "multi-status"
+            return {"mode": "resident-headless", "occupied": 1,
+                "slots": [{"envId": 1, "ended": True}]}
+
+        def status(self):
+            if self.port == 26789:
+                return {"ready": True}
+            return {"ready": False, "coldReady": True, "configured": False, "tick": -1}
+
+        def observe(self):
+            if self.port != 26789:
+                raise AssertionError("cold worker must not be observed before configuration")
+            return {"ok": True}
+
+        def attest(self, _ruleset=None):
+            return type("Attestation", (), {
+                "libg_sha256": "a" * 64, "probe_sha256": "b" * 64})()
+
+        def close_transport(self):
+            calls.append(("probe-close", self.port))
+
+    class Resident:
+        def __init__(self, env_id, host, port, *, timeout):
+            self.port = port
+
+        def status(self):
+            return {"ready": True}
+
+        def observe(self):
+            return {"ok": True}
+
+        def attest(self, _ruleset=None):
+            return type("Attestation", (), {
+                "libg_sha256": "a" * 64, "probe_sha256": "b" * 64})()
+
+        def close_transport(self):
+            pass
+
+    class EventBelief:
+        env_id = 0
+
+        def __init__(self, port):
+            self.port = port
+
+        def resident_status(self):
+            return {"mode": "legacy-headless", "active": False, "occupied": 0, "slots": []}
+
+        def close_transport(self):
+            calls.append(("event-close", self.port))
+
+    monkeypatch.setattr("native_runner.training.sspi.collector.SearchNative", Probe)
+    monkeypatch.setattr("native_runner.training.sspi.collector.ResidentNativeClashEnv", Resident)
+    monkeypatch.setattr("native_runner.training.sspi.collector.make_belief_native",
+        lambda _host, port, **_kwargs: EventBelief(port))
+
+    result = preflight_native_endpoints("127.0.0.1", 26789,
+        {0: 26790, 1: 26792}, transport="event-json", actual_env_id=1)
+
+    assert set(result) == {"actual", "belief_owner_0", "belief_owner_1"}
+    assert [call[0] for call in calls].count("event-close") == 2
+    assert [call[0] for call in calls].count("probe-close") == 3
+
+
+@pytest.mark.parametrize("transport,expected_deltas", [
+    ("event-json", False), ("event-json-delta", True),
+])
+def test_belief_native_factory_selects_event_batch_with_persistent_control(transport, expected_deltas):
+    native = make_belief_native("127.0.0.1", 26790, transport=transport)
+    try:
+        assert isinstance(native, EventBatchedSSPINative)
+        assert native.event_deltas is expected_deltas
+        assert native._persistent_transport_requested
+    finally:
+        native.close_transport()
 
 
 @pytest.mark.parametrize("transport", ["persistent", "event-json-delta"])

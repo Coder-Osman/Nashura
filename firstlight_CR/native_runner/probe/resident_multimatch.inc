@@ -47,7 +47,17 @@ struct ResidentMatchSlot {
   StoredTowerTroopRuntimeState tower_troop_runtimes[kMaxStoredTowerTroopRuntimes];
 };
 
+struct ResidentStoredSnapshot {
+  StoredSnapshot snapshot;
+  void *manager = nullptr;
+  std::int32_t slot_id = -1;
+  std::uint32_t stagnant_steps = 0;
+  bool ended = false;
+};
+
 ResidentMatchSlot g_resident_slots[kResidentMaxSlots];
+ResidentStoredSnapshot g_resident_snapshots[kMaxStoredSnapshots];
+std::uint64_t g_next_resident_snapshot_handle = 1ULL << 63;
 std::int32_t g_resident_bound_slot = -1;
 std::uint64_t g_resident_switch_count = 0;
 std::uint64_t g_resident_total_steps = 0;
@@ -56,6 +66,8 @@ std::uint64_t g_resident_total_steps = 0;
 // doing so can reuse another live slot's generation/state-epoch pair.
 std::uint64_t g_resident_generation_frontier = 0;
 std::uint64_t g_resident_state_epoch_frontier = 0;
+
+void resident_release_snapshots_for_slot(std::int32_t slot_id);
 
 bool resident_slot_id_valid(std::int32_t slot_id) {
   return slot_id >= 0 && static_cast<std::size_t>(slot_id) < kResidentMaxSlots;
@@ -148,6 +160,243 @@ bool resident_bind_slot(std::int32_t slot_id, bool reset_telemetry = true) {
   return true;
 }
 
+std::size_t count_resident_snapshots_locked() {
+  std::size_t count = 0;
+  for (const auto &snapshot : g_resident_snapshots) {
+    count += snapshot.snapshot.handle != 0 && snapshot.snapshot.wrapper != nullptr;
+  }
+  return count;
+}
+
+std::size_t resident_total_snapshot_count() {
+  pthread_mutex_lock(&g_control_mutex);
+  const std::size_t count = count_stored_snapshots_locked();
+  pthread_mutex_unlock(&g_control_mutex);
+  return count;
+}
+
+void resident_release_snapshots_for_slot(std::int32_t slot_id) {
+  void *wrappers[kMaxStoredSnapshots] = {};
+  std::size_t wrapper_count = 0;
+  pthread_mutex_lock(&g_control_mutex);
+  for (auto &snapshot : g_resident_snapshots) {
+    if (snapshot.slot_id == slot_id && snapshot.snapshot.wrapper != nullptr) {
+      wrappers[wrapper_count++] = snapshot.snapshot.wrapper;
+      snapshot = {};
+    }
+  }
+  pthread_mutex_unlock(&g_control_mutex);
+  for (std::size_t index = 0; index < wrapper_count; ++index) {
+    if (g_state_snapshot_delete != nullptr) {
+      g_state_snapshot_delete(wrappers[index]);
+    }
+  }
+}
+
+bool resident_create_snapshot(std::int32_t slot_id, char *response, std::size_t response_size) {
+  if (!resident_bind_slot(slot_id)) {
+    std::snprintf(response, response_size, "{\"ok\":false,\"error\":\"resident env is not configured\"}");
+    return false;
+  }
+  ResidentMatchSlot &slot = g_resident_slots[slot_id];
+  StoredSnapshot metadata;
+  metadata.mode = RunnerMode::Headless;
+  metadata.generation = slot.generation;
+  metadata.config_revision = slot.config_revision;
+  metadata.state_epoch = slot.state_epoch;
+  metadata.completed_steps = slot.completed_steps;
+  metadata.tick = g_game_state_tick == nullptr ? -1 : g_game_state_tick(slot.manager);
+  metadata.tower_troop_runtime_count = copy_tower_troop_runtime_snapshot(
+      slot.generation, slot.state_epoch, metadata.tick, metadata.tower_troop_runtimes, kMaxStoredTowerTroopRuntimes);
+
+  void *wrapper = nullptr;
+  const bool captured = create_state_snapshot(slot.manager, &wrapper, &metadata.digest, &metadata.serialized_bytes);
+  if (!captured || wrapper == nullptr || g_byte_stream_flip_read == nullptr) {
+    if (wrapper != nullptr && g_state_snapshot_delete != nullptr) {
+      g_state_snapshot_delete(wrapper);
+    }
+    std::snprintf(response, response_size, "{\"ok\":false,\"error\":\"native state snapshot capture failed\"}");
+    return false;
+  }
+  g_byte_stream_flip_read(static_cast<std::uint8_t *>(wrapper) + 0x08);
+  metadata.wrapper = wrapper;
+
+  ResidentStoredSnapshot *free_slot = nullptr;
+  pthread_mutex_lock(&g_control_mutex);
+  for (auto &candidate : g_resident_snapshots) {
+    if (candidate.snapshot.handle == 0 && candidate.snapshot.wrapper == nullptr) {
+      free_slot = &candidate;
+      break;
+    }
+  }
+  if (free_slot != nullptr) {
+    metadata.handle = g_next_resident_snapshot_handle++;
+    if (metadata.handle == 0) {
+      metadata.handle = g_next_resident_snapshot_handle++;
+    }
+    free_slot->snapshot = metadata;
+    free_slot->manager = slot.manager;
+    free_slot->slot_id = slot_id;
+    free_slot->stagnant_steps = slot.stagnant_steps;
+    free_slot->ended = slot.ended;
+  }
+  pthread_mutex_unlock(&g_control_mutex);
+  if (free_slot == nullptr) {
+    g_state_snapshot_delete(wrapper);
+    std::snprintf(response, response_size, "{\"ok\":false,\"error\":\"native snapshot handle table is full\"}");
+    return false;
+  }
+
+  std::snprintf(response, response_size,
+                "{\"ok\":true,\"handle\":%llu,\"scope\":\"resident-slot\","
+                "\"envId\":%d,\"generation\":%llu,\"configRevision\":%llu,\"stateEpoch\":%llu,"
+                "\"tick\":%d,\"steps\":%llu,\"digest\":\"%016llx\",\"bytes\":%u}",
+                static_cast<unsigned long long>(metadata.handle), slot_id,
+                static_cast<unsigned long long>(metadata.generation),
+                static_cast<unsigned long long>(metadata.config_revision),
+                static_cast<unsigned long long>(metadata.state_epoch), metadata.tick,
+                static_cast<unsigned long long>(metadata.completed_steps),
+                static_cast<unsigned long long>(metadata.digest), metadata.serialized_bytes);
+  return true;
+}
+
+bool resident_restore_snapshot(std::int32_t slot_id, std::uint64_t handle, char *response,
+                               std::size_t response_size) {
+  if (!resident_bind_slot(slot_id)) {
+    std::snprintf(response, response_size, "{\"ok\":false,\"error\":\"resident env is not configured\"}");
+    return false;
+  }
+  ResidentMatchSlot &slot = g_resident_slots[slot_id];
+  ResidentStoredSnapshot saved_entry;
+  pthread_mutex_lock(&g_control_mutex);
+  for (const auto &candidate : g_resident_snapshots) {
+    if (candidate.snapshot.handle == handle && candidate.snapshot.wrapper != nullptr) {
+      saved_entry = candidate;
+      break;
+    }
+  }
+  pthread_mutex_unlock(&g_control_mutex);
+  if (saved_entry.snapshot.wrapper == nullptr) {
+    std::snprintf(response, response_size, "{\"ok\":false,\"handle\":%llu,\"error\":\"native snapshot handle does not exist\"}",
+                  static_cast<unsigned long long>(handle));
+    return false;
+  }
+  const StoredSnapshot &saved = saved_entry.snapshot;
+  if (saved_entry.slot_id != slot_id || saved_entry.manager != slot.manager ||
+      saved.generation != slot.generation || saved.config_revision != slot.config_revision) {
+    std::snprintf(response, response_size,
+                  "{\"ok\":false,\"handle\":%llu,\"error\":\"native snapshot handle belongs to a different manager generation\"}",
+                  static_cast<unsigned long long>(handle));
+    return false;
+  }
+  if (g_byte_stream_reset_read == nullptr || g_byte_stream_reset_checksum == nullptr ||
+      g_game_state_deserialize_header == nullptr || g_game_state_deserialize_body == nullptr) {
+    std::snprintf(response, response_size, "{\"ok\":false,\"handle\":%llu,\"error\":\"native snapshot restore functions are unavailable\"}",
+                  static_cast<unsigned long long>(handle));
+    return false;
+  }
+
+  void *const stream = static_cast<std::uint8_t *>(saved.wrapper) + 0x08;
+  g_byte_stream_reset_read(stream);
+  const bool valid_prelude = consume_state_snapshot_prelude(stream);
+  if (valid_prelude) {
+    g_game_state_deserialize_header(slot.manager, stream);
+    g_game_state_deserialize_body(slot.manager, stream, 1, nullptr);
+  }
+  const std::int32_t restored_tick = g_game_state_tick == nullptr ? -1 : g_game_state_tick(slot.manager);
+  std::uint64_t verification_digest = 0;
+  std::uint32_t verification_bytes = 0;
+  const bool verified_snapshot = capture_state_snapshot(slot.manager, &verification_digest, &verification_bytes);
+  BattleResultView battle_result;
+  const bool result_readable = read_battle_result(read_object_field<void *>(slot.manager, 0xa8), &battle_result);
+  const bool verified = valid_prelude && verified_snapshot && result_readable && restored_tick == saved.tick &&
+                        verification_digest == saved.digest && verification_bytes == saved.serialized_bytes;
+
+  pthread_mutex_lock(&g_control_mutex);
+  ++g_resident_state_epoch_frontier;
+  if (g_resident_state_epoch_frontier == 0) {
+    ++g_resident_state_epoch_frontier;
+  }
+  slot.state_epoch = g_resident_state_epoch_frontier;
+  slot.completed_steps = saved.completed_steps;
+  slot.tick = restored_tick;
+  slot.stagnant_steps = verified ? saved_entry.stagnant_steps : 0;
+  slot.ended = result_readable && battle_result.finalized;
+  slot.telemetry_ready = false;
+  g_state_epoch = slot.state_epoch;
+  g_completed_steps = slot.completed_steps;
+  g_last_controlled_tick = slot.tick;
+  g_last_loaded_queue_count = slot.last_loaded_queue_count;
+  g_control_ended = slot.ended;
+  pthread_mutex_unlock(&g_control_mutex);
+
+  begin_runtime_telemetry_epoch(slot.manager, slot.generation, slot.state_epoch);
+  bind_combat_event_object_manager(slot.manager);
+  if (verified) {
+    restore_tower_troop_runtime_snapshot(slot.generation, slot.state_epoch, restored_tick,
+                                         saved.tower_troop_runtimes, saved.tower_troop_runtime_count);
+    slot.telemetry_ready = true;
+  }
+  resident_save_bound_slot();
+  if (!verified) {
+    std::snprintf(response, response_size, "{\"ok\":false,\"handle\":%llu,\"error\":\"native snapshot restore verification failed\"}",
+                  static_cast<unsigned long long>(handle));
+    return false;
+  }
+
+  std::snprintf(response, response_size,
+                "{\"ok\":true,\"restored\":true,\"handle\":%llu,"
+                "\"generation\":%llu,\"configRevision\":%llu,\"stateEpoch\":%llu,"
+                "\"tick\":%d,\"steps\":%llu,\"digest\":\"%016llx\",\"bytes\":%u}",
+                static_cast<unsigned long long>(handle), static_cast<unsigned long long>(slot.generation),
+                static_cast<unsigned long long>(slot.config_revision), static_cast<unsigned long long>(slot.state_epoch),
+                slot.tick, static_cast<unsigned long long>(slot.completed_steps),
+                static_cast<unsigned long long>(saved.digest), saved.serialized_bytes);
+  return true;
+}
+
+bool resident_release_snapshot(std::int32_t slot_id, std::uint64_t handle, char *response,
+                               std::size_t response_size) {
+  if (!resident_slot_id_valid(slot_id) || !g_resident_slots[slot_id].occupied) {
+    std::snprintf(response, response_size, "{\"ok\":false,\"handle\":%llu,\"error\":\"resident env is not configured\"}",
+                  static_cast<unsigned long long>(handle));
+    return false;
+  }
+  if (g_state_snapshot_delete == nullptr) {
+    std::snprintf(response, response_size,
+                  "{\"ok\":false,\"handle\":%llu,\"error\":\"native snapshot release function is unavailable\"}",
+                  static_cast<unsigned long long>(handle));
+    return false;
+  }
+  void *wrapper = nullptr;
+  std::uint64_t generation = 0;
+  pthread_mutex_lock(&g_control_mutex);
+  for (auto &candidate : g_resident_snapshots) {
+    if (candidate.snapshot.handle == handle && candidate.snapshot.wrapper != nullptr) {
+      if (candidate.slot_id == slot_id && candidate.manager == g_resident_slots[slot_id].manager &&
+          candidate.snapshot.generation == g_resident_slots[slot_id].generation &&
+          candidate.snapshot.config_revision == g_resident_slots[slot_id].config_revision) {
+        wrapper = candidate.snapshot.wrapper;
+        generation = candidate.snapshot.generation;
+        candidate = {};
+      }
+      break;
+    }
+  }
+  pthread_mutex_unlock(&g_control_mutex);
+  if (wrapper == nullptr) {
+    std::snprintf(response, response_size,
+                  "{\"ok\":false,\"handle\":%llu,\"error\":\"native snapshot handle does not exist or is stale\"}",
+                  static_cast<unsigned long long>(handle));
+    return false;
+  }
+  g_state_snapshot_delete(wrapper);
+  std::snprintf(response, response_size,
+                "{\"ok\":true,\"released\":true,\"handle\":%llu,\"generation\":%llu}",
+                static_cast<unsigned long long>(handle), static_cast<unsigned long long>(generation));
+  return true;
+}
+
 void resident_remove_trace(void *manager) {
   pthread_mutex_lock(&g_trace_mutex);
   for (auto &trace : g_manager_traces) {
@@ -173,6 +422,7 @@ void resident_destroy_slot(std::int32_t slot_id) {
   pthread_mutex_lock(&g_control_mutex);
   clear_scheduled_replay_actions_for_manager_locked(slot.manager);
   pthread_mutex_unlock(&g_control_mutex);
+  resident_release_snapshots_for_slot(slot_id);
   release_all_stored_snapshots_on_worker();
   end_combat_event_epoch(slot.manager);
   resident_remove_trace(slot.manager);
@@ -518,11 +768,18 @@ void resident_send_status(int socket_fd) {
   writer.begin_object();
   writer.field("ok", true);
   writer.field("mode", "resident-headless");
+  writer.field("residentSnapshotRestore", g_state_snapshot != nullptr && g_state_snapshot_delete != nullptr &&
+                                                g_byte_stream_flip_read != nullptr &&
+                                                g_byte_stream_reset_read != nullptr &&
+                                                g_byte_stream_reset_checksum != nullptr &&
+                                                g_game_state_deserialize_header != nullptr &&
+                                                g_game_state_deserialize_body != nullptr);
   writer.field("capacity", kResidentMaxSlots);
   writer.field("occupied", occupied);
   writer.field("boundEnvId", g_resident_bound_slot);
   writer.field("switches", g_resident_switch_count);
   writer.field("totalSteps", g_resident_total_steps);
+  writer.field("snapshotHandles", resident_total_snapshot_count());
   writer.begin_array("slots");
   for (std::size_t index = 0; index < kResidentMaxSlots; ++index) {
     const auto &slot = g_resident_slots[index];
@@ -597,6 +854,31 @@ bool handle_resident_env_command(int socket_fd, std::int32_t slot_id, const char
   if (std::strcmp(command, "observe") == 0 || std::strcmp(command, "observe-rich") == 0 ||
       std::strcmp(command, "observe-atomic") == 0) {
     resident_send_observation(socket_fd, slot_id, command);
+    return true;
+  }
+  if (std::strcmp(command, "snapshot-create") == 0 || std::strcmp(command, "create-snapshot") == 0) {
+    resident_create_snapshot(slot_id, response, sizeof(response));
+    send_control_response(socket_fd, response);
+    return true;
+  }
+  if (std::strncmp(command, "restore ", 8) == 0) {
+    std::uint64_t handle = 0;
+    if (!parse_snapshot_handle(command + 8, &handle)) {
+      send_control_error(socket_fd, "restore expects one positive snapshot handle");
+    } else {
+      resident_restore_snapshot(slot_id, handle, response, sizeof(response));
+      send_control_response(socket_fd, response);
+    }
+    return true;
+  }
+  if (std::strncmp(command, "release-snapshot ", 17) == 0) {
+    std::uint64_t handle = 0;
+    if (!parse_snapshot_handle(command + 17, &handle)) {
+      send_control_error(socket_fd, "release-snapshot expects one positive snapshot handle");
+    } else {
+      resident_release_snapshot(slot_id, handle, response, sizeof(response));
+      send_control_response(socket_fd, response);
+    }
     return true;
   }
   if (std::strcmp(command, "reset") == 0) {
@@ -707,9 +989,10 @@ bool handle_resident_env_command(int socket_fd, std::int32_t slot_id, const char
     return true;
   }
 
-  send_control_error(socket_fd, "resident commands: configure, status, observe, observe-rich, observe-atomic, reset, "
-                                "close, step, deploy, inject, activate-ability, replay-schedule-card, "
-                                "replay-schedule-ability, replay-schedule-status, replay-schedule-clear");
+  send_control_error(socket_fd, "resident commands: configure, status, observe, observe-rich, observe-atomic, "
+                                "snapshot-create, restore, release-snapshot, reset, close, step, deploy, inject, "
+                                "activate-ability, replay-schedule-card, replay-schedule-ability, "
+                                "replay-schedule-status, replay-schedule-clear");
   return true;
 }
 

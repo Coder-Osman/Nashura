@@ -51,11 +51,14 @@ class RolloutSearchWorld:
         self.commitment = semantic_digest(manifest)
         self.root = rollout.snapshot(sidecar_factory)
         self.closed = False
+        self.needs_root_restore = False
 
     def root_information(self):
         return self.root_owner_information()
 
     def root_owner_information(self):
+        if self.needs_root_restore:
+            raise ValueError("dirty search world requires root restoration")
         information = self.rollout.freeze_due_information()
         if self.owner not in information or not self.rollout.runtime.clock.boundary(self.owner):
             raise ValueError("value requested outside the root-owner decision boundary")
@@ -65,6 +68,7 @@ class RolloutSearchWorld:
         if self.closed:
             raise ValueError("released belief world")
         self.root.restore()
+        self.needs_root_restore = False
 
     def _commit(self, opponent, generator, action=None):
         information = self.rollout.freeze_due_information()
@@ -89,11 +93,13 @@ class RolloutSearchWorld:
             raise ValueError("released belief world")
         runtime = self.rollout.runtime
         start = runtime.clock.tick
+        if self.needs_root_restore:
+            raise ValueError("dirty search world must be restored before another transition")
         if not runtime.clock.boundary(self.owner):
             raise ValueError("edge must start at a completed own decision boundary")
-        with self.rollout.snapshot(self.sidecar_factory) as previous:
-            if hard_tick <= start or maximum_decisions < 1:
-                return Transition(False, 0, 0)
+        if hard_tick <= start or maximum_decisions < 1:
+            return Transition(False, 0, 0)
+        try:
             check_deadline()
             self._commit(opponent, generator, action)
             reservation = runtime.clock.pending[self.owner].identity
@@ -102,8 +108,8 @@ class RolloutSearchWorld:
                 check_deadline()
                 if runtime.clock.tick >= hard_tick:
                     elapsed = runtime.clock.tick - start
-                    previous.restore()
-                    return Transition(False, decisions, elapsed)
+                    self.needs_root_restore = True
+                    return Transition(False, decisions, elapsed, prior_boundary_restored=False)
                 self.rollout.advance()
                 if runtime.failed or runtime.truncated:
                     raise ValueError("failed or truncated belief transition")
@@ -125,16 +131,20 @@ class RolloutSearchWorld:
                 if runtime.clock.ready:
                     if decisions >= maximum_decisions:
                         elapsed = runtime.clock.tick - start
-                        previous.restore()
-                        return Transition(False, decisions, elapsed)
+                        self.needs_root_restore = True
+                        return Transition(False, decisions, elapsed, prior_boundary_restored=False)
                     self._commit(opponent, generator)
                     decisions += 1
+        except BaseException:
+            self.needs_root_restore = True
+            raise
 
     def close(self):
         if self.closed:
             return
         try:
             self.root.restore()
+            self.needs_root_restore = False
         finally:
             self.root.close()
             self.closed = True

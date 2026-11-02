@@ -229,7 +229,7 @@ class HistoryBeliefFactory:
             if initial_draw(next(player for player in environment.raw_observation["players"]
                     if player["owner"] == opponent))[0] != draw:
                 raise ValueError("conditioned opponent shuffle changed its semantics")
-            native.start_atomic_steps()
+            native.start_atomic_steps(initial_tick=environment.current_tick)
             rollout = self.rollout_factory(environment, catalog=self.catalog,
                 execution_seed=split_seed(seed, "rollout"))
             return HistoryReplaySession(rollout, opening=history.opening, opponent=self.opponent,

@@ -2372,6 +2372,8 @@ bool consume_state_snapshot_prelude(void *stream) {
   return compression == 0 && wrapper_version == 0 && has_full_state;
 }
 
+std::size_t count_resident_snapshots_locked();
+
 std::size_t count_stored_snapshots_locked() {
   std::size_t count = 0;
   for (const auto &snapshot : g_stored_snapshots) {
@@ -2379,7 +2381,7 @@ std::size_t count_stored_snapshots_locked() {
       ++count;
     }
   }
-  return count;
+  return count + count_resident_snapshots_locked();
 }
 
 const char *snapshot_error_message(SnapshotError error) {
@@ -6536,7 +6538,7 @@ void handle_control_command(int socket_fd, const char *command) {
   }
   if (std::strcmp(command, "multi-status") == 0) {
     if (!g_resident_mode_active) {
-      send_control_response(socket_fd, "{\"ok\":true,\"mode\":\"legacy-headless\",\"capacity\":16,"
+      send_control_response(socket_fd, "{\"ok\":true,\"mode\":\"legacy-headless\",\"residentSnapshotRestore\":false,\"capacity\":16,"
                                        "\"occupied\":0,\"active\":false,\"slots\":[]}");
     } else {
       resident_save_bound_slot();

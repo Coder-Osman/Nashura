@@ -1,12 +1,16 @@
 # Nashura
 
-## 2026-11-02：SSPI 搜索后续优化空间调查
+## 2026-11-02：MCTS belief event-batched transport 与 resident 快照原生验收
 
-优化后固定开局 128 模拟根的墙钟中位数为 24.675 秒，最大阶段为 transition（18.272 秒，占根约 74%）。搜索 belief worker 仍逐 tick 请求；采集器已有 resident event-batched 路径。优先在独立 MCTS worker 验证该路径，并补齐快照恢复后的 tick/事件游标重设；随后剖析 belief 重建、Python 快照复制及 compact capture。批量推进仍执行所有 native ticks；现有证据不支持给出预计提速倍率。此次只审查代码与已有证据，没有新原生测速或代码变更。详见[剩余优化空间调查](docs/SSPI_SEARCH_OPTIMIZATION_RESEARCH_2026-11-02.md)。
+已把 resident `event-json` transport 接入 SSPI MCTS belief worker，并在原生源码中增加 slot 级 snapshot create/restore/release、恢复后 telemetry epoch 重建及能力标记。只在独立 ARM64 AVD `emulator-5556` 部署候选 probe `f79ba9…8e64`，固定同一 FAIR 根、模型和 seed，顺序完成 persistent/event-json 各两根 128/128 有效模拟。完整根墙钟中位数 14.631→10.655 秒，缩短27.2%；2,368 native ticks、32项候选动作/先验/访问数、所选动作及根恢复一致。2项 Q 值有最大 `1.49e-8` 的单精度末位差异。原有 `emulator-5554` 与部署的 probe `f5a691…346f` 未改动；这只是单根搜索性能验收，不代表完整训练或策略强度提升。相关回归234项、主引擎278项、公开1104项通过，gitleaks无发现。详见[阶段记录](docs/RESULTS.md)。
 
-Transition 深入审查发现：最新根 213 次 snapshot create/release 与 1 个根快照、约 212 个边快照吻合；所有边均完成，局部回滚未触发。仅快照原生 RPC 累计约 0.496 秒，另有 Python sidecar 复制。大头候选仍是当前逐 tick step/atomic capture；对手推理计入 transition，最新基线没有独立测量。详细流程、正确性约束和验证顺序见上方调查报告。
+## 2026-11-02：SSPI transition 成功边快照削减（工程验证）
 
-批量客户端在 snapshot、PLAY 预约等普通控制请求前关闭通道，因为原生控制服务为单客户端；直接接入搜索需计量通道反复建立的成本。已知补牌 tick 也保留捕获核对，不会新增决策。旧剖析中 2,812 次 advance 仅对应 213 次双侧 FAIR 观测，逐 tick 原子捕获不等于逐 tick 重建模型输入。
+128 次模拟基线的 transition 为 18.272 秒、占根墙钟约 74%；213 次 snapshot create/release 中约 212 次属于 transition 边快照。实现已移除每边局部快照：完成边继续前进，时域截断边标记 dirty、不回传训练/搜索值，并由下一次模拟原有的 root restore 复位；异常与搜索关闭仍恢复 root。10 个定向测试文件共 286 项通过，覆盖完整预算、访问分布、未完成边和 snapshot/FAIR 恢复。
+
+当前只通过 Python 工程回归，**还没有在同一原生搜索根上测优化前后速度**，不报告提速。旧基线仅作参考：M4 Max 上128模拟根24.675秒，transition 18.272秒、2812 ticks、2813 step 与2943 observe-atomic；其嵌套 RPC 时间不是纯网络耗时。后续优先在独立 belief worker 测 event-batched capture，再测 compact typed capture；两者都须保持补牌核对、PLAY 到期、公开部署唤醒与恢复等价。详见[剩余优化空间调查](docs/SSPI_SEARCH_OPTIMIZATION_RESEARCH_2026-11-02.md)和[阶段记录](docs/RESULTS.md)。
+
+event-batched belief 路径已在隔离部署完成真实 MCTS 对照。当前冻结 AVD/probe 仍保持原样；后续训练采集若采用新 probe，需单独完成真实自然终局、更新和无搜索评测验收。
 
 ## 2026-11-02：SSPI 搜索静态编码与 FAIR 摘要优化
 

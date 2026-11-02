@@ -11,7 +11,7 @@ from native_runner.training.sspi.performance import (
 from native_runner.training.sspi.model import SSPIPolicy
 from native_runner.training.sspi.protocol import ActionMode, SSPIAction, SSPILegality
 from native_runner.training.sspi.search import SSPIJointPolicy
-from native_runner.training.sspi.search_probe import run as run_search_probe
+from native_runner.training.sspi.search_probe import LegacySearchNative, run as run_search_probe
 from native_runner.tests.test_fair_final_search import search_fixture
 
 
@@ -146,6 +146,44 @@ def test_search_probe_accepts_only_explicit_known_transports(transport):
 def test_search_probe_rejects_unknown_transport_before_native_io():
     with pytest.raises(ValueError, match="invalid independent ports"):
         run_search_probe(1, 1, simulations=128, transport="batch")
+
+
+def test_search_probe_legacy_native_accepts_restore_tick_rebasing():
+    native = LegacySearchNative("127.0.0.1", 26789)
+    assert native.start_atomic_steps(initial_tick=90) is None
+
+
+def test_search_probe_rejects_unknown_belief_transport_before_native_io():
+    with pytest.raises(ValueError, match="invalid independent ports"):
+        run_search_probe(1, 1, simulations=128, transport="persistent", belief_transport="batch")
+
+
+def test_search_probe_cleanup_stops_only_its_exclusive_resident_slot():
+    from native_runner.training.sspi.search_probe import cleanup_owned_event_worker
+
+    class Native:
+        env_id = 0
+
+        def __init__(self, slots):
+            self.slots = slots
+            self.commands = []
+
+        def close_transport(self):
+            self.commands.append("close")
+
+        def resident_status(self):
+            return {"mode": "resident-headless", "occupied": len(self.slots), "slots": self.slots}
+
+        def _raw_request(self, command):
+            self.commands.append(command)
+
+    owned = Native([{"envId": 0}])
+    foreign = Native([{"envId": 0}, {"envId": 1}])
+
+    cleanup_owned_event_worker(owned)
+    cleanup_owned_event_worker(foreign)
+    assert owned.commands == ["close", "multi-stop"]
+    assert foreign.commands == ["close"]
 
 
 def _real_information():

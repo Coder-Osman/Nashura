@@ -57,6 +57,7 @@ class Transition:
     information: object = None
     terminal_value: float | None = None
     reason: str | None = None
+    prior_boundary_restored: bool = True
 
 
 @dataclass(frozen=True)
@@ -195,13 +196,17 @@ class CompletedBoundarySearch:
                             maximum_decisions=limits.soft_decisions + limits.extension_decisions - decisions,
                             check_deadline=check_deadline)
                         if (type(transition.completed) is not bool or type(transition.ticks) is not int
+                                or type(transition.prior_boundary_restored) is not bool
                                 or transition.ticks < 0 or type(transition.decisions) is not int or transition.decisions < 0):
                             raise ValueError("malformed completed transition evidence")
                         if not transition.completed:
                             if transition.information is not None or transition.terminal_value is not None:
                                 raise ValueError("unfinished edge supplied a leaf")
-                            if world.root_owner_information().sha256 != current.sha256:
-                                raise ValueError("unfinished transition did not restore its prior boundary")
+                            if transition.prior_boundary_restored:
+                                if world.root_owner_information().sha256 != current.sha256:
+                                    raise ValueError("unfinished transition did not restore its prior boundary")
+                            elif not getattr(world, "needs_root_restore", False):
+                                raise ValueError("unfinished transition left an unmarked dirty search world")
                             discarded += 1
                             leaf = node.value
                             break

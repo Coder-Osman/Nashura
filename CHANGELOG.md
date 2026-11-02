@@ -1,5 +1,20 @@
 # 变更记录
 
+## 2026-11-02：MCTS belief event-batched transport 与 resident 快照原生验收
+
+- SSPI MCTS belief worker 使用显式 `event-json` transport：引擎逐 tick 推进，在公共部署、预约决策、终局或 tick 预算边界捕获；restore 后重设宿主 tick 与事件游标。
+- 原生 resident slot 新增独立 snapshot create/restore/release 句柄，恢复时校验 manager、generation、配置版本、tick、序列化摘要与字节数，并重建 telemetry epoch。resident status 仅在需要的原生函数已加载时报告 `residentSnapshotRestore=true`；旧部署会被宿主快速拒绝。
+- 同 seed `20261101`、CPU、7,869,902 参数、128 次有效模拟的 persistent 基线通过：14.383 秒、2,368 native ticks；root FAIR SHA `b446c1…a90c08`、模型 SHA `abf803…cca0fe`，root restore 与 handle 检查通过。
+- 旧部署 event-json 在首个 root snapshot-create 失败，0 次有效模拟。新 ARM64 probe `f79ba9…8e64` 在独立 `emulator-5556` 上验收：persistent/event-json 各两根 128/128 模拟，根墙钟中位数14.631→10.655秒（缩短27.2%）；2,368 ticks、候选动作/先验/访问数、所选动作、FAIR SHA和根恢复一致，Q最大差异 `1.49e-8`。原 `emulator-5554` 的 probe仍为 `f5a691…346f`。
+- 受影响 Python 回归 234 项、主引擎 278 项、公开 1104 项通过（42 skipped）；源码清单 2829 项通过、gitleaks 无发现，原生候选编译通过。详见 `docs/RESULTS.md`。
+
+## 2026-11-02：SSPI transition 成功边快照削减（工程验证）
+
+- 移除 MCTS 每条 transition 边的 sidecar/clock/tensorizer/native 局部快照；每个模拟原有的 root snapshot 仍用于模拟起点恢复。
+- 时域/决策限制导致的未完成边现在标记 `prior_boundary_restored=false` 和 dirty world；该边不提供 leaf/value/visit，后续模拟必须先恢复 root。异常与 world close 仍恢复 root。
+- 搜索、运行时、pending-edge、snapshot/rollout、SSPI collector/performance 等10个定向测试文件 `286 passed`；语法编译和 `git diff --check` 通过。
+- 旧的原生基线中每根有213次 snapshot create/release；新代码尚未进行同根原生 A/B，不报告提速。下一步仍是 belief event-batched capture 的真实等价与性能验收。
+
 ## 2026-11-02：SSPI 搜索优化空间调查
 
 - 对照最新 128 模拟 Engine5 证据与当前代码，确认最大剩余顶层阶段是 transition；该根逐 tick 执行 2,812 次 native advance。
