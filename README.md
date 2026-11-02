@@ -1,5 +1,9 @@
 # Nashura
 
+## 2026-11-02：SSPI 搜索后续优化空间调查
+
+优化后固定开局 128 模拟根的墙钟中位数为 24.675 秒，最大阶段为 transition（18.272 秒，占根约 74%）。搜索 belief worker 仍逐 tick 请求；采集器已有 resident event-batched 路径。优先在独立 MCTS worker 验证该路径，并补齐快照恢复后的 tick/事件游标重设；随后剖析 belief 重建、Python 快照复制及 compact capture。批量推进仍执行所有 native ticks；现有证据不支持给出预计提速倍率。此次只审查代码与已有证据，没有新原生测速或代码变更。详见[剩余优化空间调查](docs/SSPI_SEARCH_OPTIMIZATION_RESEARCH_2026-11-02.md)。
+
 ## 2026-11-02：SSPI 搜索静态编码与 FAIR 摘要优化
 
 为冻结推理缓存 V4 静态机制编码，并以 tensor view 替代 PLAY 合法掩码的嵌套布尔列表摘要；缓存仅在 eval + inference_mode 生效，训练仍完整计算。M4 Max 单线程 CPU 的固定工程 fixture 上，配对暖态模型前向中位数为 80.18→15.59 ms，FAIR SHA 为 25.49→0.900 ms。两轮 Engine5 原生 128 模拟搜索对照均保持相同访问分布、动作和身份；墙钟中位数 57.59→24.68 秒，下降 57.15%。这是单个开局状态的工程性能结果，不代表训练收益或策略强度提升。专项 25 passed，主工程 273 passed，公开检查 1104 passed/42 skipped，源码清单 2828 项、gitleaks 无发现。详见[实测与边界](docs/SSPI_SEARCH_HOT_PATH_OPTIMIZATION_2026-11-02.md)。

@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-11-02：SSPI 搜索优化空间调查
+
+- 对照最新 128 模拟 Engine5 证据与当前代码，确认最大剩余顶层阶段是 transition；该根逐 tick 执行 2,812 次 native advance。
+- transition 占根墙钟约74%；`step`/`observe-atomic` RPC累计约6.227秒，含原生推进/捕获，纯网络节省量需另测。事件批量仍执行全部native ticks。
+- 定位 event-batched 客户端只接入实际 actor，belief search 仍走普通 native 客户端；恢复后本地 tick 与事件游标重设是接入前置条件。Compact typed capture还需适配SSPI事件客户端的数据类型。
+- 记录 compact capture、快照复制、恢复观测合并与推理命中率等后续候选及逐项等价验证门。
+- 只读调查，没有代码优化或新原生测量，不报告新的提速结论。
+
 ## 2026-11-02：SSPI 搜索静态表示与摘要快路径
 
 - 搜索推理期复用静态机制编码；梯度、训练模式、参数/buffer变更、权重载入和设备/精度切换均绕过或失效缓存。

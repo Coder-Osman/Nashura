@@ -10194,18 +10194,18 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "1b1bb0dde5121f9c80599f74fed3d22602dd989b9b54663466e8f8ed373f4589",
-      "bytes": 64702,
-      "source_sha256": "1b1bb0dde5121f9c80599f74fed3d22602dd989b9b54663466e8f8ed373f4589",
+      "sha256": "8a0a2d05d4a92402e1d4507108d4e143d9986e7bfcc9601f375e9bd0413cb493",
+      "bytes": 65531,
+      "source_sha256": "8a0a2d05d4a92402e1d4507108d4e143d9986e7bfcc9601f375e9bd0413cb493",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "43d3a89c9989cbe2c0369ab01afaa6f3c76b5c45add21d096af0fcde9855776c",
-      "bytes": 111101,
-      "source_sha256": "43d3a89c9989cbe2c0369ab01afaa6f3c76b5c45add21d096af0fcde9855776c",
+      "sha256": "1557eface92fa95a87ae2f7c8ed5d10c8658c646e693a7e8dbcce71fbce63f53",
+      "bytes": 112589,
+      "source_sha256": "1557eface92fa95a87ae2f7c8ed5d10c8658c646e693a7e8dbcce71fbce63f53",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -16663,9 +16663,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "bb2a4306c59393382704080884b16fb0577d1e27f40c8654377faab828088d7b",
-      "bytes": 62310,
-      "source_sha256": "bb2a4306c59393382704080884b16fb0577d1e27f40c8654377faab828088d7b",
+      "sha256": "9b6dc373b0773fb881ec13f6b0d3e9ac194c79071daaf9ca3e306e490c658e03",
+      "bytes": 63014,
+      "source_sha256": "9b6dc373b0773fb881ec13f6b0d3e9ac194c79071daaf9ca3e306e490c658e03",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -19957,10 +19957,19 @@
       "bytes": 5894,
       "source_sha256": "342a46d88c3b29170f4b59b309ab2b1810028ac980f62b89ae8b1af65b1f4465",
       "transformations": []
+    },
+    {
+      "path": "docs/SSPI_SEARCH_OPTIMIZATION_RESEARCH_2026-11-02.md",
+      "sha256": "8258454338505b3e0361e8992deacbca50a5aedbb5d7fa2d02bdd04a6460a34b",
+      "bytes": 10565,
+      "source_sha256": "8258454338505b3e0361e8992deacbca50a5aedbb5d7fa2d02bdd04a6460a34b",
+      "transformations": [
+        "manually maintained public file updated in publication worktree"
+      ]
     }
   ],
-  "file_count": 2828,
-  "source_bytes": 36826491,
+  "file_count": 2829,
+  "source_bytes": 36840077,
   "excluded_selected_candidates": {},
   "excluded_categories": [
     "credentials",

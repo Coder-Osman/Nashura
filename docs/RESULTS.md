@@ -1,5 +1,13 @@
 # 阶段成果与证据索引
 
+## 2026-11-02：SSPI 搜索剩余优化空间调查（只读）
+
+复核静态编码/FAIR 摘要优化后的原生搜索记录：128 次有效模拟根墙钟中位数 24.675 秒，transition 18.272 秒；同根推进 2,812 native ticks、2,813 次 `step`、2,943 次 `observe-atomic`。优化后 RPC 累计计时分别为 2.961 秒和 3.267 秒，属于嵌套计时，未重复加入 transition。
+
+代码审查发现生产采集已为实际 actor 使用 resident event-batched capture，但 MCTS belief factory 和受控性能探针仍用普通 persistent/legacy native 客户端，因而每个模拟 tick 单独推进和捕获。`transition` 占根墙钟约74%；`step` 与 `observe-atomic` 两类 RPC 的中位累计耗时相加约6.227秒，但含 native 推进/捕获，不是纯网络开销。批量路径仍运行所有 native ticks，收益只能由当前状态的受控实测确定。接入前需补上 `initial_tick` 初始化及 restore 后 tick/JSON cursor 重定基，并以完整128模拟根做 FAIR SHA、边界序列、访问分布、动作和原生状态恢复等价验证。belief历史重建与Python快照复制、compact typed capture及重复policy inference仍需当前版本的分项测量；compact底层选项存在，但SSPI事件客户端目前只接受JSON mapping。
+
+本轮只读调查；没有修改训练代码、运行原生端点、产生新的性能测量或训练结果。详见[优化空间调查](SSPI_SEARCH_OPTIMIZATION_RESEARCH_2026-11-02.md)。
+
 ## 2026-11-02：SSPI 静态机制编码缓存与 FAIR 摘要快路径（实机对照）
 
 基于 main@4461fb05c956a17988f337ee2e862d154f9775b8，针对上一轮 128 模拟剖析的两项可复用热点实施优化。SemanticEncoder 仅在 eval 且 inference_mode 下缓存 EffectSemanticEncoder/MechanicProfileEncoder 的静态表示；缓存由模块/参数/buffer身份、版本、device、dtype和形状约束，模式切换、模型迁移、权重载入、autocast、训练及梯度路径均清除或跳过。FAIR SHA 对 [4,576,5] PLAY 掩码不再调用 tolist()，改为生成旧嵌套 bool 列表等价的语义摘要字节；不缓存外层摘要，每次都重读输入内容，避免外部可变 tensor 绕过版本计数。旧语义摘要 SHA 保持不变。
