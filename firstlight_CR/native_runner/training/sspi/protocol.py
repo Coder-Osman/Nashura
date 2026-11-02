@@ -367,6 +367,8 @@ class SSPILegality:
         pending_delays = torch.tensor(playable_delay_mask(DELAY_MS, tick=int(raw["tick"]),
             end_tick=gameplay_end_tick(environment)), dtype=torch.bool, device=legal_plays.device)
         if bool(pending_delays.any()) and hand_state.pending_refills:
+            deck_costs = {int(card["cardId"]): int(card["cost"]) * 10000
+                for card in player["deck"]}
             towers = environment._extract_towers(raw)
             occupied, unknown = environment._occupied_building_footprints(
                 raw, environment._rich_context(raw))
@@ -380,6 +382,12 @@ class SSPILegality:
             for refill in hand_state.pending_refills:
                 if not refill.time_known or refill.card_id not in semantic_cards:
                     continue
+                affordable_delays = native_payment_mask(tick=int(raw["tick"]),
+                    elixir_raw=int(player["elixirRaw"]), cost_raw=deck_costs[refill.card_id],
+                    timeline=environment.mode_timeline.timeline).index_select(0, selected)
+                allowed_delays = pending_delays & affordable_delays
+                if not bool(allowed_delays.any()):
+                    continue
                 entry = environment._cached_placement_entry(card_id=refill.card_id, **placement)
                 native_rows = constrain_spell_placement(entry["row_major"], observation, owner,
                     refill.card_id)
@@ -391,7 +399,7 @@ class SSPILegality:
                 card_ids.append(refill.card_id)
                 pending_arrival_ticks[refill.card_id] = refill.remaining_ticks
                 legal_plays = torch.cat((legal_plays,
-                    (cells[:, None] & pending_delays[None, :]).unsqueeze(0)), dim=0)
+                    (cells[:, None] & allowed_delays[None, :]).unsqueeze(0)), dim=0)
         return cls(card_ids, legal_plays, ability_candidates=(),
             pending_arrival_ticks=pending_arrival_ticks)
 

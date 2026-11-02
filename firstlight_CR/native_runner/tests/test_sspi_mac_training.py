@@ -174,7 +174,9 @@ def test_early_pending_play_is_ignored_without_changing_policy_target():
     assert legality.execution_action(to_full_action(later)) == to_full_action(later)
 
 
-def test_pending_card_candidate_exposes_arrival_time_and_early_bin(monkeypatch):
+@pytest.mark.parametrize("first_affordable_slot", [0, 4, 31])
+def test_pending_card_candidate_requires_native_payment_and_exposes_arrival_time(
+        monkeypatch, first_affordable_slot):
     from native_runner.training.sspi import protocol
 
     player = native_player((0,))
@@ -203,13 +205,24 @@ def test_pending_card_candidate_exposes_arrival_time_and_early_bin(monkeypatch):
             for row in range(32))})
     monkeypatch.setattr(protocol, "validate_fair_view", lambda *args: None)
     monkeypatch.setattr(protocol, "legal_event_actions", lambda *args, **kwargs: legacy)
-    monkeypatch.setattr(protocol, "native_payment_mask", lambda **kwargs: torch.ones(31, dtype=torch.bool))
+    payment_calls = []
+    def payment_mask(**kwargs):
+        payment_calls.append(kwargs)
+        return torch.arange(31) >= first_affordable_slot
+    monkeypatch.setattr(protocol, "native_payment_mask", payment_mask)
     monkeypatch.setattr(protocol, "gameplay_end_tick", lambda environment: 7200)
     monkeypatch.setattr(protocol, "constrain_spell_placement", lambda rows, *args: rows)
     legality = SSPILegality.from_native(environment, observation, frame, 0,
         catalog=object(), hand_state=hand)
-    assert legality.pending_arrival_ticks == {HOG_DECK[0]: 12}
-    assert legality.legal(SSPIAction.play(HOG_DECK[0], 17, 0))
+    assert any(call["cost_raw"] == 20000 and call["elixir_raw"] == 100000
+        for call in payment_calls)
+    if first_affordable_slot <= 10:
+        assert legality.pending_arrival_ticks == {HOG_DECK[0]: 12}
+        assert legality.plays[legality.card_ids.index(HOG_DECK[0]), 17].tolist() == [
+            slot >= first_affordable_slot for slot in (2, 4, 6, 8, 10)]
+    else:
+        assert legality.pending_arrival_ticks == {}
+        assert HOG_DECK[0] not in legality.card_ids
 
 
 def test_stable_card_identity_ignores_random_native_deck_slot_permutation():

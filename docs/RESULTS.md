@@ -1,5 +1,19 @@
 # 阶段成果与证据索引
 
+## 2026-11-02：待补牌费用修复与 event-json-delta 有效混合局
+
+新版随机模型的旧诊断在 tick 178 等位置出现原生 PLAY 拒绝：待补牌虽已知且可能在延迟内到位，`SSPILegality.from_native` 却未对这类候选应用圣水费用掩码。tick 170 的 owner 1 待补 Ice Golem 仍需 4 ticks，`elixirRaw=260`；提议 400 ms PLAY 时没有足够圣水，执行前也仅 `elixirRaw=1506`。现在使用原生 `deck` 的费用和既有 `native_payment_mask`，逐档筛除不可支付的延迟；过早于补牌的提议仍按 WAIT 忽略。定向测试覆盖全可支付、部分档位可支付和全不可支付。
+
+只在独立 `sspi-isolated` / `emulator-5556` 上验收。实际端口 26889，owner 0/1 belief 端口 26890/26892；三端 `libg` SHA256 均为 `110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783`，probe SHA256 均为 `f79ba9344a9599483c7283e7cde756a3a77f2982741f0c83467eee68a1f28e64`。主 `emulator-5554`、其端口和运行中的引擎未改。CPU、随机初始化 seed `20261103`、模型 SHA256 `9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4`，collector 源码 SHA256 `ead832eb9fc5227b15c95bb6975ec1c0baea3a6eea4a062c93fb87707e7e1e5a`。
+
+先用 `run_id=sspi-host-history-20261102`、`game_id=BENCH-0001`、随机流 `sspi-overhead-benchmark-pair-0001`、`event-json-delta`、0% 搜索复跑诊断。该局 tick 3823 自然终局，双方各 220 次 DIRECT、0 次拒绝，WIN/LOSS，耗时 11.37 秒。`episode.json` SHA256 为 `089c44cdbc71ac3998d74e5655aff1cbd0fbf6f3b93428209294d0ed7b580bbe`，`training_admissible=false`；修复改变了动作轨迹，不能把它与旧隔离局作为同轨迹速度对照。
+
+随后以新身份 `run_id=sspi-event-delta-mixed-20261102-v1`、`game_id=MIX-0001`、随机流 `sspi-event-delta-mixed-stream-0001` 运行 5% × 128。tick 3961 自然终局，owner 0/1 各 232 次决策，SEARCH 为 15/7，DIRECT 为 217/225；合计 22 根和 442 次直出，实际搜索比例 4.741%。2 张、3 张、4 张就绪手牌分别出现 6、12、446 次，补牌事件 106 次，拒绝 0 次。完整 episode 标记 `training_admissible=true`，WIN/LOSS 标签已写入所有根。22 根均为 128/128 有效模拟，访问分布各合计 128，共 2816 次；根 FAIR SHA、动作账本、独立信念世界承诺和 WDL 标签一致，`actual_state_copied=false`，无 invalid attempt 或 unfinished edge backup。结束后 26890/26892 的 `snapshotHandles=0`。
+
+该混合局墙钟 439.72 秒，搜索根墙钟累计 425.44 秒、中位 18.96 秒（范围 10.30–28.70 秒）；actual 端推进 3871 native ticks、342 次 batch 捕获，避免 3529 次宿主逐 tick 观测，收到 57.42 MB JSON，解码累计 0.629 秒。根搜索计时包含信念、transition 和推理，不与这些嵌套阶段重复相加。`episode.json`/`episode.pt`/`actions.json` SHA256 分别为 `34c035a0d665baf0da59bdd626f693990e4a183e93a031c97f02c9f776f41001`、`f6812d5f211912175c3822e7b458aae3cb67e06c661dafb66737542a5054d987`、`9685d22f76229e517191a8dac3ddc7639458c495c8a26ff25b7b8d67c5fec74d`，原始文件仅留本机 `/tmp/sspi-event-delta-mixed-20261102-v1`，不进入公开仓库。
+
+受影响 SSPI、FAIR 搜索/历史/rollout 与 resident batch 回归 `243 passed`；主工程 `278 passed`，公开九套件 `1104 passed、42 skipped`，失败与错误均为 0；gitleaks 扫描约 40.94 MB 无发现。这是新版**首个有效混合采集局**，尚未使用其数据执行新的权重更新、checkpoint 往返或关闭搜索的独立强度评估；旧诊断隔离记录保持原状态。
+
 ## 2026-11-02：MCTS belief event-batched transport 与 resident 快照原生验收
 
 为 SSPI 搜索探针和 belief factory 增加显式 `event-json` transport。`EventBatchedSSPINative` 仍使用原生 `step_until_event` 捕获，游戏的每个 native tick 都由引擎执行；宿主只在边界取得完整、校验过的 JSON 状态。搜索 transition 按下一次 WAIT/PLAY 预约和可信补牌到达 tick 限定跨度，公共部署和终局仍会提前停止。reset/restore 后重设 `_last_tick` 与 JSON 事件游标；对照只改变 belief transport，实际 root、模型、随机流与 CPU 推理设置不变。

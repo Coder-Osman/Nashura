@@ -1,5 +1,9 @@
 # Nashura
 
+## 2026-11-02：SSPI 待补牌费用掩码与增量混合整局
+
+修复待补牌 PLAY 候选未检查原生圣水支付能力的问题；五档延迟分别与原生费用掩码相交，过早于补牌到位的提议仍按 WAIT 忽略。隔离 Mac ARM64 AVD 的同随机流无搜索复跑自然终局，原生拒绝为 0。新 `event-json-delta` run 完成一局有效训练采集：双方各 232 次决策，其中 22 个 128/128 SEARCH 根和 442 次 DIRECT，终局 tick 3961、WIN/LOSS，2/3 张手牌均出现，原生拒绝为 0。22 根访问数、FAIR 身份、动作账本和 WDL 均核对通过；belief 端快照句柄为 0。整局 439.72 秒，其中搜索根累计 425.44 秒。定向 243 项、主工程 278 项、公开 1104 项通过，gitleaks 无发现。**这验证采集协议，不代表新版已完成权重更新或无搜索强度评估。**详见[阶段记录](docs/RESULTS.md)。
+
 ## 2026-11-02：MCTS belief event-batched transport 与 resident 快照原生验收
 
 已把 resident `event-json` transport 接入 SSPI MCTS belief worker，并在原生源码中增加 slot 级 snapshot create/restore/release、恢复后 telemetry epoch 重建及能力标记。只在独立 ARM64 AVD `emulator-5556` 部署候选 probe `f79ba9…8e64`，固定同一 FAIR 根、模型和 seed，顺序完成 persistent/event-json 各两根 128/128 有效模拟。完整根墙钟中位数 14.631→10.655 秒，缩短27.2%；2,368 native ticks、32项候选动作/先验/访问数、所选动作及根恢复一致。2项 Q 值有最大 `1.49e-8` 的单精度末位差异。原有 `emulator-5554` 与部署的 probe `f5a691…346f` 未改动；这只是单根搜索性能验收，不代表完整训练或策略强度提升。相关回归234项、主引擎278项、公开1104项通过，gitleaks无发现。详见[阶段记录](docs/RESULTS.md)。

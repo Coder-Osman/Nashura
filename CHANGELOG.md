@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-11-02：SSPI 待补牌原生费用与有效混合采集
+
+- 待补牌候选按原生卡组费用与五档 `native_payment_mask` 逐档相交；没有可支付档位时不生成 PLAY 候选。部分档位可支付的定向回归已覆盖。
+- 独立 `emulator-5556` 上，同随机流 0% 搜索诊断复跑自然终局，tick 3823、440 次 DIRECT、0 次原生拒绝；该评估局不作为训练样本。
+- 新 `event-json-delta` run 的 5% × 128 混合局自然终局，tick 3961、22 个 SEARCH 根、442 次 DIRECT、0 次原生拒绝、终局标签 WIN/LOSS；episode 标记 `training_admissible=true`。每根访问数均合计 128，根 FAIR、独立信念世界、账本和 WDL 对齐，belief snapshotHandles=0。
+- SSPI、FAIR 搜索/历史/rollout、resident batch 定向回归 `243 passed`；主工程 `278 passed`，公开九套件 `1104 passed、42 skipped`，gitleaks 无发现。原始 episode 和权重保留本机；新版参数更新、checkpoint 恢复与无搜索强度评估尚未执行。
+
 ## 2026-11-02：MCTS belief event-batched transport 与 resident 快照原生验收
 
 - SSPI MCTS belief worker 使用显式 `event-json` transport：引擎逐 tick 推进，在公共部署、预约决策、终局或 tick 预算边界捕获；restore 后重设宿主 tick 与事件游标。
