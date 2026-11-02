@@ -164,13 +164,13 @@ void character_state_setter_hook(void *character, std::int32_t requested_state) 
 
 bool append_character_state_runtime_events_json(std::uint64_t generation, std::uint64_t state_epoch,
                                                 std::int32_t observation_tick, char *response,
-                                                std::size_t response_size, std::size_t *used) {
+                                                std::size_t response_size, std::size_t *used, std::uint64_t requested_from = 0) {
   return append_epoch_ring_events(
       g_character_state_ring,
       {cr_character_state_runtime::kSchema, "allowlisted-native-character-state-hook-ring",
        "sha-build-id-prologue-abi-kind5-card-identity-committed-state"},
       generation, state_epoch, observation_tick, g_character_state_hook_attested.load(std::memory_order_acquire),
-      g_character_state_hook_installed.load(std::memory_order_acquire), response, response_size, used,
+      g_character_state_hook_installed.load(std::memory_order_acquire), response, response_size, used, requested_from,
       [](JsonWriter &json, const CharacterStateRawRecord &record, bool first) {
         if (record.previous_state == record.committed_state || record.requested_state != record.committed_state ||
             !character_state_card_is_allowlisted(record.source_before.card_id)) {

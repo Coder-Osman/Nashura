@@ -73,6 +73,10 @@ def selected_files(workspace):
         "docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md",
         "docs/SSPI_MAC_SEARCH_P0_P1_2026-11-01.md",
         "docs/SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md",
+        "docs/SSPI_MINIMAL_HISTORY_2026-11-02.md",
+        "docs/SSPI_HOST_HISTORY_EVIDENCE_2026-11-02.json",
+        "docs/SSPI_JSON_EVENT_DELTA_2026-11-02.md",
+        "docs/SSPI_JSON_DELTA_EVIDENCE_2026-11-02.json",
     ):
         path = workspace / name
         if path.is_file():

@@ -92,6 +92,7 @@ class ActionMovementRuntimeEnvelopeV1:
     sequence_gap_before_oldest: bool
     complete: bool
     events: tuple[ActionMovementEventV1, ...]
+    transmit_from_sequence: int | None = None
 
     @property
     def capability_status(self) -> str:

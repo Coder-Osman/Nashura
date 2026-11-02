@@ -1054,7 +1054,8 @@ class BattleEnvV1:
             value
             for identity, value in (
                 (self._combat_event_identity, self._combat_next_sequence),
-                (self._public_card_play_event_identity, self._public_card_play_next_sequence),
+                (self._public_card_play_event_identity, self._public_card_play_next_sequence
+                 if getattr(self.native, "public_card_play_events_from_combat_ring", False) else None),
             )
             if identity == capture_identity and value is not None
         )

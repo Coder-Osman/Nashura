@@ -14,7 +14,7 @@ import time
 
 import torch
 
-from native_runner.cr_native_env import NativeClashEnv, ResidentNativeClashEnv, RunnerError
+from native_runner.cr_native_env import NativeClashEnv, ResidentNativeClashEnv, RunnerError, JsonEventCursor
 from native_runner.match_factory import MatchConfig, NATIVE_FINALIZATION_DEADLINE_TICK, tournament_level_kwargs
 from native_runner.resident_batch_channel import BatchStepFailureV1, ResidentBatchChannelV1
 from native_runner.rich_telemetry_adapter import RuntimeEffectCatalog
@@ -51,11 +51,12 @@ class SearchNative(NativeClashEnv):
     """Use the selected, already-verified control transport for an AVD worker."""
 
     def __init__(self, host, port, *, transport="legacy", timeout=90.):
-        if transport not in ("legacy", "persistent"):
+        if transport not in ("legacy", "persistent", "persistent-delta"):
             raise ValueError("SSPI native transport must be legacy or persistent")
         super().__init__(host, port, timeout=timeout)
         self.transport = transport
-        self._persistent_transport_requested = transport == "persistent"
+        self._persistent_transport_requested = transport in ("persistent", "persistent-delta")
+        self.json_event_deltas = transport == "persistent-delta"
 
     def start_atomic_steps(self, *, initial_tick=None):
         return None
@@ -72,9 +73,11 @@ class EventBatchedSSPINative(ResidentNativeClashEnv):
         "receive_ns", "decode_ns", "total_ns",
     )
 
-    def __init__(self, host, port, *, env_id=0, timeout=90.):
+    def __init__(self, host, port, *, env_id=0, timeout=90., event_deltas=False):
         super().__init__(env_id, host=host, port=port, timeout=timeout)
         self._batch_channel = None
+        self._json_cursors = {env_id: JsonEventCursor()}
+        self.event_deltas = bool(event_deltas)
         self._capture = None
         self._atomic_steps = False
         self._last_tick = None
@@ -104,8 +107,13 @@ class EventBatchedSSPINative(ResidentNativeClashEnv):
                 if (status.get("occupied") != 1 or len(slots) != 1
                         or slots[0].get("envId") != self.env_id):
                     raise RunnerError("SSPI batched control requires exactly one resident slot")
-                return self._raw_request(command, _read_retry_count=_read_retry_count)
-            return super()._request(command, _read_retry_count=_read_retry_count)
+                result = self._raw_request(command, _read_retry_count=_read_retry_count)
+            else:
+                result = super()._request(command, _read_retry_count=_read_retry_count)
+            if command == "reset" or command.startswith(
+                    ("configure ", "configure-native ", "restore ")):
+                self._json_cursors[self.env_id] = JsonEventCursor()
+            return result
 
     def start_atomic_steps(self, *, initial_tick=None):
         with self._lock:
@@ -128,7 +136,9 @@ class EventBatchedSSPINative(ResidentNativeClashEnv):
                 super().close_transport()
                 self._batch_channel = ResidentBatchChannelV1(
                     self.host, self.port, timeout=self.timeout, training_capture=False,
-                    compressed_json=False, validate_json_capture=True, step_until_event=True)
+                    compressed_json=False, validate_json_capture=True, step_until_event=True,
+                    **({"json_event_deltas": True, "json_cursors": self._json_cursors}
+                       if self.event_deltas else {}))
             try:
                 outcome = self._batch_channel.step_partitioned({self.env_id: ()}, ticks=ticks)[self.env_id]
                 if isinstance(outcome, BatchStepFailureV1):
@@ -173,6 +183,11 @@ class EventBatchedSSPINative(ResidentNativeClashEnv):
 
     def observe_atomic(self):
         if self._capture is not None:
+            return self._capture
+        if self.event_deltas:
+            cursor = self._json_cursors[self.env_id]
+            result = self._request("observe-atomic-delta " + " ".join(map(str, cursor.wire())))
+            self._capture = cursor.validate(result)
             return self._capture
         return super().observe_atomic()
 
@@ -221,7 +236,7 @@ def preflight_native_endpoints(host, actual_port, belief_ports, *, transport, ac
         raise ValueError("SSPI actual resident env id must be in 0..15")
     if type(include_belief) is not bool:
         raise ValueError("SSPI belief preflight switch must be a boolean")
-    if actual_env_id != 0 and transport != "event-json":
+    if actual_env_id != 0 and transport not in ("event-json", "event-json-delta"):
         raise ValueError("non-default actual env ids require event-json resident transport")
     endpoints = [("actual", actual_port)]
     if include_belief:
@@ -230,7 +245,7 @@ def preflight_native_endpoints(host, actual_port, belief_ports, *, transport, ac
     attestations = {}
     expected_identity = None
     for role, port in endpoints:
-        if transport == "event-json" and role == "actual":
+        if transport in ("event-json", "event-json-delta") and role == "actual":
             probe = SearchNative(host, port, transport="persistent", timeout=90.)
             try:
                 resident = probe._request("multi-status")
@@ -243,7 +258,7 @@ def preflight_native_endpoints(host, actual_port, belief_ports, *, transport, ac
                 raise RunnerError("event-json requires the selected existing resident actual match")
             native = ResidentNativeClashEnv(actual_env_id, host, port, timeout=90.)
         else:
-            selected_transport = "persistent" if transport == "event-json" else transport
+            selected_transport = "persistent" if transport in ("event-json", "event-json-delta") else transport
             native = SearchNative(host, port, transport=selected_transport, timeout=90.)
         try:
             status = native.status()
@@ -372,6 +387,11 @@ def _source_sha():
         PROJECT / "native_runner" / "battle_env.py",
         PROJECT / "native_runner" / "training" / "tracking.py",
         PROJECT / "native_runner" / "resident_batch_channel.py",
+        PROJECT / "native_runner" / "runtime_schema.py",
+        PROJECT / "native_runner" / "rich_telemetry_adapter.py",
+        PROJECT / "native_runner" / "special_movement_runtime.py",
+        PROJECT / "native_runner" / "action_movement_runtime.py",
+        PROJECT / "native_runner" / "character_state_runtime.py",
         PROJECT / "native_runner" / "training_capture.py",
         PROJECT / "native_runner" / "match_factory.py",
         PROJECT / "native_runner" / "training" / "event_action_space.py",
@@ -438,8 +458,8 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         raise
     if (arm not in ARM_CONFIG or type(seed) is not int or seed < 0
             or type(actual_env_id) is not int or not 0 <= actual_env_id < 16
-            or (actual_env_id != 0 and transport != "event-json")
-            or transport not in ("legacy", "persistent", "event-json")):
+            or (actual_env_id != 0 and transport not in ("event-json", "event-json-delta"))
+            or transport not in ("legacy", "persistent", "event-json", "event-json-delta")):
         raise ValueError("SSPI collection requires a fixed arm, distinct native ports, and explicit seed")
     if device not in ("cpu", "mps") or (device == "mps" and not torch.backends.mps.is_available()):
         raise ValueError("requested SSPI inference device is unavailable")
@@ -522,13 +542,15 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         native_ports=dict(actual=actual_port,
             belief_by_owner={str(owner): port for owner, port in belief_ports.items()}))
 
-    actual_native = (EventBatchedSSPINative(host, actual_port, env_id=actual_env_id, timeout=90.)
-        if transport == "event-json"
+    actual_native = (EventBatchedSSPINative(host, actual_port, env_id=actual_env_id, timeout=90.,
+                         **({"event_deltas": True} if transport == "event-json-delta" else {}))
+        if transport in ("event-json", "event-json-delta")
         else SearchNative(host, actual_port, transport=transport, timeout=90.))
     environment = _make_environment(actual_native, bundle)
     rollout = None
 
-    belief_transport = "persistent" if transport == "event-json" else transport
+    belief_transport = ("persistent-delta" if transport == "event-json-delta" else
+                        "persistent" if transport == "event-json" else transport)
 
     def make_belief_provider(owner, port, history):
         factory = HistoryBeliefFactory(
@@ -789,7 +811,7 @@ def main():
     parser.add_argument("--seed", type=int, default=20261101)
     parser.add_argument("--random-stream-id")
     parser.add_argument("--device", choices=("cpu", "mps"), default="cpu")
-    parser.add_argument("--transport", choices=("legacy", "persistent", "event-json"), default="legacy")
+    parser.add_argument("--transport", choices=("legacy", "persistent", "event-json", "event-json-delta"), default="legacy")
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--no-temporal-augmentation", action="store_true",
         help="Keep the original SEARCH-root-only baseline without continuation samples")

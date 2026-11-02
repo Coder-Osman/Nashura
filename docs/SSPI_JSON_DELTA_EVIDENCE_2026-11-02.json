@@ -1,0 +1,1345 @@
+{
+  "actions_and_fair_identical": true,
+  "boundary_comparison": {
+    "actions_equal": true,
+    "combat_records_equal": true,
+    "current_equal": true,
+    "delta_count": 435,
+    "delta_sha256": "a393dfcc3178fa1a0e8be2d4f35b663fb809463bbbfc025cf9f98c1cbd424504",
+    "equal": true,
+    "extra_native_capture_requests": 0,
+    "first_differences": [],
+    "first_tick": 90,
+    "full_count": 435,
+    "full_sha256": "a393dfcc3178fa1a0e8be2d4f35b663fb809463bbbfc025cf9f98c1cbd424504",
+    "last_tick": 4801,
+    "normalization": [
+      "generation/stateEpoch identity",
+      "per-ring sequence/causeSequence base",
+      "process-global deploymentSequence base; relative relationships retained"
+    ]
+  },
+  "boundary_initial_audit": {
+    "cause": "process-global deploymentSequence does not reset on match creation; initial comparison omitted base normalization",
+    "current_equal": true,
+    "delta_sha256": "4b74e7d0b118f0dfa8016d082f58c461a3b04d9d29c60537b31c2ee25382b83e",
+    "differing_boundaries": 133,
+    "equal": false,
+    "full_sha256": "8ff1d426b822179d54029932f3fee06e32f001f8ac68efb4cf889f70edb280d6"
+  },
+  "deployment_incident": {
+    "cause": "am set-debug-app -w targeted the package and Android force-stopped all package processes",
+    "limitation": "restarted endpoint is not a restoration of its old in-memory match; all subsequent diagnostics use fresh games",
+    "loss": "process-local match states and snapshot handles; old Engine0 slot2 was already terminal tick4801",
+    "no_host_training_or_evaluation_actor_before_action": true,
+    "old_engine_pids": [
+      7317,
+      7311,
+      4973,
+      5380,
+      5844,
+      12080
+    ],
+    "preserved": [
+      "AVD process37821",
+      "adb server",
+      "existing native TCP forwards",
+      "global APK libcrprobe.so",
+      "on-disk episodes/checkpoints/failed evidence"
+    ],
+    "prevention": "Never call am set-debug-app at package scope for worker-only reload. Verify per-process debug behavior and preserve process identities before every reload.",
+    "remediation": [
+      "saved logcat",
+      "cleared debug-app setting",
+      "restarted existing Engine0-4 activities without -D",
+      "isolated new probe only in Engine5 mount namespace"
+    ],
+    "schema": "sspi-delta-deployment-incident.v1"
+  },
+  "device": "cpu",
+  "engine": "macOS ARM64 Android Emulator",
+  "probes": {
+    "final": "be2eff5ef7d9a9656ddc98b6340e0307d541a0084d5d9ded5746fee743313674",
+    "initial": "d40e4f8ab085900d49689f31cbeab88bbd12a120fc1b9818fda05411f89eb4b6"
+  },
+  "public_suites": [
+    {
+      "errors": 0,
+      "failures": 0,
+      "file": "checks-affordability.xml",
+      "skipped": 0,
+      "tests": 23
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "file": "checks-collection-coordinator.xml",
+      "skipped": 0,
+      "tests": 65
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "file": "checks-command-coordinates.xml",
+      "skipped": 3,
+      "tests": 41
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "file": "checks-dispatch-command.xml",
+      "skipped": 3,
+      "tests": 34
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "file": "checks-live-command.xml",
+      "skipped": 4,
+      "tests": 29
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "file": "checks-position-guards.xml",
+      "skipped": 3,
+      "tests": 18
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "file": "checks-public.xml",
+      "skipped": 27,
+      "tests": 821
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "file": "checks-reservation-mapping.xml",
+      "skipped": 2,
+      "tests": 33
+    },
+    {
+      "errors": 0,
+      "failures": 0,
+      "file": "checks-selection-timeout.xml",
+      "skipped": 0,
+      "tests": 82
+    }
+  ],
+  "raw_evidence_scope": "single isolated Engine5 process",
+  "release_checks": [
+    {
+      "elapsed_seconds": 35.92001512506977,
+      "exit_code": 0,
+      "name": "targeted-release"
+    },
+    {
+      "elapsed_seconds": 23.186846874654293,
+      "exit_code": 0,
+      "name": "main-engine"
+    },
+    {
+      "elapsed_seconds": 180.48436212493107,
+      "exit_code": 0,
+      "name": "public"
+    },
+    {
+      "elapsed_seconds": 2.473614209331572,
+      "exit_code": 0,
+      "name": "gitleaks"
+    }
+  ],
+  "remaining": [
+    "mixed SEARCH/DIRECT complete accepted episode on upgraded actual and both belief workers",
+    "new schema training/checkpoint/paired strength evaluation",
+    "existing native action rejections",
+    "legacy observation getter updates movement telemetry cache; avoid additional observations"
+  ],
+  "runs": {
+    "delta-final": {
+      "action_count": 564,
+      "action_sha256": "9761409f96376ea8a0aa2eda394af29b4d08fb1fa497b1e9bede8ab6f03f486f",
+      "identity": {
+        "actual_env_id": 0,
+        "actual_match_seed": 1703222867,
+        "actual_rollout_seed": 4311937124952775707,
+        "arm": "A_5PCT_128",
+        "controller_sha256": "03b88c64262baf85f9680dfa4b0ba751248722afd6c5857ab23234a9af65c5de",
+        "controller_sha256_by_owner": {
+          "0": "03b88c64262baf85f9680dfa4b0ba751248722afd6c5857ab23234a9af65c5de",
+          "1": "03b88c64262baf85f9680dfa4b0ba751248722afd6c5857ab23234a9af65c5de"
+        },
+        "device": "cpu",
+        "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+        "episode_kind": "evaluation",
+        "game_id": "BENCH-0001",
+        "model_sha256": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+        "model_sha256_by_owner": {
+          "0": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+          "1": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4"
+        },
+        "native_ports": {
+          "actual": 26794,
+          "belief_by_owner": {
+            "0": 26790,
+            "1": 26792
+          }
+        },
+        "native_transport": "event-json-delta",
+        "native_worker_attestations": {
+          "actual": {
+            "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+            "probe_sha256": "be2eff5ef7d9a9656ddc98b6340e0307d541a0084d5d9ded5746fee743313674"
+          }
+        },
+        "random_stream_id": "sspi-overhead-benchmark-pair-0001",
+        "run_id": "sspi-host-history-20261102",
+        "runtime_sha256": "daa98c57ff017fc363ca62babaa1b32b3efbea076b74edc69e40f9eb4e61fcf7",
+        "search_probability": 0.0,
+        "search_protocol_sha256": "1310b685bf0b0927edd6d83a833d09cf2fee516bdf3b694313eb3f3fc9725ae5",
+        "seed": 20261103,
+        "source_sha256": "4d80c8294d4488fbfeb316be0184d2cb0cc912bd83719e8b3d84da259fef9547"
+      },
+      "profile": {
+        "actual_native_ticks": 4711,
+        "batches": 434,
+        "connect_ns": 203208285,
+        "decode_ns": 798861703,
+        "decoded_response_bytes": 71778353,
+        "environments": 434,
+        "host_observations_avoided": 4277,
+        "last_request_ack_ns": 107502498,
+        "reached_tick_budget": 300,
+        "receive_ns": 976345544,
+        "request_ack_ns": 291877420,
+        "request_bytes": 43400,
+        "requested_native_ticks": 4727,
+        "response_bytes": 71792241,
+        "send_ns": 8756753,
+        "stopped_on_deployment": 133,
+        "stopped_on_terminal": 1,
+        "total_ns": 1784731424
+      },
+      "quarantine": {
+        "elapsed_seconds": 63.07561874995008,
+        "ended": true,
+        "exception": "ValueError",
+        "reason": "SSPI game did not reach a clean native terminal boundary",
+        "status": "quarantined",
+        "training_admissible": false,
+        "truncated": false
+      },
+      "raw_log_sha256": "97bbb42c56589250c64d73ad3ecea4abd8cd7802b55173e073c4b7a2dde561cf"
+    },
+    "delta-r1": {
+      "action_count": 564,
+      "action_sha256": "9761409f96376ea8a0aa2eda394af29b4d08fb1fa497b1e9bede8ab6f03f486f",
+      "identity": {
+        "actual_env_id": 0,
+        "actual_match_seed": 1703222867,
+        "actual_rollout_seed": 4311937124952775707,
+        "arm": "A_5PCT_128",
+        "controller_sha256": "03b88c64262baf85f9680dfa4b0ba751248722afd6c5857ab23234a9af65c5de",
+        "controller_sha256_by_owner": {
+          "0": "03b88c64262baf85f9680dfa4b0ba751248722afd6c5857ab23234a9af65c5de",
+          "1": "03b88c64262baf85f9680dfa4b0ba751248722afd6c5857ab23234a9af65c5de"
+        },
+        "device": "cpu",
+        "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+        "episode_kind": "evaluation",
+        "game_id": "BENCH-0001",
+        "model_sha256": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+        "model_sha256_by_owner": {
+          "0": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+          "1": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4"
+        },
+        "native_ports": {
+          "actual": 26794,
+          "belief_by_owner": {
+            "0": 26790,
+            "1": 26792
+          }
+        },
+        "native_transport": "event-json-delta",
+        "native_worker_attestations": {
+          "actual": {
+            "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+            "probe_sha256": "d40e4f8ab085900d49689f31cbeab88bbd12a120fc1b9818fda05411f89eb4b6"
+          }
+        },
+        "random_stream_id": "sspi-overhead-benchmark-pair-0001",
+        "run_id": "sspi-host-history-20261102",
+        "runtime_sha256": "703accb8b5cf4d0b267798fd7aadeaec7870d53b1e680fd3755efc0273ff9247",
+        "search_probability": 0.0,
+        "search_protocol_sha256": "1310b685bf0b0927edd6d83a833d09cf2fee516bdf3b694313eb3f3fc9725ae5",
+        "seed": 20261103,
+        "source_sha256": "a3d5370e08bd2674dad24771e367f4ae1a881274f4a09fe9fa4f40e9618a590e"
+      },
+      "profile": {
+        "actual_native_ticks": 4711,
+        "batches": 434,
+        "connect_ns": 190369297,
+        "decode_ns": 748487045,
+        "decoded_response_bytes": 71744500,
+        "environments": 434,
+        "host_observations_avoided": 4277,
+        "last_request_ack_ns": 110398254,
+        "reached_tick_budget": 300,
+        "receive_ns": 918165672,
+        "request_ack_ns": 315953422,
+        "request_bytes": 43400,
+        "requested_native_ticks": 4727,
+        "response_bytes": 71758388,
+        "send_ns": 8551286,
+        "stopped_on_deployment": 133,
+        "stopped_on_terminal": 1,
+        "total_ns": 1675916588
+      },
+      "quarantine": {
+        "elapsed_seconds": 60.25003470806405,
+        "ended": true,
+        "exception": "ValueError",
+        "reason": "SSPI game did not reach a clean native terminal boundary",
+        "status": "quarantined",
+        "training_admissible": false,
+        "truncated": false
+      },
+      "raw_log_sha256": "ea365a8ee26643c7088c5239c89e1971e01757664714fd0d5efb4a26669ad210"
+    },
+    "full-final": {
+      "action_count": 564,
+      "action_sha256": "9761409f96376ea8a0aa2eda394af29b4d08fb1fa497b1e9bede8ab6f03f486f",
+      "identity": {
+        "actual_env_id": 0,
+        "actual_match_seed": 1703222867,
+        "actual_rollout_seed": 4311937124952775707,
+        "arm": "A_5PCT_128",
+        "controller_sha256": "359319212f5bc56a672e22943988a7e1564e79516a5e39fac86608c2ef027c03",
+        "controller_sha256_by_owner": {
+          "0": "359319212f5bc56a672e22943988a7e1564e79516a5e39fac86608c2ef027c03",
+          "1": "359319212f5bc56a672e22943988a7e1564e79516a5e39fac86608c2ef027c03"
+        },
+        "device": "cpu",
+        "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+        "episode_kind": "evaluation",
+        "game_id": "BENCH-0001",
+        "model_sha256": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+        "model_sha256_by_owner": {
+          "0": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+          "1": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4"
+        },
+        "native_ports": {
+          "actual": 26794,
+          "belief_by_owner": {
+            "0": 26790,
+            "1": 26792
+          }
+        },
+        "native_transport": "event-json",
+        "native_worker_attestations": {
+          "actual": {
+            "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+            "probe_sha256": "be2eff5ef7d9a9656ddc98b6340e0307d541a0084d5d9ded5746fee743313674"
+          }
+        },
+        "random_stream_id": "sspi-overhead-benchmark-pair-0001",
+        "run_id": "sspi-host-history-20261102",
+        "runtime_sha256": "d2e60a30da6ff3fd2cb979c62369820d00e3df3facec532243cbb125a069e13a",
+        "search_probability": 0.0,
+        "search_protocol_sha256": "1310b685bf0b0927edd6d83a833d09cf2fee516bdf3b694313eb3f3fc9725ae5",
+        "seed": 20261103,
+        "source_sha256": "4d80c8294d4488fbfeb316be0184d2cb0cc912bd83719e8b3d84da259fef9547"
+      },
+      "profile": {
+        "actual_native_ticks": 4711,
+        "batches": 434,
+        "connect_ns": 188247330,
+        "decode_ns": 23282760540,
+        "decoded_response_bytes": 2952833186,
+        "environments": 434,
+        "host_observations_avoided": 4277,
+        "last_request_ack_ns": 108900620,
+        "reached_tick_budget": 300,
+        "receive_ns": 11109531829,
+        "request_ack_ns": 294467158,
+        "request_bytes": 12152,
+        "requested_native_ticks": 4727,
+        "response_bytes": 2952847074,
+        "send_ns": 9404707,
+        "stopped_on_deployment": 133,
+        "stopped_on_terminal": 1,
+        "total_ns": 34402916580
+      },
+      "quarantine": {
+        "elapsed_seconds": 95.87387016694993,
+        "ended": true,
+        "exception": "ValueError",
+        "reason": "SSPI game did not reach a clean native terminal boundary",
+        "status": "quarantined",
+        "training_admissible": false,
+        "truncated": false
+      },
+      "raw_log_sha256": "46a5ad448546391aef83eb1159750a9d060d6580d0cd6534bf54ae47892b992c"
+    },
+    "full-r1": {
+      "action_count": 564,
+      "action_sha256": "9761409f96376ea8a0aa2eda394af29b4d08fb1fa497b1e9bede8ab6f03f486f",
+      "identity": {
+        "actual_env_id": 0,
+        "actual_match_seed": 1703222867,
+        "actual_rollout_seed": 4311937124952775707,
+        "arm": "A_5PCT_128",
+        "controller_sha256": "359319212f5bc56a672e22943988a7e1564e79516a5e39fac86608c2ef027c03",
+        "controller_sha256_by_owner": {
+          "0": "359319212f5bc56a672e22943988a7e1564e79516a5e39fac86608c2ef027c03",
+          "1": "359319212f5bc56a672e22943988a7e1564e79516a5e39fac86608c2ef027c03"
+        },
+        "device": "cpu",
+        "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+        "episode_kind": "evaluation",
+        "game_id": "BENCH-0001",
+        "model_sha256": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+        "model_sha256_by_owner": {
+          "0": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+          "1": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4"
+        },
+        "native_ports": {
+          "actual": 26794,
+          "belief_by_owner": {
+            "0": 26790,
+            "1": 26792
+          }
+        },
+        "native_transport": "event-json",
+        "native_worker_attestations": {
+          "actual": {
+            "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+            "probe_sha256": "d40e4f8ab085900d49689f31cbeab88bbd12a120fc1b9818fda05411f89eb4b6"
+          }
+        },
+        "random_stream_id": "sspi-overhead-benchmark-pair-0001",
+        "run_id": "sspi-host-history-20261102",
+        "runtime_sha256": "86325cb8d2f877f2965b8820b29ba343739eb741f292e1e575404ea31c8aa256",
+        "search_probability": 0.0,
+        "search_protocol_sha256": "1310b685bf0b0927edd6d83a833d09cf2fee516bdf3b694313eb3f3fc9725ae5",
+        "seed": 20261103,
+        "source_sha256": "a3d5370e08bd2674dad24771e367f4ae1a881274f4a09fe9fa4f40e9618a590e"
+      },
+      "profile": {
+        "actual_native_ticks": 4711,
+        "batches": 434,
+        "connect_ns": 205684584,
+        "decode_ns": 23045568191,
+        "decoded_response_bytes": 2952640302,
+        "environments": 434,
+        "host_observations_avoided": 4277,
+        "last_request_ack_ns": 174576250,
+        "reached_tick_budget": 300,
+        "receive_ns": 11677976539,
+        "request_ack_ns": 424409839,
+        "request_bytes": 12152,
+        "requested_native_ticks": 4727,
+        "response_bytes": 2952654190,
+        "send_ns": 9413491,
+        "stopped_on_deployment": 133,
+        "stopped_on_terminal": 1,
+        "total_ns": 34734121965
+      },
+      "quarantine": {
+        "elapsed_seconds": 94.47831804072484,
+        "ended": true,
+        "exception": "ValueError",
+        "reason": "SSPI game did not reach a clean native terminal boundary",
+        "status": "quarantined",
+        "training_admissible": false,
+        "truncated": false
+      },
+      "raw_log_sha256": "b576cfc3e21ea1d5736fd3cb5fc8a621e3abd94ddd9aebbe25e1a808084e921e"
+    }
+  },
+  "schema": "sspi-json-event-delta-evidence.v1",
+  "search": {
+    "persistent": {
+      "audit": {
+        "attempts": 128,
+        "completed_lifecycle": {
+          "executed": 70,
+          "preempted": 55,
+          "wait_expired": 87
+        },
+        "discarded_edges": 0,
+        "nodes": 129,
+        "seconds": 42.4792432077229,
+        "timings": {
+          "belief": 1.326566040981561,
+          "candidate_generation": 0.49005554150789976,
+          "inference": 8.421854039654136,
+          "restore": 1.036057211458683,
+          "transition": 25.199595164507627,
+          "tree_selection": 0.006614344194531441
+        },
+        "world_manifest": {
+          "actual_state_copied": false,
+          "draw_commitment": "4f8f1a6d1f106fc29a4c0c9df8ab5af15b82f79c8234b0933d196d9c22baf829",
+          "root_fair_sha": "df7486acf826ce64dd60582cba71e9995757cdcec1d8049832e79883a56457d6",
+          "sampler_sha": "b5fdc4a8abe270c3e1fda9a8c34f7c84271cb05e8a893e0943ef9533cf131b04",
+          "scope": "opening-only-engineering-acceptance",
+          "seed_commitment": "309ae41a5876fe8be66b3c9a5e0fec4bdbe77107b6bd91f40335ecfa1c4bfbc4",
+          "source": "independent-belief",
+          "training_admissible": false
+        }
+      },
+      "candidate_distribution": [
+        {
+          "action_id": 0,
+          "original_joint_logp": -0.844648003578186,
+          "prior_card": 0.4297086000442505,
+          "prior_projected": 0.4297086000442505,
+          "prior_search": 0.4297086000442505,
+          "proposal": "WAIT",
+          "q": 0.000406771425216917,
+          "visits": 63
+        },
+        {
+          "action_id": 9367,
+          "original_joint_logp": -8.828152656555176,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.02191291337968955,
+          "prior_search": 0.016443896850986836,
+          "proposal": "CARD_ELITE",
+          "q": -0.0013663768768310547,
+          "visits": 2
+        },
+        {
+          "action_id": 80791,
+          "original_joint_logp": -8.791979789733887,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.01990866317179167,
+          "prior_search": 0.019510746974816053,
+          "proposal": "CARD_ELITE",
+          "q": -0.0007944107055664062,
+          "visits": 2
+        },
+        {
+          "action_id": 27223,
+          "original_joint_logp": -8.785087585449219,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.024623087558638193,
+          "prior_search": 0.02809938602417468,
+          "proposal": "CARD_ELITE",
+          "q": -0.0010517016053199768,
+          "visits": 4
+        },
+        {
+          "action_id": 124377,
+          "original_joint_logp": -9.758398056030273,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.016582295176214887,
+          "prior_search": 0.01243674198664077,
+          "proposal": "CARD_ELITE",
+          "q": -0.0008749961853027344,
+          "visits": 1
+        },
+        {
+          "action_id": 9336,
+          "original_joint_logp": -8.829305648803711,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.02188766252023991,
+          "prior_search": 0.024099962428803485,
+          "proposal": "SPATIAL_PEAK",
+          "q": -0.00136988361676534,
+          "visits": 3
+        },
+        {
+          "action_id": 80760,
+          "original_joint_logp": -8.793094635009766,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.019886480460148712,
+          "prior_search": 0.015570166264399709,
+          "proposal": "SPATIAL_PEAK",
+          "q": -0.0007940381765365601,
+          "visits": 2
+        },
+        {
+          "action_id": 27192,
+          "original_joint_logp": -8.786191940307617,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.024595909941892737,
+          "prior_search": 0.020192729517825535,
+          "proposal": "SPATIAL_PEAK",
+          "q": -0.0010570436716079712,
+          "visits": 2
+        },
+        {
+          "action_id": 123819,
+          "original_joint_logp": -9.75883960723877,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.016574974860006357,
+          "prior_search": 0.020636190733501567,
+          "proposal": "SPATIAL_PEAK",
+          "q": -0.0008532106876373291,
+          "visits": 2
+        },
+        {
+          "action_id": 23476,
+          "original_joint_logp": -9.083748817443848,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.018265669044719244,
+          "prior_search": 0.013708289112397567,
+          "proposal": "RANDOM",
+          "q": -0.0011332929134368896,
+          "visits": 1
+        },
+        {
+          "action_id": 108350,
+          "original_joint_logp": -9.798382759094238,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.01593233779630189,
+          "prior_search": 0.011949254726063232,
+          "proposal": "RANDOM",
+          "q": -0.0008732974529266357,
+          "visits": 1
+        },
+        {
+          "action_id": 117433,
+          "original_joint_logp": -9.772188186645508,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.016355192645567316,
+          "prior_search": 0.01228700492530175,
+          "proposal": "RANDOM",
+          "q": -0.0008749067783355713,
+          "visits": 1
+        },
+        {
+          "action_id": 80200,
+          "original_joint_logp": -8.833428382873535,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.019100344644907938,
+          "prior_search": 0.017722692300494867,
+          "proposal": "RANDOM",
+          "q": -0.0007943809032440186,
+          "visits": 2
+        },
+        {
+          "action_id": 2334,
+          "original_joint_logp": -9.136215209960938,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.01610312836791104,
+          "prior_search": 0.0124245902260295,
+          "proposal": "RANDOM",
+          "q": -0.001424938440322876,
+          "visits": 1
+        },
+        {
+          "action_id": 112694,
+          "original_joint_logp": -10.082279205322266,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.01199457448436996,
+          "prior_search": 0.01261283282668757,
+          "proposal": "RANDOM",
+          "q": -0.0008717477321624756,
+          "visits": 1
+        },
+        {
+          "action_id": 109185,
+          "original_joint_logp": -9.83432388305664,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.015369879898685237,
+          "prior_search": 0.017050071840390008,
+          "proposal": "RANDOM",
+          "q": -0.0008505433797836304,
+          "visits": 2
+        },
+        {
+          "action_id": 110929,
+          "original_joint_logp": -9.929866790771484,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.013969366649866432,
+          "prior_search": 0.013453723589283654,
+          "proposal": "RANDOM",
+          "q": -0.0008711516857147217,
+          "visits": 1
+        },
+        {
+          "action_id": 77914,
+          "original_joint_logp": -8.957759857177734,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.01686726742074274,
+          "prior_search": 0.014979615405354262,
+          "proposal": "RANDOM",
+          "q": -0.0007933676242828369,
+          "visits": 2
+        },
+        {
+          "action_id": 111107,
+          "original_joint_logp": -9.841019630432129,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.015267310837160854,
+          "prior_search": 0.011468252846198797,
+          "proposal": "RANDOM",
+          "q": -0.000872880220413208,
+          "visits": 1
+        },
+        {
+          "action_id": 22699,
+          "original_joint_logp": -9.238780975341797,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.015642493159003224,
+          "prior_search": 0.011773474333182888,
+          "proposal": "RANDOM",
+          "q": 0.0007000863552093506,
+          "visits": 1
+        },
+        {
+          "action_id": 2733,
+          "original_joint_logp": -8.838678359985352,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.021683474174977655,
+          "prior_search": 0.046622605593808444,
+          "proposal": "RANDOM",
+          "q": -0.00145396093527476,
+          "visits": 6
+        },
+        {
+          "action_id": 113711,
+          "original_joint_logp": -9.828778266906738,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.015455352131921979,
+          "prior_search": 0.012312147538785748,
+          "proposal": "RANDOM",
+          "q": -0.0008736848831176758,
+          "visits": 1
+        },
+        {
+          "action_id": 77542,
+          "original_joint_logp": -8.962606430053711,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.016785716760209585,
+          "prior_search": 0.012694507916129793,
+          "proposal": "RANDOM",
+          "q": -0.0007911920547485352,
+          "visits": 1
+        },
+        {
+          "action_id": 78253,
+          "original_joint_logp": -9.101703643798828,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.01460598123133997,
+          "prior_search": 0.01466502123182848,
+          "proposal": "RANDOM",
+          "q": -4.4479966163635254e-05,
+          "visits": 2
+        },
+        {
+          "action_id": 9334,
+          "original_joint_logp": -8.863045692443848,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.02116149124446308,
+          "prior_search": 0.027869548951693572,
+          "proposal": "RANDOM",
+          "q": -0.0013824105262756348,
+          "visits": 4
+        },
+        {
+          "action_id": 20465,
+          "original_joint_logp": -8.798181533813477,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.024302775771061474,
+          "prior_search": 0.018307855475966864,
+          "proposal": "RANDOM",
+          "q": -9.590387344360352e-05,
+          "visits": 2
+        },
+        {
+          "action_id": 78619,
+          "original_joint_logp": -8.842009544372559,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.01893714273525941,
+          "prior_search": 0.03933802997990081,
+          "proposal": "RANDOM",
+          "q": -0.0007336556911468506,
+          "visits": 5
+        },
+        {
+          "action_id": 7480,
+          "original_joint_logp": -9.128815650939941,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.01622272635718233,
+          "prior_search": 0.014651035569520535,
+          "proposal": "RANDOM",
+          "q": 0.0007053017616271973,
+          "visits": 2
+        },
+        {
+          "action_id": 6422,
+          "original_joint_logp": -8.844003677368164,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.021568309708862865,
+          "prior_search": 0.016191552997330844,
+          "proposal": "RANDOM",
+          "q": -0.001425042748451233,
+          "visits": 2
+        },
+        {
+          "action_id": 20595,
+          "original_joint_logp": -8.931204795837402,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.021275736906453763,
+          "prior_search": 0.018257696965907826,
+          "proposal": "RANDOM",
+          "q": -0.0011375844478607178,
+          "visits": 2
+        },
+        {
+          "action_id": 19415,
+          "original_joint_logp": -9.067489624023438,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.0185650815979143,
+          "prior_search": 0.027650802792146968,
+          "proposal": "RANDOM",
+          "q": -0.0005829408764839172,
+          "visits": 4
+        },
+        {
+          "action_id": 75271,
+          "original_joint_logp": -8.844606399536133,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.018888029515922847,
+          "prior_search": 0.01531094222787455,
+          "proposal": "RANDOM",
+          "q": -0.0007437318563461304,
+          "visits": 2
+        }
+      ],
+      "fair_sha256": "df7486acf826ce64dd60582cba71e9995757cdcec1d8049832e79883a56457d6",
+      "independent_belief_lease_released": true,
+      "inference": {
+        "note": "opponent_sample_seconds is nested inside transition_seconds",
+        "opponent_sample_calls": 212,
+        "opponent_sample_seconds": 13.90596241876483,
+        "predict_calls": 129,
+        "predict_seconds": 8.42168796248734
+      },
+      "model_sha256": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+      "native_rpc": [
+        {
+          "commands": {
+            "observe": {
+              "calls": 278,
+              "seconds": 0.234594174195081,
+              "successes": 278
+            },
+            "observe-atomic": {
+              "calls": 2943,
+              "seconds": 2.7375477091409266,
+              "successes": 2943
+            },
+            "other": {
+              "calls": 148,
+              "seconds": 0.38371128076687455,
+              "successes": 148
+            },
+            "release-snapshot": {
+              "calls": 213,
+              "seconds": 0.19419762259349227,
+              "successes": 213
+            },
+            "restore": {
+              "calls": 130,
+              "seconds": 0.1613398320041597,
+              "successes": 130
+            },
+            "snapshot-create": {
+              "calls": 213,
+              "seconds": 0.21341020660474896,
+              "successes": 213
+            },
+            "step": {
+              "calls": 2813,
+              "seconds": 2.3246089993044734,
+              "successes": 2813
+            }
+          },
+          "successful_step_ticks_requested": 2902,
+          "tick_semantics": "requested ticks of successful native step commands; not observed tick deltas"
+        }
+      ],
+      "native_ticks": {
+        "actual_ticks": 2812,
+        "advance_calls": 2812,
+        "advance_seconds": 8.163805853575468
+      },
+      "physical_actual_root_preservation_tested": false,
+      "scope": "single-isolated-process-sequential-root-and-independent-belief",
+      "seconds": 42.505466083064675,
+      "seed": 20261103,
+      "selected_action": {
+        "card_id": 26000030,
+        "cell": 232,
+        "delay_slot": 2
+      },
+      "simulations": 128,
+      "snapshot_fair_roundtrip": true,
+      "snapshot_handles_after": 0,
+      "status": "passed",
+      "transport": "persistent",
+      "valid_simulations": 128
+    },
+    "persistent-delta": {
+      "audit": {
+        "attempts": 128,
+        "completed_lifecycle": {
+          "executed": 70,
+          "preempted": 55,
+          "wait_expired": 87
+        },
+        "discarded_edges": 0,
+        "nodes": 129,
+        "seconds": 41.256827083881944,
+        "timings": {
+          "belief": 1.2699578329920769,
+          "candidate_generation": 0.45919762551784515,
+          "inference": 8.260445707011968,
+          "restore": 0.9943117457441986,
+          "transition": 24.29863642528653,
+          "tree_selection": 0.006360588129609823
+        },
+        "world_manifest": {
+          "actual_state_copied": false,
+          "draw_commitment": "4f8f1a6d1f106fc29a4c0c9df8ab5af15b82f79c8234b0933d196d9c22baf829",
+          "root_fair_sha": "df7486acf826ce64dd60582cba71e9995757cdcec1d8049832e79883a56457d6",
+          "sampler_sha": "b5fdc4a8abe270c3e1fda9a8c34f7c84271cb05e8a893e0943ef9533cf131b04",
+          "scope": "opening-only-engineering-acceptance",
+          "seed_commitment": "309ae41a5876fe8be66b3c9a5e0fec4bdbe77107b6bd91f40335ecfa1c4bfbc4",
+          "source": "independent-belief",
+          "training_admissible": false
+        }
+      },
+      "candidate_distribution": [
+        {
+          "action_id": 0,
+          "original_joint_logp": -0.844648003578186,
+          "prior_card": 0.4297086000442505,
+          "prior_projected": 0.4297086000442505,
+          "prior_search": 0.4297086000442505,
+          "proposal": "WAIT",
+          "q": 0.000406771425216917,
+          "visits": 63
+        },
+        {
+          "action_id": 9367,
+          "original_joint_logp": -8.828152656555176,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.02191291337968955,
+          "prior_search": 0.016443896850986836,
+          "proposal": "CARD_ELITE",
+          "q": -0.0013663768768310547,
+          "visits": 2
+        },
+        {
+          "action_id": 80791,
+          "original_joint_logp": -8.791979789733887,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.01990866317179167,
+          "prior_search": 0.019510746974816053,
+          "proposal": "CARD_ELITE",
+          "q": -0.0007944107055664062,
+          "visits": 2
+        },
+        {
+          "action_id": 27223,
+          "original_joint_logp": -8.785087585449219,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.024623087558638193,
+          "prior_search": 0.02809938602417468,
+          "proposal": "CARD_ELITE",
+          "q": -0.0010517016053199768,
+          "visits": 4
+        },
+        {
+          "action_id": 124377,
+          "original_joint_logp": -9.758398056030273,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.016582295176214887,
+          "prior_search": 0.01243674198664077,
+          "proposal": "CARD_ELITE",
+          "q": -0.0008749961853027344,
+          "visits": 1
+        },
+        {
+          "action_id": 9336,
+          "original_joint_logp": -8.829305648803711,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.02188766252023991,
+          "prior_search": 0.024099962428803485,
+          "proposal": "SPATIAL_PEAK",
+          "q": -0.00136988361676534,
+          "visits": 3
+        },
+        {
+          "action_id": 80760,
+          "original_joint_logp": -8.793094635009766,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.019886480460148712,
+          "prior_search": 0.015570166264399709,
+          "proposal": "SPATIAL_PEAK",
+          "q": -0.0007940381765365601,
+          "visits": 2
+        },
+        {
+          "action_id": 27192,
+          "original_joint_logp": -8.786191940307617,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.024595909941892737,
+          "prior_search": 0.020192729517825535,
+          "proposal": "SPATIAL_PEAK",
+          "q": -0.0010570436716079712,
+          "visits": 2
+        },
+        {
+          "action_id": 123819,
+          "original_joint_logp": -9.75883960723877,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.016574974860006357,
+          "prior_search": 0.020636190733501567,
+          "proposal": "SPATIAL_PEAK",
+          "q": -0.0008532106876373291,
+          "visits": 2
+        },
+        {
+          "action_id": 23476,
+          "original_joint_logp": -9.083748817443848,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.018265669044719244,
+          "prior_search": 0.013708289112397567,
+          "proposal": "RANDOM",
+          "q": -0.0011332929134368896,
+          "visits": 1
+        },
+        {
+          "action_id": 108350,
+          "original_joint_logp": -9.798382759094238,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.01593233779630189,
+          "prior_search": 0.011949254726063232,
+          "proposal": "RANDOM",
+          "q": -0.0008732974529266357,
+          "visits": 1
+        },
+        {
+          "action_id": 117433,
+          "original_joint_logp": -9.772188186645508,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.016355192645567316,
+          "prior_search": 0.01228700492530175,
+          "proposal": "RANDOM",
+          "q": -0.0008749067783355713,
+          "visits": 1
+        },
+        {
+          "action_id": 80200,
+          "original_joint_logp": -8.833428382873535,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.019100344644907938,
+          "prior_search": 0.017722692300494867,
+          "proposal": "RANDOM",
+          "q": -0.0007943809032440186,
+          "visits": 2
+        },
+        {
+          "action_id": 2334,
+          "original_joint_logp": -9.136215209960938,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.01610312836791104,
+          "prior_search": 0.0124245902260295,
+          "proposal": "RANDOM",
+          "q": -0.001424938440322876,
+          "visits": 1
+        },
+        {
+          "action_id": 112694,
+          "original_joint_logp": -10.082279205322266,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.01199457448436996,
+          "prior_search": 0.01261283282668757,
+          "proposal": "RANDOM",
+          "q": -0.0008717477321624756,
+          "visits": 1
+        },
+        {
+          "action_id": 109185,
+          "original_joint_logp": -9.83432388305664,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.015369879898685237,
+          "prior_search": 0.017050071840390008,
+          "proposal": "RANDOM",
+          "q": -0.0008505433797836304,
+          "visits": 2
+        },
+        {
+          "action_id": 110929,
+          "original_joint_logp": -9.929866790771484,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.013969366649866432,
+          "prior_search": 0.013453723589283654,
+          "proposal": "RANDOM",
+          "q": -0.0008711516857147217,
+          "visits": 1
+        },
+        {
+          "action_id": 77914,
+          "original_joint_logp": -8.957759857177734,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.01686726742074274,
+          "prior_search": 0.014979615405354262,
+          "proposal": "RANDOM",
+          "q": -0.0007933676242828369,
+          "visits": 2
+        },
+        {
+          "action_id": 111107,
+          "original_joint_logp": -9.841019630432129,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.015267310837160854,
+          "prior_search": 0.011468252846198797,
+          "proposal": "RANDOM",
+          "q": -0.000872880220413208,
+          "visits": 1
+        },
+        {
+          "action_id": 22699,
+          "original_joint_logp": -9.238780975341797,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.015642493159003224,
+          "prior_search": 0.011773474333182888,
+          "proposal": "RANDOM",
+          "q": 0.0007000863552093506,
+          "visits": 1
+        },
+        {
+          "action_id": 2733,
+          "original_joint_logp": -8.838678359985352,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.021683474174977655,
+          "prior_search": 0.046622605593808444,
+          "proposal": "RANDOM",
+          "q": -0.00145396093527476,
+          "visits": 6
+        },
+        {
+          "action_id": 113711,
+          "original_joint_logp": -9.828778266906738,
+          "prior_card": 0.1375012844800949,
+          "prior_projected": 0.015455352131921979,
+          "prior_search": 0.012312147538785748,
+          "proposal": "RANDOM",
+          "q": -0.0008736848831176758,
+          "visits": 1
+        },
+        {
+          "action_id": 77542,
+          "original_joint_logp": -8.962606430053711,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.016785716760209585,
+          "prior_search": 0.012694507916129793,
+          "proposal": "RANDOM",
+          "q": -0.0007911920547485352,
+          "visits": 1
+        },
+        {
+          "action_id": 78253,
+          "original_joint_logp": -9.101703643798828,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.01460598123133997,
+          "prior_search": 0.01466502123182848,
+          "proposal": "RANDOM",
+          "q": -4.4479966163635254e-05,
+          "visits": 2
+        },
+        {
+          "action_id": 9334,
+          "original_joint_logp": -8.863045692443848,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.02116149124446308,
+          "prior_search": 0.027869548951693572,
+          "proposal": "RANDOM",
+          "q": -0.0013824105262756348,
+          "visits": 4
+        },
+        {
+          "action_id": 20465,
+          "original_joint_logp": -8.798181533813477,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.024302775771061474,
+          "prior_search": 0.018307855475966864,
+          "proposal": "RANDOM",
+          "q": -9.590387344360352e-05,
+          "visits": 2
+        },
+        {
+          "action_id": 78619,
+          "original_joint_logp": -8.842009544372559,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.01893714273525941,
+          "prior_search": 0.03933802997990081,
+          "proposal": "RANDOM",
+          "q": -0.0007336556911468506,
+          "visits": 5
+        },
+        {
+          "action_id": 7480,
+          "original_joint_logp": -9.128815650939941,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.01622272635718233,
+          "prior_search": 0.014651035569520535,
+          "proposal": "RANDOM",
+          "q": 0.0007053017616271973,
+          "visits": 2
+        },
+        {
+          "action_id": 6422,
+          "original_joint_logp": -8.844003677368164,
+          "prior_card": 0.14053970575332642,
+          "prior_projected": 0.021568309708862865,
+          "prior_search": 0.016191552997330844,
+          "proposal": "RANDOM",
+          "q": -0.001425042748451233,
+          "visits": 2
+        },
+        {
+          "action_id": 20595,
+          "original_joint_logp": -8.931204795837402,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.021275736906453763,
+          "prior_search": 0.018257696965907826,
+          "proposal": "RANDOM",
+          "q": -0.0011375844478607178,
+          "visits": 2
+        },
+        {
+          "action_id": 19415,
+          "original_joint_logp": -9.067489624023438,
+          "prior_card": 0.14727075397968292,
+          "prior_projected": 0.0185650815979143,
+          "prior_search": 0.027650802792146968,
+          "proposal": "RANDOM",
+          "q": -0.0005829408764839172,
+          "visits": 4
+        },
+        {
+          "action_id": 75271,
+          "original_joint_logp": -8.844606399536133,
+          "prior_card": 0.14497962594032288,
+          "prior_projected": 0.018888029515922847,
+          "prior_search": 0.01531094222787455,
+          "proposal": "RANDOM",
+          "q": -0.0007437318563461304,
+          "visits": 2
+        }
+      ],
+      "fair_sha256": "df7486acf826ce64dd60582cba71e9995757cdcec1d8049832e79883a56457d6",
+      "independent_belief_lease_released": true,
+      "inference": {
+        "note": "opponent_sample_seconds is nested inside transition_seconds",
+        "opponent_sample_calls": 212,
+        "opponent_sample_seconds": 13.566417633090168,
+        "predict_calls": 129,
+        "predict_seconds": 8.260276659857482
+      },
+      "model_sha256": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+      "native_rpc": [
+        {
+          "commands": {
+            "observe": {
+              "calls": 278,
+              "seconds": 0.22790433932095766,
+              "successes": 278
+            },
+            "observe-atomic-delta": {
+              "calls": 2943,
+              "seconds": 2.5798355769366026,
+              "successes": 2943
+            },
+            "other": {
+              "calls": 148,
+              "seconds": 0.3859657533466816,
+              "successes": 148
+            },
+            "release-snapshot": {
+              "calls": 213,
+              "seconds": 0.19582519819959998,
+              "successes": 213
+            },
+            "restore": {
+              "calls": 130,
+              "seconds": 0.14350196113809943,
+              "successes": 130
+            },
+            "snapshot-create": {
+              "calls": 213,
+              "seconds": 0.1962860464118421,
+              "successes": 213
+            },
+            "step": {
+              "calls": 2813,
+              "seconds": 2.1887646610848606,
+              "successes": 2813
+            }
+          },
+          "successful_step_ticks_requested": 2902,
+          "tick_semantics": "requested ticks of successful native step commands; not observed tick deltas"
+        }
+      ],
+      "native_ticks": {
+        "actual_ticks": 2812,
+        "advance_calls": 2812,
+        "advance_seconds": 7.792373369447887
+      },
+      "physical_actual_root_preservation_tested": false,
+      "scope": "single-isolated-process-sequential-root-and-independent-belief",
+      "seconds": 41.28346375003457,
+      "seed": 20261103,
+      "selected_action": {
+        "card_id": 26000030,
+        "cell": 232,
+        "delay_slot": 2
+      },
+      "simulations": 128,
+      "snapshot_fair_roundtrip": true,
+      "snapshot_handles_after": 0,
+      "status": "passed",
+      "transport": "persistent-delta",
+      "valid_simulations": 128
+    }
+  },
+  "search_distribution_and_identity_identical": true,
+  "seed": 20261103,
+  "source_sha256": {
+    "firstlight_CR/docs/local_mac_capture_training.md": "ec6aca56cd658bb025e5bb7f6c678f0b09f9bd0fb5e730fdffac1af5ee2ccf10",
+    "firstlight_CR/native_runner/action_movement_runtime.py": "4d25b8da91c48c670948599a761ed2dcc9ced2fffddbc3f2712b6a73363e7065",
+    "firstlight_CR/native_runner/battle_env.py": "062ef6c6f4c8a2047a3e8a206a655a0b3ad2fd58d265947759f93227aec92ff3",
+    "firstlight_CR/native_runner/character_state_runtime.py": "d543c364b53cb576884af1c4b9c8ea3ed98d0a14fb55fceade6a0cd0eb40e335",
+    "firstlight_CR/native_runner/cr_native_env.py": "e8e210372c589c2e527b0208fc16a46f74abbd058301e69b1067bc1e3d5b1122",
+    "firstlight_CR/native_runner/probe/action_movement_runtime_telemetry.inc": "6c287f33236120d0022f73d940e22d71af38d3ecfaaa266ad155cf53e00ae64e",
+    "firstlight_CR/native_runner/probe/character_state_runtime_telemetry.inc": "08188a59e0b1f0b727865714730264f3a8a048468c9406e9216c043165d0e0c5",
+    "firstlight_CR/native_runner/probe/combat_event_telemetry.inc": "a691bc9b099f68ae1d4573b6b2cb1d45b5da79b362734f5b9c45f1f955bd4089",
+    "firstlight_CR/native_runner/probe/cr_replay_probe.cpp": "fba8c8e56da7c5c7c02b4fbe331a5bdfabfc5de07ed355aa31544d12b9316589",
+    "firstlight_CR/native_runner/probe/event_ring_json.h": "6d2c783a5c98a976ff89c8f0392b109c1aa08be1f4754f4e01ad078a9462068a",
+    "firstlight_CR/native_runner/probe/observation_delta.h": "49475669d015db5a32f2f766e3dc439b12825e5baba018ceb4bd8e393cfc6da4",
+    "firstlight_CR/native_runner/probe/phase_runtime_telemetry.inc": "ed7c4d54775a57c270659bf257a787d9e3d9622648ac58d3cd64a0b04a6bf793",
+    "firstlight_CR/native_runner/probe/remaining_runtime_telemetry.inc": "e9115d21091e098185198aa691ac2456ee7bfb55f2e8c3c554eb8615ac949caf",
+    "firstlight_CR/native_runner/probe/resident_multimatch.inc": "fb70f41f702bdd2e8166b901ed9512f685f911a0b255d9860f270f2843368817",
+    "firstlight_CR/native_runner/probe/special_movement_runtime_telemetry.inc": "fa5fa992e87f98aa02b2a4997fba32517143c0bcb2c98d4de073b86dcb86764a",
+    "firstlight_CR/native_runner/probe/visibility_runtime_telemetry.inc": "eb83756bbf2563ddd851006eb5ddd46ac902e4f5b8d8dcee1f1ef30626e64667",
+    "firstlight_CR/native_runner/resident_batch_channel.py": "60a0d17f3240d9d6fe4add95f8ade05a3a247ca6d3ab8c965879c886793dc85e",
+    "firstlight_CR/native_runner/runtime_schema.py": "079dcdc45410c1e790bfea95e38c88b6e44ba6f085c9193909263c5930b0132f",
+    "firstlight_CR/native_runner/special_movement_runtime.py": "215d2721028ccb1447d14b9cb4873d1fa1a5a06adccf334e24b2ec931c1718d9",
+    "firstlight_CR/native_runner/tests/test_sspi_json_delta.py": "870abcbfadd718a1a7ca531f87bc132668e89ccb5e4c5b0c4609287d4f15b220",
+    "firstlight_CR/native_runner/tests/test_sspi_mac_training.py": "61eb4551cb14f6dc667951b91a20b1e5860b885be04c0e9d3bfb0fa01a4f70e3",
+    "firstlight_CR/native_runner/training/sspi/collector.py": "cdf7e13a5580d0e7c7dac920a589b2ca941f0dba97b0af454e981f9edb8652a6",
+    "firstlight_CR/native_runner/training/sspi/performance.py": "881778543f8eeab67df0cba9d0894551e8c0ff9d0a3acece6018c84aef0cfda0",
+    "firstlight_CR/native_runner/training/sspi/search_probe.py": "d87219385f6ed5a2e8c0695a8e33fe162b1ce13ab120c54cc5deec67bbdc3344"
+  },
+  "valid_training_episodes": 0
+}

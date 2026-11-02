@@ -15,8 +15,9 @@ constexpr std::size_t kResidentMaxSlots = 16;
 // clients sent zero, so a zero value keeps the fixed-tick behaviour.
 constexpr std::uint16_t kResidentBatchRequestFlagStepUntilEvent = 1;
 constexpr std::uint16_t kResidentBatchRequestFlagEventDelta = 2;
+constexpr std::uint16_t kResidentBatchRequestFlagJsonDelta = 4;
 constexpr std::uint16_t kResidentBatchRequestFlagsKnown =
-    kResidentBatchRequestFlagStepUntilEvent | kResidentBatchRequestFlagEventDelta;
+    kResidentBatchRequestFlagStepUntilEvent | kResidentBatchRequestFlagEventDelta | kResidentBatchRequestFlagJsonDelta;
 
 // Response entry flags: bit0 is zlib (existing); the remaining bits report why
 // a step-until-event round stopped.
@@ -461,7 +462,8 @@ bool resident_step_bound_until(ResidentMatchSlot &slot, std::uint64_t max_ticks,
   return true;
 }
 
-bool resident_send_observation(int socket_fd, std::int32_t slot_id, const char *kind) {
+bool resident_send_observation(int socket_fd, std::int32_t slot_id, const char *kind,
+                               const ObservationEventCursor *cursor = nullptr) {
   if (!resident_bind_slot(slot_id)) {
     send_control_error(socket_fd, "resident env is not configured");
     return false;
@@ -483,7 +485,7 @@ bool resident_send_observation(int socket_fd, std::int32_t slot_id, const char *
   } else if (std::strcmp(kind, "observe-rich") == 0) {
     succeeded = build_rich_observation_json(g_controlled_manager, g_control_generation, response.get(), response_size);
   } else {
-    succeeded = build_atomic_observation_json_locked(response.get(), response_size);
+    succeeded = build_atomic_observation_json_locked(response.get(), response_size, cursor);
   }
   if (!succeeded && response[0] == '\0') {
     std::snprintf(response.get(), response_size,
@@ -581,6 +583,15 @@ bool handle_resident_env_command(int socket_fd, std::int32_t slot_id, const char
                   static_cast<unsigned long long>(slot.state_epoch),
                   static_cast<unsigned long long>(slot.completed_steps), slot.tick, slot.ended ? "true" : "false");
     send_control_response(socket_fd, response);
+    return true;
+  }
+  if (std::strncmp(command, "observe-atomic-delta ", 21) == 0) {
+    ObservationEventCursor cursor;
+    if (!parse_observation_cursor(command + 21, &cursor)) {
+      send_control_error(socket_fd, "invalid atomic event cursor");
+    } else {
+      resident_send_observation(socket_fd, slot_id, "observe-atomic", &cursor);
+    }
     return true;
   }
   if (std::strcmp(command, "observe") == 0 || std::strcmp(command, "observe-rich") == 0 ||
@@ -1511,7 +1522,7 @@ bool resident_send_batch_entry(int socket_fd, std::uint16_t slot_id, std::uint16
          send_all(socket_fd, payload, payload_size);
 }
 
-void handle_resident_batch_session(int socket_fd, bool training_capture = false, bool compress_json = false) {
+void handle_resident_batch_session(int socket_fd, bool training_capture = false, bool compress_json = false, bool json_delta_session = false) {
   const std::uint16_t handshake_status = g_resident_mode_active ? 0 : 1;
   if (!resident_send_batch_handshake(socket_fd, handshake_status) || handshake_status != 0) {
     return;
@@ -1550,7 +1561,9 @@ void handle_resident_batch_session(int socket_fd, bool training_capture = false,
     }
     const bool step_until_event = (request_flags & kResidentBatchRequestFlagStepUntilEvent) != 0;
     const bool event_delta = (request_flags & kResidentBatchRequestFlagEventDelta) != 0;
-    if (event_delta && !training_capture) {
+    const bool json_delta = (request_flags & kResidentBatchRequestFlagJsonDelta) != 0;
+    if ((event_delta && !training_capture) || (json_delta && (training_capture || event_delta)) ||
+        json_delta != json_delta_session) {
       resident_send_batch_response_header(socket_fd, 1, 0, 0);
       return;
     }
@@ -1567,6 +1580,7 @@ void handle_resident_batch_session(int socket_fd, bool training_capture = false,
     std::uint64_t cursor_generations[kResidentMaxSlots] = {};
     std::uint64_t cursor_epochs[kResidentMaxSlots] = {};
     std::uint64_t cursor_sequences[kResidentMaxSlots] = {};
+    ObservationEventCursor json_cursors[kResidentMaxSlots] = {};
     ResidentBatchAction actions[kResidentMaxSlots][kMaxTransitionActions] = {};
     bool seen[kResidentMaxSlots] = {};
     bool valid = true;
@@ -1585,6 +1599,14 @@ void handle_resident_batch_session(int socket_fd, bool training_capture = false,
         break;
       }
       seen[slot_ids[index]] = true;
+      if (json_delta) {
+        std::uint8_t cursor[72] = {};
+        if (!resident_receive_exact(socket_fd, cursor, sizeof(cursor))) return;
+        json_cursors[index].generation = resident_read_le<std::uint64_t>(cursor);
+        json_cursors[index].epoch = resident_read_le<std::uint64_t>(cursor + 8);
+        for (std::size_t ring = 0; ring < 7; ++ring)
+          json_cursors[index].next[ring] = resident_read_le<std::uint64_t>(cursor + 16 + ring * 8);
+      }
       if (event_delta) {
         std::uint8_t cursor[24] = {};
         if (!resident_receive_exact(socket_fd, cursor, sizeof(cursor))) {
@@ -1701,7 +1723,8 @@ void handle_resident_batch_session(int socket_fd, bool training_capture = false,
             payload_size = std::strlen(payload);
           }
         } else {
-          succeeded = build_atomic_observation_json_locked(payload, payload_capacity);
+          succeeded = build_atomic_observation_json_locked(payload, payload_capacity,
+                                                           json_delta ? &json_cursors[index] : nullptr);
           payload_size = std::strlen(payload);
         }
       }

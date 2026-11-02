@@ -540,7 +540,8 @@ def test_native_preflight_rejects_truncated_observation_and_closes_transport(mon
     assert closed == [True]
 
 
-def test_event_json_preflight_selects_resident_slot_without_rebinding_frozen_slot(monkeypatch):
+@pytest.mark.parametrize("transport", ["event-json", "event-json-delta"])
+def test_event_json_preflight_selects_resident_slot_without_rebinding_frozen_slot(monkeypatch, transport):
     calls = []
 
     class Probe:
@@ -588,13 +589,14 @@ def test_event_json_preflight_selects_resident_slot_without_rebinding_frozen_slo
     monkeypatch.setattr("native_runner.training.sspi.collector.ResidentNativeClashEnv", Resident)
 
     result = preflight_native_endpoints("127.0.0.1", 26789,
-        {0: 26790, 1: 26792}, transport="event-json", actual_env_id=1)
+        {0: 26790, 1: 26792}, transport=transport, actual_env_id=1)
 
     assert calls[2] == ("resident", 1, 26789)
     assert set(result) == {"actual", "belief_owner_0", "belief_owner_1"}
 
 
-def test_experiment_routes_run_config_owner_ports_into_episode(monkeypatch, tmp_path):
+@pytest.mark.parametrize("transport", ["persistent", "event-json-delta"])
+def test_experiment_routes_run_config_owner_ports_into_episode(monkeypatch, tmp_path, transport):
     captured = {}
 
     def collect_episode(**kwargs):
@@ -607,12 +609,13 @@ def test_experiment_routes_run_config_owner_ports_into_episode(monkeypatch, tmp_
     output, episode = experiment_module._collect_one(run_config=run_config,
         run_dir=tmp_path, game_id="A-game-0001", episode_kind="training",
         model=object(), device="cpu", actual_port=26789, belief_port=26790,
-        transport="persistent")
+        transport=transport)
 
     assert output == tmp_path / "episodes" / "A-game-0001"
     assert episode["status"] == "complete"
     assert captured["belief_ports"] == {0: 26791, 1: 26792}
     assert captured["actual_env_id"] == 1
+    assert captured["transport"] == transport
 
 
 def test_sspi_training_has_only_the_5_percent_128_configuration():

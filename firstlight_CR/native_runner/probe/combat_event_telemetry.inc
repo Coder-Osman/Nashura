@@ -1574,7 +1574,7 @@ bool append_combat_record(JsonWriter &json, const CombatRawRecord &record) {
 
 bool append_combat_events_json(void *manager, std::uint64_t generation, std::uint64_t state_epoch,
                                std::int32_t observation_tick, char *response, std::size_t response_size,
-                               std::size_t *used) {
+                               std::size_t *used, std::uint64_t requested_from = 0) {
   if (response == nullptr || used == nullptr) {
     return false;
   }
@@ -1588,7 +1588,8 @@ bool append_combat_events_json(void *manager, std::uint64_t generation, std::uin
       identity_matches ? g_combat_epoch_first_sequence.load(std::memory_order_acquire) : next_sequence;
   const std::uint64_t retained_oldest =
       next_sequence > epoch_first + kCombatEventRingCapacity ? next_sequence - kCombatEventRingCapacity : epoch_first;
-  const std::uint64_t transmit_from = retained_oldest;
+  std::uint64_t transmit_from = 0;
+  if (!observation_event_start(requested_from, retained_oldest, next_sequence, &transmit_from)) return false;
   const std::uint64_t overflow = identity_matches ? g_combat_overflow_count.load(std::memory_order_acquire) : 0;
   const std::uint64_t rejected = identity_matches ? g_combat_rejected_capture_count.load(std::memory_order_acquire) : 0;
   JsonWriter json(response, response_size, used);

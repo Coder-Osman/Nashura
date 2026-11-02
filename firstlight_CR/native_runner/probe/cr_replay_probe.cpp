@@ -4390,6 +4390,7 @@ bool read_shield(const void *object, std::int32_t *shield, std::int32_t *maximum
   return *maximum_shield >= 0 && *shield >= 0 && *shield <= *maximum_shield;
 }
 
+#include "observation_delta.h"
 #include "combat_event_telemetry.inc"
 #include "visibility_runtime_telemetry.inc"
 #include "phase_runtime_telemetry.inc"
@@ -4726,7 +4727,7 @@ bool build_observation_json(void *manager, std::uint64_t generation, char *respo
 }
 
 bool build_rich_observation_json(void *manager, std::uint64_t generation, char *response, std::size_t response_size,
-                                 bool *complete_out = nullptr) {
+                                 bool *complete_out = nullptr, const ObservationEventCursor *cursor = nullptr) {
   if (complete_out != nullptr) {
     *complete_out = false;
   }
@@ -5321,7 +5322,8 @@ bool build_rich_observation_json(void *manager, std::uint64_t generation, char *
   }
   if (encoded) {
     encode_stage = "combat-events";
-    encoded = append_combat_events_json(manager, generation, state_epoch, tick, response, response_size, &used);
+    encoded = append_combat_events_json(manager, generation, state_epoch, tick, response, response_size, &used,
+        cursor ? cursor->floor(generation, state_epoch, 0) : 0);
   }
   if (encoded) {
     encode_stage = "phase-runtime-label";
@@ -5329,7 +5331,8 @@ bool build_rich_observation_json(void *manager, std::uint64_t generation, char *
   }
   if (encoded) {
     encode_stage = "phase-runtime";
-    encoded = append_phase_runtime_events_json(generation, state_epoch, tick, response, response_size, &used);
+    encoded = append_phase_runtime_events_json(generation, state_epoch, tick, response, response_size, &used,
+        cursor ? cursor->floor(generation, state_epoch, 1) : 0);
   }
   if (encoded) {
     encode_stage = "special-movement-runtime-label";
@@ -5338,7 +5341,8 @@ bool build_rich_observation_json(void *manager, std::uint64_t generation, char *
   if (encoded) {
     encode_stage = "special-movement-runtime";
     encoded =
-        append_special_movement_runtime_events_json(generation, state_epoch, tick, response, response_size, &used);
+        append_special_movement_runtime_events_json(generation, state_epoch, tick, response, response_size, &used,
+        cursor ? cursor->floor(generation, state_epoch, 4) : 0);
   }
   if (encoded) {
     encode_stage = "action-movement-runtime-label";
@@ -5346,7 +5350,8 @@ bool build_rich_observation_json(void *manager, std::uint64_t generation, char *
   }
   if (encoded) {
     encode_stage = "action-movement-runtime";
-    encoded = append_action_movement_runtime_events_json(generation, state_epoch, tick, response, response_size, &used);
+    encoded = append_action_movement_runtime_events_json(generation, state_epoch, tick, response, response_size, &used,
+        cursor ? cursor->floor(generation, state_epoch, 5) : 0);
   }
   if (encoded) {
     encode_stage = "character-state-runtime-label";
@@ -5354,7 +5359,8 @@ bool build_rich_observation_json(void *manager, std::uint64_t generation, char *
   }
   if (encoded) {
     encode_stage = "character-state-runtime";
-    encoded = append_character_state_runtime_events_json(generation, state_epoch, tick, response, response_size, &used);
+    encoded = append_character_state_runtime_events_json(generation, state_epoch, tick, response, response_size, &used,
+        cursor ? cursor->floor(generation, state_epoch, 6) : 0);
   }
   if (encoded) {
     encode_stage = "visibility-runtime-label";
@@ -5362,7 +5368,8 @@ bool build_rich_observation_json(void *manager, std::uint64_t generation, char *
   }
   if (encoded) {
     encode_stage = "visibility-runtime";
-    encoded = append_visibility_runtime_events_json(generation, state_epoch, tick, response, response_size, &used);
+    encoded = append_visibility_runtime_events_json(generation, state_epoch, tick, response, response_size, &used,
+        cursor ? cursor->floor(generation, state_epoch, 2) : 0);
   }
   if (encoded) {
     encode_stage = "remaining-runtime-label";
@@ -5370,7 +5377,8 @@ bool build_rich_observation_json(void *manager, std::uint64_t generation, char *
   }
   if (encoded) {
     encode_stage = "remaining-runtime";
-    encoded = append_remaining_runtime_events_json(generation, state_epoch, tick, response, response_size, &used);
+    encoded = append_remaining_runtime_events_json(generation, state_epoch, tick, response, response_size, &used,
+        cursor ? cursor->floor(generation, state_epoch, 3) : 0);
   }
   if (encoded) {
     encode_stage = "tower-troop-runtime-label";
@@ -5434,7 +5442,8 @@ bool observation_capture_identity_matches_locked(const ObservationCaptureIdentit
          current.tick == expected.tick;
 }
 
-bool build_atomic_observation_json_locked(char *response, std::size_t response_size) {
+bool build_atomic_observation_json_locked(char *response, std::size_t response_size,
+                                           const ObservationEventCursor *cursor = nullptr) {
   CaptureSceneIndexScope capture_index_scope;
   constexpr const char *kSchema = "native-observation-capture.v1";
   if (response == nullptr || response_size < kFullObservationResponseBytes) {
@@ -5490,7 +5499,7 @@ bool build_atomic_observation_json_locked(char *response, std::size_t response_s
   const auto rich_started = process_monotonic_now_ns();
   bool rich_complete = false;
   if (!build_rich_observation_json(identity.manager, identity.generation, response + used, response_size - used,
-                                   &rich_complete)) {
+                                   &rich_complete, cursor)) {
     const char *const rich_error = response + used;
     const std::size_t rich_error_capacity = response_size - used;
     if (rich_error_capacity > 0 && std::strncmp(rich_error, "{\"ok\":false", 11) == 0) {
@@ -6558,7 +6567,8 @@ void handle_control_command(int socket_fd, const char *command) {
        std::strncmp(command, "step ", 5) == 0 || std::strncmp(command, "play ", 5) == 0 ||
        std::strncmp(command, "transition ", 11) == 0 || std::strncmp(command, "inject ", 7) == 0 ||
        std::strcmp(command, "observe") == 0 || std::strcmp(command, "observe-rich") == 0 ||
-       std::strcmp(command, "observe-atomic") == 0 || is_replay_schedule_command(command))) {
+       std::strcmp(command, "observe-atomic") == 0 ||
+       std::strncmp(command, "observe-atomic-delta ", 21) == 0 || is_replay_schedule_command(command))) {
     send_control_error(socket_fd, "resident mode requires env ID command prefixes");
     return;
   }
@@ -6882,6 +6892,25 @@ void handle_control_command(int socket_fd, const char *command) {
     return;
   }
 
+  if (std::strncmp(command, "observe-atomic-delta ", 21) == 0) {
+    ObservationEventCursor cursor;
+    if (!parse_observation_cursor(command + 21, &cursor)) {
+      send_control_error(socket_fd, "invalid atomic event cursor");
+      return;
+    }
+    // Control commands execute serially; match the full-capture buffer lifetime.
+    static std::unique_ptr<char[]> response(new (std::nothrow) char[kFullObservationResponseBytes]());
+    if (!response) { send_control_error(socket_fd, "atomic buffer allocation failed"); return; }
+    response[0] = '\0';
+    pthread_mutex_lock(&g_control_mutex);
+    while (g_runner_mode.load(std::memory_order_acquire) == static_cast<std::int32_t>(RunnerMode::NativeRender) &&
+           g_native_render_step_active) pthread_cond_wait(&g_control_cond, &g_control_mutex);
+    const bool ok = build_atomic_observation_json_locked(response.get(), kFullObservationResponseBytes, &cursor);
+    pthread_mutex_unlock(&g_control_mutex);
+    if (!ok && response[0] == '\0') { send_control_error(socket_fd, "atomic delta capture failed"); return; }
+    send_control_response(socket_fd, response.get());
+    return;
+  }
   if (std::strcmp(command, "observe-atomic") == 0) {
     static std::unique_ptr<char[]> atomic_response(new (std::nothrow) char[kFullObservationResponseBytes]());
     if (atomic_response == nullptr) {
@@ -7529,6 +7558,8 @@ void run_control_server(std::uint16_t port) {
     }
     if (std::strcmp(command, "session-v1") == 0) {
       handle_persistent_control_session(client_fd);
+    } else if (std::strcmp(command, "batch-json-delta-v1") == 0) {
+      handle_resident_batch_session(client_fd, false, false, true);
     } else if (std::strcmp(command, "batch-v1") == 0) {
       handle_resident_batch_session(client_fd, false, false);
     } else if (std::strcmp(command, "batch-zlib-v1") == 0) {

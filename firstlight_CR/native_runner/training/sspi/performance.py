@@ -17,7 +17,7 @@ class NativeRequestProfiler:
     def record(self, command: str, seconds: float, succeeded: bool) -> None:
         kind = command.partition(" ")[0]
         if kind not in {
-            "step", "observe", "observe-atomic", "snapshot-create", "restore",
+            "step", "observe", "observe-atomic", "observe-atomic-delta", "snapshot-create", "restore",
             "release-snapshot", "state-digest", "queue-hand-action-at",
         }:
             kind = "other"

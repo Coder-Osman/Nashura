@@ -108,6 +108,8 @@ adb shell "dd if=/data/local/tmp/crprobe_new.so of=$D/libcrprobe.so conv=fsync; 
 
 ## 4. 启动并配置 6 个引擎
 
+2026-11-02 实测补充：`am set-debug-app -w nullsroyale.rel.free` 会 force-stop 整个包的全部引擎进程，不能用作单 worker 的隔离重载。下列 configure 工具同样包含包级 force-stop、转发重建和系统配置；运行中应先检查调用范围，不直接用它修复单个端点。已有组件可逐个启动并等待 coldReady，进程重启不等于内存对局恢复。
+
 6 个引擎是同一个包的 6 个独立进程（`nullsroyale.rel.free:engine0..5`），
 分别监听 `26789..26794`：
 

@@ -181,8 +181,10 @@ class RuntimeSchema:
 
     def envelope(self, value, generation, state_epoch, observation_tick, event_parser):
         label = self.label
+        value = self.mapping(value, label)
+        transmit_from = value.get("transmitFromSequence", value.get("oldestRetainedSequence"))
         record = self.record(
-            value,
+            {key: item for key, item in value.items() if key != "transmitFromSequence"},
             label,
             (
                 "ok",
@@ -243,7 +245,9 @@ class RuntimeSchema:
         raw_events = raw.get("events")
         if not isinstance(raw_events, list) or len(raw_events) > capacity:
             raise self.error(f"{label}.events is invalid")
-        if len(raw_events) != next_sequence - oldest:
+        transmit_from = self.integer(transmit_from, f"{label}.transmitFromSequence",
+                                     minimum=oldest, maximum=next_sequence)
+        if len(raw_events) != next_sequence - transmit_from:
             raise self.error(f"{label} retained event range is incomplete")
         if capability.status == "unavailable" and raw_events:
             raise self.error(f"unavailable {label} exposed event records")
@@ -253,7 +257,7 @@ class RuntimeSchema:
             event = event_parser(
                 value,
                 index=index,
-                expected_sequence=oldest + index,
+                expected_sequence=transmit_from + index,
                 observation_tick=observation_tick,
                 previous_tick=previous_tick,
             )
@@ -275,6 +279,7 @@ class RuntimeSchema:
             sequence_gap_before_oldest=gap,
             complete=complete,
             events=tuple(events),
+            transmit_from_sequence=transmit_from,
         )
 
 

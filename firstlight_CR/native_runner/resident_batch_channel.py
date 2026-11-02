@@ -17,6 +17,7 @@ from .cr_native_env import (
     MAX_RUNNER_RESPONSE_BYTES,
     RunnerError,
     _PhaseValidationCache,
+    JsonEventCursor,
     _validate_atomic_observation,
 )
 from .training_capture import TrainingAtomicCaptureV1, TrainingCaptureDecoder, TrainingCaptureError
@@ -46,6 +47,8 @@ _ENTRY_KNOWN = _ENTRY_ZLIB | _ENTRY_STOP_MASK
 _REQUEST_FLAG_STEP_UNTIL_EVENT = 1
 _REQUEST_FLAG_EVENT_DELTA = 2
 _REQUEST_CURSOR = struct.Struct("<QQQ")
+_JSON_CURSOR = struct.Struct("<9Q")
+_REQUEST_FLAG_JSON_DELTA = 4
 
 
 @dataclass(frozen=True, slots=True)
@@ -137,6 +140,8 @@ class ResidentBatchChannelV1:
         validate_json_capture: bool = True,
         step_until_event: bool = False,
         event_deltas: bool = False,
+        json_event_deltas: bool = False,
+        json_cursors: dict[int, JsonEventCursor] | None = None,
         training_decoders: dict[int, TrainingCaptureDecoder] | None = None,
     ) -> None:
         self.host = host
@@ -147,6 +152,10 @@ class ResidentBatchChannelV1:
         self.validate_json_capture = bool(validate_json_capture)
         self.step_until_event = bool(step_until_event)
         self.event_deltas = bool(event_deltas)
+        self.json_event_deltas = bool(json_event_deltas)
+        if self.json_event_deltas and (training_capture or compressed_json or not validate_json_capture):
+            raise ValueError("JSON deltas require uncompressed validated JSON capture")
+        self._json_cursors = {} if json_cursors is None else json_cursors
         if self.event_deltas and not self.training_capture:
             raise ValueError("event deltas require compact training capture")
         self._closed = False
@@ -178,6 +187,7 @@ class ResidentBatchChannelV1:
         handshake_started = time.perf_counter_ns()
         self._socket.sendall(
             (
+                b"batch-json-delta-v1\n" if self.json_event_deltas else
                 b"batch-fast-zlib-v1\n"
                 if self.training_capture and self.compressed_json
                 else b"batch-fast-v1\n"
@@ -321,6 +331,8 @@ class ResidentBatchChannelV1:
         sequence = self._sequence
         entries = b"".join(
             _REQUEST_ENTRY.pack(env_id, len(actions), int(ticks))
+            + (_JSON_CURSOR.pack(*self._json_cursors.setdefault(env_id, JsonEventCursor()).wire())
+               if self.json_event_deltas else b"")
             + (_REQUEST_CURSOR.pack(*self._training_decoders[env_id].cursor())
                if self.event_deltas and env_id in self._training_decoders
                else _REQUEST_CURSOR.pack(0, 0, 0) if self.event_deltas else b"")
@@ -328,6 +340,8 @@ class ResidentBatchChannelV1:
             for env_id, actions in normalized
         )
         request_flags = _REQUEST_FLAG_STEP_UNTIL_EVENT if self.step_until_event else 0
+        if self.json_event_deltas:
+            request_flags |= _REQUEST_FLAG_JSON_DELTA
         if self.event_deltas:
             request_flags |= _REQUEST_FLAG_EVENT_DELTA
         request = _HEADER.pack(_REQUEST_MAGIC, _VERSION, request_flags, sequence, len(normalized)) + entries
@@ -404,7 +418,9 @@ class ResidentBatchChannelV1:
                         raise RunnerError(f"resident batch env {env_id} failed: {raw!r}")
                     if entry_status != 0 or raw.get("ok") is False:
                         raise self._server_failure(env_id, raw)
-                    if self.validate_json_capture:
+                    if self.json_event_deltas:
+                        capture = self._json_cursors[env_id].validate(dict(raw))
+                    elif self.validate_json_capture:
                         identity = (raw.get("generation"), raw.get("stateEpoch"))
                         previous_identity = self._phase_validation_identity.get(env_id)
                         phase_event_floor = (
@@ -447,6 +463,7 @@ class ResidentBatchChannelV1:
                 self._phase_validation_identity.pop(env_id, None)
                 self._phase_validation_next_sequence.pop(env_id, None)
                 self._phase_validation_caches.pop(env_id, None)
+                self._json_cursors.pop(env_id, None)
                 failure = (
                     error
                     if isinstance(error, RunnerError)

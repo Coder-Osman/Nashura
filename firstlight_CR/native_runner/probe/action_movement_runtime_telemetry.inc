@@ -321,13 +321,13 @@ const char *action_movement_stage_label(ActionMovementRawKind kind) {
 
 bool append_action_movement_runtime_events_json(std::uint64_t generation, std::uint64_t state_epoch,
                                                 std::int32_t observation_tick, char *response,
-                                                std::size_t response_size, std::size_t *used) {
+                                                std::size_t response_size, std::size_t *used, std::uint64_t requested_from = 0) {
   return append_epoch_ring_events(
       g_action_movement_ring,
       {cr_action_movement_runtime::kSchema, "allowlisted-native-action-movement-hook-ring",
        "sha-build-id-prologue-abi-action-name-global-id-class-vtable-source-identity"},
       generation, state_epoch, observation_tick, g_action_movement_hooks_attested.load(std::memory_order_acquire),
-      g_action_movement_hooks_installed.load(std::memory_order_acquire), response, response_size, used,
+      g_action_movement_hooks_installed.load(std::memory_order_acquire), response, response_size, used, requested_from,
       [](JsonWriter &json, const ActionMovementRawRecord &record, bool first) {
         const char *kind = action_movement_kind_label(record.kind);
         if (!kind || record.action_name_size == 0)

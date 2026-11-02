@@ -145,13 +145,13 @@ void special_movement_execute_hook(void *component, std::int32_t requested_x, st
 
 bool append_special_movement_runtime_events_json(std::uint64_t generation, std::uint64_t state_epoch,
                                                  std::int32_t observation_tick, char *response,
-                                                 std::size_t response_size, std::size_t *used) {
+                                                 std::size_t response_size, std::size_t *used, std::uint64_t requested_from = 0) {
   return append_epoch_ring_events(
       g_special_movement_ring,
       {cr_special_movement_runtime::kSchema, "caller-filtered-native-special-movement-hook-ring",
        "sha-build-id-prologue-abi-type0-owner-target-identity"},
       generation, state_epoch, observation_tick, g_special_movement_hook_attested.load(std::memory_order_acquire),
-      g_special_movement_hook_installed.load(std::memory_order_acquire), response, response_size, used,
+      g_special_movement_hook_installed.load(std::memory_order_acquire), response, response_size, used, requested_from,
       [](JsonWriter &json, const SpecialMovementRawRecord &record, bool first) {
         json.append("%s{", first ? "" : ",");
         json.field("sequence", record.sequence);

@@ -741,8 +741,56 @@ def _check_event_list(check, capacity, next_sequence, transmit_from, unavailable
     return events
 
 
+JSON_EVENT_RINGS = ("combatEvents", "phaseRuntime", "visibilityRuntime", "remainingRuntime",
+                    "specialMovementRuntime", "actionMovementRuntime", "characterStateRuntime")
+
+
+class JsonEventCursor:
+    """Validated delivery cursor plus bounded combat causality, never old payloads."""
+
+    def __init__(self):
+        self.clear()
+
+    def clear(self):
+        self.identity = None
+        self.tick = -1
+        self.next = (0,) * len(JSON_EVENT_RINGS)
+        self.combat = {}
+
+    def wire(self):
+        return (*(self.identity or (0, 0)), *self.next)
+
+    def validate(self, capture):
+        if _fast_env_mode():
+            raise RunnerError("atomic JSON deltas require full protocol validation")
+        identity = (capture.get("generation"), capture.get("stateEpoch"))
+        tick = capture.get("tick")
+        same = self.identity == identity
+        if same and (type(tick) is not int or tick < self.tick):
+            raise RunnerError("atomic delta tick regressed without cursor restore")
+        rich = _response_mapping(capture.get("rich"), "rich")
+        floors = self.next if same else (0,) * len(JSON_EVENT_RINGS)
+        next_values = []
+        for name, floor in zip(JSON_EVENT_RINGS, floors, strict=True):
+            event_ring = _response_mapping(rich.get(name), name)
+            oldest = _response_int(event_ring.get("oldestRetainedSequence"), name + ".oldest", minimum=1)
+            end = _response_int(event_ring.get("nextSequence"), name + ".next", minimum=oldest)
+            start = _response_int(event_ring.get("transmitFromSequence", oldest), name + ".from",
+                                  minimum=oldest, maximum=end)
+            if start != (floor or oldest):
+                raise RunnerError(f"{name} delta does not start at the confirmed cursor")
+            next_values.append(end)
+        combat = dict(self.combat) if same else {}
+        validated = _validate_atomic_observation(capture, combat_validation_state=combat)
+        # Commit only when all fields and all seven rings pass.
+        self.identity, self.tick = identity, tick
+        self.next, self.combat = tuple(next_values), combat
+        return validated
+
+
 def _validate_combat_events(
-    value: object, *, generation: int, state_epoch: int, observation_tick: int
+    value: object, *, generation: int, state_epoch: int, observation_tick: int,
+    validation_state: dict | None = None,
 ) -> Mapping[str, Any]:
     envelope = _response_mapping(value, "combatEvents")
     envelope_check = _Fields(envelope, "combatEvents")
@@ -832,6 +880,15 @@ def _validate_combat_events(
     parsed_events: dict[int, tuple[Mapping[str, Any], Mapping[str, Mapping[str, Any]]]] = {}
     deployment_contexts: dict[int, Mapping[str, Any]] = {}
     card_play_deployments: set[int] = set()
+    prior_summaries = ({seq: summary for seq, summary in validation_state.items()
+                        if oldest <= seq < transmit_from} if validation_state is not None else {})
+    for summary in prior_summaries.values():
+        deployment = summary[3]
+        if deployment is not None:
+            deployment_contexts[deployment["deploymentSequence"]] = deployment
+            if summary[0] == "card_play":
+                card_play_deployments.add(deployment["deploymentSequence"])
+
 
     def present_fact(fact: Mapping[str, Any]) -> bool:
         return fact.get("validated") is True and fact.get("present") is True
@@ -1112,29 +1169,36 @@ def _validate_combat_events(
             raise RunnerError(f"{label} exposes unexpected causality")
         parsed_events[sequence] = (event, facts)
 
+    def fact_id(fact):
+        return fact.get("nativeObjectId") if present_fact(fact) else None
+
+    summaries = dict(prior_summaries)
+    for sequence, (event, facts) in parsed_events.items():
+        deployment = event.get("deploymentContext")
+        summaries[sequence] = (event["kind"], fact_id(facts["target"]), fact_id(facts["projectile"]),
+                               dict(deployment) if deployment is not None else None)
     expected_cause_kinds = {
-        "death": {"damage"},
-        "shield_damage": {"damage"},
-        "shield_break": {"shield_damage"},
+        "death": {"damage"}, "shield_damage": {"damage"}, "shield_break": {"shield_damage"},
         "despawn": {"death", "projectile_impact", "projectile_expire", "projectile_terminal"},
     }
     for sequence, (event, facts) in parsed_events.items():
         cause = event.get("causeSequence")
         if cause is None or cause < oldest:
             continue
-        cause_event, cause_facts = parsed_events[int(cause)]
-        if cause_event.get("kind") not in expected_cause_kinds[str(event["kind"])]:
+        previous = summaries.get(cause)
+        if previous is None:
+            raise RunnerError(f"combatEvents event {sequence} lacks confirmed cause history")
+        if previous[0] not in expected_cause_kinds[str(event["kind"])]:
             raise RunnerError(f"combatEvents event {sequence} has an incompatible cause kind")
-        subject = (
-            facts["projectile"] if event["kind"] == "despawn" and present_fact(facts["projectile"]) else facts["target"]
-        )
-        cause_subject = (
-            cause_facts["projectile"]
-            if cause_event["kind"] in {"projectile_impact", "projectile_expire", "projectile_terminal"}
-            else cause_facts["target"]
-        )
-        if not same_native_entity(subject, cause_subject):
+        subject = fact_id(facts["projectile"] if event["kind"] == "despawn"
+                          and present_fact(facts["projectile"]) else facts["target"])
+        cause_subject = previous[2] if previous[0] in {
+            "projectile_impact", "projectile_expire", "projectile_terminal"} else previous[1]
+        if subject is None or subject != cause_subject:
             raise RunnerError(f"combatEvents event {sequence} cause identity does not match")
+    if validation_state is not None:
+        validation_state.clear()
+        validation_state.update(summaries)
     return envelope
 
 
@@ -2028,7 +2092,8 @@ def _validate_rich_observation_fast(result: dict[str, Any], *, phase_event_floor
 
 
 def _validate_rich_observation(result: dict[str, Any], *, phase_event_floor: int | None = None,
-        phase_validation_cache: _PhaseValidationCache | None = None) -> dict[str, Any]:
+        phase_validation_cache: _PhaseValidationCache | None = None,
+        combat_validation_state: dict | None = None) -> dict[str, Any]:
     if _fast_env_mode():
         # Trusted-engine training mode: skip per-event field and provenance
         # checks. The engine is the sole producer and we control the probe.
@@ -2472,12 +2537,15 @@ def _validate_rich_observation(result: dict[str, Any], *, phase_event_floor: int
         if name in result:
             options = {"minimum_sequence": phase_event_floor,
                 "validation_cache": phase_validation_cache} if name == "phaseRuntime" else {}
+            if name == "combatEvents":
+                options["validation_state"] = combat_validation_state
             validate(result.get(name), **identity, **options)
     return result
 
 
 def _validate_atomic_observation(result: dict[str, Any], *, phase_event_floor: int | None = None,
-        phase_validation_cache: _PhaseValidationCache | None = None) -> dict[str, Any]:
+        phase_validation_cache: _PhaseValidationCache | None = None,
+        combat_validation_state: dict | None = None) -> dict[str, Any]:
     """Validate one complete, same-manager ordinary + rich capture."""
 
     if result.get("schema") != ATOMIC_OBSERVATION_SCHEMA:
@@ -2525,7 +2593,7 @@ def _validate_atomic_observation(result: dict[str, Any], *, phase_event_floor: i
             raise RunnerError("atomic ordinary object slots are not contiguous")
 
     validated_rich = _validate_rich_observation(dict(rich), phase_event_floor=phase_event_floor,
-        phase_validation_cache=phase_validation_cache)
+        phase_validation_cache=phase_validation_cache, combat_validation_state=combat_validation_state)
     if validated_rich["truncated"]:
         raise RunnerError("atomic rich observation is incomplete")
     if validated_rich["count"] != ordinary_count or validated_rich["returned"] != ordinary_returned:
@@ -2583,6 +2651,8 @@ class NativeClashEnv:
         self._phase_validation_identity: tuple[int, int] | None = None
         self._phase_validation_next_sequence: int | None = None
         self._phase_validation_cache = _PhaseValidationCache()
+        self.json_event_deltas = False
+        self._json_event_cursor = JsonEventCursor()
         self._persistent_transport_requested = False
         self._persistent_transport_supported: bool | None = None
         self._persistent_connection: socket.socket | None = None
@@ -2590,7 +2660,8 @@ class NativeClashEnv:
 
     @staticmethod
     def _read_only_request(command: str) -> bool:
-        return command in {
+        nested = command.split(" ", 2)[2] if command.startswith("env ") else command
+        return nested.startswith("observe-atomic-delta ") or nested in {
             "status",
             "multi-status",
             "observe",
@@ -2708,6 +2779,9 @@ class NativeClashEnv:
             if diagnostics:
                 error_text = f"{error_text} ({diagnostics})"
             raise RunnerError(error_text)
+        nested = command.split(" ", 2)[2] if command.startswith("env ") else command
+        if nested == "reset" or nested.startswith(("configure ", "configure-native ", "restore ")):
+            self._json_event_cursor.clear()
         return result
 
     def status(self) -> dict[str, Any]:
@@ -2873,6 +2947,10 @@ class NativeClashEnv:
         non-truncation are revalidated here before either view is returned.
         """
 
+        if self.json_event_deltas:
+            cursor = self._json_event_cursor
+            result = self._request("observe-atomic-delta " + " ".join(map(str, cursor.wire())))
+            return cursor.validate(result)
         return self._validate_atomic_result(self._request("observe-atomic"))
 
     def _validate_atomic_result(self, result: Mapping[str, Any]) -> dict[str, Any]:

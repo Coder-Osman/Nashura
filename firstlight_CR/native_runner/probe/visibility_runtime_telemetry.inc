@@ -359,7 +359,7 @@ void visibility_buff_removed_hook(void *component, void *entry) {
 
 bool append_visibility_runtime_events_json(std::uint64_t generation, std::uint64_t state_epoch,
                                            std::int32_t observation_tick, char *response, std::size_t response_size,
-                                           std::size_t *used) {
+                                           std::size_t *used, std::uint64_t requested_from = 0) {
   if (response == nullptr || used == nullptr) {
     return false;
   }
@@ -376,7 +376,8 @@ bool append_visibility_runtime_events_json(std::uint64_t generation, std::uint64
       identity ? g_visibility_runtime_epoch_first_sequence.load(std::memory_order_acquire) : next;
   const std::uint64_t retained_oldest =
       next > epoch_first + kVisibilityRuntimeRingCapacity ? next - kVisibilityRuntimeRingCapacity : epoch_first;
-  const std::uint64_t transmit_from = retained_oldest;
+  std::uint64_t transmit_from = 0;
+  if (!observation_event_start(requested_from, retained_oldest, next, &transmit_from)) return false;
   const std::uint64_t overflow = identity ? g_visibility_runtime_overflow_count.load(std::memory_order_acquire) : 0;
   const std::uint64_t rejected = identity ? g_visibility_runtime_rejected_count.load(std::memory_order_acquire) : 0;
   const bool complete = transition_installed && identity && rejected == 0;
