@@ -6,6 +6,8 @@
 - transition 占根墙钟约74%；`step`/`observe-atomic` RPC累计约6.227秒，含原生推进/捕获，纯网络节省量需另测。事件批量仍执行全部native ticks。
 - 定位 event-batched 客户端只接入实际 actor，belief search 仍走普通 native 客户端；恢复后本地 tick 与事件游标重设是接入前置条件。Compact typed capture还需适配SSPI事件客户端的数据类型。
 - 记录 compact capture、快照复制、恢复观测合并与推理命中率等后续候选及逐项等价验证门。
+- 深入拆分 transition：对手模型推理属于 transition；213 次 snapshot 请求包含约 212 个从未用于回滚的成功边快照，native create/release 累计约 0.496 秒。列出事件批量、compact capture、局部快照和重复帧缓存的隔离验证顺序。
+- 查明resident batch控制服务单客户端、snapshot/预约会关闭batch连接；补牌预计tick仍需核对，逐tick原子捕获并非逐tick完整FAIR张量重建。将通道重连成本及边界计数纳入受控验收。
 - 只读调查，没有代码优化或新原生测量，不报告新的提速结论。
 
 ## 2026-11-02：SSPI 搜索静态表示与摘要快路径

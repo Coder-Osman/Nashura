@@ -39,6 +39,40 @@
 
 当前不优先优化 PUCT 选择（约 0.008 秒），也不应因旧开局 root 的 JSON delta 响应仅减少约 2.72% 而重做增量序列化。CPU/MPS 推理比较可以等 transition 瓶颈收敛后再做；最新 top-level inference 约占根墙钟 8%，且对手推理的嵌套成本尚未重测。模型规模、搜索预算、搜索时域、FAIR 校验与原生战斗逻辑都不作为提速旋钮。
 
+## Transition 深入分析
+
+`CompletedBoundarySearch` 对每次 `world.transition(...)` 包围计时；128 次有效模拟会经过多条树边，所以 18.272 秒是这些调用的累计值，不是单条边的时长。PUCT 选动作在计时器外；但 transition 内含对手策略推理。搜索报告里的 top-level `inference=2.007s` 只统计搜索方根/叶预测，不含 `opponent.sample()` 内部的预测。
+
+| 内部阶段 | 具体工作 | 最新根证据与判断 |
+| --- | --- | --- |
+| 边前快照 | 复制 tracker、RNG、冻结信息和 Python sidecar，并在原生 worker 创建 snapshot handle；退出边时释放 handle。 | 每个根有 213 次 create/release；实现中每条边都建局部快照。它保护不完整边的回滚，但成功边不会恢复该局部快照。 |
+| 同时决策提交 | 冻结双方当前 FAIR 信息、合法性检查；根方采用搜索候选，对手策略按它自己的 FAIR 输入采样；两边动作一起写入 DecisionClock。 | 对手预测属于 transition，而非搜索器单独的 `inference` 阶段。历史 profile 中 212 次对手 sample 累计 13.566 秒，属于模型缓存优化前的数据，只能作为“需要重新分项计时”的证据。 |
+| 预约与原生推进 | PLAY 做手牌/费用/坐标校验，队列预约并核对原生回执；WAIT 或预约等待推进到下一观察边界。 | 当前 belief worker 用普通 `SearchNative`，所以每个 native tick 发 `step`，随后发原子观测。每根 2,812 ticks 对应 2,813 次 step 和 2,943 次 observe-atomic。 |
+| 捕获与 Python 状态推进 | 解码 ordinary/rich 捕获，合并并校验遥测，更新事件、补牌估计和决策时钟；仅在有效边界建立策略信息。 | 同根 step 与 observe-atomic 的嵌套累计 RPC 时间约 2.961 + 3.267 秒。它们含 native 执行/捕获，不能等同纯网络成本或从 transition 中直接扣除。 |
+| 边界判定与回传 | 搜索方到达下一决策点时返回新 FAIR 信息；终局时返回根方终局值；未完成边按当前接口恢复边前快照。 | 所有阶段仍须保留完整执行收据、对手隐私、终局标签和完整 128 次有效模拟。 |
+
+批量接入还有一项容易遗漏的连接生命周期成本。`EventBatchedSSPINative._request()` 在**每次**控制请求前关闭 batch 通道，包括 `snapshot-create`、`release-snapshot`、`restore` 和出牌预约；下一次 `step()` 再新建通道。底层 `ResidentBatchChannelV1` 注明 native 控制服务器为单客户端，因此不能未经验证让控制与 batch 两条连接同时保持打开。在当前每根约 212 条边、213 对快照请求的搜索形态下，直接替换客户端会频繁重新握手；应记录 `connect_ns`、通道新建次数及每个 batch 的平均 native ticks。若连接开销吞掉了合并观测的收益，应先单独处理成功边局部快照或合并原生动作与推进，而不是调整 TCP 参数。Batch 协议本身支持在一次 step 帧中带 PLAY 动作并返回回执，但当前 FinalBattleEnv 还校验普通预约回执中的额外卡牌/时间字段，两条路径需逐字段证明等价后才能合并。
+
+另一个边界是补牌。SSPI 不把补牌到位作为新决策，但 `HogRefillClock.next_boundary()` 会在已知补牌预计 tick 限制下一次批量跨度，以观测核对实际到位与连续补牌。因而 event batching 目标是减少**无决策、无公共部署、无待核对补牌**区间的中间捕获，而不是机械地将 2,812 次逐 tick 观测全部压到 212 次边终点。已知补牌边界和原生终局仍要保留。
+
+逐 tick 原子捕获也不等于每 tick 都构造完整模型输入。`FinalDecisionRuntime._freeze()` 只有在时钟唤醒 owner 时才调用 `observe_dual()`；旧函数级剖析记录 2,812 次 advance 对应 213 次 `observe_dual()` 和 426 次 tensorizer 调用。新版本未重新测这些子项耗时，但这个调用结构表明应优先减少无决策区间的 native 捕获，而不是假设 2,812 次完整张量重建。时钟证据扫描、每 tick 补牌 hand-set 比较、行动回执校验等 Python 工作仍需分项计时后再决定是否优化。
+
+恢复也解释了部分额外捕获：原生 `restore()` 先请求恢复，再读取普通 `observe`；`FinalSnapshot.restore()` 为重建 rich 游标又读取原子观测。最新根的 2,943 次 `observe-atomic` 比 2,813 次 `step` 多 130 次，恰好等于 130 次 restore。合并这两次恢复后读取可能节省请求，但须保持普通状态、rich 代次和 sidecar 重定基一致；它是独立于逐 tick 事件批量的优化项。
+
+最新根中 discarded edge 为 0，而 native 快照计数为 213 次创建、213 次释放；对应 1 个 belief-world 根快照和约 212 个 transition 局部快照。没有一条 transition 需要局部回滚。仅原生 create/release RPC 的累计中位数约为 0.245 + 0.251 = **0.496 秒/根**，还未计入 Python sidecar 与状态复制。可单独测试让不完整边标记当前 world 为 dirty，由搜索器丢弃该模拟并在下一模拟开始时恢复根快照；这样不需保存每条成功边的局部快照。此调整会改变 transition 的失败后状态契约，必须明确让调用方跳过“恢复到边前状态”的断言，并验证 incomplete 后的根恢复、末次模拟退出清理及异常关闭。预期收益小于事件批量，但计数证据直接、变量容易隔离。
+
+transition 内部最大的未知项仍是优化后对手模型预测占比和 native/Python advance 的当前分配。静态编码缓存已显著降低根/叶推理；对手调用也会受益，但最新探针没有给 `opponent.sample()` 单独计时，因此历史 13.566 秒不可直接缩放。应先记录每根对手 sample 总数、独立 FAIR SHA 数、模型预测耗时与缓存候选命中率。若同一个完整 `(owner, tick, FAIR SHA, checkpoint/controller SHA)` 重复出现，再考虑 root-local policy 分布缓存；缓存预测结果，不缓存随机动作，每次仍使用原 generator 采样，保证 RNG 流不变。
+
+### 优化顺序
+
+1. **当前版本无额外请求的内部计时。** 将 transition 互斥拆分为局部快照构造/释放、对手预测、native queue、batch/step 等待、接收与解码、rich 合并校验、tracker/tensorize、时钟及结束清理。同步记录每条边 tick 数、决策数、提前公共部署、动作终结原因及对手信息哈希重复率。只加宿主计时器，不增加 observe 或 status 请求；嵌套 RPC 单独作为子计数，避免重复加总。
+2. **先测 event-batched JSON belief worker。** 将 native 请求从“每 tick 一次 step + 一次 observe-atomic”改为按下一个 WAIT/PLAY 截止 tick 请求，worker 在双方可见部署或终局时提前停止，并返回该边界的原子捕获。PLAY 截止仍须精确单 tick 执行和验证回执。它省的是无边界区间的宿主往返、捕获、解码和重复校验，不省 native tick。SSPI `wake_refills=False`，补牌仍只作为输入状态更新；已知 refill tick 会限制 batch 跨度以核对原生到位，但不新增决策。记录单客户端控制/batch 切换的重新握手耗时。
+3. **再将 compact typed capture 与 event batching 组合。** batch channel 两种能力可同时启用，但当前 SSPI event 客户端假设 JSON mapping；需要适配 `TrainingAtomicCaptureV1`、保留 rich 校验，并在 restore 后将 `_last_tick` 和 binary/JSON event cursor 重定基。相邻 FAIR 搜索旧版本 compact 实测约 2.40×，只作可行性证据，不能推算当前 SSPI 提速倍率。
+4. **单独去掉 transition 成功边的局部 snapshot。** 对照 0.496 秒 native RPC 基线及 Python 复制计时；不与 transport 变化同一轮实施，避免归因混淆。若批量客户端重连频繁，可以把该实验提前，先获得独立快照收益，再测其与批量路径的组合。
+5. **基于重复帧率决定推理缓存。** 命中率高才实现，并验证每次原始 generator 采样后态和动作分布一致；若帧几乎都唯一，跳过缓存。
+
+在同一冻结 root/model/seed 下串行比较当前路径、event-batched JSON、event-batched compact，分别至少完成完整 128 次有效模拟。记录 decision/deployment/refill 边界序列、每个 FAIR SHA、对手采样 RNG 后态、候选/访问分布、选定动作、root snapshot digest、handle 归零、tick 总量、batch 连接新建次数/耗时与服务端身份。边界、轨迹或访问统计不一致时不采用优化。现有普通 persistent `session-v1` 已避免每个普通请求重新建立 TCP 连接；batch 路径则需重新计量控制请求导致的通道重建，不用旧路径的连接假设推算倍率。
+
 ## 下一次受控原生实验
 
 使用已确认空闲的专用测试 worker，不使用正在运行或状态未确认的端点。冻结同一个原生根、模型和随机流，串行比较当前 persistent 单 tick 路径与 resident event-batched 路径。每次严格完成 128 次有效模拟，不截短时域。报告根墙钟、belief ticks、native step/batch/capture 数、响应字节、推进与解码计时、decision/deployment 边界序列、访问分布与所选动作 SHA、根 FAIR SHA、恢复后状态摘要、snapshot handle 数和错误/重试。

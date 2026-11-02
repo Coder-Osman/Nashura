@@ -8,6 +8,10 @@
 
 本轮只读调查；没有修改训练代码、运行原生端点、产生新的性能测量或训练结果。详见[优化空间调查](SSPI_SEARCH_OPTIMIZATION_RESEARCH_2026-11-02.md)。
 
+补充的 transition 源码审查确认该计时包含对手模型预测、边快照、动作预约、逐 tick native 推进与原子捕获、rich/FAIR 状态处理及边界判定；搜索方根/叶推理另行计时。最新根0个 discarded edge，快照 create/release 213次，和1个根快照加约212个 transition 快照相符；快照原生RPC约0.496秒，Python sidecar复制未单独测量。最高优先候选是 belief worker event-batched capture；随后单独测成功边快照移除、compact typed capture和对手重复帧预测缓存。新版本transition子项仍需宿主计时与完整128模拟同根对照，未报告预计提速值。
+
+补充核对控制通道：resident batch 服务端为单客户端，SSPI事件客户端在每次普通控制请求（含snapshot及PLAY预约）前关闭batch通道；直接用于当前搜索会频繁重新握手，须记录连接新建次数及耗时。已知补牌预计tick仍需原生观测核对，但不产生新决策。旧profile中2,812次advance对应213次双侧FAIR观测和426次tensorize，逐tick原子捕获并非逐tick模型张量重建；这些数量的当前版本耗时尚未重测。
+
 ## 2026-11-02：SSPI 静态机制编码缓存与 FAIR 摘要快路径（实机对照）
 
 基于 main@4461fb05c956a17988f337ee2e862d154f9775b8，针对上一轮 128 模拟剖析的两项可复用热点实施优化。SemanticEncoder 仅在 eval 且 inference_mode 下缓存 EffectSemanticEncoder/MechanicProfileEncoder 的静态表示；缓存由模块/参数/buffer身份、版本、device、dtype和形状约束，模式切换、模型迁移、权重载入、autocast、训练及梯度路径均清除或跳过。FAIR SHA 对 [4,576,5] PLAY 掩码不再调用 tolist()，改为生成旧嵌套 bool 列表等价的语义摘要字节；不缓存外层摘要，每次都重读输入内容，避免外部可变 tensor 绕过版本计数。旧语义摘要 SHA 保持不变。
