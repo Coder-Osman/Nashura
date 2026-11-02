@@ -106,6 +106,7 @@ def test_enemy_private_flood_does_not_evict_public_history_or_change_summary(own
     environment._step_action_outcomes = []
     environment._owner_events = {seat: deque(maxlen=3) for seat in (0, 1)}
     environment._owner_event_archive = {seat: {} for seat in (0, 1)}
+    environment._owner_event_window_cache = {}
     for tick in range(1, 6):
         environment._append_event(EventV1(tick=tick, event_type="action_executed", owner=1-owner, card_id=101))
     before = environment._events_for(owner, 5)

@@ -4641,6 +4641,17 @@ class BattleEnvV1:
             "earlier_last_tick": last_tick,
         }
 
+    def _events_for_dual(self, tick: int) -> dict[int, tuple[EventV1, ...]]:
+        """Filter the shared window once; subclasses may own per-owner windows."""
+        cutoff = max(0, tick - self.event_window_ticks)
+        visible: dict[int, list[EventV1]] = {0: [], 1: []}
+        for event in self._events:
+            if cutoff <= event.tick <= tick:
+                for owner in (0, 1):
+                    if self._event_visible_to(event, owner):
+                        visible[owner].append(event)
+        return {owner: tuple(events) for owner, events in visible.items()}
+
     def _pending_for(self, owner: int | None) -> tuple[PendingActionV1, ...]:
         return tuple(
             PendingActionV1(
@@ -4813,14 +4824,7 @@ class BattleEnvV1:
         # ``max_battle_ticks`` is only the later native-finalization watchdog.
         remaining = max(0, NATIVE_GAMEPLAY_END_TICK - tick) * TICK_MS
         captured_ms = None if policy_features_only else int(time.time() * 1000)
-        cutoff = max(0, tick - self.event_window_ticks)
-        visible_events: dict[int, list[EventV1]] = {0: [], 1: []}
-        for event in self._events:
-            if event.tick < cutoff or event.tick > tick:
-                continue
-            for owner in (0, 1):
-                if self._event_visible_to(event, owner):
-                    visible_events[owner].append(event)
+        visible_events = self._events_for_dual(tick)
         results: dict[int, ObservationV1] = {}
         for owner in self.possible_agents:
             action_mask = self.action_mask(owner, raw)

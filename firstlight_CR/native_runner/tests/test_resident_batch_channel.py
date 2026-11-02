@@ -496,13 +496,16 @@ def test_batch_phase_validation_history_is_lane_local(
         lambda *_args, **_kwargs: scripted,
     )
     floors: list[tuple[int, int | None]] = []
+    caches = []
 
     def validate(
         raw: dict[str, object],
         *,
         phase_event_floor: int | None,
+        phase_validation_cache=None,
     ) -> dict[str, object]:
         floors.append((int(raw["marker"]), phase_event_floor))
+        caches.append(phase_validation_cache)
         return raw
 
     monkeypatch.setattr(batch_module, "_validate_atomic_observation", validate)
@@ -512,6 +515,9 @@ def test_batch_phase_validation_history_is_lane_local(
         channel.step({2: (), 5: ()}, ticks=5)
 
     assert floors == [(2, None), (5, None), (2, 20), (5, 50)]
+    assert caches[0] is caches[2] and caches[1] is caches[3]
+    assert caches[0] is not caches[1]
+    assert channel._phase_validation_caches == {}
 
 
 

@@ -7,6 +7,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT / "firstlight_CR"
 TESTS = (
+    "test_sspi_event_history.py",
     "test_fair_final_protocol.py",
     "test_fair_final_learning.py",
     "test_fair_final_search.py",

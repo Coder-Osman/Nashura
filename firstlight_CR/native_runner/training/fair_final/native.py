@@ -5,7 +5,7 @@ import time
 from types import SimpleNamespace
 
 from native_runner.battle_env import BattleEnvError, BattleEnvV1, _PendingRecord
-from native_runner.contracts import ActionV1, TerminalV1, frozen_mapping
+from native_runner.contracts import ActionV1, TerminalV1
 from native_runner.cr_native_env import HandAction
 from native_runner.training.event_action_space import event_cell_to_native
 
@@ -29,8 +29,10 @@ class FinalBattleEnv(BattleEnvV1):
             getattr(self.native, "supports_event_batched_advance", False))
         self._owner_events = {owner: deque(maxlen=self.event_limit) for owner in (0, 1)}
         self._owner_event_archive = {owner: {} for owner in (0, 1)}
+        self._owner_event_window_cache = {}
 
     def reset(self, *args, **kwargs):
+        self._owner_event_window_cache.clear()
         for owner in (0, 1):
             self._owner_events[owner].clear()
             self._owner_event_archive[owner].clear()
@@ -47,11 +49,18 @@ class FinalBattleEnv(BattleEnvV1):
                 record["count"] += 1
                 record["last_tick"] = max(record["last_tick"], evicted.tick)
             events.append(event)
+            self._owner_event_window_cache.pop(owner, None)
         super()._append_event(event)
 
     def _events_for(self, owner, tick, hidden_entity_ids=frozenset()):
+        key = (tick, self.event_window_ticks)
+        cached = self._owner_event_window_cache.get(owner)
+        if cached is not None and cached[0] == key:
+            return cached[1]
         cutoff = max(0, tick - self.event_window_ticks)
-        return tuple(event for event in self._owner_events.get(owner, ()) if cutoff <= event.tick <= tick)
+        events = tuple(event for event in self._owner_events.get(owner, ()) if cutoff <= event.tick <= tick)
+        self._owner_event_window_cache[owner] = (key, events)
+        return events
 
     def _event_summary_for(self, owner, tick, hidden_entity_ids=frozenset()):
         cutoff = max(0, tick - self.event_window_ticks)
@@ -65,17 +74,10 @@ class FinalBattleEnv(BattleEnvV1):
             earlier_counts={key: value["count"] for key, value in records.items()},
             earlier_last_tick={key: value["last_tick"] for key, value in records.items()})
 
-    def observe_dual(self, *args, policy_features_only=False, **kwargs):
-        observations = super().observe_dual(*args, policy_features_only=policy_features_only, **kwargs)
-        result = {}
-        for owner, observation in observations.items():
-            events = self._events_for(owner, observation.tick)
-            metadata = dict(observation.metadata)
-            if not policy_features_only:
-                metadata["event_history"] = frozen_mapping({**self._event_summary_for(owner, observation.tick),
-                    "returned": len(events), "limit": self.event_limit})
-            result[owner] = replace(observation, events=events, metadata=frozen_mapping(metadata))
-        return result
+    def _events_for_dual(self, tick):
+        # Use the owner-isolated rings directly. A shared-ring pass would be
+        # discarded here and may already have lost public events to private spam.
+        return {owner: self._events_for(owner, tick) for owner in self.possible_agents}
 
     def _terminal(self, raw, towers):
         if raw.get("finalized") is not True:

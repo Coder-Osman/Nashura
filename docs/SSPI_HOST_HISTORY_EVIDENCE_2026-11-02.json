@@ -1,0 +1,496 @@
+{
+  "schema": "sspi-host-history-cost.v1",
+  "baseline": "1d7b021",
+  "platform": "macOS-15.6-arm64-arm-64bit-Mach-O",
+  "python": "3.13.5",
+  "initial_seed": 20261103,
+  "random_stream_id": "sspi-overhead-benchmark-pair-0001",
+  "run_id": "sspi-host-history-20261102",
+  "mcts_enabled": false,
+  "all_actions_and_fair_sha_equal": true,
+  "valid_training_or_evaluation_episodes": 0,
+  "phase_cache_is_host_only": true,
+  "wire_bytes_reduced": false,
+  "measurements": [
+    {
+      "name": "baseline-r1",
+      "traced": false,
+      "elapsed_seconds": 96.84480608301237,
+      "action_count": 564,
+      "actions_sha256": "9761409f96376ea8a0aa2eda394af29b4d08fb1fa497b1e9bede8ab6f03f486f",
+      "model_sha256": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+      "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "source_sha256": "cb7d80d9f95c1a6996a58853bb78818113d3343c0d1f926c67a1d30689d67e2e",
+      "probe_sha256": "f5a6910107b718877a2b8edc0ce6f8164e951f8de2ef3f856c09040ec57f346f",
+      "profile": {
+        "actual_native_ticks": 4711,
+        "batches": 434,
+        "connect_ns": 199105828,
+        "decode_ns": 26426897341,
+        "decoded_response_bytes": 2955386603,
+        "environments": 434,
+        "host_observations_avoided": 4277,
+        "last_request_ack_ns": 109394092,
+        "reached_tick_budget": 300,
+        "receive_ns": 11047281695,
+        "request_ack_ns": 303079380,
+        "request_bytes": 12152,
+        "requested_native_ticks": 4727,
+        "response_bytes": 2955400491,
+        "send_ns": 9400955,
+        "stopped_on_deployment": 133,
+        "stopped_on_terminal": 1,
+        "total_ns": 37484929634
+      },
+      "terminal_tick": 114,
+      "terminal_diagnostic": null,
+      "quarantine": {
+        "elapsed_seconds": 96.84480608301237,
+        "ended": true,
+        "exception": "ValueError",
+        "reason": "SSPI game did not reach a clean native terminal boundary",
+        "status": "quarantined",
+        "training_admissible": false,
+        "truncated": false
+      }
+    },
+    {
+      "name": "optimized-r1",
+      "traced": false,
+      "elapsed_seconds": 93.80525354202837,
+      "action_count": 564,
+      "actions_sha256": "9761409f96376ea8a0aa2eda394af29b4d08fb1fa497b1e9bede8ab6f03f486f",
+      "model_sha256": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+      "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "source_sha256": "5b37f9743faadb5eb9f14e3a9348bd54dbb19707bdc31c688187e73e7abff1a9",
+      "probe_sha256": "f5a6910107b718877a2b8edc0ce6f8164e951f8de2ef3f856c09040ec57f346f",
+      "profile": {
+        "actual_native_ticks": 4711,
+        "batches": 434,
+        "connect_ns": 202332286,
+        "decode_ns": 22664417339,
+        "decoded_response_bytes": 2955386603,
+        "environments": 434,
+        "host_observations_avoided": 4277,
+        "last_request_ack_ns": 108861164,
+        "reached_tick_budget": 300,
+        "receive_ns": 11917567334,
+        "request_ack_ns": 296402087,
+        "request_bytes": 12152,
+        "requested_native_ticks": 4727,
+        "response_bytes": 2955400491,
+        "send_ns": 9329452,
+        "stopped_on_deployment": 133,
+        "stopped_on_terminal": 1,
+        "total_ns": 34592488696
+      },
+      "terminal_tick": 4801,
+      "terminal_diagnostic": null,
+      "quarantine": {
+        "elapsed_seconds": 93.80525354202837,
+        "ended": true,
+        "exception": "ValueError",
+        "reason": "SSPI game did not reach a clean native terminal boundary",
+        "status": "quarantined",
+        "training_admissible": false,
+        "truncated": false
+      }
+    },
+    {
+      "name": "baseline-r2",
+      "traced": true,
+      "elapsed_seconds": 155.01773766614497,
+      "action_count": 564,
+      "actions_sha256": "9761409f96376ea8a0aa2eda394af29b4d08fb1fa497b1e9bede8ab6f03f486f",
+      "model_sha256": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+      "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "source_sha256": "cb7d80d9f95c1a6996a58853bb78818113d3343c0d1f926c67a1d30689d67e2e",
+      "probe_sha256": "f5a6910107b718877a2b8edc0ce6f8164e951f8de2ef3f856c09040ec57f346f",
+      "profile": {
+        "actual_native_ticks": 4711,
+        "batches": 434,
+        "connect_ns": 199146450,
+        "decode_ns": 58124245205,
+        "decoded_response_bytes": 2955386603,
+        "environments": 434,
+        "host_observations_avoided": 4277,
+        "last_request_ack_ns": 111419838,
+        "reached_tick_budget": 300,
+        "receive_ns": 10760518070,
+        "request_ack_ns": 303375960,
+        "request_bytes": 12152,
+        "requested_native_ticks": 4727,
+        "response_bytes": 2955400491,
+        "send_ns": 9778115,
+        "stopped_on_deployment": 133,
+        "stopped_on_terminal": 1,
+        "total_ns": 68895885668
+      },
+      "terminal_tick": 4801,
+      "terminal_diagnostic": {
+        "clock_tick": 4801,
+        "ended": true,
+        "failed": false,
+        "frozen": [],
+        "pending": [],
+        "ready": [],
+        "rejected": [
+          {
+            "owner": 1,
+            "reason": "rejected",
+            "reservation": 17,
+            "tick": 178
+          },
+          {
+            "owner": 0,
+            "reason": "rejected",
+            "reservation": 236,
+            "tick": 2182
+          },
+          {
+            "owner": 1,
+            "reason": "rejected",
+            "reservation": 339,
+            "tick": 3018
+          },
+          {
+            "owner": 1,
+            "reason": "rejected",
+            "reservation": 510,
+            "tick": 4402
+          }
+        ],
+        "result_tick": 4801,
+        "stage": "terminal_diagnostic",
+        "truncated": false
+      },
+      "quarantine": {
+        "elapsed_seconds": 155.01773766614497,
+        "ended": true,
+        "exception": "ValueError",
+        "reason": "SSPI game did not reach a clean native terminal boundary",
+        "status": "quarantined",
+        "training_admissible": false,
+        "truncated": false
+      }
+    },
+    {
+      "name": "optimized-r2",
+      "traced": true,
+      "elapsed_seconds": 143.21084437472746,
+      "action_count": 564,
+      "actions_sha256": "9761409f96376ea8a0aa2eda394af29b4d08fb1fa497b1e9bede8ab6f03f486f",
+      "model_sha256": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+      "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "source_sha256": "30f5e621836e280c9b81ffddbf2c2d50d2dd900c16633829c842a6776d4259be",
+      "probe_sha256": "f5a6910107b718877a2b8edc0ce6f8164e951f8de2ef3f856c09040ec57f346f",
+      "profile": {
+        "actual_native_ticks": 4711,
+        "batches": 434,
+        "connect_ns": 196246921,
+        "decode_ns": 43461861617,
+        "decoded_response_bytes": 2955386603,
+        "environments": 434,
+        "host_observations_avoided": 4277,
+        "last_request_ack_ns": 110050378,
+        "reached_tick_budget": 300,
+        "receive_ns": 12003441364,
+        "request_ack_ns": 299265377,
+        "request_bytes": 12152,
+        "requested_native_ticks": 4727,
+        "response_bytes": 2955400491,
+        "send_ns": 9845212,
+        "stopped_on_deployment": 133,
+        "stopped_on_terminal": 1,
+        "total_ns": 55476439762
+      },
+      "terminal_tick": 4801,
+      "terminal_diagnostic": {
+        "clock_tick": 4801,
+        "ended": true,
+        "failed": false,
+        "frozen": [],
+        "pending": [],
+        "ready": [],
+        "rejected": [
+          {
+            "owner": 1,
+            "reason": "rejected",
+            "reservation": 17,
+            "tick": 178
+          },
+          {
+            "owner": 0,
+            "reason": "rejected",
+            "reservation": 236,
+            "tick": 2182
+          },
+          {
+            "owner": 1,
+            "reason": "rejected",
+            "reservation": 339,
+            "tick": 3018
+          },
+          {
+            "owner": 1,
+            "reason": "rejected",
+            "reservation": 510,
+            "tick": 4402
+          }
+        ],
+        "result_tick": 4801,
+        "stage": "terminal_diagnostic",
+        "truncated": false
+      },
+      "quarantine": {
+        "elapsed_seconds": 143.21084437472746,
+        "ended": true,
+        "exception": "ValueError",
+        "reason": "SSPI game did not reach a clean native terminal boundary",
+        "status": "quarantined",
+        "training_admissible": false,
+        "truncated": false
+      }
+    },
+    {
+      "name": "optimized-r3",
+      "traced": false,
+      "elapsed_seconds": 102.34313212521374,
+      "action_count": 564,
+      "actions_sha256": "9761409f96376ea8a0aa2eda394af29b4d08fb1fa497b1e9bede8ab6f03f486f",
+      "model_sha256": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+      "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "source_sha256": "e47c83e00b730333442453dca811a60cd99225ad77e3f2862faa00adb1a23a7d",
+      "probe_sha256": "f5a6910107b718877a2b8edc0ce6f8164e951f8de2ef3f856c09040ec57f346f",
+      "profile": {
+        "actual_native_ticks": 4711,
+        "batches": 434,
+        "connect_ns": 225621039,
+        "decode_ns": 25114753430,
+        "decoded_response_bytes": 2955386603,
+        "environments": 434,
+        "host_observations_avoided": 4277,
+        "last_request_ack_ns": 117806244,
+        "reached_tick_budget": 300,
+        "receive_ns": 12495152839,
+        "request_ack_ns": 339703747,
+        "request_bytes": 12152,
+        "requested_native_ticks": 4727,
+        "response_bytes": 2955400491,
+        "send_ns": 9878720,
+        "stopped_on_deployment": 133,
+        "stopped_on_terminal": 1,
+        "total_ns": 37621053156
+      },
+      "terminal_tick": 4801,
+      "terminal_diagnostic": null,
+      "quarantine": {
+        "elapsed_seconds": 102.34313212521374,
+        "ended": true,
+        "exception": "ValueError",
+        "reason": "SSPI game did not reach a clean native terminal boundary",
+        "status": "quarantined",
+        "training_admissible": false,
+        "truncated": false
+      }
+    },
+    {
+      "name": "baseline-r3",
+      "traced": false,
+      "elapsed_seconds": 142.03858920792118,
+      "action_count": 564,
+      "actions_sha256": "9761409f96376ea8a0aa2eda394af29b4d08fb1fa497b1e9bede8ab6f03f486f",
+      "model_sha256": "9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4",
+      "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "source_sha256": "cb7d80d9f95c1a6996a58853bb78818113d3343c0d1f926c67a1d30689d67e2e",
+      "probe_sha256": "f5a6910107b718877a2b8edc0ce6f8164e951f8de2ef3f856c09040ec57f346f",
+      "profile": {
+        "actual_native_ticks": 4711,
+        "batches": 434,
+        "connect_ns": 278028498,
+        "decode_ns": 39767026413,
+        "decoded_response_bytes": 2955386603,
+        "environments": 434,
+        "host_observations_avoided": 4277,
+        "last_request_ack_ns": 140259167,
+        "reached_tick_budget": 300,
+        "receive_ns": 17012463249,
+        "request_ack_ns": 416330878,
+        "request_bytes": 12152,
+        "requested_native_ticks": 4727,
+        "response_bytes": 2955400491,
+        "send_ns": 10976961,
+        "stopped_on_deployment": 133,
+        "stopped_on_terminal": 1,
+        "total_ns": 56792057841
+      },
+      "terminal_tick": 4801,
+      "terminal_diagnostic": null,
+      "quarantine": {
+        "elapsed_seconds": 142.03858920792118,
+        "ended": true,
+        "exception": "ValueError",
+        "reason": "SSPI game did not reach a clean native terminal boundary",
+        "status": "quarantined",
+        "training_admissible": false,
+        "truncated": false
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "round": 1,
+      "traced": false,
+      "wall_reduction_percent": 3.138580853142081,
+      "decode_and_validation_reduction_percent": 14.237312664633928
+    },
+    {
+      "round": 2,
+      "traced": true,
+      "wall_reduction_percent": 7.6164789069786965,
+      "decode_and_validation_reduction_percent": 25.22593374982649
+    },
+    {
+      "round": 3,
+      "traced": false,
+      "wall_reduction_percent": 27.946952517670955,
+      "decode_and_validation_reduction_percent": 36.84528189467572
+    }
+  ],
+  "limits": [
+    "round1 baseline preceded authorized release of resident slots 0/1; optimized followed it",
+    "round2 both after slot release and both use terminal sys.settrace instrumentation; do not pool timings",
+    "all runs naturally ended but isolated by existing rejected-action admission rule",
+    "decode_ns includes JSON parsing and validation; nested durations are not additive",
+    "round3 both slots 0/1 released, no terminal trace, optimized then baseline; background system load not controlled; receive time also changed, so wall reduction is not a stable attributable speedup",
+    "only one seed and no MCTS; no new valid training or strength-evaluation result",
+    "host atomic replay uses one terminal capture and a warm phase cache; not an end-to-end throughput result"
+  ],
+  "release_source_sha256": {
+    "battle_env.py": "37ec430a6f1345fa6129df1f1206bd0dae35d19d6f89f79be606e89b0280cd76",
+    "cr_native_env.py": "39381a957ee1cce66480ed41da806160867c2b301798e51f49fc49073640ab09",
+    "resident_batch_channel.py": "77987ac9b581510dd65c4219b1c60b0c0721baa08bcbca892f2e55d615a44088",
+    "training/fair_final/native.py": "d158f0144fc7702ed72133e6e820400ab0ef4f4fed47e68134da48a1936262b8",
+    "training/tracking.py": "950eab9f45ad76c448bedfe182beb6e97c04760c658894729ace30892f693844",
+    "training/sspi/collector.py": "c13b13d4f82b98c7c18eabcf65267ef037fac5ef2ab5cf8c05e915c5c55570dc"
+  },
+  "actions_hash_encoding": "UTF-8 json.dumps(actions, sort_keys=True), default separators and ensure_ascii=True",
+  "atomic_validation_replay": {
+    "schema": "sspi-host-atomic-replay.v1",
+    "source": "single real native terminal observe-atomic; re-encoded with orjson for identical local bytes",
+    "native_observe_requests": 1,
+    "native_steps": 0,
+    "native_slots_unchanged": true,
+    "tick": 4801,
+    "payload_bytes": 9669028,
+    "payload_sha256": "31d899f6bbe1e279873f30eb9a36d7f4536a95006b720e5a7aa264dde1deaf4c",
+    "warmup_each": 1,
+    "optimized_cold_seconds": 0.1425296668894589,
+    "phase_cached_records": 4096,
+    "samples_ns": {
+      "baseline": [
+        124300875,
+        123752875,
+        122967042,
+        125341333,
+        127734208,
+        125156291,
+        124998625,
+        124674167,
+        125142084,
+        123477542,
+        123575750,
+        123988208,
+        124296291,
+        124428333,
+        125791000,
+        125047334,
+        122592500,
+        122617667,
+        122172459,
+        123918625
+      ],
+      "optimized": [
+        92957541,
+        93244209,
+        103203458,
+        93557875,
+        93690333,
+        93993625,
+        91693125,
+        94646833,
+        102629291,
+        92871667,
+        93316917,
+        91657667,
+        92570417,
+        92005333,
+        102733750,
+        92847916,
+        91491000,
+        90833708,
+        92034917,
+        92655416
+      ]
+    },
+    "median_seconds": {
+      "baseline": 0.124298583,
+      "optimized": 0.092914604
+    },
+    "equal_validated_outputs": true,
+    "timing_includes": "orjson.loads + full atomic validation; warm cache; excludes RPC and gameplay",
+    "median_reduction_percent": 25.248863054215185
+  },
+  "slot_release": {
+    "closed_slots": [
+      0,
+      1
+    ],
+    "remaining_slot": 2,
+    "remaining_tick_at_release": 4801,
+    "verified_other_slot_unchanged": true,
+    "native_process_restarted": false,
+    "evidence_sha256": "ac8e5564ac3ce443525a76527cb7c8f02bd78495f5cb1a400b2cc1d0c84f86d9"
+  },
+  "benchmark_harness_sha256": "b6952ec73d71481f6cedaa4a85645ec589d0998c1d3b240f8a77cd820e30e7f9",
+  "tests": {
+    "main_engine": {
+      "passed": 226,
+      "seconds": 24.45
+    },
+    "public_checks": {
+      "passed": 1104,
+      "skipped": 42
+    },
+    "extended_targeted_initial": {
+      "passed": 309,
+      "failed": 1,
+      "seconds": 26.97,
+      "failure": "missing ignored phase_runtime_telemetry.inc fixture"
+    },
+    "phase_snapshot_rerun": {
+      "passed": 1,
+      "seconds": 0.62,
+      "fixture_sha256": "f4435d8cc752f208c42033fbf8b01028dfc885a81c09aad30b150bb99437be08",
+      "fixture_published": false
+    },
+    "initial_environment_failure": "system Python 3.9 test collection incompatible; switched to existing Python 3.13.5 environment without package changes",
+    "local_logs_sha256": {
+      "main-checks.log": "93186dc09acc54e2bc15dcbe2a989b1fc5d601dce3485970a21c2d78b8e320ad",
+      "public-checks.log": "684b94180234d44d7839b805b7faaff9fe25aea30f35ef9c6f84ae3c53832298",
+      "targeted.log": "8630c7b072be9e81a5c647285ec0faaedf0bca5ffc38c3b7681f46928c617470",
+      "targeted.xml": "382e3847688d5be077044b4d37fb2e271b4f18e44d1d0bc6f66849dc2f0d0fd5",
+      "phase-snapshot-rerun.log": "56511e255b14e044bb57d34cd6d3ecee4914c6e3acb562f8f4ef169a0fa2b04e",
+      "phase-snapshot-rerun.xml": "7516e2890c842a8437e0887422603f8b73df8fc06881136538bc1af07ded980e",
+      "initial-test-environment-failures.txt": "18a6fc340ea6e433c0d425b1f4296003661e87ec54aef337c15141a3061ba42e"
+    }
+  },
+  "publication_checks": {
+    "source_manifest_files": 2814,
+    "source_manifest_status": "passed",
+    "gitleaks_status": "no leaks found",
+    "gitleaks_scanned_bytes": 41869562,
+    "gitleaks_log_sha256": "9b84a2695e0316ea1d6257d0cebbba5490e69072a858a3a294b39310f2993ba0",
+    "git_diff_check": "passed"
+  }
+}

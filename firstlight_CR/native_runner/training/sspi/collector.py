@@ -369,6 +369,8 @@ def _source_sha():
         Path(__file__).with_name("rollout.py"),
         Path(__file__).with_name("search.py"),
         PROJECT / "native_runner" / "cr_native_env.py",
+        PROJECT / "native_runner" / "battle_env.py",
+        PROJECT / "native_runner" / "training" / "tracking.py",
         PROJECT / "native_runner" / "resident_batch_channel.py",
         PROJECT / "native_runner" / "training_capture.py",
         PROJECT / "native_runner" / "match_factory.py",

@@ -16,6 +16,7 @@ from .cr_native_env import (
     DEFAULT_PORT,
     MAX_RUNNER_RESPONSE_BYTES,
     RunnerError,
+    _PhaseValidationCache,
     _validate_atomic_observation,
 )
 from .training_capture import TrainingAtomicCaptureV1, TrainingCaptureDecoder, TrainingCaptureError
@@ -152,6 +153,7 @@ class ResidentBatchChannelV1:
         self._sequence = 0
         self._phase_validation_identity: dict[int, tuple[int, int]] = {}
         self._phase_validation_next_sequence: dict[int, int] = {}
+        self._phase_validation_caches: dict[int, _PhaseValidationCache] = {}
         self._owns_training_decoders = training_decoders is None
         self._training_decoders = {} if training_decoders is None else training_decoders
         self._profile: dict[str, int] = {
@@ -408,7 +410,9 @@ class ResidentBatchChannelV1:
                         phase_event_floor = (
                             self._phase_validation_next_sequence.get(env_id) if identity == previous_identity else None
                         )
-                        capture = _validate_atomic_observation(dict(raw), phase_event_floor=phase_event_floor)
+                        cache = self._phase_validation_caches.setdefault(env_id, _PhaseValidationCache())
+                        capture = _validate_atomic_observation(dict(raw), phase_event_floor=phase_event_floor,
+                            phase_validation_cache=cache)
                         rich = capture.get("rich")
                         phase_runtime = rich.get("phaseRuntime") if isinstance(rich, Mapping) else None
                         if isinstance(phase_runtime, Mapping):
@@ -420,6 +424,7 @@ class ResidentBatchChannelV1:
                         else:
                             self._phase_validation_identity.pop(env_id, None)
                             self._phase_validation_next_sequence.pop(env_id, None)
+                            self._phase_validation_caches.pop(env_id, None)
                     else:
                         # BattleEnv immediately binds this mapping into the typed
                         # rich snapshot, which repeats the semantic validation.
@@ -441,6 +446,7 @@ class ResidentBatchChannelV1:
                 self._training_decoders.pop(env_id, None)
                 self._phase_validation_identity.pop(env_id, None)
                 self._phase_validation_next_sequence.pop(env_id, None)
+                self._phase_validation_caches.pop(env_id, None)
                 failure = (
                     error
                     if isinstance(error, RunnerError)
@@ -485,6 +491,9 @@ class ResidentBatchChannelV1:
         if self._closed:
             return
         self._closed = True
+        self._phase_validation_caches.clear()
+        self._phase_validation_identity.clear()
+        self._phase_validation_next_sequence.clear()
         if self._owns_training_decoders:
             self._training_decoders.clear()
         try:

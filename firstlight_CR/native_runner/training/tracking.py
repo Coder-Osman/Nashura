@@ -530,11 +530,10 @@ class DeterministicPublicTracker:
         candidates = [
             event
             for event in observation.events
-            if _event_identity(event) not in self._seen_events
-            and event.tick >= self.tick
-            and event.tick <= observation.tick
+            if self.tick <= event.tick <= observation.tick
             and event.owner in (0, 1)
             and self._event_visible_to_observer(event, observation.owner)
+            and _event_identity(event) not in self._seen_events
         ]
         candidates.sort(
             key=lambda event: (event.tick, event.event_type, event.owner if event.owner is not None else -1)
@@ -630,6 +629,10 @@ class DeterministicPublicTracker:
                     self._ability_activation_identities.add(activation_identity)
             self._seen_events.add(_event_identity(event))
         self._advance_to(observation.tick)
+        # Older events are rejected by the monotonic tick boundary above. Only
+        # this tick can be presented again, including new events arriving in a
+        # second observation at the same tick. Keep their identities for dedup.
+        self._seen_events = {identity for identity in self._seen_events if identity[0] == self.tick}
 
     def reconcile_owner_private_state(self, observation: ObservationV1) -> None:
         """Synchronize the observing owner's exact elixir, hand and cycle."""

@@ -14,6 +14,7 @@ from dataclasses import dataclass
 import json
 import math
 import os
+import pickle
 from pathlib import Path
 import socket
 import threading
@@ -1279,8 +1280,32 @@ def _validate_phase_object(value: object, label: str, *, observation_tick: int) 
             raise RunnerError(f"{label} cached {value_name}/{tick_name} relationship is invalid")
 
 
+class _PhaseValidationCache:
+    """Exact immutable record bytes, bounded by the current native ring."""
+
+    def __init__(self):
+        self.identity = None
+        self.tick = -1
+        self.records = {}
+
+    def clear(self):
+        self.identity = None
+        self.tick = -1
+        self.records.clear()
+
+
+def _phase_record_bytes(value):
+    # Serialization only, never unpickling. Unlike JSON dumping this preserves
+    # bool/int/float, tuple/list and non-finite values exactly for cache matching.
+    try:
+        return pickle.dumps(value, protocol=5)
+    except (TypeError, ValueError, pickle.PickleError) as error:
+        raise RunnerError("phaseRuntime event is not a JSON record") from error
+
+
 def _validate_phase_runtime(
-    value: object, *, generation: int, state_epoch: int, observation_tick: int, minimum_sequence: int | None = None
+    value: object, *, generation: int, state_epoch: int, observation_tick: int, minimum_sequence: int | None = None,
+    validation_cache: _PhaseValidationCache | None = None,
 ) -> Mapping[str, Any]:
     envelope = _response_mapping(value, "phaseRuntime")
     envelope_check = _Fields(envelope, "phaseRuntime")
@@ -1336,8 +1361,19 @@ def _validate_phase_runtime(
             raise RunnerError("phaseRuntime validation cursor is outside the epoch")
         if transmit_from > max(minimum_sequence, oldest) and os.environ.get("CR_RELAX_RING_CURSORS", "") != "1":
             raise RunnerError("phaseRuntime delta skipped the validation cursor")
+    cache_identity = (generation, state_epoch, epoch_first)
+    cached_records = (validation_cache.records if validation_cache is not None
+        and validation_cache.identity == cache_identity and observation_tick >= validation_cache.tick else {})
+    validated_records = {}
     for index, event_value in enumerate(events):
         label = f"phaseRuntime.events[{index}]"
+        record_bytes = _phase_record_bytes(event_value) if validation_cache is not None else None
+        previous = cached_records.get(transmit_from + index)
+        if previous is not None and previous[0] == record_bytes:
+            if observation_tick >= 0 and previous[1] > observation_tick:
+                raise RunnerError(f"{label} occurs after the observation")
+            validated_records[transmit_from + index] = previous
+            continue
         event = _response_mapping(event_value, label)
         event_check = _Fields(event, label)
         if set(event) != event_fields:
@@ -1368,6 +1404,12 @@ def _validate_phase_runtime(
         for name in ("classicChargeBefore", "classicChargeAfter"):
             event_check.optional_int(name, minimum=-1)
         event_check.boolean("success")
+        if validation_cache is not None:
+            validated_records[transmit_from + index] = (record_bytes, event_tick)
+    if validation_cache is not None:
+        validation_cache.identity = cache_identity
+        validation_cache.tick = observation_tick
+        validation_cache.records = validated_records
     return envelope
 
 
@@ -1985,7 +2027,8 @@ def _validate_rich_observation_fast(result: dict[str, Any], *, phase_event_floor
     return validated
 
 
-def _validate_rich_observation(result: dict[str, Any], *, phase_event_floor: int | None = None) -> dict[str, Any]:
+def _validate_rich_observation(result: dict[str, Any], *, phase_event_floor: int | None = None,
+        phase_validation_cache: _PhaseValidationCache | None = None) -> dict[str, Any]:
     if _fast_env_mode():
         # Trusted-engine training mode: skip per-event field and provenance
         # checks. The engine is the sole producer and we control the probe.
@@ -2427,12 +2470,14 @@ def _validate_rich_observation(result: dict[str, Any], *, phase_event_floor: int
         ("remainingRuntime", _validate_remaining_runtime),
     ):
         if name in result:
-            options = {"minimum_sequence": phase_event_floor} if name == "phaseRuntime" else {}
+            options = {"minimum_sequence": phase_event_floor,
+                "validation_cache": phase_validation_cache} if name == "phaseRuntime" else {}
             validate(result.get(name), **identity, **options)
     return result
 
 
-def _validate_atomic_observation(result: dict[str, Any], *, phase_event_floor: int | None = None) -> dict[str, Any]:
+def _validate_atomic_observation(result: dict[str, Any], *, phase_event_floor: int | None = None,
+        phase_validation_cache: _PhaseValidationCache | None = None) -> dict[str, Any]:
     """Validate one complete, same-manager ordinary + rich capture."""
 
     if result.get("schema") != ATOMIC_OBSERVATION_SCHEMA:
@@ -2479,7 +2524,8 @@ def _validate_atomic_observation(result: dict[str, Any], *, phase_event_floor: i
         if _response_int(item.get("slot"), f"ordinary.objects[{expected_slot}].slot") != expected_slot:
             raise RunnerError("atomic ordinary object slots are not contiguous")
 
-    validated_rich = _validate_rich_observation(dict(rich), phase_event_floor=phase_event_floor)
+    validated_rich = _validate_rich_observation(dict(rich), phase_event_floor=phase_event_floor,
+        phase_validation_cache=phase_validation_cache)
     if validated_rich["truncated"]:
         raise RunnerError("atomic rich observation is incomplete")
     if validated_rich["count"] != ordinary_count or validated_rich["returned"] != ordinary_returned:
@@ -2536,6 +2582,7 @@ class NativeClashEnv:
         self._lock = threading.RLock()
         self._phase_validation_identity: tuple[int, int] | None = None
         self._phase_validation_next_sequence: int | None = None
+        self._phase_validation_cache = _PhaseValidationCache()
         self._persistent_transport_requested = False
         self._persistent_transport_supported: bool | None = None
         self._persistent_connection: socket.socket | None = None
@@ -2575,6 +2622,7 @@ class NativeClashEnv:
 
         with self._lock:
             self._close_persistent_transport_locked()
+            self._phase_validation_cache.clear()
 
     def _ensure_persistent_transport_locked(self) -> None:
         if self._persistent_connection is not None:
@@ -2832,7 +2880,12 @@ class NativeClashEnv:
         phase_event_floor = (
             self._phase_validation_next_sequence if identity == self._phase_validation_identity else None
         )
-        validated = _validate_atomic_observation(result, phase_event_floor=phase_event_floor)
+        try:
+            validated = _validate_atomic_observation(result, phase_event_floor=phase_event_floor,
+                phase_validation_cache=self._phase_validation_cache)
+        except RunnerError:
+            self._phase_validation_cache.clear()
+            raise
         rich = validated.get("rich")
         phase_runtime = rich.get("phaseRuntime") if isinstance(rich, Mapping) else None
         if isinstance(phase_runtime, Mapping):
@@ -2841,6 +2894,7 @@ class NativeClashEnv:
         else:
             self._phase_validation_identity = None
             self._phase_validation_next_sequence = None
+            self._phase_validation_cache.clear()
         return validated
 
     def set_speed(self, multiplier: float) -> dict[str, Any]:
