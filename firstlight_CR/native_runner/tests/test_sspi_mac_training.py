@@ -40,6 +40,7 @@ from native_runner.training.sspi.collector import (
     OwnerBeliefProviders,
     SearchNative,
     _native_execution_action,
+    _observe_histories,
     decision_gate,
     episode_seed_identity,
     preflight_native_endpoints,
@@ -466,6 +467,54 @@ def test_native_preflight_checks_readable_observations_and_matching_artifacts(mo
         for item in result.values())
     assert [call[0] for call in calls].count("observe") == 3
     assert [call[0] for call in calls].count("close") == 3
+
+    calls.clear()
+    evaluation = preflight_native_endpoints("127.0.0.1", 26789,
+        {0: 26790, 1: 26792}, transport="persistent", include_belief=False)
+    assert set(evaluation) == {"actual"}
+    assert [call[0] for call in calls].count("observe") == 1
+    assert [call[0] for call in calls].count("close") == 1
+
+
+@pytest.mark.parametrize("frozen_owners, expected_calls", [
+    ((0, 1), ()), ((0,), ("observe:1",)), ((), ("observe_dual",)),
+])
+def test_history_observation_reuses_frozen_views(monkeypatch, frozen_owners, expected_calls):
+    calls = []
+    views = {owner: SimpleNamespace(owner=owner, tick=118) for owner in (0, 1)}
+    boundary = object()
+
+    class Environment:
+        native = SimpleNamespace(last_advance_boundary=boundary)
+
+        def observe_dual(self, *, policy_features_only):
+            assert policy_features_only
+            calls.append("observe_dual")
+            return dict(views)
+
+        def observe(self, *, owner, policy_features_only):
+            assert policy_features_only
+            calls.append(f"observe:{owner}")
+            return views[owner]
+
+    class History:
+        def __init__(self):
+            self.received = []
+
+        def observe_tick(self, observation, *, interval):
+            self.received.append((observation, interval))
+
+    histories = {owner: History() for owner in (0, 1)}
+    runtime = SimpleNamespace(environment=Environment(),
+        frozen={owner: views[owner] for owner in frozen_owners})
+    monkeypatch.setattr("native_runner.training.sspi.collector.validate_fair_view",
+        lambda observation, owner: None if observation.owner == owner else pytest.fail("wrong owner"))
+
+    observed = _observe_histories(SimpleNamespace(runtime=runtime), histories)
+
+    assert tuple(calls) == expected_calls
+    assert all(observed[owner] is views[owner] for owner in (0, 1))
+    assert all(histories[owner].received == [(views[owner], boundary)] for owner in (0, 1))
 
 
 def test_native_preflight_rejects_truncated_observation_and_closes_transport(monkeypatch):

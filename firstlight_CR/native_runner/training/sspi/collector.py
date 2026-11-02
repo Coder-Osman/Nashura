@@ -216,13 +216,17 @@ def resolve_belief_ports(actual_port, belief_port, belief_ports=None):
 
 
 def preflight_native_endpoints(host, actual_port, belief_ports, *, transport, actual_env_id=0,
-        ruleset_manifest=None):
+        ruleset_manifest=None, include_belief=True):
     if type(actual_env_id) is not int or not 0 <= actual_env_id < 16:
         raise ValueError("SSPI actual resident env id must be in 0..15")
+    if type(include_belief) is not bool:
+        raise ValueError("SSPI belief preflight switch must be a boolean")
     if actual_env_id != 0 and transport != "event-json":
         raise ValueError("non-default actual env ids require event-json resident transport")
-    endpoints = [("actual", actual_port),
-        ("belief_owner_0", belief_ports[0]), ("belief_owner_1", belief_ports[1])]
+    endpoints = [("actual", actual_port)]
+    if include_belief:
+        endpoints.extend((("belief_owner_0", belief_ports[0]),
+            ("belief_owner_1", belief_ports[1])))
     attestations = {}
     expected_identity = None
     for role, port in endpoints:
@@ -406,8 +410,15 @@ def _root_visits(outcome, codec):
 
 
 def _observe_histories(rollout, histories):
-    views = rollout.runtime.environment.observe_dual(policy_features_only=True)
-    boundary = getattr(rollout.runtime.environment.native, "last_advance_boundary", None)
+    environment = rollout.runtime.environment
+    views = dict(rollout.runtime.frozen)
+    if not views:
+        views = environment.observe_dual(policy_features_only=True)
+    else:
+        for owner in (0, 1):
+            if owner not in views:
+                views[owner] = environment.observe(owner=owner, policy_features_only=True)
+    boundary = getattr(environment.native, "last_advance_boundary", None)
     for owner in (0, 1):
         validate_fair_view(views[owner], owner)
         histories[owner].observe_tick(views[owner], interval=boundary)
@@ -536,7 +547,8 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
     try:
         worker_attestations = preflight_native_endpoints(host, actual_port, belief_ports,
             transport=transport, actual_env_id=actual_env_id,
-            ruleset_manifest=environment.ruleset_manifest)
+            ruleset_manifest=environment.ruleset_manifest,
+            include_belief=episode_kind != "evaluation")
         identity["native_worker_attestations"] = worker_attestations
         identity["engine_sha256"] = worker_attestations["actual"]["libg_sha256"]
         environment.reset(match_config=MatchConfig(deck0=HOG_DECK, deck1=HOG_DECK,
@@ -557,19 +569,19 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         opening_information = rollout.freeze_due_information()
         if set(opening_information) != {0, 1}:
             raise ValueError("native opening did not freeze both players")
-        histories = {}
+        histories = {} if episode_kind != "evaluation" else None
         for owner in (0, 1):
             information = opening_information[owner]
             validate_fair_view(rollout.runtime.frozen[owner], owner)
             if information.hand.ready_hand_count != 4 or information.legality.ability_candidates:
                 raise ValueError("native Hog opening differs from the SSPI action contract")
-            histories[owner] = FairHistoryRecorder(rollout.runtime.frozen[owner], information,
-                opening_tick=environment.warmup_ticks)
+            if histories is not None:
+                histories[owner] = FairHistoryRecorder(rollout.runtime.frozen[owner], information,
+                    opening_tick=environment.warmup_ticks)
 
         codec = ActionCodec(HOG_DECK)
         decision_indices = {0: 0, 1: 0}
-        previous_hands = {owner: set(information.hand.ready_card_ids)
-            for owner, information in opening_information.items()}
+        observations = None
         last_progress = started
 
         while not rollout.runtime.ended and not rollout.runtime.truncated:
@@ -640,7 +652,8 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                     if not information.legality.legal(action):
                         raise ValueError("SSPI actor selected an illegal native action")
                     executed_action = information.legality.execution_action(action)
-                    histories[owner].record_decision(information, executed_action)
+                    if histories is not None:
+                        histories[owner].record_decision(information, executed_action)
                     selected[owner] = action
                     counters["ignored_early_plays"] += int(executed_action != action)
                     kind = "WAIT" if executed_action.card_id is None else "PLAY"
@@ -670,8 +683,11 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                         if item["owner"] == owner)["hand"]) for owner in (0, 1)}
                 evidence_start = len(rollout.runtime.clock.evidence)
                 rollout.advance()
-                observations = _observe_histories(rollout, histories)
+                observations = (_observe_histories(rollout, histories)
+                    if histories is not None else None)
                 if augmenter is not None:
+                    if observations is None:
+                        raise AssertionError("continuation samples require FAIR history observations")
                     augmenter.observe(environment=environment, observations=observations,
                         clock=rollout.runtime.clock, catalog=bundle.card_catalog,
                         evidence=rollout.runtime.clock.evidence[evidence_start:],
@@ -688,7 +704,8 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                         reservation_evidence=len(rollout.runtime.clock.evidence) - evidence_start))
                     last_progress = time.monotonic()
 
-        observations = environment.observe_dual(policy_features_only=True)
+        if observations is None or observations[0].tick != rollout.runtime.clock.tick:
+            observations = environment.observe_dual(policy_features_only=True)
         terminal = observations[0].terminal
         if observations[1].terminal != terminal:
             raise ValueError("native owner observations disagree on final WDL")

@@ -128,6 +128,17 @@ def test_pending_rollout_snapshot_replays_same_next_decision(rollout):
         assert results[0] == results[1]
 
 
+def test_commit_uses_already_frozen_information_without_another_frame_copy(rollout, monkeypatch):
+    frozen = rollout.freeze_due_information()
+    assert set(frozen) == {0, 1}
+    monkeypatch.setattr(rollout_module, "pack", lambda *_args: pytest.fail("duplicate frame copy"))
+
+    rollout.commit_simultaneous({0: FullAction(11, 0, 1), 1: FullAction()})
+
+    assert rollout.runtime.clock.ready == set()
+    assert set(rollout.runtime.clock.pending) == {0, 1}
+
+
 def test_rollout_rejects_replaced_components_and_released_snapshots(rollout):
     snapshot = rollout.snapshot(None)
     original = rollout.generators[0]

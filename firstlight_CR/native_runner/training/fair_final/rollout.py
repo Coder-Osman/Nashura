@@ -78,7 +78,9 @@ class FinalRollout:
             for owner, info in self.information.items()}
 
     def commit_simultaneous(self, actions):
-        information = self.freeze_due_information()
+        if not self.information:
+            self.freeze_due_information()
+        information = self.information
         if self.action_adapter is not None:
             if any(not information[owner].legality.legal(action) for owner, action in actions.items()):
                 raise ValueError("illegal action before SSPI execution adaptation")
