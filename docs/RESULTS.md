@@ -1,5 +1,22 @@
 # 阶段成果与证据索引
 
+## 2026-11-02：SSPI 静态机制编码缓存与 FAIR 摘要快路径（实机对照）
+
+基于 main@4461fb05c956a17988f337ee2e862d154f9775b8，针对上一轮 128 模拟剖析的两项可复用热点实施优化。SemanticEncoder 仅在 eval 且 inference_mode 下缓存 EffectSemanticEncoder/MechanicProfileEncoder 的静态表示；缓存由模块/参数/buffer身份、版本、device、dtype和形状约束，模式切换、模型迁移、权重载入、autocast、训练及梯度路径均清除或跳过。FAIR SHA 对 [4,576,5] PLAY 掩码不再调用 tolist()，改为生成旧嵌套 bool 列表等价的语义摘要字节；不缓存外层摘要，每次都重读输入内容，避免外部可变 tensor 绕过版本计数。旧语义摘要 SHA 保持不变。
+
+Apple M4 Max/macOS 15.6、Python 3.13、PyTorch CPU 单线程，同 seed 20261103、同模型权重；完整 V4 tensorizer 固定工程 fixture 的 FAIR SHA 为 5bc94882e9963f6afa032773d7bae9469c5e1efb81a99d13f5387aaf357a5fd8，ready hand 4，plays shape [4,576,5]。前向先预热，再交替顺序做7轮配对、每轮每版10次；旧/新摘要交替顺序7轮，每轮10次。
+
+| 路径 | 旧实现 | 新实现 | 比值 |
+| --- | ---: | ---: | ---: |
+| 暖态模型前向 | 80.185 ms | 15.591 ms | 5.14× |
+| FAIR SHA（每次重读输入） | 25.494 ms | 0.900 ms | 28.33× |
+
+微基准为本地工程 fixture，不是实局。正确性定向测试 25 passed：策略/WDL logits、合法联合分布、采样动作/RNG、两轮策略CE/WDL CE的逐参数梯度、AdamW参数更新和checkpoint模型/优化器状态恢复相同；摘要严格等于旧语义，含外部张量写入的变更也会反映。主工程检查 273 passed；公开检查 1104 passed、42 skipped；来源清单2828项通过；gitleaks扫描约42.4 MB无发现。
+
+随后复用了单独隔离的 Engine5 / port 26794 顺序真实根与 belief worker 探针；不需要其它 root/belief worker。基线和优化各跑两次、固定 seed 20261103、persistent session-v1、每次128次 FULL 有效模拟。基线墙钟57.780/57.397秒，优化24.611/24.739秒；两侧中位57.588/24.675秒，单根减少32.913秒或57.15%。模型SHA 9e1751...ac445e4、root FAIR SHA df7486...6457d6及完整32候选分布逐项一致，selected action均为 card 26000030 / cell232 / delay slot2；每根均2812实际belief ticks、2812次advance、0 discarded edges。FAIR snapshot round-trip均一致，belief lease均释放，native snapshot handle为0。各RPC命令次数逐项一致：step2813、observe-atomic2943、observe278、snapshot-create213、release-snapshot213、restore130、other148。最主要阶段中位数：inference 10.867→2.007秒；transition 33.578→18.272秒（其中对手策略采样/叶推理为嵌套诊断，不能再次相加）。这是单个随机开局状态的两次复测，尚非多状态平均或训练表现结论。
+
+本阶段为 HOT_PATH_NATIVE_SEARCH_CONTROLLED_PASS；未做完整训练或策略强度评估。测量探针配置的是已核验空闲 Engine5 测试worker；没有停止/重启 AVD、adb或其他engine，也没有改变端口转发。详见原生对照证据 SSPI_SEARCH_HOT_PATH_NATIVE_CONTROL_2026-11-02.json、微基准报告 SSPI_SEARCH_HOT_PATH_OPTIMIZATION_2026-11-02.md及微基准证据 SSPI_SEARCH_HOT_PATH_OPTIMIZATION_2026-11-02.json。
+
 ## 2026-11-02：SSPI 搜索细分剖析
 
 基于826a24b，在同一独立Engine5开局root、CPU单线程、seed20261103上串行完成delta/full各128次有效模拟，无额外native请求。原候选顺序、priors、Q、visits、所选动作、模型/FAIR SHA、2812tick、RPC计数全部相同，快照句柄最终0。剖析轮墙钟41.017/39.030秒，包含新增计时且负载未隔离；不把此前42.505/41.283秒的一次差异解释为稳定加速。

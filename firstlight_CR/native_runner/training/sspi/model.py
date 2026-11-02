@@ -185,7 +185,8 @@ class SSPIModel(nn.Module):
         if not config.snapshot_only:
             raise ValueError("SSPI input must be a single current-state snapshot")
         self.encoder_config = config
-        self.encoder = SemanticEncoder(bundle or production_semantic_bundle(), config)
+        self.encoder = SemanticEncoder(bundle or production_semantic_bundle(), config,
+            cache_static_inference=True)
         self.encoder.event_encoder = _ZeroSummary(config.event_summary_dim)
         self.encoder.previous_action_encoder = _ZeroSummary(config.previous_action_dim)
         self.hand_projection = nn.Sequential(nn.Linear(HAND_FEATURE_DIM, 128), nn.SiLU(),

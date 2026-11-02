@@ -14,8 +14,10 @@ from .codec import JointActionCodec
 class SemanticEncoder(nn.Module):
     encode_observation = UniversalCardPolicyV4.encode_observation
 
-    def __init__(self, bundle, config):
+    def __init__(self, bundle, config, *, cache_static_inference=False):
         super().__init__()
+        self.cache_static_inference = cache_static_inference
+        self._clear_static_memory_cache()
         self.config = config
         self.catalog = bundle.card_catalog
         self.ability_catalog = bundle.ability_catalog
@@ -41,7 +43,57 @@ class SemanticEncoder(nn.Module):
     def forward(self, frame):
         scalars = frame.match_scalars.clone()
         scalars[:, 17] = 0
-        return self.encode_observation(replace(frame, match_scalars=scalars), validate=True)
+        return self.encode_observation(replace(frame, match_scalars=scalars), validate=True,
+            static_memories=self._inference_static_memories())
+
+    def _clear_static_memory_cache(self):
+        # Plain attributes: never parameters, buffers, or checkpoint contents.
+        self._static_memory_key = None
+        self._static_memory_inputs = ()
+        self._static_memory_cache = None
+
+    def _inference_static_memories(self):
+        modules = (self.effect_encoder, self.mechanic_profile_encoder)
+        if (not self.cache_static_inference or self.training or torch.is_grad_enabled()
+                or not torch.is_inference_mode_enabled()
+                or any(child.training for module in modules for child in module.modules())):
+            self._clear_static_memory_cache()
+            return None
+        tensors = tuple(tensor for module in modules
+            for tensor in (*module.parameters(), *module.buffers()))
+        if any(torch.is_autocast_enabled(device) for device in {tensor.device.type for tensor in tensors}):
+            self._clear_static_memory_cache()
+            return None
+        # Inference tensors have no mutation counter. Recompute rather than
+        # relying on a stale cache if a caller creates model inputs that way.
+        if any(torch.is_inference(tensor) for tensor in tensors):
+            self._clear_static_memory_cache()
+            return None
+        key = (tuple(id(child) for module in modules for child in module.modules()),
+            self.mechanic_profile_encoder.profile_count, tuple(
+            (id(tensor), tensor._version, tensor.device, tensor.dtype, tuple(tensor.shape))
+            for tensor in tensors))
+        if key != self._static_memory_key:
+            effects = self.effect_encoder.all_effects()
+            profiles = self.mechanic_profile_encoder(effects)
+            self._static_memory_cache = (effects, profiles)
+            # Retain the input objects so object IDs cannot be recycled while
+            # the corresponding cache is still live.
+            self._static_memory_inputs = (tuple(child for module in modules for child in module.modules()), tensors)
+            self._static_memory_key = key
+        return self._static_memory_cache
+
+    def train(self, mode=True):
+        self._clear_static_memory_cache()
+        return super().train(mode)
+
+    def _apply(self, fn, recurse=True):
+        self._clear_static_memory_cache()
+        return super()._apply(fn, recurse=recurse)
+
+    def _load_from_state_dict(self, *args, **kwargs):
+        self._clear_static_memory_cache()
+        return super()._load_from_state_dict(*args, **kwargs)
 
 
 class ResidualBlock(nn.Module):

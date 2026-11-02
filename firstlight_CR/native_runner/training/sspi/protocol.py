@@ -16,7 +16,7 @@ from native_runner.training.event_scheduling import gameplay_end_tick
 from native_runner.training.event_spell_constraints import constrain_spell_placement
 from native_runner.training.fair_search.config import HOG_DECK
 from native_runner.training.fair_final.adapter import native_payment_mask
-from native_runner.training.fair_search.contracts import semantic_digest
+from native_runner.training.fair_search.contracts import BooleanTensorList, semantic_digest
 from native_runner.training.v4.catalog import FIRST_REAL_CARD_VOCAB_ID
 from native_runner.training.fair_final.visibility import validate_fair_view
 from native_runner.training.fair_search.draw import refill_delay
@@ -452,8 +452,10 @@ class SSPILegality:
             raise ValueError("delay index outside the fixed SSPI bins")
         return DELAY_MS[delay_index]
 
-    def identity(self):
-        return dict(card_ids=self.card_ids, plays=self.plays.detach().cpu().tolist(),
+    def identity(self, *, tensor_digest=False):
+        return dict(card_ids=self.card_ids,
+            plays=(BooleanTensorList(self.plays) if tensor_digest
+                else self.plays.detach().cpu().tolist()),
             pending_arrival_ticks=self.pending_arrival_ticks,
             ability_feature_schema=ABILITY_FEATURE_SCHEMA,
             ability_candidates=[(item.source_entity_id, item.ability_id, item.features)
@@ -474,8 +476,10 @@ class SSPIInformation:
         if (type(self.owner) is not int or self.owner not in (0, 1)
                 or type(self.tick) is not int or self.tick < 0):
             raise ValueError("invalid SSPI information identity")
+        # Re-read all content on every call, including externally mutable tensors.
+        # The mask view preserves the legacy nested-list digest byte protocol.
         return semantic_digest(dict(schema="sspi-fair-information.v2", owner=self.owner, tick=self.tick,
-            frame=self.frame, hand=self.hand, legality=self.legality.identity()))
+            frame=self.frame, hand=self.hand, legality=self.legality.identity(tensor_digest=True)))
 
 
 def to_full_action(action: SSPIAction):

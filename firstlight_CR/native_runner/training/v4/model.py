@@ -353,7 +353,8 @@ class UniversalCardPolicyV4(nn.Module):
             cell=torch.zeros(shape, device=actual_device, dtype=actual_dtype),
         )
 
-    def encode_observation(self, batch: UniversalSemanticBatchV4, *, validate: bool = True) -> EncodedObservationV4:
+    def encode_observation(self, batch: UniversalSemanticBatchV4, *, validate: bool = True,
+                           static_memories=None) -> EncodedObservationV4:
         if validate:
             batch.validate(
                 self.config,
@@ -362,8 +363,11 @@ class UniversalCardPolicyV4(nn.Module):
                 entity_archetype_vocab_size=(self.entity_archetype_catalog.vocab_size),
                 effect_vocab_size=self.effect_catalog.vocab_size,
             )
-        effect_memory = self.effect_encoder.all_effects()
-        profile_memory = self.mechanic_profile_encoder(effect_memory)
+        if static_memories is None:
+            effect_memory = self.effect_encoder.all_effects()
+            profile_memory = self.mechanic_profile_encoder(effect_memory)
+        else:
+            effect_memory, profile_memory = static_memories
         child_effects, tower_effects = self.active_effect_encoder(
             batch.active_effects,
             effect_memory=effect_memory,

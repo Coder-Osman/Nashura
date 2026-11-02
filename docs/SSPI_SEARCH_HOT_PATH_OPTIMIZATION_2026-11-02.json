@@ -1,0 +1,81 @@
+{
+  "schema": "sspi-search-hot-path-optimization.v1",
+  "baseline_commit": "4461fb05c956a17988f337ee2e862d154f9775b8",
+  "host": {
+    "machine": "Apple M4 Max",
+    "os": "macOS 15.6",
+    "python": "3.13",
+    "compute": "CPU, one thread",
+    "emulator_abi": "arm64-v8a"
+  },
+  "native_engine": {
+    "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "probe_sha256": "be2eff5ef7d9a9656ddc98b6340e0307d541a0084d5d9ded5746fee743313674",
+    "control_transport": "persistent session-v1"
+  },
+  "model": {
+    "initialization_seed": 20261103,
+    "same_weights": true,
+    "parameter_count": 7869902
+  },
+  "fixture": {
+    "kind": "deterministic full V4 tensorizer HOG FAIR test fixture",
+    "owner": 0,
+    "tick": 100,
+    "ready_hand_count": 4,
+    "plays_shape": [4, 576, 5],
+    "fair_sha256": "5bc94882e9963f6afa032773d7bae9469c5e1efb81a99d13f5387aaf357a5fd8",
+    "native_match": false
+  },
+  "microbenchmark": {
+    "warmup_forward_calls_per_model": 2,
+    "paired_rounds": 7,
+    "calls_per_model_per_forward_pair": 10,
+    "digest_rounds": 7,
+    "legacy_and_fast_digest_calls_per_round": 10,
+    "median_seconds_per_call": {
+      "model_forward_static_cache_on": 0.015591379208490252,
+      "model_forward_static_cache_off": 0.0801846374757588,
+      "legacy_nested_list_digest": 0.0254935750272125,
+      "tensor_view_digest_without_outer_cache": 0.0009000333026051522
+    },
+    "speedup": {
+      "model_forward_static_cache": 5.142882897241985,
+      "digest_tensor_view": 28.3251463622748
+    },
+    "legacy_and_new_fair_sha_identical": true
+  },
+  "correctness": {
+    "policy_and_wdl_logits_identical": true,
+    "joint_action_distribution_identical": true,
+    "sampled_action_and_rng_state_identical": true,
+    "per_parameter_gradients_identical": true,
+    "adamw_parameter_updates_identical": true,
+    "checkpoint_model_and_optimizer_restore_identical": true,
+    "sha_refreshes_after_tensor_version_change": true,
+    "targeted_tests": "25 passed",
+    "main_engine_checks": "273 passed",
+    "public_checks": "1104 passed, 42 skipped",
+    "public_source_manifest": "2828 files passed",
+    "gitleaks": "no leaks found, 42.4 MB scanned"
+  },
+  "native_search": {
+    "status": "two_baseline_and_two_optimized_runs_passed",
+    "evidence": "SSPI_SEARCH_HOT_PATH_NATIVE_CONTROL_2026-11-02.json",
+    "root_port": 26794,
+    "sequential_isolated_actual_and_belief": true,
+    "native_search_was_run": true,
+    "physical_actual_root_preservation_tested": false,
+    "baseline_median_seconds": 57.58829587511718,
+    "optimized_median_seconds": 24.675064333016053,
+    "median_wall_reduction_fraction": 0.5715264020570249,
+    "root_fair_sha_and_candidate_visits_equal": true,
+    "actual_native_ticks_per_run": 2812,
+    "snapshot_handle_count_after_each_run": 0
+  },
+  "claims": {
+    "contains_local_hot_path_microbenchmark": true,
+    "native_speedup_measured_for_one_root_and_repeated_twice": true,
+    "training_or_model_strength_claimed": false
+  }
+}

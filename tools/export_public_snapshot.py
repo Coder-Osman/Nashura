@@ -79,6 +79,9 @@ def selected_files(workspace):
         "docs/SSPI_JSON_DELTA_EVIDENCE_2026-11-02.json",
         "docs/SSPI_SEARCH_BREAKDOWN_2026-11-02.md",
         "docs/SSPI_SEARCH_BREAKDOWN_2026-11-02.json",
+        "docs/SSPI_SEARCH_HOT_PATH_OPTIMIZATION_2026-11-02.md",
+        "docs/SSPI_SEARCH_HOT_PATH_OPTIMIZATION_2026-11-02.json",
+        "docs/SSPI_SEARCH_HOT_PATH_NATIVE_CONTROL_2026-11-02.json",
     ):
         path = workspace / name
         if path.is_file():

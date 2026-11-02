@@ -1,5 +1,6 @@
 from dataclasses import asdict, dataclass, fields, is_dataclass
 from collections.abc import Sequence
+from functools import lru_cache
 import hashlib
 import json
 import math
@@ -11,6 +12,25 @@ from ..v4 import tensors as tensor_types
 
 
 INFORMATION_DIGEST_SCHEMA = "fair-information-history-chain.v2"
+
+
+class BooleanTensorList:
+    """A tensor-backed view with the exact semantic_digest encoding of bool lists."""
+
+    __slots__ = ("tensor",)
+
+    def __init__(self, tensor):
+        if not isinstance(tensor, torch.Tensor) or tensor.dtype is not torch.bool or tensor.ndim != 3:
+            raise ValueError("boolean digest view requires a rank-three bool tensor")
+        self.tensor = tensor
+
+
+@lru_cache(maxsize=8)
+def _boolean_list_tokens(depth):
+    # Only immutable byte strings are cached, never mutable tensor contents.
+    return tuple(str(depth).encode() + b"".join(
+        b"true\0" if pattern & (1 << offset) else b"false\0" for offset in range(depth)) + b"\0"
+        for pattern in range(1 << depth))
 
 
 def require_sha(value):
@@ -68,6 +88,22 @@ def semantic_digest(value):
             digest.update(b"fair-history-chain.v1")
             digest.update(str(len(item)).encode())
             digest.update(item.digest)
+        elif isinstance(item, BooleanTensorList):
+            tensor = item.tensor.detach().to(device="cpu").contiguous()
+            depth = int(tensor.shape[2])
+            if not tensor.numel() or not 1 <= depth <= 8:
+                visit(tensor.tolist())
+                return  # visit already emitted the outer list's terminating NUL.
+            import numpy as np
+
+            packed = np.packbits(tensor.numpy(), axis=2, bitorder="little").reshape(
+                tensor.shape[0], tensor.shape[1]).tolist()
+            tokens = _boolean_list_tokens(depth)
+            digest.update(str(int(tensor.shape[0])).encode())
+            for group in packed:
+                digest.update(str(len(group)).encode())
+                digest.update(b"".join(tokens[pattern] for pattern in group))
+                digest.update(b"\0")
         elif isinstance(item, torch.Tensor):
             tensor = item.detach().cpu().contiguous()
             digest.update(json.dumps([str(tensor.dtype), list(tensor.shape)]).encode())

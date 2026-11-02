@@ -406,6 +406,10 @@ def _source_sha():
         PROJECT / "native_runner" / "training" / "fair_final" / "timing.py",
         PROJECT / "native_runner" / "training" / "fair_final" / "visibility.py",
         PROJECT / "native_runner" / "training" / "fair_search" / "belief.py",
+        PROJECT / "native_runner" / "training" / "fair_search" / "contracts.py",
+        PROJECT / "native_runner" / "training" / "az_joint" / "model.py",
+        PROJECT / "native_runner" / "training" / "v4" / "model.py",
+        PROJECT / "native_runner" / "training" / "v4" / "components.py",
         PROJECT / "native_runner" / "training" / "v4" / "factory.py",
         PROJECT / "research" / "puct-runtime" / "native_adapter.py",
     )
