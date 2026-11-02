@@ -1,0 +1,874 @@
+{
+  "device": "cpu",
+  "equivalence": {
+    "persistent": {
+      "all_equal": true,
+      "candidate_distribution": true,
+      "fair_sha256": true,
+      "model_sha256": true,
+      "native_tick_count": true,
+      "rpc_counts": true,
+      "selected_action": true,
+      "valid_simulations": true
+    },
+    "persistent-delta": {
+      "all_equal": true,
+      "candidate_distribution": true,
+      "fair_sha256": true,
+      "model_sha256": true,
+      "native_tick_count": true,
+      "rpc_counts": true,
+      "selected_action": true,
+      "valid_simulations": true
+    }
+  },
+  "limitations": [
+    "one opening root; not mid/late-game search or valid training episode",
+    "profiled delta then full; system load not isolated; wall times are diagnostic, not stable causal speedup",
+    "inclusive timer categories overlap; no extra native requests",
+    "no model, RNG, engine semantics, budget or production code changes",
+    "hash field timings are local post-search analysis of the captured root, not root-stage totals"
+  ],
+  "original_delta_advance": {
+    "actual_ticks": 2812,
+    "advance_calls": 2812,
+    "advance_seconds": 7.792373369447887
+  },
+  "original_delta_opponent": {
+    "note": "opponent_sample_seconds is nested inside transition_seconds",
+    "opponent_sample_calls": 212,
+    "opponent_sample_seconds": 13.566417633090168,
+    "predict_calls": 129,
+    "predict_seconds": 8.260276659857482
+  },
+  "original_delta_stages": {
+    "belief": 1.2699578329920769,
+    "candidate_generation": 0.45919762551784515,
+    "inference": 8.260445707011968,
+    "restore": 0.9943117457441986,
+    "transition": 24.29863642528653,
+    "tree_selection": 0.006360588129609823
+  },
+  "original_search_seconds": {
+    "persistent": 42.505466083064675,
+    "persistent-delta": 41.28346375003457
+  },
+  "probe_sha256": "be2eff5ef7d9a9656ddc98b6340e0307d541a0084d5d9ded5746fee743313674",
+  "profile_runs": {
+    "persistent": {
+      "note": "Nested inclusive timers overlap; exclusive timers partition instrumented scopes. Additional native requests: zero. Profiling overhead means not a new speed benchmark.",
+      "schema": "sspi-search-breakdown.v1",
+      "seconds": 39.03015625011176,
+      "seed": 20261103,
+      "stats": {
+        "BattleGroupEncoder > GlobalCardEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.05573617108166218,
+          "inclusive_seconds": 0.05573617108166218
+        },
+        "CandidateEncoder > GlobalCardEncoder": {
+          "calls": 682,
+          "exclusive_seconds": 0.07056013122200966,
+          "inclusive_seconds": 0.07056013122200966
+        },
+        "CardTokenEncoder > GlobalCardEncoder": {
+          "calls": 682,
+          "exclusive_seconds": 0.060723045375198126,
+          "inclusive_seconds": 0.060723045375198126
+        },
+        "LocalChildSetEncoder > GlobalCardEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.139702629763633,
+          "inclusive_seconds": 0.139702629763633
+        },
+        "environment._atomic_observation_pair > native.observe_atomic": {
+          "calls": 2943,
+          "exclusive_seconds": 0.00927144754678011,
+          "inclusive_seconds": 3.296626834664494
+        },
+        "environment.advance_reservations > environment._atomic_observation_pair": {
+          "calls": 2812,
+          "exclusive_seconds": 0.8169337343424559,
+          "inclusive_seconds": 3.935533647891134
+        },
+        "environment.advance_reservations > native._request": {
+          "calls": 3100,
+          "exclusive_seconds": 2.2799526434391737,
+          "inclusive_seconds": 2.2799526434391737
+        },
+        "information.sha256 > legality.identity": {
+          "calls": 348,
+          "exclusive_seconds": 0.1504870830103755,
+          "inclusive_seconds": 0.1504870830103755
+        },
+        "model.encode > frame.to_model_input": {
+          "calls": 341,
+          "exclusive_seconds": 0.01498142583295703,
+          "inclusive_seconds": 0.01498142583295703
+        },
+        "model.encode > semantic_encoder.forward": {
+          "calls": 341,
+          "exclusive_seconds": 0.09131830371916294,
+          "inclusive_seconds": 20.0355339278467
+        },
+        "model.forward > model.encode": {
+          "calls": 341,
+          "exclusive_seconds": 0.061704570427536964,
+          "inclusive_seconds": 20.112219924107194
+        },
+        "native.observe_atomic > native._request": {
+          "calls": 2943,
+          "exclusive_seconds": 2.3308788440190256,
+          "inclusive_seconds": 2.3308788440190256
+        },
+        "native.observe_atomic > native._validate_atomic_result": {
+          "calls": 2943,
+          "exclusive_seconds": 0.9564765430986881,
+          "inclusive_seconds": 0.9564765430986881
+        },
+        "policy.predict > model.forward": {
+          "calls": 341,
+          "exclusive_seconds": 0.08638562355190516,
+          "inclusive_seconds": 20.1986055476591
+        },
+        "policy.sample > policy.predict": {
+          "calls": 212,
+          "exclusive_seconds": 0.03094937512651086,
+          "inclusive_seconds": 12.57829246390611
+        },
+        "policy.sample > policy_distribution.sample": {
+          "calls": 212,
+          "exclusive_seconds": 0.04066905006766319,
+          "inclusive_seconds": 0.04066905006766319
+        },
+        "rollout.freeze_due_information > frame.to_model_input": {
+          "calls": 426,
+          "exclusive_seconds": 0.029608796816319227,
+          "inclusive_seconds": 0.029608796816319227
+        },
+        "rollout.freeze_due_information > tensorizer.tensorize": {
+          "calls": 426,
+          "exclusive_seconds": 0.2450484037399292,
+          "inclusive_seconds": 0.7994438707828522
+        },
+        "rollout_snapshot.__init__ > runtime_snapshot.__init__": {
+          "calls": 213,
+          "exclusive_seconds": 0.37598168244585395,
+          "inclusive_seconds": 0.5582060888409615
+        },
+        "rollout_snapshot.close > runtime_snapshot.close": {
+          "calls": 213,
+          "exclusive_seconds": 0.0015912982635200024,
+          "inclusive_seconds": 0.17128746444359422
+        },
+        "rollout_snapshot.restore > runtime_snapshot.restore": {
+          "calls": 130,
+          "exclusive_seconds": 0.29869219241663814,
+          "inclusive_seconds": 0.7655224087648094
+        },
+        "runtime._freeze > environment.observe_dual": {
+          "calls": 213,
+          "exclusive_seconds": 0.46758904587477446,
+          "inclusive_seconds": 0.46758904587477446
+        },
+        "runtime.advance > environment.advance_reservations": {
+          "calls": 2812,
+          "exclusive_seconds": 0.5727140079252422,
+          "inclusive_seconds": 6.78820029925555
+        },
+        "runtime.advance > runtime._freeze": {
+          "calls": 2812,
+          "exclusive_seconds": 0.010106595698744059,
+          "inclusive_seconds": 0.47750409971922636
+        },
+        "runtime_snapshot.__init__ > native._request": {
+          "calls": 213,
+          "exclusive_seconds": 0.1822244063951075,
+          "inclusive_seconds": 0.1822244063951075
+        },
+        "runtime_snapshot.close > native._request": {
+          "calls": 213,
+          "exclusive_seconds": 0.16969616618007421,
+          "inclusive_seconds": 0.16969616618007421
+        },
+        "runtime_snapshot.restore > environment._atomic_observation_pair": {
+          "calls": 130,
+          "exclusive_seconds": 0.041401378344744444,
+          "inclusive_seconds": 0.2178126322105527
+        },
+        "runtime_snapshot.restore > native._request": {
+          "calls": 260,
+          "exclusive_seconds": 0.24901758413761854,
+          "inclusive_seconds": 0.24901758413761854
+        },
+        "search > environment._atomic_observation_pair": {
+          "calls": 1,
+          "exclusive_seconds": 0.0007290830835700035,
+          "inclusive_seconds": 0.0023447503335773945
+        },
+        "search > information.sha256": {
+          "calls": 348,
+          "exclusive_seconds": 5.637980721890926,
+          "inclusive_seconds": 5.788467804901302
+        },
+        "search > native._request": {
+          "calls": 9,
+          "exclusive_seconds": 0.2653671237640083,
+          "inclusive_seconds": 0.2653671237640083
+        },
+        "search > policy.predict": {
+          "calls": 129,
+          "exclusive_seconds": 0.020139171741902828,
+          "inclusive_seconds": 7.6714016306214035
+        },
+        "search > rollout.freeze_due_information": {
+          "calls": 2,
+          "exclusive_seconds": 0.0038802921772003174,
+          "inclusive_seconds": 0.008472917135804892
+        },
+        "search > rollout_snapshot.__init__": {
+          "calls": 1,
+          "exclusive_seconds": 0.0012382087297737598,
+          "inclusive_seconds": 0.004926125053316355
+        },
+        "search > rollout_snapshot.close": {
+          "calls": 1,
+          "exclusive_seconds": 1.2922100722789764e-06,
+          "inclusive_seconds": 0.0005753342993557453
+        },
+        "search > rollout_snapshot.restore": {
+          "calls": 1,
+          "exclusive_seconds": 0.0017557498067617416,
+          "inclusive_seconds": 0.007020167075097561
+        },
+        "search > runtime._freeze": {
+          "calls": 1,
+          "exclusive_seconds": 8.457805961370468e-06,
+          "inclusive_seconds": 0.00019999966025352478
+        },
+        "search > search.semantic_digest": {
+          "calls": 605,
+          "exclusive_seconds": 0.008900921791791916,
+          "inclusive_seconds": 0.008900921791791916
+        },
+        "search > world.restore_root": {
+          "calls": 129,
+          "exclusive_seconds": 0.0002378765493631363,
+          "inclusive_seconds": 0.9468859601765871
+        },
+        "search > world.root_owner_information": {
+          "calls": 129,
+          "exclusive_seconds": 0.0023567541502416134,
+          "inclusive_seconds": 0.14190332917496562
+        },
+        "search > world.transition": {
+          "calls": 212,
+          "exclusive_seconds": 0.04785947361961007,
+          "inclusive_seconds": 22.80632095085457
+        },
+        "semantic_encoder.forward > ActiveEffectEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.015686857514083385,
+          "inclusive_seconds": 0.015686857514083385
+        },
+        "semantic_encoder.forward > BattleGroupEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.08513419609516859,
+          "inclusive_seconds": 0.14087036717683077
+        },
+        "semantic_encoder.forward > CandidateEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.13933419389650226,
+          "inclusive_seconds": 0.20989432511851192
+        },
+        "semantic_encoder.forward > CardTokenEncoder": {
+          "calls": 682,
+          "exclusive_seconds": 0.03577724052593112,
+          "inclusive_seconds": 0.09650028590112925
+        },
+        "semantic_encoder.forward > EffectSemanticEncoder.all_effects": {
+          "calls": 341,
+          "exclusive_seconds": 0.12277021771296859,
+          "inclusive_seconds": 0.12277021771296859
+        },
+        "semantic_encoder.forward > GenericScalarEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.004421713761985302,
+          "inclusive_seconds": 0.004421713761985302
+        },
+        "semantic_encoder.forward > LocalChildSetEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.1961299511604011,
+          "inclusive_seconds": 0.3358325809240341
+        },
+        "semantic_encoder.forward > MechanicProfileEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 16.19325194414705,
+          "inclusive_seconds": 16.19325194414705
+        },
+        "semantic_encoder.forward > RelationTransformerV4": {
+          "calls": 341,
+          "exclusive_seconds": 1.6646847473457456,
+          "inclusive_seconds": 1.6646847473457456
+        },
+        "semantic_encoder.forward > SpatialScatterEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.7005021632649004,
+          "inclusive_seconds": 0.7005021632649004
+        },
+        "semantic_encoder.forward > TowerEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.026311504654586315,
+          "inclusive_seconds": 0.026311504654586315
+        },
+        "semantic_encoder.forward > frame.validate": {
+          "calls": 341,
+          "exclusive_seconds": 0.433488916605711,
+          "inclusive_seconds": 0.433488916605711
+        },
+        "tensorizer.tensorize > frame.validate": {
+          "calls": 426,
+          "exclusive_seconds": 0.554395467042923,
+          "inclusive_seconds": 0.554395467042923
+        },
+        "world.restore_root > rollout_snapshot.restore": {
+          "calls": 129,
+          "exclusive_seconds": 0.18639009213075042,
+          "inclusive_seconds": 0.946648083627224
+        },
+        "world.root_owner_information > rollout.freeze_due_information": {
+          "calls": 341,
+          "exclusive_seconds": 0.8497626474127173,
+          "inclusive_seconds": 1.6742226900532842
+        },
+        "world.transition > policy.sample": {
+          "calls": 212,
+          "exclusive_seconds": 0.00403295923024416,
+          "inclusive_seconds": 12.622994473204017
+        },
+        "world.transition > rollout.commit_simultaneous": {
+          "calls": 212,
+          "exclusive_seconds": 0.03382416348904371,
+          "inclusive_seconds": 0.03382416348904371
+        },
+        "world.transition > rollout.freeze_due_information": {
+          "calls": 212,
+          "exclusive_seconds": 0.2617671648040414,
+          "inclusive_seconds": 0.2617671648040414
+        },
+        "world.transition > rollout_snapshot.__init__": {
+          "calls": 212,
+          "exclusive_seconds": 0.25854567252099514,
+          "inclusive_seconds": 0.813063845038414
+        },
+        "world.transition > rollout_snapshot.close": {
+          "calls": 212,
+          "exclusive_seconds": 0.0002762102521955967,
+          "inclusive_seconds": 0.17098963260650635
+        },
+        "world.transition > runtime.advance": {
+          "calls": 2812,
+          "exclusive_seconds": 0.05135138425976038,
+          "inclusive_seconds": 7.317055783234537
+        },
+        "world.transition > world.root_owner_information": {
+          "calls": 212,
+          "exclusive_seconds": 0.00409029982984066,
+          "inclusive_seconds": 1.5387664148584008
+        }
+      },
+      "transport": "persistent",
+      "wire": {
+        "attest": {
+          "bytes": 1113,
+          "calls": 1,
+          "max_bytes": 1113,
+          "parse_seconds": 1.60830095410347e-05
+        },
+        "configure": {
+          "bytes": 222,
+          "calls": 3,
+          "max_bytes": 74,
+          "parse_seconds": 1.162523403763771e-05
+        },
+        "inject": {
+          "bytes": 7599,
+          "calls": 144,
+          "max_bytes": 54,
+          "parse_seconds": 0.0003044530749320984
+        },
+        "observe": {
+          "bytes": 1219358,
+          "calls": 278,
+          "max_bytes": 4553,
+          "parse_seconds": 0.004934084136039019
+        },
+        "observe-atomic": {
+          "bytes": 136139184,
+          "calls": 2943,
+          "max_bytes": 100941,
+          "parse_seconds": 0.24177740421146154
+        },
+        "release-snapshot": {
+          "bytes": 12141,
+          "calls": 213,
+          "max_bytes": 57,
+          "parse_seconds": 0.0007312893867492676
+        },
+        "restore": {
+          "bytes": 20150,
+          "calls": 130,
+          "max_bytes": 155,
+          "parse_seconds": 0.0008457126095890999
+        },
+        "snapshot-create": {
+          "bytes": 33569,
+          "calls": 213,
+          "max_bytes": 159,
+          "parse_seconds": 0.0010067494586110115
+        },
+        "step": {
+          "bytes": 217329,
+          "calls": 2813,
+          "max_bytes": 78,
+          "parse_seconds": 0.006162980571389198
+        }
+      }
+    },
+    "persistent-delta": {
+      "note": "Nested inclusive timers overlap; exclusive timers partition instrumented scopes. Additional native requests: zero. Profiling overhead means not a new speed benchmark.",
+      "schema": "sspi-search-breakdown.v1",
+      "seconds": 41.01718358322978,
+      "seed": 20261103,
+      "stats": {
+        "BattleGroupEncoder > GlobalCardEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.0637411680072546,
+          "inclusive_seconds": 0.0637411680072546
+        },
+        "CandidateEncoder > GlobalCardEncoder": {
+          "calls": 682,
+          "exclusive_seconds": 0.0719777219928801,
+          "inclusive_seconds": 0.0719777219928801
+        },
+        "CardTokenEncoder > GlobalCardEncoder": {
+          "calls": 682,
+          "exclusive_seconds": 0.0689974594861269,
+          "inclusive_seconds": 0.0689974594861269
+        },
+        "LocalChildSetEncoder > GlobalCardEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.1413677865639329,
+          "inclusive_seconds": 0.1413677865639329
+        },
+        "environment._atomic_observation_pair > native.observe_atomic": {
+          "calls": 2943,
+          "exclusive_seconds": 0.014518007636070251,
+          "inclusive_seconds": 3.3565661353059113
+        },
+        "environment.advance_reservations > environment._atomic_observation_pair": {
+          "calls": 2812,
+          "exclusive_seconds": 0.8386319582350552,
+          "inclusive_seconds": 4.009392428211868
+        },
+        "environment.advance_reservations > native._request": {
+          "calls": 3100,
+          "exclusive_seconds": 2.287448068615049,
+          "inclusive_seconds": 2.287448068615049
+        },
+        "information.sha256 > legality.identity": {
+          "calls": 348,
+          "exclusive_seconds": 0.11186057375743985,
+          "inclusive_seconds": 0.11186057375743985
+        },
+        "model.encode > frame.to_model_input": {
+          "calls": 341,
+          "exclusive_seconds": 0.015373607631772757,
+          "inclusive_seconds": 0.015373607631772757
+        },
+        "model.encode > semantic_encoder.forward": {
+          "calls": 341,
+          "exclusive_seconds": 0.12559806229546666,
+          "inclusive_seconds": 21.84777987608686
+        },
+        "model.forward > model.encode": {
+          "calls": 341,
+          "exclusive_seconds": 0.062077383045107126,
+          "inclusive_seconds": 21.92523086676374
+        },
+        "native.observe_atomic > cursor.validate": {
+          "calls": 2943,
+          "exclusive_seconds": 0.9725173548795283,
+          "inclusive_seconds": 0.9725173548795283
+        },
+        "native.observe_atomic > native._request": {
+          "calls": 2943,
+          "exclusive_seconds": 2.3695307727903128,
+          "inclusive_seconds": 2.3695307727903128
+        },
+        "policy.predict > model.forward": {
+          "calls": 341,
+          "exclusive_seconds": 0.1017971676774323,
+          "inclusive_seconds": 22.027028034441173
+        },
+        "policy.sample > policy.predict": {
+          "calls": 212,
+          "exclusive_seconds": 0.029957843013107777,
+          "inclusive_seconds": 13.704934588633478
+        },
+        "policy.sample > policy_distribution.sample": {
+          "calls": 212,
+          "exclusive_seconds": 0.04151599295437336,
+          "inclusive_seconds": 0.04151599295437336
+        },
+        "rollout.freeze_due_information > frame.to_model_input": {
+          "calls": 426,
+          "exclusive_seconds": 0.029487635474652052,
+          "inclusive_seconds": 0.029487635474652052
+        },
+        "rollout.freeze_due_information > tensorizer.tensorize": {
+          "calls": 426,
+          "exclusive_seconds": 0.2464506644755602,
+          "inclusive_seconds": 0.8041734606958926
+        },
+        "rollout_snapshot.__init__ > runtime_snapshot.__init__": {
+          "calls": 213,
+          "exclusive_seconds": 0.3686452344991267,
+          "inclusive_seconds": 0.5523384949192405
+        },
+        "rollout_snapshot.close > runtime_snapshot.close": {
+          "calls": 213,
+          "exclusive_seconds": 0.0016136188060045242,
+          "inclusive_seconds": 0.1749980403110385
+        },
+        "rollout_snapshot.restore > runtime_snapshot.restore": {
+          "calls": 130,
+          "exclusive_seconds": 0.29511349834501743,
+          "inclusive_seconds": 0.7743614451028407
+        },
+        "runtime._freeze > environment.observe_dual": {
+          "calls": 213,
+          "exclusive_seconds": 0.47066041734069586,
+          "inclusive_seconds": 0.47066041734069586
+        },
+        "runtime.advance > environment.advance_reservations": {
+          "calls": 2812,
+          "exclusive_seconds": 0.5833856533281505,
+          "inclusive_seconds": 6.880226150155067
+        },
+        "runtime.advance > runtime._freeze": {
+          "calls": 2812,
+          "exclusive_seconds": 0.0103338323533535,
+          "inclusive_seconds": 0.48079304164275527
+        },
+        "runtime_snapshot.__init__ > native._request": {
+          "calls": 213,
+          "exclusive_seconds": 0.1836932604201138,
+          "inclusive_seconds": 0.1836932604201138
+        },
+        "runtime_snapshot.close > native._request": {
+          "calls": 213,
+          "exclusive_seconds": 0.17338442150503397,
+          "inclusive_seconds": 0.17338442150503397
+        },
+        "runtime_snapshot.restore > environment._atomic_observation_pair": {
+          "calls": 130,
+          "exclusive_seconds": 0.0426087835803628,
+          "inclusive_seconds": 0.22687682369723916
+        },
+        "runtime_snapshot.restore > native._request": {
+          "calls": 260,
+          "exclusive_seconds": 0.25237112306058407,
+          "inclusive_seconds": 0.25237112306058407
+        },
+        "search > environment._atomic_observation_pair": {
+          "calls": 1,
+          "exclusive_seconds": 0.0007911249995231628,
+          "inclusive_seconds": 0.0023287502117455006
+        },
+        "search > information.sha256": {
+          "calls": 348,
+          "exclusive_seconds": 5.663985795807093,
+          "inclusive_seconds": 5.775846369564533
+        },
+        "search > native._request": {
+          "calls": 9,
+          "exclusive_seconds": 0.2735387524589896,
+          "inclusive_seconds": 0.2735387524589896
+        },
+        "search > policy.predict": {
+          "calls": 129,
+          "exclusive_seconds": 0.019744886551052332,
+          "inclusive_seconds": 8.371796175371855
+        },
+        "search > rollout.freeze_due_information": {
+          "calls": 2,
+          "exclusive_seconds": 0.003891000524163246,
+          "inclusive_seconds": 0.008615790866315365
+        },
+        "search > rollout_snapshot.__init__": {
+          "calls": 1,
+          "exclusive_seconds": 0.001322207972407341,
+          "inclusive_seconds": 0.004436749964952469
+        },
+        "search > rollout_snapshot.close": {
+          "calls": 1,
+          "exclusive_seconds": 1.5827827155590057e-06,
+          "inclusive_seconds": 0.0008024577982723713
+        },
+        "search > rollout_snapshot.restore": {
+          "calls": 1,
+          "exclusive_seconds": 0.0014714156277477741,
+          "inclusive_seconds": 0.008405040949583054
+        },
+        "search > runtime._freeze": {
+          "calls": 1,
+          "exclusive_seconds": 8.250121027231216e-06,
+          "inclusive_seconds": 0.00020945817232131958
+        },
+        "search > search.semantic_digest": {
+          "calls": 605,
+          "exclusive_seconds": 0.008826127741485834,
+          "inclusive_seconds": 0.008826127741485834
+        },
+        "search > world.restore_root": {
+          "calls": 129,
+          "exclusive_seconds": 0.00024049775674939156,
+          "inclusive_seconds": 0.9550984995439649
+        },
+        "search > world.root_owner_information": {
+          "calls": 129,
+          "exclusive_seconds": 0.002350215334445238,
+          "inclusive_seconds": 0.1442926712334156
+        },
+        "search > world.transition": {
+          "calls": 212,
+          "exclusive_seconds": 0.04775065742433071,
+          "inclusive_seconds": 24.074936469551176
+        },
+        "semantic_encoder.forward > ActiveEffectEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.016662164125591516,
+          "inclusive_seconds": 0.016662164125591516
+        },
+        "semantic_encoder.forward > BattleGroupEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.08902482921257615,
+          "inclusive_seconds": 0.15276599721983075
+        },
+        "semantic_encoder.forward > CandidateEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.1377162029966712,
+          "inclusive_seconds": 0.2096939249895513
+        },
+        "semantic_encoder.forward > CardTokenEncoder": {
+          "calls": 682,
+          "exclusive_seconds": 0.035247573629021645,
+          "inclusive_seconds": 0.10424503311514854
+        },
+        "semantic_encoder.forward > EffectSemanticEncoder.all_effects": {
+          "calls": 341,
+          "exclusive_seconds": 0.15078112622722983,
+          "inclusive_seconds": 0.15078112622722983
+        },
+        "semantic_encoder.forward > GenericScalarEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.004315626807510853,
+          "inclusive_seconds": 0.004315626807510853
+        },
+        "semantic_encoder.forward > LocalChildSetEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.21235860278829932,
+          "inclusive_seconds": 0.3537263893522322
+        },
+        "semantic_encoder.forward > MechanicProfileEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 17.726631289813668,
+          "inclusive_seconds": 17.726631289813668
+        },
+        "semantic_encoder.forward > RelationTransformerV4": {
+          "calls": 341,
+          "exclusive_seconds": 1.815372028388083,
+          "inclusive_seconds": 1.815372028388083
+        },
+        "semantic_encoder.forward > SpatialScatterEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.7223407793790102,
+          "inclusive_seconds": 0.7223407793790102
+        },
+        "semantic_encoder.forward > TowerEncoder": {
+          "calls": 341,
+          "exclusive_seconds": 0.026629375759512186,
+          "inclusive_seconds": 0.026629375759512186
+        },
+        "semantic_encoder.forward > frame.validate": {
+          "calls": 341,
+          "exclusive_seconds": 0.4390180786140263,
+          "inclusive_seconds": 0.4390180786140263
+        },
+        "tensorizer.tensorize > frame.validate": {
+          "calls": 426,
+          "exclusive_seconds": 0.5577227962203324,
+          "inclusive_seconds": 0.5577227962203324
+        },
+        "world.restore_root > rollout_snapshot.restore": {
+          "calls": 129,
+          "exclusive_seconds": 0.1874301820062101,
+          "inclusive_seconds": 0.9548580017872155
+        },
+        "world.root_owner_information > rollout.freeze_due_information": {
+          "calls": 341,
+          "exclusive_seconds": 0.8914280575700104,
+          "inclusive_seconds": 1.720364363398403
+        },
+        "world.transition > policy.sample": {
+          "calls": 212,
+          "exclusive_seconds": 0.004234999418258667,
+          "inclusive_seconds": 13.75068558100611
+        },
+        "world.transition > rollout.commit_simultaneous": {
+          "calls": 212,
+          "exclusive_seconds": 0.03279508324339986,
+          "inclusive_seconds": 0.03279508324339986
+        },
+        "world.transition > rollout.freeze_due_information": {
+          "calls": 212,
+          "exclusive_seconds": 0.2626299560070038,
+          "inclusive_seconds": 0.2626299560070038
+        },
+        "world.transition > rollout_snapshot.__init__": {
+          "calls": 212,
+          "exclusive_seconds": 0.26214637607336044,
+          "inclusive_seconds": 0.8113703290000558
+        },
+        "world.transition > rollout_snapshot.close": {
+          "calls": 212,
+          "exclusive_seconds": 0.0003143260255455971,
+          "inclusive_seconds": 0.17451149132102728
+        },
+        "world.transition > runtime.advance": {
+          "calls": 2812,
+          "exclusive_seconds": 0.051746480632573366,
+          "inclusive_seconds": 7.412765672430396
+        },
+        "world.transition > world.root_owner_information": {
+          "calls": 212,
+          "exclusive_seconds": 0.004005791619420052,
+          "inclusive_seconds": 1.5824276991188526
+        }
+      },
+      "transport": "persistent-delta",
+      "wire": {
+        "attest": {
+          "bytes": 1113,
+          "calls": 1,
+          "max_bytes": 1113,
+          "parse_seconds": 1.7459038645029068e-05
+        },
+        "configure": {
+          "bytes": 222,
+          "calls": 3,
+          "max_bytes": 74,
+          "parse_seconds": 1.629069447517395e-05
+        },
+        "inject": {
+          "bytes": 7599,
+          "calls": 144,
+          "max_bytes": 54,
+          "parse_seconds": 0.00029583415016531944
+        },
+        "observe": {
+          "bytes": 1219358,
+          "calls": 278,
+          "max_bytes": 4553,
+          "parse_seconds": 0.005824819207191467
+        },
+        "observe-atomic-delta": {
+          "bytes": 132435873,
+          "calls": 2943,
+          "max_bytes": 81754,
+          "parse_seconds": 0.22903397539630532
+        },
+        "release-snapshot": {
+          "bytes": 12035,
+          "calls": 213,
+          "max_bytes": 57,
+          "parse_seconds": 0.0007525356486439705
+        },
+        "restore": {
+          "bytes": 19890,
+          "calls": 130,
+          "max_bytes": 153,
+          "parse_seconds": 0.0008079656399786472
+        },
+        "snapshot-create": {
+          "bytes": 33463,
+          "calls": 213,
+          "max_bytes": 159,
+          "parse_seconds": 0.0010068388655781746
+        },
+        "step": {
+          "bytes": 217329,
+          "calls": 2813,
+          "max_bytes": 78,
+          "parse_seconds": 0.006071763578802347
+        }
+      }
+    }
+  },
+  "release_checks": {
+    "main_engine": {
+      "exit_code": 0,
+      "passed": 248,
+      "seconds": 24.28
+    },
+    "public": {
+      "exit_code": 0,
+      "passed": 1104,
+      "skipped": 42
+    }
+  },
+  "schema": "sspi-search-breakdown-evidence.v1",
+  "seed": 20261103,
+  "source_commit": "826a24ba42184d22699083e4ae43e4eb1357929d",
+  "static_and_hash": {
+    "field_hash_seconds": {
+      "frame": 0.0003442208282649517,
+      "hand": 8.366252295672893e-05,
+      "legality": 0.01502237906679511
+    },
+    "legality_shape": [
+      4,
+      576,
+      5
+    ],
+    "mechanic_profile_count": 634,
+    "mechanic_tables": {
+      "guard_archetype_id": [
+        14606,
+        4
+      ],
+      "guard_mask": [
+        14606,
+        4
+      ],
+      "guard_numeric": [
+        14606,
+        4,
+        2
+      ],
+      "numeric": [
+        14606,
+        15
+      ],
+      "profile_id": [
+        14606
+      ],
+      "tags": [
+        14606,
+        54
+      ]
+    }
+  },
+  "threads": 1
+}

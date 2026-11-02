@@ -19,3 +19,5 @@
 比较 boundary-audit.json、combat-audit.json，以及 partial.pt 中的动作。记录按跨运行generation/epoch、各环sequence/causeSequence及进程级deploymentSequence基点归一化，保留相对关系和战斗字段。当前模型和轨迹会因原生出牌拒绝产生 quarantine，脚本保留非零退出码和边界审计；不把它当作训练成功。partial.pt仅对本机可信来源用torch.load读取。额外摘要计算的耗时不作为性能结论。
 
 正式计时、435边界等价、128根搜索和部署事故范围见 docs/SSPI_JSON_DELTA_EVIDENCE_2026-11-02.json 与 docs/SSPI_JSON_EVENT_DELTA_2026-11-02.md。该阶段未产出新有效训练episode或模型强度结论。
+
+函数级搜索剖析使用profile_search.py，传入相同的--port、全新--output和--transport persistent或persistent-delta。它只给现有函数加计时，根结束后对已捕获FAIR输入做本地摘要分析，不增加native请求；自动比较已发布基线的候选、动作、身份、tick和RPC计数。完整计时与子项有嵌套，按脚本说明区分inclusive/exclusive，勿累加重复时间。两种模式仍须串行在独立空闲worker上运行。

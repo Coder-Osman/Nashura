@@ -1,5 +1,11 @@
 # 阶段成果与证据索引
 
+## 2026-11-02：SSPI 搜索细分剖析
+
+基于826a24b，在同一独立Engine5开局root、CPU单线程、seed20261103上串行完成delta/full各128次有效模拟，无额外native请求。原候选顺序、priors、Q、visits、所选动作、模型/FAIR SHA、2812tick、RPC计数全部相同，快照句柄最终0。剖析轮墙钟41.017/39.030秒，包含新增计时且负载未隔离；不把此前42.505/41.283秒的一次差异解释为稳定加速。
+
+delta轮341次model.forward共22.027秒，其中MechanicProfileEncoder重复计算14606条静态operation/634个profile达17.727秒；348次顶层SSPIInformation.sha256共5.776秒，主要来自合法掩码转嵌套布尔列表后递归json.dumps。原子捕获full/delta为136139184/132435873 bytes，仅少2.72%；纯JSON解析0.2418/0.2290秒，完整原子校验0.9565/0.9725秒。开局短分支没有长局的大量累计历史，restore重置增量游标，RPC次数保持。详见[拆解](SSPI_SEARCH_BREAKDOWN_2026-11-02.md)和[机器摘要](SSPI_SEARCH_BREAKDOWN_2026-11-02.json)。这是诊断成果，未实施缓存、未更新权重、不计为完整训练或实力验证。
+
 ## 2026-11-02：SSPI 当前状态与新增事件（真实增量协议）
 
 基于 e64d277，新增七环 JSON 增量控制命令及 resident batch 握手，宿主保存每槽/每消费者确认游标和有界 combat 因果摘要，不重建旧完整事件；保留当前对象、手牌、运行时事实和全部协议/FAIR检查。正常 collector/experiment 可显式使用 event-json-delta，belief 对应 persistent-delta；冻结运行配置保持不变。恢复失败保留游标、成功才重置，重连继续交付；修复未启用公开出牌消费者的陈旧游标参与合并检查的问题。初版新控制命令的大缓冲区逐次清零改为复用。
