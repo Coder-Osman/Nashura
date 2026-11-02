@@ -1,6 +1,7 @@
 from dataclasses import dataclass, replace
 from copy import deepcopy
 import hashlib
+import time
 
 import torch
 
@@ -56,13 +57,24 @@ class FinalRollout:
             self.tensorizers[owner] = tensorizer
         self.information = {}
 
-    def freeze_due_information(self):
+    def freeze_due_information(self, *, timing_profile=None):
+        started = time.perf_counter() if timing_profile is not None else None
         observations = self.runtime.freeze_due_information()
+        if timing_profile is not None:
+            timing_profile["frozen_view_copy_seconds"] = (
+                timing_profile.get("frozen_view_copy_seconds", 0.)
+                + time.perf_counter() - started)
         if not self.information:
             try:
                 information = {}
                 for owner, observation in observations.items():
+                    started = time.perf_counter() if timing_profile is not None else None
                     frame = canonicalize_event_observation(self.tensorizers[owner].tensorize(observation, validate=True))
+                    if timing_profile is not None:
+                        timing_profile["tensorize_seconds"] = (
+                            timing_profile.get("tensorize_seconds", 0.)
+                            + time.perf_counter() - started)
+                        started = time.perf_counter()
                     if self.information_factory is None:
                         legality = legal_prefixes(self.runtime.environment, observation, frame, owner,
                             catalog=self.catalog)
@@ -70,12 +82,22 @@ class FinalRollout:
                     else:
                         information[owner] = self.information_factory(self.runtime.environment, observation,
                             frame, owner, catalog=self.catalog)
+                    if timing_profile is not None:
+                        timing_profile["information_factory_seconds"] = (
+                            timing_profile.get("information_factory_seconds", 0.)
+                            + time.perf_counter() - started)
                 self.information = information
             except Exception:
                 self.runtime.failed = True
                 raise
-        return {owner: replace(info, frame=unpack(pack(info.frame)), legality=deepcopy(info.legality))
+        started = time.perf_counter() if timing_profile is not None else None
+        result = {owner: replace(info, frame=unpack(pack(info.frame)), legality=deepcopy(info.legality))
             for owner, info in self.information.items()}
+        if timing_profile is not None:
+            timing_profile["information_copy_seconds"] = (
+                timing_profile.get("information_copy_seconds", 0.)
+                + time.perf_counter() - started)
+        return result
 
     def commit_simultaneous(self, actions):
         if not self.information:
@@ -89,10 +111,10 @@ class FinalRollout:
         self.runtime.commit_simultaneous(actions, legal=lambda owner, action: information[owner].legality.legal(action))
         self.information = {}
 
-    def advance(self):
+    def advance(self, *, timing_profile=None):
         if self.information:
             raise ValueError("commit all frozen decisions before advancing")
-        return self.runtime.advance()
+        return self.runtime.advance(timing_profile=timing_profile) if timing_profile is not None else self.runtime.advance()
 
     def snapshot(self, sidecar_factory):
         return RolloutSnapshot(self, sidecar_factory)

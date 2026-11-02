@@ -84,7 +84,7 @@ class FinalBattleEnv(BattleEnvV1):
             return TerminalV1()
         return super()._terminal(raw, towers)
 
-    def advance_reservations(self, reservations, *, ticks=1):
+    def advance_reservations(self, reservations, *, ticks=1, timing_profile=None):
         before = self.raw_observation
         native_tick = int(before["tick"])
         tick = self.current_tick
@@ -149,7 +149,8 @@ class FinalBattleEnv(BattleEnvV1):
             pending[plan.identity] = record
         self.reset_decision_deadlines()
         result = self.step({owner: ActionV1.wait(owner, ticks=ticks) for owner in (0, 1)},
-            record_trace=False, policy_features_only=True, defer_observations=True)
+            record_trace=False, policy_features_only=True, defer_observations=True,
+            timing_profile=timing_profile)
         advanced = self.current_tick - tick
         if not 1 <= advanced <= ticks or (reservations and advanced != 1):
             raise BattleEnvError("native final step advanced outside its requested boundary")
@@ -178,13 +179,18 @@ class FinalDecisionRuntime:
             host_observations_avoided=0, refill_poll_ticks=0, early_event_wakes=0)
         self._freeze(environment.current_tick, (0, 1), {})
 
-    def _freeze(self, tick, owners, outcomes):
+    def _freeze(self, tick, owners, outcomes, *, timing_profile=None):
         observations = None
 
         def freeze(owner, current_tick):
             nonlocal observations
             if observations is None:
+                started = time.perf_counter() if timing_profile is not None else None
                 observations = self.environment.observe_dual(policy_features_only=True)
+                if timing_profile is not None:
+                    timing_profile["runtime_fair_view_seconds"] = (
+                        timing_profile.get("runtime_fair_view_seconds", 0.)
+                        + time.perf_counter() - started)
             observation = observations[owner]
             if observation.tick != current_tick:
                 raise BattleEnvError("frozen FAIR observation tick differs from settled boundary")
@@ -204,7 +210,7 @@ class FinalDecisionRuntime:
         self.clock.commit(actions, legal=legal)
         self.frozen = {}
 
-    def advance(self):
+    def advance(self, *, timing_profile=None):
         if self.failed or self.ended or self.truncated or self.clock.ready:
             raise BattleEnvError("advance requires a live runtime with all decisions committed")
         try:
@@ -234,8 +240,13 @@ class FinalDecisionRuntime:
             target = current_tick + advance_ticks
             plans = tuple(plan for plan in self.clock.pending.values()
                 if plan.due_tick == target and plan.action.card_id is not None)
-            outcomes, result = (self.environment.advance_reservations(plans) if advance_ticks == 1 else
-                self.environment.advance_reservations(plans, ticks=advance_ticks))
+            if timing_profile is None:
+                outcomes, result = (self.environment.advance_reservations(plans)
+                    if advance_ticks == 1 else
+                    self.environment.advance_reservations(plans, ticks=advance_ticks))
+            else:
+                outcomes, result = self.environment.advance_reservations(plans,
+                    ticks=advance_ticks, timing_profile=timing_profile)
             actual_tick = self.environment.current_tick
             advanced = actual_tick - current_tick
             if not 1 <= advanced <= advance_ticks or (plans and actual_tick != target):
@@ -251,6 +262,7 @@ class FinalDecisionRuntime:
                 raise BattleEnvError("incomplete native reservation outcomes")
             action_events = self.environment.action_outcomes()
             if self.refill_observer is not None:
+                refill_started = time.perf_counter() if timing_profile is not None else None
                 after_players = {int(player["owner"]): player
                     for player in self.environment.raw_observation["players"]}
                 play_ticks = {owner: tuple(int(event.tick) for event in action_events
@@ -258,6 +270,10 @@ class FinalDecisionRuntime:
                     for owner in (0, 1)}
                 self.refill_observer.advance(before_players, after_players, current_tick,
                     actual_tick, play_ticks)
+                if timing_profile is not None:
+                    timing_profile["refill_observer_seconds"] = (
+                        timing_profile.get("refill_observer_seconds", 0.)
+                        + time.perf_counter() - refill_started)
             public_play = any(event.event_type == "action_executed"
                 and event.data.get("private_to") is None
                 and all(event_visible_to_owner(event, owner) for owner in (0, 1))
@@ -275,7 +291,8 @@ class FinalDecisionRuntime:
                 self.clock.finish(actual_tick, outcomes=outcomes)
                 self.frozen = {}
             else:
-                self._freeze(actual_tick, tuple(sorted(owners)), outcomes)
+                self._freeze(actual_tick, tuple(sorted(owners)), outcomes,
+                    timing_profile=timing_profile)
             return outcomes
         except Exception:
             self.failed = True

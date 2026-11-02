@@ -1,5 +1,12 @@
 # 变更记录
 
+## 2026-11-02：SSPI 完整采集分阶段计时
+
+- 在 collector/runtime/rollout 记录互斥 setup、decision loop、finalize 时间，并细分 MCTS、DIRECT 推理和采样、冻结信息复制、tensorize、合法输入构建、历史更新、advance、增强样本处理及 episode 落盘。
+- 接入 `BattleEnv.step(timing_profile=...)` 的 prepare、native bind、reconcile 和 deferred observation 计时；没有增加原生请求或改变动作语义。
+- 同随机流计时 validation 完整局 438.53 秒，对照无计时局的464条动作/FAIR、22根及访问分布、native ticks和WDL完全一致；MCTS占96.93%，没有约61秒未分类开销。
+- 影响路径定向测试 `159 passed`。计时结束后关闭两个无活跃对局的 headless AVD，ADB server保留。结果是诊断性单局，不是性能或模型强度声明。
+
 ## 2026-11-02：SSPI 待补牌原生费用与有效混合采集
 
 - 待补牌候选按原生卡组费用与五档 `native_payment_mask` 逐档相交；没有可支付档位时不生成 PLAY 候选。部分档位可支付的定向回归已覆盖。

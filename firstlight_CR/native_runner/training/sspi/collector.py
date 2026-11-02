@@ -2,6 +2,7 @@
 
 from dataclasses import asdict
 from collections.abc import Mapping
+from contextlib import contextmanager
 import hashlib
 import io
 import json
@@ -45,6 +46,18 @@ ARM_CONFIG = {
     "A_5PCT_128": (0.05, 128),
 }
 EPISODE_SCHEMA = "sspi-mac-pilot-episode.v1"
+
+
+@contextmanager
+def _timed(profile, name):
+    if profile is None:
+        yield
+        return
+    started = time.perf_counter()
+    try:
+        yield
+    finally:
+        profile[name] = profile.get(name, 0.) + time.perf_counter() - started
 
 
 class SearchNative(NativeClashEnv):
@@ -482,19 +495,22 @@ def _root_visits(outcome, codec):
     return visits
 
 
-def _observe_histories(rollout, histories):
+def _observe_histories(rollout, histories, *, timing_profile=None):
     environment = rollout.runtime.environment
-    views = dict(rollout.runtime.frozen)
-    if not views:
-        views = environment.observe_dual(policy_features_only=True)
-    else:
-        for owner in (0, 1):
-            if owner not in views:
-                views[owner] = environment.observe(owner=owner, policy_features_only=True)
+    with _timed(timing_profile, "history_fair_view_seconds"):
+        views = dict(rollout.runtime.frozen)
+        if not views:
+            views = environment.observe_dual(policy_features_only=True)
+        else:
+            for owner in (0, 1):
+                if owner not in views:
+                    views[owner] = environment.observe(owner=owner, policy_features_only=True)
     boundary = getattr(environment.native, "last_advance_boundary", None)
     for owner in (0, 1):
-        validate_fair_view(views[owner], owner)
-        histories[owner].observe_tick(views[owner], interval=boundary)
+        with _timed(timing_profile, "history_fair_validation_seconds"):
+            validate_fair_view(views[owner], owner)
+        with _timed(timing_profile, "history_recorder_seconds"):
+            histories[owner].observe_tick(views[owner], interval=boundary)
     return views
 
 
@@ -620,6 +636,8 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         ability={"0": 0, "1": 0}, ready_hand_counts={"2": 0, "3": 0, "4": 0},
         refill_events=0, ignored_early_plays=0, groups=0)
     started = time.monotonic()
+    phase_started = time.perf_counter()
+    timing_profile = {}
     try:
         worker_attestations = preflight_native_endpoints(host, actual_port, belief_ports,
             transport=transport, actual_env_id=actual_env_id,
@@ -642,7 +660,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         identity["engine_sha256"] = engine_sha
         rollout = make_sspi_rollout(environment, catalog=bundle.card_catalog,
             execution_seed=seed_identity["actual_rollout_seed"])
-        opening_information = rollout.freeze_due_information()
+        opening_information = rollout.freeze_due_information(timing_profile=timing_profile)
         if set(opening_information) != {0, 1}:
             raise ValueError("native opening did not freeze both players")
         histories = {} if episode_kind != "evaluation" else None
@@ -659,12 +677,16 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         decision_indices = {0: 0, 1: 0}
         observations = None
         last_progress = started
+        timing_profile["setup_seconds"] = time.perf_counter() - phase_started
+        loop_started = time.perf_counter()
 
         while not rollout.runtime.ended and not rollout.runtime.truncated:
-            frozen = rollout.freeze_due_information()
+            with _timed(timing_profile, "freeze_seconds"):
+                frozen = rollout.freeze_due_information(timing_profile=timing_profile)
             selected = {}
             source_roots = {}
             if frozen:
+                group_started = time.perf_counter()
                 if set(frozen) != rollout.runtime.clock.ready:
                     raise ValueError("frozen SSPI owners differ from the native same-tick ready set")
                 group = dict(tick=rollout.runtime.clock.tick,
@@ -680,36 +702,39 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                         game_id=seed_identity["random_stream_id"], owner=owner, decision_index=index,
                         probability=search_probability)
                     if search_selected:
-                        history = histories[owner].capture(information)
-                        belief_provider = belief_providers.for_search(owner, history)
+                        with _timed(timing_profile, "history_capture_seconds"):
+                            history = histories[owner].capture(information)
+                            belief_provider = belief_providers.for_search(owner, history)
                         search_seed = split_seed(seed, "sspi-search.v1", run_id, arm,
                             seed_identity["random_stream_id"], owner, index)
                         behavior_seed = split_seed(seed, "sspi-search-behavior.v1", run_id, arm,
                             seed_identity["random_stream_id"], owner, index)
-                        outcome = CompletedBoundarySearch(belief_provider,
-                            inference_by_owner[0], inference_by_owner[1],
-                            limits=limits).run(information, seed=search_seed,
-                                behavior_seed=behavior_seed, codec=codec,
-                                identity=dict(search_protocol_sha=search_sha,
-                                    root_belief_prior_sha=belief_provider.sampler_sha,
-                                    checkpoint_blue_sha=model_sha_by_owner["0"],
-                                    checkpoint_red_sha=model_sha_by_owner["1"],
-                                    controller_blue_sha=controller_sha_by_owner[0],
-                                    controller_red_sha=controller_sha_by_owner[1]),
-                                mode="FULL", simulation_budget=simulations)
+                        with _timed(timing_profile, "search_seconds"):
+                            outcome = CompletedBoundarySearch(belief_provider,
+                                inference_by_owner[0], inference_by_owner[1],
+                                limits=limits).run(information, seed=search_seed,
+                                    behavior_seed=behavior_seed, codec=codec,
+                                    identity=dict(search_protocol_sha=search_sha,
+                                        root_belief_prior_sha=belief_provider.sampler_sha,
+                                        checkpoint_blue_sha=model_sha_by_owner["0"],
+                                        checkpoint_red_sha=model_sha_by_owner["1"],
+                                        controller_blue_sha=controller_sha_by_owner[0],
+                                        controller_red_sha=controller_sha_by_owner[1]),
+                                    mode="FULL", simulation_budget=simulations)
                         action = outcome.selected
-                        visits = _root_visits(outcome, codec)
-                        roots.append(dict(root_id=f"{game_id}:{len(roots):06d}", owner=owner,
-                            tick=information.tick, decision_index=index, fair_sha256=information.sha256,
-                            frame=pack(information.frame), hand=asdict(information.hand),
-                            card_ids=information.legality.card_ids,
-                            plays=information.legality.plays.detach().cpu().clone(),
-                            pending_arrival_ticks=information.legality.pending_arrival_ticks,
-                            wait=bool(information.legality.modes[ActionMode.WAIT]),
-                            visits=visits, simulations=outcome.result["valid_simulations"],
-                            search_result=outcome.result, search_audit=outcome.audit,
-                            gate_seed=gate_seed, search_seed=search_seed, behavior_seed=behavior_seed,
-                            history_sha256=history.sha256))
+                        with _timed(timing_profile, "root_record_seconds"):
+                            visits = _root_visits(outcome, codec)
+                            roots.append(dict(root_id=f"{game_id}:{len(roots):06d}", owner=owner,
+                                tick=information.tick, decision_index=index, fair_sha256=information.sha256,
+                                frame=pack(information.frame), hand=asdict(information.hand),
+                                card_ids=information.legality.card_ids,
+                                plays=information.legality.plays.detach().cpu().clone(),
+                                pending_arrival_ticks=information.legality.pending_arrival_ticks,
+                                wait=bool(information.legality.modes[ActionMode.WAIT]),
+                                visits=visits, simulations=outcome.result["valid_simulations"],
+                                search_result=outcome.result, search_audit=outcome.audit,
+                                gate_seed=gate_seed, search_seed=search_seed, behavior_seed=behavior_seed,
+                                history_sha256=history.sha256))
                         counters["search"][str(owner)] += 1
                         source_roots[owner] = roots[-1]
                         decision_mode = "SEARCH"
@@ -718,70 +743,86 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                         action_generator = torch.Generator(device="cpu").manual_seed(
                             split_seed(seed, "sspi-direct-action.v1", run_id, arm,
                                 seed_identity["random_stream_id"], owner, index))
-                        policy, _ = inference_by_owner[owner].predict(information)
-                        action, _ = policy.sample(action_generator)
+                        with _timed(timing_profile, "direct_predict_seconds"):
+                            policy, _ = inference_by_owner[owner].predict(information)
+                        with _timed(timing_profile, "direct_sample_seconds"):
+                            action, _ = policy.sample(action_generator)
                         counters["direct"][str(owner)] += 1
                         decision_mode = "DIRECT"
                         selection_seed = split_seed(seed, "sspi-direct-action.v1", run_id, arm,
                             seed_identity["random_stream_id"], owner, index)
-                    action = _native_execution_action(action, mode=decision_mode)
-                    if not information.legality.legal(action):
-                        raise ValueError("SSPI actor selected an illegal native action")
-                    executed_action = information.legality.execution_action(action)
-                    if histories is not None:
-                        histories[owner].record_decision(information, executed_action)
-                    selected[owner] = action
-                    counters["ignored_early_plays"] += int(executed_action != action)
-                    kind = "WAIT" if executed_action.card_id is None else "PLAY"
-                    counters[kind.lower()][str(owner)] += 1
-                    group["selections"].append(dict(owner=owner, decision_index=index,
-                        mode=decision_mode, gate_seed=gate_seed, selection_seed=selection_seed,
-                        action=_action_key(action), executed_action=_action_key(executed_action)))
-                    action_log.append(dict(group=len(action_log), tick=information.tick,
-                        owner=owner, decision_index=index, fair_sha256=information.sha256,
-                        mode=decision_mode, gate_seed=gate_seed, selection_seed=selection_seed,
-                        action=_action_key(action), executed_action=_action_key(executed_action)))
-                    decision_indices[owner] += 1
-                rollout.commit_simultaneous(selected)
+                    with _timed(timing_profile, "decision_record_seconds"):
+                        action = _native_execution_action(action, mode=decision_mode)
+                        if not information.legality.legal(action):
+                            raise ValueError("SSPI actor selected an illegal native action")
+                        executed_action = information.legality.execution_action(action)
+                        if histories is not None:
+                            histories[owner].record_decision(information, executed_action)
+                        selected[owner] = action
+                        counters["ignored_early_plays"] += int(executed_action != action)
+                        kind = "WAIT" if executed_action.card_id is None else "PLAY"
+                        counters[kind.lower()][str(owner)] += 1
+                        group["selections"].append(dict(owner=owner, decision_index=index,
+                            mode=decision_mode, gate_seed=gate_seed, selection_seed=selection_seed,
+                            action=_action_key(action), executed_action=_action_key(executed_action)))
+                        action_log.append(dict(group=len(action_log), tick=information.tick,
+                            owner=owner, decision_index=index, fair_sha256=information.sha256,
+                            mode=decision_mode, gate_seed=gate_seed, selection_seed=selection_seed,
+                            action=_action_key(action), executed_action=_action_key(executed_action)))
+                        decision_indices[owner] += 1
+                with _timed(timing_profile, "commit_seconds"):
+                    rollout.commit_simultaneous(selected)
                 if augmenter is not None:
-                    for owner, root in source_roots.items():
-                        augmenter.register(root, rollout.runtime.clock.pending[owner],
-                            rollout.tensorizers[owner])
+                    with _timed(timing_profile, "augmentation_register_seconds"):
+                        for owner, root in source_roots.items():
+                            augmenter.register(root, rollout.runtime.clock.pending[owner],
+                                rollout.tensorizers[owner])
                 counters["groups"] += 1
                 if progress is not None:
                     progress(dict(stage="decisions_committed", game_id=game_id,
                         tick=group["tick"], owners=group["owners"], selections=group["selections"],
                         search_roots=len(roots), elapsed_seconds=time.monotonic() - started))
+                timing_profile["decision_group_seconds"] = (
+                    timing_profile.get("decision_group_seconds", 0.)
+                    + time.perf_counter() - group_started)
 
             if not rollout.runtime.ended and not rollout.runtime.truncated:
-                before = {owner: set(player["cardId"] for player in
-                    next(item for item in environment.raw_observation["players"]
-                        if item["owner"] == owner)["hand"]) for owner in (0, 1)}
-                evidence_start = len(rollout.runtime.clock.evidence)
-                rollout.advance()
-                observations = (_observe_histories(rollout, histories)
-                    if histories is not None else None)
+                with _timed(timing_profile, "advance_prepare_seconds"):
+                    before = {owner: set(player["cardId"] for player in
+                        next(item for item in environment.raw_observation["players"]
+                            if item["owner"] == owner)["hand"]) for owner in (0, 1)}
+                    evidence_start = len(rollout.runtime.clock.evidence)
+                with _timed(timing_profile, "runtime_advance_seconds"):
+                    rollout.advance(timing_profile=timing_profile)
+                with _timed(timing_profile, "history_update_seconds"):
+                    observations = (_observe_histories(rollout, histories,
+                        timing_profile=timing_profile) if histories is not None else None)
                 if augmenter is not None:
                     if observations is None:
                         raise AssertionError("continuation samples require FAIR history observations")
-                    augmenter.observe(environment=environment, observations=observations,
-                        clock=rollout.runtime.clock, catalog=bundle.card_catalog,
-                        evidence=rollout.runtime.clock.evidence[evidence_start:],
-                        refill_clock=rollout.runtime.refill_observer)
-                after = {owner: set(player["cardId"] for player in
-                    next(item for item in environment.raw_observation["players"]
-                        if item["owner"] == owner)["hand"]) for owner in (0, 1)}
-                counters["refill_events"] += sum(max(0, len(after[owner] - before[owner])) for owner in (0, 1))
-                if progress is not None and time.monotonic() - last_progress >= 60.:
-                    progress(dict(stage="native_advance", game_id=game_id,
-                        tick=rollout.runtime.clock.tick, search_roots=len(roots),
-                        seconds_since_search_check=time.monotonic() - last_progress,
-                        elapsed_seconds=time.monotonic() - started,
-                        reservation_evidence=len(rollout.runtime.clock.evidence) - evidence_start))
-                    last_progress = time.monotonic()
+                    with _timed(timing_profile, "augmentation_observe_seconds"):
+                        augmenter.observe(environment=environment, observations=observations,
+                            clock=rollout.runtime.clock, catalog=bundle.card_catalog,
+                            evidence=rollout.runtime.clock.evidence[evidence_start:],
+                            refill_clock=rollout.runtime.refill_observer)
+                with _timed(timing_profile, "advance_bookkeeping_seconds"):
+                    after = {owner: set(player["cardId"] for player in
+                        next(item for item in environment.raw_observation["players"]
+                            if item["owner"] == owner)["hand"]) for owner in (0, 1)}
+                    counters["refill_events"] += sum(max(0, len(after[owner] - before[owner])) for owner in (0, 1))
+                    if progress is not None and time.monotonic() - last_progress >= 60.:
+                        progress(dict(stage="native_advance", game_id=game_id,
+                            tick=rollout.runtime.clock.tick, search_roots=len(roots),
+                            seconds_since_search_check=time.monotonic() - last_progress,
+                            elapsed_seconds=time.monotonic() - started,
+                            reservation_evidence=len(rollout.runtime.clock.evidence) - evidence_start))
+                        last_progress = time.monotonic()
 
+        timing_profile["loop_seconds"] = time.perf_counter() - loop_started
+        finalize_started = time.perf_counter()
         if observations is None or observations[0].tick != rollout.runtime.clock.tick:
-            observations = environment.observe_dual(policy_features_only=True)
+            with _timed(timing_profile, "terminal_fair_view_seconds"):
+                observations = environment.observe_dual(policy_features_only=True)
         terminal = observations[0].terminal
         if observations[1].terminal != terminal:
             raise ValueError("native owner observations disagree on final WDL")
@@ -806,10 +847,32 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         native_performance = (actual_native.finish_capture_profile()
             if isinstance(actual_native, EventBatchedSSPINative) else None)
         tensor_path = destination / "episode.pt"
-        tensor_sha = _atomic_torch(tensor_path, dict(schema=EPISODE_SCHEMA,
-            identity=identity, roots=roots))
-        _atomic_json(destination / "actions.json", dict(schema="sspi-action-ledger.v1",
-            rows=action_log, reservation_evidence=rollout.runtime.clock.evidence))
+        with _timed(timing_profile, "tensor_write_seconds"):
+            tensor_sha = _atomic_torch(tensor_path, dict(schema=EPISODE_SCHEMA,
+                identity=identity, roots=roots))
+        with _timed(timing_profile, "actions_write_seconds"):
+            _atomic_json(destination / "actions.json", dict(schema="sspi-action-ledger.v1",
+                rows=action_log, reservation_evidence=rollout.runtime.clock.evidence))
+        timing_profile["finalize_seconds"] = time.perf_counter() - finalize_started
+        timing_profile["group_other_seconds"] = max(0., timing_profile.get("decision_group_seconds", 0.)
+            - sum(timing_profile.get(name, 0.) for name in (
+                "history_capture_seconds", "search_seconds", "root_record_seconds",
+                "direct_predict_seconds", "direct_sample_seconds", "decision_record_seconds",
+                "commit_seconds", "augmentation_register_seconds")))
+        timing_profile["runtime_other_seconds"] = max(0., timing_profile.get("runtime_advance_seconds", 0.)
+            - sum(timing_profile.get(name, 0.) for name in (
+                "step_transition_seconds", "step_observation_seconds",
+                "runtime_fair_view_seconds", "refill_observer_seconds")))
+        timing_profile["loop_other_seconds"] = max(0., timing_profile["loop_seconds"]
+            - sum(timing_profile.get(name, 0.) for name in (
+                "freeze_seconds", "decision_group_seconds", "advance_prepare_seconds",
+                "runtime_advance_seconds", "history_update_seconds",
+                "augmentation_observe_seconds", "advance_bookkeeping_seconds")))
+        timing_profile["finalize_other_seconds"] = max(0., timing_profile["finalize_seconds"]
+            - sum(timing_profile.get(name, 0.) for name in (
+                "terminal_fair_view_seconds", "tensor_write_seconds", "actions_write_seconds")))
+        timing_profile["accounted_seconds"] = sum(timing_profile[name]
+            for name in ("setup_seconds", "loop_seconds", "finalize_seconds"))
         episode = dict(schema=EPISODE_SCHEMA, identity=identity, status="complete",
             episode_kind=episode_kind, training_admissible=training_admissible,
             result=result, tensor_file="episode.pt",
@@ -821,6 +884,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
             search_fraction_actual=(sum(map(int, counters["search"].values())) /
                 max(1, sum(map(int, counters["decisions"].values())))),
             native_capture_performance=native_performance,
+            timing_profile=dict(schema="sspi-collection-timing.v1", **timing_profile),
             elapsed_seconds=time.monotonic() - started,
             terminal_tick=rollout.runtime.clock.tick)
         _atomic_json(destination / "episode.json", episode)

@@ -1,5 +1,19 @@
 # 阶段成果与证据索引
 
+## 2026-11-02：SSPI 完整混合采集互斥计时
+
+为定位整局采集的剩余耗时，将计时从 collector 接到 `FinalRollout`、`FinalDecisionRuntime` 和 `BattleEnv.step(timing_profile=...)`。profile 中 setup、loop、finalize 是互斥整局分区；loop 下 freeze、决策组、runtime advance、历史更新、补牌记账和 finalize 均独立计时。决策组内将 SEARCH、DIRECT 推理/采样、动作记录与校验、commit 和 root序列化分别记录；advance内的step prepare/native bind/reconcile和runtime FAIR freeze为嵌套细项，不重复求和。计时不增加原生请求。
+
+使用 macOS 宿主 CPU、随机流 `sspi-event-delta-mixed-stream-0001`、run `sspi-event-delta-mixed-20261102-v1`、game `MIX-0001`、seed 20261103、`event-json-delta` 做 `episode_kind=validation`。实际端口 26889，belief owner 0/1 为 26893/26894（原 26890/26892 留有非终局 resident 槽，预检拒绝后未 reset、未改写其状态）。模型 SHA256 `9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4`，源码 SHA256 `805acbb2513c16575520193462ea02665e72775e9a153cddfa5fbf232d9fd0e5`，三 worker `libg` SHA256 `110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783`，probe SHA256 `f79ba9344a9599483c7283e7cde756a3a77f2982741f0c83467eee68a1f28e64`。
+
+对局自然终局于 tick 3961，232组、464个 owner 决策，22个 SEARCH 根（15/7）及442个 DIRECT 决策，WDL WIN/LOSS；2、3、4张就绪手牌状态分别出现6、12、446次。episode `training_admissible=false`，不是训练样本。未计时 training episode 与本局的464行动作/FAIR ledger、22个根的 tick/owner/decision/FAIR SHA/访问分布、双方计数、native ticks和WDL完全一致；计时没有改变执行或采样结果。
+
+总墙钟 `438.5317 s`，profile闭合 `438.5316 s`，差 `0.00015 s`。互斥分区为 setup `1.316 s`（0.30%）、loop `437.088 s`（99.67%）、finalize `0.128 s`（0.03%）。loop中的decision groups `430.831 s`，其中MCTS搜索 `425.056 s`（整局96.93%，22根平均19.32秒）；DIRECT前向和动作采样 `4.690 s`（1.07%）；动作校验/历史决策记账 `0.625 s`，decision组剩余 `0.353 s`。loop其余为freeze `2.735 s`（嵌套冻结视图复制1.155、张量化1.158、输入构造0.229、信息副本0.182秒）、runtime advance `3.211 s`、history update `0.300 s`和约0.009秒预备/增广/其他。因此，此 5%×128 完整轨迹中没有约61秒的未分类开销，主要成本是MCTS工作量。
+
+Runtime advance 内的 `BattleEnv.step` transition `2.449 s`，其中native bind `2.138 s`、事件/回执 reconcile `0.290 s`、准备 `0.021 s`；deferred observation materialization `0.0006 s`。runtime公平视图freeze另 `0.515 s`，advance其他 `0.243 s`，均已包含在advance父阶段。原生推进 `3871 ticks`、`342`个 event-json-delta batches，避免 `3529`次宿主逐tick观测，响应 `57.43 MB`；JSON decode `0.621 s`、receive `0.674 s`、resident批处理 `1.302 s`均为native bind/advance的嵌套子计时，不能再次累加。状态传输、历史、张量化、合法动作生成和落盘不是总耗时主因。
+
+计时路径回归 `159 passed`。这是单局瓶颈归因，不代表吞吐优化或策略强度变化。采样结束并核对两个 AVD 六个 native 端口均无 resident match、没有 collector 后，`emulator-5556` 与既有 `emulator-5554` 均通过 emulator console 正常关机；随后无 QEMU、SSPI actor 或 ADB device 留存，ADB server未停止。episode/张量/动作原件只留本机 `/tmp/sspi-phase-profile-mixed-20261102-r2`，SHA256分别为 `7485fe24db9960b0e561a2e1d45e2cc8de0c9ceae6efe480421710e3d8572d2b`、`73dc6266c69e2683472944c8c0d765c183a298b1b6c5af58e9069d6b61b0fccb`、`9685d22f76229e517191a8dac3ddc7639458c495c8a26ff25b7b8d67c5fec74d`，不进入公开仓库。
+
 ## 2026-11-02：待补牌费用修复与 event-json-delta 有效混合局
 
 新版随机模型的旧诊断在 tick 178 等位置出现原生 PLAY 拒绝：待补牌虽已知且可能在延迟内到位，`SSPILegality.from_native` 却未对这类候选应用圣水费用掩码。tick 170 的 owner 1 待补 Ice Golem 仍需 4 ticks，`elixirRaw=260`；提议 400 ms PLAY 时没有足够圣水，执行前也仅 `elixirRaw=1506`。现在使用原生 `deck` 的费用和既有 `native_payment_mask`，逐档筛除不可支付的延迟；过早于补牌的提议仍按 WAIT 忽略。定向测试覆盖全可支付、部分档位可支付和全不可支付。
