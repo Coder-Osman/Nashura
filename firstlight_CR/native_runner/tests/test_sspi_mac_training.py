@@ -1,5 +1,6 @@
 from copy import deepcopy
 import json
+from types import SimpleNamespace
 
 import pytest
 import torch
@@ -22,6 +23,7 @@ from native_runner.training.sspi.protocol import (
     AbilityCandidate,
     ActionMode,
     HandState,
+    HogRefillClock,
     SSPILegality,
     SSPIAction,
     SSPIInformation,
@@ -30,8 +32,11 @@ from native_runner.training.sspi.protocol import (
 )
 from native_runner.training.fair_final.rollout import FinalRollout
 from native_runner.training.fair_final.policy import FullAction
+from native_runner.contracts import ObservationTier
+from native_runner.cr_native_env import NativeClashEnv, ResidentNativeClashEnv, RunnerError
 from native_runner.training.sspi.collector import (
     ARM_CONFIG,
+    EventBatchedSSPINative,
     OwnerBeliefProviders,
     SearchNative,
     _native_execution_action,
@@ -119,14 +124,90 @@ def test_hand_cycle_rejects_missing_identity_and_non_native_integer_indices():
 
 
 def test_hand_features_include_physical_slots_fifo_and_known_unavailable_next_card():
-    hand = HandState.from_native(native_player((0, 2)))
+    hand = HandState.from_native(native_player((0, 2)), refill_remaining_ticks=(12, 32))
     features = _hand_features(hand, device="cpu")
     assert features.shape == (HAND_FEATURE_DIM,)
-    assert features[0] == 0. and features[9] == 1.
-    assert features[20] == 1.
-    assert features[-1] == 0.
+    assert features[0] == 0. and features[15] == 1.
+    assert features[13] == 1. and features[14] == pytest.approx(12 / 1200)
+    assert features[43] == 1. and features[44] == pytest.approx(32 / 1200)
     refilled = HandState.from_native(refill_one(native_player((0, 2))))
     assert _hand_features(refilled, device="cpu").shape == features.shape
+
+
+def test_hog_refill_clock_preserves_deadline_across_batched_ticks_and_restore():
+    clock = HogRefillClock()
+    before = {owner: native_player() for owner in (0, 1)}
+    first = deepcopy(before)
+    first[0]["hand"][0] = {**first[0]["deck"][4], "handIndex": 0}
+    clock.advance(before, first, 401, 402, {0: (402,), 1: ()})
+    assert clock.remaining(0, 405, 2) == (17, 37)
+    saved = clock.capture()
+    second = deepcopy(first)
+    second[0]["hand"].pop(0)
+    clock.advance(first, second, 402, 405, {0: (405,), 1: ()})
+    assert clock.remaining(0, 405, 1) == (17,)
+    refilled = deepcopy(second)
+    refilled[0]["hand"].append({**refilled[0]["deck"][5], "handIndex": 0})
+    clock.advance(second, refilled, 405, 422, {0: (), 1: ()})
+    assert clock.remaining(0, 422, 1) == (20,)
+    clock.restore(saved)
+    assert clock.remaining(0, 405, 2) == (17, 37)
+    clock.advance(first, first, 405, 450, {0: (), 1: ()})
+    late = deepcopy(first)
+    late[0]["hand"][0] = {**late[0]["deck"][5], "handIndex": 0}
+    clock.advance(first, late, 450, 451, {0: (451,), 1: ()})
+    assert clock.remaining(0, 455, 1) == (16,)
+    assert clock.next_boundary({0: native_player((0,)), 1: native_player()}, 455) == 471
+
+
+def test_early_pending_play_is_ignored_without_changing_policy_target():
+    plays = torch.zeros((1, 576, 5), dtype=torch.bool)
+    plays[0, 17, :] = True
+    legality = SSPILegality((HOG_DECK[4],), plays,
+        pending_arrival_ticks={HOG_DECK[4]: 12})
+    early = SSPIAction.play(HOG_DECK[4], 17, 0)
+    later = SSPIAction.play(HOG_DECK[4], 17, 4)
+    assert legality.legal(early)
+    assert legality.execution_action(to_full_action(early)) == FullAction()
+    assert legality.execution_action(to_full_action(later)) == to_full_action(later)
+
+
+def test_pending_card_candidate_exposes_arrival_time_and_early_bin(monkeypatch):
+    from native_runner.training.sspi import protocol
+
+    player = native_player((0,))
+    for card in (*player["hand"], *player["deck"]):
+        card["cost"] = 2
+    hand = HandState.from_native(player, refill_remaining_ticks=(12,))
+    count = len(HOG_DECK)
+    cells = torch.zeros((count, 576), dtype=torch.bool)
+    for row in range(1, 4):
+        cells[row, 17] = True
+    legacy = SimpleNamespace(decision_ready=True, row_card_id=torch.tensor(HOG_DECK),
+        cell_masks=cells, delay_masks=torch.ones((count, 31), dtype=torch.bool))
+    frame = SimpleNamespace(own_cards=SimpleNamespace(
+        card_vocab_id=torch.zeros((1, count), dtype=torch.long),
+        mask=torch.ones((1, count), dtype=torch.bool)))
+    observation = SimpleNamespace(owner=0, tick=410, tier=ObservationTier.FAIR)
+    raw = {"tick": 410, "players": [{**player, "owner": 0, "elixirRaw": 100000}]}
+    environment = SimpleNamespace(current_tick=410, raw_observation=raw,
+        mode_timeline=SimpleNamespace(timeline=object()),
+        _extract_towers=lambda raw: (), _rich_context=lambda raw: None,
+        _occupied_building_footprints=lambda raw, rich: ((), ()),
+        _destroyed_enemy_lanes=lambda owner, towers: (),
+        _active_tower_footprints=lambda towers: (),
+        _cached_placement_entry=lambda **kwargs: {"row_major": tuple(
+            tuple(cell == 17 for cell in range(18)) if row == 0 else (False,) * 18
+            for row in range(32))})
+    monkeypatch.setattr(protocol, "validate_fair_view", lambda *args: None)
+    monkeypatch.setattr(protocol, "legal_event_actions", lambda *args, **kwargs: legacy)
+    monkeypatch.setattr(protocol, "native_payment_mask", lambda **kwargs: torch.ones(31, dtype=torch.bool))
+    monkeypatch.setattr(protocol, "gameplay_end_tick", lambda environment: 7200)
+    monkeypatch.setattr(protocol, "constrain_spell_placement", lambda rows, *args: rows)
+    legality = SSPILegality.from_native(environment, observation, frame, 0,
+        catalog=object(), hand_state=hand)
+    assert legality.pending_arrival_ticks == {HOG_DECK[0]: 12}
+    assert legality.legal(SSPIAction.play(HOG_DECK[0], 17, 0))
 
 
 def test_stable_card_identity_ignores_random_native_deck_slot_permutation():
@@ -195,6 +276,112 @@ def test_collector_transport_is_explicit_and_legacy_remains_default():
         SearchNative("127.0.0.1", 26789, transport="unknown")
     legacy.close_transport()
     persistent.close_transport()
+
+
+def test_event_batch_collector_reuses_validated_json_capture_and_invalidates_before_control(monkeypatch):
+    calls = []
+    capture = {"tick": 8, "ordinary": {"tick": 8}, "rich": {"tick": 8}}
+    profile = dict(connect_ns=1, batches=1, environments=1, request_bytes=10,
+        response_bytes=20, decoded_response_bytes=30, send_ns=2,
+        request_ack_ns=3, last_request_ack_ns=3, receive_ns=4, decode_ns=5, total_ns=6)
+
+    class Channel:
+        def __init__(self, host, port, **options):
+            calls.append(("connect", host, port, options))
+
+        def step_partitioned(self, actions, *, ticks):
+            calls.append(("step", actions, ticks))
+            return {0: type("Outcome", (), {"capture": capture, "stop_flags": 2,
+                "stopped_on_deployment": True, "stopped_on_terminal": False,
+                "reached_max_ticks": False})()}
+
+        def profile(self):
+            return profile
+
+        def close(self):
+            calls.append("close")
+
+    def request(native, command, **options):
+        calls.append(("control", command))
+        if command == "multi-status":
+            return {"occupied": 1, "slots": [{"envId": 0}]}
+        return {"ok": True}
+
+    monkeypatch.setattr("native_runner.training.sspi.collector.ResidentBatchChannelV1", Channel)
+    monkeypatch.setattr(NativeClashEnv, "_request", request)
+    native = EventBatchedSSPINative("127.0.0.1", 26789)
+    native.start_atomic_steps(initial_tick=7)
+    assert native.step(5) is capture["ordinary"]
+    assert native.observe_atomic() is capture
+    assert native.observe() is capture["ordinary"]
+    assert calls[0][3]["training_capture"] is False
+    assert calls[0][3]["compressed_json"] is False
+    assert calls[0][3]["validate_json_capture"] is True
+    assert calls[0][3]["step_until_event"] is True
+    assert calls[1] == ("step", {0: ()}, 5)
+    assert native.last_advance_boundary.start_tick == 7
+    assert native.last_advance_boundary.end_tick == 8
+    assert native.last_advance_boundary.stop_reason == "deployment"
+
+    native._request('inject {"owner":0}')
+    assert calls[-2:] == ["close", ("control", 'env 0 inject {"owner":0}')]
+    assert native._capture is None
+    assert native.capture_profile["response_bytes"] == 20
+    result = native.finish_capture_profile()
+    assert result["decoded_response_bytes"] == 30
+    assert result["actual_native_ticks"] == 1
+    assert result["requested_native_ticks"] == 5
+    assert result["stopped_on_deployment"] == 1
+    native.close_transport()
+
+
+def test_event_batch_snapshot_controls_require_one_resident_slot(monkeypatch):
+    native = EventBatchedSSPINative("127.0.0.1", 26789)
+    monkeypatch.setattr(ResidentNativeClashEnv, "resident_status",
+        lambda _self: {"occupied": 2, "slots": [{"envId": 0}, {"envId": 1}]})
+    with pytest.raises(RunnerError, match="exactly one resident slot"):
+        native._request("snapshot-create")
+
+
+def test_event_batch_transport_routes_its_configured_resident_slot(monkeypatch):
+    calls = []
+    capture = {"tick": 9, "ordinary": {"tick": 9}, "rich": {"tick": 9}}
+
+    class Channel:
+        def __init__(self, host, port, **options):
+            calls.append(("connect", options))
+
+        def step_partitioned(self, actions, *, ticks):
+            calls.append(("step", actions, ticks))
+            return {1: type("Outcome", (), {"capture": capture, "stop_flags": 0,
+                "stopped_on_deployment": False, "stopped_on_terminal": False,
+                "reached_max_ticks": True})()}
+
+        def profile(self):
+            return {name: 0 for name in EventBatchedSSPINative._CHANNEL_PROFILE_FIELDS}
+
+        def close(self):
+            calls.append("close")
+
+    monkeypatch.setattr("native_runner.training.sspi.collector.ResidentBatchChannelV1", Channel)
+    native = EventBatchedSSPINative("127.0.0.1", 26789, env_id=1)
+    native.start_atomic_steps(initial_tick=8)
+    assert native.step(4) is capture["ordinary"]
+    assert calls[-1] == ("step", {1: ()}, 4)
+    assert native.last_advance_boundary.stop_reason == "tick_budget"
+    native.close_transport()
+
+
+def test_event_batch_snapshot_routes_single_slot_digest_through_global_control(monkeypatch):
+    calls = []
+    native = EventBatchedSSPINative("127.0.0.1", 26789)
+    monkeypatch.setattr(ResidentNativeClashEnv, "resident_status",
+        lambda _self: {"occupied": 1, "slots": [{"envId": 0}]})
+    monkeypatch.setattr(NativeClashEnv, "_request",
+        lambda _self, command, **_options: calls.append(command) or {"ok": True})
+
+    assert native._request("snapshot-create") == {"ok": True}
+    assert calls == ["snapshot-create"]
 
 
 def test_owner_belief_providers_keep_independent_history_cursors_and_close_all():
@@ -304,6 +491,60 @@ def test_native_preflight_rejects_truncated_observation_and_closes_transport(mon
     assert closed == [True]
 
 
+def test_event_json_preflight_selects_resident_slot_without_rebinding_frozen_slot(monkeypatch):
+    calls = []
+
+    class Probe:
+        def __init__(self, host, port, *, transport, timeout):
+            self.port = port
+            calls.append(("probe", port, transport))
+
+        def _request(self, command):
+            assert command == "multi-status"
+            return {"mode": "resident-headless", "occupied": 2,
+                "slots": [{"envId": 0}, {"envId": 1}]}
+
+        def status(self):
+            return {"ready": True}
+
+        def observe(self):
+            return {"ok": True}
+
+        def attest(self, _ruleset=None):
+            return type("Attestation", (), {
+                "libg_sha256": "a" * 64, "probe_sha256": "b" * 64})()
+
+        def close_transport(self):
+            calls.append(("probe-close", self.port))
+
+    class Resident:
+        def __init__(self, env_id, host, port, *, timeout):
+            calls.append(("resident", env_id, port))
+            self.port = port
+
+        def status(self):
+            return {"ready": True}
+
+        def observe(self):
+            return {"ok": True}
+
+        def attest(self, _ruleset=None):
+            return type("Attestation", (), {
+                "libg_sha256": "a" * 64, "probe_sha256": "b" * 64})()
+
+        def close_transport(self):
+            calls.append(("resident-close", self.port))
+
+    monkeypatch.setattr("native_runner.training.sspi.collector.SearchNative", Probe)
+    monkeypatch.setattr("native_runner.training.sspi.collector.ResidentNativeClashEnv", Resident)
+
+    result = preflight_native_endpoints("127.0.0.1", 26789,
+        {0: 26790, 1: 26792}, transport="event-json", actual_env_id=1)
+
+    assert calls[2] == ("resident", 1, 26789)
+    assert set(result) == {"actual", "belief_owner_0", "belief_owner_1"}
+
+
 def test_experiment_routes_run_config_owner_ports_into_episode(monkeypatch, tmp_path):
     captured = {}
 
@@ -313,7 +554,7 @@ def test_experiment_routes_run_config_owner_ports_into_episode(monkeypatch, tmp_
 
     monkeypatch.setattr(experiment_module, "collect_episode", collect_episode)
     run_config = dict(run_id="ports-test", arm="A_5PCT_128", seed=20261102,
-        ports={"belief_by_owner": {"0": 26791, "1": 26792}})
+        actual_env_id=1, ports={"belief_by_owner": {"0": 26791, "1": 26792}})
     output, episode = experiment_module._collect_one(run_config=run_config,
         run_dir=tmp_path, game_id="A-game-0001", episode_kind="training",
         model=object(), device="cpu", actual_port=26789, belief_port=26790,
@@ -322,6 +563,7 @@ def test_experiment_routes_run_config_owner_ports_into_episode(monkeypatch, tmp_
     assert output == tmp_path / "episodes" / "A-game-0001"
     assert episode["status"] == "complete"
     assert captured["belief_ports"] == {0: 26791, 1: 26792}
+    assert captured["actual_env_id"] == 1
 
 
 def test_sspi_training_has_only_the_5_percent_128_configuration():
@@ -438,7 +680,7 @@ def test_checkpoint_restores_fresh_model_and_optimizer_state(tmp_path):
     optimizer.step()
     optimizer.zero_grad(set_to_none=True)
     expected = {name: value.detach().clone() for name, value in model.state_dict().items()}
-    identity = {"run": "unit-test", "seed": 20261101, "action_schema": "sspi-tagged-action.v1"}
+    identity = {"run": "unit-test", "seed": 20261101, "action_schema": "sspi-tagged-action.v2"}
     path = tmp_path / "sspi.pt"
     saved = save_checkpoint(path, model, optimizer, identity=identity, optimizer_steps=1)
 

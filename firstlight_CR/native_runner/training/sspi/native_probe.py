@@ -12,12 +12,99 @@ from native_runner.match_factory import (MatchConfig, NATIVE_FINALIZATION_DEADLI
     tournament_level_kwargs)
 from native_runner.rich_telemetry_adapter import RuntimeEffectCatalog
 from native_runner.training.fair_final.native import FinalBattleEnv
+from native_runner.training.fair_final.policy import FullAction
 from native_runner.training.fair_search.config import HOG_DECK
 from native_runner.training.sspi.learning import create_optimizer
 from native_runner.training.sspi.model import initialize_fresh_model
-from native_runner.training.sspi.protocol import SSPIAction
+from native_runner.training.sspi.protocol import ACTION_SCHEMA, SSPIAction
 from native_runner.training.sspi.rollout import make_sspi_rollout
 from native_runner.training.v4.factory import production_semantic_bundle
+
+
+def probe_refill_decision(port: int, *, seed: int, host: str = "127.0.0.1",
+        event_json=False):
+    """Verify delayed Hog refill and ignored early PLAY on one native worker."""
+    bundle = production_semantic_bundle()
+    if event_json:
+        from native_runner.training.sspi.collector import EventBatchedSSPINative
+        native = EventBatchedSSPINative(host, port, timeout=90.)
+    else:
+        native = NativeClashEnv(host, port, timeout=90.)
+    environment = FinalBattleEnv(native=native, card_catalog=bundle.native_card_catalog,
+        semantic_subset_contract=bundle.semantic_subset_contract,
+        effect_catalog=RuntimeEffectCatalog.from_catalog(bundle.native_effect_catalog))
+    try:
+        environment.reset(match_config=MatchConfig(deck0=HOG_DECK, deck1=HOG_DECK, seed=seed,
+            end_tick=NATIVE_FINALIZATION_DEADLINE_TICK, **tournament_level_kwargs()),
+            options=dict(render_mode="headless", decision_ticks=1, event_driven_decisions=False,
+                allow_initial_remaining_runtime_rejections=True))
+        if event_json:
+            native.start_atomic_steps(initial_tick=environment.current_tick)
+        rollout = make_sspi_rollout(environment, catalog=bundle.card_catalog, execution_seed=seed + 1)
+        plays = ignored = pending_decisions = 0
+        predicted = {}
+        arrivals = []
+        for _ in range(120):
+            frozen = rollout.freeze_due_information()
+            if frozen:
+                actions = {owner: FullAction() for owner in frozen}
+                if 0 in frozen and plays < 2:
+                    info = frozen[0]
+                    player = next(item for item in environment.raw_observation["players"]
+                        if item["owner"] == 0)
+                    costs = {int(card["cardId"]): int(card["cost"]) for card in player["hand"]}
+                    choices = []
+                    for row, card_id in enumerate(info.legality.card_ids):
+                        if card_id not in costs:
+                            continue
+                        cells = torch.nonzero(info.legality.plays[row], as_tuple=False)
+                        if cells.numel():
+                            cell, delay = (int(value) for value in cells[0])
+                            choices.append((costs[card_id], card_id, cell, delay))
+                    if choices:
+                        _, card_id, cell, delay = min(choices)
+                        actions[0] = FullAction(card_id, cell, (2, 4, 6, 8, 10)[delay])
+                        plays += 1
+                elif 0 in frozen and frozen[0].hand.pending_refills and not ignored:
+                    info = frozen[0]
+                    refill = info.hand.pending_refills[0]
+                    row = info.legality.card_ids.index(refill.card_id)
+                    cells = torch.nonzero(info.legality.plays[row, :, 0], as_tuple=False)
+                    if cells.numel() and refill.remaining_ticks >= 4:
+                        actions[0] = FullAction(refill.card_id, int(cells[0, 0]), 2)
+                        ignored += 1
+                if 0 in frozen and frozen[0].hand.pending_refills:
+                    pending_decisions += 1
+                    for refill in frozen[0].hand.pending_refills:
+                        if refill.time_known:
+                            predicted[refill.card_id] = frozen[0].tick + refill.remaining_ticks
+                rollout.commit_simultaneous(actions)
+                if ignored and 0 in frozen and actions[0].card_id in predicted:
+                    if rollout.runtime.clock.pending[0].action.card_id is not None:
+                        raise ValueError("early queued-card proposal reached native execution")
+            before = {player["owner"]: {card["cardId"] for card in player["hand"]}
+                for player in environment.raw_observation["players"]}
+            rollout.advance()
+            after = {player["owner"]: {card["cardId"] for card in player["hand"]}
+                for player in environment.raw_observation["players"]}
+            arrived = after[0] - before[0]
+            if arrived and len(before[0]) < 4:
+                arrivals.append(dict(tick=rollout.runtime.clock.tick, cards=sorted(arrived),
+                    predicted_ticks={str(card): predicted.get(card) for card in sorted(arrived)},
+                    woke_owner0=0 in rollout.runtime.clock.ready))
+                break
+        if plays != 2 or ignored != 1 or not pending_decisions or not arrivals:
+            raise ValueError("bounded native Hog trajectory did not expose delayed refill")
+        if any(entry["predicted_ticks"].get(str(card)) != entry["tick"]
+                for entry in arrivals for card in entry["cards"]):
+            raise ValueError(f"predicted Hog refill tick differs from native arrival: {arrivals}")
+        if any(entry["woke_owner0"] for entry in arrivals):
+            raise ValueError("native refill unexpectedly woke the SSPI decision clock")
+        return dict(status="passed", port=port, engine_sha256=native.attest().libg_sha256,
+            plays=plays, pending_decisions=pending_decisions, ignored_early_plays=ignored,
+            arrivals=arrivals, wake_refills=False, event_json=event_json)
+    finally:
+        native.close_transport()
 
 
 def benchmark_step(model, information, *, device):
@@ -100,7 +187,7 @@ def run(port: int, *, seed: int, host: str = "127.0.0.1"):
             del current
         return dict(status="passed", native_port=port, native_engine_sha256=native.attest().libg_sha256,
             fair_sha256=information.sha256, hand_count=information.hand.ready_hand_count,
-            action_schema="sspi-tagged-action.v1", delay_ms=[200, 400, 600, 800, 1000],
+            action_schema=ACTION_SCHEMA, delay_ms=[200, 400, 600, 800, 1000],
             wait_ticks=20, parameters=base.parameter_count, model_seed=seed, inference=outputs,
             max_abs_error=errors, forward_backward_optimizer=timings,
             backend_preference=min(timings, key=lambda item: timings[item]["median_seconds"]),
@@ -119,10 +206,15 @@ def main():
     parser.add_argument("--port", type=int, required=True)
     parser.add_argument("--seed", type=int, default=20261101)
     parser.add_argument("--host", default="127.0.0.1")
+    parser.add_argument("--refill-only", action="store_true")
+    parser.add_argument("--event-json", action="store_true")
     args = parser.parse_args()
     torch.set_num_threads(1)
     torch.manual_seed(args.seed)
-    print(json.dumps(run(args.port, seed=args.seed, host=args.host), sort_keys=True), flush=True)
+    result = (probe_refill_decision(args.port, seed=args.seed, host=args.host,
+        event_json=args.event_json)
+        if args.refill_only else run(args.port, seed=args.seed, host=args.host))
+    print(json.dumps(result, sort_keys=True), flush=True)
 
 
 if __name__ == "__main__":

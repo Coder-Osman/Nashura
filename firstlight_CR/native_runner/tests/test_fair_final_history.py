@@ -11,7 +11,13 @@ from native_runner.tests.test_fair_final_protocol import toy_policy
 from native_runner.tests.test_fair_final_rollout import rollout
 from native_runner.tests.test_training_tracking import _observation
 from native_runner.training.fair_final import history_belief
-from native_runner.training.fair_final.history import FairHistory, FairHistoryRecorder, OwnDecision, PublicDeployment
+from native_runner.training.fair_final.history import (
+    EventBatchBoundary,
+    FairHistory,
+    FairHistoryRecorder,
+    OwnDecision,
+    PublicDeployment,
+)
 from native_runner.training.fair_final.history_belief import HistoryBeliefFactory, HistoryReplaySession, IncompatibleHistory, compatible_opponent_draw
 from native_runner.training.fair_final.opening_belief import OpeningEvidence
 from native_runner.training.fair_final.policy import FullAction, LegalPrefixes
@@ -108,6 +114,39 @@ def test_recorder_requires_contiguous_ticks_and_deduplicates_window():
     assert recorder.observed_tick == 102
     with pytest.raises(ValueError, match="boundary"):
         recorder.record_decision(replace(current, owner=1), FullAction())
+
+
+def test_event_batch_boundary_allows_gap_only_when_native_reports_no_deployment():
+    observation, information = opening_fixture()
+    recorder = FairHistoryRecorder(observation, information, opening_tick=100)
+
+    recorder.observe_tick(replace(observation, tick=120),
+        interval=EventBatchBoundary(100, 120, "tick_budget"))
+
+    assert recorder.observed_tick == 120
+    with pytest.raises(ValueError, match="interval differs"):
+        recorder.observe_tick(replace(observation, tick=140),
+            interval=EventBatchBoundary(119, 140, "tick_budget"))
+
+
+def test_event_batch_deployment_boundary_requires_public_execution_at_stop_tick():
+    observation, information = opening_fixture()
+    recorder = FairHistoryRecorder(observation, information, opening_tick=100)
+    event = EventV1(tick=109, event_type="action_executed", owner=1,
+        card_id=HOG_DECK[0], position=(1500., 2500.))
+
+    recorder.observe_tick(replace(observation, tick=109, events=(event,)),
+        interval=EventBatchBoundary(100, 109, "deployment"))
+
+    assert recorder.deployments == [PublicDeployment(109, 1, HOG_DECK[0], 1500, 2500)]
+    missing = FairHistoryRecorder(observation, information, opening_tick=100)
+    with pytest.raises(ValueError, match="complete public execution"):
+        missing.observe_tick(replace(observation, tick=109),
+            interval=EventBatchBoundary(100, 109, "deployment"))
+    hidden = FairHistoryRecorder(observation, information, opening_tick=100)
+    with pytest.raises(ValueError, match="tick-budget boundary"):
+        hidden.observe_tick(replace(observation, tick=109, events=(event,)),
+            interval=EventBatchBoundary(100, 109, "tick_budget"))
 
 
 def test_public_cycle_sampling_is_deterministic_and_compatible():

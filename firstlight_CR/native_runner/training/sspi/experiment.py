@@ -163,6 +163,7 @@ def _collect_one(*, run_config, run_dir, game_id, episode_kind, model, device,
             for owner, port in configured_belief_ports.items()}
     belief_ports = resolve_belief_ports(actual_port, belief_port, configured_belief_ports)
     episode = collect_episode(actual_port=actual_port, belief_port=belief_port,
+        actual_env_id=run_config.get("actual_env_id", 0),
         output_dir=output, run_id=run_config["run_id"], arm=run_config["arm"],
         game_id=game_id, seed=run_config["seed"], model=shared_model,
         transport=transport, episode_kind=episode_kind,

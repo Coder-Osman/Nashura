@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-11-02：SSPI 补牌时序与决策边界
+
+- 保留八卡身份与物理手牌槽，向模型输入已知待补牌的剩余 tick 和已知标志；不引入 EMPTY 动作。
+- 取消补牌到位的额外决策；有可信到位时刻的待补牌可进入 PLAY 提案，过早提案在执行前转换为普通 WAIT，不增加奖励或惩罚。搜索世界、真实 actor 和快照时钟共享该规则。
+- 采集记录同时保存提出动作与实际执行动作，避免把被忽略的提前出牌计成真实 PLAY。
+- Mac ARM64 AVD 事件批量补牌探针通过：tick 114 到位、未唤醒决策、提前 PLAY 未提交；新版真实搜索根 128/128，45.92 秒，2812 native ticks，状态恢复和句柄释放通过。扩展定向回归 171 passed。
+- 新手牌特征 schema 与旧 checkpoint 架构身份不同；旧 v5 局部 checkpoint 保留为历史证据，不用于新协议续训。新版自然终局训练及无搜索评估仍待完成。
+
 ## 2026-11-02：SSPI native worker 预检与终局自动闭环续接
 
 - collector 在 native reset 前对 actual 与两个 owner belief 端点执行只读 status/observe 和 ruleset 绑定 attestation；拒绝截断观测、未就绪端点及 engine/probe 身份不一致，避免已知损坏 worker 消耗整局。

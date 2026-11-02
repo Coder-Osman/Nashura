@@ -16,31 +16,29 @@ from .protocol import (ABILITY_FEATURE_DIM, ABILITY_FEATURE_SCHEMA, ActionMode, 
     HandState, SSPILegality, SSPIAction, stable_card_rows)
 
 
-HAND_FEATURE_SCHEMA = "sspi-hand-slots-and-refill-fifo.v1"
-HAND_FEATURE_DIM = 161
+HAND_FEATURE_SCHEMA = "sspi-eight-card-readiness-and-refill-time.v2"
+HAND_FEATURE_DIM = 128
 
 
 def _hand_features(hand: HandState, *, device):
     if not isinstance(hand, HandState):
         raise TypeError("SSPI model requires a native stable-hand snapshot")
     card_row = {card_id: slot for slot, card_id in hand.deck}
+    ready_slots = {slot.card_id: slot.index for slot in hand.slots if slot.card_id is not None}
+    cycle_positions = {card_id: index for index, (_, card_id) in enumerate(hand.cycle)}
+    pending = {refill.card_id: refill for refill in hand.pending_refills}
     values = []
-    for slot in hand.slots:
-        values.append(float(slot.occupied))
-        values.extend(float(slot.deck_slot == index) if slot.occupied else 0. for index in range(8))
-        values.append(float(slot.refill_pending))
-        refill_deck_slot = card_row.get(slot.refill_card_id)
-        values.extend(float(refill_deck_slot == index) if refill_deck_slot is not None else 0. for index in range(8))
-        values.append(float(slot.refill_time_known))
-        values.append(min(slot.refill_remaining_ticks or 0, 1200) / 1200.)
-    for index in range(8):
-        present = index < len(hand.cycle)
-        values.append(float(present))
-        deck_slot = hand.cycle[index][0] if present else None
-        values.extend(float(deck_slot == card_index) if present else 0. for card_index in range(8))
+    for _, card_id in hand.deck:
+        ready_slot = ready_slots.get(card_id)
+        queue_position = cycle_positions.get(card_id)
+        refill = pending.get(card_id)
+        values.append(float(ready_slot is not None))
+        values.extend(float(ready_slot == index) for index in range(4))
+        values.extend(float(queue_position == index) for index in range(8))
+        values.append(float(refill is not None and refill.time_known))
+        values.append(min(refill.remaining_ticks or 0, 1200) / 1200. if refill is not None else 0.)
     next_slot = card_row.get(hand.known_next_card_id)
     values.extend(float(next_slot == index) if next_slot is not None else 0. for index in range(8))
-    values.append(float(hand.next_card_available_now))
     if len(values) != HAND_FEATURE_DIM:
         raise AssertionError("SSPI hand feature width changed")
     return torch.tensor(values, dtype=torch.float32, device=device)
@@ -178,7 +176,7 @@ class SSPIPolicy:
 class SSPIModel(nn.Module):
     """Fixed stateless V4 semantic/spatial backbone with three modes and five delays."""
 
-    schema = "sspi-policy-value.v1"
+    schema = "sspi-policy-value.v2"
     backbone_fields = ("scene_state", "spatial_summary", "scalar_summary", "candidate_summary")
 
     def __init__(self, *, bundle=None, encoder_config=None):

@@ -17,9 +17,12 @@ def prior():
     return FrozenDeckPrior("fixed-experiment", "a" * 64, (DeckFrequency(tuple(sorted(HOG_DECK)), 1),))
 
 
-def factory(native_factory=lambda: None, frozen=None):
+def factory(native_factory=lambda: None, frozen=None, rollout_factory=None):
+    if rollout_factory is None:
+        rollout_factory = prior_history.FinalRollout
     return PriorHistoryBeliefFactory(native_factory, prior=frozen or prior(), catalog=None,
-        opponent=SimpleNamespace(controller_sha="b" * 64, checkpoint_sha="c" * 64), sidecar_factory=None)
+        opponent=SimpleNamespace(controller_sha="b" * 64, checkpoint_sha="c" * 64),
+        sidecar_factory=None, rollout_factory=rollout_factory)
 
 
 def following(first, *, card=None):

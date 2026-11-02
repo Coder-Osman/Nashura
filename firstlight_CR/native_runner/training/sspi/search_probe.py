@@ -26,6 +26,7 @@ from native_runner.rich_telemetry_adapter import RuntimeEffectCatalog
 from native_runner.training.sspi.learning import SEARCH_BUDGETS
 from native_runner.training.sspi.model import initialize_fresh_model
 from native_runner.training.sspi.rollout import WAIT_TICKS, make_sspi_information, make_sspi_rollout
+from native_runner.training.sspi.protocol import ACTION_SCHEMA, HogRefillClock
 from native_runner.training.sspi.performance import NativeRequestProfiler, NativeTickCounter, TimedSearchInference
 from native_runner.training.sspi.search import budget_search_sha, make_search_inference
 from native_runner.training.v4.factory import production_semantic_bundle
@@ -56,9 +57,13 @@ class MeasuredSSPIRollout(FinalRollout):
     """Count genuine successful native tick advances without extra observations."""
 
     def __init__(self, environment, *, catalog, execution_seed, tick_counter):
+        clock = HogRefillClock()
         super().__init__(environment, catalog=catalog, execution_seed=execution_seed,
-            wait_ticks=WAIT_TICKS, wake_refills=True,
-            information_factory=make_sspi_information)
+            wait_ticks=WAIT_TICKS, wake_refills=False, refill_observer=clock,
+            information_factory=lambda environment, observation, frame, owner, *, catalog:
+                make_sspi_information(environment, observation, frame, owner, catalog=catalog,
+                    refill_clock=clock),
+            action_adapter=lambda information, action: information.legality.execution_action(action))
         self.tick_counter = tick_counter
 
     def advance(self):
@@ -110,7 +115,7 @@ def run(root_port, belief_port, *, seed=20261101, simulations=128, transport="le
 
         model = initialize_fresh_model(seed, device="cpu", bundle=bundle).eval()
         model_sha = semantic_digest(model.state_dict())
-        controller_sha = semantic_digest(dict(model_sha=model_sha, action_schema="sspi-tagged-action.v1",
+        controller_sha = semantic_digest(dict(model_sha=model_sha, action_schema=ACTION_SCHEMA,
             delay_ms=[200, 400, 600, 800, 1000], wait_ticks=20, device="cpu"))
         inference = TimedSearchInference(make_search_inference(
             model, checkpoint_sha=model_sha, controller_sha=controller_sha))

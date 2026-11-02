@@ -24,6 +24,7 @@ def serialize_information(information):
         fair_sha256=information.sha256, frame=pack(information.frame),
         hand=asdict(information.hand), card_ids=information.legality.card_ids,
         plays=information.legality.plays.detach().cpu().clone(),
+        pending_arrival_ticks=information.legality.pending_arrival_ticks,
         wait=bool(information.legality.modes[ActionMode.WAIT]))
 
 
@@ -34,7 +35,8 @@ def deserialize_information(payload):
         known_next_card_id=raw["known_next_card_id"],
         cycle=tuple(tuple(item) for item in raw["cycle"]),
         pending_refills=tuple(PendingRefill(**item) for item in raw["pending_refills"]))
-    legality = SSPILegality(payload["card_ids"], payload["plays"], wait=payload["wait"])
+    legality = SSPILegality(payload["card_ids"], payload["plays"], wait=payload["wait"],
+        pending_arrival_ticks=payload.get("pending_arrival_ticks", {}))
     information = SSPIInformation(payload["owner"], payload["tick"],
         unpack(payload["frame"]), hand, legality)
     if information.sha256 != payload["fair_sha256"]:
@@ -52,11 +54,15 @@ def fork_tensorizer(tensorizer):
     return result
 
 
-def capture_pending_information(environment, observation, tensorizer, *, catalog):
+def capture_pending_information(environment, observation, tensorizer, *, catalog,
+        refill_clock=None):
     frame = canonicalize_event_observation(tensorizer.tensorize(observation, validate=True))
     player = next(item for item in environment.raw_observation["players"]
         if int(item["owner"]) == observation.owner)
-    hand = HandState.from_native(player)
+    holes = 4 - len(player["hand"])
+    remaining = (refill_clock.remaining(observation.owner, observation.tick, holes)
+        if refill_clock is not None else None)
+    hand = HandState.from_native(player, refill_remaining_ticks=remaining)
     legality = SSPILegality.from_native(environment, observation, frame, observation.owner,
         catalog=catalog, hand_state=hand, require_boundary=False)
     return SSPIInformation(observation.owner, observation.tick, frame, hand, legality)
@@ -92,7 +98,8 @@ class TemporalAugmenter:
             raise ValueError("duplicate continuation reservation")
         self.pending[plan.identity] = _PendingGroup(root, plan, action, fork_tensorizer(tensorizer))
 
-    def observe(self, *, environment, observations, clock, evidence, catalog):
+    def observe(self, *, environment, observations, clock, evidence, catalog,
+            refill_clock=None):
         # Settle before sampling: an executed/preempted/terminal frame is not an
         # intermediate state of the old reservation, even at a 200-ms boundary.
         for event in evidence:
@@ -122,7 +129,7 @@ class TemporalAugmenter:
             action = SSPIAction.play(group.action.card_id, group.action.cell,
                 DELAY_MS.index(remaining_ms))
             information = capture_pending_information(environment, observations[plan.owner],
-                group.tensorizer, catalog=catalog)
+                group.tensorizer, catalog=catalog, refill_clock=refill_clock)
             if information.tick != clock.tick or information.owner != plan.owner:
                 raise ValueError("continuation observation tick/owner changed")
             if not information.legality.legal(action):

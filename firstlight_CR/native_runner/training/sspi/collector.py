@@ -14,12 +14,13 @@ import time
 
 import torch
 
-from native_runner.cr_native_env import NativeClashEnv
+from native_runner.cr_native_env import NativeClashEnv, ResidentNativeClashEnv, RunnerError
 from native_runner.match_factory import MatchConfig, NATIVE_FINALIZATION_DEADLINE_TICK, tournament_level_kwargs
+from native_runner.resident_batch_channel import BatchStepFailureV1, ResidentBatchChannelV1
 from native_runner.rich_telemetry_adapter import RuntimeEffectCatalog
 from ..fair_final.codec import ActionCodec
 from ..fair_final.episode import terminal_result
-from ..fair_final.history import FairHistoryRecorder
+from ..fair_final.history import EventBatchBoundary, FairHistoryRecorder
 from ..fair_final.history_belief import HistoryBeliefFactory
 from ..fair_final.native import FinalBattleEnv
 from ..fair_final.policy import FullAction
@@ -31,7 +32,7 @@ from ..fair_search.contracts import pack, semantic_digest
 from ..fair_final.visibility import validate_fair_view
 from .learning import SEARCH_BUDGETS
 from .augmentation import TemporalAugmenter, TEMPORAL_SCHEMA
-from .protocol import ActionMode, SSPIAction, from_full_action, to_full_action
+from .protocol import ACTION_SCHEMA, ActionMode, SSPIAction, from_full_action, to_full_action
 from .rollout import make_sspi_rollout
 from .search import budget_search_sha, make_search_inference, SSPIHistorySearchProvider
 
@@ -56,8 +57,141 @@ class SearchNative(NativeClashEnv):
         self.transport = transport
         self._persistent_transport_requested = transport == "persistent"
 
-    def start_atomic_steps(self):
+    def start_atomic_steps(self, *, initial_tick=None):
         return None
+
+
+class EventBatchedSSPINative(ResidentNativeClashEnv):
+    """Return complete validated JSON captures at native event/deadline boundaries."""
+
+    supports_event_batched_advance = True
+
+    _CHANNEL_PROFILE_FIELDS = (
+        "connect_ns", "batches", "environments", "request_bytes", "response_bytes",
+        "decoded_response_bytes", "send_ns", "request_ack_ns", "last_request_ack_ns",
+        "receive_ns", "decode_ns", "total_ns",
+    )
+
+    def __init__(self, host, port, *, env_id=0, timeout=90.):
+        super().__init__(env_id, host=host, port=port, timeout=timeout)
+        self._batch_channel = None
+        self._capture = None
+        self._atomic_steps = False
+        self._last_tick = None
+        self.last_advance_boundary = None
+        self.capture_profile = {name: 0 for name in self._CHANNEL_PROFILE_FIELDS}
+        self.capture_profile.update(actual_native_ticks=0, requested_native_ticks=0,
+            host_observations_avoided=0, stopped_on_deployment=0, stopped_on_terminal=0,
+            reached_tick_budget=0)
+
+    def _close_batch(self):
+        channel, self._batch_channel = self._batch_channel, None
+        if channel is None:
+            return
+        profile = channel.profile()
+        for name in self._CHANNEL_PROFILE_FIELDS:
+            self.capture_profile[name] += int(profile[name])
+        channel.close()
+
+    def _request(self, command, *, _read_retry_count=2):
+        with self._lock:
+            self._close_batch()
+            self._capture = None
+            if command == "snapshot-create" or command.startswith(
+                    ("restore ", "release-snapshot ")):
+                status = self.resident_status()
+                slots = status.get("slots", ())
+                if (status.get("occupied") != 1 or len(slots) != 1
+                        or slots[0].get("envId") != self.env_id):
+                    raise RunnerError("SSPI batched control requires exactly one resident slot")
+                return self._raw_request(command, _read_retry_count=_read_retry_count)
+            return super()._request(command, _read_retry_count=_read_retry_count)
+
+    def start_atomic_steps(self, *, initial_tick=None):
+        with self._lock:
+            self._capture = None
+            self.last_advance_boundary = None
+            if initial_tick is not None and (type(initial_tick) is not int or initial_tick < 0):
+                raise ValueError("initial native tick must be a nonnegative integer")
+            self._last_tick = initial_tick
+            self._atomic_steps = True
+
+    def step(self, ticks=1):
+        if not self._atomic_steps:
+            self.last_advance_boundary = None
+            return super().step(ticks)
+        if type(ticks) is not int or not 1 <= ticks <= 1_000_000:
+            raise ValueError("SSPI batched transport requires a positive native tick span")
+        with self._lock:
+            self._capture = None
+            if self._batch_channel is None:
+                super().close_transport()
+                self._batch_channel = ResidentBatchChannelV1(
+                    self.host, self.port, timeout=self.timeout, training_capture=False,
+                    compressed_json=False, validate_json_capture=True, step_until_event=True)
+            try:
+                outcome = self._batch_channel.step_partitioned({self.env_id: ()}, ticks=ticks)[self.env_id]
+                if isinstance(outcome, BatchStepFailureV1):
+                    raise outcome.error
+                capture = outcome.capture
+                ordinary = capture.get("ordinary") if isinstance(capture, Mapping) else None
+                if not isinstance(ordinary, Mapping):
+                    raise RunnerError("SSPI event batch returned no ordinary state")
+                current_tick = ordinary.get("tick")
+                if type(current_tick) is not int:
+                    raise RunnerError("SSPI event batch returned an invalid native tick")
+                if self._last_tick is not None:
+                    start_tick = self._last_tick
+                    advanced = current_tick - self._last_tick
+                    if not 1 <= advanced <= ticks:
+                        raise RunnerError("SSPI event batch tick delta is outside its request")
+                    self.capture_profile["actual_native_ticks"] += advanced
+                    self.capture_profile["host_observations_avoided"] += advanced - 1
+                self.capture_profile["requested_native_ticks"] += ticks
+                self.capture_profile["stopped_on_deployment"] += int(outcome.stopped_on_deployment)
+                self.capture_profile["stopped_on_terminal"] += int(outcome.stopped_on_terminal)
+                self.capture_profile["reached_tick_budget"] += int(outcome.reached_max_ticks)
+                stop_flags = (int(outcome.stopped_on_deployment) + int(outcome.stopped_on_terminal)
+                    + int(outcome.reached_max_ticks))
+                if stop_flags != 1 or self._last_tick is None:
+                    raise RunnerError("SSPI event batch returned ambiguous boundary evidence")
+                stop_reason = ("deployment" if outcome.stopped_on_deployment else
+                    "terminal" if outcome.stopped_on_terminal else "tick_budget")
+                self.last_advance_boundary = EventBatchBoundary(
+                    start_tick, current_tick, stop_reason)
+                self._last_tick = current_tick
+                self._capture = capture
+                return ordinary
+            except BaseException:
+                self._close_batch()
+                raise
+
+    def observe(self):
+        if self._capture is not None:
+            return self._capture["ordinary"]
+        return super().observe()
+
+    def observe_atomic(self):
+        if self._capture is not None:
+            return self._capture
+        return super().observe_atomic()
+
+    def finish_capture_profile(self):
+        with self._lock:
+            self._close_batch()
+            return dict(self.capture_profile)
+
+    def close_transport(self):
+        with self._lock:
+            self._close_batch()
+            self._capture = None
+            super().close_transport()
+
+    def close(self):
+        try:
+            self.close_transport()
+        finally:
+            super().close()
 
 
 def resolve_belief_ports(actual_port, belief_port, belief_ports=None):
@@ -81,13 +215,32 @@ def resolve_belief_ports(actual_port, belief_port, belief_ports=None):
     return {owner: belief_ports[owner] for owner in (0, 1)}
 
 
-def preflight_native_endpoints(host, actual_port, belief_ports, *, transport, ruleset_manifest=None):
+def preflight_native_endpoints(host, actual_port, belief_ports, *, transport, actual_env_id=0,
+        ruleset_manifest=None):
+    if type(actual_env_id) is not int or not 0 <= actual_env_id < 16:
+        raise ValueError("SSPI actual resident env id must be in 0..15")
+    if actual_env_id != 0 and transport != "event-json":
+        raise ValueError("non-default actual env ids require event-json resident transport")
     endpoints = [("actual", actual_port),
         ("belief_owner_0", belief_ports[0]), ("belief_owner_1", belief_ports[1])]
     attestations = {}
     expected_identity = None
     for role, port in endpoints:
-        native = SearchNative(host, port, transport=transport, timeout=90.)
+        if transport == "event-json" and role == "actual":
+            probe = SearchNative(host, port, transport="persistent", timeout=90.)
+            try:
+                resident = probe._request("multi-status")
+            finally:
+                probe.close_transport()
+            slots = resident.get("slots", ())
+            if (resident.get("mode") != "resident-headless"
+                    or resident.get("occupied") != len(slots)
+                    or not any(slot.get("envId") == actual_env_id for slot in slots)):
+                raise RunnerError("event-json requires the selected existing resident actual match")
+            native = ResidentNativeClashEnv(actual_env_id, host, port, timeout=90.)
+        else:
+            selected_transport = "persistent" if transport == "event-json" else transport
+            native = SearchNative(host, port, transport=selected_transport, timeout=90.)
         try:
             status = native.status()
             if status.get("ready") is not True:
@@ -212,6 +365,8 @@ def _source_sha():
         Path(__file__).with_name("rollout.py"),
         Path(__file__).with_name("search.py"),
         PROJECT / "native_runner" / "cr_native_env.py",
+        PROJECT / "native_runner" / "resident_batch_channel.py",
+        PROJECT / "native_runner" / "training_capture.py",
         PROJECT / "native_runner" / "match_factory.py",
         PROJECT / "native_runner" / "training" / "event_action_space.py",
         PROJECT / "native_runner" / "training" / "fair_final" / "history.py",
@@ -252,23 +407,26 @@ def _root_visits(outcome, codec):
 
 def _observe_histories(rollout, histories):
     views = rollout.runtime.environment.observe_dual(policy_features_only=True)
+    boundary = getattr(rollout.runtime.environment.native, "last_advance_boundary", None)
     for owner in (0, 1):
         validate_fair_view(views[owner], owner)
-        histories[owner].observe_tick(views[owner])
+        histories[owner].observe_tick(views[owner], interval=boundary)
     return views
 
 
 def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_id,
         seed=20261101, model=None, models_by_owner=None, device="cpu", host="127.0.0.1",
         transport="legacy", search_probability=None, episode_kind="training", progress=None,
-        temporal_augmentation=True, random_stream_id=None, belief_ports=None):
+        temporal_augmentation=True, random_stream_id=None, belief_ports=None, actual_env_id=0):
     """Collect one complete native match; incomplete matches are quarantined."""
     try:
         belief_ports = resolve_belief_ports(actual_port, belief_port, belief_ports)
     except ValueError:
         raise
     if (arm not in ARM_CONFIG or type(seed) is not int or seed < 0
-            or transport not in ("legacy", "persistent")):
+            or type(actual_env_id) is not int or not 0 <= actual_env_id < 16
+            or (actual_env_id != 0 and transport != "event-json")
+            or transport not in ("legacy", "persistent", "event-json")):
         raise ValueError("SSPI collection requires a fixed arm, distinct native ports, and explicit seed")
     if device not in ("cpu", "mps") or (device == "mps" and not torch.backends.mps.is_available()):
         raise ValueError("requested SSPI inference device is unavailable")
@@ -313,7 +471,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
     model_sha_by_owner = {str(owner): semantic_digest(item.state_dict())
         for owner, item in sorted(models_by_owner.items())}
     controller_sha_by_owner = {owner: semantic_digest(dict(model_sha=model_sha_by_owner[str(owner)],
-        action_schema="sspi-tagged-action.v1", delay_ms=[200, 400, 600, 800, 1000],
+        action_schema=ACTION_SCHEMA, delay_ms=[200, 400, 600, 800, 1000],
         wait_ticks=20, device=device, deck=list(HOG_DECK), native_transport=transport))
         for owner in (0, 1)}
     inference_by_owner = {owner: make_search_inference(models_by_owner[owner],
@@ -327,13 +485,15 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
     search_sha = budget_search_sha(limits, simulations)
     runtime_sha = semantic_digest(dict(schema="sspi-mac-pilot-native-runtime.v1",
         engine="android-arm64-avd", deck=list(HOG_DECK), delay_ms=[200, 400, 600, 800, 1000],
-        wait_ticks=20, wake_refills=True, search_sha=search_sha, source_sha=_source_sha(),
+        wait_ticks=20, wake_refills=False, refill_time="hog-observed-cadence.v1",
+        ignored_early_play="wait-no-reward.v1", search_sha=search_sha, source_sha=_source_sha(),
         search_probability=search_probability, episode_kind=episode_kind,
         temporal_augmentation=TEMPORAL_SCHEMA if augmenter is not None else None,
         random_stream_id=seed_identity["random_stream_id"],
         actual_match_seed=seed_identity["actual_match_seed"],
         actual_rollout_seed=seed_identity["actual_rollout_seed"],
         native_transport=transport,
+        actual_env_id=actual_env_id,
         native_ports=dict(actual=actual_port,
             belief_by_owner={str(owner): port for owner, port in belief_ports.items()})))
     identity = dict(run_id=run_id, arm=arm, game_id=game_id, seed=seed,
@@ -344,15 +504,22 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         search_protocol_sha256=search_sha, runtime_sha256=runtime_sha,
         source_sha256=_source_sha(), device=device, engine_sha256=None,
         episode_kind=episode_kind, search_probability=search_probability,
+        native_transport=transport,
+        actual_env_id=actual_env_id,
         native_ports=dict(actual=actual_port,
             belief_by_owner={str(owner): port for owner, port in belief_ports.items()}))
 
-    actual_native = SearchNative(host, actual_port, transport=transport, timeout=90.)
+    actual_native = (EventBatchedSSPINative(host, actual_port, env_id=actual_env_id, timeout=90.)
+        if transport == "event-json"
+        else SearchNative(host, actual_port, transport=transport, timeout=90.))
     environment = _make_environment(actual_native, bundle)
     rollout = None
+
+    belief_transport = "persistent" if transport == "event-json" else transport
+
     def make_belief_provider(owner, port, history):
         factory = HistoryBeliefFactory(
-            lambda: SearchNative(host, port, transport=transport, timeout=90.),
+            lambda: SearchNative(host, port, transport=belief_transport, timeout=90.),
             catalog=bundle.card_catalog, opponent=inference_by_owner[1 - owner],
             sidecar_factory=BattleEnvSidecar, rollout_factory=make_sspi_rollout)
         return SSPIHistorySearchProvider(factory, history=history,
@@ -364,19 +531,23 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
     counters = dict(decisions={"0": 0, "1": 0}, search={"0": 0, "1": 0},
         direct={"0": 0, "1": 0}, play={"0": 0, "1": 0}, wait={"0": 0, "1": 0},
         ability={"0": 0, "1": 0}, ready_hand_counts={"2": 0, "3": 0, "4": 0},
-        refill_events=0, groups=0)
+        refill_events=0, ignored_early_plays=0, groups=0)
     started = time.monotonic()
     try:
         worker_attestations = preflight_native_endpoints(host, actual_port, belief_ports,
-            transport=transport, ruleset_manifest=environment.ruleset_manifest)
+            transport=transport, actual_env_id=actual_env_id,
+            ruleset_manifest=environment.ruleset_manifest)
         identity["native_worker_attestations"] = worker_attestations
         identity["engine_sha256"] = worker_attestations["actual"]["libg_sha256"]
         environment.reset(match_config=MatchConfig(deck0=HOG_DECK, deck1=HOG_DECK,
                 seed=seed_identity["actual_match_seed"],
                 end_tick=NATIVE_FINALIZATION_DEADLINE_TICK, **tournament_level_kwargs()),
-            options=dict(render_mode="headless", decision_ticks=1, event_driven_decisions=False,
+            options=dict(render_mode="headless", decision_ticks=20, event_driven_decisions=True,
                 allow_initial_remaining_runtime_rejections=True))
-        actual_native.start_atomic_steps()
+        if isinstance(actual_native, EventBatchedSSPINative):
+            actual_native.start_atomic_steps(initial_tick=environment.current_tick)
+        else:
+            actual_native.start_atomic_steps()
         engine_sha = actual_native.attest().libg_sha256
         if engine_sha != identity["engine_sha256"]:
             raise ValueError("actual SSPI engine identity changed after endpoint preflight")
@@ -445,6 +616,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                             frame=pack(information.frame), hand=asdict(information.hand),
                             card_ids=information.legality.card_ids,
                             plays=information.legality.plays.detach().cpu().clone(),
+                            pending_arrival_ticks=information.legality.pending_arrival_ticks,
                             wait=bool(information.legality.modes[ActionMode.WAIT]),
                             visits=visits, simulations=outcome.result["valid_simulations"],
                             search_result=outcome.result, search_audit=outcome.audit,
@@ -467,17 +639,19 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                     action = _native_execution_action(action, mode=decision_mode)
                     if not information.legality.legal(action):
                         raise ValueError("SSPI actor selected an illegal native action")
-                    histories[owner].record_decision(information, action)
+                    executed_action = information.legality.execution_action(action)
+                    histories[owner].record_decision(information, executed_action)
                     selected[owner] = action
-                    kind = "WAIT" if action.card_id is None else "PLAY"
+                    counters["ignored_early_plays"] += int(executed_action != action)
+                    kind = "WAIT" if executed_action.card_id is None else "PLAY"
                     counters[kind.lower()][str(owner)] += 1
                     group["selections"].append(dict(owner=owner, decision_index=index,
                         mode=decision_mode, gate_seed=gate_seed, selection_seed=selection_seed,
-                        action=_action_key(action)))
+                        action=_action_key(action), executed_action=_action_key(executed_action)))
                     action_log.append(dict(group=len(action_log), tick=information.tick,
                         owner=owner, decision_index=index, fair_sha256=information.sha256,
                         mode=decision_mode, gate_seed=gate_seed, selection_seed=selection_seed,
-                        action=_action_key(action)))
+                        action=_action_key(action), executed_action=_action_key(executed_action)))
                     decision_indices[owner] += 1
                 rollout.commit_simultaneous(selected)
                 if augmenter is not None:
@@ -500,7 +674,8 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                 if augmenter is not None:
                     augmenter.observe(environment=environment, observations=observations,
                         clock=rollout.runtime.clock, catalog=bundle.card_catalog,
-                        evidence=rollout.runtime.clock.evidence[evidence_start:])
+                        evidence=rollout.runtime.clock.evidence[evidence_start:],
+                        refill_clock=rollout.runtime.refill_observer)
                 after = {owner: set(player["cardId"] for player in
                     next(item for item in environment.raw_observation["players"]
                         if item["owner"] == owner)["hand"]) for owner in (0, 1)}
@@ -535,6 +710,8 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                 for owner, item in models_by_owner.items()):
             raise ValueError("actor model weights changed during a frozen collection generation")
 
+        native_performance = (actual_native.finish_capture_profile()
+            if isinstance(actual_native, EventBatchedSSPINative) else None)
         tensor_path = destination / "episode.pt"
         tensor_sha = _atomic_torch(tensor_path, dict(schema=EPISODE_SCHEMA,
             identity=identity, roots=roots))
@@ -546,9 +723,11 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
             tensor_sha256=tensor_sha, actions_file="actions.json", decisions=counters,
             actions_sha256=hashlib.sha256((destination / "actions.json").read_bytes()).hexdigest(),
             temporal_augmentation=augmenter.statistics() if augmenter is not None else None,
+            native_advance_performance=dict(rollout.runtime.advance_profile),
             search_roots=len(roots), search_probability=search_probability, search_simulations=simulations,
             search_fraction_actual=(sum(map(int, counters["search"].values())) /
                 max(1, sum(map(int, counters["decisions"].values())))),
+            native_capture_performance=native_performance,
             elapsed_seconds=time.monotonic() - started,
             terminal_tick=rollout.runtime.clock.tick)
         _atomic_json(destination / "episode.json", episode)
@@ -581,6 +760,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="Collect one frozen-model SSPI native Hog episode")
     parser.add_argument("--actual-port", type=int, required=True)
+    parser.add_argument("--actual-env-id", type=int, default=0)
     parser.add_argument("--belief-port", type=int, required=True)
     parser.add_argument("--belief-port-owner-1", type=int)
     parser.add_argument("--output-dir", type=Path, required=True)
@@ -590,14 +770,15 @@ def main():
     parser.add_argument("--seed", type=int, default=20261101)
     parser.add_argument("--random-stream-id")
     parser.add_argument("--device", choices=("cpu", "mps"), default="cpu")
-    parser.add_argument("--transport", choices=("legacy", "persistent"), default="legacy")
+    parser.add_argument("--transport", choices=("legacy", "persistent", "event-json"), default="legacy")
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--no-temporal-augmentation", action="store_true",
         help="Keep the original SEARCH-root-only baseline without continuation samples")
     args = parser.parse_args()
     def progress(row):
         print(json.dumps(row, sort_keys=True), flush=True)
-    result = collect_episode(actual_port=args.actual_port, belief_port=args.belief_port,
+    result = collect_episode(actual_port=args.actual_port, actual_env_id=args.actual_env_id,
+        belief_port=args.belief_port,
         output_dir=args.output_dir, run_id=args.run_id, arm=args.arm,
         game_id=args.game_id, seed=args.seed, device=args.device, host=args.host,
         random_stream_id=args.random_stream_id,

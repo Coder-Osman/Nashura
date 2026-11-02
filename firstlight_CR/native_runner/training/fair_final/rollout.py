@@ -26,16 +26,18 @@ class DecisionInformation:
 
 class FinalRollout:
     def __init__(self, environment, *, catalog, execution_seed, wait_ticks=60,
-            wake_refills=False, information_factory=None):
+            wake_refills=False, information_factory=None, refill_observer=None, action_adapter=None):
         if type(execution_seed) is not int or execution_seed < 0:
             raise ValueError("execution RNG requires an independent nonnegative seed")
         if type(wait_ticks) is not int or wait_ticks < 1 or type(wake_refills) is not bool:
             raise ValueError("invalid rollout wake clock")
         if information_factory is not None and not callable(information_factory):
             raise TypeError("information factory must be callable")
-        self.runtime = FinalDecisionRuntime(environment, wait_ticks=wait_ticks, wake_refills=wake_refills)
+        self.runtime = FinalDecisionRuntime(environment, wait_ticks=wait_ticks,
+            wake_refills=wake_refills, refill_observer=refill_observer)
         self.catalog = catalog
         self.information_factory = information_factory
+        self.action_adapter = action_adapter
         self.generators = {}
         for owner in (0, 1):
             identity = f"fair-final-execution.v1:{execution_seed}:{owner}".encode()
@@ -77,6 +79,11 @@ class FinalRollout:
 
     def commit_simultaneous(self, actions):
         information = self.freeze_due_information()
+        if self.action_adapter is not None:
+            if any(not information[owner].legality.legal(action) for owner, action in actions.items()):
+                raise ValueError("illegal action before SSPI execution adaptation")
+            actions = {owner: self.action_adapter(information[owner], action)
+                for owner, action in actions.items()}
         self.runtime.commit_simultaneous(actions, legal=lambda owner, action: information[owner].legality.legal(action))
         self.information = {}
 

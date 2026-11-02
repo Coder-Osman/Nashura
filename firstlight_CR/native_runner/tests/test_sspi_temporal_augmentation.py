@@ -63,7 +63,8 @@ def ordinary_action(info, delay_index):
 
 def run_plain_policy(monkeypatch, delay_index=3, *, event_tick=None, rejected=False,
         terminal_tick=None, illegal_sample_tick=None):
-    def capture(environment, observation, tensorizer, *, catalog):
+    def capture(environment, observation, tensorizer, *, catalog, refill_clock=None):
+        assert refill_clock is None
         tensorizer.tracker.append(observation.tick)
         info = information(observation.tick, observation.owner)
         if observation.tick == illegal_sample_tick:

@@ -25,6 +25,8 @@ class FinalBattleEnv(BattleEnvV1):
                 ("shaping_beta", "terminal_margin_beta", "truncation_terminal_potential")):
             raise ValueError("final runtime requires FAIR observations and terminal-only rewards")
         super().__init__(*args, **{**kwargs, "include_native_digest": False})
+        self.supports_event_batched_advance = bool(
+            getattr(self.native, "supports_event_batched_advance", False))
         self._owner_events = {owner: deque(maxlen=self.event_limit) for owner in (0, 1)}
         self._owner_event_archive = {owner: {} for owner in (0, 1)}
 
@@ -80,14 +82,19 @@ class FinalBattleEnv(BattleEnvV1):
             return TerminalV1()
         return super()._terminal(raw, towers)
 
-    def advance_reservations(self, reservations):
+    def advance_reservations(self, reservations, *, ticks=1):
         before = self.raw_observation
         native_tick = int(before["tick"])
         tick = self.current_tick
+        if type(ticks) is not int or not 1 <= ticks <= 1_000_000:
+            raise BattleEnvError("final native advance needs a positive tick span")
+        if ticks != 1 and not self.supports_event_batched_advance:
+            raise BattleEnvError("multi-tick final advances require event-batched native transport")
         if self._pending_abilities or any(item.status == "queued" for item in self._pending):
             raise BattleEnvError("final runtime owns all native commands")
         if (len({plan.owner for plan in reservations}) != len(reservations)
-                or any(plan.due_tick != tick + 1 or plan.action.card_id is None for plan in reservations)):
+                or any(plan.due_tick != tick + 1 or plan.action.card_id is None for plan in reservations)
+                or (reservations and ticks != 1)):
             raise BattleEnvError("only next-tick ACT reservations may enter the native queue")
         prepared = []
         outcomes = {}
@@ -139,10 +146,11 @@ class FinalBattleEnv(BattleEnvV1):
             self._pending.append(record)
             pending[plan.identity] = record
         self.reset_decision_deadlines()
-        result = self.step({owner: ActionV1.wait(owner, ticks=1) for owner in (0, 1)},
+        result = self.step({owner: ActionV1.wait(owner, ticks=ticks) for owner in (0, 1)},
             record_trace=False, policy_features_only=True, defer_observations=True)
-        if self.current_tick != tick + 1:
-            raise BattleEnvError("native final step did not advance exactly one tick")
+        advanced = self.current_tick - tick
+        if not 1 <= advanced <= ticks or (reservations and advanced != 1):
+            raise BattleEnvError("native final step advanced outside its requested boundary")
         for identity, record in pending.items():
             if record.status not in ("executed", "rejected"):
                 raise BattleEnvError("native reservation has no final execution attestation")
@@ -153,16 +161,19 @@ class FinalBattleEnv(BattleEnvV1):
 class FinalDecisionRuntime:
     wake_protocol = "public-deployment-own-deadline.v1"
 
-    def __init__(self, environment, *, wait_ticks=60, wake_refills=False):
+    def __init__(self, environment, *, wait_ticks=60, wake_refills=False, refill_observer=None):
         self.environment = environment
         self.clock = DecisionClock(wait_ticks=wait_ticks)
         self.wake_refills = bool(wake_refills)
+        self.refill_observer = refill_observer
         self.wake_protocol = ("public-deployment-own-deadline-and-own-refill.v1"
             if self.wake_refills else type(self).wake_protocol)
         self.failed = False
         self.ended = False
         self.truncated = False
         self.frozen = {}
+        self.advance_profile = dict(native_calls=0, actual_native_ticks=0,
+            host_observations_avoided=0, refill_poll_ticks=0, early_event_wakes=0)
         self._freeze(environment.current_tick, (0, 1), {})
 
     def _freeze(self, tick, owners, outcomes):
@@ -195,33 +206,74 @@ class FinalDecisionRuntime:
         if self.failed or self.ended or self.truncated or self.clock.ready:
             raise BattleEnvError("advance requires a live runtime with all decisions committed")
         try:
-            target = self.clock.tick + 1
-            before_hands = ({int(player["owner"]): {
+            current_tick = self.clock.tick
+            deadlines = tuple(plan.due_tick for plan in self.clock.pending.values())
+            if deadlines and min(deadlines) <= current_tick:
+                raise BattleEnvError("live decisions have no future reservation deadline")
+            ticks_to_deadline = min(deadlines) - current_tick if deadlines else 1
+            before_players = ({int(player["owner"]): player
+                for player in self.environment.raw_observation["players"]}
+                if self.wake_refills or self.refill_observer is not None else {})
+            before_hands = ({owner: {
                     (int(card["deckSlot"]), int(card["cardId"])) for card in player["hand"]}
-                for player in self.environment.raw_observation["players"]} if self.wake_refills else {})
+                for owner, player in before_players.items()} if self.wake_refills else {})
+            refill_pending = (self.wake_refills and any(
+                len(player["hand"]) < 4 for player in self.environment.raw_observation["players"]))
+            deadline = current_tick + ticks_to_deadline
+            deadline_has_play = any(plan.due_tick == deadline and plan.action.card_id is not None
+                for plan in self.clock.pending.values())
+            event_batching = bool(getattr(self.environment, "supports_event_batched_advance", False))
+            advance_ticks = (1 if not event_batching or refill_pending else
+                max(1, ticks_to_deadline - int(deadline_has_play)))
+            if self.refill_observer is not None:
+                refill_boundary = self.refill_observer.next_boundary(before_players, current_tick)
+                if refill_boundary is not None:
+                    advance_ticks = min(advance_ticks, refill_boundary - current_tick)
+            target = current_tick + advance_ticks
             plans = tuple(plan for plan in self.clock.pending.values()
                 if plan.due_tick == target and plan.action.card_id is not None)
-            outcomes, result = self.environment.advance_reservations(plans)
+            outcomes, result = (self.environment.advance_reservations(plans) if advance_ticks == 1 else
+                self.environment.advance_reservations(plans, ticks=advance_ticks))
+            actual_tick = self.environment.current_tick
+            advanced = actual_tick - current_tick
+            if not 1 <= advanced <= advance_ticks or (plans and actual_tick != target):
+                raise BattleEnvError("native event advance crossed a reservation boundary")
+            self.advance_profile["native_calls"] += 1
+            self.advance_profile["actual_native_ticks"] += advanced
+            self.advance_profile["host_observations_avoided"] += advanced - 1
+            self.advance_profile["refill_poll_ticks"] += int(refill_pending)
             _, _, terminated, truncated, _ = result
             self.ended, self.truncated = bool(terminated["__all__"]), bool(truncated["__all__"])
             expected = {plan.identity for plan in plans}
             if set(outcomes) != expected:
                 raise BattleEnvError("incomplete native reservation outcomes")
+            action_events = self.environment.action_outcomes()
+            if self.refill_observer is not None:
+                after_players = {int(player["owner"]): player
+                    for player in self.environment.raw_observation["players"]}
+                play_ticks = {owner: tuple(int(event.tick) for event in action_events
+                    if event.event_type == "action_executed" and event.owner == owner)
+                    for owner in (0, 1)}
+                self.refill_observer.advance(before_players, after_players, current_tick,
+                    actual_tick, play_ticks)
             public_play = any(event.event_type == "action_executed"
                 and event.data.get("private_to") is None
                 and all(event_visible_to_owner(event, owner) for owner in (0, 1))
-                for event in self.environment.action_outcomes())
+                for event in action_events)
             owners = {0, 1} if public_play else set()
+            self.advance_profile["early_event_wakes"] += int(public_play and actual_tick < target)
             if self.wake_refills:
                 after_hands = {int(player["owner"]): {
                         (int(card["deckSlot"]), int(card["cardId"])) for card in player["hand"]}
                     for player in self.environment.raw_observation["players"]}
-                owners.update(owner for owner in (0, 1) if after_hands[owner] - before_hands[owner])
+                refill_owners = {owner for owner in (0, 1)
+                    if after_hands[owner] - before_hands[owner]}
+                owners.update(refill_owners)
             if self.ended or self.truncated or not getattr(self.environment, "policy_actions_open", True):
-                self.clock.finish(target, outcomes=outcomes)
+                self.clock.finish(actual_tick, outcomes=outcomes)
                 self.frozen = {}
             else:
-                self._freeze(target, tuple(sorted(owners)), outcomes)
+                self._freeze(actual_tick, tuple(sorted(owners)), outcomes)
             return outcomes
         except Exception:
             self.failed = True
@@ -241,6 +293,8 @@ class FinalSnapshot:
         self.sidecar = sidecar_factory(self.environment)
         self.battle_state = self.sidecar.capture()
         self.clock = runtime.clock.capture()
+        observer = getattr(runtime, "refill_observer", None)
+        self.refill_observer_state = observer.capture() if observer is not None else None
         self.frozen = deepcopy(runtime.frozen)
         self.match_id = self.environment.episode_id
         self.handle = self.native.create_snapshot()
@@ -272,6 +326,8 @@ class FinalSnapshot:
             NativeBeliefWorld._rebase_native_cursors(self,
                 self.environment._rich_snapshot_for(self.environment.raw_observation), receipt)
             self.runtime.clock = DecisionClock.restore(self.clock)
+            if self.refill_observer_state is not None:
+                self.runtime.refill_observer.restore(self.refill_observer_state)
             if self.environment.current_tick != self.runtime.clock.tick:
                 raise BattleEnvError("restored native clock differs from controller")
             self.runtime.frozen = deepcopy(self.frozen)

@@ -1,5 +1,13 @@
 # 阶段成果与证据索引
 
+## 2026-11-02：SSPI 补牌时序协议修订（工程验证）
+
+在最新 `origin/main` 派生工作树实现无补牌决策的 Hog 时序输入：稳定八卡身份、四个物理槽、待补 FIFO、剩余 tick/已知标志；无 EMPTY 动作。模型可提议待补牌的五档 PLAY；若预测到位 tick 晚于或等于提议出牌 tick，则忽略提议并按 WAIT 推进，无额外负反馈。搜索世界与实际对局使用同一适配器；采集日志区分提议与执行动作。新版输入 schema 改变，旧 v5 的四局局部 checkpoint 与新模型架构身份不兼容，不能据此声称已对新版完成训练。
+
+Mac M4 Max + ARM64 Android Emulator `astral-api30` 的事件批量 resident 端点 `26789` 补牌探针通过：预测与原生均在 tick 114 到位、`woke_owner0=false`、一次过早 PLAY 被忽略且未提交原生预约。独立 legacy 端点 `26790/26792` 上的新版真实开局搜索根 128/128 有效，45.92 秒、2812 实际 native ticks，0 丢弃边；原生根摘要前后一致、信念句柄释放。搜索内阶段为 transition 29.21 秒、叶推理 7.62 秒、restore 1.33 秒、信念构造 1.26 秒、候选生成 0.46 秒；RPC 与对手采样计时嵌在这些阶段内，不重复相加。模型 7,869,902 参数，libg SHA `110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783`，固定 seed `20261103`，工程根 `training_admissible=false`。相关 SSPI、FAIR 搜索/快照与时序增强扩展定向回归 `171 passed`。这验证协议及真实搜索根；新协议的自然完整局、参数更新和关闭 MCTS 的独立评估尚未完成。
+
+同一新版随机模型的 CPU/MPS 小型前后向及优化器步均通过，CPU/MPS 三次更新中位分别为 0.122/0.151 秒；WAIT 对数概率差 0，WDL 最大绝对差 `2.98e-8`，当前选 CPU。此为合成 WAIT/WDL 算子探针，不是训练样本。本次公开检查 `1104 passed, 42 skipped`，主引擎 `214 passed`，源码清单 `2810` 项，gitleaks 扫描约 41.20 MB 无发现，差异空白检查通过。
+
 ## 2026-11-02：SSPI 终局自动流水线、worker 预检与 owner provider 复用（真实局进行中）
 
 `experiment` orchestrator 等待完整自然终局后，自动执行冻结策略训练采集、验证、仅搜索根的 policy CE/WDL CE 更新、checkpoint 保存与恢复及关闭 MCTS 的 32 对/64 局严格配对评测。完整评测后 heartbeat 按同一协议续接后代；三代只是首次观察里程碑，没有固定墙钟上限。评测恢复入口验证 generation 记录、checkpoint 文件 SHA、optimizer 状态及 theta0 初始化。截断局只隔离，不作为平局或训练标签。

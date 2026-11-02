@@ -47,6 +47,21 @@ class OwnDecision:
 
 
 @dataclass(frozen=True)
+class EventBatchBoundary:
+    start_tick: int
+    end_tick: int
+    stop_reason: str
+
+    source = "resident-step-until-event.v1"
+
+    def __post_init__(self):
+        if (type(self.start_tick) is not int or type(self.end_tick) is not int
+                or self.start_tick < 0 or self.end_tick <= self.start_tick
+                or self.stop_reason not in ("deployment", "terminal", "tick_budget")):
+            raise ValueError("invalid native event-batch boundary")
+
+
+@dataclass(frozen=True)
 class FairHistory:
     opening: OpeningEvidence
     decisions: tuple
@@ -127,10 +142,19 @@ class FairHistoryRecorder:
         self.seen = set()
         self.observed_tick = opening_tick
 
-    def observe_tick(self, observation):
+    def observe_tick(self, observation, *, interval=None):
         validate_fair_view(observation, self.opening.owner)
-        if observation.tick not in (self.observed_tick, self.observed_tick + 1):
-            raise ValueError("FAIR history requires every tick; event windows may discard deployments")
+        if interval is None:
+            if observation.tick not in (self.observed_tick, self.observed_tick + 1):
+                raise ValueError("FAIR history requires every tick without native boundary evidence")
+            start_tick = self.observed_tick
+            stop_reason = None
+        else:
+            if (not isinstance(interval, EventBatchBoundary) or interval.start_tick != self.observed_tick
+                    or interval.end_tick != observation.tick):
+                raise ValueError("FAIR history interval differs from native event-batch evidence")
+            start_tick = interval.start_tick
+            stop_reason = interval.stop_reason
         additions = set()
         for event in observation.events:
             if event.event_type != "action_executed" or not all(
@@ -140,8 +164,18 @@ class FairHistoryRecorder:
             if entry.tick > observation.tick:
                 raise ValueError("future public execution entered FAIR history")
             if entry not in self.seen:
+                if interval is not None and entry.tick <= start_tick:
+                    raise ValueError("unseen public deployment predates the native event interval")
                 additions.add(entry)
         ordered = sorted(additions)
+        if interval is not None:
+            if stop_reason == "deployment" and (not ordered or any(
+                    entry.tick != observation.tick for entry in ordered)):
+                raise ValueError("deployment boundary lacks its complete public execution event")
+            if stop_reason == "tick_budget" and ordered:
+                raise ValueError("native tick-budget boundary skipped a public deployment")
+            if stop_reason == "terminal" and any(entry.tick != observation.tick for entry in ordered):
+                raise ValueError("terminal boundary contains a deployment from an earlier tick")
         if ordered and self.deployments and ordered[0] <= self.deployments[-1]:
             raise ValueError("public deployment arrived after its history boundary")
         if len({(entry.tick, entry.owner) for entry in [*self.deployments[-2:], *ordered]}) != len(
