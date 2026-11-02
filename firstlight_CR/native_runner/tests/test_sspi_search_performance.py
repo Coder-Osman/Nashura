@@ -77,13 +77,71 @@ def test_probe_native_request_profile_distinguishes_step_requests_from_ticks():
     profile.record("step 3", 0.1, True)
     profile.record("step 8", 0.2, False)
     profile.record("observe-atomic", 0.5, True)
+    profile.record_phase("step 3", "response_wait_read_seconds", 0.04, response_bytes=12)
     profile.record("restore 7", 0.03, True)
     summary = profile.summary()
     assert summary["successful_step_ticks_requested"] == 3
     assert summary["commands"]["step"]["calls"] == 2
     assert summary["commands"]["step"]["successes"] == 1
     assert summary["commands"]["observe-atomic"]["seconds"] == pytest.approx(0.5)
+    assert summary["request_phases"]["step"]["response_wait_read_seconds"] == {
+        "calls": 1, "seconds": pytest.approx(0.04), "response_bytes": 12,
+    }
     assert "not observed tick deltas" in summary["tick_semantics"]
+
+
+def test_native_request_phase_profile_preserves_persistent_response():
+    from native_runner.cr_native_env import NativeClashEnv
+
+    class Reader:
+        def readline(self, _limit):
+            return b'{"ok":true,"tick":17}\n'
+
+    class Connection:
+        def __init__(self):
+            self.sent = []
+
+        def sendall(self, payload):
+            self.sent.append(payload)
+
+    native = NativeClashEnv("127.0.0.1", 1)
+    native.rpc_profile = NativeRequestProfiler()
+    native._persistent_transport_requested = True
+    native._persistent_transport_supported = True
+    native._persistent_connection = Connection()
+    native._persistent_reader = Reader()
+
+    assert native._request("step 1") == {"ok": True, "tick": 17}
+    assert native._persistent_connection.sent == [b"step 1\n"]
+    phases = native.rpc_profile.summary()["request_phases"]["step"]
+    assert phases["send_seconds"]["calls"] == 1
+    assert phases["response_wait_read_seconds"]["calls"] == 1
+    assert phases["response_wait_read_seconds"]["response_bytes"] == len(b'{"ok":true,"tick":17}\n')
+    assert phases["json_decode_seconds"]["calls"] == 1
+    assert phases["response_validation_seconds"]["calls"] == 1
+
+
+def test_native_delta_cursor_validation_is_timed_without_extra_request():
+    from native_runner.cr_native_env import NativeClashEnv
+
+    class Cursor:
+        def wire(self):
+            return (1, 2)
+
+        def validate(self, result):
+            return {"validated": result["ok"]}
+
+    native = NativeClashEnv("127.0.0.1", 1)
+    native.rpc_profile = NativeRequestProfiler()
+    native.json_event_deltas = True
+    native._json_event_cursor = Cursor()
+    commands = []
+    native._request = lambda command: commands.append(command) or {"ok": True}
+
+    assert native.observe_atomic() == {"validated": True}
+    assert commands == ["observe-atomic-delta 1 2"]
+    phases = native.rpc_profile.summary()["request_phases"]["observe-atomic-delta"]
+    assert phases["delta_cursor_validation_seconds"]["calls"] == 1
 
 
 def test_probe_exact_tick_counter_never_counts_restores():

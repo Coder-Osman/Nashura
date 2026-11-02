@@ -1,10 +1,16 @@
 # Nashura
 
+## 2026-11-03：event-batched 复测与 MCTS transition 分解
+
+在隔离的 macOS ARM64 AVD 上完成同 seed 的 persistent-delta / event-json-delta / persistent-delta sandwich 搜索。两次基线均为 15.40–15.69 秒，event-batched 为 10.95 秒；128 根延迟下降 29.6%，transition 由均值 11.20 秒降至 6.10 秒。2812 native ticks 不变，event-batched 用 349 个批次省去 2463 次逐 tick 宿主观测。
+
+`step_native_bind` 的互斥子项均有真实引擎数据：persistent 平均 5.860 秒，event-batched 1.169 秒；分项为 step client、atomic capture client、capture envelope、rich telemetry bind 和 residual。搜索动作、访问数与各 prior 完全相同；7 个候选的 Q 有最多 `2.98e-8` 的浮点末位差异，结果没有被记为逐字等价。定向回归 `35 passed`。完整结果与三份原始 JSON 见[阶段记录](docs/RESULTS.md)及[证据目录](docs/evidence/sspi-transition-profile-20261103/)。
+
 ## 2026-11-02：SSPI 搜索优化默认与 MCTS 成本复核
 
 新 SSPI run 默认采用已用于完整采集的 `persistent` transport；MCTS 探针默认使用 `persistent` root 控制和同根对照通过的 `persistent-delta` belief transport。策略条件缓存、稳定候选排序、transition 成功边快照削减和 event-batched 推进均已在主线。相同 seed/model/root 的 full 与 delta 搜索均 128/128 有效，完整访问分布、动作、FAIR SHA、2812 native ticks 和快照恢复完全一致，墙钟 16.445/16.429 秒；该对照没有显示显著 delta 提速。
 
-本次使用的 resident runtime 未上报 resident snapshot/restore 能力，因此 event-batched 搜索在首个模拟前被拦截；16.43 秒 MCTS profile 实际仍逐 tick 推进。历史 event-batched 对照的根中位数为 14.631→10.655 秒、transition 为 10.204→5.857 秒，该已验证实现已在主线；当前运行时缺少对应能力标记，故未将其设为新 run 默认。详细阶段和当前环境限制见[结果记录](docs/RESULTS.md)。
+上一段记录的是 2026-11-02 的运行时状态，当时部署缺少 resident snapshot/restore 能力标记，event-batched 搜索在首个模拟前被拦截。2026-11-03 已在隔离克隆 AVD 部署带 resident 快照能力的 probe 并完成同根 sandwich 复测：128 根延迟下降 29.6%，访问数与 prior 相同，Q 的末位差异已在[结果记录](docs/RESULTS.md)明确列出。event-batched 保持显式 transport；主训练 AVD 和冻结部署未动。
 
 ## 2026-11-02：SSPI 完整采集互斥计时归因
 

@@ -1,5 +1,14 @@
 # 变更记录
 
+## 2026-11-03：event-batched 复测与 MCTS native bind 拆解
+
+- 将 `step_native_bind_seconds` 拆为 native step client、atomic capture client、capture envelope、rich telemetry bind 与互斥 residual；请求内另记录锁等待、连接/握手、发送、读取、JSON decode、响应校验和 delta cursor 校验，不增加 native RPC。
+- 在隔离 macOS ARM64 AVD 上以 seed `20261103` 完成 persistent-delta / event-json-delta / persistent-delta 三根 sandwich 对照，每根128/128有效模拟、2812 native ticks。基线墙钟15.686/15.403秒，event-json-delta为10.948秒；以两次基线均值计算根延迟下降29.6%、transition下降45.5%。
+- 真实 `step_native_bind` 互斥分项：persistent均值5.860秒，event-json-delta为1.169秒（下降80.0%）。动作、访问数和prior逐项一致；7个候选Q有最大`2.98e-8`末位差异，故不称为完整数值等价。
+- event-batched共349次capture batch、同样推进2812 ticks，省去2463次宿主观测；响应字节17.02 MB，对比persistent-delta的132.28 MB。resident快照租约释放，根状态在每次搜索内部恢复。
+- 定向回归 `35 passed`；原始结果位于 `docs/evidence/sspi-transition-profile-20261103/`。发布检查将在本次证据和代码更新后重跑。
+- 发布验证：公开测试 `1104 passed / 42 skipped`，主引擎 `282 passed`，源码清单 `2832` 项，gitleaks扫描 `41.30 MB` 无发现。
+
 ## 2026-11-02：SSPI transport 默认与 MCTS transition 分项
 
 - 新建 SSPI run 缺省使用已覆盖完整采集的 `persistent` transport，代际采集、checkpoint 评估沿用 frozen run config 中的显式 transport。

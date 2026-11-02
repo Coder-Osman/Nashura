@@ -12,6 +12,7 @@ class NativeRequestProfiler:
 
     def __init__(self):
         self.commands = {}
+        self.phases = {}
         self.successful_step_ticks_requested = 0
 
     def record(self, command: str, seconds: float, succeeded: bool) -> None:
@@ -28,9 +29,25 @@ class NativeRequestProfiler:
         if kind == "step" and succeeded:
             self.successful_step_ticks_requested += int(command.partition(" ")[2])
 
+    def record_phase(self, command: str, phase: str, seconds: float, *, response_bytes: int = 0) -> None:
+        kind = command.partition(" ")[0]
+        if kind not in {
+            "step", "observe", "observe-atomic", "observe-atomic-delta", "snapshot-create", "restore",
+            "release-snapshot", "state-digest", "queue-hand-action-at",
+        }:
+            kind = "other"
+        item = self.phases.setdefault(kind, {}).setdefault(phase, dict(calls=0, seconds=0.0, response_bytes=0))
+        item["calls"] += 1
+        item["seconds"] += seconds
+        item["response_bytes"] += response_bytes
+
     def summary(self) -> dict:
         return dict(
             commands={key: dict(value) for key, value in sorted(self.commands.items())},
+            request_phases={
+                command: {phase: dict(value) for phase, value in sorted(phases.items())}
+                for command, phases in sorted(self.phases.items())
+            },
             successful_step_ticks_requested=self.successful_step_ticks_requested,
             tick_semantics="requested ticks of successful native step commands; not observed tick deltas",
         )

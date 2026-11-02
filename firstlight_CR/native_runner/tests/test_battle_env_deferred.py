@@ -30,6 +30,11 @@ def test_deferred_observations_preserve_transitions_rewards_events_and_masks():
         assert public(refreshed[owner]) == public(expected[0][owner])
     assert profile["step_transition_seconds"] > 0
     assert profile["step_native_bind_seconds"] > 0
+    native_bind_parts = sum(profile[name] for name in (
+        "step_native_step_client_seconds", "step_atomic_capture_client_seconds",
+        "step_capture_envelope_seconds", "step_rich_telemetry_bind_seconds",
+        "step_native_bind_unattributed_seconds"))
+    assert profile["step_native_bind_seconds"] == pytest.approx(native_bind_parts)
 
 
 def test_plain_wait_skips_masks_but_retains_owner_validation():

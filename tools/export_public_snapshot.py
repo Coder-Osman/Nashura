@@ -82,6 +82,9 @@ def selected_files(workspace):
         "docs/SSPI_SEARCH_HOT_PATH_OPTIMIZATION_2026-11-02.md",
         "docs/SSPI_SEARCH_HOT_PATH_OPTIMIZATION_2026-11-02.json",
         "docs/SSPI_SEARCH_HOT_PATH_NATIVE_CONTROL_2026-11-02.json",
+        "docs/evidence/sspi-transition-profile-20261103/persistent-delta.json",
+        "docs/evidence/sspi-transition-profile-20261103/persistent-delta-repeat.json",
+        "docs/evidence/sspi-transition-profile-20261103/event-json-delta.json",
     ):
         path = workspace / name
         if path.is_file():

@@ -2723,37 +2723,82 @@ class NativeClashEnv:
         self._persistent_transport_supported = True
         return
 
+    def _record_request_phase(self, command: str, phase: str, seconds: float, *, response_bytes: int = 0) -> None:
+        profiler = getattr(self, "rpc_profile", None)
+        record = getattr(profiler, "record_phase", None)
+        if callable(record):
+            record(command, phase, seconds, response_bytes=response_bytes)
+
     def _request(self, command: str, *, _read_retry_count: int = 2) -> dict[str, Any]:
+        profile_phases = callable(getattr(getattr(self, "rpc_profile", None), "record_phase", None))
+        lock_started = time.perf_counter() if profile_phases else None
         with self._lock:
+            if lock_started is not None:
+                self._record_request_phase(command, "lock_wait_seconds", time.perf_counter() - lock_started)
             try:
                 if self._persistent_transport_requested and self._persistent_transport_supported is not False:
-                    self._ensure_persistent_transport_locked()
+                    phase_started = time.perf_counter() if profile_phases else None
+                    try:
+                        self._ensure_persistent_transport_locked()
+                    finally:
+                        if phase_started is not None:
+                            self._record_request_phase(command, "connect_handshake_seconds",
+                                time.perf_counter() - phase_started)
                     connection = self._persistent_connection
                     reader = self._persistent_reader
                     if connection is None or reader is None:
                         raise RunnerError("persistent native control session has no socket")
-                    connection.sendall(command.encode("utf-8") + b"\n")
-                    payload = reader.readline(MAX_RUNNER_RESPONSE_BYTES + 2)
+                    phase_started = time.perf_counter() if profile_phases else None
+                    try:
+                        connection.sendall(command.encode("utf-8") + b"\n")
+                    finally:
+                        if phase_started is not None:
+                            self._record_request_phase(command, "send_seconds", time.perf_counter() - phase_started)
+                    payload = b""
+                    phase_started = time.perf_counter() if profile_phases else None
+                    try:
+                        payload = reader.readline(MAX_RUNNER_RESPONSE_BYTES + 2)
+                    finally:
+                        if phase_started is not None:
+                            self._record_request_phase(command, "response_wait_read_seconds",
+                                time.perf_counter() - phase_started,
+                                response_bytes=len(payload))
                     if not payload.endswith(b"\n"):
                         raise RunnerError("persistent native control session ended mid-response")
                     response_bytes = len(payload)
                     if response_bytes > MAX_RUNNER_RESPONSE_BYTES:
                         raise RunnerError("native runner response exceeds the 16 MiB host bound")
                 else:
-                    connection = socket.create_connection((self.host, self.port), timeout=self.timeout)
+                    phase_started = time.perf_counter() if profile_phases else None
+                    try:
+                        connection = socket.create_connection((self.host, self.port), timeout=self.timeout)
+                    finally:
+                        if phase_started is not None:
+                            self._record_request_phase(command, "connect_seconds", time.perf_counter() - phase_started)
                     with connection:
-                        connection.sendall(command.encode("utf-8") + b"\n")
+                        phase_started = time.perf_counter() if profile_phases else None
+                        try:
+                            connection.sendall(command.encode("utf-8") + b"\n")
+                        finally:
+                            if phase_started is not None:
+                                self._record_request_phase(command, "send_seconds", time.perf_counter() - phase_started)
                         chunks: list[bytes] = []
                         response_bytes = 0
-                        while True:
-                            chunk = connection.recv(65536)
-                            if not chunk:
-                                break
-                            response_bytes += len(chunk)
-                            if response_bytes > MAX_RUNNER_RESPONSE_BYTES:
-                                raise RunnerError("native runner response exceeds the 16 MiB host bound")
-                            chunks.append(chunk)
-                    payload = b"".join(chunks)
+                        phase_started = time.perf_counter() if profile_phases else None
+                        try:
+                            while True:
+                                chunk = connection.recv(65536)
+                                if not chunk:
+                                    break
+                                response_bytes += len(chunk)
+                                if response_bytes > MAX_RUNNER_RESPONSE_BYTES:
+                                    raise RunnerError("native runner response exceeds the 16 MiB host bound")
+                                chunks.append(chunk)
+                            payload = b"".join(chunks)
+                        finally:
+                            if phase_started is not None:
+                                self._record_request_phase(command, "response_wait_read_seconds",
+                                    time.perf_counter() - phase_started, response_bytes=response_bytes)
             except (OSError, TimeoutError, RunnerError) as error:
                 self._close_persistent_transport_locked()
                 if self._persistent_transport_supported is False:
@@ -2764,6 +2809,7 @@ class NativeClashEnv:
                 if isinstance(error, RunnerError):
                     raise
                 raise RunnerError(f"native runner transport failed for {command!r}") from error
+        phase_started = time.perf_counter() if profile_phases else None
         try:
             result = _fast_json_loads(payload)
         except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as error:
@@ -2771,18 +2817,26 @@ class NativeClashEnv:
                 time.sleep(0.002)
                 return self._request(command, _read_retry_count=_read_retry_count - 1)
             raise RunnerError(f"invalid native runner response to {command!r}") from error
-        if not result.get("ok"):
-            error_text = str(result.get("error", result))
-            diagnostics = ", ".join(
-                f"{key}={result[key]}" for key in ("stage", "bytesUsed", "capacity") if key in result
-            )
-            if diagnostics:
-                error_text = f"{error_text} ({diagnostics})"
-            raise RunnerError(error_text)
-        nested = command.split(" ", 2)[2] if command.startswith("env ") else command
-        if nested == "reset" or nested.startswith(("configure ", "configure-native ", "restore ")):
-            self._json_event_cursor.clear()
-        return result
+        finally:
+            if phase_started is not None:
+                self._record_request_phase(command, "json_decode_seconds", time.perf_counter() - phase_started)
+        phase_started = time.perf_counter() if profile_phases else None
+        try:
+            if not result.get("ok"):
+                error_text = str(result.get("error", result))
+                diagnostics = ", ".join(
+                    f"{key}={result[key]}" for key in ("stage", "bytesUsed", "capacity") if key in result
+                )
+                if diagnostics:
+                    error_text = f"{error_text} ({diagnostics})"
+                raise RunnerError(error_text)
+            nested = command.split(" ", 2)[2] if command.startswith("env ") else command
+            if nested == "reset" or nested.startswith(("configure ", "configure-native ", "restore ")):
+                self._json_event_cursor.clear()
+            return result
+        finally:
+            if phase_started is not None:
+                self._record_request_phase(command, "response_validation_seconds", time.perf_counter() - phase_started)
 
     def status(self) -> dict[str, Any]:
         return self._request("status")
@@ -2950,8 +3004,21 @@ class NativeClashEnv:
         if self.json_event_deltas:
             cursor = self._json_event_cursor
             result = self._request("observe-atomic-delta " + " ".join(map(str, cursor.wire())))
-            return cursor.validate(result)
-        return self._validate_atomic_result(self._request("observe-atomic"))
+            started = time.perf_counter() if callable(getattr(getattr(self, "rpc_profile", None), "record_phase", None)) else None
+            try:
+                return cursor.validate(result)
+            finally:
+                if started is not None:
+                    self._record_request_phase("observe-atomic-delta", "delta_cursor_validation_seconds",
+                        time.perf_counter() - started)
+        result = self._request("observe-atomic")
+        started = time.perf_counter() if callable(getattr(getattr(self, "rpc_profile", None), "record_phase", None)) else None
+        try:
+            return self._validate_atomic_result(result)
+        finally:
+            if started is not None:
+                self._record_request_phase("observe-atomic", "atomic_result_validation_seconds",
+                    time.perf_counter() - started)
 
     def _validate_atomic_result(self, result: Mapping[str, Any]) -> dict[str, Any]:
         identity = (result.get("generation"), result.get("stateEpoch"))

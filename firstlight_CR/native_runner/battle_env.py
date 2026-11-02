@@ -1033,15 +1033,25 @@ class BattleEnvV1:
         except (KeyError, TypeError, ValueError) as error:
             raise BattleEnvError("ordinary observation lacks tick/generation identity for rich merge") from error
 
-    def _atomic_observation_pair(self) -> tuple[dict[str, Any], RichTelemetrySnapshot]:
+    def _atomic_observation_pair(self, *, timing_profile=None) -> tuple[dict[str, Any], RichTelemetrySnapshot]:
+        started = time.perf_counter() if timing_profile is not None else None
         try:
             capture = self.native.observe_atomic()
         except RunnerError as error:
             raise BattleEnvError(f"native atomic telemetry failed closed: {error}") from error
+        finally:
+            if timing_profile is not None:
+                timing_profile["step_atomic_capture_client_seconds"] = (
+                    timing_profile.get("step_atomic_capture_client_seconds", 0.) + time.perf_counter() - started)
+        bind_started = time.perf_counter() if timing_profile is not None else None
         direct_ordinary = getattr(capture, "ordinary", None)
         direct_snapshot = getattr(capture, "snapshot", None)
         if isinstance(direct_ordinary, Mapping) and isinstance(direct_snapshot, RichTelemetrySnapshot):
-            return dict(direct_ordinary), direct_snapshot
+            raw = dict(direct_ordinary)
+            if timing_profile is not None:
+                timing_profile["step_capture_envelope_seconds"] = (
+                    timing_profile.get("step_capture_envelope_seconds", 0.) + time.perf_counter() - bind_started)
+            return raw, direct_snapshot
         if not isinstance(capture, Mapping):
             raise BattleEnvError("native atomic telemetry response is not a mapping")
         ordinary = capture.get("ordinary")
@@ -1059,6 +1069,10 @@ class BattleEnvV1:
             )
             if identity == capture_identity and value is not None
         )
+        if timing_profile is not None:
+            timing_profile["step_capture_envelope_seconds"] = (
+                timing_profile.get("step_capture_envelope_seconds", 0.) + time.perf_counter() - bind_started)
+        rich_started = time.perf_counter() if timing_profile is not None else None
         try:
             snapshot = bind_rich_telemetry(
                 raw,
@@ -1076,6 +1090,10 @@ class BattleEnvV1:
             )
         except RichTelemetryMergeError as error:
             raise BattleEnvError(f"native atomic telemetry merge failed: {error}") from error
+        finally:
+            if timing_profile is not None:
+                timing_profile["step_rich_telemetry_bind_seconds"] = (
+                    timing_profile.get("step_rich_telemetry_bind_seconds", 0.) + time.perf_counter() - rich_started)
         return raw, snapshot
 
     def _prime_rich_cache(self, raw: Mapping[str, Any], snapshot: RichTelemetrySnapshot) -> None:
@@ -2372,13 +2390,23 @@ class BattleEnvV1:
         self._decision_deadline_native = {owner: tick for owner in self.possible_agents}
 
     def _advance_headless(
-        self, before: Mapping[str, Any], ticks: int
+        self, before: Mapping[str, Any], ticks: int, *, timing_profile=None
     ) -> tuple[Mapping[str, Any], RichTelemetrySnapshot]:
         # Global early wakes can disclose private opponent transition timing.
         # Production FAIR episodes use fixed, atomic decision boundaries.
         self._last_advance_event = False
-        self.native.step(ticks)
-        pair = self._atomic_observation_pair()
+        if timing_profile is None:
+            self.native.step(ticks)
+        else:
+            step_started = time.perf_counter()
+            try:
+                self.native.step(ticks)
+            finally:
+                timing_profile["step_native_step_client_seconds"] = (
+                    timing_profile.get("step_native_step_client_seconds", 0.)
+                    + time.perf_counter() - step_started
+                )
+        pair = self._atomic_observation_pair(timing_profile=timing_profile)
         # The native step-until-event primitive stops at the first public
         # deployment, which can be earlier than the requested advance.  Without
         # resetting the decision deadlines the observation would be built with
@@ -2391,7 +2419,7 @@ class BattleEnvV1:
         return pair
 
     def _advance_synchronized_native_render(
-        self, before: Mapping[str, Any], ticks: int
+        self, before: Mapping[str, Any], ticks: int, *, timing_profile=None
     ) -> tuple[Mapping[str, Any], RichTelemetrySnapshot | None]:
         if not self.episode_config or self.episode_config.event_driven_decisions:
             raise BattleEnvError("synchronized native-render steps require fixed decisions")
@@ -2407,7 +2435,7 @@ class BattleEnvV1:
                 "synchronized native-render decision boundary drifted: "
                 f"expected {target_tick}, stopped at {observed_tick}"
             )
-        after, prefetched_rich = self._atomic_observation_pair()
+        after, prefetched_rich = self._atomic_observation_pair(timing_profile=timing_profile)
         after_tick = int(after.get("tick", -1))
         after_terminal = bool(after.get("finalized", after.get("finalizedEnded", after.get("ended", False))))
         if not after_terminal and after_tick != target_tick:
@@ -2736,16 +2764,27 @@ class BattleEnvV1:
                 )
 
         native_started = time.perf_counter()
+        if timing_profile is not None:
+            native_bind_parts = (
+                "step_native_step_client_seconds",
+                "step_atomic_capture_client_seconds",
+                "step_capture_envelope_seconds",
+                "step_rich_telemetry_bind_seconds",
+            )
+            native_bind_before = {
+                name: timing_profile.get(name, 0.) for name in native_bind_parts
+            }
         mode = self.episode_config.render_mode
         prefetched_rich: RichTelemetrySnapshot | None = None
         if mode == "headless":
-            after, prefetched_rich = self._advance_headless(before, advance_ticks)
+            after, prefetched_rich = self._advance_headless(before, advance_ticks, timing_profile=timing_profile)
         else:
             self._last_advance_event = False
             target_tick = before_native_tick + advance_ticks
             wait_timeout = max(2.0, advance_ticks / TICKS_PER_SECOND + 2.0)
             if self._synchronize_native_render_steps:
-                after, prefetched_rich = self._advance_synchronized_native_render(before, advance_ticks)
+                after, prefetched_rich = self._advance_synchronized_native_render(
+                    before, advance_ticks, timing_profile=timing_profile)
             else:
                 deadline = time.monotonic() + wait_timeout
                 after = before
@@ -2758,7 +2797,7 @@ class BattleEnvV1:
                     after = self.native.observe()
 
         if prefetched_rich is None:
-            after, prefetched_rich = self._atomic_observation_pair()
+            after, prefetched_rich = self._atomic_observation_pair(timing_profile=timing_profile)
 
         native_finished = time.perf_counter()
         self._raw = dict(after)
@@ -2846,10 +2885,19 @@ class BattleEnvV1:
             }
             infos["__all__"] = {"trace_length": len(self._trace), "event_wake": self._last_advance_event}
         if timing_profile is not None:
+            native_bind_seconds = native_finished - native_started
             for name, duration in (("step_prepare_seconds", native_started - step_started),
-                                   ("step_native_bind_seconds", native_finished - native_started),
+                                   ("step_native_bind_seconds", native_bind_seconds),
                                    ("step_reconcile_seconds", observation_started - native_finished)):
                 timing_profile[name] = timing_profile.get(name, 0.) + duration
+            native_bind_parts_seconds = sum(
+                timing_profile.get(name, 0.) - native_bind_before[name]
+                for name in native_bind_parts
+            )
+            timing_profile["step_native_bind_unattributed_seconds"] = (
+                timing_profile.get("step_native_bind_unattributed_seconds", 0.)
+                + max(0., native_bind_seconds - native_bind_parts_seconds)
+            )
             timing_profile["step_transition_seconds"] = timing_profile.get("step_transition_seconds", 0.) + observation_started - step_started
             timing_profile["step_observation_seconds"] = timing_profile.get("step_observation_seconds", 0.) + time.perf_counter() - observation_started
         return observations, dict(self._last_rewards), terminations, truncations, infos

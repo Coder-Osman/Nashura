@@ -1,5 +1,61 @@
 # 阶段成果与证据索引
 
+## 2026-11-03：event-batched capture 复测与 native bind 实测分解
+
+### 环境与方法
+
+仅使用 macOS M4 Max 宿主和从 `astral-api30` 克隆的 ARM64 API 30 `-no-window` AVD `emulator-5556`；主 AVD `emulator-5554`、ADB server 和既有转发均未改。测试 AVD 为6核。基于其既有15.535.13 cluster 安装离线重打 APK、替换为相同源码构建的 probe，并通过现有安装事务备份和恢复资源；APK SHA256 `18010aa7123d69a6fa829084065f4c982e163d66e30e846a048a9b1c6341ccdd`。native `libg.so` SHA256 `110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783`，probe SHA256 `f79ba9344a9599483c7283e7cde756a3a77f2982741f0c83467eee68a1f28e64`。原有990项运行时资源安装后逐项验证一致。
+
+使用 CPU 随机初始化网络，seed `20261103`，model SHA `9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4`，FAIR root SHA `df7486acf826ce64dd60582cba71e9995757cdcec1d8049832e79883a56457d6`，search SHA `1310b685bf0b0927edd6d83a833d09cf2fee516bdf3b694313eb3f3fc9725ae5`。在隔离 worker 0/1（宿主端口26889/26890）顺序运行 persistent-delta、event-json-delta、persistent-delta；每根均128/128有效模拟、0条丢弃边、推进2812 native ticks。两次基线的候选和 Q 逐项完全相同，构成首尾速度控制；三次的模型、FAIR、belief sampler和search protocol SHA一致。每次搜索内部 native root digest保持不变、belief lease释放，结束后resident槽数为0。跨次 native digest不作为相同状态依据，因为它包含进程内原生身份；使用完整 FAIR SHA核对冻结根。
+
+### 搜索速度与正确性
+
+| 传输 | 根墙钟 | transition | step_native_bind | native ticks |
+| --- | ---: | ---: | ---: | ---: |
+| persistent-delta（首） | 15.686 s | 11.290 s | 5.910 s | 2812 |
+| event-json-delta | 10.948 s | 6.098 s | 1.169 s | 2812 |
+| persistent-delta（尾） | 15.403 s | 11.108 s | 5.810 s | 2812 |
+
+两次 persistent 根均值15.544秒。event-batched根延迟降低29.6%，搜索吞吐从8.23升至11.69 simulations/s；transition降低45.5%，`step_native_bind`降低80.0%。这是本机单一冻结 FAIR 状态和随机流的受控 sandwich 复测，不外推为多状态平均。
+
+MCTS顶层阶段中，belief约1.192→1.179秒、candidate generation 0.455→0.477秒、推理1.385→1.375秒、tree selection约0.0056→0.0056秒；restore从0.921升至1.410秒。transition节省5.101秒，即使restore多用约0.490秒，根墙钟仍净省4.597秒。
+
+transition的互斥归因如下；RPC、step bind和FAIR视图细项是这些父阶段内的嵌套时间：
+
+| transition子项 | persistent均值 | event-batched |
+| --- | ---: | ---: |
+| 对手策略采样 | 2.207 s | 2.208 s |
+| 动作提交（扣除对手采样） | 0.289 s | 0.270 s |
+| native advance | 7.157 s | 2.129 s |
+| 根边界 FAIR information | 1.534 s | 1.486 s |
+| 其他 | 0.010 s | 0.003 s |
+| **transition总计** | **11.197 s** | **6.096 s** |
+
+以上子项之和对应 `transition_breakdown` 父计时；MCTS外层 `stage_seconds.transition` 为11.199/6.098秒，两个计时边界相差约0.002秒。event-batched将 native advance 降低70.3%；其中 BattleEnv 的准备、native bind、回执/事件协调与 runtime FAIR freeze仍全部执行。对手策略采样和根边界信息构造基本不变，当前下一层瓶颈因此集中在这两项和restore。
+
+event-batched以349个capture batch提交相同2812 ticks，其中137次在公开部署边界停下、212次到达tick预算；省去2463次逐tick宿主观测。batch响应17.02 MB，persistent-delta原子捕获响应132.28 MB，减少87.1%；batch内JSON decode为0.190秒。persistent基线有2813次step（RPC累计1.981秒）、2943次observe-atomic-delta（RPC累计2.252秒、JSON decode0.216秒、cursor校验0.988秒）。这些RPC与cursor时间是transition中的嵌套计时，不能加到根墙钟或native bind父项上。event组仍完成必要的快照恢复和 FAIR 校验。
+
+三组选择同一动作 `PLAY(card_id=26000030, cell=232, delay_slot=2)`。候选顺序、动作ID、proposal、联合logp、card/projected/search priors及每个候选的访问数逐项一致，访问合计128；event组只有7个候选Q与基线有末位差异，最大绝对差`2.98e-8`。persistent首尾两组Q逐项完全相同，因此将差异明确保留为 event transport 的微小价值数值偏差，不声称完整 candidate JSON 位级等价。当前结果未显示该差异改变动作、prior或访问分布。
+
+### `step_native_bind` 组成
+
+新增计时仅包围已经存在的调用，不增加native请求。以下互斥组件合计等于 `step_native_bind_seconds`，最后的residual用于暴露未归类差值：
+
+| 互斥子项 | persistent均值 | event-batched | 含义 |
+| --- | ---: | ---: | --- |
+| `step_native_step_client_seconds` | 1.965 s | 1.032 s | Python发起step或batch advance并等到回执的client墙钟 |
+| `step_atomic_capture_client_seconds` | 3.052 s | 0.00016 s | 单独atomic capture及delta校验；event batch在step响应中附带capture |
+| `step_capture_envelope_seconds` | 0.0064 s | 0.0010 s | 从mapping提取ordinary/rich envelope并准备边界元数据 |
+| `step_rich_telemetry_bind_seconds` | 0.802 s | 0.135 s | 绑定并校验rich事件、实体关系和FAIR关联 |
+| `step_native_bind_unattributed_seconds` | 0.0343 s | 0.0011 s | 以上客户端子项未覆盖的剩余时间 |
+| **`step_native_bind_seconds`** | **5.860 s** | **1.169 s** | **父项总时长** |
+
+persistent均值来自两根测量；各平均数相加有小数舍入误差。请求内部计时显示主要成本来自等待原生回复和完整delta cursor校验，不是建TCP连接：持久连接的2813次step合计连接/握手0.0005秒、响应读取1.927秒；observe-atomic-delta的2943次请求读取1.802秒、JSON parse0.216秒、cursor校验0.988秒。capture client与native request计时范围不同，且搜索中还有snapshot restore触发的额外observe，不把它们直接相加。event-batched把observe与step合并成同一批次响应，并只发送增量事件环，减少了宿主观测、数据量和rich bind时间。
+
+原始完整profile： [persistent首轮](evidence/sspi-transition-profile-20261103/persistent-delta.json)、[event-batched](evidence/sspi-transition-profile-20261103/event-json-delta.json)、[persistent重复基线](evidence/sspi-transition-profile-20261103/persistent-delta-repeat.json)。
+
+定向验证 `test_sspi_search_performance.py` 与 `test_battle_env_deferred.py` 共 `35 passed`；公开测试 `1104 passed / 42 skipped`，主引擎 `282 passed`，公开源码清单 `2832` 项通过，gitleaks扫描 `41.30 MB` 无发现，语法与diff空白检查通过。隔离测试结束后只关闭本次克隆 AVD 并移除其26889–26894端口转发，主 AVD及ADB server保持原样。该任务完成采集/搜索性能复测与bind归因，不是完整训练episode、权重更新或模型强度评估。
+
 ## 2026-11-02：SSPI 默认传输与 MCTS 耗时复核
 
 新建 SSPI run 默认使用完整采集已覆盖的 `persistent` native transport；缺少 transport 字段的旧 run config 也解析为该值，显式冻结在 run config 中的 transport 保持不变。搜索探针默认使用 persistent root 控制连接和同根等价性对照通过的 `persistent-delta` belief worker。已验证的条件概率缓存、稳定候选排序、成功边局部快照削减和事件批量推进实现均已在主线；本次新增 transition 子阶段计时不发额外 native 请求。

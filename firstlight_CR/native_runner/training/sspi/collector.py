@@ -221,7 +221,13 @@ class EventBatchedSSPINative(ResidentNativeClashEnv):
         if self.event_deltas:
             cursor = self._json_cursors[self.env_id]
             result = self._request("observe-atomic-delta " + " ".join(map(str, cursor.wire())))
-            self._capture = cursor.validate(result)
+            started = time.perf_counter() if callable(getattr(getattr(self, "rpc_profile", None), "record_phase", None)) else None
+            try:
+                self._capture = cursor.validate(result)
+            finally:
+                if started is not None:
+                    self._record_request_phase("observe-atomic-delta", "delta_cursor_validation_seconds",
+                        time.perf_counter() - started)
             return self._capture
         return super().observe_atomic()
 
