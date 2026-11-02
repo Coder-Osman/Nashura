@@ -41,6 +41,8 @@ PROJECT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PROJECT / "research" / "puct-runtime"))
 from native_adapter import BattleEnvSidecar
 
+DEFAULT_TRANSPORT = "persistent"
+
 
 ARM_CONFIG = {
     "A_5PCT_128": (0.05, 128),
@@ -516,7 +518,7 @@ def _observe_histories(rollout, histories, *, timing_profile=None):
 
 def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_id,
         seed=20261101, model=None, models_by_owner=None, device="cpu", host="127.0.0.1",
-        transport="legacy", search_probability=None, episode_kind="training", progress=None,
+        transport=DEFAULT_TRANSPORT, search_probability=None, episode_kind="training", progress=None,
         temporal_augmentation=True, random_stream_id=None, belief_ports=None, actual_env_id=0):
     """Collect one complete native match; incomplete matches are quarantined."""
     try:
@@ -927,7 +929,8 @@ def main():
     parser.add_argument("--seed", type=int, default=20261101)
     parser.add_argument("--random-stream-id")
     parser.add_argument("--device", choices=("cpu", "mps"), default="cpu")
-    parser.add_argument("--transport", choices=("legacy", "persistent", "event-json", "event-json-delta"), default="legacy")
+    parser.add_argument("--transport", choices=("legacy", "persistent", "event-json", "event-json-delta"),
+        default=DEFAULT_TRANSPORT)
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--no-temporal-augmentation", action="store_true",
         help="Keep the original SEARCH-root-only baseline without continuation samples")

@@ -282,11 +282,13 @@ def test_ability_pointer_and_tagged_action_roundtrip_are_versionable():
         assert to_full_action(action).delay_slot == delay_slot
 
 
-def test_collector_transport_is_explicit_and_legacy_remains_default():
+def test_collector_defaults_to_verified_persistent_transport():
     legacy = SearchNative("127.0.0.1", 26789)
     persistent = SearchNative("127.0.0.1", 26789, transport="persistent")
     assert legacy._persistent_transport_requested is False
     assert persistent._persistent_transport_requested is True
+    from native_runner.training.sspi.collector import DEFAULT_TRANSPORT
+    assert DEFAULT_TRANSPORT == "persistent"
     with pytest.raises(ValueError, match="transport"):
         SearchNative("127.0.0.1", 26789, transport="unknown")
     legacy.close_transport()
@@ -753,6 +755,16 @@ def test_experiment_routes_run_config_owner_ports_into_episode(monkeypatch, tmp_
     assert captured["belief_ports"] == {0: 26791, 1: 26792}
     assert captured["actual_env_id"] == 1
     assert captured["transport"] == transport
+
+
+def test_new_run_without_transport_uses_persistent_transport():
+    import inspect
+    from native_runner.training.sspi.experiment import _configured_transport
+    from native_runner.training.sspi.collector import collect_episode
+
+    assert _configured_transport({}) == "persistent"
+    assert _configured_transport({"transport": "persistent"}) == "persistent"
+    assert inspect.signature(collect_episode).parameters["transport"].default == "persistent"
 
 
 def test_sspi_training_has_only_the_5_percent_128_configuration():

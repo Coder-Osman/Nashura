@@ -99,25 +99,97 @@ class MeasuredSSPIRollout(FinalRollout):
                     refill_clock=clock),
             action_adapter=lambda information, action: information.legality.execution_action(action))
         self.tick_counter = tick_counter
+        self.advance_phase_seconds = {}
 
     def advance(self):
-        return self.tick_counter.advance(self, super().advance)
+        phase = {}
+        try:
+            return self.tick_counter.advance(self,
+                lambda: super(MeasuredSSPIRollout, self).advance(timing_profile=phase))
+        finally:
+            for name, seconds in phase.items():
+                self.advance_phase_seconds[name] = self.advance_phase_seconds.get(name, 0.) + seconds
 
 
 class TrackedOpeningBeliefProvider(OpeningBeliefProvider):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, phase_profile=None, tick_counter=None, inference=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.last_world = None
+        self.phase_profile = phase_profile
+        self.tick_counter = tick_counter
+        self.inference = inference
 
     def build(self, information, *, seed):
         world = super().build(information, seed=seed)
         self.last_world = world
+        if self.phase_profile is not None:
+            _attach_transition_profile(world, self.phase_profile,
+                tick_counter=self.tick_counter, inference=self.inference)
         return world
 
 
-def run(root_port, belief_port, *, seed=20261101, simulations=128, transport="legacy",
-        belief_transport=None, probe_path=None):
-    belief_transport = transport if belief_transport is None else belief_transport
+def _attach_transition_profile(world, profile, *, tick_counter, inference):
+    """Split existing transition work without adding native calls or changing outputs."""
+    counters = dict(commit_seconds=0., root_information_seconds=0.)
+    rollout = world.rollout
+    original_commit = world._commit
+    original_root_information = world.root_owner_information
+    original_transition = world.transition
+
+    def timed_commit(*args, **kwargs):
+        started = time.perf_counter()
+        try:
+            return original_commit(*args, **kwargs)
+        finally:
+            counters["commit_seconds"] += time.perf_counter() - started
+
+    def timed_root_information(*args, **kwargs):
+        started = time.perf_counter()
+        try:
+            return original_root_information(*args, **kwargs)
+        finally:
+            counters["root_information_seconds"] += time.perf_counter() - started
+
+    world._commit = timed_commit
+    world.root_owner_information = timed_root_information
+
+    def timed_transition(*args, **kwargs):
+        before_commit = counters["commit_seconds"]
+        before_root = counters["root_information_seconds"]
+        before_advance = tick_counter.advance_seconds
+        before_advance_profile = dict(rollout.advance_phase_seconds)
+        before_opponent = inference.opponent_sample_seconds
+        started = time.perf_counter()
+        try:
+            return original_transition(*args, **kwargs)
+        finally:
+            elapsed = time.perf_counter() - started
+            commit = counters["commit_seconds"] - before_commit
+            root_information = counters["root_information_seconds"] - before_root
+            advance = tick_counter.advance_seconds - before_advance
+            opponent = inference.opponent_sample_seconds - before_opponent
+            commit_exclusive = max(0., commit - opponent)
+            other = elapsed - commit_exclusive - root_information - advance - opponent
+            profile["transition_seconds"] = profile.get("transition_seconds", 0.) + elapsed
+            profile["opponent_sample_seconds"] = profile.get("opponent_sample_seconds", 0.) + opponent
+            profile["action_commit_excluding_opponent_seconds"] = (
+                profile.get("action_commit_excluding_opponent_seconds", 0.) + commit_exclusive)
+            profile["advance_seconds"] = profile.get("advance_seconds", 0.) + advance
+            profile["boundary_information_seconds"] = (
+                profile.get("boundary_information_seconds", 0.) + root_information)
+            profile["transition_other_seconds"] = profile.get("transition_other_seconds", 0.) + other
+            phase_names = set(rollout.advance_phase_seconds) | set(before_advance_profile)
+            for name in phase_names:
+                delta = rollout.advance_phase_seconds.get(name, 0.) - before_advance_profile.get(name, 0.)
+                profile.setdefault("advance_phases", {})[name] = (
+                    profile.setdefault("advance_phases", {}).get(name, 0.) + delta)
+            profile["transition_calls"] = profile.get("transition_calls", 0) + 1
+    world.transition = timed_transition
+
+
+def run(root_port, belief_port, *, seed=20261101, simulations=128, transport="persistent",
+        belief_transport="persistent-delta", probe_path=None):
+    belief_transport = "persistent-delta" if belief_transport is None else belief_transport
     if (type(root_port) is not int or type(belief_port) is not int or root_port == belief_port
             or type(seed) is not int or seed < 0 or simulations not in SEARCH_BUDGETS.values()
             or transport not in ("legacy", "persistent", "persistent-delta")
@@ -179,9 +251,11 @@ def run(root_port, belief_port, *, seed=20261101, simulations=128, transport="le
             return MeasuredSSPIRollout(environment, catalog=catalog,
                 execution_seed=execution_seed, tick_counter=tick_counter)
 
+        transition_profile = {}
         belief = TrackedOpeningBeliefProvider(new_belief_native,
             evidence=opening, catalog=bundle.card_catalog, sidecar_factory=BattleEnvSidecar,
-            rollout_factory=new_measured_rollout)
+            rollout_factory=new_measured_rollout, phase_profile=transition_profile,
+            tick_counter=tick_counter, inference=inference)
         limits = SearchLimits(root_noise=.25, root_noise_mode="training")
         search_sha = budget_search_sha(limits, simulations)
         identity = dict(search_protocol_sha=search_sha, root_belief_prior_sha=belief.sampler_sha,
@@ -216,6 +290,7 @@ def run(root_port, belief_port, *, seed=20261101, simulations=128, transport="le
             actual_root_native_rpc=actual_native.rpc_profile.summary(),
             belief_native_rpc=[native.rpc_profile.summary() for native in belief_natives],
             belief_event_batch=belief_batch,
+            transition_breakdown=transition_profile,
             note="RPC and opponent times are nested in the measured search stages; do not sum twice")
         return dict(status="passed", mode="SEARCH", simulations=simulations,
             valid_simulations=outcome.result["valid_simulations"], attempts=outcome.audit["attempts"],
@@ -249,14 +324,14 @@ def main():
     parser.add_argument("--belief-port", type=int, required=True)
     parser.add_argument("--seed", type=int, default=20261101)
     parser.add_argument("--simulations", type=int, choices=(128,), default=128)
-    parser.add_argument("--transport", choices=("legacy", "persistent", "persistent-delta"), default="legacy")
+    parser.add_argument("--transport", choices=("legacy", "persistent", "persistent-delta"), default="persistent")
     parser.add_argument("--belief-transport", choices=("same", "legacy", "persistent", "persistent-delta",
-        "event-json", "event-json-delta"), default="same")
+        "event-json", "event-json-delta"), default="persistent-delta")
     parser.add_argument("--probe-path", default=None)
     args = parser.parse_args()
     print(json.dumps(run(args.root_port, args.belief_port, seed=args.seed,
         simulations=args.simulations, transport=args.transport,
-        belief_transport=None if args.belief_transport == "same" else args.belief_transport,
+        belief_transport=args.transport if args.belief_transport == "same" else args.belief_transport,
         probe_path=args.probe_path),
         sort_keys=True), flush=True)
 

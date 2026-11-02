@@ -1,5 +1,13 @@
 # 变更记录
 
+## 2026-11-02：SSPI transport 默认与 MCTS transition 分项
+
+- 新建 SSPI run 缺省使用已覆盖完整采集的 `persistent` transport，代际采集、checkpoint 评估沿用 frozen run config 中的显式 transport。
+- 搜索探针默认 persistent root 控制和同根验证通过的 persistent-delta belief，新增 transition 内对手采样、动作提交、native advance、边界 FAIR 构造与剩余开销计时，不增加 native 请求。
+- M4 Max 上同 seed/model/root full 与 delta 均完成 128/128 模拟，动作、候选访问分布、FAIR、2812 native ticks、根恢复和 lease 释放一致；总时长 16.445/16.429 秒。
+- transition 11.987 秒：advance 7.882、对手采样 2.254、边界 FAIR 1.548 秒；搜索顶层约 73% 在 transition。旧的 event-batched 14.631→10.655 秒是另一次固定根实测，本次没有启用批量推进。
+- 策略条件缓存、稳定候选排序、transition 成功边快照削减和 event-batched 优化已在主线；SSPI/FAIR 搜索、恢复、rollout/runtime 与 native telemetry 定向回归 `330 passed`。当前 AVD 缺少 resident snapshot/restore capability 字段，event-batched MCTS 复测在首个模拟前停止；不据此声称该优化回归或本次有速度增益。
+
 ## 2026-11-02：SSPI 完整采集分阶段计时
 
 - 在 collector/runtime/rollout 记录互斥 setup、decision loop、finalize 时间，并细分 MCTS、DIRECT 推理和采样、冻结信息复制、tensorize、合法输入构建、历史更新、advance、增强样本处理及 episode 落盘。

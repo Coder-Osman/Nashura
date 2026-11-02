@@ -143,6 +143,62 @@ def test_search_probe_accepts_only_explicit_known_transports(transport):
         run_search_probe(1, 1, simulations=128, transport=transport)
 
 
+def test_search_probe_defaults_to_persistent_root_and_verified_delta_belief():
+    import inspect
+    from native_runner.training.sspi.search_probe import run
+
+    parameters = inspect.signature(run).parameters
+    assert parameters["transport"].default == "persistent"
+    assert parameters["belief_transport"].default == "persistent-delta"
+
+
+def test_transition_phase_profile_partitions_existing_calls_without_changing_result():
+    from native_runner.training.sspi.search_probe import _attach_transition_profile
+
+    class TickCounter:
+        advance_seconds = 0.0
+
+    class Inference:
+        opponent_sample_seconds = 0.0
+
+    class Rollout:
+        advance_phase_seconds = {}
+
+    class World:
+        def __init__(self):
+            self.rollout = Rollout()
+            self.calls = []
+
+        def _commit(self, opponent, generator, action=None):
+            self.calls.append("commit")
+            opponent.opponent_sample_seconds += 0.001
+
+        def root_owner_information(self):
+            self.calls.append("information")
+            return "root"
+
+        def transition(self, action, *, opponent, generator, hard_tick, maximum_decisions, check_deadline):
+            self._commit(opponent, generator, action)
+            self.rollout.advance_phase_seconds["step_native_bind_seconds"] = 0.002
+            counter.advance_seconds += 0.003
+            self.root_owner_information()
+            return "transition-result"
+
+    counter, inference, world, profile = TickCounter(), Inference(), World(), {}
+    _attach_transition_profile(world, profile, tick_counter=counter, inference=inference)
+    result = world.transition("action", opponent=inference, generator=None, hard_tick=10,
+        maximum_decisions=2, check_deadline=lambda: None)
+
+    assert result == "transition-result"
+    assert world.calls == ["commit", "information"]
+    accounted = sum(profile[name] for name in (
+        "opponent_sample_seconds", "action_commit_excluding_opponent_seconds",
+        "advance_seconds", "boundary_information_seconds", "transition_other_seconds"))
+    assert accounted == pytest.approx(profile["transition_seconds"], abs=1e-9)
+    assert profile["advance_phases"]["step_native_bind_seconds"] == pytest.approx(0.002)
+    assert profile["transition_calls"] == 1
+
+
 def test_search_probe_rejects_unknown_transport_before_native_io():
     with pytest.raises(ValueError, match="invalid independent ports"):
         run_search_probe(1, 1, simulations=128, transport="batch")

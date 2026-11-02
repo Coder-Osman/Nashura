@@ -1,5 +1,11 @@
 # Nashura
 
+## 2026-11-02：SSPI 搜索优化默认与 MCTS 成本复核
+
+新 SSPI run 默认采用已用于完整采集的 `persistent` transport；MCTS 探针默认使用 `persistent` root 控制和同根对照通过的 `persistent-delta` belief transport。策略条件缓存、稳定候选排序、transition 成功边快照削减和 event-batched 推进均已在主线。相同 seed/model/root 的 full 与 delta 搜索均 128/128 有效，完整访问分布、动作、FAIR SHA、2812 native ticks 和快照恢复完全一致，墙钟 16.445/16.429 秒；该对照没有显示显著 delta 提速。
+
+本次使用的 resident runtime 未上报 resident snapshot/restore 能力，因此 event-batched 搜索在首个模拟前被拦截；16.43 秒 MCTS profile 实际仍逐 tick 推进。历史 event-batched 对照的根中位数为 14.631→10.655 秒、transition 为 10.204→5.857 秒，该已验证实现已在主线；当前运行时缺少对应能力标记，故未将其设为新 run 默认。详细阶段和当前环境限制见[结果记录](docs/RESULTS.md)。
+
 ## 2026-11-02：SSPI 完整采集互斥计时归因
 
 加入只读计时，将整局耗时按 setup、循环和 finalize 分区，并分别记录冻结决策状态、MCTS、DIRECT 推理/采样、native advance、双方 FAIR、张量化、历史维护和落盘；`BattleEnv.step` 进一步拆为准备、原生绑定、回执/事件协调及观测。相同 5% × 128 随机流的计时 validation 自然终局 438.53 秒、3961 tick、22 根；与未计时局的 464 条动作/FAIR 记录、22 根访问分布、tick 和 WDL 完全一致。墙钟 96.93% 在 MCTS；DIRECT 推理/采样 4.69 秒（1.07%），runtime 推进/回执协调 3.21 秒（0.73%），计时分区误差 0.00015 秒，没有约61秒的额外未分类阶段。计时根及 nested RPC 不重复相加；这是单局瓶颈归因，不代表吞吐优化或策略提升。验证后关闭两个空闲 headless AVD，未停止 adb server。详见[阶段记录](docs/RESULTS.md)。

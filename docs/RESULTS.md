@@ -1,5 +1,15 @@
 # 阶段成果与证据索引
 
+## 2026-11-02：SSPI 默认传输与 MCTS 耗时复核
+
+新建 SSPI run 默认使用完整采集已覆盖的 `persistent` native transport；缺少 transport 字段的旧 run config 也解析为该值，显式冻结在 run config 中的 transport 保持不变。搜索探针默认使用 persistent root 控制连接和同根等价性对照通过的 `persistent-delta` belief worker。已验证的条件概率缓存、稳定候选排序、成功边局部快照削减和事件批量推进实现均已在主线；本次新增 transition 子阶段计时不发额外 native 请求。
+
+在 M4 Max macOS、`astral-api30` / `emulator-5554` 的空闲 Engine4/5（端口 26793/26794）运行两个 128 次真实搜索根。seed `20261103`、随机初始化模型 7,869,902 参数，model SHA `9e17519d536c1aa1a7d6879b8d0468f508ee0f396e01645fdd93e4b32ac445e4`，root FAIR SHA `df7486acf826ce64dd60582cba71e9995757cdcec1d8049832e79883a56457d6`，search SHA `1310b685bf0b0927edd6d83a833d09cf2fee516bdf3b694313eb3f3fc9725ae5`，libg SHA `110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783`，probe SHA `be2eff5ef7d9a9656ddc98b6340e0307d541a0084d5d9ded5746fee743313674`。运行配置分别为 `persistent + persistent` 与 `persistent + persistent-delta`；两根均 128/128 有效、0 条丢弃边、实际推进 2,812 ticks，selected action、完整候选访问分布、FAIR/model/search SHA、根状态恢复和 belief lease 释放逐项一致。墙钟为 16.445/16.429 秒；单对差异约 0.1%，不构成有意义的 delta 提速结论。
+
+本次 MCTS 顶层互斥计时为 belief 1.203 秒（7.3%）、candidate generation 0.455 秒（2.8%）、tree selection 0.006 秒、inference 1.423 秒（8.7%）、restore 0.965 秒（5.9%）、transition 11.987 秒（73.0%）、未归类 0.381 秒（2.3%）。transition 内互斥分项为 native advance 7.882 秒（65.8%）、对手策略采样 2.254 秒（18.8%）、根边界 FAIR 信息构造 1.548 秒（12.9%）、动作提交其余部分 0.291 秒（2.4%）、其他约 0.010 秒。advance 的嵌套 native bind 6.530 秒、prepare 0.102 秒、reconcile 0.415 秒、runtime FAIR freeze 0.475 秒；这些子项不能与父阶段重复求和。2,813 次 step RPC 共 2.268 秒，2,943 次 observe-atomic-delta 共 2.521 秒，130 次 restore 共 0.135 秒，均嵌套于顶层阶段。
+
+此前已验证的 event-batched 优化确实将另一固定根的完整搜索中位数从 14.631 降至 10.655 秒，transition 从 10.204 降至 5.857 秒，belief advance 从 2,368 次降到 335 次；该实现已在主线。它仍需原生 resident `multi-status` 明确提供 `residentSnapshotRestore`，因此保持为显式 transport。当前 AVD 未提供该能力标记，event-batched 复测在第一个模拟前被 capability gate 拦截，0 次有效模拟；16.43 秒剖析实际仍逐 tick 执行 2,812 次 advance，测试槽已回收。故本次重新计时不能作为 event-batched 优化的复测或回归结论。受影响 SSPI、FAIR 搜索、rollout、runtime、恢复和 native telemetry 定向回归 `330 passed`。该阶段只验证搜索工程行为与耗时，不代表完成模型更新或策略强度提升。
+
 ## 2026-11-02：SSPI 完整混合采集互斥计时
 
 为定位整局采集的剩余耗时，将计时从 collector 接到 `FinalRollout`、`FinalDecisionRuntime` 和 `BattleEnv.step(timing_profile=...)`。profile 中 setup、loop、finalize 是互斥整局分区；loop 下 freeze、决策组、runtime advance、历史更新、补牌记账和 finalize 均独立计时。决策组内将 SEARCH、DIRECT 推理/采样、动作记录与校验、commit 和 root序列化分别记录；advance内的step prepare/native bind/reconcile和runtime FAIR freeze为嵌套细项，不重复求和。计时不增加原生请求。

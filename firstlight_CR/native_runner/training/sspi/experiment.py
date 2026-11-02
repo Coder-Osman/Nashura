@@ -16,6 +16,7 @@ import torch
 
 from native_runner.training.fair_search.contracts import semantic_digest
 from native_runner.training.sspi.collector import (
+    DEFAULT_TRANSPORT,
     collect_episode,
     episode_seed_identity,
     resolve_belief_ports,
@@ -129,6 +130,13 @@ def _episode_model_sha(metadata):
     if isinstance(by_owner, dict) and by_owner.get("0") == by_owner.get("1"):
         return by_owner["0"]
     return identity.get("model_sha256")
+
+
+def _configured_transport(run_config):
+    transport = run_config.get("transport", DEFAULT_TRANSPORT)
+    if transport not in ("legacy", "persistent", "event-json", "event-json-delta"):
+        raise ValueError("SSPI run config has an unknown native transport")
+    return transport
 
 
 def _validate_episode(metadata, *, run_config, model_sha, episode_kind, search_probability):
@@ -332,7 +340,8 @@ def evaluate_generation(*, run_dir, generation, actual_port=26789, belief_port=2
             raise RuntimeError("cannot verify the owner of the active SSPI orchestrator")
         if _pid_command(owner_pid):
             raise RuntimeError("an SSPI postgame or continuation orchestrator is still running")
-    if transport is not None and transport != config.get("transport"):
+    configured_transport = _configured_transport(config)
+    if transport is not None and transport != configured_transport:
         raise ValueError("generation evaluation transport differs from the frozen run configuration")
     bundle = production_semantic_bundle()
     trained_model, _optimizer, generation_record, restored = _restore_generation_checkpoint(
@@ -355,7 +364,7 @@ def evaluate_generation(*, run_dir, generation, actual_port=26789, belief_port=2
         trained_model=trained_model, trained_model_sha=restored["model_sha"],
         theta0_model=baseline, theta0_sha=baseline_sha,
         checkpoint_sha=restored["file_sha"], actual_port=actual_port,
-        belief_port=belief_port, transport=config["transport"],
+        belief_port=belief_port, transport=configured_transport,
         evaluation_pairs=evaluation_pairs, output_name=output_name)
 
 
@@ -448,7 +457,8 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
         else:
             directory, metadata = _collect_one(run_config=collection_config, run_dir=run_dir,
                 game_id=game_id, episode_kind="training", model=model, device="cpu",
-                actual_port=actual_port, belief_port=belief_port, transport=config["transport"])
+                actual_port=actual_port, belief_port=belief_port,
+                transport=_configured_transport(config))
         _validate_episode(metadata, run_config=config, model_sha=parent_model_sha,
             episode_kind="training", search_probability=0.05)
         train_dirs.append(directory)
@@ -472,7 +482,8 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
         else:
             directory, metadata = _collect_one(run_config=collection_config, run_dir=run_dir,
                 game_id=game_id, episode_kind="validation", model=model, device="cpu",
-                actual_port=actual_port, belief_port=belief_port, transport=config["transport"])
+                actual_port=actual_port, belief_port=belief_port,
+                transport=_configured_transport(config))
         _validate_episode(metadata, run_config=config, model_sha=parent_model_sha,
             episode_kind="validation", search_probability=0.05)
         validation_dirs.append(directory)
@@ -560,7 +571,7 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
         generation=generation, trained_model=restored, trained_model_sha=checkpoint["model_sha"],
         theta0_model=baseline, theta0_sha=baseline_sha,
         checkpoint_sha=checkpoint["file_sha"], actual_port=actual_port,
-        belief_port=belief_port, transport=config["transport"],
+        belief_port=belief_port, transport=_configured_transport(config),
         evaluation_pairs=evaluation_pairs,
         output_name=f"evaluation-paired-generation-{generation:04d}.json")
     record["evaluation"] = dict(path=f"evaluation-paired-generation-{generation:04d}.json",
@@ -611,7 +622,8 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
         game_id = f"A-game-{index:04d}"
         directory, metadata = _collect_one(run_config=config, run_dir=run_dir,
             game_id=game_id, episode_kind="training", model=baseline, device="cpu",
-            actual_port=actual_port, belief_port=belief_port, transport=config["transport"])
+            actual_port=actual_port, belief_port=belief_port,
+            transport=_configured_transport(config))
         if _episode_model_sha(metadata) != baseline_sha:
             raise ValueError("frozen training generation changed theta0 between episodes")
         _validate_episode(metadata, run_config=config, model_sha=baseline_sha,
@@ -631,7 +643,8 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
         game_id = f"V-game-{index:04d}"
         directory, metadata = _collect_one(run_config=config, run_dir=run_dir,
             game_id=game_id, episode_kind="validation", model=baseline, device="cpu",
-            actual_port=actual_port, belief_port=belief_port, transport=config["transport"])
+            actual_port=actual_port, belief_port=belief_port,
+            transport=_configured_transport(config))
         _validate_episode(metadata, run_config=config, model_sha=baseline_sha,
             episode_kind="validation", search_probability=0.05)
         validation_dirs.append(directory)
@@ -706,7 +719,7 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
         generation=1, trained_model=restored, trained_model_sha=checkpoint["model_sha"],
         theta0_model=baseline, theta0_sha=baseline_sha,
         checkpoint_sha=checkpoint["file_sha"], actual_port=actual_port,
-        belief_port=belief_port, transport=config["transport"],
+        belief_port=belief_port, transport=_configured_transport(config),
         evaluation_pairs=evaluation_pairs, output_name="evaluation-paired-generation-0001.json")
     training_record["evaluation"] = dict(path="evaluation-paired-generation-0001.json",
         score=evaluation_record["score"], games=evaluation_record["protocol"]["games"])
