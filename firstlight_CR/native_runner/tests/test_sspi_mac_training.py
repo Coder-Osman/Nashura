@@ -1065,7 +1065,9 @@ def test_continuation_parent_checkpoint_rejects_mismatched_record_checksum(tmp_p
         _restore_generation_checkpoint(tmp_path, 1, "continuation-test", bundle=None)
 
 
-def test_next_generation_freezes_parent_then_trains_and_restores_checkpoint(monkeypatch, tmp_path):
+@pytest.mark.parametrize("with_direct_value_stage", [False, True])
+def test_next_generation_freezes_parent_then_trains_and_restores_checkpoint(
+        monkeypatch, tmp_path, with_direct_value_stage):
     import native_runner.training.sspi.experiment as experiment
     from native_runner.training.fair_search.contracts import semantic_digest
 
@@ -1079,17 +1081,20 @@ def test_next_generation_freezes_parent_then_trains_and_restores_checkpoint(monk
     optimizer.step()
     optimizer.zero_grad(set_to_none=True)
     parent_sha = semantic_digest(parent.state_dict())
+    plan = dict(schema="sspi-direct-value-stage.v1", train_games=2, validation_games=1)
+    stage_record = dict(direct_value_stage=dict(plan=plan)) if with_direct_value_stage else {}
     identity = dict(run_id=run_id, generation=1, seed=seed,
-        architecture_sha=parent.architecture_sha)
+        architecture_sha=parent.architecture_sha, **stage_record)
     checkpoint_path = tmp_path / "checkpoints" / "generation-0001.pt"
     checkpoint = save_checkpoint(checkpoint_path, parent, optimizer,
         identity=identity, optimizer_steps=1)
+    stage_config = dict(direct_value_stage=plan) if with_direct_value_stage else {}
     (tmp_path / "generation-0001.json").write_text(json.dumps(dict(
         schema="sspi-mac-pilot-generation.v2", run_id=run_id, generation=1,
-        theta0_sha256=theta0_sha, checkpoint=checkpoint)))
+        theta0_sha256=theta0_sha, checkpoint=checkpoint, **stage_record)))
     (tmp_path / "run_config.json").write_text(json.dumps(dict(
         schema="sspi-mac-pilot-run.v2", run_id=run_id, arm="A_5PCT_128",
-        device="cpu", seed=seed, transport="persistent", deck=list(HOG_DECK))))
+        device="cpu", seed=seed, transport="persistent", deck=list(HOG_DECK), **stage_config)))
     (tmp_path / "postgame_status.json").write_text(json.dumps(dict(
         status="complete", generation=1)))
 
@@ -1135,6 +1140,18 @@ def test_next_generation_freezes_parent_then_trains_and_restores_checkpoint(monk
         "loss": torch.tensor(.75), "policy_loss": torch.tensor(.25),
         "value_loss": torch.tensor(.5), "continuation_loss": torch.tensor(0.),
         "continuation_rows": 0})
+    appended = []
+    if with_direct_value_stage:
+        def append(**kwargs):
+            assert kwargs["generation"] == 2 and kwargs["optimizer_steps"] == 2
+            assert semantic_digest(kwargs["model"].state_dict()) != parent_sha
+            value = kwargs["model"].value_head[-1].bias
+            value.sum().backward()
+            kwargs["optimizer"].step()
+            kwargs["optimizer"].zero_grad(set_to_none=True)
+            appended.append(semantic_digest(kwargs["model"].state_dict()))
+            return dict(plan=plan, optimizer_steps=1, status="updated")
+        monkeypatch.setattr(experiment, "_append_direct_value_stage", append)
 
     result = run_next_generation(run_dir=tmp_path, parent_generation=1,
         train_games=1, validation_games=1)
@@ -1144,7 +1161,10 @@ def test_next_generation_freezes_parent_then_trains_and_restores_checkpoint(monk
     assert result["parent_model_sha256"] == parent_sha
     assert len(result["updates"]) == 1
     assert result["trained_search_roots"] == 1 and result["unused_search_roots"] == 1
-    assert result["checkpoint_restore"]["optimizer_steps"] == 2
+    assert result["checkpoint_restore"]["optimizer_steps"] == 2 + int(with_direct_value_stage)
+    if with_direct_value_stage:
+        assert result["direct_value_stage"]["plan"] == plan
+        assert result["checkpoint"]["model_sha"] == appended[0]
     assert result["temporal_augmentation"] is False
     status = json.loads((tmp_path / "postgame_status.json").read_text())
     assert status["status"] == "complete" and status["generation"] == 2

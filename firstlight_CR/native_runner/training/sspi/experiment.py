@@ -34,6 +34,7 @@ from native_runner.training.sspi.learning import (
     train_generation_step,
 )
 from native_runner.training.sspi.model import initialize_fresh_model
+from native_runner.training.sspi.value_calibration import stage_config, run_direct_value_stage
 from native_runner.training.v4.factory import production_semantic_bundle
 
 
@@ -56,6 +57,19 @@ def _atomic_json(path, value):
 
 def _experiment_source_sha():
     return hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+
+
+def _append_direct_value_stage(*, config, run_dir, generation, model, optimizer,
+        optimizer_steps, train_dirs, actual_port, belief_port):
+    if stage_config(config) is None:
+        return None
+    engine_sha = json.loads((train_dirs[0] / "episode.json").read_text())["identity"].get("engine_sha256")
+    return run_direct_value_stage(run_dir=run_dir, config=config, generation=generation,
+        model=model, optimizer=optimizer, optimizer_steps=optimizer_steps,
+        engine_sha=engine_sha, actual_port=actual_port, belief_port=belief_port,
+        transport=_configured_transport(config),
+        progress=lambda row: _write_status(run_dir, "running", row["stage"],
+            **{key: value for key, value in row.items() if key not in ("status", "stage")}))
 
 
 def exposure_batches(rows, *, seed, exposure_limit=2, batch_size=EFFECTIVE_BATCH):
@@ -505,6 +519,8 @@ def evaluate_generation(*, run_dir, generation, actual_port=26789, belief_port=2
     bundle = production_semantic_bundle()
     trained_model, _optimizer, generation_record, restored = _restore_generation_checkpoint(
         run_dir, generation, config["run_id"], bundle=bundle)
+    if (generation_record.get("direct_value_stage") or {}).get("plan") != stage_config(config):
+        raise ValueError("generation direct value plan differs from frozen run configuration")
     baseline = initialize_fresh_model(config["seed"], device="cpu", bundle=bundle).eval()
     baseline_sha = semantic_digest(baseline.state_dict())
     initialization = config.get("initialization", {})
@@ -543,7 +559,8 @@ def _restore_generation_checkpoint(run_dir, generation, run_id, *, bundle):
     payload = envelope.get("payload") if isinstance(envelope, dict) else None
     identity = payload.get("identity") if isinstance(payload, dict) else None
     if (not isinstance(identity, dict) or identity.get("run_id") != run_id
-            or identity.get("generation") != generation):
+            or identity.get("generation") != generation
+            or identity.get("direct_value_stage") != record.get("direct_value_stage")):
         raise ValueError("parent checkpoint does not identify the requested generation")
     model = initialize_fresh_model(identity["seed"], device="cpu", bundle=bundle)
     optimizer = create_optimizer(model)
@@ -561,6 +578,7 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
     """Collect one generation, apply one root-batch update, restore, and optionally evaluate."""
     run_dir = Path(run_dir)
     config = json.loads((run_dir / "run_config.json").read_text())
+    value_plan = stage_config(config)
     status_path = run_dir / "postgame_status.json"
     status = json.loads(status_path.read_text()) if status_path.exists() else {}
     if status.get("status") == "running":
@@ -592,6 +610,8 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
     bundle = production_semantic_bundle()
     model, optimizer, parent_record, parent_restore = _restore_generation_checkpoint(
         run_dir, parent_generation, config["run_id"], bundle=bundle)
+    if (parent_record.get("direct_value_stage") or {}).get("plan") != value_plan:
+        raise ValueError("direct value stage cannot be added to or removed from a historical run")
     parent_checkpoint_sha = parent_restore["file_sha"]
     parent_model_sha = parent_restore["model_sha"]
     for parameter in model.parameters():
@@ -706,6 +726,12 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
     initialization_model_sha = parent_record.get("theta0_sha256")
     if not initialization_model_sha:
         raise ValueError("parent generation omitted the fresh initialization identity")
+    direct_value_stage = _append_direct_value_stage(config=config, run_dir=run_dir,
+        generation=generation, model=model, optimizer=optimizer,
+        optimizer_steps=parent_restore["optimizer_steps"] + len(updates), train_dirs=train_dirs,
+        actual_port=actual_port, belief_port=belief_port)
+    optimizer_steps = (parent_restore["optimizer_steps"] + len(updates)
+        + (direct_value_stage or {}).get("optimizer_steps", 0))
     checkpoint_identity = dict(run_id=config["run_id"], generation=generation,
         seed=config["seed"], architecture_sha=model.architecture_sha,
         initialization_model_sha=initialization_model_sha,
@@ -714,12 +740,14 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
         validation_episode_sha256=validation_episode_shas, source_sha256=source_shas,
         experiment_source_sha256=_experiment_source_sha(),
         action_schema="sspi-tagged-action.v1",
-        training_protocol="5pct-x-128-guarded-update-per-generation.v2",
+        training_protocol=("5pct-x-128-guarded-plus-direct-value.v1" if direct_value_stage
+            else "5pct-x-128-guarded-update-per-generation.v2"),
         training_root_selection_seed=selection_seed,
         training_root_indices=selected_indices,
-        temporal_augmentation=collection_config["temporal_augmentation"])
+        temporal_augmentation=collection_config["temporal_augmentation"],
+        **(dict(direct_value_stage=direct_value_stage) if direct_value_stage else {}))
     checkpoint = save_checkpoint(checkpoint_path, model, optimizer, identity=checkpoint_identity,
-        optimizer_steps=parent_restore["optimizer_steps"] + len(updates),
+        optimizer_steps=optimizer_steps,
         run_state=dict(generation=generation, parent_checkpoint_sha256=parent_checkpoint_sha,
             training_games=[path.name for path in train_dirs],
             validation_games=[path.name for path in validation_dirs],
@@ -732,7 +760,7 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
     restoration = load_checkpoint(checkpoint_path, restored, restored_optimizer,
         expected_identity=checkpoint_identity, device="cpu")
     if (semantic_digest(restored.state_dict()) != checkpoint["model_sha"]
-            or restoration["optimizer_steps"] != parent_restore["optimizer_steps"] + len(updates)
+            or restoration["optimizer_steps"] != optimizer_steps
             or not restored_optimizer.state):
         raise ValueError("continuation checkpoint did not restore model and optimizer state")
 
@@ -750,7 +778,8 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
         exposure_limit=2, max_observed_exposure=max(exposure_counts),
         experiment_source_sha256=_experiment_source_sha(),
         quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines),
-        temporal_augmentation=collection_config["temporal_augmentation"])
+        temporal_augmentation=collection_config["temporal_augmentation"],
+        **(dict(direct_value_stage=direct_value_stage) if direct_value_stage else {}))
     _atomic_json(generation_record, record)
     baseline = initialize_fresh_model(config["seed"], device="cpu", bundle=bundle).eval()
     baseline_sha = semantic_digest(baseline.state_dict())
@@ -795,6 +824,11 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
     run_dir = Path(run_dir)
     first_episode_dir = Path(first_episode_dir)
     config = json.loads((run_dir / "run_config.json").read_text())
+    value_plan = stage_config(config)
+    previous_record = run_dir / "generation-0001.json"
+    if previous_record.exists() and (json.loads(previous_record.read_text()).get(
+            "direct_value_stage") or {}).get("plan") != value_plan:
+        raise ValueError("direct value stage cannot be added to or removed from a historical run")
     if (config.get("schema") != "sspi-mac-pilot-run.v2" or config.get("status") != "collecting"
             or config.get("arm") != "A_5PCT_128" or config.get("device") != "cpu"
             or train_games < 1 or validation_games < 1
@@ -923,16 +957,22 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
         for path in train_dirs}
     validation_episode_shas = {path.name: hashlib.sha256((path / "episode.json").read_bytes()).hexdigest()
         for path in validation_dirs}
+    direct_value_stage = _append_direct_value_stage(config=config, run_dir=run_dir,
+        generation=1, model=model, optimizer=optimizer, optimizer_steps=len(updates),
+        train_dirs=train_dirs, actual_port=actual_port, belief_port=belief_port)
+    optimizer_steps = len(updates) + (direct_value_stage or {}).get("optimizer_steps", 0)
     checkpoint_identity = dict(run_id=config["run_id"], generation=1, seed=config["seed"],
         architecture_sha=model.architecture_sha, initialization_model_sha=baseline_sha,
         train_episode_sha256=train_episode_shas, validation_episode_sha256=validation_episode_shas,
         source_sha256=sorted({json.loads((path / "episode.json").read_text())["identity"]["source_sha256"]
             for path in train_dirs + validation_dirs}),
         action_schema="sspi-tagged-action.v1",
-        training_protocol="5pct-x-128-guarded-update-per-generation.v2",
+        training_protocol=("5pct-x-128-guarded-plus-direct-value.v1" if direct_value_stage
+            else "5pct-x-128-guarded-update-per-generation.v2"),
         experiment_source_sha256=_experiment_source_sha(),
         training_root_selection_seed=selection_seed,
         training_root_indices=selected_indices,
+        **(dict(direct_value_stage=direct_value_stage) if direct_value_stage else {}),
         continuation_protocol=dict(schema=TEMPORAL_SCHEMA,
             source_weight_with_samples=1. - TEMPORAL_AUX_WEIGHT,
             auxiliary_group_weight=TEMPORAL_AUX_WEIGHT,
@@ -940,7 +980,7 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
             validation_rows=sum(len(row.continuations) for row in validation_rows)))
     checkpoint_path = run_dir / "checkpoints" / "generation-0001.pt"
     checkpoint = save_checkpoint(checkpoint_path, model, optimizer, identity=checkpoint_identity,
-        optimizer_steps=len(updates), run_state=dict(training_games=[path.name for path in train_dirs],
+        optimizer_steps=optimizer_steps, run_state=dict(training_games=[path.name for path in train_dirs],
             validation_games=[path.name for path in validation_dirs], search_roots=len(train_rows),
             trained_search_roots=len(selected_indices), training_root_selection_seed=selection_seed,
             training_root_indices=selected_indices,
@@ -950,7 +990,7 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
     restoration = load_checkpoint(checkpoint_path, restored, restored_optimizer,
         expected_identity=checkpoint_identity, device="cpu")
     if (semantic_digest(restored.state_dict()) != checkpoint["model_sha"]
-            or restoration["optimizer_steps"] != len(updates) or not restored_optimizer.state):
+            or restoration["optimizer_steps"] != optimizer_steps or not restored_optimizer.state):
         raise ValueError("generation checkpoint did not restore model and optimizer state")
     restored.eval()
 
@@ -965,10 +1005,11 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
         validation_outcomes=episode_outcome_counts(validation_dirs),
         exposure_limit=2, max_observed_exposure=max(exposure_counts),
         experiment_source_sha256=_experiment_source_sha(),
-        quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines))
+        quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines),
+        **(dict(direct_value_stage=direct_value_stage) if direct_value_stage else {}))
     _atomic_json(run_dir / "generation-0001.json", training_record)
     _emit("checkpoint_restored", path=str(checkpoint_path), model_sha=checkpoint["model_sha"],
-        optimizer_steps=len(updates), validation_roots=len(validation_rows))
+        optimizer_steps=optimizer_steps, validation_roots=len(validation_rows))
 
     if evaluation_pairs is None:
         training_record["evaluation"] = None

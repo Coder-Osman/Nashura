@@ -40,16 +40,21 @@ def policy_head_sha(model: SSPIModel):
     return semantic_digest(model.policy_head.state_dict())
 
 
-def configure_value_training(model: SSPIModel):
-    for parameter in model.parameters():
-        parameter.requires_grad_(True)
-    for parameter in model.policy_head.parameters():
-        parameter.requires_grad_(False)
+def policy_function_sha(model: SSPIModel):
+    """Include shared parameters and buffers, not just the policy output head."""
+    return semantic_digest({name: value for name, value in model.state_dict().items()
+        if not name.startswith("value_head.")})
+
+
+def configure_value_training(model: SSPIModel, *, head_only=False):
+    for name, parameter in model.named_parameters():
+        parameter.requires_grad_(name.startswith("value_head.") if head_only
+            else not name.startswith("policy_head."))
     return tuple(parameter for parameter in model.parameters() if parameter.requires_grad)
 
 
-def create_value_optimizer(model: SSPIModel):
-    parameters = configure_value_training(model)
+def create_value_optimizer(model: SSPIModel, *, head_only=False):
+    parameters = configure_value_training(model, head_only=head_only)
     return torch.optim.AdamW(parameters, lr=1e-4, weight_decay=1e-4)
 
 
@@ -178,14 +183,22 @@ def prediction_metrics(predictions):
         wl_ce=ce / count, brier=brier / count, ece10=ece)
 
 
-def train_value_generation(model: SSPIModel, optimizer, training_rows, validation_rows, *, seed):
+def train_value_generation(model: SSPIModel, optimizer, training_rows, validation_rows, *, seed,
+        head_only=False):
     if type(seed) is not int or type(optimizer) is not torch.optim.AdamW:
         raise ValueError("value generation requires independent train and validation rows")
     if not training_rows or not validation_rows:
         return dict(status="skipped", reason="no_effective_training_or_validation_samples",
             optimizer_steps=0, attempted_steps=0)
-    parameters = configure_value_training(model)
+    if {row.game_id for row in training_rows} & {row.game_id for row in validation_rows}:
+        raise ValueError("value training and validation episodes overlap")
+    parameters = configure_value_training(model, head_only=head_only)
+    optimized = [p for group in optimizer.param_groups for p in group["params"]]
+    if len(optimized) != len(parameters) or {id(p) for p in optimized} != {id(p) for p in parameters}:
+        raise ValueError("value optimizer parameter scope differs")
+    model.zero_grad(set_to_none=True)
     frozen_sha = policy_head_sha(model)
+    function_sha = policy_function_sha(model) if head_only else None
     initial_model = copy.deepcopy(model.state_dict())
     initial_optimizer = copy.deepcopy(optimizer.state_dict())
     baseline = prediction_metrics(value_predictions(model, validation_rows))
@@ -199,12 +212,16 @@ def train_value_generation(model: SSPIModel, optimizer, training_rows, validatio
         for start in range(0, len(ordering), VALUE_BATCH):
             indices = ordering[start:start + VALUE_BATCH]
             optimizer.zero_grad(set_to_none=True)
-            model.train()
+            # Frozen encoder buffers (e.g. running statistics) must also stay fixed.
+            model.train(not head_only)
             for offset in range(0, len(indices), VALUE_MICROBATCH):
                 micro = [training_rows[i] for i in indices[offset:offset + VALUE_MICROBATCH]]
                 (value_loss(model, micro) * (len(micro) / len(indices))).backward()
             if any(parameter.grad is not None for parameter in model.policy_head.parameters()):
                 raise ValueError("value-only training reached the policy head")
+            if head_only and any(p.grad is not None for name, p in model.named_parameters()
+                    if not name.startswith("value_head.")):
+                raise ValueError("head-only value training reached the shared policy function")
             norm = torch.nn.utils.clip_grad_norm_(parameters, 1.)
             if not bool(torch.isfinite(norm)):
                 raise ValueError("value-only gradient norm is nonfinite")
@@ -219,17 +236,28 @@ def train_value_generation(model: SSPIModel, optimizer, training_rows, validatio
                     best = (copy.deepcopy(model.state_dict()),
                         copy.deepcopy(optimizer.state_dict()), metrics, steps)
         if best is None:
+            if head_only:
+                model.load_state_dict(initial_model)
+                optimizer.load_state_dict(initial_optimizer)
+                optimizer.zero_grad(set_to_none=True)
+                model.eval()
+                return dict(status="rolled_back", reason="no_independent_validation_improvement",
+                    optimizer_steps=0, attempted_steps=steps, validation_before=baseline,
+                    validation_after=baseline, validation_checks=checks,
+                    policy_head_sha=frozen_sha, policy_function_sha=function_sha)
             raise RuntimeError("value-only generation did not improve independent WL CE")
         model.load_state_dict(best[0])
         optimizer.load_state_dict(best[1])
         if policy_head_sha(model) != frozen_sha:
             raise ValueError("value-only update changed policy-head parameters")
+        if head_only and policy_function_sha(model) != function_sha:
+            raise ValueError("head-only value update changed the frozen policy function")
         model.eval()
         return dict(status="updated", rows=len(training_rows), games=len({row.game_id for row in training_rows}),
             seed=seed, batch_size=VALUE_BATCH, microbatch=VALUE_MICROBATCH,
             optimizer_steps=best[3], attempted_steps=steps, validation_before=baseline,
             validation_after=best[2], validation_checks=checks,
-            policy_head_sha=frozen_sha)
+            policy_head_sha=frozen_sha, **(dict(policy_function_sha=function_sha) if head_only else {}))
     except BaseException:
         model.load_state_dict(initial_model)
         optimizer.load_state_dict(initial_optimizer)

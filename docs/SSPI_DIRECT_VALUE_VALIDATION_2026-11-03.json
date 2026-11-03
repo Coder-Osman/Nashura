@@ -1,0 +1,64 @@
+{
+  "schema": "nashura.sspi-direct-value-validation.v1",
+  "date": "2026-11-03",
+  "base_commit": "618d33f4abd985e4adea473eebb6da16b7fe027b",
+  "scope": "engineering-only; no native collection or experiment launched",
+  "main_engine_checks": {
+    "passed": 413,
+    "failed": 0
+  },
+  "public_checks": {
+    "passed": 1104,
+    "skipped": 42,
+    "failed": 0,
+    "skips": "39 private native fixtures/evidence unavailable; 3 missing unicorn"
+  },
+  "targeted_checks": {
+    "passed": 77,
+    "failed": 0
+  },
+  "new_stage_tests": {
+    "passed": 9,
+    "failed": 0
+  },
+  "gitleaks": {
+    "status": "passed",
+    "findings": 0
+  },
+  "validation": [
+    "head-only nonzero gradients and updates",
+    "policy parameters and shared buffers unchanged",
+    "best model and AdamW restored together",
+    "no improvement rollback",
+    "empty decisive training skip without extra games",
+    "complete synthetic episode identity and integrity checks",
+    "no repeat collection/update on stage recovery",
+    "first and subsequent generation final checkpoints and evaluation handoff",
+    "legacy runs retain old execution; changed phase plan rejected"
+  ],
+  "cpu": {
+    "synthetic_fair": true,
+    "policy_log_prob_bitwise_equal": true
+  },
+  "mps": {
+    "synthetic_fair": true,
+    "policy_state_sha_equal": true,
+    "policy_log_prob_bitwise_equal": false,
+    "observed_max_abs_log_prob_difference": 4.76837158203125e-07,
+    "no_optimizer_step_control_max_abs_log_prob_difference": 4.76837158203125e-07,
+    "absolute_tolerance": 1e-06,
+    "initial_strict_bitwise_test_failed": true
+  },
+  "native_episodes": 0,
+  "new_experiments_started": 0,
+  "strength_result": null,
+  "source_sha256": {
+    "firstlight_CR/native_runner/training/sspi/value_calibration.py": "b6af1d793ef132244d4bdda75cda4cdf5cd040e03730a5fac1bc274e0b27cdd9",
+    "firstlight_CR/native_runner/training/sspi/value_learning.py": "e827c57017eff700f9a578a010768bc2f4f6fbcb91a06548a8e1bfc99f8a3c0e",
+    "firstlight_CR/native_runner/training/sspi/experiment.py": "bd3f990c0ac3cbb804f1ce9d9b3e4a98cfe3ed4391a90d31bdba35db286e4664",
+    "firstlight_CR/native_runner/tests/test_sspi_value_calibration.py": "f573b7430056cd3ce867d18e37454c670ec417313d45aefe967a5079e87266b8",
+    "firstlight_CR/native_runner/tests/test_sspi_binary_outcome.py": "e46d6d9420750e1d9ae0b8c0d8b6c96032e63aebbd5638d9d96eff6a5efab0fb",
+    "firstlight_CR/native_runner/tests/test_sspi_mac_training.py": "f759c2e8e3649e690ef921d4a976c9cb37bb7eb01f238fc94e51b71888633b0d",
+    "tools/run_main_engine_checks.py": "02dcf2d347b9c78526e86213ef02b7ac5ad4b09edfba25e26e085465d48081e7"
+  }
+}

@@ -9,6 +9,7 @@ PROJECT = ROOT / "firstlight_CR"
 TESTS = (
     "test_sspi_binary_outcome.py",
     "test_sspi_value_only.py",
+    "test_sspi_value_calibration.py",
     "test_sspi_mac_training.py",
     "test_sspi_temporal_augmentation.py",
     "test_sspi_search_performance.py",

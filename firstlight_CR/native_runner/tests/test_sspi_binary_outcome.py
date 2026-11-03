@@ -174,6 +174,7 @@ def test_best_model_adamw_restore_and_failed_update_rollback(monkeypatch):
     model = TinyValueModel()
     optimizer = learning.create_value_optimizer(model)
     rows = [learning.ValueRow("g", torch.tensor([[1.,.2]]), WLLabel.WIN)]*3
+    validation = [learning.ValueRow("held-out", torch.tensor([[1.,.2]]), WLLabel.WIN)]
     monkeypatch.setattr(learning, "VALUE_BATCH", 1)
     monkeypatch.setattr(learning, "VALIDATION_INTERVAL", 1)
     monkeypatch.setattr(learning, "value_predictions", lambda *_: [])
@@ -183,14 +184,14 @@ def test_best_model_adamw_restore_and_failed_update_rollback(monkeypatch):
         states.append(semantic_digest((model.state_dict(), optimizer.state_dict())))
         return dict(wl_ce=next(measurements))
     monkeypatch.setattr(learning, "prediction_metrics", metrics)
-    result = learning.train_value_generation(model, optimizer, rows, rows, seed=1)
+    result = learning.train_value_generation(model, optimizer, rows, validation, seed=1)
     assert result["attempted_steps"] == 3 and result["optimizer_steps"] == 2
     assert semantic_digest((model.state_dict(), optimizer.state_dict())) == states[2]
     assert all(int(state["step"]) == 2 for state in optimizer.state.values())
     before = semantic_digest((model.state_dict(), optimizer.state_dict()))
     measurements = iter([.7, .8, .8, .8])
     with pytest.raises(RuntimeError, match="did not improve"):
-        learning.train_value_generation(model, optimizer, rows, rows, seed=1)
+        learning.train_value_generation(model, optimizer, rows, validation, seed=1)
     assert semantic_digest((model.state_dict(), optimizer.state_dict())) == before
 
 
