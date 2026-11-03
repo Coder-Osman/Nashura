@@ -1,0 +1,189 @@
+{
+  "schema": "sspi-random-to-60-experiment-design.v1",
+  "status": "design_only",
+  "ready_to_run": false,
+  "base_commit": "6e54b381ad8aadc3ef6ef30fdfdfcfca3d354e62",
+  "new_run_required": true,
+  "initialization_seed": 20261103,
+  "load_historical_training_artifacts": false,
+  "target": {
+    "opponent": "frozen_same_seed_theta0",
+    "both_players_search_probability": 0.0,
+    "both_players_temperature": 1.0,
+    "win_rate": "wins / (wins + losses)",
+    "null_win_rate": 0.6,
+    "natural_draws": "exclude_and_report",
+    "failed_or_truncated": "pause_without_label_or_seed_replacement"
+  },
+  "hardware": {
+    "device": "cpu",
+    "actors": 1,
+    "native": "existing_macos_arm64_android_emulator"
+  },
+  "architecture": {
+    "schema": "sspi-policy-value.v3",
+    "parameters": 7869645,
+    "unchanged": true
+  },
+  "search": {
+    "probability": 0.05,
+    "valid_simulations": 128,
+    "cpuct": 1.5,
+    "initial_candidates": 8,
+    "maximum_candidates": 32,
+    "root_noise_fraction": 0.25,
+    "horizon": "unchanged"
+  },
+  "joint_update": {
+    "training_roots": "all_current_generation_decisive_roots",
+    "maximum_epochs": 2,
+    "maximum_attempted_exposures_per_root": 2,
+    "cross_generation_replay": false,
+    "batch_size_max": 128,
+    "microbatch": 4,
+    "partial_batch": "normalize_by_actual_root_count",
+    "policy_ce_weight": 1.0,
+    "win_loss_ce_weight": 1.0,
+    "continuation_group_weight": "preserve_current_protocol",
+    "optimizer": {
+      "type": "AdamW",
+      "lr": 1e-05,
+      "weight_decay": 0.0001,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "gradient_clip": 1.0
+    },
+    "backtracking": "existing_guarded_step",
+    "rejected_batch": "restore_model_and_optimizer_then_end_joint_phase"
+  },
+  "direct_value_stage": {
+    "schema": "sspi-direct-value-stage.v1",
+    "train_games": 32,
+    "validation_games": 16,
+    "search_probability": 0.0,
+    "value_sample_probability": 0.5,
+    "trainable_scope": "value_head_only",
+    "maximum_epochs": 1,
+    "batch_size": 128,
+    "microbatch": 4,
+    "optimizer": {
+      "type": "AdamW",
+      "lr": 0.0001,
+      "weight_decay": 0.0001,
+      "gradient_clip": 1.0
+    },
+    "validation_interval_steps": 32,
+    "restore_best_model_and_optimizer": true,
+    "no_improvement": "rollback",
+    "warm_start_before_generation_one": false
+  },
+  "generation_schedule": [
+    {
+      "from": 1,
+      "through": 2,
+      "search_train_games": 4,
+      "search_validation_games": 2
+    },
+    {
+      "from": 3,
+      "through": 8,
+      "search_train_games": 8,
+      "search_validation_games": 4
+    }
+  ],
+  "screening": {
+    "generations": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "seed_pairs_per_checkpoint": 64,
+    "minimum_decisive_games_for_selection": 64,
+    "separate_seed_domains": true,
+    "first_candidate_threshold": 0.65,
+    "generation_eight_fallback_threshold": 0.6,
+    "generation_eight_fallback_selection": "best_screened_checkpoint_tie_earliest",
+    "formal_evidence": false
+  },
+  "formal_evaluation": {
+    "candidate_count": 1,
+    "freeze_candidate": true,
+    "minimum_complete_pairs": 64,
+    "maximum_complete_pairs": 1500,
+    "report_every_pairs": 32,
+    "independent_of_training_validation_and_screening": true,
+    "test": "fixed_mixture_nonnegative_supermartingale",
+    "pair_statistic": "W_i - 0.60 * D_i",
+    "lambda_grid": [
+      0.05,
+      0.1,
+      0.2,
+      0.4,
+      0.8
+    ],
+    "lambda_weights": [
+      0.2,
+      0.2,
+      0.2,
+      0.2,
+      0.2
+    ],
+    "e_value_threshold": 20.0,
+    "anytime_type_i_error": 0.05,
+    "numeric_accumulation": "log1p_and_logsumexp",
+    "bootstrap_interval_role": "descriptive_only",
+    "critical_assumptions": [
+      "fixed_candidate",
+      "iid_complete_seed_pairs",
+      "no_postselection_on_formal_data",
+      "one_preregistered_candidate"
+    ]
+  },
+  "implementation_needed": [
+    "all_root_schedule_and_partial_batches",
+    "joint_learning_rate_and_schedule_identity",
+    "screening_and_candidate_lock",
+    "paired_anytime_test_and_idempotent_resume"
+  ],
+  "no_hard_training_wall_time_limit": true,
+  "native_runs_started_by_this_design": 0,
+  "historical_evidence": {
+    "protocol": "historical_three_class_WDL_not_new_results",
+    "search_run_id": "sspi-mac-5pct128-8x8-20261103-v3",
+    "generation_record_sha256": {
+      "g1": "6d2d437868d86fb8f5eedb0f6720493237c3231e7d6db3fb332d9f980d111d06",
+      "g2": "c735c64335ae52f4abcb8ac76b7a83762f99a0e041f2ef272b5c22bf68fcf2f2"
+    },
+    "search_roots_collected": 369,
+    "search_roots_used": 256,
+    "search_training_games": 16,
+    "search_training_mean_seconds": 545.804609911429,
+    "search_validation_games": 8,
+    "search_validation_mean_seconds": 639.7861036198447,
+    "direct_value_run_id": "sspi-value-only-50pct-64x8-20261103-v1",
+    "direct_value_training_games": 64,
+    "direct_value_training_mean_seconds": 13.985688457702054,
+    "old_checkpoint_evaluation_games": 49,
+    "old_checkpoint_evaluation_mean_seconds": 14.994789219451878
+  },
+  "design_checks": {
+    "schedule_counts_checked": true,
+    "betting_factor_minimum": 0.04,
+    "null_factor_expectation_exact_checks": [
+      "independent_games",
+      "perfectly_correlated_pair",
+      "draw_mixture"
+    ],
+    "not_a_native_battle_or_learning_test": true
+  },
+  "publication_checks": {
+    "main_engine_passed": 413,
+    "public_passed": 1104,
+    "public_skipped": 42,
+    "scope": "unchanged runtime regression, not execution of proposed scheduler or evaluation test"
+  }
+}

@@ -10194,18 +10194,18 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "1ed2a587c1e9ed2a25182df684e45b308bda738d8f1a0cc13aaf0d03a3b3684c",
-      "bytes": 76093,
-      "source_sha256": "1ed2a587c1e9ed2a25182df684e45b308bda738d8f1a0cc13aaf0d03a3b3684c",
+      "sha256": "830434d8a3051b2e72452ce5198b24ee74a4494019f536bfbe07eb9e44945827",
+      "bytes": 76739,
+      "source_sha256": "830434d8a3051b2e72452ce5198b24ee74a4494019f536bfbe07eb9e44945827",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "77cddf19cac446a729d2083a34ee7329471e86b5cf4d56d86743ba2e429490d4",
-      "bytes": 144750,
-      "source_sha256": "77cddf19cac446a729d2083a34ee7329471e86b5cf4d56d86743ba2e429490d4",
+      "sha256": "fbba265aedb5a30e9ec6489946c57594d0d82a38d9f72047a35ef9d605683f5a",
+      "bytes": 145817,
+      "source_sha256": "fbba265aedb5a30e9ec6489946c57594d0d82a38d9f72047a35ef9d605683f5a",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -16665,9 +16665,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "06534a67f9e8a4648b26ea38eeb9663ee129d1f9a296222fa4fbb05edbe0d5f7",
-      "bytes": 71263,
-      "source_sha256": "06534a67f9e8a4648b26ea38eeb9663ee129d1f9a296222fa4fbb05edbe0d5f7",
+      "sha256": "c5687858ef88ee55ebdf487cf479effb5908ea0e468a9f9e53b97d44730a5546",
+      "bytes": 72048,
+      "source_sha256": "c5687858ef88ee55ebdf487cf479effb5908ea0e468a9f9e53b97d44730a5546",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -19543,9 +19543,9 @@
     },
     {
       "path": "publication/checks-affordability.xml",
-      "sha256": "235c71b87e1a4e3d2476f4d018b9c1b5b04cc51bfbbb8780462b7cdaf85ed13d",
+      "sha256": "a32a29fe2482e5b660c3b9f3b820d703cd4454e0842cc6c521693907d1aa5f74",
       "bytes": 4340,
-      "source_sha256": "235c71b87e1a4e3d2476f4d018b9c1b5b04cc51bfbbb8780462b7cdaf85ed13d",
+      "source_sha256": "a32a29fe2482e5b660c3b9f3b820d703cd4454e0842cc6c521693907d1aa5f74",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19554,9 +19554,9 @@
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
-      "sha256": "3bc9dd3e733df8239a8167ac508fb00efa55e8c0ba2a2db55317b4aba0f5925f",
+      "sha256": "ee00bbd0c1464167360e4ff0b91098e3fef6b03c1fc5e5cf7cf77447a4a94766",
       "bytes": 12024,
-      "source_sha256": "3bc9dd3e733df8239a8167ac508fb00efa55e8c0ba2a2db55317b4aba0f5925f",
+      "source_sha256": "ee00bbd0c1464167360e4ff0b91098e3fef6b03c1fc5e5cf7cf77447a4a94766",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19565,9 +19565,9 @@
     },
     {
       "path": "publication/checks-command-coordinates.xml",
-      "sha256": "7605f1e01aac27c99eb7af27232ec94713b79d8c9359658686685e2cd5c4842d",
+      "sha256": "0066e533d28e98d7964e09d80e008aeec4f45afb8f1b419b7fafe3b18ff44f1b",
       "bytes": 8259,
-      "source_sha256": "7605f1e01aac27c99eb7af27232ec94713b79d8c9359658686685e2cd5c4842d",
+      "source_sha256": "0066e533d28e98d7964e09d80e008aeec4f45afb8f1b419b7fafe3b18ff44f1b",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19576,9 +19576,9 @@
     },
     {
       "path": "publication/checks-dispatch-command.xml",
-      "sha256": "5334e28656700cb31b10eb5eb3bfcbb0a375c4a8e51828f4ab8bc1e66b82fffd",
+      "sha256": "d8637c609d1c2e6ea9524bb60b85ef5c8fd5ea9e40eaebad10d61688c480dc15",
       "bytes": 6481,
-      "source_sha256": "5334e28656700cb31b10eb5eb3bfcbb0a375c4a8e51828f4ab8bc1e66b82fffd",
+      "source_sha256": "d8637c609d1c2e6ea9524bb60b85ef5c8fd5ea9e40eaebad10d61688c480dc15",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19587,9 +19587,9 @@
     },
     {
       "path": "publication/checks-live-command.xml",
-      "sha256": "7e88194c1aabe9d12bd9fb508565d938368646c6578dcb960fb583ab05b61433",
+      "sha256": "558e48ee318b6de5b0e83e4af472f819fd5d16f5265c7e93ccd756b987c2f045",
       "bytes": 6470,
-      "source_sha256": "7e88194c1aabe9d12bd9fb508565d938368646c6578dcb960fb583ab05b61433",
+      "source_sha256": "558e48ee318b6de5b0e83e4af472f819fd5d16f5265c7e93ccd756b987c2f045",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19598,9 +19598,9 @@
     },
     {
       "path": "publication/checks-position-guards.xml",
-      "sha256": "7f68de53cb01ec548cedae14b0e2679d2fb243915f2155bda74f25fe24fab987",
+      "sha256": "bd6ef6e859172cbf44726d62e04c145edab794190685a4c4d5284322fb0613e8",
       "bytes": 4319,
-      "source_sha256": "7f68de53cb01ec548cedae14b0e2679d2fb243915f2155bda74f25fe24fab987",
+      "source_sha256": "bd6ef6e859172cbf44726d62e04c145edab794190685a4c4d5284322fb0613e8",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19609,9 +19609,9 @@
     },
     {
       "path": "publication/checks-public.xml",
-      "sha256": "337c67abc984999eed62896bef0d4d6ff464dab7add2da914639d265edb1d9c8",
+      "sha256": "aac56ecce3c2b0dfc8ae28810e8d466bacee6d7d0e224c80d54980a477cff1c4",
       "bytes": 161900,
-      "source_sha256": "337c67abc984999eed62896bef0d4d6ff464dab7add2da914639d265edb1d9c8",
+      "source_sha256": "aac56ecce3c2b0dfc8ae28810e8d466bacee6d7d0e224c80d54980a477cff1c4",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19620,9 +19620,9 @@
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
-      "sha256": "8b68cc660c6f316febaea56e2b441432218b4329e7d1219400f0ddc1cf42ddf2",
+      "sha256": "b08467f85a7cc9dc38d356991ea381950e71a6e4d121ca98c30570cd94677ff3",
       "bytes": 6433,
-      "source_sha256": "8b68cc660c6f316febaea56e2b441432218b4329e7d1219400f0ddc1cf42ddf2",
+      "source_sha256": "b08467f85a7cc9dc38d356991ea381950e71a6e4d121ca98c30570cd94677ff3",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19631,9 +19631,9 @@
     },
     {
       "path": "publication/checks-selection-timeout.xml",
-      "sha256": "92d935f25fed65915bbcded408d77fa2962bdb8075b1fa5f80a135fa43bc0a89",
+      "sha256": "1978a0a1c2cb45b5dd81494c63bb2d957a4e31b813f2627aa8f4ae6fd00f19c1",
       "bytes": 14580,
-      "source_sha256": "92d935f25fed65915bbcded408d77fa2962bdb8075b1fa5f80a135fa43bc0a89",
+      "source_sha256": "1978a0a1c2cb45b5dd81494c63bb2d957a4e31b813f2627aa8f4ae6fd00f19c1",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -20061,10 +20061,24 @@
       "bytes": 12664,
       "source_sha256": "b6af1d793ef132244d4bdda75cda4cdf5cd040e03730a5fac1bc274e0b27cdd9",
       "transformations": []
+    },
+    {
+      "path": "docs/SSPI_RANDOM_TO_60_EXPERIMENT_2026-11-03.md",
+      "sha256": "3e5ce7c4e38d74f88656b0448b18c6de186dfe8baf5775b050068295b4d4ee88",
+      "source_sha256": "3e5ce7c4e38d74f88656b0448b18c6de186dfe8baf5775b050068295b4d4ee88",
+      "bytes": 12874,
+      "transformations": []
+    },
+    {
+      "path": "docs/SSPI_RANDOM_TO_60_PLAN_2026-11-03.json",
+      "sha256": "1f87203639cd5a9c93615ae431501c0df7a30572b16b2b2da7f42d1de83a5a24",
+      "source_sha256": "1f87203639cd5a9c93615ae431501c0df7a30572b16b2b2da7f42d1de83a5a24",
+      "bytes": 5563,
+      "transformations": []
     }
   ],
-  "file_count": 2842,
-  "source_bytes": 37170622,
+  "file_count": 2844,
+  "source_bytes": 37191557,
   "excluded_selected_candidates": {},
   "excluded_categories": [
     "credentials",
