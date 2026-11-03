@@ -247,6 +247,8 @@ def test_fresh_coordinator_changes_data_and_carries_selected_parent(tmp_path,mon
     def train(args,batch,run_id,parent,parent_sha):
         parents.append((parent,parent_sha))
         index=len(parents)
+        if index==2:
+            (tmp_path/"STOP_AFTER_BATCH").touch()
         return "/remote/"+batch.name,dict(status="fitting_observed" if index==2 else "batch_budget_complete",
             checkpoint_sha=f"checkpoint-{index}")
     monkeypatch.setattr(module,"collect_batch",collect)
@@ -254,7 +256,49 @@ def test_fresh_coordinator_changes_data_and_carries_selected_parent(tmp_path,mon
     module.run(args)
     assert len(seen)==80 and len({r["actual_match_seed"] for r in seen})==80
     assert parents==[("/remote/initial.pt","initial-sha"),("/remote/batch-0001/run/best.pt","checkpoint-1")]
-    assert json.loads((tmp_path/"status.json").read_text())["status"]=="complete"
+    assert json.loads((tmp_path/"status.json").read_text())==dict(status="paused_user",next_batch=3)
+
+
+def test_series_identity_allows_only_coordinator_code_revision():
+    module=coordinator_module()
+    first=dict(series_id="same-series",source_sha="source",coordinator_sha="old")
+    revised=dict(series_id="same-series",source_sha="source",coordinator_sha="new")
+    changed=dict(revised,source_sha="different")
+    assert module.compatible_series_identity(first,revised)
+    assert not module.compatible_series_identity(first,changed)
+
+
+def test_continuity_watcher_restarts_only_after_fit_completion():
+    import importlib.util
+    from pathlib import Path
+    path=Path(__file__).resolve().parents[3]/"tools/watch_tower_refresh.py"
+    spec=importlib.util.spec_from_file_location("tower_continuity_test",path)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    assert module.should_resume(dict(status="complete",stage="fitting_observed"))
+    assert not module.should_resume(dict(status="paused_failure",stage="error"))
+    assert not module.should_resume(dict(status="running",stage="remote_training"))
+    assert module.should_stop(dict(status="paused_failure"))
+    assert module.is_coordinator(["python","-u","/tmp/run_tower_refresh.py",
+        "--series-id","series"],"series")
+    assert not module.is_coordinator(["python","/tmp/watch_tower_refresh.py",
+        "--series-id","series","--restart-frozen-source","/tmp/run_tower_refresh.py"],"series")
+
+
+def test_continuity_watcher_can_switch_to_updated_frozen_coordinator():
+    import importlib.util
+    from pathlib import Path
+    path=Path(__file__).resolve().parents[3]/"tools/watch_tower_refresh.py"
+    spec=importlib.util.spec_from_file_location("tower_continuity_command_test",path)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    old="/tmp/frozen-old"
+    new="/tmp/frozen-updated"
+    command=["python3","-u",old+"/tools/run_tower_refresh.py","--series-id","series",
+        "--frozen-source",old,"--series-dir","/tmp/series"]
+    rewritten=module.coordinator_command(command,new)
+    assert rewritten[2]==new+"/tools/run_tower_refresh.py"
+    assert rewritten[rewritten.index("--frozen-source")+1]==new
+    assert rewritten[rewritten.index("--series-dir")+1]=="/tmp/series"
+    assert command[2]==old+"/tools/run_tower_refresh.py"
 
 
 def test_coordinator_rejects_wrong_budget_or_unverified_checkpoint():

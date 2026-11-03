@@ -1,0 +1,86 @@
+{
+  "schema": "nashura.sspi-tower-continuity.v1",
+  "recorded_at_utc": "2026-11-03T16:49:07Z",
+  "series_id": "sspi-tower-refresh-20261103-v1",
+  "status": "running",
+  "initial_model_sha": "14fbd5fa43ba84be860f4333f3c63a935879b2ca0d6221978100c93cb6061415",
+  "training_source_sha": "67e6e038c068f6dcb483dcfb6b3db28221c9eac614bcd1cf8e1725fde91bc68c",
+  "collection": {
+    "actor": "macos-arm64-android-emulator-single-actor",
+    "policy": "frozen-initial-random-direct",
+    "sample_probability": 0.5,
+    "search_probability": 0.0,
+    "batches_collected": 2,
+    "games_total": 80,
+    "training_games": 64,
+    "validation_games": 16,
+    "training_states": 17465,
+    "validation_states": 3955,
+    "search_roots": 0,
+    "draws": 0,
+    "truncated_games_used": 0
+  },
+  "batches": [
+    {
+      "batch_id": "batch-0001",
+      "run_id": "sspi-tower-refresh-20261103-v1-b0001",
+      "collection_status": "complete",
+      "training_status": "batch_budget_complete",
+      "training_epochs": 8,
+      "best_epoch": 8,
+      "training_states": 9001,
+      "validation_states": 1871,
+      "dataset_sha": "142caa6456fe8ff9976b42c52a2cdfcb675299091af8cf4646b32b2a20423532",
+      "checkpoint_sha": "bc34dc6698e89070cea50a4cbff2e8dcfc27281ca9bb772fc184309ffd2069bd",
+      "model_sha": "89c673fafa5a994f7c3f938931418c809e7bded3cb6b9c8561776cd238777d1b",
+      "optimizer_sha": "62c6cca3e363d913dd667e31cfb3e7b5824675428c96f1c068755f8d061dac82"
+    },
+    {
+      "batch_id": "batch-0002",
+      "run_id": "sspi-tower-refresh-20261103-v1-b0002",
+      "collection_status": "complete",
+      "training_status": "running",
+      "completed_epochs": 3,
+      "current_epoch": 4,
+      "completed_steps": 742,
+      "max_epochs": 8,
+      "training_states": 8464,
+      "validation_states": 2084,
+      "dataset_sha": "980bf997e00c509c548c967b4624b30f8e3c2e070e32fce7ca2927dd32275d78",
+      "last_completed_epoch": {
+        "training_mse": 0.00416878193915681,
+        "validation_mse": 0.004000098109804548,
+        "validation_mae": 0.04889486803487539,
+        "validation_direction_accuracy": 0.6517792217810833,
+        "seconds": 259.3305047880858,
+        "signal_streak": 0
+      }
+    }
+  ],
+  "continuity": {
+    "watcher_running": true,
+    "watcher_sha": "29fd6dc883fb1164a435acfd3dbcea7de390578111691a18eedb5ee0fc931d3c",
+    "old_coordinator_sha": "6b0adcc26efd7ce0b7ac348caf8f5f21a74b34f5c53b865cb775815682bb5be4",
+    "resume_coordinator_sha": "7e26f8417062e940a2f9e439fd786dd82bd9274975a394c3b8d110676a45c9a6",
+    "resume_condition": "old process exited and status is complete/fitting_observed and no active series coordinator",
+    "failure_or_user_pause_auto_restart": false,
+    "active_series_coordinators_at_snapshot": 1,
+    "source_sha_equal_before_and_after_resume_patch": true
+  },
+  "engineering_validation": {
+    "tower_refresh_tests": 16,
+    "tower_refresh_tests_status": "passed",
+    "main_engine_tests_before_watcher_test": 469,
+    "main_engine_tests_after_watcher_test": 470,
+    "public_checks": {"passed": 1104, "skipped": 42},
+    "source_manifest_files": 2866,
+    "source_manifest_status": "passed",
+    "gitleaks": {
+      "status": "passed",
+      "bytes_scanned": 36272440,
+      "findings": 0
+    }
+  },
+  "independent_acceptance": false,
+  "strength_claim": false
+}

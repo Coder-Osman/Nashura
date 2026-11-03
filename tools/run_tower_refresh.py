@@ -166,6 +166,12 @@ else:
         time.sleep(30)
 
 
+def compatible_series_identity(previous, current):
+    mutable = {"coordinator_sha", "coordinator_sha_history"}
+    return ({key:value for key,value in previous.items() if key not in mutable}
+        == {key:value for key,value in current.items() if key not in mutable})
+
+
 def run(args):
     config=dict(schema="sspi-tower-refresh-series.v1",series_id=args.series_id,
         coordinator_sha=sha(__file__),
@@ -176,8 +182,13 @@ def run(args):
         local_games=dict(training=32,validation=8),collection_policy="frozen-original-random",
         remote=args.remote,remote_root=args.remote_root,remote_python=args.remote_python)
     path=args.series_dir/"series.json"
-    if path.exists() and json.loads(path.read_text())!=config:
-        raise ValueError("series identity differs")
+    if path.exists():
+        previous=json.loads(path.read_text())
+        if previous != config:
+            if not compatible_series_identity(previous,config):
+                raise ValueError("series identity differs")
+            history=previous.get("coordinator_sha_history",[previous.get("coordinator_sha")])
+            config["coordinator_sha_history"]=list(dict.fromkeys([*history,config["coordinator_sha"]]))
     _atomic_json(path,config)
     excluded=json.loads(args.excluded_seeds.read_text())
     parent,parent_sha=args.parent_checkpoint,args.parent_sha
@@ -203,9 +214,10 @@ def run(args):
         excluded.extend({k:r[k] for k in ("actual_match_seed","actual_rollout_seed")} for r in planned)
         parent,parent_sha=remote_batch+"/run/best.pt",report["checkpoint_sha"]
         if report["status"]=="fitting_observed":
-            _atomic_json(args.series_dir/"status.json",dict(status="complete",stage="fitting_observed",
-                batch=batch.name,checkpoint_sha=parent_sha,independent_acceptance=False))
-            return
+            continuation=dict(status="running",stage="fitting_observed_continue",
+                batch=batch.name,next_batch=index+1,checkpoint_sha=parent_sha,independent_acceptance=False)
+            _atomic_json(args.series_dir/"status.json",continuation)
+            print(json.dumps(continuation),flush=True)
         index+=1
 
 
