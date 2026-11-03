@@ -74,6 +74,8 @@ def selected_files(workspace):
         "docs/SSPI_VALUE_ONLY_EXPERIMENT_2026-11-03.md",
         "docs/SSPI_TOWER_HEAD_BOOTSTRAP_2026-11-03.md",
         "docs/SSPI_TOWER_HEAD_BOOTSTRAP_RESULTS_2026-11-03.json",
+        "docs/SSPI_TOWER_SHARED_FIT_2026-11-03.md",
+        "docs/SSPI_TOWER_SHARED_FIT_RESULTS_2026-11-03.json",
         "tools/audit_tower_bootstrap.py",
         "docs/evidence/sspi-tower-bootstrap-20261103/runtime-v1-compat.diff.txt",
         "docs/SSPI_WL_VALIDATION_2026-11-03.json",

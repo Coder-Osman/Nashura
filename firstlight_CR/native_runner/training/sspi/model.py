@@ -226,16 +226,27 @@ class SSPIModel(nn.Module):
         if hand is None:
             raise ValueError("SSPI inference requires FAIR input with a stable hand/FIFO snapshot")
         device = next(self.parameters()).device
+        return self.encode_inputs(frame, _hand_features(hand, device=device).unsqueeze(0))
+
+    def encode_inputs(self, frame, hand_features):
+        """Batch the existing stateless trunk without changing its architecture."""
+        device = next(self.parameters()).device
         frame = frame.to_model_input(device, float_dtype=torch.float32)
-        if frame.batch_size < 1:
-            raise ValueError("SSPI encoder requires at least one FAIR frame")
+        hand_features = hand_features.to(device=device, dtype=torch.float32)
+        if frame.batch_size < 1 or hand_features.shape != (frame.batch_size, HAND_FEATURE_DIM):
+            raise ValueError("SSPI encoder requires one hand feature row per FAIR frame")
+        if not bool(torch.isfinite(hand_features).all()):
+            raise ValueError("SSPI hand inputs are nonfinite")
         encoded = self.encoder(frame)
-        hand_summary = self.hand_projection(_hand_features(hand, device=device).unsqueeze(0))
+        hand_summary = self.hand_projection(hand_features)
         combined = torch.cat([encoded.scene_state, encoded.spatial_summary,
             encoded.scalar_summary + hand_summary, encoded.candidate_summary], dim=-1)
         if combined.shape[-1] != 640:
             raise ValueError("SSPI frozen feature projection width changed")
         return self.trunk(combined), encoded, frame
+
+    def value_batch(self, frame, hand_features):
+        return self.value_head(self.encode_inputs(frame, hand_features)[0])
 
     def forward(self, decision, legalities):
         shared, encoded, model_frame = self.encode(decision)

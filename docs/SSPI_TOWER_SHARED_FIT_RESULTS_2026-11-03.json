@@ -1,0 +1,444 @@
+{
+  "schema": "nashura.tower-shared-fit-progress.v1",
+  "recorded_at": "2026-11-03T22:47:39.354405+08:00",
+  "status": "running",
+  "independent_acceptance": false,
+  "identity": {
+    "batch": 256,
+    "dataset_sha": "ca68014e172cc8351e545cd114a9060f9f34742c26256fb7f5e4d3e831af3177",
+    "device": "cuda:0",
+    "gpu": "Tesla V100-PCIE-32GB",
+    "initial_model_sha": "14fbd5fa43ba84be860f4333f3c63a935879b2ca0d6221978100c93cb6061415",
+    "lr": 0.0001,
+    "max_epochs": null,
+    "microbatch": 16,
+    "original_holdout_used": false,
+    "policy_frozen": true,
+    "protocol": "sspi-tower-shared-fit.v1",
+    "run_id": "sspi-tower-shared-20261103-v1",
+    "seed": 20261103,
+    "shared_frozen": false,
+    "signal_streak": 3,
+    "source_sha": "f797c56aed22d43f06ee0109922898e67d6d569130737dde59d873d83469aa31",
+    "torch": "2.5.1+cu121",
+    "weight_decay": 0.0001
+  },
+  "base_commit": "f07389d55b6b0aedccc1bd0490e30744f3979b4d",
+  "runtime_status_snapshot": {
+    "completed_steps": 128,
+    "epoch": 5,
+    "stage": "training",
+    "status": "running"
+  },
+  "data_audit": {
+    "training": {
+      "states": 8171,
+      "unique_decisions": 8171,
+      "episodes": 32,
+      "score_min": -0.48305972755850507,
+      "score_max": 0.48305972755850507,
+      "score_mean": -0.00041045545114485737,
+      "advantage_states": 3190,
+      "all_soft_targets_normalized": true
+    },
+    "validation": {
+      "states": 1996,
+      "unique_decisions": 1996,
+      "episodes": 8,
+      "score_min": -0.27277091083643346,
+      "score_max": 0.27277091083643346,
+      "score_mean": 0.00048576288300137535,
+      "advantage_states": 912,
+      "all_soft_targets_normalized": true
+    }
+  },
+  "input_target_audit": {
+    "samples": 10167,
+    "max_error": 0.0002925735970974175,
+    "all_hp_inputs_match_original_fp16_storage": true,
+    "all_owner_perspectives_match": true,
+    "checked_states": 10167,
+    "interpretation": "Existing half-precision storage rounding, no target perspective or missing-HP mismatch"
+  },
+  "original_input_padding_audit": {
+    "original_decisions_checked": 8,
+    "max_global_padding_logit_error": 2.7939677238464355e-09,
+    "passed": true,
+    "model_seed": 20261103
+  },
+  "cuda_probe": {
+    "identity": {
+      "protocol": "sspi-tower-shared-cuda-probe.v1",
+      "source_sha": "f797c56aed22d43f06ee0109922898e67d6d569130737dde59d873d83469aa31",
+      "dataset_sha": "ca68014e172cc8351e545cd114a9060f9f34742c26256fb7f5e4d3e831af3177"
+    },
+    "torch": "2.5.1+cu121",
+    "gpu": "Tesla V100-PCIE-32GB",
+    "sample_count": 16,
+    "train_samples": 8171,
+    "validation_samples": 1996,
+    "cpu_cuda_max_logit_error": 1.210719347000122e-08,
+    "cpu_forward_seconds": 0.5291504254564643,
+    "cuda_warm_forward_seconds": 0.12256563547998667,
+    "cuda_update_seconds": 0.7006827397271991,
+    "soft_ce": 0.69313645362854,
+    "gradient_l1": {
+      "encoder": 0.9722777048523814,
+      "hand_projection": 0.040303265501279384,
+      "trunk": 0.8215132139011985,
+      "value_head": 0.4901801682281075
+    },
+    "peak_cuda_bytes": 692676608,
+    "cuda_rng_restored": true,
+    "next_update_bitwise_equal": true,
+    "policy_head_unchanged": true,
+    "buffers_unchanged": true,
+    "timing_scope": "single correctness probe, no backend performance conclusion"
+  },
+  "initial_state": {
+    "baseline": {
+      "training": {
+        "status": "defined",
+        "games": 32,
+        "samples": 8171,
+        "mse": 0.010602594495921077,
+        "mae": 0.061207297488182606,
+        "correlation": -0.03130544935216696,
+        "direction_accuracy": 0.4835632974214322,
+        "advantage_games": 32,
+        "advantage_states": 3190,
+        "aggregation": "equal-game-means",
+        "bootstrap": "whole-game-resampling",
+        "bootstrap_seed": 20261103,
+        "bootstrap_replicates": 0,
+        "correlation_defined_games": 32
+      },
+      "validation": {
+        "status": "defined",
+        "games": 8,
+        "samples": 1996,
+        "mse": 0.008037688297468051,
+        "mae": 0.06946333445818782,
+        "correlation": 0.03562211880469814,
+        "direction_accuracy": 0.5205522557415048,
+        "advantage_games": 8,
+        "advantage_states": 912,
+        "aggregation": "equal-game-means",
+        "bootstrap": "whole-game-resampling",
+        "bootstrap_seed": 20261103,
+        "bootstrap_replicates": 0,
+        "correlation_defined_games": 8
+      }
+    },
+    "constants": {
+      "training": 0.010586342048575585,
+      "validation": 0.00804196430810508
+    },
+    "initial_policy_modes": [
+      [
+        0.4694811999797821,
+        0.5305188298225403,
+        0.0
+      ],
+      [
+        0.5695936679840088,
+        0.4304063320159912,
+        0.0
+      ],
+      [
+        0.46946191787719727,
+        0.5305381417274475,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.44829070568084717,
+        0.5517092943191528,
+        0.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.4335465133190155,
+        0.5664535164833069,
+        0.0
+      ],
+      [
+        0.491207093000412,
+        0.5087928771972656,
+        0.0
+      ]
+    ],
+    "initial_shared_sha": "aec7820eb6b7c51fa5f28cb6badfef7cbca7387fce4901bc69aa5e6aae241c36",
+    "initial_value_sha": "b67d5e43f748fbc34b086bbc8830bd083d3b698d0572492b0977a54b846333dc",
+    "policy_sha": "7cc61795870493f85452e0d8492945cd6b845d2d0c9010ea567418418485a7d2",
+    "buffers_sha": "723e2e7d59cb68744f1195fb45d94d0266f94b0b22b1fc4e68cd364dee8327b3"
+  },
+  "completed_epochs": [
+    {
+      "best_epoch": 0,
+      "buffers_unchanged": true,
+      "consecutive_signal_epochs": 0,
+      "epoch": 1,
+      "first_batch_gradient_l1": {
+        "encoder": 0.9333194401439361,
+        "hand_projection": 0.027317126863636076,
+        "trunk": 0.6978105361922644,
+        "value_head": 0.44444571339408867
+      },
+      "fit_signal": false,
+      "metrics": {
+        "training": {
+          "advantage_games": 32,
+          "advantage_states": 3190,
+          "aggregation": "equal-game-means",
+          "bootstrap": "whole-game-resampling",
+          "bootstrap_replicates": 0,
+          "bootstrap_seed": 20261103,
+          "correlation": 0.15747435529745027,
+          "correlation_defined_games": 32,
+          "direction_accuracy": 0.5827890613444365,
+          "games": 32,
+          "mae": 0.060558724889480456,
+          "mse": 0.009911302646713525,
+          "samples": 8171,
+          "status": "defined"
+        },
+        "validation": {
+          "advantage_games": 8,
+          "advantage_states": 912,
+          "aggregation": "equal-game-means",
+          "bootstrap": "whole-game-resampling",
+          "bootstrap_replicates": 0,
+          "bootstrap_seed": 20261103,
+          "correlation": 0.06756744486224327,
+          "correlation_defined_games": 8,
+          "direction_accuracy": 0.5424606413337054,
+          "games": 8,
+          "mae": 0.0691299717870823,
+          "mse": 0.008074134378963179,
+          "samples": 1996,
+          "status": "defined"
+        }
+      },
+      "ordering_sha": "702b60473e6c199fcdea418aeb5fd158906c991bb281ae7e22f18768e3d057fb",
+      "peak_cuda_bytes": 711255552,
+      "policy_head_unchanged": true,
+      "samples": 8171,
+      "seconds": 249.82157555315644,
+      "shared_changed": true,
+      "soft_ce": 0.6931042452947467,
+      "steps": 32,
+      "value_changed": true
+    },
+    {
+      "best_epoch": 0,
+      "buffers_unchanged": true,
+      "consecutive_signal_epochs": 0,
+      "epoch": 2,
+      "first_batch_gradient_l1": {
+        "encoder": 0.9795104826509392,
+        "hand_projection": 0.15204255541902967,
+        "trunk": 1.6950562615238596,
+        "value_head": 0.6671592629281804
+      },
+      "fit_signal": false,
+      "metrics": {
+        "training": {
+          "advantage_games": 32,
+          "advantage_states": 3190,
+          "aggregation": "equal-game-means",
+          "bootstrap": "whole-game-resampling",
+          "bootstrap_replicates": 0,
+          "bootstrap_seed": 20261103,
+          "correlation": 0.19255797356160262,
+          "correlation_defined_games": 32,
+          "direction_accuracy": 0.5641119175702741,
+          "games": 32,
+          "mae": 0.06428662208357673,
+          "mse": 0.009610187987836282,
+          "samples": 8171,
+          "status": "defined"
+        },
+        "validation": {
+          "advantage_games": 8,
+          "advantage_states": 912,
+          "aggregation": "equal-game-means",
+          "bootstrap": "whole-game-resampling",
+          "bootstrap_replicates": 0,
+          "bootstrap_seed": 20261103,
+          "correlation": 0.11204938360571584,
+          "correlation_defined_games": 8,
+          "direction_accuracy": 0.5046527009565908,
+          "games": 8,
+          "mae": 0.07386541899677715,
+          "mse": 0.008715572116649584,
+          "samples": 1996,
+          "status": "defined"
+        }
+      },
+      "ordering_sha": "470bab8d6811fbc32531a743f3eecf3f4099f24bdf641b72d35113681c1ee9b1",
+      "peak_cuda_bytes": 711255552,
+      "policy_head_unchanged": true,
+      "samples": 8171,
+      "seconds": 248.94445759058,
+      "shared_changed": true,
+      "soft_ce": 0.6928774659978819,
+      "steps": 32,
+      "value_changed": true
+    },
+    {
+      "best_epoch": 0,
+      "buffers_unchanged": true,
+      "consecutive_signal_epochs": 0,
+      "epoch": 3,
+      "first_batch_gradient_l1": {
+        "encoder": 1.4305304083681285,
+        "hand_projection": 0.32417475804686546,
+        "trunk": 2.9917246808763593,
+        "value_head": 0.9716241096612066
+      },
+      "fit_signal": false,
+      "metrics": {
+        "training": {
+          "advantage_games": 32,
+          "advantage_states": 3190,
+          "aggregation": "equal-game-means",
+          "bootstrap": "whole-game-resampling",
+          "bootstrap_replicates": 0,
+          "bootstrap_seed": 20261103,
+          "correlation": 0.2198782020440705,
+          "correlation_defined_games": 32,
+          "direction_accuracy": 0.6172527984631536,
+          "games": 32,
+          "mae": 0.06126662099604557,
+          "mse": 0.008593102919022119,
+          "samples": 8171,
+          "status": "defined"
+        },
+        "validation": {
+          "advantage_games": 8,
+          "advantage_states": 912,
+          "aggregation": "equal-game-means",
+          "bootstrap": "whole-game-resampling",
+          "bootstrap_replicates": 0,
+          "bootstrap_seed": 20261103,
+          "correlation": 0.13456920013397575,
+          "correlation_defined_games": 8,
+          "direction_accuracy": 0.524971011350291,
+          "games": 8,
+          "mae": 0.07284776691380956,
+          "mse": 0.008584863403300008,
+          "samples": 1996,
+          "status": "defined"
+        }
+      },
+      "ordering_sha": "a17d76cf5761ce11d1874c90da79554d22047458c19e6e76cb238166f897200d",
+      "peak_cuda_bytes": 711255552,
+      "policy_head_unchanged": true,
+      "samples": 8171,
+      "seconds": 246.10371860396117,
+      "shared_changed": true,
+      "soft_ce": 0.6927063690158586,
+      "steps": 32,
+      "value_changed": true
+    },
+    {
+      "best_epoch": 0,
+      "buffers_unchanged": true,
+      "consecutive_signal_epochs": 0,
+      "epoch": 4,
+      "first_batch_gradient_l1": {
+        "encoder": 1.9952506764568785,
+        "hand_projection": 0.4961669964250177,
+        "trunk": 4.311378615675494,
+        "value_head": 1.1764781199162826
+      },
+      "fit_signal": false,
+      "metrics": {
+        "training": {
+          "advantage_games": 32,
+          "advantage_states": 3190,
+          "aggregation": "equal-game-means",
+          "bootstrap": "whole-game-resampling",
+          "bootstrap_replicates": 0,
+          "bootstrap_seed": 20261103,
+          "correlation": 0.23779789421088313,
+          "correlation_defined_games": 32,
+          "direction_accuracy": 0.627921983230472,
+          "games": 32,
+          "mae": 0.056688087833056185,
+          "mse": 0.006812530655534833,
+          "samples": 8171,
+          "status": "defined"
+        },
+        "validation": {
+          "advantage_games": 8,
+          "advantage_states": 912,
+          "aggregation": "equal-game-means",
+          "bootstrap": "whole-game-resampling",
+          "bootstrap_replicates": 0,
+          "bootstrap_seed": 20261103,
+          "correlation": 0.14489200307712952,
+          "correlation_defined_games": 8,
+          "direction_accuracy": 0.5781210711250976,
+          "games": 8,
+          "mae": 0.07484568922337412,
+          "mse": 0.009662299066548231,
+          "samples": 1996,
+          "status": "defined"
+        }
+      },
+      "ordering_sha": "03a6a878eacbb93f6238e5ffb5ee8202b8fec6c929995f598a8e64134d70cb00",
+      "peak_cuda_bytes": 711255552,
+      "policy_head_unchanged": true,
+      "samples": 8171,
+      "seconds": 247.9689066587016,
+      "shared_changed": true,
+      "soft_ce": 0.6922427753225678,
+      "steps": 32,
+      "value_changed": true
+    }
+  ],
+  "validation_reused_for_selection": true,
+  "original_holdout_evaluations": 0,
+  "new_native_games": 0,
+  "checks": {
+    "targeted_passed": 29,
+    "main_passed": 461,
+    "public_passed": 1104,
+    "public_existing_skipped": 42,
+    "gitleaks": "passed"
+  },
+  "launch_incident": {
+    "stage": "preflight-before-data-transfer-completed",
+    "reason": "expected raw shard not yet present",
+    "optimizer_steps": 0,
+    "recovery": "waited for complete transfer, verified all shard hashes, reran preflight successfully",
+    "original_traceback_retained_privately": true
+  },
+  "conclusion": "Training error has decreased; validation has not improved at this snapshot. Trainer continues from full raw FAIR inputs; no successful initialization or playing-strength conclusion.",
+  "checkpoint_snapshot": {
+    "best": {
+      "file_sha": "a98272235b05b1c3b424f0824fd40f334ef4864a2998ec4482d4ed68315c7c22",
+      "model_sha": "14fbd5fa43ba84be860f4333f3c63a935879b2ca0d6221978100c93cb6061415",
+      "optimizer_sha": "8030d4d7056c1fd65d1403e19cf0e9159a4f1653c0aa699c2e5da28759151864",
+      "epoch": 0,
+      "steps": 0
+    },
+    "latest": {
+      "file_sha": "1d2f9d03e7fb4984936c21f56573f8e385c798c1f9b015049f9b475515b939ff",
+      "model_sha": "2e674565379f470731d2afd3508eff3546bb26585fe228092fb2cb146ac08370",
+      "optimizer_sha": "1d0adecfc789718006f7d804c6112621ced510ef97ceb295b0c653a7b525b4c8",
+      "epoch": 4,
+      "steps": 128
+    }
+  }
+}
