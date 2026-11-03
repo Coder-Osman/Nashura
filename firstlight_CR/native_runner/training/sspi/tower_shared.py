@@ -24,11 +24,12 @@ from .value_experiment import _atomic_json
 from .value_learning import load_value_episode, configure_value_training, policy_head_sha, policy_function_sha
 
 DATA_SCHEMA = "sspi-tower-raw-inputs.v1"
-RUN_SCHEMA = "sspi-tower-shared-fit.v1"
+RUN_SCHEMA = "sspi-tower-shared-fit.v2"
 BATCH = 256
 MICROBATCH = 16
 LR = 1e-4
 SIGNAL_STREAK = 3
+MAX_EPOCHS = 8
 
 
 def file_sha(path):
@@ -244,7 +245,31 @@ def _load(path, model, optimizer, identity, device):
     return result["run_state"]
 
 
-def run(data_dir, run_dir, run_id, *, device="cuda:0"):
+def restore_parent(path, checksum, model, optimizer, *, device, dataset_sha):
+    if file_sha(path) != checksum:
+        raise ValueError("parent checkpoint checksum differs")
+    envelope = torch.load(path, weights_only=True, map_location="cpu")
+    payload = envelope["payload"]
+    identity = payload["identity"]
+    if (identity.get("protocol") not in ("sspi-tower-shared-fit.v1", RUN_SCHEMA)
+            or identity.get("dataset_sha") == dataset_sha
+            or dataset_sha in payload["run_state"].get("consumed_datasets", ())
+            or identity.get("seed") != SEED or identity.get("policy_frozen") is not True
+            or identity.get("shared_frozen") is not False):
+        raise ValueError("parent protocol differs or this dataset was already consumed")
+    state = _load(path, model, optimizer, identity, device)
+    if any(g["lr"] != LR or g["weight_decay"] != 1e-4 for g in optimizer.param_groups):
+        raise ValueError("parent optimizer settings differ")
+    return dict(file_sha=checksum, identity=identity, model_sha=semantic_digest(model.state_dict()),
+        optimizer_sha=semantic_digest(optimizer.state_dict()), steps=state["steps"],
+        consumed_datasets=list(dict.fromkeys([*state.get("consumed_datasets", []), identity["dataset_sha"]])))
+
+
+def batch_has_work(state):
+    return state["epoch"] < MAX_EPOCHS
+
+
+def run(data_dir, run_dir, run_id, *, device="cuda:0", parent_checkpoint=None, parent_sha=None):
     data_dir, run_dir = Path(data_dir), Path(run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
     torch.set_num_threads(1)
@@ -267,16 +292,27 @@ def run(data_dir, run_dir, run_id, *, device="cuda:0"):
         raise ValueError("the exact original random weights were not restored")
     model.to(device)
     optimizer = create_optimizer(model)
+    original_policy_sha = policy_head_sha(model)
+    dataset_sha = file_sha(data_dir / "dataset.json")
+    if (parent_checkpoint is None) != (parent_sha is None):
+        raise ValueError("parent checkpoint and explicit SHA must be supplied together")
+    parent = (restore_parent(parent_checkpoint, parent_sha, model, optimizer,
+        device=device, dataset_sha=dataset_sha) if parent_checkpoint else None)
+    if parent and (parent["identity"].get("initial_model_sha") != manifest["identity"]["initial_model_sha"]
+            or policy_head_sha(model) != original_policy_sha):
+        raise ValueError("parent random origin or frozen policy head differs")
+    parent_steps = parent["steps"] if parent else 0
     initial_shared = policy_function_sha(model)
     initial_value = semantic_digest(model.value_head.state_dict())
     policy_sha = policy_head_sha(model)
     buffers_sha = semantic_digest(dict(model.named_buffers()))
     identity = dict(protocol=RUN_SCHEMA, run_id=run_id, source_sha=source_sha(),
-        dataset_sha=file_sha(data_dir / "dataset.json"), initial_model_sha=manifest["identity"]["initial_model_sha"],
+        dataset_sha=dataset_sha, initial_model_sha=manifest["identity"]["initial_model_sha"],
         seed=SEED, batch=BATCH, microbatch=MICROBATCH, lr=LR, weight_decay=1e-4,
         policy_frozen=True, shared_frozen=False, torch=str(torch.__version__), device=device,
         gpu=torch.cuda.get_device_name() if device.startswith("cuda") else None,
-        signal_streak=SIGNAL_STREAK, max_epochs=None, original_holdout_used=False)
+        signal_streak=SIGNAL_STREAK, max_epochs=MAX_EPOCHS, original_holdout_used=False,
+        parent_checkpoint=parent, starting_model_sha=semantic_digest(model.state_dict()))
     config_path = run_dir / "run_config.json"
     if config_path.exists() and json.loads(config_path.read_text()) != identity:
         raise ValueError("existing shared-fit run identity differs")
@@ -300,13 +336,14 @@ def run(data_dir, run_dir, run_id, *, device="cuda:0"):
         mean = sum(r["score"] for r in data["training"]["records"])/len(data["training"]["records"])
         constants = {s: min(score_metrics(d["records"],[v]*len(d["records"]),replicates=0)["mse"]
             for v in (0., mean)) for s,d in data.items()}
-        state = dict(epoch=0, steps=0, baseline=baseline, constants=constants,
+        state = dict(epoch=0, steps=parent_steps, baseline=baseline, constants=constants,
             best_epoch=0, best_mse=baseline["validation"]["mse"], best_metrics=baseline,
             streak=0, initial_policy=policy_probe(model,probes), initial_shared_sha=initial_shared,
-            initial_value_sha=initial_value, policy_sha=policy_sha, buffers_sha=buffers_sha)
+            initial_value_sha=initial_value, policy_sha=policy_sha, buffers_sha=buffers_sha,
+            consumed_datasets=[*(parent["consumed_datasets"] if parent else []),dataset_sha])
         _save(run_dir / "best.pt", model, optimizer, identity, state)
         _save(latest, model, optimizer, identity, state)
-    while not fitting_complete(state):
+    while batch_has_work(state):
         if (run_dir / "STOP_AFTER_EPOCH").exists():
             _atomic_json(run_dir / "status.json", dict(status="paused_user", epoch=state["epoch"],
                 latest_checkpoint_sha=file_sha(latest)))
@@ -339,6 +376,7 @@ def run(data_dir, run_dir, run_id, *, device="cuda:0"):
             validation_direction=evaluated["validation"]["direction_accuracy"],
             signal_streak=state["streak"], seconds=record["seconds"])
     attempted_steps, completed_epochs = state["steps"], state["epoch"]
+    observed = fitting_complete(state)
     state = _load(run_dir / "best.pt", model, optimizer, identity, device)
     current_policy = policy_probe(model, probes)
     reference = initialize_fresh_model(SEED, device=device)
@@ -351,8 +389,11 @@ def run(data_dir, run_dir, run_id, *, device="cuda:0"):
     mean = sum(r["score"] for r in data["training"]["records"])/len(data["training"]["records"])
     constant_metrics = {s:{name:score_metrics(d["records"],[value]*len(d["records"]))
         for name,value in (("zero",0.),("training_mean",mean))} for s,d in data.items()}
-    report = dict(schema=RUN_SCHEMA, identity=identity, status="fitting_observed", independent_acceptance=False,
+    report = dict(schema=RUN_SCHEMA, identity=identity,
+        status="fitting_observed" if observed else "batch_budget_complete", independent_acceptance=False,
         epochs=completed_epochs, attempted_steps=attempted_steps, best_epoch=state["best_epoch"],
+        batch_update_steps=attempted_steps-parent_steps, parent_steps=parent_steps,
+        consumed_datasets=state["consumed_datasets"],
         selected_steps=state["steps"], metrics=final_metrics, baseline=state["baseline"],
         constant_metrics=constant_metrics, validation_reused_for_selection=True,
         constants=state["constants"], checkpoint_sha=file_sha(run_dir / "best.pt"),
@@ -366,7 +407,7 @@ def run(data_dir, run_dir, run_id, *, device="cuda:0"):
             for x,y in zip(state["initial_policy"],current_policy)), default=None),
         elapsed_seconds=time.time()-started, new_native_games=0, original_holdout_evaluations=0)
     _atomic_json(report_path, report)
-    _atomic_json(run_dir / "status.json", dict(status="complete", stage="fitting_observed", best_epoch=state["best_epoch"],
+    _atomic_json(run_dir / "status.json", dict(status="complete", stage=report["status"], best_epoch=state["best_epoch"],
         validation_mse=report["metrics"]["validation"]["mse"], checkpoint_sha=report["checkpoint_sha"]))
     return report
 
@@ -382,6 +423,8 @@ def main():
     train.add_argument("--run-dir", type=Path, required=True)
     train.add_argument("--run-id", required=True)
     train.add_argument("--device", default="cuda:0")
+    train.add_argument("--parent-checkpoint", type=Path)
+    train.add_argument("--parent-sha")
     args = vars(parser.parse_args())
     command = args.pop("command")
     if command == "prepare":

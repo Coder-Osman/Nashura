@@ -1,0 +1,126 @@
+{
+  "schema": "nashura.tower-fresh-batches-progress.v1",
+  "recorded_at_utc": "2026-11-03T15:55:00Z",
+  "status": "running",
+  "independent_acceptance": false,
+  "series_id": "sspi-tower-refresh-20261103-v1",
+  "protocol": {
+    "training": "sspi-tower-shared-fit.v2",
+    "collection": "sspi-tower-fresh-collection.v1",
+    "max_epochs_per_batch": 8,
+    "optimizer_state_continues_between_batches": true
+  },
+  "initial_model_sha": "14fbd5fa43ba84be860f4333f3c63a935879b2ca0d6221978100c93cb6061415",
+  "current_batch": {
+    "batch_id": "batch-0001",
+    "collection_run_id": "sspi-tower-refresh-20261103-v1-b0001",
+    "training_games": 32,
+    "training_decisive_games": 32,
+    "training_draw_games": 0,
+    "training_samples": 9001,
+    "training_search_roots": 0,
+    "validation_games": 8,
+    "validation_decisive_games": 8,
+    "validation_draw_games": 0,
+    "validation_samples": 1871,
+    "validation_search_roots": 0,
+    "prior_seed_pairs_checked": 48,
+    "new_seed_pairs": 40,
+    "overlapping_seed_pairs": 0,
+    "dataset_sha": "142caa6456fe8ff9976b42c52a2cdfcb675299091af8cf4646b32b2a20423532",
+    "source_config_sha": "cab10368b40ef0d5c2222f5fc2c43af13279808d0b9a552e78a80fd46f0cad14"
+  },
+  "training": {
+    "run_id": "sspi-tower-refresh-20261103-v1-b0001",
+    "status_snapshot": {
+      "status": "running",
+      "stage": "training",
+      "epoch_in_batch": 5,
+      "completed_optimizer_steps_including_parent": 496
+    },
+    "completed_epochs_in_batch": 4,
+    "max_epochs_in_batch": 8,
+    "source_sha": "67e6e038c068f6dcb483dcfb6b3db28221c9eac614bcd1cf8e1725fde91bc68c",
+    "parent_checkpoint_sha": "efaa23a34d5065a0e8b0407c2016847e3b40d7739685012ae3dc1ca95716e18e",
+    "parent_optimizer_state_restored": true,
+    "best_epoch_at_snapshot": 2,
+    "best_checkpoint_sha_at_snapshot": "47a2787da4a53139569cdd26dcb4d00d1bcfa92c484bae2165cb1f3b4224f01b",
+    "baseline": {
+      "training": {
+        "mse": 0.012974642843111828,
+        "mae": 0.074049362526668,
+        "direction_accuracy": 0.5104714699907144
+      },
+      "validation": {
+        "mse": 0.022305754124181183,
+        "mae": 0.10530976714955832,
+        "direction_accuracy": 0.7508572886779961
+      }
+    },
+    "completed_epochs": [
+      {
+        "epoch": 1,
+        "seconds": 273.13298878539354,
+        "soft_ce": 0.6931396574990483,
+        "training": {
+          "mse": 0.008436243745125345,
+          "mae": 0.0596885989482424,
+          "direction_accuracy": 0.6021612608111202
+        },
+        "validation": {
+          "mse": 0.01361502706166932,
+          "mae": 0.08948287926597828,
+          "direction_accuracy": 0.5005184213767958
+        }
+      },
+      {
+        "epoch": 2,
+        "seconds": 272.7691966695711,
+        "soft_ce": 0.6929271767078777,
+        "training": {
+          "mse": 0.008390108003854896,
+          "mae": 0.05889270907692416,
+          "direction_accuracy": 0.6181069738198013
+        },
+        "validation": {
+          "mse": 0.01326910049188671,
+          "mae": 0.08827651043223902,
+          "direction_accuracy": 0.4606818017945373
+        }
+      },
+      {
+        "epoch": 3,
+        "seconds": 266.7440778054297,
+        "soft_ce": 0.692858275360908,
+        "training": {
+          "mse": 0.007944076830443032,
+          "mae": 0.059856194696258996,
+          "direction_accuracy": 0.6501757672974247
+        },
+        "validation": {
+          "mse": 0.01388950864737751,
+          "mae": 0.0930041984246367,
+          "direction_accuracy": 0.48258389652370753
+        }
+      },
+      {
+        "epoch": 4,
+        "seconds": 266.438065668568,
+        "soft_ce": 0.6925903101349364,
+        "training": {
+          "mse": 0.008146909669597243,
+          "mae": 0.06271923574486697,
+          "direction_accuracy": 0.6331922571754097
+        },
+        "validation": {
+          "mse": 0.016711376729966972,
+          "mae": 0.10172953702543149,
+          "direction_accuracy": 0.5282821363725714
+        }
+      }
+    ],
+    "fit_diagnostic_passed": false,
+    "independent_evaluation_completed": false
+  },
+  "next_action": "After eight epochs on batch-0001, the existing coordinator collects a new 32-game training and 8-game validation batch with excluded prior seeds, then trains at most eight epochs on that new batch."
+}

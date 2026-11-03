@@ -114,7 +114,7 @@ def test_signal_requires_both_splits_and_direction_coverage():
     assert not shared.fit_signal(train,dict(valid,direction_accuracy=.6),constants)
     assert not shared.fit_signal(train,dict(valid,advantage_states=20),constants)
     state=dict(streak=3,best_metrics=dict(training=train,validation=valid),constants=constants)
-    assert shared.fitting_complete(state) # Resume after the last committed epoch needs no new update.
+    assert shared.fitting_complete(state) # Fit detection is separate from the eight-epoch budget.
     assert not shared.fitting_complete(dict(state,streak=2))
 
 
@@ -143,3 +143,128 @@ def test_cached_representation_schema_is_rejected(tmp_path):
     (tmp_path/"dataset.json").write_text(json.dumps(dict(identity=dict(schema="sspi-tower-head-cache.v1"))))
     with pytest.raises(ValueError,match="raw supervised"):
         shared.load_data(tmp_path)
+
+
+def test_refresh_budget_never_starts_a_ninth_epoch():
+    assert shared.MAX_EPOCHS == 8
+    assert shared.batch_has_work(dict(epoch=0))
+    assert shared.batch_has_work(dict(epoch=7))
+    assert not shared.batch_has_work(dict(epoch=8))
+    assert not shared.batch_has_work(dict(epoch=11))
+
+
+def test_parent_carries_model_and_adam_and_rejects_consumed_data(tmp_path):
+    model=initialize_fresh_model(20261103)
+    optimizer=shared.create_optimizer(model)
+    _,frame,hands=example_batch()
+    data=dict(frame=frame,hands=hands,targets=torch.tensor([[.6,.4],[.3,.7]]),
+        records=[dict(game_id="g1",score=.2),dict(game_id="g1",score=-.4)])
+    shared.train_epoch(model,optimizer,data,1,device="cpu")
+    identity=dict(protocol="sspi-tower-shared-fit.v1",seed=20261103,dataset_sha="old-data",
+        policy_frozen=True,shared_frozen=False)
+    path=tmp_path/"parent.pt"
+    shared._save(path,model,optimizer,identity,dict(epoch=1,steps=1,consumed_datasets=["older-data"]))
+    expected=semantic_digest((model.state_dict(),optimizer.state_dict()))
+    fresh=initialize_fresh_model(20261103);opt=shared.create_optimizer(fresh)
+    receipt=shared.restore_parent(path,shared.file_sha(path),fresh,opt,device="cpu",dataset_sha="fresh-data")
+    assert semantic_digest((fresh.state_dict(),opt.state_dict()))==expected
+    assert receipt["steps"]==1 and receipt["consumed_datasets"]==["older-data","old-data"]
+    for reused in ("older-data","old-data"):
+        with pytest.raises(ValueError,match="already consumed"):
+            shared.restore_parent(path,shared.file_sha(path),fresh,opt,device="cpu",dataset_sha=reused)
+    with pytest.raises(ValueError,match="checksum"):
+        shared.restore_parent(path,"wrong",fresh,opt,device="cpu",dataset_sha="fresh-data")
+
+
+def test_fresh_batches_have_disjoint_training_validation_and_prior_seeds():
+    from native_runner.training.sspi.tower_refresh import planned_games
+    first=planned_games("fresh-b0001")
+    second=planned_games("fresh-b0002",first)
+    assert len(first)==len(second)==40
+    assert sum(r["split"]=="training" for r in first)==32
+    assert sum(r["split"]=="validation" for r in first)==8
+    for key in ("actual_match_seed","actual_rollout_seed"):
+        assert len({r[key] for r in first+second})==80
+    with pytest.raises(ValueError,match="repeat a native seed"):
+        planned_games("fresh-b0001",first)
+
+
+def test_eight_epoch_run_and_boundary_recovery_do_not_repeat_exposure(tmp_path,monkeypatch):
+    import json
+    model=initialize_fresh_model(20261103)
+    _,frame,hands=example_batch()
+    data={s:dict(frame=frame,hands=hands,targets=torch.tensor([[.6,.4],[.3,.7]]),
+        records=[dict(game_id=s,score=.2),dict(game_id=s,score=-.4)])
+        for s in ("training","validation")}
+    manifest=dict(identity=dict(initial_model_sha=semantic_digest(model.state_dict())))
+    data_dir=tmp_path/"data";data_dir.mkdir()
+    (data_dir/"dataset.json").write_text(json.dumps(manifest))
+    torch.save(dict(architecture=model.architecture,model=model.state_dict()),data_dir/"initial.pt")
+    monkeypatch.setattr(shared,"load_data",lambda _: (data,[],manifest))
+    calls=[];real_epoch=shared.train_epoch
+    def counted(*args,**kwargs):
+        calls.append(args[3]);return real_epoch(*args,**kwargs)
+    monkeypatch.setattr(shared,"train_epoch",counted)
+    run_dir=tmp_path/"run"
+    first=shared.run(data_dir,run_dir,"bounded-fixture",device="cpu")
+    assert first["status"]=="batch_budget_complete" and first["epochs"]==8
+    assert first["batch_update_steps"]==8 and calls==list(range(1,9))
+    assert first["checkpoint_roundtrip"]
+    # Completed invocation is idempotent; recovery after the committed eighth epoch is too.
+    assert shared.run(data_dir,run_dir,"bounded-fixture",device="cpu")==first
+    (run_dir/"result.json").unlink()
+    second=shared.run(data_dir,run_dir,"bounded-fixture",device="cpu")
+    assert calls==list(range(1,9)) and second["epochs"]==8
+    assert second["model_sha"]==first["model_sha"]
+    assert second["optimizer_sha"]==first["optimizer_sha"]
+
+
+def coordinator_module():
+    import importlib.util
+    from pathlib import Path
+    path=Path(__file__).resolve().parents[3]/"tools/run_tower_refresh.py"
+    spec=importlib.util.spec_from_file_location("tower_coordinator_test",path)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    return module
+
+
+def test_fresh_coordinator_changes_data_and_carries_selected_parent(tmp_path,monkeypatch):
+    import json
+    from types import SimpleNamespace
+    from native_runner.training.sspi.tower_refresh import planned_games
+    module=coordinator_module()
+    for name in ("initial","probe"):(tmp_path/name).write_text(name)
+    (tmp_path/"excluded").write_text("[]")
+    args=SimpleNamespace(series_dir=tmp_path,series_id="fresh-fixture",initial_model=tmp_path/"initial",
+        probe=tmp_path/"probe",excluded_seeds=tmp_path/"excluded",parent_checkpoint="/remote/initial.pt",
+        parent_sha="initial-sha",remote="training-host",remote_root="/remote",remote_python="python")
+    seen=[];parents=[]
+    def collect(args,batch,run_id,excluded):
+        batch.mkdir(exist_ok=True)
+        plan=planned_games(run_id,json.loads(excluded.read_text()))
+        seen.extend(plan)
+        (batch/"run_config.json").write_text(json.dumps(dict(planned_games=plan)))
+    def train(args,batch,run_id,parent,parent_sha):
+        parents.append((parent,parent_sha))
+        index=len(parents)
+        return "/remote/"+batch.name,dict(status="fitting_observed" if index==2 else "batch_budget_complete",
+            checkpoint_sha=f"checkpoint-{index}")
+    monkeypatch.setattr(module,"collect_batch",collect)
+    monkeypatch.setattr(module,"train_batch",train)
+    module.run(args)
+    assert len(seen)==80 and len({r["actual_match_seed"] for r in seen})==80
+    assert parents==[("/remote/initial.pt","initial-sha"),("/remote/batch-0001/run/best.pt","checkpoint-1")]
+    assert json.loads((tmp_path/"status.json").read_text())["status"]=="complete"
+
+
+def test_coordinator_rejects_wrong_budget_or_unverified_checkpoint():
+    module=coordinator_module()
+    report=dict(schema=shared.RUN_SCHEMA,epochs=8,status="batch_budget_complete",
+        identity=dict(max_epochs=8,dataset_sha="fresh-data",source_sha=shared.source_sha()),
+        policy_head_unchanged=True,buffers_unchanged=True,checkpoint_roundtrip=True)
+    module.validate_training_receipt(report,"fresh-data")
+    for changed in (dict(report,epochs=9),dict(report,checkpoint_roundtrip=False)):
+        with pytest.raises(ValueError,match="eight-epoch receipt"):
+            module.validate_training_receipt(changed,"fresh-data")
+    with pytest.raises(ValueError,match="eight-epoch receipt"):
+        module.validate_training_receipt(report,"different-data")
