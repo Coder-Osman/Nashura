@@ -66,7 +66,7 @@ def _checkpoint_model(path, identity, *, bundle):
 
 
 def _collect(run_dir, config, game_id, kind, model, *, actual_port, belief_port,
-        belief_port_owner_1, transport, random_stream_id=None):
+        belief_port_owner_1, transport, random_stream_id=None, tower_hp_targets=False):
     destination = run_dir / "episodes" / game_id
     models = model if isinstance(model, dict) else {0: model, 1: model}
     expected_shas = {str(owner): _model_sha(item) for owner, item in models.items()}
@@ -81,7 +81,8 @@ def _collect(run_dir, config, game_id, kind, model, *, actual_port, belief_port,
             game_id=game_id, seed=SEED, models_by_owner=models, device="cpu",
             transport=transport, episode_kind=kind, search_probability=0.,
             temporal_augmentation=False, random_stream_id=random_stream_id,
-            value_sample_probability=0. if kind == "evaluation" else 0.5)
+            value_sample_probability=0. if kind == "evaluation" else 0.5,
+            **({"tower_hp_targets": True} if tower_hp_targets else {}))
     identity = metadata.get("identity") or {}
     decisive = decisive_result(metadata.get("result"))
     if (metadata.get("status") != "complete"

@@ -573,13 +573,15 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         seed=20261101, model=None, models_by_owner=None, device="cpu", host="127.0.0.1",
         transport=DEFAULT_TRANSPORT, search_probability=None, episode_kind="training", progress=None,
         temporal_augmentation=True, random_stream_id=None, belief_ports=None, actual_env_id=0,
-        value_sample_probability=None):
+        value_sample_probability=None, tower_hp_targets=False):
     """Collect one complete native match; incomplete matches are quarantined."""
     try:
         belief_ports = resolve_belief_ports(actual_port, belief_port, belief_ports)
     except ValueError:
         raise
     value_only = value_sample_probability is not None
+    if type(tower_hp_targets) is not bool or (tower_hp_targets and not value_only):
+        raise ValueError("tower HP targets require the independent no-search value protocol")
     if ((arm != VALUE_ARM if value_only else arm not in ARM_CONFIG)
             or type(seed) is not int or seed < 0
             or type(actual_env_id) is not int or not 0 <= actual_env_id < 16
@@ -681,6 +683,9 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         actual_env_id=actual_env_id,
         native_ports=dict(actual=actual_port,
             belief_by_owner={str(owner): port for owner, port in belief_ports.items()}))
+    if tower_hp_targets:
+        from .tower_bootstrap import TARGET_SCHEMA, capture_tower_target
+        identity["heuristic_target_schema"] = TARGET_SCHEMA
 
     actual_native = (EventBatchedSSPINative(host, actual_port, env_id=actual_env_id, timeout=90.,
                          **({"event_deltas": True} if transport == "event-json-delta" else {}))
@@ -846,10 +851,15 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                             action=_action_key(action), executed_action=_action_key(executed_action),
                             value_selected=value_selected, value_gate_seed=value_gate_seed))
                         if value_selected:
-                            value_rows.append(dict(**serialize_information(information),
+                            row = dict(**serialize_information(information),
                                 decision_index=index, value_gate_seed=value_gate_seed,
                                 action=_action_key(action),
-                                executed_action=_action_key(executed_action)))
+                                executed_action=_action_key(executed_action))
+                            if tower_hp_targets:
+                                # The already frozen public decision view: no RPC, RNG, or new boundary.
+                                row["tower_hp_target"] = capture_tower_target(
+                                    rollout.runtime.frozen[owner], information)
+                            value_rows.append(row)
                             counters["value_samples"][str(owner)] += 1
                         decision_indices[owner] += 1
                 with _timed(timing_profile, "commit_seconds"):

@@ -7,6 +7,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT / "firstlight_CR"
 TESTS = (
+    "test_sspi_tower_bootstrap.py",
     "test_sspi_random60.py",
     "test_sspi_binary_outcome.py",
     "test_sspi_value_only.py",

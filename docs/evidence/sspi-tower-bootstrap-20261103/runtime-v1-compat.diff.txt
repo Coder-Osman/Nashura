@@ -1,0 +1,11 @@
+--- a/firstlight_CR/native_runner/training/sspi/tower_bootstrap.py
++++ b/firstlight_CR/native_runner/training/sspi/tower_bootstrap.py
+@@ -172,7 +172,3 @@
+ def _correlation(x, y):
+-    # A nonzero constant can acquire a tiny fake variance through rounded means.
+-    if len(x) < 2 or min(x) == max(x) or min(y) == max(y):
+-        return None
+-    mean_x, mean_y = _mean(x), _mean(y)
+-    dx, dy = [v - mean_x for v in x], [v - mean_y for v in y]
++    dx, dy = [v - _mean(x) for v in x], [v - _mean(y) for v in y]
+     denominator = math.sqrt(sum(v*v for v in dx) * sum(v*v for v in dy))

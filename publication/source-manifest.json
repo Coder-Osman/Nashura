@@ -10194,18 +10194,18 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "99bc8e43359b8776f8049547aa2dc27d424793ff06359960e98d875c7072a0ae",
-      "bytes": 77383,
-      "source_sha256": "99bc8e43359b8776f8049547aa2dc27d424793ff06359960e98d875c7072a0ae",
+      "sha256": "1498ab9fc4d47688eef1ba8a089b9cef2287d064b6af7925d2626419b6d19608",
+      "bytes": 78400,
+      "source_sha256": "1498ab9fc4d47688eef1ba8a089b9cef2287d064b6af7925d2626419b6d19608",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "032f2a66fe5e1da3c2a8b04abfc3e100f572e9adaa27386f5dae5c72d3300b15",
-      "bytes": 146946,
-      "source_sha256": "032f2a66fe5e1da3c2a8b04abfc3e100f572e9adaa27386f5dae5c72d3300b15",
+      "sha256": "663508f72e601964be53c13bf696a87573de099723b465e2edb9d342f5e6a533",
+      "bytes": 149650,
+      "source_sha256": "663508f72e601964be53c13bf696a87573de099723b465e2edb9d342f5e6a533",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -16665,9 +16665,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "41ba9d3dcd4d7d30f4bc3c1ec96222a19d4b98564430f72ce588be8b533522a8",
-      "bytes": 72637,
-      "source_sha256": "41ba9d3dcd4d7d30f4bc3c1ec96222a19d4b98564430f72ce588be8b533522a8",
+      "sha256": "dc706825158659570be8075c1a98e5d0af96b7e634f4c10b4e4f1693352808e8",
+      "bytes": 73638,
+      "source_sha256": "dc706825158659570be8075c1a98e5d0af96b7e634f4c10b4e4f1693352808e8",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -19783,9 +19783,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/sspi/collector.py",
-      "sha256": "1ae19bbb98d1a189115207c4dc0f7ccff4f403eaf94f45728eca1fb6babf52c7",
-      "bytes": 58839,
-      "source_sha256": "1ae19bbb98d1a189115207c4dc0f7ccff4f403eaf94f45728eca1fb6babf52c7",
+      "sha256": "e1d6cd25b7f6854b40bb8b2f6303d931ff33f6f2cc33d8166287bfbe2acb68a3",
+      "bytes": 59550,
+      "source_sha256": "e1d6cd25b7f6854b40bb8b2f6303d931ff33f6f2cc33d8166287bfbe2acb68a3",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -19835,9 +19835,9 @@
     },
     {
       "path": "tools/run_main_engine_checks.py",
-      "sha256": "df667bd6abfcc114e42c60e65c0e17b03c63608a9e972b5e8774eb3217ef7a30",
-      "bytes": 1240,
-      "source_sha256": "df667bd6abfcc114e42c60e65c0e17b03c63608a9e972b5e8774eb3217ef7a30",
+      "sha256": "3261373cc022655af7ddb8fe833737fc0e2ef5c375d08ca4978b8d95f030db42",
+      "bytes": 1276,
+      "source_sha256": "3261373cc022655af7ddb8fe833737fc0e2ef5c375d08ca4978b8d95f030db42",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -19907,9 +19907,9 @@
     },
     {
       "path": "tools/export_public_snapshot.py",
-      "sha256": "1f43dfb5b5d52e5b633366d18366d7e2b16200f6d3297ecdbf885daf00827d89",
-      "bytes": 13201,
-      "source_sha256": "1f43dfb5b5d52e5b633366d18366d7e2b16200f6d3297ecdbf885daf00827d89",
+      "sha256": "82253cf6a8750c26a6b5f0b50f096921178730dd1b49b11fd527aa42b773e5f7",
+      "bytes": 13447,
+      "source_sha256": "82253cf6a8750c26a6b5f0b50f096921178730dd1b49b11fd527aa42b773e5f7",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -20008,9 +20008,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/sspi/value_experiment.py",
-      "sha256": "1158683879581aa5162bc672fe87126a08c1f53de0d27ed5e12f7bcbae3dad70",
-      "bytes": 28602,
-      "source_sha256": "1158683879581aa5162bc672fe87126a08c1f53de0d27ed5e12f7bcbae3dad70",
+      "sha256": "a7233d885b188f82ebdc8a919f80dea4207135cb1213b669bad0bf96125f1218",
+      "bytes": 28698,
+      "source_sha256": "a7233d885b188f82ebdc8a919f80dea4207135cb1213b669bad0bf96125f1218",
       "transformations": []
     },
     {
@@ -20096,9 +20096,58 @@
       "bytes": 24932,
       "source_sha256": "bda7fee993c89fe36daf72e2e87d17aa8711525aab021b37c56ba0a76aaf1c4c",
       "transformations": []
+    },
+    {
+      "path": "docs/SSPI_TOWER_HEAD_BOOTSTRAP_2026-11-03.md",
+      "sha256": "0062b5ec1934cb41e8591893aaa9c90329d915a14bb1f11c2314efa0619768c4",
+      "bytes": 5539,
+      "source_sha256": "0062b5ec1934cb41e8591893aaa9c90329d915a14bb1f11c2314efa0619768c4",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/tests/test_sspi_tower_bootstrap.py",
+      "sha256": "457109f2290a372cb4c0db4e31969e1a31acbbc2b99be61abdc336beffda1fc2",
+      "bytes": 16102,
+      "source_sha256": "457109f2290a372cb4c0db4e31969e1a31acbbc2b99be61abdc336beffda1fc2",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/tower_bootstrap.py",
+      "sha256": "03cd22594d65afd22a8a6889cb54d6ac6356a3918e2f638fb8eb8dbe65336da5",
+      "bytes": 16668,
+      "source_sha256": "03cd22594d65afd22a8a6889cb54d6ac6356a3918e2f638fb8eb8dbe65336da5",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/tower_experiment.py",
+      "sha256": "26dbd380fe494ac6bf94904763768f50526bc9f9f7075690275610b84835383f",
+      "bytes": 17307,
+      "source_sha256": "26dbd380fe494ac6bf94904763768f50526bc9f9f7075690275610b84835383f",
+      "transformations": []
+    },
+    {
+      "path": "docs/SSPI_TOWER_HEAD_BOOTSTRAP_RESULTS_2026-11-03.json",
+      "sha256": "31fcf87034f6e971313af60f1a63adf3b1035a3854658f392444bdd0fd23cdb6",
+      "bytes": 23807,
+      "source_sha256": "31fcf87034f6e971313af60f1a63adf3b1035a3854658f392444bdd0fd23cdb6",
+      "transformations": []
+    },
+    {
+      "path": "tools/audit_tower_bootstrap.py",
+      "sha256": "06b93e4aa95b342fdc3fc99660d7308db9758b349000eefe8cd395ce1c2c590d",
+      "bytes": 5351,
+      "source_sha256": "06b93e4aa95b342fdc3fc99660d7308db9758b349000eefe8cd395ce1c2c590d",
+      "transformations": []
+    },
+    {
+      "path": "docs/evidence/sspi-tower-bootstrap-20261103/runtime-v1-compat.diff.txt",
+      "sha256": "042ff4a3c98c8726cc430ac675821af67afae549bbad316f75f9d80d90f8e791",
+      "bytes": 587,
+      "source_sha256": "042ff4a3c98c8726cc430ac675821af67afae549bbad316f75f9d80d90f8e791",
+      "transformations": []
     }
   ],
-  "file_count": 2847,
+  "file_count": 2854,
   "source_bytes": 37240877,
   "excluded_selected_candidates": {},
   "excluded_categories": [

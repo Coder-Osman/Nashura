@@ -1,0 +1,602 @@
+{
+  "schema": "sspi-tower-bootstrap-public-result.v1",
+  "run_id": "sspi-tower-bootstrap-20261103-v1",
+  "status": "completed_failed_acceptance",
+  "accepted_update": false,
+  "runtime": {
+    "actor_threads": 1,
+    "device": "cpu",
+    "hardware": "Apple M4 Max",
+    "machine": "arm64",
+    "optimizer_threads": 1,
+    "os": "Darwin",
+    "os_version": "15.6",
+    "python": "3.13.5",
+    "pytorch": "2.9.0"
+  },
+  "runtime_source_sha": "ca101b7eca09c5d8a5120432482b79989a520514a8aef3479103e5bc3c3eff06",
+  "base_commit": "0f766d30b03ae89869709f0745a1d0de31498d4f",
+  "frozen_source_manifest_sha": "54e0f81817dbaa94fb4789f2815d4161ee14de4b7f09ff05cc9fa5bba2a3b026",
+  "native_attestation": {
+    "actual": {
+      "libg_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+      "probe_sha256": "f79ba9344a9599483c7283e7cde756a3a77f2982741f0c83467eee68a1f28e64"
+    }
+  },
+  "seed": 20261103,
+  "value_head_parameters": 131842,
+  "formula": "sum-hp-difference-over-sum.v1",
+  "sampling_probability": 0.5,
+  "search_roots": 0,
+  "initialization": "fresh random seed; no old checkpoints or data",
+  "initial_model_sha": "14fbd5fa43ba84be860f4333f3c63a935879b2ca0d6221978100c93cb6061415",
+  "initial_checkpoint_sha": "602af95161d519740c63e575ea4be10bbe8731fc1237b3ea4b54e6fb6a6bea7a",
+  "collections": {
+    "test": {
+      "cache_forward_max_abs_error": 0.0,
+      "collected_games": 8,
+      "decisive_games": 8,
+      "excluded_draw_games": 0,
+      "invalid_states": 0,
+      "mean_game_seconds": 21.776032494730316,
+      "samples": 2080
+    },
+    "training": {
+      "cache_forward_max_abs_error": 0.0,
+      "collected_games": 32,
+      "decisive_games": 32,
+      "excluded_draw_games": 0,
+      "invalid_states": 0,
+      "mean_game_seconds": 16.11995829961961,
+      "samples": 8171
+    },
+    "validation": {
+      "cache_forward_max_abs_error": 0.0,
+      "collected_games": 8,
+      "decisive_games": 8,
+      "excluded_draw_games": 0,
+      "invalid_states": 0,
+      "mean_game_seconds": 20.777544687560294,
+      "samples": 1996
+    }
+  },
+  "episode_identity_sha": {
+    "test": {
+      "tower-test-0001": "1ba7752427ab4024ae2145f7dcaf90210777c00d47be1c21191719c2b00615b5",
+      "tower-test-0002": "7f8d600af30da5f7aedbf87a5b2f81c2e500e28fa1242236f5c08128293dfa5a",
+      "tower-test-0003": "dfc5bcd90ca4ec610d12b3702245f3b35cf6461b161d965da339ad3bf51305ea",
+      "tower-test-0004": "30da5a3cf4ee23b32905b3838c3889595d05dbaebe44709a8028e9590498c2c2",
+      "tower-test-0005": "012355e6068bd8e6ce54d69d954a63e6c2921fef75e3c2dbbdc6cf68e69bb370",
+      "tower-test-0006": "3e7a7e94c530547b0874fee15a6d80393ffc7a9fce3ef5ab578bc93f2b0bf0ba",
+      "tower-test-0007": "5da0c0c571e04303a71931e86f07eb0faf6c41a628114f7806bcafdbe7998be3",
+      "tower-test-0008": "aa26cc1e8300c4e365484e0490896256ec5b1668507ca0aa43b69a039de65c46"
+    },
+    "training": {
+      "tower-training-0001": "caa4ef59a8db15eede9f998aea7c4f36034fd2936bf27e7d2ca432947420e528",
+      "tower-training-0002": "2026983ec4389e1106077aadb4a217d8d8969043be305d0f801b03403b09917c",
+      "tower-training-0003": "03a37aa0fe01c2b5ab6006fcf3661fe75f8762417d813d65ca6df35e0c65c981",
+      "tower-training-0004": "572f1b87c7ae807bb1c9525bb0f4154787d3102ad8faff573993fdaf0ebf175b",
+      "tower-training-0005": "ecc866c20d978c35db7da4bba1ec592dbe451cf1724d3a3da72156a304d267b3",
+      "tower-training-0006": "34be5a17fbec8b19194041b90b7286ab9bf1d4d95677ea9d586b77648ea34c40",
+      "tower-training-0007": "efb74ba1686ced38c0cda7aacda98ab0db4708798fcdce547ff3a70387b516f1",
+      "tower-training-0008": "fc3a26e738f62aa1b9967ac7acad3fa4089d8d0d55cfeeb60b3fc7b212ad1f8f",
+      "tower-training-0009": "ba4f2856b921955529f42b2bf43537d37df346ddd29474cb313a22a031835196",
+      "tower-training-0010": "5c8cf26c724b3eb53cd56ae26f717d136dfe3a8e2434f4ec6e34cdf7d39d765d",
+      "tower-training-0011": "dab8dbe36c19de8e2c1b54cef515ebb2cbb4bff05031ec037b4b59276b23d0ea",
+      "tower-training-0012": "3b7ed37f3a4d347926d8b5deccea66a39a2db8c2504502d8e6cee6304ddfd421",
+      "tower-training-0013": "6dd11fc3e52b2771cf42030b21d10d946e69f0f88c23078144435ec24eed0c0a",
+      "tower-training-0014": "88851bdbfcb0855fb60151e62be430fa682eaa91af4ef89e4e3ba001b711a442",
+      "tower-training-0015": "a607a2ba12a345e750c3f95155fcdf0d03e74b65fdd33397b84fa2edd025545d",
+      "tower-training-0016": "f199f705b3e3c54a843e158f0a77edfaa7a4155ab818323666d29e64ebed0517",
+      "tower-training-0017": "3fc853048a39fc63411630c08071491b3e232471857d31efdc1b4b33c93ac4fe",
+      "tower-training-0018": "a9797221518e2a9ea526812aa61e4a02687399bce0ec970e78383e22744b9295",
+      "tower-training-0019": "929d4f451bc3463bfa062d2064fadf9d2a457c204532f7d18c8c9e57b111cf18",
+      "tower-training-0020": "ed0e3ec2b5417016747f16dd009bfdcb03504e0cd33597575077cfeb0cae4f72",
+      "tower-training-0021": "92f1be908bdf24ffb7c8a50706151aee92bf26fb4292a3396eeae2b920a2e41f",
+      "tower-training-0022": "7a7f075ccf5987b437bc4eb5379284fcc61794498b06ff8f18ae398c92281545",
+      "tower-training-0023": "3bb3aa04edbbc4e4de86f03ac65515f21b8e74a2e69a0e854369ee4ad4463c36",
+      "tower-training-0024": "f8ab9550e64e3b0be0cbb7e449ca01ce54c6f2aa6dc1d7025ea7549d7fa7a278",
+      "tower-training-0025": "070482a30bb9351f0ec691a2f75e51a6e85231cca212a19a788b09bca898ede2",
+      "tower-training-0026": "390af3ecdac8077267156ed40a433ab3d5ad5568055e3a7a917051ec48744b90",
+      "tower-training-0027": "f91c9b61979b985c99c758a1f131af0a344e615aec4ad7acf3b062d01f9a68ba",
+      "tower-training-0028": "6845e1c75369396d1a5002c2b4a940e4088e39984516cba8b910a07c0d4b4f9f",
+      "tower-training-0029": "00033e102d20878c8ff58a5ab82ab4c082079db36e5a6173403f1b36e0643b84",
+      "tower-training-0030": "1c8586c0462dabb69e4538db863bbb58fbf2e4fe873dfe7be44fe85287b13d5d",
+      "tower-training-0031": "fe7f7d30766cb0f9d754e486c89ecae41022dbe8e9060cc9bc6916a7fd87bd4c",
+      "tower-training-0032": "269c6b494bff3f58db211b6b6ce983d02e7d6f487e6fc74abf20eff32f556f35"
+    },
+    "validation": {
+      "tower-validation-0001": "6cb1a23d37211f2a5c86d54190ec69b7f0d6f65da0417f6194e2d04c3aa2e5f2",
+      "tower-validation-0002": "3ef1ff4289042bc14dc0f144b74a05169d212bc63e13b9387af9fe59e099432d",
+      "tower-validation-0003": "e24d1681ca09ad8a70c9b8e80ba70a0edc4357fc27e214c04a00b0f7e9f927d8",
+      "tower-validation-0004": "7d0170c2c6ef0e1597be4648e01c086ceb33491f2b7d463d61a975d2907e8fbe",
+      "tower-validation-0005": "147f3b7dadf8f2d358e8278ce68dbbee396ec5f302ec5b532ee9ac81311f2ac0",
+      "tower-validation-0006": "5978ed2667e0404c5646b40d7dd7df646d69e574d0f467e635e5dc7a431f7fdb",
+      "tower-validation-0007": "841c022453de92b87078c3a2a665d066e3fec9ad4a13c7f1dd6a11738e33ea31",
+      "tower-validation-0008": "da57d8a5af607b63fa38433906464ff53ae9ba751dae0cd06005be55c7da20ea"
+    }
+  },
+  "update": {
+    "attempted_steps": 96,
+    "best_epoch": 0,
+    "best_head_sha": "b67d5e43f748fbc34b086bbc8830bd083d3b698d0572492b0977a54b846333dc",
+    "best_optimizer_sha": "ec91ff866820486e7dceb4de9f22011a9557f61f2e97fcdfa617c7fc645c7b77",
+    "best_validation_mse": 0.00803768835279231,
+    "data_sha": "7af4805794024cb82ed3a5a7652e73cdc1d636523eccc22145795beb6b9c1a77",
+    "early_stopped": true,
+    "epochs": [
+      {
+        "batches": 32,
+        "epoch": 1,
+        "max_unclipped_gradient_norm": 0.1764029860496521,
+        "ordering_sha": "a3649449ef9a6ce7257853faf2bc27be387606d5c91b0573217f3849d93dbf89",
+        "samples": 8171,
+        "soft_ce": 0.6931887070678349,
+        "validation_mse": 0.008091806618633495
+      },
+      {
+        "batches": 32,
+        "epoch": 2,
+        "max_unclipped_gradient_norm": 0.06971906870603561,
+        "ordering_sha": "444b6b32379865281c749f36836f71ab3a0ed40ba9807b8fdf94391484407d62",
+        "samples": 8171,
+        "soft_ce": 0.6928881300792687,
+        "validation_mse": 0.008609050531647509
+      },
+      {
+        "batches": 32,
+        "epoch": 3,
+        "max_unclipped_gradient_norm": 0.05025682598352432,
+        "ordering_sha": "707af788d08fe9c57e87b9db4740319b9fb8b7013de269821e50b6283db46e1b",
+        "samples": 8171,
+        "soft_ce": 0.6927918898272931,
+        "validation_mse": 0.008698367026861003
+      }
+    ],
+    "frozen_sha": "aec7820eb6b7c51fa5f28cb6badfef7cbca7387fce4901bc69aa5e6aae241c36",
+    "initial_validation_mse": 0.00803768835279231,
+    "selected_steps": 0,
+    "status": "rolled_back"
+  },
+  "integrity": {
+    "checkpoint_roundtrip": true,
+    "fixed_policy_probes": 4,
+    "frozen_sha": "aec7820eb6b7c51fa5f28cb6badfef7cbca7387fce4901bc69aa5e6aae241c36",
+    "frozen_unchanged": true,
+    "head_changed": false,
+    "policy_unchanged": true
+  },
+  "all_buffers_audit": {
+    "all_buffers_sha": "723e2e7d59cb68744f1195fb45d94d0266f94b0b22b1fc4e68cd364dee8327b3",
+    "all_buffers_unchanged": true,
+    "candidate_replaced": false,
+    "fixed_policy_probes": 4,
+    "frozen_state_sha": "aec7820eb6b7c51fa5f28cb6badfef7cbca7387fce4901bc69aa5e6aae241c36",
+    "heldout_evaluations": 0,
+    "model_optimizer_identical": true,
+    "model_sha": "14fbd5fa43ba84be860f4333f3c63a935879b2ca0d6221978100c93cb6061415",
+    "new_native_episodes": 0,
+    "nonpersistent_buffer_count": 24,
+    "nonpersistent_buffer_names": [
+      "encoder.effect_encoder.catalog_features",
+      "encoder.mechanic_profile_encoder.profile_id",
+      "encoder.mechanic_profile_encoder.trigger_id",
+      "encoder.mechanic_profile_encoder.operation_id",
+      "encoder.mechanic_profile_encoder.target_id",
+      "encoder.mechanic_profile_encoder.source_id",
+      "encoder.mechanic_profile_encoder.control_path_id",
+      "encoder.mechanic_profile_encoder.condition_id",
+      "encoder.mechanic_profile_encoder.amount_basis_id",
+      "encoder.mechanic_profile_encoder.guard_archetype_id",
+      "encoder.mechanic_profile_encoder.guard_polarity",
+      "encoder.mechanic_profile_encoder.guard_numeric",
+      "encoder.mechanic_profile_encoder.guard_mask",
+      "encoder.mechanic_profile_encoder.tags",
+      "encoder.mechanic_profile_encoder.effect_vocab_id",
+      "encoder.mechanic_profile_encoder.produced_archetype_id",
+      "encoder.mechanic_profile_encoder.numeric",
+      "encoder.card_encoder.catalog_static",
+      "encoder.card_encoder.catalog_mechanics",
+      "encoder.card_encoder.card_form_profile_ids",
+      "encoder.child_encoder.archetype_profile_ids",
+      "encoder.tower_encoder.tower_troop_profile_ids",
+      "encoder.candidate_encoder.ability_features",
+      "encoder.candidate_encoder.ability_profile_ids"
+    ],
+    "optimizer_sha": "ec91ff866820486e7dceb4de9f22011a9557f61f2e97fcdfa617c7fc645c7b77",
+    "original_checkpoint_sha": "8241a95be69c4790fa6912d64f796e44597644e5a47ccf08c7f1f3c83b38f4b3",
+    "passed": true,
+    "policy_unchanged": true,
+    "schema": "sspi-tower-all-buffers-audit.v1",
+    "update_identical": true
+  },
+  "holdout": {
+    "acceptance": {
+      "best_constant_mse": 0.007081335960958296,
+      "gates": {
+        "coverage": true,
+        "direction_80pct": false,
+        "integrity": true,
+        "mae_005": false,
+        "mse_reduction_50pct": false
+      },
+      "passed": false,
+      "relative_mse_reduction": -0.0008685734438800274
+    },
+    "current": {
+      "advantage_games": 7,
+      "advantage_states": 811,
+      "aggregation": "equal-game-means",
+      "bootstrap": "whole-game-resampling",
+      "bootstrap_replicates": 2000,
+      "bootstrap_seed": 20261103,
+      "ci95": {
+        "correlation": [
+          -0.17553142186137502,
+          0.12064805889868098
+        ],
+        "direction_accuracy": [
+          0.4556227288471871,
+          0.5411495685744429
+        ],
+        "mae": [
+          0.0355011341714487,
+          0.0926737734192359
+        ],
+        "mse": [
+          0.002103785607475598,
+          0.013647733634685787
+        ]
+      },
+      "correlation": -0.030131728992131034,
+      "correlation_defined_games": 8,
+      "direction_accuracy": 0.5001204318335135,
+      "games": 8,
+      "mae": 0.06170381722387334,
+      "mse": 0.007087486621321177,
+      "per_game": [
+        {
+          "advantage_states": 7,
+          "correlation": 0.2450295426384683,
+          "direction_accuracy": 0.42857142857142855,
+          "game_id": "tower-test-0001",
+          "mae": 0.031399489239916485,
+          "mse": 0.0011415303536861387,
+          "samples": 209
+        },
+        {
+          "advantage_states": 73,
+          "correlation": -0.2604418994925793,
+          "direction_accuracy": 0.5616438356164384,
+          "game_id": "tower-test-0002",
+          "mae": 0.041668858236059245,
+          "mse": 0.0019601529582011943,
+          "samples": 245
+        },
+        {
+          "advantage_states": 0,
+          "correlation": -0.1449336752331561,
+          "direction_accuracy": null,
+          "game_id": "tower-test-0003",
+          "mae": 0.030067200700511165,
+          "mse": 0.0010221654723865637,
+          "samples": 358
+        },
+        {
+          "advantage_states": 134,
+          "correlation": -0.3400712820552087,
+          "direction_accuracy": 0.417910447761194,
+          "game_id": "tower-test-0004",
+          "mae": 0.06875736176702985,
+          "mse": 0.007769969517608125,
+          "samples": 212
+        },
+        {
+          "advantage_states": 307,
+          "correlation": 0.3178699904916503,
+          "direction_accuracy": 0.5211726384364821,
+          "game_id": "tower-test-0005",
+          "mae": 0.10635995061336068,
+          "mse": 0.012915273003489937,
+          "samples": 347
+        },
+        {
+          "advantage_states": 163,
+          "correlation": 0.0869109016544104,
+          "direction_accuracy": 0.49079754601226994,
+          "game_id": "tower-test-0006",
+          "mae": 0.1479090692116362,
+          "mse": 0.027687055860033255,
+          "samples": 198
+        },
+        {
+          "advantage_states": 40,
+          "correlation": -0.03278642782702452,
+          "direction_accuracy": 0.575,
+          "game_id": "tower-test-0007",
+          "mae": 0.02086214733929017,
+          "mse": 0.0009319826549484398,
+          "samples": 312
+        },
+        {
+          "advantage_states": 87,
+          "correlation": -0.1126309821136087,
+          "direction_accuracy": 0.5057471264367817,
+          "game_id": "tower-test-0008",
+          "mae": 0.04660646068318288,
+          "mse": 0.003271763150215768,
+          "samples": 199
+        }
+      ],
+      "samples": 2080,
+      "status": "defined"
+    },
+    "selection": {
+      "best_epoch": 0,
+      "checkpoint_sha": "8241a95be69c4790fa6912d64f796e44597644e5a47ccf08c7f1f3c83b38f4b3",
+      "data_sha": "a797433852422faa28c039f99a81ab6e714560b4e9f02783e4ff7f4c3106be51",
+      "model_sha": "14fbd5fa43ba84be860f4333f3c63a935879b2ca0d6221978100c93cb6061415"
+    },
+    "training_mean_baseline": {
+      "advantage_games": 7,
+      "advantage_states": 811,
+      "aggregation": "equal-game-means",
+      "bootstrap": "whole-game-resampling",
+      "bootstrap_replicates": 2000,
+      "bootstrap_seed": 20261103,
+      "ci95": {
+        "correlation": null,
+        "direction_accuracy": [
+          0.4621057285691792,
+          0.5305337034687932
+        ],
+        "mae": [
+          0.035150855723132625,
+          0.0924335146830756
+        ],
+        "mse": [
+          0.0020787628934222932,
+          0.013652099855640575
+        ]
+      },
+      "correlation": null,
+      "correlation_defined_games": 0,
+      "direction_accuracy": 0.4960233290499774,
+      "games": 8,
+      "mae": 0.06142656972564576,
+      "mse": 0.007081335960958296,
+      "per_game": [
+        {
+          "advantage_states": 7,
+          "correlation": null,
+          "direction_accuracy": 0.5714285714285714,
+          "game_id": "tower-test-0001",
+          "mae": 0.031701086288967145,
+          "mse": 0.0011619634335093974,
+          "samples": 209
+        },
+        {
+          "advantage_states": 73,
+          "correlation": null,
+          "direction_accuracy": 0.4520547945205479,
+          "game_id": "tower-test-0002",
+          "mae": 0.04112042538896436,
+          "mse": 0.0019237311132100255,
+          "samples": 245
+        },
+        {
+          "advantage_states": 0,
+          "correlation": null,
+          "direction_accuracy": null,
+          "game_id": "tower-test-0003",
+          "mae": 0.029645752065390565,
+          "mse": 0.0009986918591757311,
+          "samples": 358
+        },
+        {
+          "advantage_states": 134,
+          "correlation": null,
+          "direction_accuracy": 0.4925373134328358,
+          "game_id": "tower-test-0004",
+          "mae": 0.06806988981093182,
+          "mse": 0.007694618523567681,
+          "samples": 212
+        },
+        {
+          "advantage_states": 307,
+          "correlation": null,
+          "direction_accuracy": 0.5276872964169381,
+          "game_id": "tower-test-0005",
+          "mae": 0.10646951234995242,
+          "mse": 0.012977674627519436,
+          "samples": 347
+        },
+        {
+          "advantage_states": 163,
+          "correlation": null,
+          "direction_accuracy": 0.50920245398773,
+          "game_id": "tower-test-0006",
+          "mae": 0.14755291270254017,
+          "mse": 0.02770991282851114,
+          "samples": 198
+        },
+        {
+          "advantage_states": 40,
+          "correlation": null,
+          "direction_accuracy": 0.425,
+          "game_id": "tower-test-0007",
+          "mae": 0.02046818207914516,
+          "mse": 0.000929983386354023,
+          "samples": 312
+        },
+        {
+          "advantage_states": 87,
+          "correlation": null,
+          "direction_accuracy": 0.4942528735632184,
+          "game_id": "tower-test-0008",
+          "mae": 0.04638479711927445,
+          "mse": 0.0032541119158189325,
+          "samples": 199
+        }
+      ],
+      "samples": 2080,
+      "status": "defined"
+    },
+    "training_mean_score": -0.00041045545114485737,
+    "zero_baseline": {
+      "advantage_games": 7,
+      "advantage_states": 811,
+      "aggregation": "equal-game-means",
+      "bootstrap": "whole-game-resampling",
+      "bootstrap_replicates": 2000,
+      "bootstrap_seed": 20261103,
+      "ci95": {
+        "correlation": null,
+        "direction_accuracy": [
+          0.0,
+          0.0
+        ],
+        "mae": [
+          0.03512879482677244,
+          0.09240237824984464
+        ],
+        "mse": [
+          0.0020784441384215694,
+          0.0136526254674555
+        ]
+      },
+      "correlation": null,
+      "correlation_defined_games": 0,
+      "direction_accuracy": 0.0,
+      "games": 8,
+      "mae": 0.061402502904445294,
+      "mse": 0.0070815364439422305,
+      "per_game": [
+        {
+          "advantage_states": 7,
+          "correlation": null,
+          "direction_accuracy": 0.0,
+          "game_id": "tower-test-0001",
+          "mae": 0.0316755555671256,
+          "mse": 0.0011621525957034955,
+          "samples": 209
+        },
+        {
+          "advantage_states": 73,
+          "correlation": null,
+          "direction_accuracy": 0.0,
+          "game_id": "tower-test-0002",
+          "mae": 0.041101996776872145,
+          "mse": 0.001923144935099072,
+          "samples": 245
+        },
+        {
+          "advantage_states": 0,
+          "correlation": null,
+          "direction_accuracy": null,
+          "game_id": "tower-test-0003",
+          "mae": 0.029634286829325066,
+          "mse": 0.0009992443550665387,
+          "samples": 358
+        },
+        {
+          "advantage_states": 134,
+          "correlation": null,
+          "direction_accuracy": 0.0,
+          "game_id": "tower-test-0004",
+          "mae": 0.06805052870474573,
+          "mse": 0.007692779614188853,
+          "samples": 212
+        },
+        {
+          "advantage_states": 307,
+          "correlation": null,
+          "direction_accuracy": 0.0,
+          "game_id": "tower-test-0005",
+          "mae": 0.10646596374374655,
+          "mse": 0.012982600548409657,
+          "samples": 347
+        },
+        {
+          "advantage_states": 163,
+          "correlation": null,
+          "direction_accuracy": 0.0,
+          "game_id": "tower-test-0006",
+          "mae": 0.14751145255595988,
+          "mse": 0.027710227542643833,
+          "samples": 198
+        },
+        {
+          "advantage_states": 40,
+          "correlation": null,
+          "direction_accuracy": 0.0,
+          "game_id": "tower-test-0007",
+          "mae": 0.020401629709133198,
+          "mse": 0.0009285979620824453,
+          "samples": 312
+        },
+        {
+          "advantage_states": 87,
+          "correlation": null,
+          "direction_accuracy": 0.0,
+          "game_id": "tower-test-0008",
+          "mae": 0.04637860934865417,
+          "mse": 0.0032535439983439507,
+          "samples": 199
+        }
+      ],
+      "samples": 2080,
+      "status": "defined"
+    }
+  },
+  "metric_errata": {
+    "field": "training_mean_baseline.correlation",
+    "original": 1.1127767086658675e-17,
+    "corrected": null,
+    "reason": "constant predictions have zero variance; rounded repeated means created a spurious near-zero correlation",
+    "selection_and_gates_unchanged": true,
+    "heldout_inference_repeated": false
+  },
+  "checkpoint": {
+    "architecture_sha": "ade50d5132de8ae3849193f7de6c26bf3b87d5641be2860a29d7ef02a4f414f2",
+    "file_sha": "8241a95be69c4790fa6912d64f796e44597644e5a47ccf08c7f1f3c83b38f4b3",
+    "model_sha": "14fbd5fa43ba84be860f4333f3c63a935879b2ca0d6221978100c93cb6061415"
+  },
+  "checkpoint_interpretation": "best validation candidate is epoch 0: initial weights and empty AdamW state restored; not a successful warmup",
+  "wall_seconds": 1935.877934217453,
+  "checks": {
+    "tower_tests": 22,
+    "main_engine_tests": 454,
+    "public_passed": 1104,
+    "public_skipped": 42,
+    "gitleaks": "passed: no leaks found",
+    "main_engine_seconds": 156.43,
+    "tower_tests_seconds": 42.8,
+    "nonpersistent_buffer_targeted_test": "1 passed; actual-data replay also passed"
+  },
+  "evidence_sha": {
+    "result.json": "9d24be3f31512d3184ec1f1b49b54d3c5e24aef332d4e97cb67386e8c878f83e",
+    "holdout.json": "c2e5f8e9d7a2c23682aafdee85b6a7c54059fdf9216f34ef6ca7854555f2e6e4",
+    "run_config.json": "cd511b85b483b6a366aac1519b584ee0b2b2eb4d15561f9c6b091a70f4ca0384",
+    "all-buffers-replay-audit.json": "fd65e16d449a0b919b66de39abd080dc8ce7e7ce7722944a3ee55d656caf2c53",
+    "public-checks.log": "9eda431edfebfe086df7231331e5aced6368bae50806076bbbc8bfcdb80a661b",
+    "tower-tests-release.log": "9ccd9771336ad58e42e8ccdfb06848d23eda50236cd4d8063cd1af9ea40baace",
+    "main-checks-release.log": "ac0d42f5336b1ffa330f258e709a0a4cb5ccdc496cd39d3f370bd5c5ccf97917",
+    "audit-resume-check.log": "b350228db7da4107d86ee2abaabc5db72c51c7830a1a8b39947978f64148d9a0",
+    "gitleaks-release.log": "25ee005bb147e605ce9379c713069dc8c2e5102b03b18b9923f95f37e31ea05d",
+    "gitleaks-final.log": "0e54105c9caf89b19bb4611bbe5bec81fb9f9a995350ab194e47e8a20c921e35"
+  },
+  "limitations": [
+    "scores are heuristic targets, not calibrated win probabilities",
+    "no SSPI continuation or win-rate evaluation",
+    "no extra games or hyperparameter changes after failure",
+    "48 games and one frozen seed; not a broad architecture conclusion"
+  ],
+  "source_reproduction": {
+    "runtime_compatibility_patch": "docs/evidence/sspi-tower-bootstrap-20261103/runtime-v1-compat.diff.txt",
+    "usage": "apply only in an independent copy to restore the exact original runtime; not on the current main worktree",
+    "expected_runtime_module_sha": "a4907cc6f6a097bec16ce462fcd1357bf3f735310a6d72f6e31eda349cc6139d",
+    "release_module_sha": "03cd22594d65afd22a8a6889cb54d6ac6356a3918e2f638fb8eb8dbe65336da5",
+    "expected_runtime_source_sha": "ca101b7eca09c5d8a5120432482b79989a520514a8aef3479103e5bc3c3eff06"
+  }
+}
