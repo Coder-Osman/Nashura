@@ -1,7 +1,7 @@
 {
   "schema": "sspi-random-to-60-experiment-design.v1",
-  "status": "design_only",
-  "ready_to_run": false,
+  "status": "implemented_pending_native_execution",
+  "ready_to_run": true,
   "base_commit": "6e54b381ad8aadc3ef6ef30fdfdfcfca3d354e62",
   "new_run_required": true,
   "initialization_seed": 20261103,
@@ -143,12 +143,7 @@
       "one_preregistered_candidate"
     ]
   },
-  "implementation_needed": [
-    "all_root_schedule_and_partial_batches",
-    "joint_learning_rate_and_schedule_identity",
-    "screening_and_candidate_lock",
-    "paired_anytime_test_and_idempotent_resume"
-  ],
+  "implementation_needed": [],
   "no_hard_training_wall_time_limit": true,
   "native_runs_started_by_this_design": 0,
   "historical_evidence": {
@@ -181,9 +176,11 @@
     "not_a_native_battle_or_learning_test": true
   },
   "publication_checks": {
-    "main_engine_passed": 413,
+    "main_engine_passed": 432,
     "public_passed": 1104,
     "public_skipped": 42,
-    "scope": "unchanged runtime regression, not execution of proposed scheduler or evaluation test"
-  }
+    "new_directed_tests": 19,
+    "scope": "implemented scheduler and paired evaluation fixtures; actual model short-batch update; not native learning evidence"
+  },
+  "entrypoint": "native_runner.training.sspi.random60"
 }

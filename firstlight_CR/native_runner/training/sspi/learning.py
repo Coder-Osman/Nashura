@@ -29,6 +29,14 @@ MICROBATCH = 4
 ACCUMULATION_STEPS = EFFECTIVE_BATCH // MICROBATCH
 
 
+class UpdateRejected(RuntimeError):
+    """A guarded step restored its model and optimizer after all trials failed."""
+
+    def __init__(self, message, *, report=None):
+        super().__init__(message)
+        self.report = {} if report is None else report
+
+
 class WLLabel(IntEnum):
     WIN = 0
     LOSS = 1
@@ -112,8 +120,10 @@ def terminal_wl(owner: int, winner: int | None) -> WLLabel | None:
     return WLLabel.WIN if winner == owner else WLLabel.LOSS
 
 
-def create_optimizer(model: SSPIModel):
-    return torch.optim.AdamW(model.parameters(), lr=1e-4, weight_decay=1e-4)
+def create_optimizer(model: SSPIModel, *, lr=1e-4):
+    if not math.isfinite(lr) or lr <= 0.:
+        raise ValueError("SSPI learning rate must be finite and positive")
+    return torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
 
 
 def search_root_loss(model: SSPIModel, rows: list[TrainingRow] | tuple[TrainingRow, ...],
@@ -212,9 +222,11 @@ def _generation_metrics(model, rows):
         "loss", "policy_loss", "value_loss", "root_mode_policy_loss")}
 
 
-def train_generation_step(model: SSPIModel, optimizer, rows, *, validation_rows=()):
-    """Apply one 128-root AdamW update, accepting only a non-regressing step."""
-    if len(rows) != EFFECTIVE_BATCH or any(row.search_mode != "SEARCH" for row in rows):
+def train_generation_step(model: SSPIModel, optimizer, rows, *, validation_rows=(),
+        allow_partial=False):
+    """Apply a guarded update; new protocols may explicitly allow a short batch."""
+    if ((not 1 <= len(rows) <= EFFECTIVE_BATCH if allow_partial else len(rows) != EFFECTIVE_BATCH)
+            or any(row.search_mode != "SEARCH" for row in rows)):
         raise ValueError("generation updates require exactly 128 SEARCH roots and no DIRECT rows")
     if type(optimizer) is not torch.optim.AdamW:
         raise TypeError("SSPI pilot requires AdamW")
@@ -226,14 +238,16 @@ def train_generation_step(model: SSPIModel, optimizer, rows, *, validation_rows=
     continuation_rows = 0
     original_parameters = original_optimizer = None
     try:
-        for offset in range(0, EFFECTIVE_BATCH, MICROBATCH):
-            micro = search_root_loss(model, rows[offset:offset + MICROBATCH])
-            (micro["loss"] / ACCUMULATION_STEPS).backward()
-            loss_total += float(micro["loss"].detach().cpu()) / ACCUMULATION_STEPS
-            policy_total += float(micro["policy_loss"].detach().cpu()) / ACCUMULATION_STEPS
-            value_total += float(micro["value_loss"].detach().cpu()) / ACCUMULATION_STEPS
-            mode_total += float(micro["root_mode_policy_loss"].detach().cpu()) / ACCUMULATION_STEPS
-            auxiliary_total += float(micro["continuation_loss"].detach().cpu()) / ACCUMULATION_STEPS
+        for offset in range(0, len(rows), MICROBATCH):
+            subset = rows[offset:offset + MICROBATCH]
+            micro = search_root_loss(model, subset)
+            weight = len(subset) / len(rows)
+            (micro["loss"] * weight).backward()
+            loss_total += float(micro["loss"].detach().cpu()) * weight
+            policy_total += float(micro["policy_loss"].detach().cpu()) * weight
+            value_total += float(micro["value_loss"].detach().cpu()) * weight
+            mode_total += float(micro["root_mode_policy_loss"].detach().cpu()) * weight
+            auxiliary_total += float(micro["continuation_loss"].detach().cpu()) * weight
             continuation_rows += micro["continuation_rows"]
         norm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
         if not bool(torch.isfinite(norm)):
@@ -269,7 +283,9 @@ def train_generation_step(model: SSPIModel, optimizer, rows, *, validation_rows=
                                 "root_mode_policy_loss"))))):
                 break
         else:
-            raise RuntimeError("SSPI generation update has no non-regressing step")
+            raise UpdateRejected("SSPI generation update has no non-regressing step",
+                report=dict(training_before=before, validation_before=validation_before,
+                    trials=trials, gradient_norm=float(norm.detach().cpu())))
     except BaseException:
         if original_parameters is not None and original_optimizer is not None:
             with torch.no_grad():
@@ -284,8 +300,8 @@ def train_generation_step(model: SSPIModel, optimizer, rows, *, validation_rows=
         validation_before_update=validation_before,
         validation_after_update=validation_after, step_fraction=scale, step_trials=trials,
         gradient_norm=float(norm.detach().cpu()), optimizer_steps=1,
-        search_rows=EFFECTIVE_BATCH, direct_rows=0, microbatch=MICROBATCH,
-        accumulation_steps=ACCUMULATION_STEPS, continuation_rows=continuation_rows,
+        search_rows=len(rows), direct_rows=0, microbatch=MICROBATCH,
+        accumulation_steps=math.ceil(len(rows) / MICROBATCH), continuation_rows=continuation_rows,
         continuation_loss=auxiliary_total)
 
 

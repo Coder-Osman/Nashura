@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import random
@@ -145,6 +146,26 @@ def paired_win_rate_interval(pair_counts, *, seed, replicates=10_000):
         result.update(low=samples[int(.025*(len(samples)-1))],
             high=samples[int(.975*(len(samples)-1))])
     return result
+
+
+def paired_sequential_evidence(pair_counts, *, minimum_pairs=64):
+    """Fixed candidate, IID seed pairs: test E[W-.6D] <= 0 by a fixed e-mixture."""
+    if (type(minimum_pairs) is not int or minimum_pairs < 1
+            or any(len(pair) != 2 or any(type(x) is not int for x in pair)
+                or not 0 <= pair[0] <= pair[1] <= 2 for pair in pair_counts)):
+        raise ValueError("invalid complete pair counts for sequential evidence")
+    grid = (.05, .10, .20, .40, .80)
+    log_products = [sum(math.log1p(lam * (wins - .60 * decisive))
+        for wins, decisive in pair_counts) for lam in grid]
+    peak = max(log_products)
+    log_e = peak + math.log(sum(math.exp(value-peak) for value in log_products)/len(grid))
+    decisive = sum(pair[1] for pair in pair_counts)
+    return dict(schema="sspi-paired-evidence.v1", null_win_rate=.60,
+        lambda_grid=list(grid), log_e_value=log_e,
+        e_value=math.exp(log_e) if log_e < 700 else None,
+        threshold=20., minimum_pairs=minimum_pairs, complete_pairs=len(pair_counts),
+        decisive_games=decisive,
+        passed=len(pair_counts) >= minimum_pairs and decisive > 0 and log_e >= math.log(20.))
 
 
 def episode_outcome_counts(directories):
@@ -413,21 +434,44 @@ def paired_outcomes_from_results(results, *, expected_pairs):
 
 def _run_paired_evaluation(*, run_config, run_dir, generation, trained_model,
         trained_model_sha, theta0_model, theta0_sha, checkpoint_sha, actual_port,
-        belief_port, transport, evaluation_pairs, output_name):
+        belief_port, transport, evaluation_pairs, output_name, evaluation_domain=None,
+        sequential=False, minimum_pairs=64):
     if type(evaluation_pairs) is not int or evaluation_pairs < 1:
         raise ValueError("paired evaluation requires at least one independent seed pair")
     run_dir = Path(run_dir)
     output_path = run_dir / output_name
-    if output_path.exists():
+    prior_result = json.loads(output_path.read_text()) if output_path.exists() else None
+    if output_path.exists() and evaluation_domain is None:
         raise ValueError(f"paired evaluation output already exists: {output_path}")
+    if (sequential and evaluation_domain != "formal") or evaluation_domain not in (
+            None, "screening", "formal"):
+        raise ValueError("sequential evaluation requires an independent formal domain")
+    evaluation_identity = None
+    if evaluation_domain is not None:
+        evaluation_identity = dict(schema="sspi-locked-evaluation.v1", domain=evaluation_domain,
+            run_config_sha=semantic_digest(run_config), generation=generation,
+            trained_model_sha=trained_model_sha, theta0_sha=theta0_sha,
+            checkpoint_sha=checkpoint_sha, transport=transport, actual_port=actual_port,
+            maximum_pairs=evaluation_pairs, minimum_pairs=minimum_pairs,
+            sequential=sequential, experiment_source_sha=_experiment_source_sha())
+        identity_path = output_path.with_suffix(".identity.json")
+        if identity_path.exists():
+            if json.loads(identity_path.read_text()) != evaluation_identity:
+                raise ValueError("locked evaluation identity changed")
+        else:
+            _atomic_json(identity_path, evaluation_identity)
 
     results = []
     for pair_index in range(evaluation_pairs):
         pair_number = pair_index + 1
         stream_id = f"sspi-eval-g{generation:04d}-pair-{pair_number:04d}"
+        if evaluation_domain is not None:
+            stream_id = f"sspi-{evaluation_domain}-g{generation:04d}-pair-{pair_number:04d}"
         for side in (0, 1):
             game_number = pair_index * 2 + side + 1
             game_id = f"E-paired-g{generation:04d}-game-{game_number:04d}"
+            if evaluation_domain is not None:
+                game_id = f"E-{evaluation_domain}-g{generation:04d}-game-{game_number:04d}"
             trained_owner = side
             models = {trained_owner: trained_model, 1 - trained_owner: theta0_model}
             expected_models = {str(trained_owner): trained_model_sha,
@@ -447,13 +491,21 @@ def _run_paired_evaluation(*, run_config, run_dir, generation, trained_model,
             _validate_episode(metadata, run_config=run_config, model_sha=theta0_sha,
                 episode_kind="evaluation", search_probability=0.)
             identity = metadata["identity"]
+            if evaluation_domain is not None:
+                for filename, checksum_key in (("episode.pt", "tensor_sha256"),
+                        ("actions.json", "actions_sha256")):
+                    if hashlib.sha256((directory / filename).read_bytes()).hexdigest() != metadata.get(checksum_key):
+                        raise ValueError("evaluation episode evidence checksum differs")
             if (identity.get("random_stream_id") != stream_id
                     or identity.get("game_id") != game_id
                     or identity.get("model_sha256_by_owner") != expected_models
                     or type(identity.get("actual_match_seed")) is not int
                     or type(identity.get("actual_rollout_seed")) is not int
                     or type(metadata.get("search_roots")) is not int
-                    or metadata.get("search_roots") != 0):
+                    or metadata.get("search_roots") != 0
+                    or (evaluation_domain is not None and (
+                        identity.get("engine_sha256") != run_config.get("engine_sha256")
+                        or identity.get("source_sha256") != run_config.get("collector_source_sha")))):
                 raise ValueError("paired evaluation episode identity differs from its planned side/stream")
             expected_seed_identity = episode_seed_identity(run_config["seed"],
                 run_id=run_config["run_id"], arm=run_config["arm"], game_id=game_id,
@@ -479,18 +531,37 @@ def _run_paired_evaluation(*, run_config, run_dir, generation, trained_model,
                 total_games=evaluation_pairs * 2, winner=winner, score=score)
             _write_status(run_dir, "running", "paired_evaluation", generation=generation,
                 games=len(results), target_games=evaluation_pairs * 2,
-                completed_pairs=len({item["pair_index"] for item in results}))
+                completed_pairs=len(results) // 2, evaluation_domain=evaluation_domain)
 
-    pair_counts = paired_outcomes_from_results(results, expected_pairs=evaluation_pairs)
+        if sequential:
+            counts = paired_outcomes_from_results(results, expected_pairs=pair_number)
+            evidence = paired_sequential_evidence(counts, minimum_pairs=minimum_pairs)
+            if pair_number % 32 == 0 or evidence["passed"] or pair_number == evaluation_pairs:
+                _atomic_json(output_path.with_suffix(".progress.json"), dict(
+                    identity=evaluation_identity, evidence=evidence, pair_counts=counts,
+                    results=results))
+                _emit("formal_evaluation_evidence", **evidence)
+            if evidence["passed"]:
+                break
+
+    complete_pairs = len(results) // 2
+    pair_counts = paired_outcomes_from_results(results, expected_pairs=complete_pairs)
     score = paired_win_rate_interval(pair_counts,
         seed=run_config["seed"] ^ generation ^ 0x53535049)
     record = dict(schema="sspi-mac-pilot-paired-evaluation.v2",
         run_id=run_config["run_id"], generation=generation,
         trained_checkpoint_sha256=checkpoint_sha, theta0_sha256=theta0_sha,
-        protocol=dict(search_probability=0., temperature=1., paired_seeds=evaluation_pairs,
+        protocol=dict(search_probability=0., temperature=1., paired_seeds=complete_pairs,
             games=len(results), games_per_seed=2, pairing_key="random_stream_id",
             deck=list(run_config["deck"])), pair_counts=pair_counts, score=score,
         results=results)
+    if evaluation_identity is not None:
+        record["evaluation_identity"] = evaluation_identity
+    if sequential:
+        record["sequential_evidence"] = paired_sequential_evidence(
+            pair_counts, minimum_pairs=minimum_pairs)
+    if prior_result is not None and prior_result != json.loads(json.dumps(record)):
+        raise ValueError("completed evaluation result changed on restoration")
     _atomic_json(output_path, record)
     return record
 
