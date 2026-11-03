@@ -10,6 +10,7 @@ from native_runner.tests.test_fair_final_search import runtime_world
 from native_runner.training.fair_final import history_provider
 from native_runner.training.fair_final.history import FairHistory, OwnDecision
 from native_runner.training.fair_final.history_belief import HistoryReplaySession, IncompatibleHistory
+from native_runner.training.fair_final import history_belief
 from native_runner.training.fair_final.history_provider import HistorySearchProvider, RecoveringHistoryCursor
 from native_runner.training.fair_final.codec import ActionCodec
 from native_runner.training.fair_final.opening_belief import OpeningEvidence
@@ -193,6 +194,100 @@ def test_retry_bounds_are_validated_before_access(attempts):
         RecoveringHistoryCursor(Factory(), seed=1, attempts=attempts)
     with pytest.raises(ValueError):
         HistorySearchProvider(Factory(), history=history_fixture(), attempts=attempts)
+
+
+def test_unmatched_nearby_public_play_error_identifies_public_boundary(monkeypatch):
+    monkeypatch.setattr(history_belief, "deployment_action",
+        lambda *args, **kwargs: (None, dict(failure_reason="card_has_no_ready_physical_slot")))
+    session = object.__new__(HistoryReplaySession)
+    session.rollout = SimpleNamespace(runtime=SimpleNamespace(
+        clock=SimpleNamespace(wait_ticks=20)))
+    information = SimpleNamespace(owner=1, tick=100)
+    event = SimpleNamespace(owner=1, tick=105, card_id=HOG_DECK[0])
+    history = SimpleNamespace(deployments=(event,), root_tick=120)
+
+    with pytest.raises(IncompatibleHistory,
+            match="card_has_no_ready_physical_slot"):
+        session._opponent_action(information, history)
+
+
+def test_deployment_diagnostic_identifies_card_missing_from_ready_hand(monkeypatch):
+    monkeypatch.setattr(history_belief, "validate_fair_view", lambda *_args: None)
+    observation = SimpleNamespace(owner=0, players=[SimpleNamespace(owner=0,
+        metadata={"hand_slot_by_card": {}})])
+    environment = SimpleNamespace(action_mask=lambda *_args: pytest.fail("no slot should be queried"))
+    rollout = SimpleNamespace(runtime=SimpleNamespace(environment=environment, frozen={0: observation}))
+    information = SimpleNamespace(owner=0, tick=100,
+        hand=SimpleNamespace(ready_card_ids=(HOG_DECK[1],), pending_refills=()),
+        legality=SimpleNamespace(card_ids=(HOG_DECK[1],), pending_arrival_ticks={}))
+    event = SimpleNamespace(owner=0, card_id=HOG_DECK[0], tick=116, x=5000, y=10000)
+
+    action, diagnostic = history_belief.deployment_action(rollout, information, event,
+        include_diagnostics=True)
+
+    assert action is None
+    assert diagnostic["failure_reason"] == "card_has_no_ready_or_pending_physical_slot"
+    assert diagnostic["ready_card_ids"] == [HOG_DECK[1]]
+    assert diagnostic["pending_refills"] == []
+
+
+def test_deployment_replay_uses_pending_physical_slot_when_refill_precedes_action(monkeypatch):
+    card_id, cell, slot = HOG_DECK[0], 12, 2
+    monkeypatch.setattr(history_belief, "validate_fair_view", lambda *_args: None)
+    monkeypatch.setattr(history_belief, "event_cell_to_native",
+        lambda value, **_kwargs: (value % 18, value // 18))
+    observation = SimpleNamespace(owner=0, players=[SimpleNamespace(owner=0,
+        metadata={"hand_slot_by_card": {}})])
+    plays = torch.zeros((1, 576, 5), dtype=torch.bool)
+    plays[0, cell, 3] = True
+    legality = SimpleNamespace(card_ids=(card_id,), plays=plays,
+        pending_arrival_ticks={card_id: 6})
+    pending = SimpleNamespace(card_id=card_id, hand_index=slot,
+        remaining_ticks=6, time_known=True)
+    hand = SimpleNamespace(ready_card_ids=(), pending_refills=(pending,))
+    placement_calls = []
+
+    class Environment:
+        raw_observation = {}
+
+        def action_mask(self, *_args):
+            pytest.fail("a pending physical slot has no ready-card action mask")
+
+        def _extract_towers(self, _raw):
+            return ()
+
+        def _rich_context(self, _raw):
+            return object()
+
+        def _occupied_building_footprints(self, _raw, _context):
+            return (), ()
+
+        def _destroyed_enemy_lanes(self, _owner, _towers):
+            return ()
+
+        def _active_tower_footprints(self, _towers):
+            return ()
+
+        def _cached_placement_entry(self, *, card_id, owner, **_placement):
+            placement_calls.append((card_id, owner))
+            return {"model_subcell_offset": None}
+
+        def _world_target(self, command):
+            assert command.hand_slot == slot
+            return command.target_grid
+
+    rollout = SimpleNamespace(runtime=SimpleNamespace(environment=Environment(), frozen={0: observation}))
+    information = SimpleNamespace(owner=0, tick=100, hand=hand, legality=legality)
+    event = SimpleNamespace(owner=0, card_id=card_id, tick=116, x=cell, y=0)
+
+    action, diagnostic = history_belief.deployment_action(rollout, information, event,
+        include_diagnostics=True)
+
+    assert action == FullAction(card_id, cell, 8)
+    assert diagnostic["slot_source"] == "pending_refill"
+    assert diagnostic["pending_arrival_ticks"] == 6
+    assert diagnostic["legal_cell_count"] == 1
+    assert placement_calls == [(card_id, 0)]
 
 
 @pytest.mark.parametrize("owner", [0, 1])

@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import copy
 from dataclasses import dataclass
 from enum import IntEnum
 import hashlib
+import math
 import os
 from pathlib import Path
 import random
@@ -103,7 +105,7 @@ def search_root_loss(model: SSPIModel, rows: list[TrainingRow] | tuple[TrainingR
     search_rows = [row for row in rows if row.search_mode == "SEARCH"]
     if not search_rows:
         raise ValueError("batch has no eligible SEARCH roots")
-    policy_losses, value_logits, labels = [], [], []
+    policy_losses, mode_losses, value_logits, labels = [], [], [], []
     auxiliary_policy, auxiliary_value = [], []
     source_weights = []
     continuation_rows = 0
@@ -113,6 +115,12 @@ def search_root_loss(model: SSPIModel, rows: list[TrainingRow] | tuple[TrainingR
         policy_loss = -sum(policy.log_prob(action) * (count / row.simulations)
             for action, count in row.visits)
         policy_losses.append(policy_loss)
+        mode_counts = {}
+        for action, count in row.visits:
+            mode_counts[action.mode] = mode_counts.get(action.mode, 0) + count
+        mode_log = policy.conditionals()
+        mode_losses.append(-sum(mode_log[int(mode)] * (count / row.simulations)
+            for mode, count in mode_counts.items()))
         value_logits.append(logits[0])
         labels.append(int(row.final_wdl))
         source_weights.append(1. - temporal_aux_weight if row.continuations else 1.)
@@ -132,6 +140,7 @@ def search_root_loss(model: SSPIModel, rows: list[TrainingRow] | tuple[TrainingR
     targets = torch.tensor(labels, dtype=torch.long, device=logits.device)
     per_root_value = F.cross_entropy(logits, targets, reduction="none")
     root_policy_loss, root_value_loss = per_root_policy.mean(), per_root_value.mean()
+    root_mode_policy_loss = torch.stack(mode_losses).mean()
     weights = per_root_policy.new_tensor(source_weights)
     policy_loss = (per_root_policy * weights).mean()
     value_loss = (per_root_value * weights).mean()
@@ -148,6 +157,7 @@ def search_root_loss(model: SSPIModel, rows: list[TrainingRow] | tuple[TrainingR
         raise ValueError("SSPI policy/value loss is nonfinite")
     return dict(loss=loss, policy_loss=policy_loss, value_loss=value_loss,
         root_policy_loss=root_policy_loss, root_value_loss=root_value_loss,
+        root_mode_policy_loss=root_mode_policy_loss,
         continuation_loss=temporal_aux_weight * (aux_policy + aux_value),
         continuation_rows=continuation_rows,
         search_rows=len(search_rows), direct_rows=len(rows) - len(search_rows))
@@ -172,16 +182,26 @@ def train_search_step(model: SSPIModel, optimizer, rows, *, gradient_clip=1.):
     return losses
 
 
-def train_generation_step(model: SSPIModel, optimizer, rows):
-    """Apply one fixed 128-root generation update as 32 four-root microbatches."""
+def _generation_metrics(model, rows):
+    with torch.inference_mode():
+        losses = search_root_loss(model, rows)
+    return {name: float(losses[name]) for name in (
+        "loss", "policy_loss", "value_loss", "root_mode_policy_loss")}
+
+
+def train_generation_step(model: SSPIModel, optimizer, rows, *, validation_rows=()):
+    """Apply one 128-root AdamW update, accepting only a non-regressing step."""
     if len(rows) != EFFECTIVE_BATCH or any(row.search_mode != "SEARCH" for row in rows):
         raise ValueError("generation updates require exactly 128 SEARCH roots and no DIRECT rows")
     if type(optimizer) is not torch.optim.AdamW:
         raise TypeError("SSPI pilot requires AdamW")
+    if any(row.search_mode != "SEARCH" for row in validation_rows):
+        raise ValueError("generation validation requires SEARCH roots")
     model.train()
     optimizer.zero_grad(set_to_none=True)
-    policy_total = value_total = loss_total = auxiliary_total = 0.
+    policy_total = value_total = mode_total = loss_total = auxiliary_total = 0.
     continuation_rows = 0
+    original_parameters = original_optimizer = None
     try:
         for offset in range(0, EFFECTIVE_BATCH, MICROBATCH):
             micro = search_root_loss(model, rows[offset:offset + MICROBATCH])
@@ -189,17 +209,57 @@ def train_generation_step(model: SSPIModel, optimizer, rows):
             loss_total += float(micro["loss"].detach().cpu()) / ACCUMULATION_STEPS
             policy_total += float(micro["policy_loss"].detach().cpu()) / ACCUMULATION_STEPS
             value_total += float(micro["value_loss"].detach().cpu()) / ACCUMULATION_STEPS
+            mode_total += float(micro["root_mode_policy_loss"].detach().cpu()) / ACCUMULATION_STEPS
             auxiliary_total += float(micro["continuation_loss"].detach().cpu()) / ACCUMULATION_STEPS
             continuation_rows += micro["continuation_rows"]
         norm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
         if not bool(torch.isfinite(norm)):
             raise ValueError("SSPI generation gradient norm is nonfinite")
+        before = dict(loss=loss_total, policy_loss=policy_total,
+            value_loss=value_total, root_mode_policy_loss=mode_total)
+        model.eval()
+        validation_before = _generation_metrics(model, validation_rows) if validation_rows else None
+        parameters = tuple(model.parameters())
+        original_parameters = tuple(parameter.detach().clone() for parameter in parameters)
+        original_optimizer = copy.deepcopy(optimizer.state_dict())
         optimizer.step()
-        optimizer.zero_grad(set_to_none=True)
+        deltas = tuple(parameter.detach() - original for parameter, original
+            in zip(parameters, original_parameters))
+        trials = []
+        for exponent in range(10):
+            scale = 2. ** -exponent
+            if exponent:
+                with torch.no_grad():
+                    for parameter, original, delta in zip(parameters, original_parameters, deltas):
+                        parameter.copy_(original + scale * delta)
+            after = _generation_metrics(model, rows)
+            validation_after = _generation_metrics(model, validation_rows) if validation_rows else None
+            trials.append(dict(scale=scale, training=after, validation=validation_after))
+            if (all(math.isfinite(value) for value in after.values())
+                    and after["loss"] < before["loss"] - 1e-5
+                    and all(after[name] <= before[name] + 1e-5 for name in (
+                        "policy_loss", "value_loss", "root_mode_policy_loss"))
+                    and (validation_before is None or (validation_after is not None
+                        and all(math.isfinite(value) for value in validation_after.values())
+                        and all(validation_after[name] <= validation_before[name] + 1e-5
+                            for name in ("loss", "policy_loss", "value_loss",
+                                "root_mode_policy_loss"))))):
+                break
+        else:
+            raise RuntimeError("SSPI generation update has no non-regressing step")
     except BaseException:
+        if original_parameters is not None and original_optimizer is not None:
+            with torch.no_grad():
+                for parameter, original in zip(parameters, original_parameters):
+                    parameter.copy_(original)
+            optimizer.load_state_dict(original_optimizer)
         optimizer.zero_grad(set_to_none=True)
         raise
+    optimizer.zero_grad(set_to_none=True)
     return dict(loss=loss_total, policy_loss=policy_total, value_loss=value_total,
+        root_mode_policy_loss=mode_total, after_update=after,
+        validation_before_update=validation_before,
+        validation_after_update=validation_after, step_fraction=scale, step_trials=trials,
         gradient_norm=float(norm.detach().cpu()), optimizer_steps=1,
         search_rows=EFFECTIVE_BATCH, direct_rows=0, microbatch=MICROBATCH,
         accumulation_steps=ACCUMULATION_STEPS, continuation_rows=continuation_rows,

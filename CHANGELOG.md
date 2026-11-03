@@ -1,5 +1,11 @@
 # 变更记录
 
+## 2026-11-03：SSPI 代际更新稳定性
+
+- 第 2 代关闭 MCTS 的换边评估在 49/3000 局暂停；已完成的 49 局均输给 theta0。核对 checkpoint、换边、seed 与终局后，定位到第一代模式策略更新过冲，而非评估计分反向。
+- 每代唯一一次 AdamW 更新增加确定性参数步长回退；训练与独立验证根的策略、模式、价值 CE 不退化才接受。无可接受步长时完整恢复参数和优化器状态。原先 `loss` 仍表示用于反传的更新前损失，新增 `after_update` 和 `step_trials` 保留验收记录。
+- 原始首代 128 训练根及 107 验证根离线重放接受 1/8 更新；可出牌观测 WAIT 概率 0.4862→0.5710，训练和验证策略、模式、价值 CE 均下降。诊断 checkpoint/AdamW 恢复通过；相关回归 `221 passed`、公开 `1104 passed / 42 skipped`、主引擎 `282 passed`，gitleaks 无发现。未进行修正权重的真实对局强度验证。
+
 ## 2026-11-03：event-batched 复测与 MCTS native bind 拆解
 
 - 将 `step_native_bind_seconds` 拆为 native step client、atomic capture client、capture envelope、rich telemetry bind 与互斥 residual；请求内另记录锁等待、连接/握手、发送、读取、JSON decode、响应校验和 delta cursor 校验，不增加 native RPC。

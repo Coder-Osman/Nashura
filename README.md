@@ -1,5 +1,9 @@
 # Nashura
 
+## 2026-11-03：SSPI 代际更新过冲修正
+
+第二代 checkpoint 的无搜索配对评估在 49/3000 局时暂停；完成的 49 局均输给随机初始模型。训练根复核发现首代更新使可出牌状态的 WAIT 概率从 48.6% 跳至 86.8%，策略 CE 反而上升。现对每代唯一一次 AdamW 更新进行参数步长回退，要求训练根和独立验证根的策略、模式、价值 CE 均不退化；若无可接受步长则回滚模型与优化器，不生成 checkpoint。原始首代 128 训练根和 107 验证根离线重放选中 1/8 步长，WAIT 概率为 57.1%，训练/验证两组 CE 均下降，checkpoint 往返通过。此为更新稳定性验证，不是新模型的实战强度结论。详见[结果记录](docs/RESULTS.md)。
+
 ## 2026-11-03：event-batched 复测与 MCTS transition 分解
 
 在隔离的 macOS ARM64 AVD 上完成同 seed 的 persistent-delta / event-json-delta / persistent-delta sandwich 搜索。两次基线均为 15.40–15.69 秒，event-batched 为 10.95 秒；128 根延迟下降 29.6%，transition 由均值 11.20 秒降至 6.10 秒。2812 native ticks 不变，event-batched 用 349 个批次省去 2463 次逐 tick 宿主观测。

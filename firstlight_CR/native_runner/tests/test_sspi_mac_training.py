@@ -15,6 +15,7 @@ from native_runner.training.sspi.learning import (
     load_checkpoint,
     save_checkpoint,
     search_root_loss,
+    train_generation_step,
     train_search_step,
 )
 from native_runner.training.sspi.model import HAND_FEATURE_DIM, SSPIPolicy, _hand_features, initialize_fresh_model
@@ -48,6 +49,7 @@ from native_runner.training.sspi.collector import (
     resolve_belief_ports,
 )
 from native_runner.training.sspi.experiment import (
+    _combined_quarantine_ids,
     _generation_episode_id,
     _restore_generation_checkpoint,
     evaluate_generation,
@@ -55,6 +57,7 @@ from native_runner.training.sspi.experiment import (
     paired_scores_from_results,
     paired_score_interval,
     run_next_generation,
+    select_generation_batch,
 )
 from native_runner.training.sspi.search import SSPIJointPolicy, budget_search_sha
 from native_runner.training.fair_final.candidates import structured_candidates
@@ -565,7 +568,9 @@ def test_native_preflight_rejects_truncated_observation_and_closes_transport(mon
 
 
 @pytest.mark.parametrize("transport", ["event-json", "event-json-delta"])
-def test_event_json_preflight_selects_resident_slot_without_rebinding_frozen_slot(monkeypatch, transport):
+@pytest.mark.parametrize("belief_state", ["empty", "live"])
+def test_event_json_preflight_reuses_resident_belief_worker_without_observing_stale_world(
+        monkeypatch, transport, belief_state):
     calls = []
 
     class Probe:
@@ -618,14 +623,16 @@ def test_event_json_preflight_selects_resident_slot_without_rebinding_frozen_slo
 
         def resident_status(self):
             calls.append(("belief-resident-status", self.port))
-            return {"mode": "resident-headless", "occupied": 1,
-                "slots": [{"envId": self.env_id, "ended": True}]}
+            slots = [] if belief_state == "empty" else [
+                {"envId": self.env_id, "ended": False, "generation": 7}]
+            return {"mode": "resident-headless", "residentSnapshotRestore": True,
+                "snapshotHandles": 0, "occupied": len(slots), "slots": slots}
 
         def status(self):
-            return {"ready": True}
+            raise AssertionError("resident belief status must not inspect an old search world")
 
         def observe(self):
-            return {"ok": True}
+            raise AssertionError("preflight must not observe a stale hidden belief world")
 
         def attest(self, _ruleset=None):
             return type("Attestation", (), {
@@ -719,6 +726,58 @@ def test_event_json_preflight_accepts_only_cold_legacy_belief_workers(monkeypatc
     assert set(result) == {"actual", "belief_owner_0", "belief_owner_1"}
     assert [call[0] for call in calls].count("event-close") == 2
     assert [call[0] for call in calls].count("probe-close") == 3
+
+
+@pytest.mark.parametrize("transport", ["event-json", "event-json-delta"])
+def test_event_json_preflight_accepts_only_cold_legacy_actual_worker(monkeypatch, transport):
+    calls = []
+
+    class Probe:
+        def __init__(self, _host, port, *, transport, timeout):
+            self.port = port
+            calls.append(("probe", port, transport))
+
+        def _request(self, command):
+            assert command == "multi-status"
+            return {"mode": "legacy-headless", "active": False,
+                "occupied": 0, "slots": []}
+
+        def status(self):
+            return {"ready": False, "coldReady": True, "configured": False, "tick": -1}
+
+        def observe(self):
+            raise AssertionError("cold worker must not be observed before configuration")
+
+        def attest(self, _ruleset=None):
+            return type("Attestation", (), {
+                "libg_sha256": "a" * 64, "probe_sha256": "b" * 64})()
+
+        def close_transport(self):
+            calls.append(("probe-close", self.port))
+
+    class EventBelief:
+        env_id = 0
+
+        def __init__(self, port):
+            self.port = port
+
+        def resident_status(self):
+            return {"mode": "legacy-headless", "active": False,
+                "occupied": 0, "slots": []}
+
+        def close_transport(self):
+            calls.append(("event-close", self.port))
+
+    monkeypatch.setattr("native_runner.training.sspi.collector.SearchNative", Probe)
+    monkeypatch.setattr("native_runner.training.sspi.collector.make_belief_native",
+        lambda _host, port, **_kwargs: EventBelief(port))
+
+    result = preflight_native_endpoints("127.0.0.1", 26789,
+        {0: 26790, 1: 26792}, transport=transport)
+
+    assert set(result) == {"actual", "belief_owner_0", "belief_owner_1"}
+    assert [call[0] for call in calls].count("probe-close") == 4
+    assert [call[0] for call in calls].count("event-close") == 2
 
 
 @pytest.mark.parametrize("transport,expected_deltas", [
@@ -865,12 +924,75 @@ def test_direct_rows_contribute_to_neither_loss_or_gradient():
     alone = search_root_loss(model, [search])
     assert mixed["search_rows"] == 1 and mixed["direct_rows"] == 1
     assert torch.equal(mixed["policy_loss"], alone["policy_loss"])
+    assert torch.equal(mixed["root_mode_policy_loss"], alone["root_mode_policy_loss"])
     assert torch.equal(mixed["value_loss"], alone["value_loss"])
     before = model.mode_logits.detach().clone()
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3)
     result = train_search_step(model, optimizer, [search, direct])
     assert result["gradient_norm"] > 0 and result["optimizer_steps"] == 1
     assert not torch.equal(before, model.mode_logits.detach())
+
+
+def test_generation_update_backtracks_until_both_losses_improve(monkeypatch):
+    import native_runner.training.sspi.learning as learning
+
+    model = nn.Linear(1, 1, bias=False)
+    with torch.no_grad():
+        model.weight.zero_()
+    optimizer = torch.optim.AdamW(model.parameters(), lr=.1, weight_decay=0.)
+    rows = [SimpleNamespace(search_mode="SEARCH")] * 128
+
+    def losses(model, _rows):
+        policy = (model.weight[0, 0] - .02).square()
+        value = (model.weight[0, 0] - .02).square()
+        return dict(loss=policy + value, policy_loss=policy, value_loss=value,
+            root_mode_policy_loss=policy, continuation_loss=policy.new_zeros(()),
+            continuation_rows=0)
+
+    monkeypatch.setattr(learning, "search_root_loss", losses)
+    result = train_generation_step(model, optimizer, rows, validation_rows=rows[:1])
+    assert result["step_fraction"] == .25
+    assert result["optimizer_steps"] == 1 and len(result["step_trials"]) == 3
+    assert result["after_update"]["policy_loss"] < result["policy_loss"]
+    assert result["validation_after_update"]["loss"] < result["validation_before_update"]["loss"]
+    assert torch.allclose(model.weight.detach(), torch.tensor([[.025]]), atol=1e-6)
+    assert optimizer.state
+
+
+@pytest.mark.parametrize("prior_state", (False, True))
+def test_generation_update_rejects_conflicting_loss_and_restores_state(monkeypatch, prior_state):
+    import native_runner.training.sspi.learning as learning
+
+    model = nn.Linear(1, 1, bias=False)
+    with torch.no_grad():
+        model.weight.zero_()
+    optimizer = torch.optim.AdamW(model.parameters(), lr=.1, weight_decay=0.)
+    if prior_state:
+        model.weight.grad = torch.ones_like(model.weight)
+        optimizer.step()
+        optimizer.zero_grad(set_to_none=True)
+        with torch.no_grad():
+            model.weight.zero_()
+    original_optimizer = deepcopy(optimizer.state_dict())
+    rows = [SimpleNamespace(search_mode="SEARCH")] * 128
+
+    def losses(model, _rows):
+        policy = 2. * (model.weight[0, 0] - 1.).square()
+        value = (model.weight[0, 0] + 1.).square()
+        return dict(loss=policy + value, policy_loss=policy, value_loss=value,
+            root_mode_policy_loss=policy, continuation_loss=policy.new_zeros(()),
+            continuation_rows=0)
+
+    monkeypatch.setattr(learning, "search_root_loss", losses)
+    with pytest.raises(RuntimeError, match="no non-regressing step"):
+        train_generation_step(model, optimizer, rows, validation_rows=rows[:1])
+    assert torch.equal(model.weight.detach(), torch.zeros_like(model.weight))
+    restored_optimizer = optimizer.state_dict()
+    assert restored_optimizer["param_groups"] == original_optimizer["param_groups"]
+    assert restored_optimizer["state"].keys() == original_optimizer["state"].keys()
+    for key, state in original_optimizer["state"].items():
+        assert all(torch.equal(restored_optimizer["state"][key][name], value)
+            for name, value in state.items())
 
 
 def test_checkpoint_restores_fresh_model_and_optimizer_state(tmp_path):
@@ -989,7 +1111,8 @@ def test_next_generation_freezes_parent_then_trains_and_restores_checkpoint(monk
         (destination / "episode.json").write_text(json.dumps(metadata))
         return destination, metadata
 
-    def train_step(model, optim, rows):
+    def train_step(model, optim, rows, *, validation_rows=()):
+        assert len(validation_rows) == 1
         optim.zero_grad(set_to_none=True)
         next(model.parameters()).grad = torch.ones_like(next(model.parameters()))
         norm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)
@@ -1001,10 +1124,9 @@ def test_next_generation_freezes_parent_then_trains_and_restores_checkpoint(monk
 
     monkeypatch.setattr(experiment, "_collect_one", collect)
     monkeypatch.setattr(experiment, "production_semantic_bundle", lambda: None)
-    monkeypatch.setattr(experiment, "load_episode_training_rows", lambda _path: [object()])
+    monkeypatch.setattr(experiment, "load_episode_training_rows", lambda _path: [object(), object()])
     monkeypatch.setattr(experiment, "load_episode_validation_rows", lambda _path: [object()])
     monkeypatch.setattr(experiment, "EFFECTIVE_BATCH", 1)
-    monkeypatch.setattr(experiment, "exposure_batches", lambda *_args, **_kwargs: [[(0, 0)]])
     monkeypatch.setattr(experiment, "train_generation_step", train_step)
     monkeypatch.setattr(experiment, "_run_paired_evaluation", lambda **kwargs: dict(
         score=dict(mean=.5), protocol=dict(games=4)))
@@ -1019,10 +1141,115 @@ def test_next_generation_freezes_parent_then_trains_and_restores_checkpoint(monk
     assert len(collection_models) == 2
     assert result["generation"] == 2
     assert result["parent_model_sha256"] == parent_sha
+    assert len(result["updates"]) == 1
+    assert result["trained_search_roots"] == 1 and result["unused_search_roots"] == 1
     assert result["checkpoint_restore"]["optimizer_steps"] == 2
     assert result["temporal_augmentation"] is False
     status = json.loads((tmp_path / "postgame_status.json").read_text())
     assert status["status"] == "complete" and status["generation"] == 2
+
+
+def test_generation_batch_selection_is_unique_reproducible_and_requires_full_batch():
+    rows = list(range(300))
+    first = select_generation_batch(rows, seed=71)
+    repeated = select_generation_batch(rows, seed=71)
+    other = select_generation_batch(rows, seed=72)
+    assert len(first) == len(set(first)) == 128
+    assert first == repeated
+    assert first != other
+    assert all(0 <= index < len(rows) for index in first)
+    with pytest.raises(ValueError, match="128 SEARCH roots"):
+        select_generation_batch(rows[:127], seed=71)
+
+
+def test_training_and_validation_quarantine_limits_are_independent():
+    assert _combined_quarantine_ids(["A-game-0006", "A-game-0007"], ["V-game-0002"]) == [
+        "A-game-0006", "A-game-0007", "V-game-0002"]
+    with pytest.raises(RuntimeError, match="training quarantine limit"):
+        _combined_quarantine_ids([f"A-game-{index:04d}" for index in range(1, 6)], [])
+    with pytest.raises(RuntimeError, match="validation quarantine limit"):
+        _combined_quarantine_ids([], [f"V-game-{index:04d}" for index in range(1, 6)])
+
+
+def test_first_generation_resume_excludes_quarantine_and_uses_next_unique_game_id(tmp_path):
+    episodes = tmp_path / "episodes"
+    complete = episodes / "A-game-0001"
+    complete.mkdir(parents=True)
+    (complete / "episode.json").write_text(json.dumps({"status": "complete"}))
+    failed_paths = []
+    for game_id in ("A-game-0006", "A-game-0007"):
+        failed = episodes / game_id
+        failed.mkdir()
+        (failed / "partial.pt").write_bytes(b"preserved partial")
+        (failed / "quarantine.json").write_text(json.dumps({
+            "status": "quarantined", "training_admissible": False,
+            "exception": "IncompatibleHistory", "truncated": False, "ended": False}))
+        failed_paths.append(failed)
+
+    found, quarantined, next_index = experiment_module._existing_episode_batch(
+        tmp_path, prefix="A-game-")
+
+    assert [(index, path.name, record["status"])
+        for index, path, record in found] == [(1, "A-game-0001", "complete")]
+    assert quarantined == ["A-game-0006", "A-game-0007"]
+    assert next_index == 8
+    assert all((path / "partial.pt").read_bytes() == b"preserved partial"
+        for path in failed_paths)
+
+
+def test_existing_validation_batch_accepts_three_preserved_quarantines(tmp_path):
+    episodes = tmp_path / "episodes"
+    for game_id in ("V-game-0002", "V-game-0003", "V-game-0006"):
+        directory = episodes / game_id
+        directory.mkdir(parents=True)
+        (directory / "partial.pt").write_bytes(b"preserved")
+        (directory / "quarantine.json").write_text(json.dumps({
+            "status": "quarantined", "training_admissible": False,
+            "exception": "IncompatibleHistory", "truncated": False, "ended": False}))
+
+    complete, quarantined, next_index = experiment_module._existing_episode_batch(
+        tmp_path, prefix="V-game-")
+
+    assert complete == []
+    assert quarantined == ["V-game-0002", "V-game-0003", "V-game-0006"]
+    assert next_index == 7
+
+
+def test_collection_skips_only_nonterminal_incompatible_history_and_preserves_id(monkeypatch, tmp_path):
+    attempted = []
+    complete_record = {"status": "complete", "game_id": "A-game-0007"}
+
+    def collect(**kwargs):
+        game_id = kwargs["game_id"]
+        attempted.append(game_id)
+        output = kwargs["run_dir"] / "episodes" / game_id
+        output.mkdir(parents=True)
+        if game_id == "A-game-0006":
+            (output / "partial.pt").write_bytes(b"partial")
+            (output / "quarantine.json").write_text(json.dumps({
+                "status": "quarantined", "training_admissible": False,
+                "exception": "IncompatibleHistory", "truncated": False, "ended": False,
+                "reason": "no compatible independent world"}))
+            raise ValueError("no compatible independent world")
+        (output / "episode.json").write_text(json.dumps(complete_record))
+        return output, complete_record
+
+    monkeypatch.setattr(experiment_module, "_collect_one", collect)
+    quarantine_ids = []
+    args = dict(run_config={}, run_dir=tmp_path, episode_kind="training", model=None,
+        device="cpu", actual_port=26889, belief_port=26893, transport="event-json-delta",
+        quarantined_game_ids=quarantine_ids)
+
+    failed_path, failed_metadata = experiment_module._collect_or_skip_quarantine(
+        game_id="A-game-0006", **args)
+    completed_path, completed_metadata = experiment_module._collect_or_skip_quarantine(
+        game_id="A-game-0007", **args)
+
+    assert attempted == ["A-game-0006", "A-game-0007"]
+    assert failed_path is None and failed_metadata is None
+    assert completed_path.name == "A-game-0007" and completed_metadata == complete_record
+    assert quarantine_ids == ["A-game-0006"]
+    assert (tmp_path / "episodes" / "A-game-0006" / "partial.pt").read_bytes() == b"partial"
 
 
 def test_continuation_rejects_running_orchestrator_without_owner_pid(tmp_path):

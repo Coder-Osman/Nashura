@@ -41,42 +41,115 @@ def compatible_opponent_draw(history, seed):
     return tuple(map(int, initial[random.Random(seed).randrange(len(initial))]))
 
 
-def deployment_action(rollout, information, event):
+def deployment_action(rollout, information, event, *, include_diagnostics=False):
     duration = event.tick - information.tick
-    if duration < 2 or duration > 60 or duration % 2 or event.owner != information.owner:
+
+    diagnostic = None
+    if include_diagnostics:
+        diagnostic = dict(owner=event.owner, card_id=event.card_id,
+            decision_tick=information.tick, deployment_tick=event.tick,
+            duration_ticks=duration, target=(event.x, event.y))
+
+    def miss(reason):
+        if diagnostic is not None:
+            diagnostic["failure_reason"] = reason
+            return None, diagnostic
         return None
+
+    if duration < 2 or duration > 60 or duration % 2 or event.owner != information.owner:
+        return miss("invalid_owner_or_delay")
     environment = rollout.runtime.environment
     observation = rollout.runtime.frozen[information.owner]
     validate_fair_view(observation, information.owner)
     own = next(player for player in observation.players if player.owner == information.owner)
     slots = own.metadata["hand_slot_by_card"]
     slot = slots.get(str(event.card_id), slots.get(event.card_id))
+    pending_refill = next((item for item in information.hand.pending_refills
+        if item.card_id == event.card_id), None)
+    placement_entry = None
     if slot is None:
-        return None
-    placement = environment.action_mask(information.owner).placement_masks.get(str(slot))
-    if placement is None:
-        return None
-    offset = placement.get("model_subcell_offset")
+        if pending_refill is None:
+            if diagnostic is not None:
+                diagnostic["ready_card_ids"] = list(information.hand.ready_card_ids)
+                diagnostic["pending_refills"] = [dict(card_id=item.card_id,
+                    remaining_ticks=item.remaining_ticks, time_known=item.time_known)
+                    for item in information.hand.pending_refills]
+            return miss("card_has_no_ready_or_pending_physical_slot")
+        if (not pending_refill.time_known or pending_refill.remaining_ticks is None
+                or duration <= pending_refill.remaining_ticks):
+            if diagnostic is not None:
+                diagnostic["pending_arrival_ticks"] = pending_refill.remaining_ticks
+            return miss("pending_card_will_not_be_ready_by_public_deployment")
+        slot = pending_refill.hand_index
+        raw = environment.raw_observation
+        towers = environment._extract_towers(raw)
+        occupied, unknown = environment._occupied_building_footprints(raw,
+            environment._rich_context(raw))
+        placement_entry = environment._cached_placement_entry(card_id=event.card_id,
+            owner=information.owner, form="base",
+            destroyed_enemy_princess_lanes=environment._destroyed_enemy_lanes(
+                information.owner, towers),
+            active_tower_footprints=environment._active_tower_footprints(towers),
+            occupied_building_footprints=occupied, unknown_occupied_building_ids=unknown)
+        if diagnostic is not None:
+            diagnostic["slot_source"] = "pending_refill"
+            diagnostic["physical_slot"] = int(slot)
+            diagnostic["pending_arrival_ticks"] = pending_refill.remaining_ticks
+    else:
+        action_mask = environment.action_mask(information.owner)
+        placement_entry = action_mask.placement_masks.get(str(slot))
+        if placement_entry is None:
+            if diagnostic is not None:
+                diagnostic["physical_slot"] = int(slot)
+                diagnostic["placement_slots"] = sorted(action_mask.placement_masks)
+            return miss("physical_slot_has_no_placement_mask")
+    offset = placement_entry.get("model_subcell_offset")
     if offset is not None:
         sign = 1 if information.owner == 0 else -1
         offset = tuple(float(value) * sign for value in offset)
     matches = []
     if event.card_id not in information.legality.card_ids:
-        return None
+        if diagnostic is not None:
+            diagnostic["ready_card_ids"] = list(information.hand.ready_card_ids)
+            diagnostic["legal_card_ids"] = list(information.legality.card_ids)
+            diagnostic["pending_arrival_ticks"] = dict(information.legality.pending_arrival_ticks)
+        return miss("card_has_no_legal_action_row")
     delay_bin = duration // 2
     if information.legality.plays.shape[-1] == 5:
         delay_bin = DELAY_SLOT_TO_INDEX.get(delay_bin, -1)
     card_index = information.legality.card_ids.index(event.card_id)
     if not 0 <= delay_bin < information.legality.plays.shape[-1]:
-        return None
-    for cell in torch.where(information.legality.plays[card_index, :, delay_bin])[0].tolist():
+        if diagnostic is not None:
+            diagnostic["delay_bin"] = delay_bin
+            diagnostic["legal_delay_count"] = int(information.legality.plays[card_index].any(0).sum())
+        return miss("delay_not_in_legal_action_range")
+    legal_cells = torch.where(information.legality.plays[card_index, :, delay_bin])[0].tolist()
+    if diagnostic is not None:
+        diagnostic.update(delay_bin=delay_bin, legal_cell_count=len(legal_cells))
+    for cell in legal_cells:
         grid = event_cell_to_native(cell, owner=information.owner, board_width=18)
         command = ActionV1.play(information.owner, int(slot), grid, subcell_offset=offset, card_id=event.card_id)
-        if tuple(environment._world_target(command)) == (event.x, event.y):
+        target = tuple(environment._world_target(command))
+        if target == (event.x, event.y):
             matches.append(FullAction(event.card_id, cell, duration // 2))
     if len(matches) > 1:
         raise ValueError("public deployment maps to ambiguous model cells")
-    return matches[0] if matches else None
+    if matches:
+        return (matches[0], diagnostic) if diagnostic is not None else matches[0]
+    if diagnostic is not None:
+        candidate_targets = []
+        for cell in legal_cells:
+            grid = event_cell_to_native(cell, owner=information.owner, board_width=18)
+            command = ActionV1.play(information.owner, int(slot), grid,
+                subcell_offset=offset, card_id=event.card_id)
+            target = tuple(environment._world_target(command))
+            distance = sum((a - b) ** 2 for a, b in zip(target, (event.x, event.y)))
+            candidate_targets.append((distance, cell, target))
+        diagnostic["failure_reason"] = "public_target_not_in_legal_cells"
+        diagnostic["nearest_legal_targets"] = [dict(cell=cell, target=target, distance_squared=distance)
+            for distance, cell, target in sorted(candidate_targets)[:3]]
+        return None, diagnostic
+    return None
 
 
 class HistoryReplaySession:
@@ -100,11 +173,13 @@ class HistoryReplaySession:
         first_tick = future[0].tick if future else history.root_tick + 1
         next_play = next((event for event in future if event.owner == information.owner), None)
         if next_play is not None and next_play.tick == first_tick:
-            action = deployment_action(self.rollout, information, next_play)
+            action, diagnostic = deployment_action(self.rollout, information, next_play,
+                include_diagnostics=True)
             if action is not None:
                 return action
             if next_play.tick <= information.tick + self.rollout.runtime.clock.wait_ticks:
-                raise IncompatibleHistory("public play has no legal reservation from the preceding boundary")
+                raise IncompatibleHistory("public play has no legal reservation from the preceding boundary "
+                    f"{diagnostic}")
         cutoff = min(first_tick, history.root_tick)
         generator = torch.Generator().manual_seed(split_seed(self.seed, f"hidden-plan:{information.tick}"))
         for attempt in range(self.maximum_plan_attempts):

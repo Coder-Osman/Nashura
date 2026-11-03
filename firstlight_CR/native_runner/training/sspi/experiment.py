@@ -36,6 +36,9 @@ from native_runner.training.sspi.model import initialize_fresh_model
 from native_runner.training.v4.factory import production_semantic_bundle
 
 
+MAX_RECOVERABLE_QUARANTINES_PER_GENERATION = 4
+
+
 def _emit(stage, **fields):
     print(json.dumps(dict(stage=stage, **fields), sort_keys=True, allow_nan=False), flush=True)
 
@@ -48,6 +51,10 @@ def _atomic_json(path, value):
         handle.flush()
         os.fsync(handle.fileno())
     os.replace(temporary, path)
+
+
+def _experiment_source_sha():
+    return hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 
 
 def exposure_batches(rows, *, seed, exposure_limit=2, batch_size=EFFECTIVE_BATCH):
@@ -73,6 +80,15 @@ def exposure_batches(rows, *, seed, exposure_limit=2, batch_size=EFFECTIVE_BATCH
         batches.append(selected)
         tokens = deferred
     return batches
+
+
+def select_generation_batch(rows, *, seed, batch_size=EFFECTIVE_BATCH):
+    """Select one deterministic, unique SEARCH-root batch for a generation."""
+    if type(seed) is not int or type(batch_size) is not int or batch_size < 1:
+        raise ValueError("invalid generation batch selection identity")
+    if len(rows) < batch_size:
+        raise ValueError(f"generation did not collect {batch_size} SEARCH roots")
+    return random.Random(seed).sample(range(len(rows)), batch_size)
 
 
 def paired_score_interval(pair_scores, *, seed, replicates=10_000):
@@ -182,6 +198,95 @@ def _collect_one(*, run_config, run_dir, game_id, episode_kind, model, device,
         belief_ports=belief_ports,
         progress=lambda row: print(json.dumps(row, sort_keys=True, allow_nan=False), flush=True))
     return output, episode
+
+
+def _episode_prefix(kind, generation=None):
+    if generation is None:
+        return f"{kind}-game-"
+    return f"{kind}-g{generation:04d}-game-"
+
+
+def _is_recoverable_quarantine(directory):
+    path = Path(directory) / "quarantine.json"
+    if not path.is_file() or (Path(directory) / "episode.json").exists():
+        return False
+    try:
+        record = json.loads(path.read_text())
+    except (OSError, json.JSONDecodeError):
+        return False
+    return (record.get("status") == "quarantined"
+        and record.get("training_admissible") is False
+        and record.get("exception") == "IncompatibleHistory"
+        and record.get("truncated") is False and record.get("ended") is False)
+
+
+def _combined_quarantine_ids(training_ids, validation_ids):
+    if len(training_ids) > MAX_RECOVERABLE_QUARANTINES_PER_GENERATION:
+        raise RuntimeError("generation exceeded the recoverable training quarantine limit")
+    if len(validation_ids) > MAX_RECOVERABLE_QUARANTINES_PER_GENERATION:
+        raise RuntimeError("generation exceeded the recoverable validation quarantine limit")
+    return list(dict.fromkeys([*training_ids, *validation_ids]))
+
+
+def _existing_episode_batch(run_dir, *, prefix):
+    """Load complete episodes and preserve, but exclude, eligible quarantines."""
+    episodes_root = Path(run_dir) / "episodes"
+    complete, quarantined, max_index = [], [], 0
+    if not episodes_root.exists():
+        return complete, quarantined, 1
+    for directory in sorted(episodes_root.iterdir()):
+        if not directory.is_dir() or not directory.name.startswith(prefix):
+            continue
+        index_text = directory.name[len(prefix):]
+        if not index_text.isdecimal():
+            continue
+        max_index = max(max_index, int(index_text))
+        manifest = directory / "episode.json"
+        quarantine = directory / "quarantine.json"
+        if manifest.is_file() and quarantine.exists():
+            raise RuntimeError(f"episode has both completion and quarantine records: {directory}")
+        if manifest.is_file():
+            complete.append((int(index_text), directory, json.loads(manifest.read_text())))
+        elif _is_recoverable_quarantine(directory):
+            quarantined.append(directory.name)
+        else:
+            raise RuntimeError(f"incomplete episode needs recovery: {directory}")
+    if len(quarantined) > MAX_RECOVERABLE_QUARANTINES_PER_GENERATION:
+        raise RuntimeError("generation exceeded the recoverable quarantine limit")
+    return complete, quarantined, max_index + 1
+
+
+def _collect_or_skip_quarantine(*, run_config, run_dir, game_id, episode_kind,
+        model, device, actual_port, belief_port, transport, quarantined_game_ids):
+    output = Path(run_dir) / "episodes" / game_id
+    if output.exists():
+        if _is_recoverable_quarantine(output):
+            if game_id not in quarantined_game_ids:
+                if len(quarantined_game_ids) >= MAX_RECOVERABLE_QUARANTINES_PER_GENERATION:
+                    raise RuntimeError("generation exceeded the recoverable quarantine limit")
+                quarantined_game_ids.append(game_id)
+            _emit("episode_quarantined", game_id=game_id,
+                reason=json.loads((output / "quarantine.json").read_text()).get("reason"),
+                replacement_required=True)
+            return None, None
+        manifest = output / "episode.json"
+        if manifest.is_file() and not (output / "quarantine.json").exists():
+            return output, json.loads(manifest.read_text())
+        raise RuntimeError(f"episode output already exists without a recoverable result: {output}")
+    try:
+        return _collect_one(run_config=run_config, run_dir=Path(run_dir),
+            game_id=game_id, episode_kind=episode_kind, model=model, device=device,
+            actual_port=actual_port, belief_port=belief_port, transport=transport)
+    except Exception:
+        if not _is_recoverable_quarantine(output):
+            raise
+        if len(quarantined_game_ids) >= MAX_RECOVERABLE_QUARANTINES_PER_GENERATION:
+            raise
+        quarantined_game_ids.append(game_id)
+        _emit("episode_quarantined", game_id=game_id,
+            reason=json.loads((output / "quarantine.json").read_text()).get("reason"),
+            replacement_required=True)
+        return None, None
 
 
 def _generation_episode_id(kind, generation, index):
@@ -399,7 +504,7 @@ def _restore_generation_checkpoint(run_dir, generation, run_id, *, bundle):
 
 def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
         belief_port=26790, train_games=16, validation_games=4, evaluation_pairs=32):
-    """Collect, train, restore, and no-search evaluate one frozen-policy generation."""
+    """Collect one generation, apply one root-batch update, restore, and optionally evaluate."""
     run_dir = Path(run_dir)
     config = json.loads((run_dir / "run_config.json").read_text())
     status_path = run_dir / "postgame_status.json"
@@ -421,7 +526,8 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
             or (status.get("status") == "failed"
                 and status.get("generation") not in (None, parent_generation))
             or train_games < 1 or validation_games < 1
-            or type(evaluation_pairs) is not int or evaluation_pairs < 1):
+            or (evaluation_pairs is not None
+                and (type(evaluation_pairs) is not int or evaluation_pairs < 1))):
         raise ValueError("continuation identity or parent completion state differs")
     generation = parent_generation + 1
     generation_record = run_dir / f"generation-{generation:04d}.json"
@@ -442,76 +548,93 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
     collection_config = dict(config)
     collection_config["temporal_augmentation"] = bool(config.get("temporal_augmentation", False))
     train_dirs, train_rows = [], []
-    _write_status(run_dir, "running", "continuation_training_collection",
-        generation=generation, parent_generation=parent_generation, games=0,
-        search_roots=0, target_games=train_games)
-    index = 1
-    while len(train_dirs) < train_games or len(train_rows) < EFFECTIVE_BATCH:
-        game_id = _generation_episode_id("A", generation, index)
-        directory = run_dir / "episodes" / game_id
-        if directory.exists():
-            metadata_path = directory / "episode.json"
-            if not metadata_path.is_file():
-                raise RuntimeError(f"incomplete continuation episode needs recovery: {directory}")
-            metadata = json.loads(metadata_path.read_text())
-        else:
-            directory, metadata = _collect_one(run_config=collection_config, run_dir=run_dir,
-                game_id=game_id, episode_kind="training", model=model, device="cpu",
-                actual_port=actual_port, belief_port=belief_port,
-                transport=_configured_transport(config))
+    train_prefix = _episode_prefix("A", generation)
+    existing_train, training_quarantines, index = _existing_episode_batch(
+        run_dir, prefix=train_prefix)
+    for _episode_index, directory, metadata in existing_train:
         _validate_episode(metadata, run_config=config, model_sha=parent_model_sha,
             episode_kind="training", search_probability=0.05)
         train_dirs.append(directory)
         train_rows.extend(load_episode_training_rows(directory))
+    _write_status(run_dir, "running", "continuation_training_collection",
+        generation=generation, parent_generation=parent_generation, games=len(train_dirs),
+        search_roots=len(train_rows), target_games=train_games,
+        quarantined_games=list(training_quarantines))
+    while len(train_dirs) < train_games:
+        game_id = _generation_episode_id("A", generation, index)
+        directory, metadata = _collect_or_skip_quarantine(run_config=collection_config,
+            run_dir=run_dir, game_id=game_id, episode_kind="training", model=model,
+            device="cpu", actual_port=actual_port, belief_port=belief_port,
+            transport=_configured_transport(config), quarantined_game_ids=training_quarantines)
         index += 1
+        if directory is None:
+            _write_status(run_dir, "running", "continuation_training_collection",
+                generation=generation, parent_generation=parent_generation,
+                games=len(train_dirs), search_roots=len(train_rows), target_games=train_games,
+                quarantined_games=list(training_quarantines))
+            continue
+        _validate_episode(metadata, run_config=config, model_sha=parent_model_sha,
+            episode_kind="training", search_probability=0.05)
+        train_dirs.append(directory)
+        train_rows.extend(load_episode_training_rows(directory))
         _write_status(run_dir, "running", "continuation_training_collection",
             generation=generation, parent_generation=parent_generation, games=len(train_dirs),
-            search_roots=len(train_rows), target_games=train_games)
+            search_roots=len(train_rows), target_games=train_games,
+            quarantined_games=list(training_quarantines))
+
+    if len(train_rows) < EFFECTIVE_BATCH:
+        raise ValueError("fixed training-game count produced fewer than 128 SEARCH roots")
 
     validation_dirs, validation_rows = [], []
+    validation_prefix = _episode_prefix("V", generation)
+    existing_validation, validation_quarantines, validation_index = _existing_episode_batch(
+        run_dir, prefix=validation_prefix)
+    _combined_quarantine_ids(training_quarantines, validation_quarantines)
+    for _episode_index, directory, metadata in existing_validation:
+        _validate_episode(metadata, run_config=config, model_sha=parent_model_sha,
+            episode_kind="validation", search_probability=0.05)
+        validation_dirs.append(directory)
+        validation_rows.extend(load_episode_validation_rows(directory))
     _write_status(run_dir, "running", "continuation_validation_collection",
-        generation=generation, games=0, target_games=validation_games)
-    for index in range(1, validation_games + 1):
+        generation=generation, games=len(validation_dirs), target_games=validation_games,
+        quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines))
+    index = validation_index
+    while len(validation_dirs) < validation_games:
         game_id = _generation_episode_id("V", generation, index)
-        directory = run_dir / "episodes" / game_id
-        if directory.exists():
-            metadata_path = directory / "episode.json"
-            if not metadata_path.is_file():
-                raise RuntimeError(f"incomplete continuation episode needs recovery: {directory}")
-            metadata = json.loads(metadata_path.read_text())
-        else:
-            directory, metadata = _collect_one(run_config=collection_config, run_dir=run_dir,
-                game_id=game_id, episode_kind="validation", model=model, device="cpu",
-                actual_port=actual_port, belief_port=belief_port,
-                transport=_configured_transport(config))
+        directory, metadata = _collect_or_skip_quarantine(run_config=collection_config,
+            run_dir=run_dir, game_id=game_id, episode_kind="validation", model=model,
+            device="cpu", actual_port=actual_port, belief_port=belief_port,
+            transport=_configured_transport(config), quarantined_game_ids=validation_quarantines)
+        index += 1
+        if directory is None:
+            _write_status(run_dir, "running", "continuation_validation_collection",
+                generation=generation, games=len(validation_dirs),
+                target_games=validation_games,
+                quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines))
+            continue
         _validate_episode(metadata, run_config=config, model_sha=parent_model_sha,
             episode_kind="validation", search_probability=0.05)
         validation_dirs.append(directory)
         validation_rows.extend(load_episode_validation_rows(directory))
         _write_status(run_dir, "running", "continuation_validation_collection",
-            generation=generation, games=len(validation_dirs), target_games=validation_games)
+            generation=generation, games=len(validation_dirs), target_games=validation_games,
+            quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines))
 
-    schedule = exposure_batches(train_rows, seed=config["seed"] ^ generation,
-        exposure_limit=2)
-    if not schedule:
-        raise ValueError("continuation generation has no complete effective batch")
+    selection_seed = config["seed"] ^ generation ^ 0x53535049
+    selected_indices = select_generation_batch(train_rows, seed=selection_seed,
+        batch_size=EFFECTIVE_BATCH)
     for parameter in model.parameters():
         parameter.requires_grad_(True)
     _write_status(run_dir, "running", "continuation_training", generation=generation,
-        search_roots=len(train_rows), updates=len(schedule))
-    updates = []
+        search_roots=len(train_rows), trained_search_roots=len(selected_indices), updates=1)
     exposure_counts = [0] * len(train_rows)
-    for step, tokens in enumerate(schedule, start=1):
-        indices = [index for index, _exposure in tokens]
-        for index in indices:
-            exposure_counts[index] += 1
-        update = train_generation_step(model, optimizer,
-            [train_rows[index] for index in indices])
-        updates.append(update)
-        _emit("continuation_optimizer_update", generation=generation,
-            step=step, updates_available=len(schedule), **update)
-    if max(exposure_counts, default=0) > 2:
-        raise ValueError("continuation exceeded the search-root exposure cap")
+    for index in selected_indices:
+        exposure_counts[index] = 1
+    update = train_generation_step(model, optimizer,
+        [train_rows[index] for index in selected_indices], validation_rows=validation_rows)
+    updates = [update]
+    _emit("continuation_optimizer_update", generation=generation,
+        step=1, updates_available=1, **update)
 
     model.eval()
     with torch.no_grad():
@@ -533,14 +656,20 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
         parent_checkpoint_sha256=parent_checkpoint_sha, parent_model_sha256=parent_model_sha,
         train_episode_sha256=train_episode_shas,
         validation_episode_sha256=validation_episode_shas, source_sha256=source_shas,
-        action_schema="sspi-tagged-action.v1", training_protocol="5pct-x-128-search-roots.v1",
+        experiment_source_sha256=_experiment_source_sha(),
+        action_schema="sspi-tagged-action.v1",
+        training_protocol="5pct-x-128-guarded-update-per-generation.v2",
+        training_root_selection_seed=selection_seed,
+        training_root_indices=selected_indices,
         temporal_augmentation=collection_config["temporal_augmentation"])
     checkpoint = save_checkpoint(checkpoint_path, model, optimizer, identity=checkpoint_identity,
         optimizer_steps=parent_restore["optimizer_steps"] + len(updates),
         run_state=dict(generation=generation, parent_checkpoint_sha256=parent_checkpoint_sha,
             training_games=[path.name for path in train_dirs],
             validation_games=[path.name for path in validation_dirs],
-            search_roots=len(train_rows), exposure_limit=2,
+            search_roots=len(train_rows), trained_search_roots=len(selected_indices),
+            training_root_selection_seed=selection_seed, training_root_indices=selected_indices,
+            exposure_limit=2,
             exposure_counts=exposure_counts))
     restored = initialize_fresh_model(config["seed"], device="cpu", bundle=bundle)
     restored_optimizer = create_optimizer(restored)
@@ -557,8 +686,12 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
         theta0_sha256=initialization_model_sha, checkpoint=checkpoint,
         checkpoint_restore=restoration, training_games=[path.name for path in train_dirs],
         validation_games=[path.name for path in validation_dirs], search_roots=len(train_rows),
+        trained_search_roots=len(selected_indices), unused_search_roots=len(train_rows) - len(selected_indices),
+        training_root_selection_seed=selection_seed, training_root_indices=selected_indices,
         validation_roots=len(validation_rows), updates=updates, validation_loss=validation_metrics,
         exposure_limit=2, max_observed_exposure=max(exposure_counts),
+        experiment_source_sha256=_experiment_source_sha(),
+        quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines),
         temporal_augmentation=collection_config["temporal_augmentation"])
     _atomic_json(generation_record, record)
     baseline = initialize_fresh_model(config["seed"], device="cpu", bundle=bundle).eval()
@@ -567,6 +700,18 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
         raise ValueError("continuation theta0 differs from the original initialization")
     for parameter in baseline.parameters():
         parameter.requires_grad_(False)
+    if evaluation_pairs is None:
+        record["evaluation"] = None
+        _atomic_json(generation_record, record)
+        _write_status(run_dir, "complete", "generation_complete", generation=generation,
+            training_record=generation_record.name, evaluation_record=None,
+            parent_generation=parent_generation)
+        _emit("continuation_generation_complete", generation=generation,
+            checkpoint=str(checkpoint_path), model_sha=checkpoint["model_sha"],
+            optimizer_steps=restoration["optimizer_steps"], search_roots=len(train_rows),
+            evaluation_deferred=True)
+        return record
+
     evaluation = _run_paired_evaluation(run_config=config, run_dir=run_dir,
         generation=generation, trained_model=restored, trained_model_sha=checkpoint["model_sha"],
         theta0_model=baseline, theta0_sha=baseline_sha,
@@ -594,7 +739,9 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
     config = json.loads((run_dir / "run_config.json").read_text())
     if (config.get("schema") != "sspi-mac-pilot-run.v1" or config.get("status") != "collecting"
             or config.get("arm") != "A_5PCT_128" or config.get("device") != "cpu"
-            or train_games < 1 or validation_games < 1 or evaluation_pairs < 1):
+            or train_games < 1 or validation_games < 1
+            or (evaluation_pairs is not None
+                and (type(evaluation_pairs) is not int or evaluation_pairs < 1))):
         raise ValueError("postgame pilot identity or execution plan differs from the Mac run")
 
     first_metadata = wait_for_episode_process(wait_pid, first_episode_dir,
@@ -613,17 +760,32 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
     for parameter in baseline.parameters():
         parameter.requires_grad_(False)
 
-    train_dirs = [first_episode_dir]
-    train_rows = load_episode_training_rows(first_episode_dir)
+    train_dirs, train_rows = [], []
+    train_prefix = _episode_prefix("A")
+    existing_train, training_quarantines, index = _existing_episode_batch(
+        run_dir, prefix=train_prefix)
+    for _episode_index, directory, metadata in existing_train:
+        _validate_episode(metadata, run_config=config, model_sha=baseline_sha,
+            episode_kind="training", search_probability=0.05)
+        train_dirs.append(directory)
+        train_rows.extend(load_episode_training_rows(directory))
+    if first_episode_dir not in train_dirs:
+        raise ValueError("the original natural-terminal training episode is missing from the run")
     _write_status(run_dir, "running", "training_collection", games=len(train_dirs),
-        search_roots=len(train_rows), target_games=train_games)
-    while len(train_dirs) < train_games or len(train_rows) < EFFECTIVE_BATCH:
-        index = len(train_dirs) + 1
+        search_roots=len(train_rows), target_games=train_games,
+        quarantined_games=list(training_quarantines))
+    while len(train_dirs) < train_games:
         game_id = f"A-game-{index:04d}"
-        directory, metadata = _collect_one(run_config=config, run_dir=run_dir,
-            game_id=game_id, episode_kind="training", model=baseline, device="cpu",
-            actual_port=actual_port, belief_port=belief_port,
-            transport=_configured_transport(config))
+        directory, metadata = _collect_or_skip_quarantine(run_config=config,
+            run_dir=run_dir, game_id=game_id, episode_kind="training", model=baseline,
+            device="cpu", actual_port=actual_port, belief_port=belief_port,
+            transport=_configured_transport(config), quarantined_game_ids=training_quarantines)
+        index += 1
+        if directory is None:
+            _write_status(run_dir, "running", "training_collection", games=len(train_dirs),
+                search_roots=len(train_rows), target_games=train_games,
+                quarantined_games=list(training_quarantines))
+            continue
         if _episode_model_sha(metadata) != baseline_sha:
             raise ValueError("frozen training generation changed theta0 between episodes")
         _validate_episode(metadata, run_config=config, model_sha=baseline_sha,
@@ -631,45 +793,66 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
         train_dirs.append(directory)
         train_rows.extend(load_episode_training_rows(directory))
         _emit("training_collection_progress", games=len(train_dirs), search_roots=len(train_rows),
-            required_games=train_games, effective_batch=EFFECTIVE_BATCH)
+            required_games=train_games, effective_batch=EFFECTIVE_BATCH,
+            quarantined_games=list(training_quarantines))
         _write_status(run_dir, "running", "training_collection", games=len(train_dirs),
-            search_roots=len(train_rows), target_games=train_games)
+            search_roots=len(train_rows), target_games=train_games,
+            quarantined_games=list(training_quarantines))
+
+    if len(train_rows) < EFFECTIVE_BATCH:
+        raise ValueError("fixed training-game count produced fewer than 128 SEARCH roots")
 
     validation_dirs, validation_rows = [], []
-    _write_status(run_dir, "running", "validation_collection", games=0,
-        target_games=validation_games)
+    validation_prefix = _episode_prefix("V")
+    existing_validation, validation_quarantines, validation_index = _existing_episode_batch(
+        run_dir, prefix=validation_prefix)
+    _combined_quarantine_ids(training_quarantines, validation_quarantines)
+    for _episode_index, directory, metadata in existing_validation:
+        _validate_episode(metadata, run_config=config, model_sha=baseline_sha,
+            episode_kind="validation", search_probability=0.05)
+        validation_dirs.append(directory)
+        validation_rows.extend(load_episode_validation_rows(directory))
+    _write_status(run_dir, "running", "validation_collection", games=len(validation_dirs),
+        target_games=validation_games,
+        quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines))
+    index = validation_index
     while len(validation_dirs) < validation_games:
-        index = len(validation_dirs) + 1
         game_id = f"V-game-{index:04d}"
-        directory, metadata = _collect_one(run_config=config, run_dir=run_dir,
-            game_id=game_id, episode_kind="validation", model=baseline, device="cpu",
-            actual_port=actual_port, belief_port=belief_port,
-            transport=_configured_transport(config))
+        directory, metadata = _collect_or_skip_quarantine(run_config=config,
+            run_dir=run_dir, game_id=game_id, episode_kind="validation", model=baseline,
+            device="cpu", actual_port=actual_port, belief_port=belief_port,
+            transport=_configured_transport(config), quarantined_game_ids=validation_quarantines)
+        index += 1
+        if directory is None:
+            _write_status(run_dir, "running", "validation_collection", games=len(validation_dirs),
+                target_games=validation_games,
+                quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines))
+            continue
         _validate_episode(metadata, run_config=config, model_sha=baseline_sha,
             episode_kind="validation", search_probability=0.05)
         validation_dirs.append(directory)
         validation_rows.extend(load_episode_validation_rows(directory))
         _emit("validation_collection_progress", games=len(validation_dirs),
-            search_roots=len(validation_rows), required_games=validation_games)
+            search_roots=len(validation_rows), required_games=validation_games,
+            quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines))
         _write_status(run_dir, "running", "validation_collection", games=len(validation_dirs),
-            search_roots=len(validation_rows), target_games=validation_games)
+            search_roots=len(validation_rows), target_games=validation_games,
+            quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines))
 
-    schedule = exposure_batches(train_rows, seed=config["seed"], exposure_limit=2)
+    selection_seed = config["seed"] ^ 1 ^ 0x53535049
+    selected_indices = select_generation_batch(train_rows, seed=selection_seed,
+        batch_size=EFFECTIVE_BATCH)
     _write_status(run_dir, "running", "training", games=len(train_dirs),
-        search_roots=len(train_rows), updates=len(schedule))
+        search_roots=len(train_rows), trained_search_roots=len(selected_indices), updates=1)
     model = initialize_fresh_model(config["seed"], device="cpu", bundle=bundle)
     optimizer = create_optimizer(model)
     exposure_counts = [0] * len(train_rows)
-    updates = []
-    for step, tokens in enumerate(schedule, start=1):
-        batch_indices = [index for index, _exposure in tokens]
-        for index in batch_indices:
-            exposure_counts[index] += 1
-        update = train_generation_step(model, optimizer, [train_rows[index] for index in batch_indices])
-        updates.append(update)
-        _emit("optimizer_update", step=step, updates_available=len(schedule), **update)
-    if not updates or max(exposure_counts, default=0) > 2:
-        raise ValueError("generation produced no valid update or exceeded root exposure cap")
+    for index in selected_indices:
+        exposure_counts[index] = 1
+    update = train_generation_step(model, optimizer,
+        [train_rows[index] for index in selected_indices], validation_rows=validation_rows)
+    updates = [update]
+    _emit("optimizer_update", step=1, updates_available=1, **update)
 
     model.eval()
     with torch.no_grad():
@@ -685,7 +868,11 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
         train_episode_sha256=train_episode_shas, validation_episode_sha256=validation_episode_shas,
         source_sha256=sorted({json.loads((path / "episode.json").read_text())["identity"]["source_sha256"]
             for path in train_dirs + validation_dirs}),
-        action_schema="sspi-tagged-action.v1", training_protocol="5pct-x-128-search-roots.v1",
+        action_schema="sspi-tagged-action.v1",
+        training_protocol="5pct-x-128-guarded-update-per-generation.v2",
+        experiment_source_sha256=_experiment_source_sha(),
+        training_root_selection_seed=selection_seed,
+        training_root_indices=selected_indices,
         continuation_protocol=dict(schema=TEMPORAL_SCHEMA,
             source_weight_with_samples=1. - TEMPORAL_AUX_WEIGHT,
             auxiliary_group_weight=TEMPORAL_AUX_WEIGHT,
@@ -695,6 +882,8 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
     checkpoint = save_checkpoint(checkpoint_path, model, optimizer, identity=checkpoint_identity,
         optimizer_steps=len(updates), run_state=dict(training_games=[path.name for path in train_dirs],
             validation_games=[path.name for path in validation_dirs], search_roots=len(train_rows),
+            trained_search_roots=len(selected_indices), training_root_selection_seed=selection_seed,
+            training_root_indices=selected_indices,
             exposure_limit=2, exposure_counts=exposure_counts))
     restored = initialize_fresh_model(config["seed"], device="cpu", bundle=bundle)
     restored_optimizer = create_optimizer(restored)
@@ -709,11 +898,26 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
         generation=1, theta0_sha256=baseline_sha, checkpoint=checkpoint,
         checkpoint_restore=restoration, training_games=[path.name for path in train_dirs],
         validation_games=[path.name for path in validation_dirs], search_roots=len(train_rows),
+        trained_search_roots=len(selected_indices), unused_search_roots=len(train_rows) - len(selected_indices),
+        training_root_selection_seed=selection_seed, training_root_indices=selected_indices,
         validation_roots=len(validation_rows), updates=updates, validation_loss=validation_metrics,
-        exposure_limit=2, max_observed_exposure=max(exposure_counts))
+        exposure_limit=2, max_observed_exposure=max(exposure_counts),
+        experiment_source_sha256=_experiment_source_sha(),
+        quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines))
     _atomic_json(run_dir / "generation-0001.json", training_record)
     _emit("checkpoint_restored", path=str(checkpoint_path), model_sha=checkpoint["model_sha"],
         optimizer_steps=len(updates), validation_roots=len(validation_rows))
+
+    if evaluation_pairs is None:
+        training_record["evaluation"] = None
+        _atomic_json(run_dir / "generation-0001.json", training_record)
+        _write_status(run_dir, "complete", "generation_complete", generation=1,
+            training_record="generation-0001.json", evaluation_record=None)
+        _emit("generation_training_complete", generation=1,
+            checkpoint=str(checkpoint_path), model_sha=checkpoint["model_sha"],
+            optimizer_steps=restoration["optimizer_steps"], search_roots=len(train_rows),
+            evaluation_deferred=True)
+        return dict(training=training_record, evaluation=None)
 
     evaluation_record = _run_paired_evaluation(run_config=config, run_dir=run_dir,
         generation=1, trained_model=restored, trained_model_sha=checkpoint["model_sha"],
@@ -746,10 +950,14 @@ def main():
     parser.add_argument("--train-games", type=int, default=16)
     parser.add_argument("--validation-games", type=int, default=4)
     parser.add_argument("--evaluation-pairs", type=int, default=32)
+    parser.add_argument("--skip-evaluation", action="store_true",
+        help="Defer no-search evaluation to a pre-registered later generation")
     parser.add_argument("--poll-seconds", type=float, default=15.)
     args = parser.parse_args()
     try:
         if args.evaluate_generation is not None:
+            if args.skip_evaluation:
+                parser.error("--skip-evaluation cannot be combined with --evaluate-generation")
             record = evaluate_generation(run_dir=args.run_dir,
                 generation=args.evaluate_generation, actual_port=args.actual_port,
                 belief_port=args.belief_port, evaluation_pairs=args.evaluation_pairs)
@@ -762,7 +970,7 @@ def main():
             run_next_generation(run_dir=args.run_dir, parent_generation=args.parent_generation,
                 actual_port=args.actual_port, belief_port=args.belief_port,
                 train_games=args.train_games, validation_games=args.validation_games,
-                evaluation_pairs=args.evaluation_pairs)
+                evaluation_pairs=None if args.skip_evaluation else args.evaluation_pairs)
         else:
             if args.first_episode_dir is None or args.wait_pid is None:
                 parser.error("initial postgame run requires --first-episode-dir and --wait-pid")
@@ -771,7 +979,8 @@ def main():
             run_postgame(run_dir=args.run_dir, first_episode_dir=args.first_episode_dir,
                 wait_pid=args.wait_pid, actual_port=args.actual_port, belief_port=args.belief_port,
                 train_games=args.train_games, validation_games=args.validation_games,
-                evaluation_pairs=args.evaluation_pairs, poll_seconds=args.poll_seconds)
+                evaluation_pairs=None if args.skip_evaluation else args.evaluation_pairs,
+                poll_seconds=args.poll_seconds)
     except BaseException as error:
         run_dir = args.run_dir
         _atomic_json(run_dir / "postgame_status.json", dict(status="failed",

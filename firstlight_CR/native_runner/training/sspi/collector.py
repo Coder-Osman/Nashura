@@ -42,6 +42,7 @@ sys.path.insert(0, str(PROJECT / "research" / "puct-runtime"))
 from native_adapter import BattleEnvSidecar
 
 DEFAULT_TRANSPORT = "persistent"
+HISTORY_RECONSTRUCTION_ATTEMPTS = 16
 
 
 ARM_CONFIG = {
@@ -292,7 +293,8 @@ def preflight_native_endpoints(host, actual_port, belief_ports, *, transport, ac
     attestations = {}
     expected_identity = None
     for role, port in endpoints:
-        cold_belief_worker = False
+        cold_worker = False
+        reusable_belief_worker = False
         if transport in ("event-json", "event-json-delta") and role == "actual":
             probe = SearchNative(host, port, transport="persistent", timeout=90.)
             try:
@@ -300,38 +302,49 @@ def preflight_native_endpoints(host, actual_port, belief_ports, *, transport, ac
             finally:
                 probe.close_transport()
             slots = resident.get("slots", ())
-            if (resident.get("mode") != "resident-headless"
-                    or resident.get("occupied") != len(slots)
-                    or not any(slot.get("envId") == actual_env_id for slot in slots)):
+            if (resident.get("mode") == "resident-headless"
+                    and resident.get("occupied") == len(slots)
+                    and any(slot.get("envId") == actual_env_id for slot in slots)):
+                native = ResidentNativeClashEnv(actual_env_id, host, port, timeout=90.)
+            elif (resident.get("mode") == "legacy-headless" and resident.get("active") is False
+                    and resident.get("occupied") == 0 and not slots):
+                native = SearchNative(host, port, transport="persistent", timeout=90.)
+                cold_worker = True
+            else:
                 raise RunnerError("event-json requires the selected existing resident actual match")
-            native = ResidentNativeClashEnv(actual_env_id, host, port, timeout=90.)
         elif transport in ("event-json", "event-json-delta"):
             event_native = make_belief_native(host, port, transport=transport, timeout=90.)
             resident = event_native.resident_status()
             slots = resident.get("slots", ())
-            if (resident.get("mode") == "resident-headless" and resident.get("occupied") == 1
-                    and len(slots) == 1 and slots[0].get("envId") == event_native.env_id
-                    and slots[0].get("ended") is True):
+            resident_ready = (resident.get("mode") == "resident-headless"
+                and resident.get("residentSnapshotRestore") is True
+                and resident.get("snapshotHandles") == 0)
+            if (resident_ready and resident.get("occupied") == 1 and len(slots) == 1
+                    and slots[0].get("envId") == event_native.env_id):
                 native = event_native
+                reusable_belief_worker = True
+            elif (resident_ready and resident.get("occupied") == 0 and not slots):
+                native = event_native
+                reusable_belief_worker = True
             elif (resident.get("mode") == "legacy-headless" and resident.get("active") is False
                     and resident.get("occupied") == 0 and not slots):
                 event_native.close_transport()
                 native = SearchNative(host, port, transport="persistent", timeout=90.)
-                cold_belief_worker = True
+                cold_worker = True
             else:
                 event_native.close_transport()
                 raise RunnerError(f"SSPI event-batched belief endpoint must have one resident slot on port {port}")
         else:
             native = SearchNative(host, port, transport=transport, timeout=90.)
         try:
-            status = native.status()
-            if cold_belief_worker:
+            status = None if reusable_belief_worker else native.status()
+            if cold_worker:
                 if (status.get("ready") is not False or status.get("coldReady") is not True
                         or status.get("configured") is not False or status.get("tick") != -1):
-                    raise ValueError(f"SSPI event-batched belief endpoint is not cold on port {port}")
-            elif status.get("ready") is not True:
+                    raise ValueError(f"SSPI event-batched {role} endpoint is not cold on port {port}")
+            elif not reusable_belief_worker and status.get("ready") is not True:
                 raise ValueError(f"SSPI native {role} endpoint is not ready on port {port}")
-            if not cold_belief_worker:
+            if not cold_worker and not reusable_belief_worker:
                 observation = native.observe()
                 if observation.get("ok") is not True:
                     raise ValueError(f"SSPI native {role} endpoint returned an invalid observation")
@@ -635,7 +648,8 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
             sidecar_factory=BattleEnvSidecar, rollout_factory=make_sspi_rollout)
         return SSPIHistorySearchProvider(factory, history=history,
             seed=split_seed(seed, "history-provider", run_id, arm,
-                seed_identity["random_stream_id"], owner))
+                seed_identity["random_stream_id"], owner),
+            attempts=HISTORY_RECONSTRUCTION_ATTEMPTS)
 
     belief_providers = OwnerBeliefProviders(belief_ports, make_belief_provider)
     roots, action_log = [], []
