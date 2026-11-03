@@ -21,7 +21,7 @@ from native_runner.training.sspi.augmentation import (
 )
 from native_runner.training.sspi.experiment import exposure_batches
 from native_runner.training.sspi.learning import (
-    ContinuationRow, TrainingRow, WDLLabel, load_episode_training_rows,
+    ContinuationRow, TrainingRow, WLLabel, load_episode_training_rows,
     search_root_loss, train_generation_step, train_search_step,
 )
 from native_runner.training.sspi.model import SSPIPolicy
@@ -154,8 +154,8 @@ def training_row(*, count=3):
     source = information()
     action = SSPIAction.play(source.hand.ready_card_ids[0], 17, 3)
     extras = tuple(ContinuationRow(information(104 + 4 * index),
-        SSPIAction.play(action.card_id, 17, 2 - index), WDLLabel.WIN) for index in range(count))
-    return TrainingRow(source, source.legality, WDLLabel.WIN, "SEARCH",
+        SSPIAction.play(action.card_id, 17, 2 - index), WLLabel.WIN) for index in range(count))
+    return TrainingRow(source, source.legality, WLLabel.WIN, "SEARCH",
         ((action, 128),), 128, continuations=extras)
 
 
@@ -181,7 +181,7 @@ def test_original_root_gets_half_and_continuations_share_the_other_half():
     source = search_root_loss(model, [replace(row, continuations=())])["loss"]
     policies, logits = model(row.continuations[0].frame, [row.continuations[0].frame.legality])
     extra = -policies[0].log_prob(row.continuations[0].action) + torch.nn.functional.cross_entropy(
-        logits, torch.tensor([int(WDLLabel.WIN)]))
+        logits, torch.tensor([int(WLLabel.WIN)]))
     actual = search_root_loss(model, [row])
     assert float(actual["loss"].detach()) == pytest.approx(float((0.5 * source + 0.5 * extra).detach()))
 
@@ -213,19 +213,21 @@ def test_generation_microbatches_match_a_direct_128_group_update_and_share_expos
 
 
 def write_episode(directory, root, statistics):
-    root["wdl"] = "WIN"
+    root["wl"] = "WIN"
     for sample in root.get("continuations", ()):
-        sample["wdl"] = "WIN"
+        sample["wl"] = "WIN"
     ledger = dict(rows=[dict(owner=0, tick=100, decision_index=0, mode="SEARCH",
         action=root["selected_action"], fair_sha256=root["fair_sha256"])],
         reservation_evidence=[root["continuation_execution"]])
     (directory / "actions.json").write_text(json.dumps(ledger))
-    torch.save(dict(schema="sspi-mac-pilot-episode.v1", identity={}, roots=[root]), directory / "episode.pt")
-    metadata = dict(schema="sspi-mac-pilot-episode.v1", status="complete", identity={},
+    torch.save(dict(schema="sspi-mac-pilot-episode.v2", identity={}, roots=[root]), directory / "episode.pt")
+    metadata = dict(schema="sspi-mac-pilot-episode.v2", status="complete", identity={},
         episode_kind="training", training_admissible=True, search_roots=1,
         tensor_sha256=hashlib.sha256((directory / "episode.pt").read_bytes()).hexdigest(),
         actions_sha256=hashlib.sha256((directory / "actions.json").read_bytes()).hexdigest(),
-        result=dict(labels=["WIN", "LOSS"], terminal_tick=200), temporal_augmentation=statistics)
+        result=dict(labels=["WIN", "LOSS"], winner=0, terminal_tick=200),
+        supervision=dict(value_order=["WIN", "LOSS"], eligible=True, excluded_reason=None),
+        temporal_augmentation=statistics)
     (directory / "episode.json").write_text(json.dumps(metadata))
 
 
@@ -235,11 +237,11 @@ def test_collected_samples_roundtrip_into_the_training_loss(monkeypatch, tmp_pat
     rows = load_episode_training_rows(tmp_path)
     assert len(rows) == 1 and len(rows[0].continuations) == 3
     assert [extra.frame.tick for extra in rows[0].continuations] == [104, 108, 112]
-    assert all(extra.final_wdl == WDLLabel.WIN for extra in rows[0].continuations)
+    assert all(extra.final_wl == WLLabel.WIN for extra in rows[0].continuations)
     assert search_root_loss(TinyPolicyValue(), rows)["continuation_rows"] == 3
 
 
-@pytest.mark.parametrize("mutation", ["delay", "source", "wdl", "executed", "duplicate"])
+@pytest.mark.parametrize("mutation", ["delay", "source", "wl", "executed", "duplicate"])
 def test_loader_rejects_misaligned_labels_even_with_recomputed_episode_checksum(monkeypatch, tmp_path, mutation):
     root, recorder, _, _ = run_plain_policy(monkeypatch)
     write_episode(tmp_path, root, recorder.statistics())
@@ -249,8 +251,8 @@ def test_loader_rejects_misaligned_labels_even_with_recomputed_episode_checksum(
         changed["continuations"][0]["action"] = changed["selected_action"]
     elif mutation == "source":
         changed["continuations"][0]["source_root_id"] = "another-root"
-    elif mutation == "wdl":
-        changed["continuations"][0]["wdl"] = "LOSS"
+    elif mutation == "wl":
+        changed["continuations"][0]["wl"] = "LOSS"
     elif mutation == "executed":
         changed["continuation_execution"]["reason"] = "preempted"
     else:
@@ -263,7 +265,7 @@ def test_loader_rejects_misaligned_labels_even_with_recomputed_episode_checksum(
         load_episode_training_rows(tmp_path)
 
 
-def test_loader_keeps_legacy_episodes_without_augmentation_readable(monkeypatch, tmp_path):
+def test_loader_keeps_binary_episodes_without_augmentation_readable(monkeypatch, tmp_path):
     root, recorder, _, _ = run_plain_policy(monkeypatch)
     write_episode(tmp_path, root, recorder.statistics())
     payload = torch.load(tmp_path / "episode.pt", weights_only=True)
@@ -305,20 +307,20 @@ def test_real_fair_tensorization_and_full_model_backward_preserve_the_actor_tens
         view = replace(observation, tick=tick)
         sample = augmentation.capture_pending_information(environment, view, auxiliary_tensorizer, catalog=None)
         extras.append(ContinuationRow(sample,
-            SSPIAction.play(source.hand.ready_card_ids[0], 17, 2 - index), WDLLabel.WIN))
+            SSPIAction.play(source.hand.ready_card_ids[0], 17, 2 - index), WLLabel.WIN))
     assert actor_tensorizer._last_tensorized_tick == 100
     assert auxiliary_tensorizer._last_tensorized_tick == 112
     assert actor_tensorizer.tracker is not auxiliary_tensorizer.tracker
     # Extra sampling must not make the next actor observation go backwards.
     actor_tensorizer.tensorize(replace(observation, tick=108))
 
-    row = TrainingRow(source, source.legality, WDLLabel.WIN, "SEARCH",
+    row = TrainingRow(source, source.legality, WLLabel.WIN, "SEARCH",
         ((SSPIAction.play(source.hand.ready_card_ids[0], 17, 3), 128),), 128,
         continuations=tuple(extras))
     torch.set_num_threads(1)
     model = initialize_fresh_model(20261101)
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4)
-    before = model.wdl_head[-1].weight.detach().clone()
+    before = model.value_head[-1].weight.detach().clone()
     result = train_search_step(model, optimizer, [row])
     assert result["continuation_rows"] == 3 and result["gradient_norm"] > 0
-    assert not torch.equal(before, model.wdl_head[-1].weight.detach())
+    assert not torch.equal(before, model.value_head[-1].weight.detach())

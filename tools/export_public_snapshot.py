@@ -71,6 +71,8 @@ def selected_files(workspace):
         "CHANGELOG.md",
         "docs/RESULTS.md",
         "docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md",
+        "docs/SSPI_VALUE_ONLY_EXPERIMENT_2026-11-03.md",
+        "docs/SSPI_WL_VALIDATION_2026-11-03.json",
         "docs/SSPI_MAC_SEARCH_P0_P1_2026-11-01.md",
         "docs/SSPI_SEARCH_PERFORMANCE_HANDOFF_2026-11-01.md",
         "docs/SSPI_MINIMAL_HISTORY_2026-11-02.md",

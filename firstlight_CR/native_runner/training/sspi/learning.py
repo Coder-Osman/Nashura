@@ -16,44 +16,64 @@ import torch
 import torch.nn.functional as F
 
 from ..fair_search.contracts import semantic_digest
-from .model import SSPIModel
+from .model import SSPIModel, VALUE_ORDER
 from .protocol import (SSPIAction, SSPILegality, SSPIInformation, ActionMode, DELAY_MS)
 from .augmentation import (TEMPORAL_AUX_WEIGHT, TEMPORAL_SCHEMA,
     SAMPLE_INTERVAL_TICKS, deserialize_information)
 
 
-CHECKPOINT_SCHEMA = "sspi-mac-pilot-checkpoint.v2"
+CHECKPOINT_SCHEMA = "sspi-mac-pilot-checkpoint.v3"
 SEARCH_BUDGETS = {"A_5PCT_128": 128}
 EFFECTIVE_BATCH = 128
 MICROBATCH = 4
 ACCUMULATION_STEPS = EFFECTIVE_BATCH // MICROBATCH
 
 
-class WDLLabel(IntEnum):
+class WLLabel(IntEnum):
     WIN = 0
-    DRAW = 1
-    LOSS = 2
+    LOSS = 1
+
+
+def decisive_result(result):
+    """Validate native outcome evidence; draws have no learning target."""
+    if not isinstance(result, dict) or "winner" not in result:
+        raise ValueError("complete native outcome requires an explicit winner field")
+    winner = result["winner"]
+    if (result.get("truncated") or result.get("failed")
+            or (winner is not None and (type(winner) is not int or winner not in (0, 1)))):
+        raise ValueError("failed or truncated result is not a natural terminal")
+    expected = ["DRAW", "DRAW"] if winner is None else [
+        "WIN" if owner == winner else "LOSS" for owner in (0, 1)]
+    if result.get("labels") != expected:
+        raise ValueError("native winner and owner outcome labels disagree")
+    return winner is not None
+
+
+def validate_value_logits(logits):
+    if logits.ndim != 2 or logits.shape[1] != 2 or not bool(torch.isfinite(logits).all()):
+        raise ValueError("SSPI requires finite WIN/LOSS logits with explicit two-class order")
 
 
 @dataclass(frozen=True)
 class ContinuationRow:
     frame: SSPIInformation
     action: SSPIAction
-    final_wdl: WDLLabel
+    final_wl: WLLabel
 
     def __post_init__(self):
         if (not isinstance(self.frame, SSPIInformation)
                 or self.action.mode != ActionMode.PLAY
                 or not self.frame.legality.legal(self.action)):
             raise ValueError("continuation requires a current FAIR state and legal PLAY target")
-        object.__setattr__(self, "final_wdl", WDLLabel(self.final_wdl))
+        if not isinstance(self.final_wl, WLLabel):
+            raise ValueError("continuation requires an explicit WIN/LOSS label")
 
 
 @dataclass(frozen=True)
 class TrainingRow:
     frame: object
     legality: SSPILegality
-    final_wdl: WDLLabel
+    final_wl: WLLabel
     search_mode: str
     visits: tuple[tuple[SSPIAction, int], ...] = ()
     simulations: int = 0
@@ -62,8 +82,8 @@ class TrainingRow:
     def __post_init__(self):
         if self.search_mode not in ("DIRECT", "SEARCH"):
             raise ValueError("training row mode must be DIRECT or SEARCH")
-        if not isinstance(self.final_wdl, WDLLabel):
-            object.__setattr__(self, "final_wdl", WDLLabel(self.final_wdl))
+        if not isinstance(self.final_wl, WLLabel):
+            raise ValueError("training row requires an explicit WIN/LOSS label")
         if self.search_mode == "DIRECT":
             if self.visits or self.simulations or self.continuations:
                 raise ValueError("DIRECT rows must not carry search targets")
@@ -78,17 +98,18 @@ class TrainingRow:
         if self.continuations and (not isinstance(self.frame, SSPIInformation)
                 or len(self.continuations) > len(DELAY_MS) - 1
                 or len({row.frame.tick for row in self.continuations}) != len(self.continuations)
-                or any(row.final_wdl != self.final_wdl or row.frame.owner != self.frame.owner
+                or any(row.final_wl != self.final_wl or row.frame.owner != self.frame.owner
                     or row.frame.tick <= self.frame.tick for row in self.continuations)):
             raise ValueError("continuations must belong to one source root and terminal label")
 
 
-def terminal_wdl(owner: int, winner: int | None) -> WDLLabel:
-    if type(owner) is not int or owner not in (0, 1) or winner not in (None, 0, 1):
-        raise ValueError("terminal WDL requires a complete native winner result")
+def terminal_wl(owner: int, winner: int | None) -> WLLabel | None:
+    if (type(owner) is not int or owner not in (0, 1)
+            or (winner is not None and (type(winner) is not int or winner not in (0, 1)))):
+        raise ValueError("terminal WL requires a complete native winner result")
     if winner is None:
-        return WDLLabel.DRAW
-    return WDLLabel.WIN if winner == owner else WDLLabel.LOSS
+        return None
+    return WLLabel.WIN if winner == owner else WLLabel.LOSS
 
 
 def create_optimizer(model: SSPIModel):
@@ -111,6 +132,7 @@ def search_root_loss(model: SSPIModel, rows: list[TrainingRow] | tuple[TrainingR
     continuation_rows = 0
     for row in search_rows:
         policies, logits = model(row.frame, [row.legality])
+        validate_value_logits(logits)
         policy = policies[0]
         policy_loss = -sum(policy.log_prob(action) * (count / row.simulations)
             for action, count in row.visits)
@@ -122,14 +144,15 @@ def search_root_loss(model: SSPIModel, rows: list[TrainingRow] | tuple[TrainingR
         mode_losses.append(-sum(mode_log[int(mode)] * (count / row.simulations)
             for mode, count in mode_counts.items()))
         value_logits.append(logits[0])
-        labels.append(int(row.final_wdl))
+        labels.append(int(row.final_wl))
         source_weights.append(1. - temporal_aux_weight if row.continuations else 1.)
         if row.continuations and temporal_aux_weight:
             group_policy, group_value = [], []
             for extra in row.continuations:
                 extra_policies, extra_logits = model(extra.frame, [extra.frame.legality])
+                validate_value_logits(extra_logits)
                 group_policy.append(-extra_policies[0].log_prob(extra.action))
-                target = torch.tensor([int(extra.final_wdl)], dtype=torch.long,
+                target = torch.tensor([int(extra.final_wl)], dtype=torch.long,
                     device=extra_logits.device)
                 group_value.append(F.cross_entropy(extra_logits, target))
             auxiliary_policy.append(torch.stack(group_policy).mean())
@@ -300,7 +323,7 @@ def _load_continuations(root, metadata, ledger):
             or root.get("continuation_execution") != execution
             or execution not in ledger.get("reservation_evidence", ())
             or due_tick > result.get("terminal_tick", -1)
-            or root["wdl"] != result.get("labels", [None, None])[root["owner"]]
+            or root["wl"] != result.get("labels", [None, None])[root["owner"]]
             or not any(item.get("owner") == root["owner"] and item.get("tick") == source_tick
                 and item.get("decision_index") == root["decision_index"]
                 and item.get("mode") == "SEARCH" and item.get("action") == selected.key
@@ -321,10 +344,10 @@ def _load_continuations(root, metadata, ledger):
                 or action.mode != ActionMode.PLAY or action.card_id != selected.card_id
                 or action.cell != selected.cell
                 or DELAY_MS[action.delay_index] != (due_tick - information.tick) * 50
-                or sample.get("wdl") != root["wdl"]):
+                or sample.get("wl") != root["wl"]):
             raise ValueError("continuation timing, action, source, or terminal label changed")
         seen.add(information.tick)
-        rows.append(ContinuationRow(information, action, WDLLabel[sample["wdl"]]))
+        rows.append(ContinuationRow(information, action, WLLabel[sample["wl"]]))
     return tuple(rows)
 
 
@@ -336,8 +359,9 @@ def _load_episode_rows(directory, *, expected_kind):
     import json
     metadata = json.loads(manifest_path.read_text())
     checksum = hashlib.sha256((directory / "episode.pt").read_bytes()).hexdigest()
-    admissible = expected_kind == "training"
-    if (metadata.get("schema") != "sspi-mac-pilot-episode.v1"
+    decisive = decisive_result(metadata.get("result"))
+    admissible = expected_kind == "training" and decisive
+    if (metadata.get("schema") != "sspi-mac-pilot-episode.v2"
             or metadata.get("status") != "complete"
             or metadata.get("episode_kind", "training") != expected_kind
             or metadata.get("training_admissible", True) is not admissible
@@ -345,6 +369,16 @@ def _load_episode_rows(directory, *, expected_kind):
             or manifest.get("schema") != metadata["schema"]
             or manifest.get("identity") != metadata.get("identity")):
         raise ValueError("SSPI episode is incomplete, quarantined, or checksum-invalid")
+    supervision = metadata.get("supervision") or {}
+    if (supervision.get("value_order") != list(VALUE_ORDER)
+            or supervision.get("eligible") is not decisive
+            or supervision.get("excluded_reason") != (None if decisive else "natural_draw")):
+        raise ValueError("SSPI episode supervision protocol differs")
+    if not decisive:
+        if (manifest.get("roots") != [] or manifest.get("value_rows", []) != []
+                or supervision.get("discarded_search_roots") != metadata.get("search_roots")):
+            raise ValueError("draw episode retained supervised samples")
+        return []
     rows = []
     ledger = {}
     has_continuations = any(root.get("continuations") for root in manifest.get("roots", ()))
@@ -357,9 +391,11 @@ def _load_episode_rows(directory, *, expected_kind):
         if root.get("simulations") not in SEARCH_BUDGETS.values():
             raise ValueError("SSPI episode contains an incomplete or unsupported search root")
         information = deserialize_information(root)
+        if root.get("wl") != metadata["result"]["labels"][information.owner]:
+            raise ValueError("search target differs from native owner outcome")
         legality = information.legality
         visits = tuple((_action_from_key(key), int(count)) for key, count in root["visits"])
-        rows.append(TrainingRow(information, legality, WDLLabel[root["wdl"]], "SEARCH",
+        rows.append(TrainingRow(information, legality, WLLabel[root["wl"]], "SEARCH",
             visits=visits, simulations=root["simulations"],
             continuations=_load_continuations(root, metadata, ledger)))
     if len(rows) != metadata.get("search_roots"):

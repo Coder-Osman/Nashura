@@ -324,7 +324,7 @@ def _real_information():
 def test_static_cache_preserves_policy_wdl_gradients_adamw_and_checkpoint(tmp_path):
     from native_runner.training.sspi.model import initialize_fresh_model
     from native_runner.training.sspi.learning import (
-        TrainingRow, WDLLabel, search_root_loss, create_optimizer, save_checkpoint, load_checkpoint,
+        TrainingRow, WLLabel, search_root_loss, create_optimizer, save_checkpoint, load_checkpoint,
     )
 
     torch.set_num_threads(1)
@@ -353,7 +353,7 @@ def test_static_cache_preserves_policy_wdl_gradients_adamw_and_checkpoint(tmp_pa
             assert torch.equal(a.get_state(), b.get_state())
     assert cached.encoder._static_memory_cache is not None
     assert all(torch.equal(value, before[name]) for name, value in cached.state_dict().items())
-    row = TrainingRow(info, info.legality, WDLLabel.WIN, "SEARCH",
+    row = TrainingRow(info, info.legality, WLLabel.WIN, "SEARCH",
         ((SSPIAction.wait(), 32), (SSPIAction.play(info.hand.ready_card_ids[0], 17, 2), 96)), 128)
     optimizers = [create_optimizer(model) for model in (cached, reference)]
     # Eval with gradients also bypasses the cache, even without train().

@@ -31,8 +31,9 @@ from ..fair_final.history_provider import RecoveringHistoryCursor
 from ..fair_search.config import HOG_DECK
 from ..fair_search.contracts import pack, semantic_digest
 from ..fair_final.visibility import validate_fair_view
-from .learning import SEARCH_BUDGETS
-from .augmentation import TemporalAugmenter, TEMPORAL_SCHEMA
+from .learning import SEARCH_BUDGETS, decisive_result
+from .model import VALUE_ORDER
+from .augmentation import TemporalAugmenter, TEMPORAL_SCHEMA, serialize_information
 from .protocol import ACTION_SCHEMA, ActionMode, SSPIAction, from_full_action, to_full_action
 from .rollout import make_sspi_rollout
 from .search import budget_search_sha, make_search_inference, SSPIHistorySearchProvider
@@ -48,7 +49,30 @@ HISTORY_RECONSTRUCTION_ATTEMPTS = 16
 ARM_CONFIG = {
     "A_5PCT_128": (0.05, 128),
 }
-EPISODE_SCHEMA = "sspi-mac-pilot-episode.v1"
+EPISODE_SCHEMA = "sspi-mac-pilot-episode.v2"
+VALUE_EPISODE_SCHEMA = "sspi-value-only-episode.v2"
+VALUE_ARM = "VALUE_50PCT_0"
+
+
+def finalize_supervision(result, roots, value_rows):
+    """Filter at natural terminal only; never affect observations, actions or RNG."""
+    decisive = decisive_result(result)
+    excluded = dict(value_order=list(VALUE_ORDER), eligible=decisive,
+        excluded_reason=None if decisive else "natural_draw",
+        discarded_search_roots=0, discarded_value_samples=0, discarded_continuations=0)
+    if not decisive:
+        excluded.update(discarded_search_roots=len(roots), discarded_value_samples=len(value_rows),
+            discarded_continuations=sum(len(root.get("continuations", ())) for root in roots))
+        roots.clear()
+        value_rows.clear()
+    else:
+        for root in roots:
+            root["wl"] = result["labels"][root["owner"]]
+            for sample in root.get("continuations", ()):
+                sample["wl"] = root["wl"]
+        for row in value_rows:
+            row["wl"] = result["labels"][row["owner"]]
+    return excluded
 
 
 @contextmanager
@@ -406,6 +430,16 @@ def decision_gate(seed, *, run_id, arm, game_id, owner, decision_index, probabil
     return random.Random(gate_seed).random() < probability, gate_seed
 
 
+def value_sample_gate(seed, *, run_id, game_id, owner, decision_index, probability):
+    if (type(probability) is not float or not 0. <= probability <= 1.
+            or type(owner) is not int or owner not in (0, 1)
+            or type(decision_index) is not int or decision_index < 0):
+        raise ValueError("invalid value-only per-decision sampling gate")
+    gate_seed = split_seed(seed, "sspi-value-sample-gate.v1", run_id, game_id,
+        owner, decision_index)
+    return random.Random(gate_seed).random() < probability, gate_seed
+
+
 def episode_seed_identity(seed, *, run_id, arm, game_id, random_stream_id=None):
     stream_id = game_id if random_stream_id is None else random_stream_id
     if (type(stream_id) is not str or not stream_id or len(stream_id) > 160
@@ -538,34 +572,44 @@ def _observe_histories(rollout, histories, *, timing_profile=None):
 def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_id,
         seed=20261101, model=None, models_by_owner=None, device="cpu", host="127.0.0.1",
         transport=DEFAULT_TRANSPORT, search_probability=None, episode_kind="training", progress=None,
-        temporal_augmentation=True, random_stream_id=None, belief_ports=None, actual_env_id=0):
+        temporal_augmentation=True, random_stream_id=None, belief_ports=None, actual_env_id=0,
+        value_sample_probability=None):
     """Collect one complete native match; incomplete matches are quarantined."""
     try:
         belief_ports = resolve_belief_ports(actual_port, belief_port, belief_ports)
     except ValueError:
         raise
-    if (arm not in ARM_CONFIG or type(seed) is not int or seed < 0
+    value_only = value_sample_probability is not None
+    if ((arm != VALUE_ARM if value_only else arm not in ARM_CONFIG)
+            or type(seed) is not int or seed < 0
             or type(actual_env_id) is not int or not 0 <= actual_env_id < 16
             or (actual_env_id != 0 and transport not in ("event-json", "event-json-delta"))
             or transport not in ("legacy", "persistent", "event-json", "event-json-delta")):
         raise ValueError("SSPI collection requires a fixed arm, distinct native ports, and explicit seed")
     if device not in ("cpu", "mps") or (device == "mps" and not torch.backends.mps.is_available()):
         raise ValueError("requested SSPI inference device is unavailable")
-    probability, simulations = ARM_CONFIG[arm]
-    if SEARCH_BUDGETS[arm] != simulations:
+    probability, simulations = ((0., 0) if value_only else ARM_CONFIG[arm])
+    if not value_only and SEARCH_BUDGETS[arm] != simulations:
         raise AssertionError("SSPI arm and learning budget registry differ")
     if episode_kind not in ("training", "validation", "evaluation"):
         raise ValueError("SSPI episode kind must be training, validation, or evaluation")
     if type(temporal_augmentation) is not bool:
         raise ValueError("temporal augmentation switch must be a boolean")
-    augmenter = TemporalAugmenter() if temporal_augmentation and episode_kind != "evaluation" else None
+    if value_only and (type(value_sample_probability) is not float
+            or value_sample_probability != (0. if episode_kind == "evaluation" else 0.5)
+            or temporal_augmentation):
+        raise ValueError("value-only episodes require 50% samples and no continuation augmentation")
+    augmenter = (TemporalAugmenter() if not value_only and temporal_augmentation
+        and episode_kind != "evaluation" else None)
     if search_probability is None:
         search_probability = probability
     if type(search_probability) is not float or not 0. <= search_probability < 1.:
         raise ValueError("SSPI search probability must be in [0, 1)")
-    if ((episode_kind == "evaluation") != (search_probability == 0.)
-            or (episode_kind == "training" and search_probability == 0.)):
+    if ((value_only and search_probability != 0.)
+            or (not value_only and ((episode_kind == "evaluation") != (search_probability == 0.)
+                or (episode_kind == "training" and search_probability == 0.)))):
         raise ValueError("only evaluation episodes may disable MCTS")
+    episode_schema = VALUE_EPISODE_SCHEMA if value_only else EPISODE_SCHEMA
     seed_identity = episode_seed_identity(seed, run_id=run_id, arm=arm, game_id=game_id,
         random_stream_id=random_stream_id)
     training_admissible = episode_kind == "training"
@@ -604,13 +648,15 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         else semantic_digest(model_sha_by_owner))
     controller_sha = (controller_sha_by_owner[0] if controller_sha_by_owner[0] == controller_sha_by_owner[1]
         else semantic_digest({str(key): value for key, value in controller_sha_by_owner.items()}))
-    limits = SearchLimits(root_noise=.25, root_noise_mode="training")
-    search_sha = budget_search_sha(limits, simulations)
+    limits = None if value_only else SearchLimits(root_noise=.25, root_noise_mode="training")
+    search_sha = None if value_only else budget_search_sha(limits, simulations)
     runtime_sha = semantic_digest(dict(schema="sspi-mac-pilot-native-runtime.v1",
         engine="android-arm64-avd", deck=list(HOG_DECK), delay_ms=[200, 400, 600, 800, 1000],
         wait_ticks=20, wake_refills=False, refill_time="hog-observed-cadence.v1",
         ignored_early_play="wait-no-reward.v1", search_sha=search_sha, source_sha=_source_sha(),
         search_probability=search_probability, episode_kind=episode_kind,
+        collection_protocol="value-only.v2" if value_only else "sspi-search.v2",
+        value_sample_probability=value_sample_probability,
         temporal_augmentation=TEMPORAL_SCHEMA if augmenter is not None else None,
         random_stream_id=seed_identity["random_stream_id"],
         actual_match_seed=seed_identity["actual_match_seed"],
@@ -628,6 +674,8 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         search_protocol_sha256=search_sha, runtime_sha256=runtime_sha,
         source_sha256=_source_sha(), device=device, engine_sha256=None,
         episode_kind=episode_kind, search_probability=search_probability,
+        collection_protocol="value-only.v2" if value_only else "sspi-search.v2",
+        value_sample_probability=value_sample_probability,
         native_transport=transport,
         belief_transport=belief_transport,
         actual_env_id=actual_env_id,
@@ -652,11 +700,12 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
             attempts=HISTORY_RECONSTRUCTION_ATTEMPTS)
 
     belief_providers = OwnerBeliefProviders(belief_ports, make_belief_provider)
-    roots, action_log = [], []
+    roots, value_rows, action_log = [], [], []
     counters = dict(decisions={"0": 0, "1": 0}, search={"0": 0, "1": 0},
         direct={"0": 0, "1": 0}, play={"0": 0, "1": 0}, wait={"0": 0, "1": 0},
         ability={"0": 0, "1": 0}, ready_hand_counts={"2": 0, "3": 0, "4": 0},
-        refill_events=0, ignored_early_plays=0, groups=0)
+        refill_events=0, ignored_early_plays=0, groups=0,
+        value_samples={"0": 0, "1": 0})
     started = time.monotonic()
     phase_started = time.perf_counter()
     timing_profile = {}
@@ -664,7 +713,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         worker_attestations = preflight_native_endpoints(host, actual_port, belief_ports,
             transport=transport, actual_env_id=actual_env_id,
             ruleset_manifest=environment.ruleset_manifest,
-            include_belief=episode_kind != "evaluation")
+            include_belief=not value_only and episode_kind != "evaluation")
         identity["native_worker_attestations"] = worker_attestations
         identity["engine_sha256"] = worker_attestations["actual"]["libg_sha256"]
         environment.reset(match_config=MatchConfig(deck0=HOG_DECK, deck1=HOG_DECK,
@@ -685,7 +734,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         opening_information = rollout.freeze_due_information(timing_profile=timing_profile)
         if set(opening_information) != {0, 1}:
             raise ValueError("native opening did not freeze both players")
-        histories = {} if episode_kind != "evaluation" else None
+        histories = {} if not value_only and episode_kind != "evaluation" else None
         for owner in (0, 1):
             information = opening_information[owner]
             validate_fair_view(rollout.runtime.frozen[owner], owner)
@@ -723,11 +772,15 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                     search_selected, gate_seed = decision_gate(seed, run_id=run_id, arm=arm,
                         game_id=seed_identity["random_stream_id"], owner=owner, decision_index=index,
                         probability=search_probability)
+                    value_selected, value_gate_seed = (value_sample_gate(seed, run_id=run_id,
+                        game_id=seed_identity["random_stream_id"], owner=owner,
+                        decision_index=index, probability=value_sample_probability)
+                        if value_only else (False, None))
                     if search_selected:
                         with _timed(timing_profile, "history_capture_seconds"):
                             history = histories[owner].capture(information)
                             belief_provider = belief_providers.for_search(owner, history)
-                        search_seed = split_seed(seed, "sspi-search.v1", run_id, arm,
+                        search_seed = split_seed(seed, "sspi-search.v2", run_id, arm,
                             seed_identity["random_stream_id"], owner, index)
                         behavior_seed = split_seed(seed, "sspi-search-behavior.v1", run_id, arm,
                             seed_identity["random_stream_id"], owner, index)
@@ -790,7 +843,14 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                         action_log.append(dict(group=len(action_log), tick=information.tick,
                             owner=owner, decision_index=index, fair_sha256=information.sha256,
                             mode=decision_mode, gate_seed=gate_seed, selection_seed=selection_seed,
-                            action=_action_key(action), executed_action=_action_key(executed_action)))
+                            action=_action_key(action), executed_action=_action_key(executed_action),
+                            value_selected=value_selected, value_gate_seed=value_gate_seed))
+                        if value_selected:
+                            value_rows.append(dict(**serialize_information(information),
+                                decision_index=index, value_gate_seed=value_gate_seed,
+                                action=_action_key(action),
+                                executed_action=_action_key(executed_action)))
+                            counters["value_samples"][str(owner)] += 1
                         decision_indices[owner] += 1
                 with _timed(timing_profile, "commit_seconds"):
                     rollout.commit_simultaneous(selected)
@@ -847,7 +907,7 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                 observations = environment.observe_dual(policy_features_only=True)
         terminal = observations[0].terminal
         if observations[1].terminal != terminal:
-            raise ValueError("native owner observations disagree on final WDL")
+            raise ValueError("native owner observations disagree on final native outcome")
         result = terminal_result(terminal, environment.raw_observation,
             truncated=rollout.runtime.truncated, failed=rollout.runtime.failed)
         if (not rollout.runtime.ended or rollout.runtime.truncated or rollout.runtime.failed
@@ -856,10 +916,9 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                 or any(event["reason"] == "rejected" for event in rollout.runtime.clock.evidence)):
             raise ValueError("SSPI game did not reach a clean native terminal boundary")
         belief_providers.close()
-        for root in roots:
-            root["wdl"] = result["labels"][root["owner"]]
-            for sample in root.get("continuations", ()):
-                sample["wdl"] = root["wdl"]
+        executed_search_roots = len(roots)
+        supervision = finalize_supervision(result, roots, value_rows)
+        training_admissible = training_admissible and supervision["eligible"]
         if augmenter is not None and augmenter.pending:
             raise ValueError("complete episode has unresolved continuation reservations")
         if any(semantic_digest(item.state_dict()) != model_sha_by_owner[str(owner)]
@@ -870,8 +929,8 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
             if isinstance(actual_native, EventBatchedSSPINative) else None)
         tensor_path = destination / "episode.pt"
         with _timed(timing_profile, "tensor_write_seconds"):
-            tensor_sha = _atomic_torch(tensor_path, dict(schema=EPISODE_SCHEMA,
-                identity=identity, roots=roots))
+            tensor_sha = _atomic_torch(tensor_path, dict(schema=episode_schema,
+                identity=identity, roots=roots, value_rows=value_rows))
         with _timed(timing_profile, "actions_write_seconds"):
             _atomic_json(destination / "actions.json", dict(schema="sspi-action-ledger.v1",
                 rows=action_log, reservation_evidence=rollout.runtime.clock.evidence))
@@ -895,14 +954,21 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
                 "terminal_fair_view_seconds", "tensor_write_seconds", "actions_write_seconds")))
         timing_profile["accounted_seconds"] = sum(timing_profile[name]
             for name in ("setup_seconds", "loop_seconds", "finalize_seconds"))
-        episode = dict(schema=EPISODE_SCHEMA, identity=identity, status="complete",
+        augmentation_stats = augmenter.statistics() if augmenter is not None else None
+        if augmentation_stats is not None and not supervision["eligible"]:
+            augmentation_stats["excluded_draw_samples"] = augmentation_stats["retained"]
+            augmentation_stats["retained"] = 0
+        episode = dict(schema=episode_schema, identity=identity, status="complete",
             episode_kind=episode_kind, training_admissible=training_admissible,
+            supervision=supervision,
             result=result, tensor_file="episode.pt",
             tensor_sha256=tensor_sha, actions_file="actions.json", decisions=counters,
             actions_sha256=hashlib.sha256((destination / "actions.json").read_bytes()).hexdigest(),
-            temporal_augmentation=augmenter.statistics() if augmenter is not None else None,
+            temporal_augmentation=augmentation_stats,
             native_advance_performance=dict(rollout.runtime.advance_profile),
-            search_roots=len(roots), search_probability=search_probability, search_simulations=simulations,
+            search_roots=executed_search_roots, retained_search_roots=len(roots),
+            search_probability=search_probability, search_simulations=simulations,
+            value_samples=len(value_rows), value_sample_probability=value_sample_probability,
             search_fraction_actual=(sum(map(int, counters["search"].values())) /
                 max(1, sum(map(int, counters["decisions"].values())))),
             native_capture_performance=native_performance,
@@ -912,13 +978,14 @@ def collect_episode(*, actual_port, belief_port, output_dir, run_id, arm, game_i
         _atomic_json(destination / "episode.json", episode)
         if progress is not None:
             progress(dict(stage="episode_complete", game_id=game_id, result=result,
-                search_roots=len(roots), decisions=counters["decisions"],
+                search_roots=executed_search_roots, retained_search_roots=len(roots),
+                decisions=counters["decisions"],
                 elapsed_seconds=episode["elapsed_seconds"], output=str(destination)))
         return episode
     except BaseException as error:
         try:
-            _atomic_torch(destination / "partial.pt", dict(schema=EPISODE_SCHEMA,
-                identity=identity, roots=roots, actions=action_log))
+            _atomic_torch(destination / "partial.pt", dict(schema=episode_schema,
+                identity=identity, roots=roots, value_rows=value_rows, actions=action_log))
             _atomic_json(destination / "quarantine.json", dict(status="quarantined",
                 training_admissible=False, exception=type(error).__name__, reason=str(error),
                 truncated=bool(rollout and rollout.runtime.truncated),

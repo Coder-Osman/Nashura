@@ -11,12 +11,18 @@ from .visibility import validate_fair_view
 
 class FrozenSearchInference:
     def __init__(self, model, *, checkpoint_sha, controller_sha, source_adapter=False,
-            policy_adapter=None):
+            policy_adapter=None, value_order=("WIN", "DRAW", "LOSS")):
         self.model = model
         self.checkpoint_sha = require_sha(checkpoint_sha)
         self.controller_sha = require_sha(controller_sha)
         self.source_adapter = source_adapter
         self.policy_adapter = policy_adapter
+        self.value_order = tuple(value_order)
+        if self.value_order not in (("WIN", "LOSS"), ("WIN", "DRAW", "LOSS")):
+            raise ValueError("unsupported explicit search value class order")
+        architecture = getattr(model, "architecture", {})
+        if "value_order" in architecture and tuple(architecture["value_order"]) != self.value_order:
+            raise ValueError("search value order differs from model architecture")
         if any(module.training for module in model.modules()):
             raise ValueError("search requires a frozen eval-mode model")
 

@@ -1,0 +1,135 @@
+{
+  "scope": "synthetic-FAIR-fixture-operator-smoke; no native calls or experiment",
+  "platform": "Darwin",
+  "machine": "arm64",
+  "torch": "2.9.0",
+  "seed": 20261103,
+  "devices": {
+    "cpu": {
+      "initial_probabilities": [
+        0.5005217790603638,
+        0.49947816133499146
+      ],
+      "loss": 0.692104160785675,
+      "value_gradient_norm": 3.6065375804901123,
+      "shared_gradient_norm": 0.2138572782278061,
+      "policy_gradients": 0,
+      "policy_sha_unchanged": true,
+      "shared_updated": true,
+      "single_step_seconds": 0.18411549972370267
+    },
+    "mps": {
+      "initial_probabilities": [
+        0.5005217790603638,
+        0.49947819113731384
+      ],
+      "loss": 0.692104160785675,
+      "value_gradient_norm": 3.6065375804901123,
+      "shared_gradient_norm": 0.2138633131980896,
+      "policy_gradients": 0,
+      "policy_sha_unchanged": true,
+      "shared_updated": true,
+      "single_step_seconds": 1.0802814583294094
+    }
+  },
+  "historical_shared_policy_parameters_identical": true,
+  "architecture_sha": "ade50d5132de8ae3849193f7de6c26bf3b87d5641be2860a29d7ef02a4f414f2",
+  "parameter_count": 7869645,
+  "value_order": [
+    "WIN",
+    "LOSS"
+  ],
+  "cpu_mps_probability_max_abs": 2.9802322387695312e-08,
+  "historical_g1_checkpoint_sha256": "57a40c821fc6f00bcd1247ee7094cbe994dfa01e0fdc41fb27e17fa0dce821c9",
+  "schema": "sspi-wl-engineering-verification.v1",
+  "new_training_run_started": false,
+  "native_games_run": 0,
+  "public_checks": {
+    "public": {
+      "passed": 794,
+      "tests": 821,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 27
+    },
+    "affordability": {
+      "passed": 23,
+      "tests": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "selection-timeout": {
+      "passed": 82,
+      "tests": 82,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "position-guards": {
+      "passed": 15,
+      "tests": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 3
+    },
+    "live-command": {
+      "passed": 25,
+      "tests": 29,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 4
+    },
+    "dispatch-command": {
+      "passed": 31,
+      "tests": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 3
+    },
+    "reservation-mapping": {
+      "passed": 31,
+      "tests": 33,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2
+    },
+    "command-coordinates": {
+      "passed": 38,
+      "tests": 41,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 3
+    },
+    "collection-coordinator": {
+      "passed": 65,
+      "tests": 65,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "targeted_binary_and_value_tests": {
+    "passed": 31,
+    "failed": 0
+  },
+  "frozen_v1_source_sha256": "dbdb6a5a41778a42f9f9bde6c08b41db9d8b7a7181fd2b7c8f7bf6e72b707ef7",
+  "historical_g1_generation_record_sha256": "f244f18dbf6d5385ec517e2f098fb32cad68e811f8f6b852d1d3c71823af7ac5",
+  "main_engine_checks": {
+    "command": "python tools/run_main_engine_checks.py",
+    "passed": 403,
+    "failed": 0
+  },
+  "gitleaks": {
+    "version": "8.30.1",
+    "findings": 0,
+    "command": "gitleaks dir . --config .gitleaks.toml --redact"
+  },
+  "historical_source_match": true,
+  "compileall_passed": true,
+  "diff_check_passed": true,
+  "skips": {
+    "private_artifacts_or_evidence": 39,
+    "missing_unicorn": 3
+  }
+}

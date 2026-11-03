@@ -74,16 +74,20 @@ def split_seed(seed, *parts):
     return int(semantic_digest(["fair-final-search-rng.v1", seed, *parts])[:16], 16)
 
 
-def scalar_value(logits):
-    if logits.shape not in ((3,), (1, 3)) or not bool(torch.isfinite(logits).all()):
-        raise ValueError("finite WIN/DRAW/LOSS logits required")
-    probabilities = logits.detach().reshape(3).softmax(-1)
-    return float(probabilities[0] - probabilities[2])
+def scalar_value(logits, *, value_order=("WIN", "DRAW", "LOSS")):
+    order = tuple(value_order)
+    if order not in (("WIN", "LOSS"), ("WIN", "DRAW", "LOSS")):
+        raise ValueError("unsupported explicit value class order")
+    if logits.shape not in ((len(order),), (1, len(order))) or not bool(torch.isfinite(logits).all()):
+        raise ValueError("finite value logits must match the explicit class order")
+    probabilities = logits.detach().reshape(len(order)).softmax(-1)
+    return float(probabilities[0] - probabilities[-1])
 
 
 class SearchNode:
-    def __init__(self, policy, logits, *, limits, seed, noise=False):
-        self.value = scalar_value(logits)
+    def __init__(self, policy, logits, *, limits, seed, noise=False,
+            value_order=("WIN", "DRAW", "LOSS")):
+        self.value = scalar_value(logits, value_order=value_order)
         self.candidates = structured_candidates(policy, seed=seed, maximum=limits.maximum_candidates)
         self.priors = act_only_noise(self.candidates, seed=split_seed(seed, "noise"),
             fraction=limits.root_noise if noise else 0.)
@@ -169,7 +173,8 @@ class CompletedBoundarySearch:
             with torch.inference_mode():
                 policy, logits = timed("inference", self.inference.predict, information)
                 root = timed("candidate_generation", SearchNode, policy, logits, limits=limits,
-                    seed=split_seed(seed, "candidate", root_sha), noise=True)
+                    seed=split_seed(seed, "candidate", root_sha), noise=True,
+                    value_order=getattr(self.inference, "value_order", ("WIN", "DRAW", "LOSS")))
                 nodes = {root_sha: root}
                 while completed < budget:
                     check_deadline()
@@ -231,7 +236,8 @@ class CompletedBoundarySearch:
                         if history not in nodes:
                             policy, logits = timed("inference", self.inference.predict, current)
                             nodes[history] = timed("candidate_generation", SearchNode,
-                                policy, logits, limits=limits, seed=split_seed(seed, "candidate", history))
+                                policy, logits, limits=limits, seed=split_seed(seed, "candidate", history),
+                                value_order=getattr(self.inference, "value_order", ("WIN", "DRAW", "LOSS")))
                             leaf = nodes[history].value
                             break
                         node = nodes[history]

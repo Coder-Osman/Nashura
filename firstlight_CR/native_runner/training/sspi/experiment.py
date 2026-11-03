@@ -24,6 +24,7 @@ from native_runner.training.sspi.collector import (
 from native_runner.training.sspi.augmentation import TEMPORAL_AUX_WEIGHT, TEMPORAL_SCHEMA
 from native_runner.training.sspi.learning import (
     EFFECTIVE_BATCH,
+    decisive_result,
     create_optimizer,
     load_checkpoint,
     load_episode_training_rows,
@@ -92,6 +93,7 @@ def select_generation_batch(rows, *, seed, batch_size=EFFECTIVE_BATCH):
 
 
 def paired_score_interval(pair_scores, *, seed, replicates=10_000):
+    """Legacy equal-weight score helper; active WL reports use paired_win_rate_interval."""
     if not pair_scores or any(not 0. <= value <= 1. for value in pair_scores):
         raise ValueError("paired evaluation requires complete seed-pair scores")
     rng = random.Random(seed)
@@ -102,6 +104,50 @@ def paired_score_interval(pair_scores, *, seed, replicates=10_000):
     high = samples[int(0.975 * (replicates - 1))]
     return dict(mean=sum(pair_scores) / count, low=low, high=high, method="paired-seed-bootstrap",
         replicates=replicates, seed=seed)
+
+
+def paired_win_rate_interval(pair_counts, *, seed, replicates=10_000):
+    """Resample whole seed pairs; use wins / decisive games, not mean pair rates."""
+    if (not pair_counts or type(replicates) is not int or replicates < 1
+            or any(len(pair) != 2 or any(type(x) is not int for x in pair)
+                or not 0 <= pair[0] <= pair[1] <= 2 for pair in pair_counts)):
+        raise ValueError("paired WL evaluation requires valid per-pair win and decisive counts")
+    wins, decisive = map(sum, zip(*pair_counts))
+    result = dict(mean=None, low=None, high=None, wins=wins, losses=decisive-wins,
+        decisive_games=decisive, excluded_draw_games=2*len(pair_counts)-decisive,
+        complete_pairs=len(pair_counts), method="paired-seed-bootstrap-win-over-decisive",
+        replicates=replicates, effective_replicates=0, seed=seed, status="undefined")
+    if not decisive:
+        return result
+    rng, samples = random.Random(seed), []
+    for _ in range(replicates):
+        drawn = [pair_counts[rng.randrange(len(pair_counts))] for _ in pair_counts]
+        total = sum(pair[1] for pair in drawn)
+        if total:
+            samples.append(sum(pair[0] for pair in drawn) / total)
+    samples.sort()
+    result.update(mean=wins/decisive, status="defined", effective_replicates=len(samples))
+    if samples:
+        result.update(low=samples[int(.025*(len(samples)-1))],
+            high=samples[int(.975*(len(samples)-1))])
+    return result
+
+
+def episode_outcome_counts(directories):
+    decisive = sum(decisive_result(json.loads((Path(path)/"episode.json").read_text())["result"])
+        for path in directories)
+    return dict(collected_games=len(directories), decisive_games=decisive,
+        excluded_draw_games=len(directories)-decisive)
+
+
+def _skip_generation(run_dir, generation, reason, train_dirs, validation_dirs):
+    record = dict(status="skipped", generation=generation, reason=reason,
+        optimizer_steps=0, training_outcomes=episode_outcome_counts(train_dirs),
+        validation_outcomes=episode_outcome_counts(validation_dirs))
+    _atomic_json(Path(run_dir)/f"generation-{generation:04d}-skipped.json", record)
+    _write_status(run_dir, "skipped", "generation_update_skipped", **{k:v for k,v in record.items()
+        if k != "status"})
+    return record
 
 
 def _pid_command(pid):
@@ -135,7 +181,8 @@ def wait_for_episode_process(pid, episode_dir, *, expected_game_id, poll_seconds
     if not manifest.exists():
         raise RuntimeError("collector exited without a complete episode or quarantine record")
     metadata = json.loads(manifest.read_text())
-    if metadata.get("status") != "complete" or metadata.get("training_admissible") is not True:
+    if (metadata.get("status") != "complete" or
+            metadata.get("training_admissible") is not decisive_result(metadata.get("result"))):
         raise RuntimeError("active collector did not publish a training-admissible natural terminal")
     return metadata
 
@@ -157,9 +204,11 @@ def _configured_transport(run_config):
 
 def _validate_episode(metadata, *, run_config, model_sha, episode_kind, search_probability):
     identity = metadata.get("identity", {})
-    if (metadata.get("status") != "complete"
+    decisive = decisive_result(metadata.get("result"))
+    if (metadata.get("schema") != "sspi-mac-pilot-episode.v2"
+            or metadata.get("status") != "complete"
             or metadata.get("episode_kind", "training") != episode_kind
-            or metadata.get("training_admissible", True) is not (episode_kind == "training")
+            or metadata.get("training_admissible", True) is not (episode_kind == "training" and decisive)
             or metadata.get("search_probability") != search_probability
             or identity.get("run_id") != run_config["run_id"]
             or identity.get("arm") != run_config["arm"]
@@ -296,7 +345,7 @@ def _generation_episode_id(kind, generation, index):
     return f"{kind}-g{generation:04d}-game-{index:04d}"
 
 
-def paired_scores_from_results(results, *, expected_pairs):
+def paired_outcomes_from_results(results, *, expected_pairs):
     if type(expected_pairs) is not int or expected_pairs < 1 or len(results) != expected_pairs * 2:
         raise ValueError("paired evaluation requires exactly two complete games per pair")
     grouped, game_ids = {}, set()
@@ -309,7 +358,11 @@ def paired_scores_from_results(results, *, expected_pairs):
                 or type(side) is not int or side not in (0, 1)
                 or result.get("trained_owner") != side
                 or type(game_id) is not str or not game_id or game_id in game_ids
-                or type(score) not in (int, float) or not 0. <= score <= 1.
+                or "winner" not in result
+                or (result["winner"] is not None and
+                    (type(result["winner"]) is not int or result["winner"] not in (0, 1)))
+                or (score is not None if result.get("winner") is None else
+                    type(score) not in (int, float) or score != float(result["winner"] == side))
                 or type(result.get("search_roots")) is not int
                 or result.get("search_roots") != 0
                 or result.get("search_probability") != 0.):
@@ -339,7 +392,8 @@ def paired_scores_from_results(results, *, expected_pairs):
         if native_seeds in native_seed_pairs:
             raise ValueError("independent evaluation pairs reused an actual native seed pair")
         native_seed_pairs.add(native_seeds)
-        pair_scores.append((first["score"] + second["score"]) / 2.)
+        scores = [game["score"] for game in (first, second) if game["score"] is not None]
+        pair_scores.append((int(sum(scores)), len(scores)))
     return pair_scores
 
 
@@ -395,7 +449,7 @@ def _run_paired_evaluation(*, run_config, run_dir, generation, trained_model,
             winner = metadata["result"]["winner"]
             if winner is not None and (type(winner) is not int or winner not in (0, 1)):
                 raise ValueError("paired evaluation episode has an invalid terminal winner")
-            score = 0.5 if winner is None else 1. if winner == trained_owner else 0.
+            score = None if winner is None else 1. if winner == trained_owner else 0.
             result = dict(pair_index=pair_number, side=side, game_id=game_id,
                 trained_owner=trained_owner, winner=winner, score=score,
                 random_stream_id=identity["random_stream_id"],
@@ -413,15 +467,15 @@ def _run_paired_evaluation(*, run_config, run_dir, generation, trained_model,
                 games=len(results), target_games=evaluation_pairs * 2,
                 completed_pairs=len({item["pair_index"] for item in results}))
 
-    pair_scores = paired_scores_from_results(results, expected_pairs=evaluation_pairs)
-    score = paired_score_interval(pair_scores,
+    pair_counts = paired_outcomes_from_results(results, expected_pairs=evaluation_pairs)
+    score = paired_win_rate_interval(pair_counts,
         seed=run_config["seed"] ^ generation ^ 0x53535049)
-    record = dict(schema="sspi-mac-pilot-paired-evaluation.v1",
+    record = dict(schema="sspi-mac-pilot-paired-evaluation.v2",
         run_id=run_config["run_id"], generation=generation,
         trained_checkpoint_sha256=checkpoint_sha, theta0_sha256=theta0_sha,
         protocol=dict(search_probability=0., temperature=1., paired_seeds=evaluation_pairs,
             games=len(results), games_per_seed=2, pairing_key="random_stream_id",
-            deck=list(run_config["deck"])), pair_scores=pair_scores, score=score,
+            deck=list(run_config["deck"])), pair_counts=pair_counts, score=score,
         results=results)
     _atomic_json(output_path, record)
     return record
@@ -433,7 +487,7 @@ def evaluate_generation(*, run_dir, generation, actual_port=26789, belief_port=2
     run_dir = Path(run_dir)
     config = json.loads((run_dir / "run_config.json").read_text())
     if (type(generation) is not int or generation < 1
-            or config.get("schema") != "sspi-mac-pilot-run.v1"
+            or config.get("schema") != "sspi-mac-pilot-run.v2"
             or config.get("arm") != "A_5PCT_128" or config.get("device") != "cpu"
             or type(evaluation_pairs) is not int or evaluation_pairs < 1):
         raise ValueError("generation evaluation identity or execution plan differs from the Mac run")
@@ -478,7 +532,7 @@ def _restore_generation_checkpoint(run_dir, generation, run_id, *, bundle):
     record = json.loads(record_path.read_text())
     saved = record.get("checkpoint") or {}
     checkpoint_path = Path(run_dir) / "checkpoints" / f"generation-{generation:04d}.pt"
-    if (record.get("schema") != "sspi-mac-pilot-generation.v1"
+    if (record.get("schema") != "sspi-mac-pilot-generation.v2"
             or record.get("run_id") != run_id or record.get("generation") != generation
             or saved.get("path") != str(checkpoint_path)
             or not checkpoint_path.is_file()
@@ -518,7 +572,7 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
                 and str(run_dir) in command:
             raise RuntimeError("an SSPI postgame or continuation orchestrator is still running")
     if (type(parent_generation) is not int or parent_generation < 1
-            or config.get("schema") != "sspi-mac-pilot-run.v1"
+            or config.get("schema") != "sspi-mac-pilot-run.v2"
             or config.get("arm") != "A_5PCT_128" or config.get("device") != "cpu"
             or status.get("status") not in ("complete", "failed", "running")
             or (status.get("status") == "complete"
@@ -582,8 +636,6 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
             search_roots=len(train_rows), target_games=train_games,
             quarantined_games=list(training_quarantines))
 
-    if len(train_rows) < EFFECTIVE_BATCH:
-        raise ValueError("fixed training-game count produced fewer than 128 SEARCH roots")
 
     validation_dirs, validation_rows = [], []
     validation_prefix = _episode_prefix("V", generation)
@@ -619,6 +671,10 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
         _write_status(run_dir, "running", "continuation_validation_collection",
             generation=generation, games=len(validation_dirs), target_games=validation_games,
             quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines))
+
+    if len(train_rows) < EFFECTIVE_BATCH or not validation_rows:
+        return _skip_generation(run_dir, generation,
+            "insufficient_effective_search_or_validation_samples", train_dirs, validation_dirs)
 
     selection_seed = config["seed"] ^ generation ^ 0x53535049
     selected_indices = select_generation_batch(train_rows, seed=selection_seed,
@@ -680,7 +736,7 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
             or not restored_optimizer.state):
         raise ValueError("continuation checkpoint did not restore model and optimizer state")
 
-    record = dict(schema="sspi-mac-pilot-generation.v1", run_id=config["run_id"],
+    record = dict(schema="sspi-mac-pilot-generation.v2", run_id=config["run_id"],
         generation=generation, parent_generation=parent_generation,
         parent_checkpoint_sha256=parent_checkpoint_sha, parent_model_sha256=parent_model_sha,
         theta0_sha256=initialization_model_sha, checkpoint=checkpoint,
@@ -689,6 +745,8 @@ def run_next_generation(*, run_dir, parent_generation, actual_port=26789,
         trained_search_roots=len(selected_indices), unused_search_roots=len(train_rows) - len(selected_indices),
         training_root_selection_seed=selection_seed, training_root_indices=selected_indices,
         validation_roots=len(validation_rows), updates=updates, validation_loss=validation_metrics,
+        training_outcomes=episode_outcome_counts(train_dirs),
+        validation_outcomes=episode_outcome_counts(validation_dirs),
         exposure_limit=2, max_observed_exposure=max(exposure_counts),
         experiment_source_sha256=_experiment_source_sha(),
         quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines),
@@ -737,7 +795,7 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
     run_dir = Path(run_dir)
     first_episode_dir = Path(first_episode_dir)
     config = json.loads((run_dir / "run_config.json").read_text())
-    if (config.get("schema") != "sspi-mac-pilot-run.v1" or config.get("status") != "collecting"
+    if (config.get("schema") != "sspi-mac-pilot-run.v2" or config.get("status") != "collecting"
             or config.get("arm") != "A_5PCT_128" or config.get("device") != "cpu"
             or train_games < 1 or validation_games < 1
             or (evaluation_pairs is not None
@@ -799,8 +857,6 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
             search_roots=len(train_rows), target_games=train_games,
             quarantined_games=list(training_quarantines))
 
-    if len(train_rows) < EFFECTIVE_BATCH:
-        raise ValueError("fixed training-game count produced fewer than 128 SEARCH roots")
 
     validation_dirs, validation_rows = [], []
     validation_prefix = _episode_prefix("V")
@@ -838,6 +894,10 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
         _write_status(run_dir, "running", "validation_collection", games=len(validation_dirs),
             search_roots=len(validation_rows), target_games=validation_games,
             quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines))
+
+    if len(train_rows) < EFFECTIVE_BATCH or not validation_rows:
+        return _skip_generation(run_dir, 1,
+            "insufficient_effective_search_or_validation_samples", train_dirs, validation_dirs)
 
     selection_seed = config["seed"] ^ 1 ^ 0x53535049
     selected_indices = select_generation_batch(train_rows, seed=selection_seed,
@@ -894,13 +954,15 @@ def run_postgame(*, run_dir, first_episode_dir, wait_pid, actual_port=26789,
         raise ValueError("generation checkpoint did not restore model and optimizer state")
     restored.eval()
 
-    training_record = dict(schema="sspi-mac-pilot-generation.v1", run_id=config["run_id"],
+    training_record = dict(schema="sspi-mac-pilot-generation.v2", run_id=config["run_id"],
         generation=1, theta0_sha256=baseline_sha, checkpoint=checkpoint,
         checkpoint_restore=restoration, training_games=[path.name for path in train_dirs],
         validation_games=[path.name for path in validation_dirs], search_roots=len(train_rows),
         trained_search_roots=len(selected_indices), unused_search_roots=len(train_rows) - len(selected_indices),
         training_root_selection_seed=selection_seed, training_root_indices=selected_indices,
         validation_roots=len(validation_rows), updates=updates, validation_loss=validation_metrics,
+        training_outcomes=episode_outcome_counts(train_dirs),
+        validation_outcomes=episode_outcome_counts(validation_dirs),
         exposure_limit=2, max_observed_exposure=max(exposure_counts),
         experiment_source_sha256=_experiment_source_sha(),
         quarantined_games=_combined_quarantine_ids(training_quarantines, validation_quarantines))
@@ -954,6 +1016,9 @@ def main():
         help="Defer no-search evaluation to a pre-registered later generation")
     parser.add_argument("--poll-seconds", type=float, default=15.)
     args = parser.parse_args()
+    config_path = args.run_dir / "run_config.json"
+    if config_path.exists() and json.loads(config_path.read_text()).get("schema") != "sspi-mac-pilot-run.v2":
+        raise ValueError("old SSPI run protocol differs; preserve its evidence unchanged")
     try:
         if args.evaluate_generation is not None:
             if args.skip_evaluation:

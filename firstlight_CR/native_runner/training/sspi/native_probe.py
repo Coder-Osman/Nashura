@@ -167,13 +167,13 @@ def run(port: int, *, seed: int, host: str = "127.0.0.1"):
             with torch.inference_mode():
                 policies, values = current(information, [information.legality])
                 outputs[device] = dict(wait_log_probability=float(policies[0].log_prob(
-                    SSPIAction.wait()).detach().cpu()), wdl=values[0].softmax(-1).cpu().tolist())
+                    SSPIAction.wait()).detach().cpu()), wl=values[0].softmax(-1).cpu().tolist())
             del current
 
         errors = dict(wait_log_probability=abs(outputs["cpu"]["wait_log_probability"]
             - outputs["mps"]["wait_log_probability"]),
-            wdl_max_abs=max(abs(left-right) for left, right in zip(outputs["cpu"]["wdl"], outputs["mps"]["wdl"])))
-        if errors["wdl_max_abs"] > 2e-3 or errors["wait_log_probability"] > 2e-3:
+            wl_max_abs=max(abs(left-right) for left, right in zip(outputs["cpu"]["wl"], outputs["mps"]["wl"])))
+        if errors["wl_max_abs"] > 2e-3 or errors["wait_log_probability"] > 2e-3:
             raise ValueError(f"CPU/MPS inference differs beyond pilot tolerance: {errors}")
 
         timings = {}
@@ -191,7 +191,7 @@ def run(port: int, *, seed: int, host: str = "127.0.0.1"):
             wait_ticks=20, parameters=base.parameter_count, model_seed=seed, inference=outputs,
             max_abs_error=errors, forward_backward_optimizer=timings,
             backend_preference=min(timings, key=lambda item: timings[item]["median_seconds"]),
-            objective="operator-and-gradient-smoke-only; synthetic WAIT/WDL probe, not training data")
+            objective="operator-and-gradient-smoke-only; synthetic WAIT/WL probe, not training data")
     finally:
         if rollout is not None:
             rollout.runtime.frozen.clear()

@@ -16,6 +16,9 @@ from .protocol import (ABILITY_FEATURE_DIM, ABILITY_FEATURE_SCHEMA, ActionMode, 
     HandState, SSPILegality, SSPIAction, stable_card_rows)
 
 
+VALUE_ORDER = ("WIN", "LOSS")
+
+
 HAND_FEATURE_SCHEMA = "sspi-eight-card-readiness-and-refill-time.v2"
 HAND_FEATURE_DIM = 128
 
@@ -176,7 +179,7 @@ class SSPIPolicy:
 class SSPIModel(nn.Module):
     """Fixed stateless V4 semantic/spatial backbone with three modes and five delays."""
 
-    schema = "sspi-policy-value.v2"
+    schema = "sspi-policy-value.v3"
     backbone_fields = ("scene_state", "spatial_summary", "scalar_summary", "candidate_summary")
 
     def __init__(self, *, bundle=None, encoder_config=None):
@@ -195,13 +198,13 @@ class SSPIModel(nn.Module):
             nn.LayerNorm(512))
         self.policy_head = SSPIConditionalHeads(token_width=config.token_dim,
             spatial_width=config.spatial_hidden_channels)
-        self.wdl_head = nn.Sequential(nn.Linear(512, 256), nn.SiLU(), nn.Linear(256, 3))
+        self.value_head = nn.Sequential(nn.Linear(512, 256), nn.SiLU(), nn.Linear(256, 2))
 
     @property
     def architecture(self):
         return dict(schema=self.schema, encoder=asdict(self.encoder_config),
             backbone_fields=list(self.backbone_fields), history_fields=[],
-            recurrent_core=None, mode_order=["WAIT", "PLAY", "ABILITY"], value_order=["WIN", "DRAW", "LOSS"],
+            recurrent_core=None, mode_order=["WAIT", "PLAY", "ABILITY"], value_order=list(VALUE_ORDER),
             delay_ms=list(DELAY_MS), ability_interface="tagged-source-ability-pointer.v1",
             ability_feature_schema=ABILITY_FEATURE_SCHEMA, ability_feature_dim=ABILITY_FEATURE_DIM,
             hand_feature_schema=HAND_FEATURE_SCHEMA, hand_feature_dim=HAND_FEATURE_DIM,
@@ -246,11 +249,11 @@ class SSPIModel(nn.Module):
             logits = self.policy_head.logits_for(shared[index], encoded.own_card_memory[index, list(rows)],
                 encoded.spatial_memory[index], ability_features)
             policies.append(SSPIPolicy(logits, legality))
-        return policies, self.wdl_head(shared)
+        return policies, self.value_head(shared)
 
     def value_only(self, decision):
         shared, _, _ = self.encode(decision)
-        return self.wdl_head(shared)
+        return self.value_head(shared)
 
 
 def initialize_fresh_model(seed: int, *, device="cpu", bundle=None, encoder_config=None):
@@ -259,8 +262,8 @@ def initialize_fresh_model(seed: int, *, device="cpu", bundle=None, encoder_conf
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(seed)
         model = SSPIModel(bundle=bundle, encoder_config=encoder_config)
-        nn.init.normal_(model.wdl_head[-1].weight, mean=0., std=1e-3)
-        nn.init.zeros_(model.wdl_head[-1].bias)
+        nn.init.normal_(model.value_head[-1].weight, mean=0., std=1e-3)
+        nn.init.zeros_(model.value_head[-1].bias)
     if any("event_encoder" in name or "previous_action_encoder" in name or "lstm" in name.lower()
             for name, _ in model.named_parameters()):
         raise AssertionError("SSPI model unexpectedly contains history or recurrent parameters")

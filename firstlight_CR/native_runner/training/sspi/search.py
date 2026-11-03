@@ -6,6 +6,7 @@ from ..fair_final.policy import FullAction
 from ..fair_final.search import SearchLimits
 from ..fair_final.search_runtime import FrozenSearchInference
 from .protocol import ActionMode, DELAY_SLOTS, SSPIAction, from_full_action, to_full_action
+from .model import VALUE_ORDER
 
 
 def budget_search_sha(limits: SearchLimits, simulations: int) -> str:
@@ -85,7 +86,7 @@ class SSPIJointPolicy:
 def make_search_inference(model, *, checkpoint_sha, controller_sha):
     model.eval()
     return FrozenSearchInference(model, checkpoint_sha=checkpoint_sha,
-        controller_sha=controller_sha, policy_adapter=SSPIJointPolicy)
+        controller_sha=controller_sha, policy_adapter=SSPIJointPolicy, value_order=VALUE_ORDER)
 
 
 class SSPIHistorySearchProvider:

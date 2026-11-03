@@ -10,7 +10,7 @@ from native_runner.training.fair_search.config import HOG_DECK
 from native_runner.training.sspi.learning import (
     SEARCH_BUDGETS,
     TrainingRow,
-    WDLLabel,
+    WLLabel,
     create_optimizer,
     load_checkpoint,
     save_checkpoint,
@@ -54,7 +54,7 @@ from native_runner.training.sspi.experiment import (
     _restore_generation_checkpoint,
     evaluate_generation,
     exposure_batches,
-    paired_scores_from_results,
+    paired_outcomes_from_results,
     paired_score_interval,
     run_next_generation,
     select_generation_batch,
@@ -889,7 +889,7 @@ class TinyPolicyValue(nn.Module):
     def __init__(self):
         super().__init__()
         self.mode_logits = nn.Parameter(torch.tensor([0.1, -0.2, 0.3]))
-        self.wdl_logits = nn.Parameter(torch.tensor([0.2, -0.1, 0.05]))
+        self.wdl_logits = nn.Parameter(torch.tensor([0.2, -0.1]))
 
     def forward(self, frame, legalities):
         if frame == "DIRECT_SENTINEL":
@@ -916,9 +916,9 @@ def one_play_legality():
 
 def test_direct_rows_contribute_to_neither_loss_or_gradient():
     legality = one_play_legality()
-    search = TrainingRow("SEARCH", legality, WDLLabel.WIN, "SEARCH",
+    search = TrainingRow("SEARCH", legality, WLLabel.WIN, "SEARCH",
         ((SSPIAction.play(HOG_DECK[0], 17, 2), 128),), 128)
-    direct = TrainingRow("DIRECT_SENTINEL", legality, WDLLabel.LOSS, "DIRECT")
+    direct = TrainingRow("DIRECT_SENTINEL", legality, WLLabel.LOSS, "DIRECT")
     model = TinyPolicyValue()
     mixed = search_root_loss(model, [search, direct])
     alone = search_root_loss(model, [search])
@@ -1034,7 +1034,7 @@ def test_continuation_generation_identity_and_parent_checkpoint_restore(tmp_path
         architecture_sha=model.architecture_sha)
     saved = save_checkpoint(checkpoint_path, model, optimizer, identity=identity,
         optimizer_steps=1)
-    record = dict(schema="sspi-mac-pilot-generation.v1", run_id="continuation-test",
+    record = dict(schema="sspi-mac-pilot-generation.v2", run_id="continuation-test",
         generation=1, theta0_sha256="theta0", checkpoint=saved)
     (tmp_path / "generation-0001.json").write_text(json.dumps(record))
 
@@ -1057,7 +1057,7 @@ def test_continuation_parent_checkpoint_rejects_mismatched_record_checksum(tmp_p
         identity=dict(run_id="continuation-test", generation=1, seed=20261101,
             architecture_sha=model.architecture_sha), optimizer_steps=0)
     saved["file_sha"] = "0" * 64
-    record = dict(schema="sspi-mac-pilot-generation.v1", run_id="continuation-test",
+    record = dict(schema="sspi-mac-pilot-generation.v2", run_id="continuation-test",
         generation=1, checkpoint=saved)
     (tmp_path / "generation-0001.json").write_text(json.dumps(record))
 
@@ -1085,10 +1085,10 @@ def test_next_generation_freezes_parent_then_trains_and_restores_checkpoint(monk
     checkpoint = save_checkpoint(checkpoint_path, parent, optimizer,
         identity=identity, optimizer_steps=1)
     (tmp_path / "generation-0001.json").write_text(json.dumps(dict(
-        schema="sspi-mac-pilot-generation.v1", run_id=run_id, generation=1,
+        schema="sspi-mac-pilot-generation.v2", run_id=run_id, generation=1,
         theta0_sha256=theta0_sha, checkpoint=checkpoint)))
     (tmp_path / "run_config.json").write_text(json.dumps(dict(
-        schema="sspi-mac-pilot-run.v1", run_id=run_id, arm="A_5PCT_128",
+        schema="sspi-mac-pilot-run.v2", run_id=run_id, arm="A_5PCT_128",
         device="cpu", seed=seed, transport="persistent", deck=list(HOG_DECK))))
     (tmp_path / "postgame_status.json").write_text(json.dumps(dict(
         status="complete", generation=1)))
@@ -1103,8 +1103,9 @@ def test_next_generation_freezes_parent_then_trains_and_restores_checkpoint(monk
         destination = kwargs["run_dir"] / "episodes" / kwargs["game_id"]
         destination.mkdir(parents=True)
         kind = kwargs["episode_kind"]
-        metadata = dict(schema="sspi-mac-pilot-episode.v1", status="complete",
+        metadata = dict(schema="sspi-mac-pilot-episode.v2", status="complete",
             episode_kind=kind, training_admissible=(kind == "training"),
+            result=dict(winner=0, labels=["WIN", "LOSS"]),
             search_probability=0.05, identity=dict(run_id=run_id, arm="A_5PCT_128",
                 seed=seed, device="cpu", source_sha256="source",
                 model_sha256_by_owner={"0": parent_sha, "1": parent_sha}))
@@ -1254,7 +1255,7 @@ def test_collection_skips_only_nonterminal_incompatible_history_and_preserves_id
 
 def test_continuation_rejects_running_orchestrator_without_owner_pid(tmp_path):
     (tmp_path / "run_config.json").write_text(json.dumps(dict(
-        schema="sspi-mac-pilot-run.v1", arm="A_5PCT_128", device="cpu")))
+        schema="sspi-mac-pilot-run.v2", arm="A_5PCT_128", device="cpu")))
     (tmp_path / "postgame_status.json").write_text(json.dumps(dict(status="running")))
 
     with pytest.raises(RuntimeError, match="owner"):
@@ -1267,8 +1268,8 @@ def test_fresh_model_has_no_history_parameters_and_neutral_wdl_bias():
     assert 7_000_000 <= model.parameter_count <= 10_500_000
     assert not any("event_encoder" in name or "previous_action_encoder" in name
         or "lstm" in name.lower() for name, _ in model.named_parameters())
-    assert torch.count_nonzero(model.wdl_head[-1].weight) > 0
-    assert torch.count_nonzero(model.wdl_head[-1].bias) == 0
+    assert torch.count_nonzero(model.value_head[-1].weight) > 0
+    assert torch.count_nonzero(model.value_head[-1].bias) == 0
     assert all(torch.equal(value, same_seed.state_dict()[name])
         for name, value in model.state_dict().items())
 
@@ -1320,27 +1321,27 @@ def test_paired_evaluation_uses_same_native_random_stream_across_seat_swap():
 def test_paired_score_validation_requires_complete_seed_matched_no_search_swaps():
     def result(pair, side, stream, match_seed, rollout_seed):
         return dict(pair_index=pair, side=side, game_id=f"g{pair}-{side}",
-            trained_owner=side, score=float(side),
+            trained_owner=side, score=float(side), winner=1,
             random_stream_id=stream, actual_match_seed=match_seed,
             actual_rollout_seed=rollout_seed, search_roots=0, search_probability=0.)
 
     rows = [result(1, 0, "pair-1", 10, 20), result(1, 1, "pair-1", 10, 20),
         result(2, 0, "pair-2", 11, 21), result(2, 1, "pair-2", 11, 21)]
-    assert paired_scores_from_results(rows, expected_pairs=2) == [0.5, 0.5]
+    assert paired_outcomes_from_results(rows, expected_pairs=2) == [(1, 2), (1, 2)]
 
     mismatched = deepcopy(rows)
     mismatched[1]["actual_match_seed"] = 99
     with pytest.raises(ValueError, match="share the same recorded random streams"):
-        paired_scores_from_results(mismatched, expected_pairs=2)
+        paired_outcomes_from_results(mismatched, expected_pairs=2)
     repeated_native_seeds = deepcopy(rows)
     repeated_native_seeds[2]["actual_match_seed"] = 10
     repeated_native_seeds[2]["actual_rollout_seed"] = 20
     repeated_native_seeds[3]["actual_match_seed"] = 10
     repeated_native_seeds[3]["actual_rollout_seed"] = 20
     with pytest.raises(ValueError, match="reused an actual native seed pair"):
-        paired_scores_from_results(repeated_native_seeds, expected_pairs=2)
+        paired_outcomes_from_results(repeated_native_seeds, expected_pairs=2)
     with pytest.raises(ValueError, match="two complete games"):
-        paired_scores_from_results(rows[:-1], expected_pairs=2)
+        paired_outcomes_from_results(rows[:-1], expected_pairs=2)
 
 
 def test_paired_evaluation_collects_both_seats_without_search_and_records_provenance(
@@ -1360,10 +1361,11 @@ def test_paired_evaluation_collects_both_seats_without_search_and_records_proven
             model_sha256_by_owner={str(side): "trained", str(1 - side): "theta0"},
             **episode_seed_identity(seed, run_id=run_id, arm=arm, game_id=game_id,
                 random_stream_id=stream_id))
-        metadata = dict(schema="sspi-mac-pilot-episode.v1", status="complete",
+        metadata = dict(schema="sspi-mac-pilot-episode.v2", status="complete",
             episode_kind="evaluation", training_admissible=False,
             search_probability=0., search_roots=0, identity=identity,
-            result=dict(winner=trained_owner))
+            result=dict(winner=trained_owner,
+                labels=["WIN" if owner == trained_owner else "LOSS" for owner in (0, 1)]))
         directory = kwargs["run_dir"] / "episodes" / game_id
         directory.mkdir(parents=True)
         (directory / "episode.json").write_text(json.dumps(metadata))
@@ -1402,13 +1404,13 @@ def test_generation_evaluation_restores_checkpoint_and_validates_theta0(monkeypa
     checkpoint = save_checkpoint(checkpoint_path, model, optimizer,
         identity=identity, optimizer_steps=1)
     (tmp_path / "generation-0001.json").write_text(json.dumps(dict(
-        schema="sspi-mac-pilot-generation.v1", run_id=run_id, generation=1,
+        schema="sspi-mac-pilot-generation.v2", run_id=run_id, generation=1,
         theta0_sha256=theta0_sha, checkpoint=checkpoint)))
     initialization_path = tmp_path / "initialization.pt"
     initialization_path.write_bytes(b"original initialization identity")
     initialization_sha = hashlib.sha256(initialization_path.read_bytes()).hexdigest()
     (tmp_path / "run_config.json").write_text(json.dumps(dict(
-        schema="sspi-mac-pilot-run.v1", run_id=run_id, arm="A_5PCT_128",
+        schema="sspi-mac-pilot-run.v2", run_id=run_id, arm="A_5PCT_128",
         device="cpu", seed=seed, transport="persistent", deck=list(HOG_DECK),
         initialization=dict(path=str(initialization_path), file_sha=initialization_sha,
             model_sha=theta0_sha))))
@@ -1446,12 +1448,12 @@ def test_generation_evaluation_rejects_theta0_identity_mismatch(monkeypatch, tmp
     checkpoint = save_checkpoint(checkpoint_path, model, optimizer,
         identity=identity, optimizer_steps=1)
     (tmp_path / "generation-0001.json").write_text(json.dumps(dict(
-        schema="sspi-mac-pilot-generation.v1", run_id=run_id, generation=1,
+        schema="sspi-mac-pilot-generation.v2", run_id=run_id, generation=1,
         theta0_sha256="wrong-theta0", checkpoint=checkpoint)))
     initialization_path = tmp_path / "initialization.pt"
     initialization_path.write_bytes(b"original initialization identity")
     (tmp_path / "run_config.json").write_text(json.dumps(dict(
-        schema="sspi-mac-pilot-run.v1", run_id=run_id, arm="A_5PCT_128",
+        schema="sspi-mac-pilot-run.v2", run_id=run_id, arm="A_5PCT_128",
         device="cpu", seed=seed, transport="persistent", deck=list(HOG_DECK),
         initialization=dict(path=str(initialization_path),
             file_sha=hashlib.sha256(initialization_path.read_bytes()).hexdigest(),
