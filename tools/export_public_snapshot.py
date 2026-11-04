@@ -27,6 +27,7 @@ NORMALIZED_EOF_PATHS = {
     Path("_spec_work/versions/fair-final-affordability-boundaries-v1") / name
     for name in ("cases.py", "probe.py", "run_native.py", "verify.py")
 }
+NORMALIZED_EOF_PATHS.add(Path("firstlight_CR/native_runner/training/sspi/tower_counterfactual.py"))
 
 
 def digest(content):
@@ -80,6 +81,7 @@ def selected_files(workspace):
         "docs/SSPI_TOWER_FRESH_BATCHES_RESULTS_2026-11-03.json",
         "docs/SSPI_TOWER_CONTINUITY_2026-11-04.md",
         "docs/SSPI_TOWER_CONTINUITY_RESULTS_2026-11-04.json",
+        "docs/SSPI_TOWER_COUNTERFACTUAL_2026-11-04.md",
         "tools/run_tower_refresh.py",
         "tools/watch_tower_refresh.py",
         "tools/audit_tower_bootstrap.py",
@@ -176,7 +178,10 @@ def export(workspace, destination, *, excluded_files=()):
                 transformations.append("removed embedded credential default; use CR_REMOTE_PASSWORD")
         if relative in NORMALIZED_EOF_PATHS and text.endswith("\n\n"):
             text = text.rstrip("\n") + "\n"
-            transformations.append("removed extra EOF blank lines in public copy; frozen native source hashes preserved")
+            if relative.parts[:2] == ("_spec_work", "versions"):
+                transformations.append("removed extra EOF blank lines in public copy; frozen native source hashes preserved")
+            else:
+                transformations.append("removed one extra EOF blank line in public copy; source SHA records the executed training module")
         if transformations:
             content = text.encode("utf-8")
         target = destination / relative

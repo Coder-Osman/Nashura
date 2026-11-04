@@ -447,12 +447,14 @@ def save_checkpoint(path, model: SSPIModel, optimizer, *, identity, optimizer_st
         raise ValueError("SSPI checkpoints require a clean optimizer boundary")
     state = {name: tensor.detach().cpu().clone() for name, tensor in model.state_dict().items()}
     mps_rng = (torch.mps.get_rng_state().cpu() if torch.backends.mps.is_available() else None)
+    cuda_rng = torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None
     run_state = {} if run_state is None else dict(run_state)
     payload = dict(schema=CHECKPOINT_SCHEMA, architecture=model.architecture,
         architecture_sha=model.architecture_sha, identity=dict(identity), identity_sha=semantic_digest(identity),
         model=state, model_sha=semantic_digest(state), optimizer=optimizer.state_dict(),
         optimizer_sha=semantic_digest(optimizer.state_dict()), optimizer_steps=optimizer_steps,
         python_rng=random.getstate(), cpu_rng=torch.get_rng_state(), mps_rng=mps_rng,
+        cuda_rng=cuda_rng,
         run_state=run_state, run_state_sha=semantic_digest(run_state),
         model_training=model.training)
     envelope = dict(schema=CHECKPOINT_SCHEMA, payload=payload, payload_sha=semantic_digest(payload))
@@ -498,6 +500,12 @@ def load_checkpoint(path, model: SSPIModel, optimizer, *, expected_identity, dev
         if not torch.backends.mps.is_available():
             raise RuntimeError("checkpoint contains MPS RNG state but MPS is unavailable")
         torch.mps.set_rng_state(payload["mps_rng"])
+    if payload.get("cuda_rng") is not None:
+        if not torch.cuda.is_available():
+            raise RuntimeError("checkpoint contains CUDA RNG state but CUDA is unavailable")
+        if len(payload["cuda_rng"]) != torch.cuda.device_count():
+            raise RuntimeError("checkpoint CUDA device count differs from the current host")
+        torch.cuda.set_rng_state_all(payload["cuda_rng"])
     model.train(bool(payload["model_training"]))
     return dict(file_sha=hashlib.sha256(data).hexdigest(), model_sha=payload["model_sha"],
         optimizer_steps=payload["optimizer_steps"], identity_sha=payload["identity_sha"],

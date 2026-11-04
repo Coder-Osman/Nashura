@@ -9,6 +9,7 @@ PROJECT = ROOT / "firstlight_CR"
 TESTS = (
     "test_sspi_tower_shared.py",
     "test_sspi_tower_bootstrap.py",
+    "test_sspi_tower_counterfactual.py",
     "test_sspi_random60.py",
     "test_sspi_binary_outcome.py",
     "test_sspi_value_only.py",

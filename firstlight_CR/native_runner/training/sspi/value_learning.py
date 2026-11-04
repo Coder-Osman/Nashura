@@ -58,7 +58,7 @@ def create_value_optimizer(model: SSPIModel, *, head_only=False):
     return torch.optim.AdamW(parameters, lr=1e-4, weight_decay=1e-4)
 
 
-def load_value_episode(directory, *, expected_kind, run_id, model_sha):
+def load_value_episode(directory, *, expected_kind, run_id, model_sha, include_raw=False):
     directory = Path(directory)
     metadata = json.loads((directory / "episode.json").read_text())
     identity = metadata.get("identity") or {}
@@ -112,7 +112,7 @@ def load_value_episode(directory, *, expected_kind, run_id, model_sha):
                 or supervision.get("discarded_value_samples") != len(selected)
                 or len(selected) != sum(metadata["decisions"]["value_samples"].values())):
             raise ValueError("draw episode retained value samples or lost exclusion evidence")
-        return [], metadata
+        return ([], metadata, manifest) if include_raw else ([], metadata)
     if (not isinstance(raw_rows, list) or len(raw_rows) != len(selected)
             or len(raw_rows) != metadata.get("value_samples")
             or len(raw_rows) != sum(metadata["decisions"]["value_samples"].values())):
@@ -130,7 +130,7 @@ def load_value_episode(directory, *, expected_kind, run_id, model_sha):
                 or raw.get("wl") != result["labels"][information.owner]):
             raise ValueError("value-only FAIR row lacks matching decision or terminal evidence")
         rows.append(ValueRow(identity["game_id"], information, WLLabel[raw["wl"]]))
-    return rows, metadata
+    return (rows, metadata, manifest) if include_raw else (rows, metadata)
 
 
 def value_loss(model: SSPIModel, rows):

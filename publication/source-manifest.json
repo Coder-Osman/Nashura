@@ -10194,18 +10194,18 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "33cfbbcb6f3fd71b4f0c68ab3f8f335ad8177e68f1e1fcf3a319447b54562e74",
-      "bytes": 81447,
-      "source_sha256": "33cfbbcb6f3fd71b4f0c68ab3f8f335ad8177e68f1e1fcf3a319447b54562e74",
+      "sha256": "1ffb13368841d7cb960bb4567a20965dc7a64e06f5c40efd31e12130a4a248a5",
+      "bytes": 82375,
+      "source_sha256": "1ffb13368841d7cb960bb4567a20965dc7a64e06f5c40efd31e12130a4a248a5",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "61a67cd8f82cc26b38f30e618dc462e61aebe74c0f0fdc5344b3583b96cde00f",
-      "bytes": 155890,
-      "source_sha256": "61a67cd8f82cc26b38f30e618dc462e61aebe74c0f0fdc5344b3583b96cde00f",
+      "sha256": "d6b71419fe05f2507efd328afabee366b47d305a98fdb61221880929939c8b30",
+      "bytes": 157171,
+      "source_sha256": "d6b71419fe05f2507efd328afabee366b47d305a98fdb61221880929939c8b30",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -16665,9 +16665,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "ef6ff3e644e81a553c37ad227761d8ffa811f88cc7cfb9c94c7d023f61fc6028",
-      "bytes": 76129,
-      "source_sha256": "ef6ff3e644e81a553c37ad227761d8ffa811f88cc7cfb9c94c7d023f61fc6028",
+      "sha256": "190a7c40cf074f55d4a6eb55d5869693060e64c2d9ecca9bc8db83fa70e7ba72",
+      "bytes": 77048,
+      "source_sha256": "190a7c40cf074f55d4a6eb55d5869693060e64c2d9ecca9bc8db83fa70e7ba72",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -19543,9 +19543,9 @@
     },
     {
       "path": "publication/checks-affordability.xml",
-      "sha256": "526e8a261fbf9b4beae73deacb31f8c56bffad87b707a090724850475fe3e734",
-      "bytes": 4340,
-      "source_sha256": "526e8a261fbf9b4beae73deacb31f8c56bffad87b707a090724850475fe3e734",
+      "sha256": "98f84488da3d72e3fee7261b3a6a37fc190a2ee2e715979e61677a28dfacbe32",
+      "bytes": 4341,
+      "source_sha256": "98f84488da3d72e3fee7261b3a6a37fc190a2ee2e715979e61677a28dfacbe32",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19554,9 +19554,9 @@
     },
     {
       "path": "publication/checks-collection-coordinator.xml",
-      "sha256": "d7db165fb8cf773bf29b2f965ae0f6e195501d370a2faa3a93c7419201c3965e",
+      "sha256": "522c9c4962e1434d10ef3a6f8a2f7cab2fb1abfecf757c038c54ae3cb394c183",
       "bytes": 12024,
-      "source_sha256": "d7db165fb8cf773bf29b2f965ae0f6e195501d370a2faa3a93c7419201c3965e",
+      "source_sha256": "522c9c4962e1434d10ef3a6f8a2f7cab2fb1abfecf757c038c54ae3cb394c183",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19565,9 +19565,9 @@
     },
     {
       "path": "publication/checks-command-coordinates.xml",
-      "sha256": "cc29c0a196cbdc399832ea8cdd446f6955df13b83bcc9f620daa817b448c9e24",
-      "bytes": 8250,
-      "source_sha256": "cc29c0a196cbdc399832ea8cdd446f6955df13b83bcc9f620daa817b448c9e24",
+      "sha256": "be4a900d25416726be414b6cbb68f27d3ab2621f235423b3276021acc7ae4f64",
+      "bytes": 8286,
+      "source_sha256": "be4a900d25416726be414b6cbb68f27d3ab2621f235423b3276021acc7ae4f64",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19576,9 +19576,9 @@
     },
     {
       "path": "publication/checks-dispatch-command.xml",
-      "sha256": "86c4bf5f00ded00a3ebd08902fc0e068c81d4893555d560c1d98a32f397bb38c",
-      "bytes": 6472,
-      "source_sha256": "86c4bf5f00ded00a3ebd08902fc0e068c81d4893555d560c1d98a32f397bb38c",
+      "sha256": "9cef2126169445ab727d416ce75be09f822d1cc0bbeb6c6f0cc1020dc8c2c44b",
+      "bytes": 6508,
+      "source_sha256": "9cef2126169445ab727d416ce75be09f822d1cc0bbeb6c6f0cc1020dc8c2c44b",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19587,9 +19587,9 @@
     },
     {
       "path": "publication/checks-live-command.xml",
-      "sha256": "61217622f33ba8e09814e957ad6ea695685b0529f26c7ad18e466e5eac045dae",
-      "bytes": 6458,
-      "source_sha256": "61217622f33ba8e09814e957ad6ea695685b0529f26c7ad18e466e5eac045dae",
+      "sha256": "bc8db03631480fc2b49e9fffb5400df7a39431c12a61ddcf44adb90bd52b0a7a",
+      "bytes": 6506,
+      "source_sha256": "bc8db03631480fc2b49e9fffb5400df7a39431c12a61ddcf44adb90bd52b0a7a",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19598,9 +19598,9 @@
     },
     {
       "path": "publication/checks-position-guards.xml",
-      "sha256": "bf6081d3439bf62a8cd80c8fe584116d4f736a531a93413c1ec11d3e6764aaad",
-      "bytes": 4310,
-      "source_sha256": "bf6081d3439bf62a8cd80c8fe584116d4f736a531a93413c1ec11d3e6764aaad",
+      "sha256": "2bed57e4a25f26535c3177b309a4422d6172658288c8b00fc4aed34a8cbb3c92",
+      "bytes": 4346,
+      "source_sha256": "2bed57e4a25f26535c3177b309a4422d6172658288c8b00fc4aed34a8cbb3c92",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19609,9 +19609,9 @@
     },
     {
       "path": "publication/checks-public.xml",
-      "sha256": "3e62b1418db8d8b301b1ce904f7621e789adc703a072cc16eb4b085332bb1bbe",
-      "bytes": 161819,
-      "source_sha256": "3e62b1418db8d8b301b1ce904f7621e789adc703a072cc16eb4b085332bb1bbe",
+      "sha256": "c6140b8bd1b6f960f59509c5bb15738917ea013c0c28f69946816551c70a64ed",
+      "bytes": 162144,
+      "source_sha256": "c6140b8bd1b6f960f59509c5bb15738917ea013c0c28f69946816551c70a64ed",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19620,9 +19620,9 @@
     },
     {
       "path": "publication/checks-reservation-mapping.xml",
-      "sha256": "40ffbc88fcfdf2f9172a122e55cdc49e2677dadafd82b7ce29b86632037736b8",
-      "bytes": 6427,
-      "source_sha256": "40ffbc88fcfdf2f9172a122e55cdc49e2677dadafd82b7ce29b86632037736b8",
+      "sha256": "32a48577b1a86fb19a69ce8c8f7a984ab06a3161ac7f81b35a31037059b22ea2",
+      "bytes": 6451,
+      "source_sha256": "32a48577b1a86fb19a69ce8c8f7a984ab06a3161ac7f81b35a31037059b22ea2",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19631,9 +19631,9 @@
     },
     {
       "path": "publication/checks-selection-timeout.xml",
-      "sha256": "17438eef0527089a0de272d231c7b9fec8c0aca0f85e1c3c554c316bcd316c19",
+      "sha256": "7d360dc97940c488f3676a1b8c1dcbce58b07f1a186c9e4ffb6d0123f676c357",
       "bytes": 14581,
-      "source_sha256": "17438eef0527089a0de272d231c7b9fec8c0aca0f85e1c3c554c316bcd316c19",
+      "source_sha256": "7d360dc97940c488f3676a1b8c1dcbce58b07f1a186c9e4ffb6d0123f676c357",
       "transformations": [
         "2026-10-29: refresh pytest report after public verification",
         "manually maintained public file updated in publication worktree",
@@ -19693,9 +19693,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/sspi/learning.py",
-      "sha256": "e98058bfd09e4860a00ea9a49f1246e27a4df07ee655666ca8ffde6372f2c5ec",
-      "bytes": 26521,
-      "source_sha256": "e98058bfd09e4860a00ea9a49f1246e27a4df07ee655666ca8ffde6372f2c5ec",
+      "sha256": "f3b0f33427df0d9889ceb99159f1942bc07304df3dfcd31cb556dc8c7e40d905",
+      "bytes": 27029,
+      "source_sha256": "f3b0f33427df0d9889ceb99159f1942bc07304df3dfcd31cb556dc8c7e40d905",
       "transformations": []
     },
     {
@@ -19837,9 +19837,9 @@
     },
     {
       "path": "tools/run_main_engine_checks.py",
-      "sha256": "d0d07d2461eacb6ed5765cd5bd0bf60d046268725f163129ae0ae2f8b651ed96",
-      "bytes": 1309,
-      "source_sha256": "d0d07d2461eacb6ed5765cd5bd0bf60d046268725f163129ae0ae2f8b651ed96",
+      "sha256": "3547735a43d70e432ac314627c235c64e2b3dd0445b4ea0b405f22e1cf6114f3",
+      "bytes": 1350,
+      "source_sha256": "3547735a43d70e432ac314627c235c64e2b3dd0445b4ea0b405f22e1cf6114f3",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -19909,9 +19909,9 @@
     },
     {
       "path": "tools/export_public_snapshot.py",
-      "sha256": "c2dcf541091d810247dd54667251bedfb9ffaff6613a621345781f17a719bfce",
-      "bytes": 13873,
-      "source_sha256": "c2dcf541091d810247dd54667251bedfb9ffaff6613a621345781f17a719bfce",
+      "sha256": "2aecd5c24f4d85e2bcfcae571a3e5031febd95227d385fee430599727c672f91",
+      "bytes": 14255,
+      "source_sha256": "2aecd5c24f4d85e2bcfcae571a3e5031febd95227d385fee430599727c672f91",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -20017,9 +20017,9 @@
     },
     {
       "path": "firstlight_CR/native_runner/training/sspi/value_learning.py",
-      "sha256": "e827c57017eff700f9a578a010768bc2f4f6fbcb91a06548a8e1bfc99f8a3c0e",
-      "bytes": 13534,
-      "source_sha256": "e827c57017eff700f9a578a010768bc2f4f6fbcb91a06548a8e1bfc99f8a3c0e",
+      "sha256": "4bc34221d52536afacaebf5e4930c51f4d88df3b98c194abe6a834f2a5aad3ec",
+      "bytes": 13649,
+      "source_sha256": "4bc34221d52536afacaebf5e4930c51f4d88df3b98c194abe6a834f2a5aad3ec",
       "transformations": []
     },
     {
@@ -20231,10 +20231,33 @@
       "bytes": 5413,
       "source_sha256": "29fd6dc883fb1164a435acfd3dbcea7de390578111691a18eedb5ee0fc931d3c",
       "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/tests/test_sspi_tower_counterfactual.py",
+      "sha256": "d99c403b6d7a8ba134700bfb032154bd008116c36f75bacea549e613ed0c3035",
+      "bytes": 18676,
+      "source_sha256": "d99c403b6d7a8ba134700bfb032154bd008116c36f75bacea549e613ed0c3035",
+      "transformations": []
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/sspi/tower_counterfactual.py",
+      "sha256": "385fde72d5ea4d8ab574f7ed7ef69d0e4480fd81ac7e62457731e4e1868376b5",
+      "bytes": 71518,
+      "source_sha256": "e41931470e58b2a719b2238cb2bf9f164f6a05631091ac3ddac9fcf05d9a4df5",
+      "transformations": [
+        "removed one extra EOF blank line in public copy; source SHA records the executed training module"
+      ]
+    },
+    {
+      "path": "docs/SSPI_TOWER_COUNTERFACTUAL_2026-11-04.md",
+      "sha256": "62188ed1686163a66d066312cbebf1cd59ff73fba0eb6f36c057b2009d85acc2",
+      "bytes": 4772,
+      "source_sha256": "62188ed1686163a66d066312cbebf1cd59ff73fba0eb6f36c057b2009d85acc2",
+      "transformations": []
     }
   ],
-  "file_count": 2866,
-  "source_bytes": 37452071,
+  "file_count": 2869,
+  "source_bytes": 37554950,
   "excluded_selected_candidates": {},
   "excluded_categories": [
     "credentials",
