@@ -10194,18 +10194,18 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "1ffb13368841d7cb960bb4567a20965dc7a64e06f5c40efd31e12130a4a248a5",
-      "bytes": 82375,
-      "source_sha256": "1ffb13368841d7cb960bb4567a20965dc7a64e06f5c40efd31e12130a4a248a5",
+      "sha256": "dd7fd2d1259bf85f4e491a6d9c99c73bd92291e686b301d329cd5db53b61d7ab",
+      "bytes": 82463,
+      "source_sha256": "dd7fd2d1259bf85f4e491a6d9c99c73bd92291e686b301d329cd5db53b61d7ab",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "d6b71419fe05f2507efd328afabee366b47d305a98fdb61221880929939c8b30",
-      "bytes": 157171,
-      "source_sha256": "d6b71419fe05f2507efd328afabee366b47d305a98fdb61221880929939c8b30",
+      "sha256": "ec10d22c3b9c2ccf59eeded36f01ff627716067e72b86b44eeef33d8451c0bed",
+      "bytes": 157134,
+      "source_sha256": "ec10d22c3b9c2ccf59eeded36f01ff627716067e72b86b44eeef33d8451c0bed",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -16665,9 +16665,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "190a7c40cf074f55d4a6eb55d5869693060e64c2d9ecca9bc8db83fa70e7ba72",
-      "bytes": 77048,
-      "source_sha256": "190a7c40cf074f55d4a6eb55d5869693060e64c2d9ecca9bc8db83fa70e7ba72",
+      "sha256": "26a7c5bb7e2561ff19da51e4b09608b51fcfa0056aeaccdf857b6aa3106db011",
+      "bytes": 77060,
+      "source_sha256": "26a7c5bb7e2561ff19da51e4b09608b51fcfa0056aeaccdf857b6aa3106db011",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -20250,14 +20250,14 @@
     },
     {
       "path": "docs/SSPI_TOWER_COUNTERFACTUAL_2026-11-04.md",
-      "sha256": "62188ed1686163a66d066312cbebf1cd59ff73fba0eb6f36c057b2009d85acc2",
-      "bytes": 4772,
-      "source_sha256": "62188ed1686163a66d066312cbebf1cd59ff73fba0eb6f36c057b2009d85acc2",
+      "sha256": "9d8903580650d62869b1e4273ccd0e443efedec1f47ee97368070e140464634d",
+      "bytes": 6937,
+      "source_sha256": "9d8903580650d62869b1e4273ccd0e443efedec1f47ee97368070e140464634d",
       "transformations": []
     }
   ],
   "file_count": 2869,
-  "source_bytes": 37554950,
+  "source_bytes": 37557178,
   "excluded_selected_candidates": {},
   "excluded_categories": [
     "credentials",
