@@ -10194,18 +10194,18 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "28ab40b8fb8df9e95d1edc5e2ff69bf3489d79a9b807ed52724e3c76af316aae",
-      "bytes": 81238,
-      "source_sha256": "28ab40b8fb8df9e95d1edc5e2ff69bf3489d79a9b807ed52724e3c76af316aae",
+      "sha256": "33cfbbcb6f3fd71b4f0c68ab3f8f335ad8177e68f1e1fcf3a319447b54562e74",
+      "bytes": 81447,
+      "source_sha256": "33cfbbcb6f3fd71b4f0c68ab3f8f335ad8177e68f1e1fcf3a319447b54562e74",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "fefa0bbf7c27202de82cdf58c1789bbd0ab8b797c2a28ba9331135822eff57f3",
-      "bytes": 154999,
-      "source_sha256": "fefa0bbf7c27202de82cdf58c1789bbd0ab8b797c2a28ba9331135822eff57f3",
+      "sha256": "61a67cd8f82cc26b38f30e618dc462e61aebe74c0f0fdc5344b3583b96cde00f",
+      "bytes": 155890,
+      "source_sha256": "61a67cd8f82cc26b38f30e618dc462e61aebe74c0f0fdc5344b3583b96cde00f",
       "transformations": [
         "manually maintained public file updated in publication worktree"
       ]
@@ -20185,9 +20185,9 @@
     },
     {
       "path": "docs/SSPI_TOWER_FRESH_BATCHES_2026-11-03.md",
-      "sha256": "3ae086ff697f6c6c3f3ff03634c43fa9106044c41d08935e6b1a3a2af6a0cdee",
-      "bytes": 6336,
-      "source_sha256": "3ae086ff697f6c6c3f3ff03634c43fa9106044c41d08935e6b1a3a2af6a0cdee",
+      "sha256": "d10375b22f7e3167f5f5ab3c07c0516b0220cad32697ad633675892c714ce252",
+      "bytes": 8469,
+      "source_sha256": "d10375b22f7e3167f5f5ab3c07c0516b0220cad32697ad633675892c714ce252",
       "transformations": []
     },
     {
