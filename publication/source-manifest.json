@@ -10194,20 +10194,20 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "dd7fd2d1259bf85f4e491a6d9c99c73bd92291e686b301d329cd5db53b61d7ab",
-      "bytes": 82463,
-      "source_sha256": "dd7fd2d1259bf85f4e491a6d9c99c73bd92291e686b301d329cd5db53b61d7ab",
+      "sha256": "aeb2df61b843d442a329ff5c4c72dc41fccd7c0a0afab0df143aacd42f82d556",
+      "bytes": 83216,
+      "source_sha256": "aeb2df61b843d442a329ff5c4c72dc41fccd7c0a0afab0df143aacd42f82d556",
       "transformations": [
-        "manually maintained public file updated in publication worktree"
+        "authored directly in isolated public repository worktree"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "ec10d22c3b9c2ccf59eeded36f01ff627716067e72b86b44eeef33d8451c0bed",
-      "bytes": 157134,
-      "source_sha256": "ec10d22c3b9c2ccf59eeded36f01ff627716067e72b86b44eeef33d8451c0bed",
+      "sha256": "9d401e0250d588e2d9ebba72b99e0b164cd059101cf80089eee40984de46befe",
+      "bytes": 158253,
+      "source_sha256": "9d401e0250d588e2d9ebba72b99e0b164cd059101cf80089eee40984de46befe",
       "transformations": [
-        "manually maintained public file updated in publication worktree"
+        "authored directly in isolated public repository worktree"
       ]
     },
     {
@@ -16665,11 +16665,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "26a7c5bb7e2561ff19da51e4b09608b51fcfa0056aeaccdf857b6aa3106db011",
-      "bytes": 77060,
-      "source_sha256": "26a7c5bb7e2561ff19da51e4b09608b51fcfa0056aeaccdf857b6aa3106db011",
+      "sha256": "e2fd60f669fd7721c345088aee514b502fc8fae71ae9d6800aee73c5ac60f122",
+      "bytes": 77803,
+      "source_sha256": "e2fd60f669fd7721c345088aee514b502fc8fae71ae9d6800aee73c5ac60f122",
       "transformations": [
-        "manually maintained public file updated in publication worktree"
+        "authored directly in isolated public repository worktree"
       ]
     },
     {
@@ -19837,11 +19837,11 @@
     },
     {
       "path": "tools/run_main_engine_checks.py",
-      "sha256": "3547735a43d70e432ac314627c235c64e2b3dd0445b4ea0b405f22e1cf6114f3",
-      "bytes": 1350,
-      "source_sha256": "3547735a43d70e432ac314627c235c64e2b3dd0445b4ea0b405f22e1cf6114f3",
+      "sha256": "c4d78bf995e910a9b7bfce704493083d7c174eb3616dcb2170c297b1f5218e16",
+      "bytes": 1389,
+      "source_sha256": "c4d78bf995e910a9b7bfce704493083d7c174eb3616dcb2170c297b1f5218e16",
       "transformations": [
-        "manually maintained public file updated in publication worktree"
+        "authored directly in isolated public repository worktree"
       ]
     },
     {
@@ -20254,10 +20254,46 @@
       "bytes": 6937,
       "source_sha256": "9d8903580650d62869b1e4273ccd0e443efedec1f47ee97368070e140464634d",
       "transformations": []
+    },
+    {
+      "path": "docs/EVENT_VALUE_TOWER_SENSITIVITY_2026-11-05.md",
+      "sha256": "be354ba0471ec3b045ea04d3a180b81353d2a8af79854c73f1e42efdb43c427e",
+      "bytes": 6708,
+      "source_sha256": "be354ba0471ec3b045ea04d3a180b81353d2a8af79854c73f1e42efdb43c427e",
+      "transformations": [
+        "authored directly in isolated public repository worktree"
+      ]
+    },
+    {
+      "path": "docs/EVENT_VALUE_TOWER_SENSITIVITY_RESULTS_2026-11-05.json",
+      "sha256": "c37343c2a21d6dd8ac5429a1e085f61fc38033dd81c926cd75a8c2067ea4d021",
+      "bytes": 16214,
+      "source_sha256": "ad1db152b41b7258c9fb512f71ecc3d0e498a83abf45a3a282ef26ac2e307743",
+      "transformations": [
+        "private report aggregate: removed per-state examples and individual derivatives; added gradient summary, effective-action subset, frozen-source comparison and engineering checks"
+      ]
+    },
+    {
+      "path": "firstlight_CR/native_runner/tests/test_event_value_sensitivity.py",
+      "sha256": "ba3df6c16626ec620139824b60ed9fb744a4067122f0df9a56568c773d1c6177",
+      "bytes": 4853,
+      "source_sha256": "ba3df6c16626ec620139824b60ed9fb744a4067122f0df9a56568c773d1c6177",
+      "transformations": [
+        "authored directly in isolated public repository worktree"
+      ]
+    },
+    {
+      "path": "firstlight_CR/native_runner/training/event_value_sensitivity.py",
+      "sha256": "ec03660625b291d27ad845c423af4add61109b2ad7adfce6c1d404ef8d9798ad",
+      "bytes": 15034,
+      "source_sha256": "ec03660625b291d27ad845c423af4add61109b2ad7adfce6c1d404ef8d9798ad",
+      "transformations": [
+        "authored directly in isolated public repository worktree"
+      ]
     }
   ],
-  "file_count": 2869,
-  "source_bytes": 37557178,
+  "file_count": 2873,
+  "source_bytes": 37602641,
   "excluded_selected_candidates": {},
   "excluded_categories": [
     "credentials",

@@ -1,0 +1,505 @@
+{
+  "schema": "event-tower-input-sensitivity.v1",
+  "checkpoint_sha256": "e9f7c84a3e5f84a4d625c3f9a68e332a318a2aedc06e196da55bdb00a66bd1f0",
+  "source_code": {
+    "event_value_sensitivity.py": "ec03660625b291d27ad845c423af4add61109b2ad7adfce6c1d404ef8d9798ad",
+    "event_checkpoint.py": "b96b643d0f6ec4d1dfa10ed2361a4e8dbfaa88f0204ae44100aadc5227bb902e",
+    "event_model.py": "edc5acb09fa8db15b01452af243263415133b2a1e3c1ee5953ea234ee894ba98",
+    "event_cache.py": "5242e81b699c1bf1da56a1140b3d8b7b127322232852e049ae06d7accf608c7c",
+    "event_tower_rewards.py": "f73815a4812e613e0fd9365c9733e671be86d6a63f280641d3efd53829264f71",
+    "v4/model.py": "c112d6f3bb179b045c1c3a74ca8bfaa7a173eb315e1eaaf828756a33cd02d4e0",
+    "v4/components.py": "1685ac92cb1bdc65017f3ef3ac02af336622dcf7247bf47c733a539c1b0c7178",
+    "v4/config.py": "711f20b12eb0fb54886f28b261fb8ef631f7733b72c0c2e33fe69741025aed59",
+    "v4/tensors.py": "e502511db6752a37da10302cd56c7abf596999db7bdc31c1fdb91f931ad137c6",
+    "v4/tensorizer.py": "e171a1b048a30b66a215bc98bd5ad10ec7f81e1f9f1718409c30a0639bd140e3",
+    "v4/factory.py": "40125a6b7f3fc8085b6638a767e062e35866189a6cb9779a380637e762ce2d4e",
+    "v4/mechanics.py": "705cec5ef7a416376fc9e53a2a5d76a085a411a097a494cc84c47d2fb81b133c"
+  },
+  "contract_sha256": "0002b04a924d82c228102126b7631eb53d6a80bda670a54d0663683756db0cb3",
+  "iteration": 1755,
+  "model_parameters": 9953219,
+  "snapshot_only": true,
+  "residual_blocks": 2,
+  "value_semantics": "unbounded scalar shaped-return estimate; not WDL probability",
+  "runtime": {
+    "torch": "2.9.0",
+    "python": "3.13.5",
+    "machine": "arm64",
+    "device": "cpu",
+    "threads": 1
+  },
+  "retentions": [
+    1.0,
+    0.75,
+    0.5,
+    0.25,
+    0.1
+  ],
+  "tolerance": 1e-05,
+  "sources": [
+    {
+      "summary_sha256": "119ac9586ea183c356a962c27aa77967aa15208b0ca19eb1c1da4cc2ca6b0283",
+      "data_sha256": "3a5c6b465fb3b9a60f9896440cd1ad64b8fe0139a10ff841bfb358a790ae309b",
+      "frames": 134,
+      "lanes": 1
+    }
+  ],
+  "states": 134,
+  "episode_lanes": 1,
+  "matches": 1,
+  "owners": [
+    0
+  ],
+  "raw_value": {
+    "own_princess": {
+      "states": 134,
+      "mean_values": [
+        0.6228756653561965,
+        0.4476060446129361,
+        0.07501682516799044,
+        -0.4954342871570765,
+        -0.73341812659055
+      ],
+      "half_hp_delta_mean": -0.5478588401882062,
+      "half_hp_delta_median": -0.5185743123292923,
+      "half_hp_delta_p05_p95": [
+        -0.942458875477314,
+        -0.22811096906661996
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 1.0,
+      "monotone_step_fraction": 1.0,
+      "strict_direction_step_fraction": 1.0,
+      "range_median": 1.4096794873476028
+    },
+    "enemy_princess": {
+      "states": 134,
+      "mean_values": [
+        0.6228756653561965,
+        0.7242975080830615,
+        0.8120042230211088,
+        0.870400882798678,
+        0.899347424006729
+      ],
+      "half_hp_delta_mean": 0.18912855766491213,
+      "half_hp_delta_median": 0.12254968285560608,
+      "half_hp_delta_p05_p95": [
+        0.026392418146133422,
+        0.539235021546483
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 0.9776119402985075,
+      "monotone_step_fraction": 0.9944029850746269,
+      "strict_direction_step_fraction": 0.9925373134328358,
+      "range_median": 0.19774800539016724
+    },
+    "own_king": {
+      "states": 134,
+      "mean_values": [
+        0.6228756653561965,
+        0.5869912174877836,
+        0.4678556223664044,
+        -0.04167718657139522,
+        -0.6791652437549696
+      ],
+      "half_hp_delta_mean": -0.15502004298979222,
+      "half_hp_delta_median": -0.11914926767349243,
+      "half_hp_delta_p05_p95": [
+        -0.3320324055850506,
+        -0.030958488583564783
+      ],
+      "half_hp_direction_fraction": 0.9925373134328358,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 0.9552238805970149,
+      "monotone_step_fraction": 0.9888059701492538,
+      "strict_direction_step_fraction": 0.9888059701492538,
+      "range_median": 1.325217366218567
+    },
+    "enemy_king": {
+      "states": 134,
+      "mean_values": [
+        0.6228756653561965,
+        0.6506433955379831,
+        0.7372984534629913,
+        0.8477565326463821,
+        0.9100514946144018
+      ],
+      "half_hp_delta_mean": 0.11442278810679468,
+      "half_hp_delta_median": 0.0371432900428772,
+      "half_hp_delta_p05_p95": [
+        0.011719739437103272,
+        0.4921361456625163
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 0.9626865671641791,
+      "monotone_step_fraction": 0.9906716417910447,
+      "strict_direction_step_fraction": 0.9906716417910447,
+      "range_median": 0.19877409934997559
+    },
+    "own_all": {
+      "states": 134,
+      "mean_values": [
+        0.6228756653561965,
+        0.4174324486599262,
+        -0.06548325980165556,
+        -0.7284346907052086,
+        -0.9273740262237947
+      ],
+      "half_hp_delta_mean": -0.6883589251578521,
+      "half_hp_delta_median": -0.6483365036547184,
+      "half_hp_delta_p05_p95": [
+        -1.0867667585611342,
+        -0.3427850633859635
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 1.0,
+      "monotone_step_fraction": 1.0,
+      "strict_direction_step_fraction": 1.0,
+      "range_median": 1.6304585635662079
+    },
+    "enemy_all": {
+      "states": 134,
+      "mean_values": [
+        0.6228756653561965,
+        0.7350769273714343,
+        0.8337799881988052,
+        0.91177811679333,
+        0.9548642852190715
+      ],
+      "half_hp_delta_mean": 0.21090432284260863,
+      "half_hp_delta_median": 0.14333191514015198,
+      "half_hp_delta_p05_p95": [
+        0.0367641806602478,
+        0.5838220845907925
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 1.0,
+      "monotone_step_fraction": 1.0,
+      "strict_direction_step_fraction": 1.0,
+      "range_median": 0.25552472472190857
+    }
+  },
+  "potential_coefficient": 0.15,
+  "potential_adjusted_value": {
+    "own_princess": {
+      "states": 134,
+      "mean_values": [
+        0.6313431864967498,
+        0.44388308678058647,
+        0.059103388564466335,
+        -0.5235382026673032,
+        -0.7688363279285502
+      ],
+      "half_hp_delta_mean": -0.5722397979322835,
+      "half_hp_delta_median": -0.5443482379429043,
+      "half_hp_delta_p05_p95": [
+        -0.9687627082783729,
+        -0.2475684884469957
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 1.0,
+      "monotone_step_fraction": 1.0,
+      "strict_direction_step_fraction": 1.0,
+      "range_median": 1.4550800010561944
+    },
+    "enemy_princess": {
+      "states": 134,
+      "mean_values": [
+        0.6313431864967498,
+        0.7428386278116877,
+        0.8406189412267784,
+        0.9090891999401037,
+        0.9440799019007552
+      ],
+      "half_hp_delta_mean": 0.20927575473002952,
+      "half_hp_delta_median": 0.13986230548471218,
+      "half_hp_delta_p05_p95": [
+        0.03914296701550497,
+        0.5692350214347243
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 0.9925373134328358,
+      "monotone_step_fraction": 0.9981343283582089,
+      "strict_direction_step_fraction": 0.9981343283582089,
+      "range_median": 0.2319890943355859
+    },
+    "own_king": {
+      "states": 134,
+      "mean_values": [
+        0.6313431864967498,
+        0.5729587386125945,
+        0.4313231433978053,
+        -0.1007096652997962,
+        -0.7516977241207184
+      ],
+      "half_hp_delta_mean": -0.20002004309894458,
+      "half_hp_delta_median": -0.16414926722645762,
+      "half_hp_delta_p05_p95": [
+        -0.3770324067864567,
+        -0.07595848852768543
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 1.0,
+      "monotone_step_fraction": 1.0,
+      "strict_direction_step_fraction": 1.0,
+      "range_median": 1.4062173674814402
+    },
+    "enemy_king": {
+      "states": 134,
+      "mean_values": [
+        0.6313431864967498,
+        0.6816109166494502,
+        0.7907659747345894,
+        0.9237240534776174,
+        0.9995190171830689
+      ],
+      "half_hp_delta_mean": 0.15942278823784015,
+      "half_hp_delta_median": 0.08214329099282619,
+      "half_hp_delta_p05_p95": [
+        0.056719738990068456,
+        0.5371361446566879
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 1.0,
+      "monotone_step_fraction": 1.0,
+      "strict_direction_step_fraction": 1.0,
+      "range_median": 0.2797741000540555
+    },
+    "own_all": {
+      "states": 134,
+      "mean_values": [
+        0.6313431864967498,
+        0.39120949085301454,
+        -0.1263966967171033,
+        -0.8240386069543777,
+        -1.0437922282450234
+      ],
+      "half_hp_delta_mean": -0.7577398832138531,
+      "half_hp_delta_median": -0.7182783225551248,
+      "half_hp_delta_p05_p95": [
+        -1.15711404918693,
+        -0.40832693368196493
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 1.0,
+      "monotone_step_fraction": 1.0,
+      "strict_direction_step_fraction": 1.0,
+      "range_median": 1.755283890478313
+    },
+    "enemy_all": {
+      "states": 134,
+      "mean_values": [
+        0.6313431864967498,
+        0.7761180470016461,
+        0.9073947068415019,
+        1.0179664344151511,
+        1.0805967586921221
+      ],
+      "half_hp_delta_mean": 0.2760515203447526,
+      "half_hp_delta_median": 0.20757845686748624,
+      "half_hp_delta_p05_p95": [
+        0.09385581498965623,
+        0.6588220862671732
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 1.0,
+      "monotone_step_fraction": 1.0,
+      "strict_direction_step_fraction": 1.0,
+      "range_median": 0.3702354897744954
+    }
+  },
+  "potential_adjustment": "V + beta*Phi removes the known shaping offset for an exact discounted critic; does not calibrate this approximate critic",
+  "integrity": {
+    "parameters_and_buffers_unchanged": true,
+    "model_tensors_sha256": "04fcbe38291747fe8f6cb4d934420849b80b3b3e92eacfe96c96d50b39047b78",
+    "checkpoint_unchanged": true,
+    "source_files_unchanged": true,
+    "non_hp_inputs_unchanged": true,
+    "source_frames_unchanged": true,
+    "repeat_output_max_abs": 0.0,
+    "parameter_gradients_absent": true
+  },
+  "limitation": "One or more archived lanes; repeated states are correlated, no independent-match CI or win-rate claim. Positive HP interventions hold activation/history fixed, king cases can be off-manifold.",
+  "seconds": 306.34630804136395,
+  "input_gradient_summary": {
+    "checks": 18,
+    "maximum_absolute_error": 0.000319063663482666,
+    "maximum_relative_error": 0.0040304320899701915,
+    "all_expected_sign": true
+  },
+  "effective_actions_only": {
+    "own_princess": {
+      "states": 100,
+      "mean_values": [
+        0.6117601552605629,
+        0.4353693856671452,
+        0.05475557819008827,
+        -0.5096919190511108,
+        -0.7441235675662756
+      ],
+      "half_hp_delta_mean": -0.5570045770704746,
+      "half_hp_delta_median": -0.5057812072336674,
+      "half_hp_delta_p05_p95": [
+        -0.9375256225466728,
+        -0.24846220016479498
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 1.0,
+      "monotone_step_fraction": 1.0,
+      "strict_direction_step_fraction": 1.0,
+      "range_median": 1.4082408249378204
+    },
+    "enemy_princess": {
+      "states": 100,
+      "mean_values": [
+        0.6117601552605629,
+        0.7114978705719114,
+        0.79780084438622,
+        0.8565036712959408,
+        0.8858831182122231
+      ],
+      "half_hp_delta_mean": 0.18604068912565708,
+      "half_hp_delta_median": 0.12399962544441223,
+      "half_hp_delta_p05_p95": [
+        0.031059688329696654,
+        0.5439918257296085
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 0.97,
+      "monotone_step_fraction": 0.9925,
+      "strict_direction_step_fraction": 0.9925,
+      "range_median": 0.19774800539016724
+    },
+    "own_king": {
+      "states": 100,
+      "mean_values": [
+        0.6117601552605629,
+        0.5755838826112449,
+        0.45328902849927544,
+        -0.07010969506576657,
+        -0.6955566699802875
+      ],
+      "half_hp_delta_mean": -0.15847112676128744,
+      "half_hp_delta_median": -0.1230013519525528,
+      "half_hp_delta_p05_p95": [
+        -0.3359143756330013,
+        -0.028312385082244877
+      ],
+      "half_hp_direction_fraction": 0.99,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 0.95,
+      "monotone_step_fraction": 0.9875,
+      "strict_direction_step_fraction": 0.9875,
+      "range_median": 1.325217366218567
+    },
+    "enemy_king": {
+      "states": 100,
+      "mean_values": [
+        0.6117601552605629,
+        0.6385156379267574,
+        0.7231394967995584,
+        0.8363618878275156,
+        0.9005201624333858
+      ],
+      "half_hp_delta_mean": 0.11137934153899551,
+      "half_hp_delta_median": 0.03573578596115112,
+      "half_hp_delta_p05_p95": [
+        0.011348503828048705,
+        0.49864860326051713
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 0.95,
+      "monotone_step_fraction": 0.9875,
+      "strict_direction_step_fraction": 0.9875,
+      "range_median": 0.20799538493156433
+    },
+    "own_all": {
+      "states": 100,
+      "mean_values": [
+        0.6117601552605629,
+        0.4050785029120743,
+        -0.08598100962117314,
+        -0.7397115795128048,
+        -0.9355698370933533
+      ],
+      "half_hp_delta_mean": -0.697741164881736,
+      "half_hp_delta_median": -0.6431041844189167,
+      "half_hp_delta_p05_p95": [
+        -1.0890397042036057,
+        -0.3547341108322144
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 1.0,
+      "monotone_step_fraction": 1.0,
+      "strict_direction_step_fraction": 1.0,
+      "range_median": 1.6089694499969482
+    },
+    "enemy_all": {
+      "states": 100,
+      "mean_values": [
+        0.6117601552605629,
+        0.7220476648956538,
+        0.8196346576884389,
+        0.8990513820946217,
+        0.9435971297323704
+      ],
+      "half_hp_delta_mean": 0.207874502427876,
+      "half_hp_delta_median": 0.14333191514015198,
+      "half_hp_delta_p05_p95": [
+        0.04193798303604126,
+        0.5961004197597503
+      ],
+      "half_hp_direction_fraction": 1.0,
+      "half_hp_sensitive_fraction": 1.0,
+      "monotone_state_fraction": 1.0,
+      "monotone_step_fraction": 1.0,
+      "strict_direction_step_fraction": 1.0,
+      "range_median": 0.2610243260860443
+    }
+  },
+  "execution_status_counts": {
+    "cancelled": 34,
+    "executed": 69,
+    "wait": 31
+  },
+  "public_evidence": {
+    "private_report_sha256": "ad1db152b41b7258c9fb512f71ecc3d0e498a83abf45a3a282ef26ac2e307743",
+    "per_state_file_sha256": "c1403d751255967b1781ec0bb6d3b0b10b60d32bdbeb0568699c1bcfd23a838c",
+    "excluded": [
+      "checkpoint",
+      "raw archive inputs",
+      "per-state outputs",
+      "local paths"
+    ],
+    "meaning": "Historical offline inference evidence; private attachments required for full reproduction."
+  },
+  "frozen_source_comparison": {
+    "comparisons": 402,
+    "maximum_absolute_error": 0.0,
+    "identical": 402
+  },
+  "engineering_checks": {
+    "targeted_passed": 11,
+    "main_passed": 495,
+    "public_passed": 1104,
+    "public_skipped": 42,
+    "source_manifest_verified": 2873,
+    "gitleaks": "no leaks found",
+    "diff_check": "passed"
+  }
+}
