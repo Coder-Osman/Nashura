@@ -10194,18 +10194,18 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "aeb2df61b843d442a329ff5c4c72dc41fccd7c0a0afab0df143aacd42f82d556",
-      "bytes": 83216,
-      "source_sha256": "aeb2df61b843d442a329ff5c4c72dc41fccd7c0a0afab0df143aacd42f82d556",
+      "sha256": "41beb4460ad66e0be058061d7601458aa7f6264a12745541486207107221dc7e",
+      "bytes": 83726,
+      "source_sha256": "41beb4460ad66e0be058061d7601458aa7f6264a12745541486207107221dc7e",
       "transformations": [
         "authored directly in isolated public repository worktree"
       ]
     },
     {
       "path": "docs/RESULTS.md",
-      "sha256": "9d401e0250d588e2d9ebba72b99e0b164cd059101cf80089eee40984de46befe",
-      "bytes": 158253,
-      "source_sha256": "9d401e0250d588e2d9ebba72b99e0b164cd059101cf80089eee40984de46befe",
+      "sha256": "d545869a698ee656916e017c86e298f6c8ffeed33634f1116921fe3d41961542",
+      "bytes": 159500,
+      "source_sha256": "d545869a698ee656916e017c86e298f6c8ffeed33634f1116921fe3d41961542",
       "transformations": [
         "authored directly in isolated public repository worktree"
       ]
@@ -16665,9 +16665,9 @@
     },
     {
       "path": "README.md",
-      "sha256": "e2fd60f669fd7721c345088aee514b502fc8fae71ae9d6800aee73c5ac60f122",
-      "bytes": 77803,
-      "source_sha256": "e2fd60f669fd7721c345088aee514b502fc8fae71ae9d6800aee73c5ac60f122",
+      "sha256": "a59af2aef6d81a911e13856368b7e23e500d5c704f3d0436d99ead42d180da4d",
+      "bytes": 78472,
+      "source_sha256": "a59af2aef6d81a911e13856368b7e23e500d5c704f3d0436d99ead42d180da4d",
       "transformations": [
         "authored directly in isolated public repository worktree"
       ]
@@ -20290,10 +20290,28 @@
       "transformations": [
         "authored directly in isolated public repository worktree"
       ]
+    },
+    {
+      "path": "docs/SSPI_INPUT_ARCHITECTURE_AUDIT_2026-11-05.md",
+      "sha256": "b66e3894d90c717bb59c5b040fbb325bb0d6bbc3f7de6b322bcc2eb117bc2ee8",
+      "bytes": 16467,
+      "source_sha256": "b66e3894d90c717bb59c5b040fbb325bb0d6bbc3f7de6b322bcc2eb117bc2ee8",
+      "transformations": [
+        "authored directly in isolated public repository worktree"
+      ]
+    },
+    {
+      "path": "docs/SSPI_INPUT_ARCHITECTURE_AUDIT_RESULTS_2026-11-05.json",
+      "sha256": "213d0ad4ab86b07466a63374fbc773bf8843b09acfa1bb5a179a67c515b8ef55",
+      "bytes": 9643,
+      "source_sha256": "a3061b4b3a97f0e0933f269edc3396955af403c8f9472c3cefe9cc7a89b39c4d",
+      "transformations": [
+        "private probe aggregate: removed per-state outputs; added source identities, runtime version, scope, derived aggregate checks and publication checks"
+      ]
     }
   ],
-  "file_count": 2873,
-  "source_bytes": 37602641,
+  "file_count": 2875,
+  "source_bytes": 37631177,
   "excluded_selected_candidates": {},
   "excluded_categories": [
     "credentials",

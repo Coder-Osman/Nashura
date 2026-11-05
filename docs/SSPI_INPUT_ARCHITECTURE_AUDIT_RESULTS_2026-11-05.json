@@ -1,0 +1,329 @@
+{
+  "schema": "sspi-input-architecture-audit.v1",
+  "architecture_sha": "ade50d5132de8ae3849193f7de6c26bf3b87d5641be2860a29d7ef02a4f414f2",
+  "parameters": {
+    "encoder.effect_encoder": 61185,
+    "encoder.mechanic_profile_encoder": 466816,
+    "encoder.active_effect_encoder": 18304,
+    "encoder.card_encoder": 105217,
+    "encoder.child_encoder": 132737,
+    "encoder.group_encoder": 283520,
+    "encoder.tower_encoder": 107008,
+    "encoder.card_token_encoder": 70528,
+    "encoder.relation_transformer": 3162464,
+    "encoder.spatial_encoder": 287776,
+    "encoder.scalar_encoder": 18944,
+    "encoder.candidate_encoder": 793536,
+    "hand_projection": 33280,
+    "trunk": 1381888,
+    "policy_head": 814600,
+    "value_head": 131842
+  },
+  "total_parameters": 7869645,
+  "sources": [
+    {
+      "file": "A-game-0001",
+      "sha256": "f0741be3081fff9d165c51efdc9c7144127eb142f9f48bc1a8bb330db450de5e",
+      "roots": 18
+    },
+    {
+      "file": "A-game-0002",
+      "sha256": "5f4564305953ac9d37b446d8756ea005941fba68c51400f909d80905b68feb9a",
+      "roots": 27
+    },
+    {
+      "file": "A-game-0003",
+      "sha256": "d8cb1e7f465c47655739b787c8aa9e65fb9f0b632ded675cd054babcc68d2f0d",
+      "roots": 17
+    },
+    {
+      "file": "A-game-0004",
+      "sha256": "ae101e0bd6d3dd40fc4579cee7b7e9ca82815a55a82a56fb5dccda54bee48caf",
+      "roots": 25
+    },
+    {
+      "file": "A-game-0005",
+      "sha256": "f42b9a825dd8ab4959e074213955b4baf2b48cd828607e5c09228b7f90542adc",
+      "roots": 29
+    },
+    {
+      "file": "A-game-0006",
+      "sha256": "9bfd12949be4a19bd9cd0a71c129fc24b807050d34bb19672e031fced48deb63",
+      "roots": 36
+    },
+    {
+      "file": "A-game-0007",
+      "sha256": "753e55fd22a90210a29e50f4f0708abd4a731c4019e52e011dab0176fc2406e4",
+      "roots": 35
+    },
+    {
+      "file": "A-game-0008",
+      "sha256": "ef2ddf835a2b9175fa7f01d41538be0c7c2d3a095c7436e33e67af281a8217ae",
+      "roots": 23
+    }
+  ],
+  "states": 210,
+  "input_bytes": {
+    "match_scalars": {
+      "min": 72.0,
+      "mean": 72.0,
+      "median": 72.0,
+      "max": 72.0
+    },
+    "own_cards": {
+      "min": 728.0,
+      "mean": 728.0,
+      "median": 728.0,
+      "max": 728.0
+    },
+    "opponent_cards": {
+      "min": 819.0,
+      "mean": 819.0,
+      "median": 819.0,
+      "max": 819.0
+    },
+    "towers": {
+      "min": 798.0,
+      "mean": 798.0,
+      "median": 798.0,
+      "max": 798.0
+    },
+    "groups": {
+      "min": 61520.0,
+      "mean": 61520.0,
+      "median": 61520.0,
+      "max": 61520.0
+    },
+    "active_effects": {
+      "min": 0.0,
+      "mean": 7.552380952380952,
+      "median": 0.0,
+      "max": 183.0
+    },
+    "events": {
+      "min": 3104.0,
+      "mean": 3104.0,
+      "median": 3104.0,
+      "max": 3104.0
+    },
+    "relation_edges": {
+      "min": 300.0,
+      "mean": 788.8095238095239,
+      "median": 800.0,
+      "max": 1525.0
+    },
+    "explicit_spatial_planes": {
+      "min": 32256.0,
+      "mean": 32256.0,
+      "median": 32256.0,
+      "max": 32256.0
+    },
+    "previous_action": {
+      "min": 148.0,
+      "mean": 148.0,
+      "median": 148.0,
+      "max": 148.0
+    },
+    "candidates": {
+      "min": 4312.0,
+      "mean": 4312.0,
+      "median": 4312.0,
+      "max": 4312.0
+    }
+  },
+  "frame_bytes": {
+    "min": 104057.0,
+    "mean": 104553.3619047619,
+    "median": 104557.0,
+    "max": 105282.0
+  },
+  "live_counts": {
+    "groups": {
+      "min": 0.0,
+      "mean": 6.880952380952381,
+      "median": 7.0,
+      "max": 15.0
+    },
+    "children": {
+      "min": 0.0,
+      "mean": 8.476190476190476,
+      "median": 9.0,
+      "max": 20.0
+    },
+    "events": {
+      "min": 0.0,
+      "mean": 7.390476190476191,
+      "median": 7.0,
+      "max": 26.0
+    },
+    "relations": {
+      "min": 12.0,
+      "mean": 31.552380952380954,
+      "median": 32.0,
+      "max": 61.0
+    },
+    "candidates": {
+      "min": 0.0,
+      "mean": 0.5476190476190477,
+      "median": 0.0,
+      "max": 4.0
+    }
+  },
+  "spatial_zeros": {
+    "min": 0.9898313283920288,
+    "mean": 0.994975319362822,
+    "median": 0.9947916865348816,
+    "max": 1.0
+  },
+  "child_columns_always_zero_in_sample": [
+    "shield_over_10000",
+    "is_ability_source",
+    "attack_phase_remaining_over_5000ms",
+    "projectile_homing",
+    "attack_windup",
+    "attack_release_or_channel",
+    "attack_charging",
+    "attack_interrupted",
+    "attack_sequence_index_over_10",
+    "attack_charge_stage_over_10",
+    "attack_charge_elapsed_over_5000ms",
+    "attack_damage_multiplier_over_5",
+    "attack_locked",
+    "classic_charge_ready",
+    "visibility_hidden_or_burrowed",
+    "visibility_transition_remaining_over_5000ms",
+    "visibility_targetable",
+    "visibility_targetable_known",
+    "visibility_area_damage_eligible",
+    "visibility_area_damage_eligible_known",
+    "projectile_drag_back_active",
+    "projectile_drag_stage_known",
+    "extra_spawn_accumulator_ratio",
+    "extra_spawn_accumulator_known",
+    "capture_runtime_known",
+    "capture_acquired_delay",
+    "capture_grab_pause",
+    "capture_dragging",
+    "capture_contained",
+    "capture_release_pending",
+    "capture_phase_budget_remaining_over_5000ms",
+    "capture_action_cycle_progress",
+    "capture_cooldown_remaining_ratio",
+    "threshold_relocation_runtime_known",
+    "relocation_waiting_threshold",
+    "relocation_active",
+    "relocation_exhausted",
+    "relocation_burrowed",
+    "relocation_remaining_ratio",
+    "relocation_index_ratio",
+    "relocation_threshold_percent",
+    "attack_sequence_progress_ratio",
+    "attack_sequence_progress_known",
+    "attack_sequence_decay_remaining_ratio",
+    "attack_sequence_decay_known",
+    "periodic_attack_modifier_present",
+    "periodic_attack_modifier_progress_ratio",
+    "periodic_attack_modifier_source_death_linger",
+    "periodic_attack_modifier_linger_remaining_ratio"
+  ],
+  "pending_refill_ticks": {
+    "min": 2.0,
+    "mean": 9.6,
+    "median": 8.0,
+    "max": 28.0
+  },
+  "random_probe_summary": {
+    "geometry_projection_rms": {
+      "min": 8.998866081237793,
+      "mean": 8.998866081237793,
+      "median": 8.998866081237793,
+      "max": 8.998866081237793
+    },
+    "numeric_feature_projection_rms": {
+      "min": 0.08905556052923203,
+      "mean": 0.09480770428975423,
+      "median": 0.09454827755689621,
+      "max": 0.09778862446546555
+    },
+    "halved_hp_projection_delta_rms": {
+      "min": 0.0013387756189331412,
+      "mean": 0.009171768358404128,
+      "median": 0.009663698263466358,
+      "max": 0.011857423931360245
+    },
+    "scene_delta_l2": {
+      "min": 0.0007018919568508863,
+      "mean": 0.009583180294915413,
+      "median": 0.009769405238330364,
+      "max": 0.01671678200364113
+    },
+    "scene_l2": {
+      "min": 15.99970531463623,
+      "mean": 15.999722679456076,
+      "median": 15.999713897705078,
+      "max": 15.999778747558594
+    },
+    "spatial_delta_max": {
+      "min": 0.0,
+      "mean": 0.0,
+      "median": 0.0,
+      "max": 0.0
+    },
+    "candidate_delta_l2": {
+      "min": 0.0,
+      "mean": 0.000944371880905237,
+      "median": 0.00012165098451077938,
+      "max": 0.0033046596217900515
+    },
+    "shared_delta_l2": {
+      "min": 0.0007969989674165845,
+      "mean": 0.010157560139001967,
+      "median": 0.010360866785049438,
+      "max": 0.01701880246400833
+    },
+    "shared_l2": {
+      "min": 22.62649917602539,
+      "mean": 22.626572529474895,
+      "median": 22.626567840576172,
+      "max": 22.62665557861328
+    },
+    "win_probability_delta": {
+      "min": -1.6689300537109375e-06,
+      "mean": -6.159146626790365e-07,
+      "median": -4.76837158203125e-07,
+      "max": 1.7881393432617188e-07
+    }
+  },
+  "limitations": "8 historical games/search roots; initial SSPI seed only; not trained-checkpoint diagnosis or runtime benchmark",
+  "source_commit": "078359e796d8077becd11fa557fee92b8117fee7",
+  "torch_version": "2.9.0",
+  "probe_seed": 20261103,
+  "probe_device": "cpu",
+  "probe_states": 24,
+  "probe_intervention": "Multiply own princess tower current HP ratio and absolute normalized HP by 0.5; other tensor fields unchanged.",
+  "geometry_to_numeric_projection_rms_ratio": 94.91703389141436,
+  "child_padding_fraction": 0.9470238095238095,
+  "shared_parameters": 6923203,
+  "private_probe_sha256": "203d9e208be99d47be68ab57a305c478872bf104e141f0de9ec9bf11153b1504",
+  "private_report_sha256": "a3061b4b3a97f0e0933f269edc3396955af403c8f9472c3cefe9cc7a89b39c4d",
+  "source_sha256": {
+    "firstlight_CR/native_runner/training/sspi/model.py": "5ab51a4f6ea92b1786cf52e88b9d1839a35d793d01010c4bc2af56e48823964a",
+    "firstlight_CR/native_runner/training/az_joint/model.py": "8c74e721957874ab6ca1192960f4ec795e63fa1963d9cd726b2cc319fc74c9c5",
+    "firstlight_CR/native_runner/training/v4/components.py": "1685ac92cb1bdc65017f3ef3ac02af336622dcf7247bf47c733a539c1b0c7178",
+    "firstlight_CR/native_runner/training/v4/tensorizer.py": "e171a1b048a30b66a215bc98bd5ad10ec7f81e1f9f1718409c30a0639bd140e3",
+    "firstlight_CR/native_runner/training/v4/config.py": "711f20b12eb0fb54886f28b261fb8ef631f7733b72c0c2e33fe69741025aed59"
+  },
+  "publication": "Aggregate summary only. Raw private FAIR samples and per-state outputs are not distributed. Proposed architecture is not implemented.",
+  "publication_checks": {
+    "public": {
+      "passed": 1104,
+      "skipped": 42
+    },
+    "active_main": {
+      "passed": 495
+    },
+    "gitleaks": "passed; no leaks found",
+    "source_manifest_verified_files": 2875,
+    "note": "CPU engineering checks, not native games or model-training validation. Fresh XML kept privately; historical tracked check files preserved."
+  }
+}
