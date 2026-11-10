@@ -47,7 +47,8 @@ def _configuration(run_dir, run_id, model, optimizer, *, actual_port, belief_por
         source_sha=source_identity(), collector_source_sha=_source_sha(),
         initial_model_sha=semantic_digest(model.state_dict()), frozen_sha=policy_function_sha(model),
         initial_policy_head_sha=policy_head_sha(model), architecture_sha=model.architecture_sha,
-        value_head_parameters=131842, transport="event-json-delta",
+        value_head_parameters=sum(parameter.numel() for parameter in model.value_head.parameters()),
+        transport="event-json-delta",
         native_ports=dict(actual=actual_port, belief_by_owner={str(k): v for k, v in belief_ports.items()}),
         optimizer=dict(type="AdamW", lr=1e-3, weight_decay=1e-4, betas=[.9, .999], eps=1e-8),
         batch=256, max_epochs=20, patience=3, min_improvement=1e-6, gradient_clip=1.,
@@ -103,8 +104,10 @@ def _episode_cache(run_dir, config, model, split, index, *, actual_port, belief_
         if receipt["identity"] != identity or sha(cache_path) != receipt["file_sha"]:
             raise ValueError("tower cache receipt differs")
         cache = torch.load(cache_path, weights_only=True)
-        if cache["schema"] != warmup.CACHE_SCHEMA or cache["shared_sha"] != config["frozen_sha"]:
-            raise ValueError("cached shared representation identity differs")
+        if (cache["schema"] != warmup.CACHE_SCHEMA
+                or cache["frozen_function_sha"] != config["frozen_sha"]
+                or cache.get("value_inputs", torch.empty(0)).shape[1:] != (1024,)):
+            raise ValueError("cached value-head input identity differs")
         return cache, receipt
     rows, _ = load_value_episode(directory, expected_kind=kind,
         run_id=config["run_id"], model_sha=config["initial_model_sha"])
@@ -140,8 +143,9 @@ def _collect_split(run_dir, config, model, split, *, actual_port, belief_ports):
         _status(run_dir, status="running", stage="episode_cached", split=split,
             completed=index, target=SPLITS[split], samples=sum(r["samples"] for r in receipts),
             wall_seconds=receipt["wall_seconds"], cache_seconds=receipt["cache_seconds"])
-    combined = dict(schema=warmup.CACHE_SCHEMA, shared_sha=config["frozen_sha"],
-        shared=torch.cat([c["shared"] for c in caches]), records=[r for c in caches for r in c["records"]])
+    combined = dict(schema=warmup.CACHE_SCHEMA, frozen_function_sha=config["frozen_sha"],
+        value_inputs=torch.cat([c["value_inputs"] for c in caches]),
+        records=[r for c in caches for r in c["records"]])
     summary = dict(collected_games=len(receipts), decisive_games=sum(r["decisive"] for r in receipts),
         excluded_draw_games=sum(not r["decisive"] for r in receipts),
         invalid_states=sum(len(r["excluded_states"]) for r in receipts), samples=len(combined["records"]),

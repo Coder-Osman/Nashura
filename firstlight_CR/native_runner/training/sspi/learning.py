@@ -22,7 +22,7 @@ from .augmentation import (TEMPORAL_AUX_WEIGHT, TEMPORAL_SCHEMA,
     SAMPLE_INTERVAL_TICKS, deserialize_information)
 
 
-CHECKPOINT_SCHEMA = "sspi-mac-pilot-checkpoint.v3"
+CHECKPOINT_SCHEMA = "sspi-mac-pilot-checkpoint.v4"
 SEARCH_BUDGETS = {"A_5PCT_128": 128}
 EFFECTIVE_BATCH = 128
 MICROBATCH = 4

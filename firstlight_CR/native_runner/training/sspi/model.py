@@ -76,6 +76,8 @@ class _ResidualBlock(nn.Module):
 class SSPIConditionalHeads(nn.Module):
     def __init__(self, *, token_width=256, spatial_width=64):
         super().__init__()
+        self.scalar_context = nn.Linear(128, 512)
+        self.hand_context = nn.Linear(128, 512)
         self.mode = nn.Sequential(nn.Linear(512, 256), nn.SiLU(), nn.Linear(256, 3))
         self.card_query = nn.Linear(512, token_width)
         self.cell_query = nn.Sequential(nn.Linear(512 + token_width, 256), nn.SiLU(), nn.Linear(256, 128))
@@ -86,10 +88,12 @@ class SSPIConditionalHeads(nn.Module):
         self.ability_query = nn.Linear(512, 128)
         self.ability_key = nn.Linear(128, 128)
 
-    def logits_for(self, shared, cards, spatial, ability_features):
+    def logits_for(self, shared, cards, spatial, ability_features, scalar_summary, hand_summary):
         if (shared.shape != (512,) or cards.ndim != 2 or spatial.ndim != 3
-                or ability_features.ndim != 2 or ability_features.shape[1] != ABILITY_FEATURE_DIM):
+                or ability_features.ndim != 2 or ability_features.shape[1] != ABILITY_FEATURE_DIM
+                or scalar_summary.shape != (128,) or hand_summary.shape != (128,)):
             raise ValueError("SSPI action heads expect one encoded decision")
+        shared = shared + self.scalar_context(scalar_summary) + self.hand_context(hand_summary)
         keys = self.cell_key(spatial.unsqueeze(0)).squeeze(0).flatten(1).transpose(0, 1)
 
         def logits(prefix):
@@ -179,8 +183,8 @@ class SSPIPolicy:
 class SSPIModel(nn.Module):
     """Fixed stateless V4 semantic/spatial backbone with three modes and five delays."""
 
-    schema = "sspi-policy-value.v3"
-    backbone_fields = ("scene_state", "spatial_summary", "scalar_summary", "candidate_summary")
+    schema = "sspi-policy-value.v4"
+    backbone_fields = ("scene_state", "spatial_summary", "scalar_summary", "hand_summary", "candidate_summary")
 
     def __init__(self, *, bundle=None, encoder_config=None):
         super().__init__()
@@ -189,16 +193,16 @@ class SSPIModel(nn.Module):
             raise ValueError("SSPI input must be a single current-state snapshot")
         self.encoder_config = config
         self.encoder = SemanticEncoder(bundle or production_semantic_bundle(), config,
-            cache_static_inference=True)
+            cache_static_inference=True, sspi_fusion=True)
         self.encoder.event_encoder = _ZeroSummary(config.event_summary_dim)
         self.encoder.previous_action_encoder = _ZeroSummary(config.previous_action_dim)
         self.hand_projection = nn.Sequential(nn.Linear(HAND_FEATURE_DIM, 128), nn.SiLU(),
             nn.Linear(128, 128), nn.LayerNorm(128))
-        self.trunk = nn.Sequential(nn.Linear(640, 512), nn.SiLU(), _ResidualBlock(), _ResidualBlock(),
+        self.trunk = nn.Sequential(nn.Linear(768, 512), nn.SiLU(), _ResidualBlock(), _ResidualBlock(),
             nn.LayerNorm(512))
         self.policy_head = SSPIConditionalHeads(token_width=config.token_dim,
             spatial_width=config.spatial_hidden_channels)
-        self.value_head = nn.Sequential(nn.Linear(512, 256), nn.SiLU(), nn.Linear(256, 2))
+        self.value_head = nn.Sequential(nn.Linear(1024, 256), nn.SiLU(), nn.Linear(256, 2))
 
     @property
     def architecture(self):
@@ -208,6 +212,13 @@ class SSPIModel(nn.Module):
             delay_ms=list(DELAY_MS), ability_interface="tagged-source-ability-pointer.v1",
             ability_feature_schema=ABILITY_FEATURE_SCHEMA, ability_feature_dim=ABILITY_FEATURE_DIM,
             hand_feature_schema=HAND_FEATURE_SCHEMA, hand_feature_dim=HAND_FEATURE_DIM,
+            fusion_schema="alphastar-hierarchical-cross-branch.v1",
+            child_group_context="group-transformer-output-gated-residual-to-child.v1",
+            spatial_condition_schema="scene-scalar-hand-film-residual.v1",
+            tower_value_schema="fair-six-tower-set-pool.v1",
+            value_input_fields=["shared", "tower_value_context", "scalar_summary", "hand_summary"],
+            policy_context_fields=["shared", "scalar_summary", "hand_summary", "conditioned_spatial_memory"],
+            trunk_input_fields=["scene_state", "spatial_summary", "scalar_summary", "hand_summary", "candidate_summary"],
             ability_candidates_during_hog=0,
             catalogs={name: getattr(self.encoder, name).catalog_id for name in
                 ("catalog", "ability_catalog", "entity_archetype_catalog", "effect_catalog", "mechanic_profile_catalog")})
@@ -229,7 +240,7 @@ class SSPIModel(nn.Module):
         return self.encode_inputs(frame, _hand_features(hand, device=device).unsqueeze(0))
 
     def encode_inputs(self, frame, hand_features):
-        """Batch the existing stateless trunk without changing its architecture."""
+        """Encode one FAIR snapshot with hierarchical relational/spatial fusion."""
         device = next(self.parameters()).device
         frame = frame.to_model_input(device, float_dtype=torch.float32)
         hand_features = hand_features.to(device=device, dtype=torch.float32)
@@ -237,16 +248,22 @@ class SSPIModel(nn.Module):
             raise ValueError("SSPI encoder requires one hand feature row per FAIR frame")
         if not bool(torch.isfinite(hand_features).all()):
             raise ValueError("SSPI hand inputs are nonfinite")
-        encoded = self.encoder(frame)
         hand_summary = self.hand_projection(hand_features)
+        encoded = self.encoder(frame, hand_summary)
         combined = torch.cat([encoded.scene_state, encoded.spatial_summary,
-            encoded.scalar_summary + hand_summary, encoded.candidate_summary], dim=-1)
-        if combined.shape[-1] != 640:
-            raise ValueError("SSPI frozen feature projection width changed")
+            encoded.scalar_summary, encoded.hand_summary, encoded.candidate_summary], dim=-1)
+        if combined.shape[-1] != 768:
+            raise ValueError("SSPI hierarchical feature projection width changed")
         return self.trunk(combined), encoded, frame
 
+    @staticmethod
+    def value_head_inputs(shared, encoded):
+        return torch.cat((shared, encoded.tower_value_context,
+            encoded.scalar_summary, encoded.hand_summary), dim=-1)
+
     def value_batch(self, frame, hand_features):
-        return self.value_head(self.encode_inputs(frame, hand_features)[0])
+        shared, encoded, _ = self.encode_inputs(frame, hand_features)
+        return self.value_head(self.value_head_inputs(shared, encoded))
 
     def forward(self, decision, legalities):
         shared, encoded, model_frame = self.encode(decision)
@@ -258,13 +275,14 @@ class SSPIModel(nn.Module):
             ability_features = torch.tensor([candidate.features for candidate in legality.ability_candidates],
                 dtype=shared.dtype, device=shared.device).reshape(-1, ABILITY_FEATURE_DIM)
             logits = self.policy_head.logits_for(shared[index], encoded.own_card_memory[index, list(rows)],
-                encoded.spatial_memory[index], ability_features)
+                encoded.spatial_memory[index], ability_features, encoded.scalar_summary[index],
+                encoded.hand_summary[index])
             policies.append(SSPIPolicy(logits, legality))
-        return policies, self.value_head(shared)
+        return policies, self.value_head(self.value_head_inputs(shared, encoded))
 
     def value_only(self, decision):
-        shared, _, _ = self.encode(decision)
-        return self.value_head(shared)
+        shared, encoded, _ = self.encode(decision)
+        return self.value_head(self.value_head_inputs(shared, encoded))
 
 
 def initialize_fresh_model(seed: int, *, device="cpu", bundle=None, encoder_config=None):

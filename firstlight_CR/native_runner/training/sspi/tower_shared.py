@@ -151,7 +151,8 @@ def load_data(directory):
 
 def create_optimizer(model):
     parameters = configure_value_training(model, head_only=False)
-    if sum(p.numel() for p in parameters) != 7055045:
+    expected = tuple(p for name, p in model.named_parameters() if not name.startswith("policy_head."))
+    if {id(p) for p in parameters} != {id(p) for p in expected}:
         raise ValueError("unfrozen shared/value parameter scope differs")
     return torch.optim.AdamW(parameters, lr=LR, weight_decay=1e-4, betas=(.9,.999), eps=1e-8)
 

@@ -15,8 +15,8 @@ from .model import VALUE_ORDER
 from .value_learning import configure_value_training, policy_function_sha
 
 TARGET_SCHEMA = "sspi-public-tower-hp-target.v1"
-CACHE_SCHEMA = "sspi-tower-head-cache.v1"
-RUN_SCHEMA = "sspi-tower-head-bootstrap.v1"
+CACHE_SCHEMA = "sspi-tower-head-cache.v2"
+RUN_SCHEMA = "sspi-tower-head-bootstrap.v2"
 FORMULA = "sum-hp-difference-over-sum.v1"
 SEED = 20261103
 BATCH = 256
@@ -89,8 +89,10 @@ def validate_target(record, raw):
 def create_optimizer(model):
     parameters = configure_value_training(model, head_only=True)
     model.eval()  # Freeze all shared running statistics as well as weights.
-    if sum(p.numel() for p in parameters) != 131842:
-        raise ValueError("tower warmup requires the unchanged 131842-parameter value head")
+    expected_parameters = tuple(model.value_head.parameters())
+    if ({id(p) for p in parameters} != {id(p) for p in expected_parameters}
+            or any(p.requires_grad for n, p in model.named_parameters() if not n.startswith("value_head."))):
+        raise ValueError("tower warmup optimizer must contain exactly the current value head")
     if model.architecture["value_order"] != ["WIN", "LOSS"]:
         raise ValueError("tower warmup requires explicit WIN/LOSS output order")
     return torch.optim.AdamW(parameters, lr=1e-3, weight_decay=1e-4,
@@ -139,29 +141,30 @@ def cache_rows(model, rows, raw_rows):
                 decision_index=raw["decision_index"], reason=target["reason"]))
             continue
         with torch.no_grad():
-            shared, _, _ = model.encode(row.information)
-            if shared.shape != (1, 512) or not bool(torch.isfinite(shared).all()):
-                raise ValueError("invalid frozen shared representation")
+            shared, encoded, _ = model.encode(row.information)
+            value_inputs = model.value_head_inputs(shared, encoded)
+            if value_inputs.shape != (1, 1024) or not bool(torch.isfinite(value_inputs).all()):
+                raise ValueError("invalid frozen shared and FAIR value representation")
             if index in (0, len(rows) // 2, len(rows) - 1):
-                cached = model.value_head(shared)
+                cached = model.value_head(value_inputs)
                 full = model(row.information, [row.information.legality])[1]
                 max_error = max(max_error, float((full - cached).abs().max()))
                 torch.testing.assert_close(full, cached, atol=1e-6, rtol=0)
-        vectors.append(shared.detach().cpu().clone())
+        vectors.append(value_inputs.detach().cpu().clone())
         records.append(dict(game_id=row.game_id,
             decision_index=raw["decision_index"], value_gate_seed=raw["value_gate_seed"],
             action=raw["action"], executed_action=raw["executed_action"], **target))
     if policy_function_sha(model) != before:
         raise ValueError("shared weights or buffers changed during cache encoding")
-    return dict(schema=CACHE_SCHEMA, shared_sha=before,
-        shared=torch.cat(vectors) if vectors else torch.empty((0, 512)), records=records,
+    return dict(schema=CACHE_SCHEMA, frozen_function_sha=before,
+        value_inputs=torch.cat(vectors) if vectors else torch.empty((0, 1024)), records=records,
         excluded=excluded, cache_forward_max_abs_error=max_error)
 
 
 def cached_scores(model, cache):
     model.eval()
     with torch.no_grad():
-        chunks = [model.value_head(part).softmax(-1) for part in cache["shared"].split(BATCH)]
+        chunks = [model.value_head(part).softmax(-1) for part in cache["value_inputs"].split(BATCH)]
     return torch.cat([p[:, 0] - p[:, 1] for p in chunks]).tolist() if chunks else []
 
 
@@ -221,7 +224,9 @@ def train_head(model, optimizer, train, validation, *, checkpoint_path, identity
     """Resume at committed epoch boundaries, with exact best head AND AdamW state."""
     frozen = policy_function_sha(model)
     for cache in (train, validation):
-        if cache["shared_sha"] != frozen or len(cache["shared"]) != len(cache["records"]):
+        if (cache["schema"] != CACHE_SCHEMA or cache["frozen_function_sha"] != frozen
+                or len(cache["value_inputs"]) != len(cache["records"])
+                or cache["value_inputs"].shape[1:] != (1024,)):
             raise ValueError("cache identity or row count differs")
     if {r["game_id"] for r in train["records"]} & {r["game_id"] for r in validation["records"]}:
         raise ValueError("training/validation episode overlap")
@@ -257,7 +262,7 @@ def train_head(model, optimizer, train, validation, *, checkpoint_path, identity
         for start in range(0, len(order), BATCH):
             indices = order[start:start+BATCH]
             optimizer.zero_grad(set_to_none=True)
-            loss = soft_loss(model.value_head(train["shared"][indices]), targets[indices])
+            loss = soft_loss(model.value_head(train["value_inputs"][indices]), targets[indices])
             loss.backward()
             if any(p.grad is not None for n, p in model.named_parameters() if not n.startswith("value_head.")):
                 raise ValueError("gradient escaped the value head")

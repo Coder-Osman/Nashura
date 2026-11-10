@@ -702,7 +702,9 @@ def _evaluate_real_split(model, entries, data_dir, model_sha, *, device, replica
 
 def _make_optimizer(model):
     parameters = configure_value_training(model, head_only=False)
-    if sum(parameter.numel() for parameter in parameters) != 7_055_045:
+    expected = tuple(parameter for name, parameter in model.named_parameters()
+        if not name.startswith("policy_head."))
+    if {id(parameter) for parameter in parameters} != {id(parameter) for parameter in expected}:
         raise ValueError("tower fit must update the shared body and value head only")
     if any(parameter.requires_grad for parameter in model.policy_head.parameters()):
         raise ValueError("policy head must stay outside the value optimizer")

@@ -121,7 +121,8 @@ def test_soft_ce_and_tail_actual_size_normalization():
 def test_real_cached_head_gradient_frozen_policy_and_checkpoint(tmp_path):
     model = initialize_fresh_model(warmup.SEED).eval()
     optimizer = warmup.create_optimizer(model)
-    assert sum(p.numel() for p in model.parameters() if p.requires_grad) == 131842
+    assert sum(p.numel() for p in model.parameters() if p.requires_grad) == sum(
+        p.numel() for p in model.value_head.parameters())
     # state_dict intentionally omits nonpersistent catalog buffers; check those too.
     buffers_before = semantic_digest(dict(model.named_buffers()))
     info = _real_information()
@@ -130,18 +131,19 @@ def test_real_cached_head_gradient_frozen_policy_and_checkpoint(tmp_path):
     raw = dict(**serialize_information(info), decision_index=3, value_gate_seed=5,
         action="wait", executed_action="wait", tower_hp_target=warmup.capture_tower_target(observation, info))
     cache = warmup.cache_rows(model, [ValueRow("g1", info, WLLabel.LOSS)], [raw])
-    assert cache["shared"].shape == (1, 512)
-    assert not cache["shared"].is_inference() and cache["cache_forward_max_abs_error"] == 0.
+    assert cache["schema"] == warmup.CACHE_SCHEMA
+    assert cache["value_inputs"].shape == (1, 1024)
+    assert not cache["value_inputs"].is_inference() and cache["cache_forward_max_abs_error"] == 0.
     frozen, policy = policy_function_sha(model), warmup.policy_signature(model, info)
     head = semantic_digest(model.value_head.state_dict())
-    warmup.soft_loss(model.value_head(cache["shared"]), torch.tensor([[.6, .4]])).backward()
+    warmup.soft_loss(model.value_head(cache["value_inputs"]), torch.tensor([[.6, .4]])).backward()
     assert any(p.grad is not None and bool(p.grad.abs().sum() > 0) for p in model.value_head.parameters())
     assert all(p.grad is None for n, p in model.named_parameters() if not n.startswith("value_head."))
     optimizer.step()
     optimizer.zero_grad(set_to_none=True)
     with torch.no_grad():
         full = model.value_only(info)
-        batch = model.value_head(cache["shared"].repeat(7, 1))
+        batch = model.value_head(cache["value_inputs"].repeat(7, 1))
     torch.testing.assert_close(batch, full.expand(7, 2), atol=1e-6, rtol=0)
     assert policy_function_sha(model) == frozen and warmup.policy_signature(model, info) == policy
     assert semantic_digest(dict(model.named_buffers())) == buffers_before
@@ -158,9 +160,9 @@ def test_real_cached_head_gradient_frozen_policy_and_checkpoint(tmp_path):
 
 def synthetic_cache(model, prefix, n=257):
     generator = torch.Generator().manual_seed(12)
-    x = torch.randn((n, 512), generator=generator)
+    x = torch.randn((n, 1024), generator=generator)
     scores = .1 * x[:, 0].tanh()
-    return dict(shared_sha=policy_function_sha(model), shared=x,
+    return dict(schema=warmup.CACHE_SCHEMA, frozen_function_sha=policy_function_sha(model), value_inputs=x,
         records=[dict(game_id=f"{prefix}-{i%4}", score=float(v), soft_target=[float((1+v)/2), float((1-v)/2)])
             for i, v in enumerate(scores)])
 
@@ -205,7 +207,7 @@ def test_best_model_optimizer_rollback_patience_and_empty_data(tmp_path, monkeyp
     assert result["status"] == "rolled_back" and result["early_stopped"]
     assert len(result["epochs"]) == 3 and result["selected_steps"] == 0
     assert semantic_digest((model.state_dict(), optimizer.state_dict())) == before
-    train["records"], train["shared"] = [], torch.empty((0, 512))
+    train["records"], train["value_inputs"] = [], torch.empty((0, 1024))
     assert warmup.train_head(model, optimizer, train, valid, checkpoint_path=tmp_path/"empty.pt", identity={})["status"] == "skipped"
     assert not (tmp_path/"empty.pt").exists()
 

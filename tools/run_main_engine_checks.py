@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT / "firstlight_CR"
 TESTS = (
     "test_event_value_sensitivity.py",
+    "test_sspi_alphastar_fusion.py",
     "test_sspi_tower_shared.py",
     "test_sspi_tower_bootstrap.py",
     "test_sspi_tower_counterfactual.py",

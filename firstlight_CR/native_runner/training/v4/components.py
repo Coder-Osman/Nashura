@@ -686,33 +686,47 @@ class RelationTransformerV4(nn.Module):
 
 
 class ResidualSpatialBlock(nn.Module):
-    def __init__(self, channels: int) -> None:
+    def __init__(self, channels: int, *, condition_dim: int = 0) -> None:
         super().__init__()
         self.norm1 = nn.GroupNorm(8, channels)
         self.conv1 = nn.Conv2d(channels, channels, 3, padding=1)
         self.norm2 = nn.GroupNorm(8, channels)
         self.conv2 = nn.Conv2d(channels, channels, 3, padding=1)
+        self.film = nn.Linear(condition_dim, 2 * channels) if condition_dim else None
         nn.init.zeros_(self.conv2.weight)
         nn.init.zeros_(self.conv2.bias)
+        if self.film is not None:
+            nn.init.zeros_(self.film.weight)
+            nn.init.zeros_(self.film.bias)
 
-    def forward(self, inputs: Tensor) -> Tensor:
+    def forward(self, inputs: Tensor, condition: Tensor | None = None) -> Tensor:
         residual = torch.nn.functional.silu(self.norm1(inputs))
         residual = self.conv1(residual)
         residual = torch.nn.functional.silu(self.norm2(residual))
-        return inputs + self.conv2(residual)
+        output = inputs + self.conv2(residual)
+        if self.film is not None:
+            if condition is None or condition.ndim != 2 or condition.shape[0] != inputs.shape[0]:
+                raise ValueError("conditional spatial block requires one global context per scene")
+            gamma, beta = self.film(condition).chunk(2, dim=-1)
+            output = output * (1. + gamma[:, :, None, None]) + beta[:, :, None, None]
+        elif condition is not None:
+            raise ValueError("unconditional spatial block received a conditioning vector")
+        return output
 
 
 class SpatialScatterEncoder(nn.Module):
     """Bilinear child scatter plus an exact-resolution spatial ResNet."""
 
-    def __init__(self, config: ModelConfigV4) -> None:
+    def __init__(self, config: ModelConfigV4, *, condition_dim: int = 0) -> None:
         super().__init__()
         self.config = config
+        self.condition_dim = condition_dim
         self.child_value = nn.Linear(config.child_dim, config.learned_scatter_channels)
         input_channels = config.explicit_spatial_channels + config.learned_scatter_channels + 3
         self.input = nn.Conv2d(input_channels, config.spatial_hidden_channels, 3, padding=1)
         self.blocks = nn.Sequential(
-            *(ResidualSpatialBlock(config.spatial_hidden_channels) for _ in range(config.spatial_res_blocks))
+            *(ResidualSpatialBlock(config.spatial_hidden_channels, condition_dim=condition_dim)
+                for _ in range(config.spatial_res_blocks))
         )
         self.summary = mlp(2 * config.spatial_hidden_channels, config.spatial_summary_dim, config.spatial_summary_dim)
 
@@ -822,10 +836,17 @@ class SpatialScatterEncoder(nn.Module):
         child_extent: Tensor,
         child_radius: Tensor,
         child_mask: Tensor,
+        condition: Tensor | None = None,
     ) -> tuple[Tensor, Tensor]:
         learned = self.scatter(child_memory, child_position, child_extent, child_radius, child_mask)
         coordinates = self.coordinate_planes(explicit_planes).unsqueeze(0).expand(explicit_planes.shape[0], -1, -1, -1)
-        spatial = self.blocks(self.input(torch.cat((explicit_planes, learned, coordinates), dim=1)))
+        if self.condition_dim and (condition is None or condition.shape != (explicit_planes.shape[0], self.condition_dim)):
+            raise ValueError("spatial encoder conditioning shape differs")
+        if not self.condition_dim and condition is not None:
+            raise ValueError("unconditional spatial encoder received a conditioning vector")
+        spatial = self.input(torch.cat((explicit_planes, learned, coordinates), dim=1))
+        for block in self.blocks:
+            spatial = block(spatial, condition)
         average = spatial.mean(dim=(2, 3))
         maximum = spatial.amax(dim=(2, 3))
         return spatial, self.summary(torch.cat((average, maximum), dim=-1))
