@@ -73,6 +73,8 @@ def selected_files(workspace):
         "docs/RESULTS.md",
         "docs/SSPI_MAC_PILOT_TRAINING_SPEC_2026-11-01.md",
         "docs/SSPI_VALUE_ONLY_EXPERIMENT_2026-11-03.md",
+        "docs/SSPI_VALUE_CURVE_V4_2026-11-10.md",
+        "docs/SSPI_VALUE_CURVE_V4_RESULTS_2026-11-10.json",
         "docs/SSPI_TOWER_HEAD_BOOTSTRAP_2026-11-03.md",
         "docs/SSPI_TOWER_HEAD_BOOTSTRAP_RESULTS_2026-11-03.json",
         "docs/SSPI_TOWER_SHARED_FIT_2026-11-03.md",
@@ -101,6 +103,16 @@ def selected_files(workspace):
         "docs/evidence/sspi-transition-profile-20261103/persistent-delta.json",
         "docs/evidence/sspi-transition-profile-20261103/persistent-delta-repeat.json",
         "docs/evidence/sspi-transition-profile-20261103/event-json-delta.json",
+        "tools/export_public_snapshot.py",
+        "publication/checks-public.xml",
+        "publication/checks-affordability.xml",
+        "publication/checks-selection-timeout.xml",
+        "publication/checks-position-guards.xml",
+        "publication/checks-live-command.xml",
+        "publication/checks-dispatch-command.xml",
+        "publication/checks-reservation-mapping.xml",
+        "publication/checks-command-coordinates.xml",
+        "publication/checks-collection-coordinator.xml",
     ):
         path = workspace / name
         if path.is_file():

@@ -497,15 +497,13 @@ def load_checkpoint(path, model: SSPIModel, optimizer, *, expected_identity, dev
     random.setstate(payload["python_rng"])
     torch.set_rng_state(payload["cpu_rng"])
     if payload["mps_rng"] is not None:
-        if not torch.backends.mps.is_available():
-            raise RuntimeError("checkpoint contains MPS RNG state but MPS is unavailable")
-        torch.mps.set_rng_state(payload["mps_rng"])
+        if torch.backends.mps.is_available():
+            torch.mps.set_rng_state(payload["mps_rng"])
     if payload.get("cuda_rng") is not None:
-        if not torch.cuda.is_available():
-            raise RuntimeError("checkpoint contains CUDA RNG state but CUDA is unavailable")
-        if len(payload["cuda_rng"]) != torch.cuda.device_count():
-            raise RuntimeError("checkpoint CUDA device count differs from the current host")
-        torch.cuda.set_rng_state_all(payload["cuda_rng"])
+        if torch.cuda.is_available():
+            if len(payload["cuda_rng"]) != torch.cuda.device_count():
+                raise RuntimeError("checkpoint CUDA device count differs from the current host")
+            torch.cuda.set_rng_state_all(payload["cuda_rng"])
     model.train(bool(payload["model_training"]))
     return dict(file_sha=hashlib.sha256(data).hexdigest(), model_sha=payload["model_sha"],
         optimizer_steps=payload["optimizer_steps"], identity_sha=payload["identity_sha"],

@@ -14,10 +14,11 @@ import torch
 import torch.nn.functional as F
 
 from ..fair_search.contracts import semantic_digest
+from ..v4.tensors import concatenate_padded_tensor_records
 from .augmentation import deserialize_information
 from .collector import VALUE_ARM, VALUE_EPISODE_SCHEMA, value_sample_gate
 from .learning import WLLabel, decisive_result, validate_value_logits
-from .model import SSPIModel, VALUE_ORDER
+from .model import SSPIModel, VALUE_ORDER, _hand_features
 
 
 VALUE_BATCH = 128
@@ -30,6 +31,9 @@ class ValueRow:
     game_id: str
     information: object
     final_wl: WLLabel
+    owner: int | None = None
+    decision_index: int | None = None
+    fair_sha256: str | None = None
 
     def __post_init__(self):
         if not isinstance(self.final_wl, WLLabel):
@@ -129,7 +133,9 @@ def load_value_episode(directory, *, expected_kind, run_id, model_sha, include_r
                 or raw.get("executed_action") != action["executed_action"]
                 or raw.get("wl") != result["labels"][information.owner]):
             raise ValueError("value-only FAIR row lacks matching decision or terminal evidence")
-        rows.append(ValueRow(identity["game_id"], information, WLLabel[raw["wl"]]))
+        rows.append(ValueRow(identity["game_id"], information, WLLabel[raw["wl"]],
+            owner=action["owner"], decision_index=action["decision_index"],
+            fair_sha256=action["fair_sha256"]))
     return (rows, metadata, manifest) if include_raw else (rows, metadata)
 
 
@@ -157,6 +163,49 @@ def value_predictions(model: SSPIModel, rows):
             result.append((row.game_id, int(row.final_wl),
                 tuple(float(item) for item in probabilities.cpu())))
     return result
+
+
+def encode_value_head_inputs(model: SSPIModel, rows, *, progress=None):
+    """Encode frozen FAIR backbones once; returned tensors remain usable by autograd."""
+    model.eval()
+    features = []
+    with torch.no_grad():
+        # This batches a frozen forward only. Optimizer microbatches remain 4.
+        for start in range(0, len(rows), VALUE_BATCH):
+            part = rows[start:start + VALUE_BATCH]
+            frame = concatenate_padded_tensor_records(tuple(row.information.frame for row in part))
+            hands = torch.stack([_hand_features(row.information.hand, device="cpu") for row in part])
+            shared, encoded, _ = model.encode_inputs(frame, hands)
+            feature = model.value_head_inputs(shared, encoded)
+            if (feature.ndim != 2 or feature.shape[0] != len(part)
+                    or not bool(torch.isfinite(feature).all())):
+                raise ValueError("value-curve encoder produced invalid head inputs")
+            if start == 0:
+                for index, row in enumerate(part[:VALUE_MICROBATCH]):
+                    full = model.value_only(row.information)
+                    cached = model.value_head(feature[index:index + 1])
+                    torch.testing.assert_close(cached, full, atol=1e-6, rtol=1e-5)
+            features.append(feature.detach())
+            done = start + len(part)
+            if progress is not None and (done % 256 == 0 or done == len(rows)):
+                progress(done, len(rows))
+    if not features:
+        raise ValueError("value-curve feature cache requires rows")
+    return torch.cat(features)
+
+
+def value_head_predictions(model: SSPIModel, rows, features):
+    if (features.ndim != 2 or features.shape[0] != len(rows)
+            or not bool(torch.isfinite(features).all())):
+        raise ValueError("value-curve feature cache does not match its rows")
+    model.eval()
+    with torch.no_grad():
+        logits = model.value_head(features.to(device=next(model.parameters()).device,
+            dtype=next(model.parameters()).dtype))
+        validate_value_logits(logits)
+        probabilities = logits.softmax(-1).cpu()
+    return [(row.game_id, int(row.final_wl), tuple(float(x) for x in probs))
+        for row, probs in zip(rows, probabilities)]
 
 
 def prediction_metrics(predictions):
@@ -264,3 +313,84 @@ def train_value_generation(model: SSPIModel, optimizer, training_rows, validatio
         optimizer.zero_grad(set_to_none=True)
         model.eval()
         raise
+
+
+def train_value_curve_batch(model: SSPIModel, optimizer, training_rows, *, seed,
+        batch_size=VALUE_BATCH, microbatch_size=VALUE_MICROBATCH, features=None):
+    """Expose each newly collected value state once and keep AdamW state live."""
+    if (type(seed) is not int or seed < 0 or type(optimizer) is not torch.optim.AdamW
+            or type(batch_size) is not int or batch_size < 1
+            or type(microbatch_size) is not int or not 1 <= microbatch_size <= batch_size):
+        raise ValueError("invalid value-curve batch configuration")
+    if not training_rows:
+        return dict(status="skipped", rows=0, games=0, optimizer_steps=0,
+            reason="no_decisive_value_samples",
+            exposure_sha256=semantic_digest([]))
+    keys = [(row.game_id, row.owner, row.decision_index) for row in training_rows]
+    if any(owner not in (0, 1) or type(index) is not int or index < 0
+            for _game, owner, index in keys):
+        raise ValueError("value-curve rows require owner and decision identities")
+    if len(set(keys)) != len(keys):
+        raise ValueError("value-curve batch repeats a decision state")
+    parameters = configure_value_training(model, head_only=True)
+    optimized = [p for group in optimizer.param_groups for p in group["params"]]
+    if len(optimized) != len(parameters) or {id(p) for p in optimized} != {id(p) for p in parameters}:
+        raise ValueError("value-curve optimizer must contain exactly the value head")
+    if any(group.get("lr") != 1e-4 or group.get("weight_decay") != 1e-4
+            or tuple(group.get("betas", ())) != (0.9, 0.999)
+            or group.get("eps") != 1e-8 or group.get("amsgrad") is not False
+            for group in optimizer.param_groups):
+        raise ValueError("value-curve optimizer hyperparameters differ from the fixed protocol")
+    frozen_sha = policy_function_sha(model)
+    model.eval()
+    model.zero_grad(set_to_none=True)
+    if features is not None:
+        first_layer = (model.value_head[0] if isinstance(model.value_head, torch.nn.Sequential)
+            else model.value_head)
+        feature_width = getattr(first_layer, "in_features", None)
+        if (features.ndim != 2 or features.shape[0] != len(training_rows)
+                or (feature_width is not None and features.shape[1] != feature_width)
+                or not bool(torch.isfinite(features).all())):
+            raise ValueError("value-curve feature cache does not match its rows")
+    labels = torch.tensor([int(row.final_wl) for row in training_rows], dtype=torch.long,
+        device=next(model.parameters()).device)
+    if features is not None:
+        features = features.to(device=labels.device, dtype=next(model.parameters()).dtype)
+    ordering = list(range(len(training_rows)))
+    random.Random(seed).shuffle(ordering)
+    steps = 0
+    max_grad_norm = 0.
+    for start in range(0, len(ordering), batch_size):
+        batch_indices = ordering[start:start + batch_size]
+        optimizer.zero_grad(set_to_none=True)
+        for offset in range(0, len(batch_indices), microbatch_size):
+            indices = batch_indices[offset:offset + microbatch_size]
+            if features is None:
+                rows = [training_rows[index] for index in indices]
+                loss = value_loss(model, rows)
+                count = len(rows)
+            else:
+                batch_ids = torch.tensor(indices, dtype=torch.long, device=labels.device)
+                logits = model.value_head(features.index_select(0, batch_ids))
+                validate_value_logits(logits)
+                loss = F.cross_entropy(logits, labels.index_select(0, batch_ids))
+                count = len(indices)
+            (loss * (count / len(batch_indices))).backward()
+        if any(parameter.grad is not None for name, parameter in model.named_parameters()
+                if not name.startswith("value_head.")):
+            raise ValueError("value-curve gradient reached frozen parameters")
+        norm = torch.nn.utils.clip_grad_norm_(parameters, 1.)
+        if not bool(torch.isfinite(norm)):
+            raise ValueError("value-curve gradient norm is nonfinite")
+        max_grad_norm = max(max_grad_norm, float(norm.detach().cpu()))
+        optimizer.step()
+        optimizer.zero_grad(set_to_none=True)
+        steps += 1
+    if policy_function_sha(model) != frozen_sha:
+        raise ValueError("value-curve update changed the frozen policy function")
+    model.eval()
+    return dict(status="updated", rows=len(training_rows),
+        games=len({row.game_id for row in training_rows}), optimizer_steps=steps,
+        batch_size=batch_size, microbatch_size=microbatch_size, seed=seed,
+        max_gradient_norm=max_grad_norm, policy_function_sha=frozen_sha,
+        exposure_sha256=semantic_digest(sorted(keys)))

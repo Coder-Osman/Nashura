@@ -1,0 +1,470 @@
+{
+  "checkpoint_identity": {
+    "architecture_sha": "d956a4128d712f78b6abc7ae11990b4006ea7c4848913829e348e623b38cad0f",
+    "collector_source_sha": "dbc82720810c9d4f66d3ea87ae6f988e2db06c5f78e0bb97b8995646883e886b",
+    "engine_sha256": "110aa2b5cac391c498645e072b0d88729428c2c2845e7e2737ca8ee979059783",
+    "initial_model_sha": "c5ed5d9b51decbdc1a81511b2a43b30c575498273e580b9d8ed0b6bf9fe751ec",
+    "initial_policy_function_sha": "24a9324bb630fd91c4730fdc2f6c57cb58b9e02d02c6ffcd7f1f96f3c6cbe215",
+    "initial_policy_head_sha": "862a6ab4d33cdb2dadc238721d119b585ce953a73eb55b2942404e3461360a53",
+    "model_schema": "sspi-policy-value.v4",
+    "protocol": "sspi-value-learning-curve.v1",
+    "recovery_revision": "portable-accelerator-rng-v1",
+    "run_id": "sspi-value-curve-v4-20261110-r1",
+    "seed": 20261103,
+    "source_sha256": "b301dac2d9d0c9f0a1ccac794ed113c90ae888627425d914a04c696de2053e4c",
+    "training_scope": "value_head_only",
+    "value_order": [
+      "WIN",
+      "LOSS"
+    ]
+  },
+  "checks": [
+    {
+      "check_index": 1,
+      "checkpoint": {
+        "file_sha256": "10bad402eef1a3a6b27b5cc28cacf4d1f49d6e59ea536abd620ee4533f79536f",
+        "model_sha": "02d4bf07ab7145b4ce2742ddf933ef128a6b7a426cd8db9997bd194ac9fae1e3",
+        "optimizer_sha256": "85648b0dbbc9a6847f08d7762a4cdb271248d889fcbea3df2fce696c9a3f9f48",
+        "optimizer_steps": 130,
+        "path": "curve-0064.pt",
+        "run_state_sha256": "d9ccacd874295567197b81351eabbeeb3b8e03d52be259af1a93c269c2ffaf71"
+      },
+      "collected_games": 64,
+      "current_batch": {
+        "batch_size": 128,
+        "end": 64,
+        "exposure_sha256": "69e947573b5462ff0b125955c813b4984b9c4913933fe1e37c853d8a55cee68c",
+        "games": 64,
+        "max_gradient_norm": null,
+        "microbatch_size": 4,
+        "optimizer_steps": 130,
+        "optimizer_steps_total": 130,
+        "policy_function_sha": "24a9324bb630fd91c4730fdc2f6c57cb58b9e02d02c6ffcd7f1f96f3c6cbe215",
+        "rows": 16555,
+        "seed": 1467245818,
+        "start": 1,
+        "status": "updated",
+        "training_games": {
+          "collected_games": 64,
+          "decisive_games": 64,
+          "excluded_draw_games": 0,
+          "selected_rows": 16555
+        }
+      },
+      "decisive_training_games": 64,
+      "device": "cuda:0",
+      "evaluation": {
+        "check_index": 1,
+        "current": {
+          "aggregation": "sample-means-with-equal-game-CE-and-Brier-reported-separately",
+          "brier": 0.5026738945851248,
+          "ece10": 0.03175439459058241,
+          "equal_game_mean": {
+            "brier": 0.5033718417815114,
+            "wl_ce": 0.6965801644316962
+          },
+          "games": 32,
+          "rows": 8101,
+          "wl_ce": 0.6958879156867736
+        },
+        "current_minus_constant_ce": {
+          "ci95": [
+            -0.013891002711295439,
+            0.020918700627477776
+          ],
+          "games": 32,
+          "lower": -0.022429973190652444,
+          "mean": 0.003434613438047614,
+          "method": "paired-complete-game-bootstrap-equal-game-mean",
+          "one_sided_alpha": 0.0015625,
+          "replicates": 20000,
+          "seed": 1115317949,
+          "upper": 0.030286256895699627
+        },
+        "current_minus_initial_ce": {
+          "ci95": [
+            -0.013935673879937223,
+            0.020646915709746867
+          ],
+          "games": 32,
+          "lower": -0.02195732921782652,
+          "mean": 0.003431788519882386,
+          "method": "paired-complete-game-bootstrap-equal-game-mean",
+          "one_sided_alpha": 0.0015625,
+          "replicates": 20000,
+          "seed": 1216045498,
+          "upper": 0.029328421476190733
+        },
+        "initial": {
+          "aggregation": "sample-means-with-equal-game-CE-and-Brier-reported-separately",
+          "brier": 0.5000004039011063,
+          "ece10": 0.010035978395428802,
+          "equal_game_mean": {
+            "brier": 0.5000011958242188,
+            "wl_ce": 0.6931483759118139
+          },
+          "games": 32,
+          "rows": 8101,
+          "wl_ce": 0.693147583916778
+        },
+        "reasons": [],
+        "repeated_test_correction": {
+          "baselines": 2,
+          "checks": 16,
+          "familywise_alpha": 0.05,
+          "one_sided_test_alpha": 0.0015625
+        },
+        "status": "evaluated",
+        "training_frequency_constant": {
+          "aggregation": "sample-means-with-equal-game-CE-and-Brier-reported-separately",
+          "brier": 0.4999988889052872,
+          "ece10": 0.0012081613394727686,
+          "equal_game_mean": {
+            "brier": 0.49999837043379763,
+            "wl_ce": 0.6931455509936509
+          },
+          "games": 32,
+          "rows": 8101,
+          "wl_ce": 0.6931460694651366
+        },
+        "validation_signal": false
+      },
+      "excluded_draw_games": 0,
+      "initial_checkpoint_sha256": "7892bcd9f05b36727aa431b9f1a4536d9329b5cc3d687f4ad59838c140d63e8f",
+      "recovery": {
+        "action_ledgers_and_episode_sha256": "verified",
+        "checkpoint_and_adamw_roundtrip": "passed",
+        "frozen_policy_function": "passed",
+        "kind": "recovered_committed_update",
+        "optimizer_steps_repeated": 0,
+        "reason": "result JSON construction failed after checkpoint promotion",
+        "recovery_script_sha256": "94c5db83ac28ad2eeaad656e26b7930fd5922d9d53a7c4bcc7e11119a9a28b95",
+        "recovery_source_sha256": "5378005028ae137d9a5d65ee447896bc09c7244c2fef6430e79be2d75b9c849c",
+        "unavailable_fields": [
+          "current_batch.max_gradient_norm"
+        ]
+      },
+      "run_id": "sspi-value-curve-v4-20261110-r1",
+      "sampled_training_rows": 16555,
+      "schema": "sspi-value-learning-curve-check.v1",
+      "source_sha256": "b301dac2d9d0c9f0a1ccac794ed113c90ae888627425d914a04c696de2053e4c",
+      "status": "continue",
+      "training_games": 64,
+      "validation": {
+        "collected_games": 32,
+        "decisive_games": 32,
+        "excluded_draw_games": 0,
+        "selected_rows": 8101
+      }
+    }
+  ],
+  "conclusion": "No validation learning signal at 64 training games; continue the preregistered curve. No policy-strength claim.",
+  "engineering_checks": {
+    "gitleaks_findings": 0,
+    "gitleaks_scanned_megabytes": 44.08,
+    "main_engine_passed": 511,
+    "main_engine_seconds": 156.55,
+    "public_passed": 1104,
+    "public_skipped": 42,
+    "public_snapshot_files_verified": 2880
+  },
+  "execution_source_sha256": "5378005028ae137d9a5d65ee447896bc09c7244c2fef6430e79be2d75b9c849c",
+  "final_holdout": null,
+  "first_96_episode_collection": {
+    "training": {
+      "collected_games": 64,
+      "decisions": 33084,
+      "decisive_games": 64,
+      "excluded_draw_games": 0,
+      "label_counts": {
+        "LOSS": 8281,
+        "WIN": 8274
+      },
+      "native_advance_sums": {
+        "actual_native_ticks": 277108,
+        "early_event_wakes": 0,
+        "host_observations_avoided": 252388,
+        "native_calls": 24720,
+        "refill_poll_ticks": 0
+      },
+      "native_capture_sums": {
+        "actual_native_ticks": 277108,
+        "batches": 24720,
+        "connect_ns": 9456668809,
+        "decode_ns": 44172470730,
+        "decoded_response_bytes": 4025277805,
+        "environments": 24720,
+        "host_observations_avoided": 252388,
+        "last_request_ack_ns": 5706585349,
+        "reached_tick_budget": 17287,
+        "receive_ns": 48488010576,
+        "request_ack_ns": 16651215748,
+        "request_bytes": 2472000,
+        "requested_native_ticks": 277569,
+        "response_bytes": 4026068845,
+        "send_ns": 421207818,
+        "stopped_on_deployment": 7369,
+        "stopped_on_terminal": 64,
+        "total_ns": 93124473352
+      },
+      "ready_hand_decision_counts": {
+        "2": 15,
+        "3": 483,
+        "4": 32586
+      },
+      "sample_fraction": 0.5003929391851046,
+      "sampled_states": 16555,
+      "search_roots": 0,
+      "seconds_max": 20.992100749979727,
+      "seconds_mean": 14.702741053327827,
+      "seconds_median": 13.272849187502288,
+      "seconds_min": 11.36013895799988,
+      "seconds_total": 940.9754274129809,
+      "timing_profile_sums": {
+        "accounted_seconds": 940.9619259999308,
+        "actions_write_seconds": 0.2864368339360226,
+        "advance_bookkeeping_seconds": 0.11172046602587216,
+        "advance_prepare_seconds": 0.13830744242295623,
+        "commit_seconds": 2.0841646306798793,
+        "decision_group_seconds": 445.8013199600973,
+        "decision_record_seconds": 38.28866261668736,
+        "direct_predict_seconds": 370.072063395608,
+        "direct_sample_seconds": 5.48566180357011,
+        "finalize_other_seconds": 2.089276255952427,
+        "finalize_seconds": 26.235186417063233,
+        "freeze_seconds": 186.7808904980484,
+        "frozen_view_copy_seconds": 78.55044045773684,
+        "group_other_seconds": 29.870767513551982,
+        "history_update_seconds": 0.007747928029857576,
+        "information_copy_seconds": 12.755563664191868,
+        "information_factory_seconds": 15.436810038750991,
+        "loop_other_seconds": 0.21363037638366222,
+        "loop_seconds": 861.2417266668926,
+        "refill_observer_seconds": 0.15762585602351464,
+        "runtime_advance_seconds": 228.1881099958846,
+        "runtime_fair_view_seconds": 36.59828858036781,
+        "runtime_other_seconds": 17.825174961588345,
+        "setup_seconds": 53.48501291597495,
+        "step_atomic_capture_client_seconds": 0.010532568645430729,
+        "step_capture_envelope_seconds": 0.08255592561908998,
+        "step_native_bind_seconds": 152.09778371249558,
+        "step_native_bind_unattributed_seconds": 0.08370018095592968,
+        "step_native_step_client_seconds": 107.46469080029055,
+        "step_observation_seconds": 0.06539347794023342,
+        "step_prepare_seconds": 1.4221728109987453,
+        "step_reconcile_seconds": 20.021670596470358,
+        "step_rich_telemetry_bind_seconds": 44.45630423698458,
+        "step_transition_seconds": 173.5416271199647,
+        "tensor_write_seconds": 23.03763837213046,
+        "tensorize_seconds": 79.24725962913362,
+        "terminal_fair_view_seconds": 0.8218349550443236
+      }
+    },
+    "validation": {
+      "collected_games": 32,
+      "decisions": 16002,
+      "decisive_games": 32,
+      "excluded_draw_games": 0,
+      "label_counts": {
+        "LOSS": 4062,
+        "WIN": 4039
+      },
+      "native_advance_sums": {
+        "actual_native_ticks": 134399,
+        "early_event_wakes": 0,
+        "host_observations_avoided": 122576,
+        "native_calls": 11823,
+        "refill_poll_ticks": 0
+      },
+      "native_capture_sums": {
+        "actual_native_ticks": 134399,
+        "batches": 11823,
+        "connect_ns": 4469686573,
+        "decode_ns": 21300825069,
+        "decoded_response_bytes": 1977989887,
+        "environments": 11823,
+        "host_observations_avoided": 122576,
+        "last_request_ack_ns": 2745258478,
+        "reached_tick_budget": 8254,
+        "receive_ns": 22987687845,
+        "request_ack_ns": 7914898412,
+        "request_bytes": 1182300,
+        "requested_native_ticks": 134693,
+        "response_bytes": 1978368223,
+        "send_ns": 204016494,
+        "stopped_on_deployment": 3537,
+        "stopped_on_terminal": 32,
+        "total_ns": 44512897950
+      },
+      "ready_hand_decision_counts": {
+        "2": 5,
+        "3": 222,
+        "4": 15775
+      },
+      "sample_fraction": 0.5062492188476441,
+      "sampled_states": 8101,
+      "search_roots": 0,
+      "seconds_max": 20.60553095798241,
+      "seconds_mean": 14.103002308467694,
+      "seconds_median": 13.074589958501747,
+      "seconds_min": 11.519120832992485,
+      "seconds_total": 451.2960738709662,
+      "timing_profile_sums": {
+        "accounted_seconds": 451.2888070449699,
+        "actions_write_seconds": 0.13612920488230884,
+        "advance_bookkeeping_seconds": 0.05315269634593278,
+        "advance_prepare_seconds": 0.06593128602253273,
+        "commit_seconds": 1.0027642944187392,
+        "decision_group_seconds": 212.78728302719537,
+        "decision_record_seconds": 18.629611400712747,
+        "direct_predict_seconds": 176.10070203928626,
+        "direct_sample_seconds": 2.636024519277271,
+        "finalize_other_seconds": 1.0093097533972468,
+        "finalize_seconds": 11.853074042010121,
+        "freeze_seconds": 89.86546796973562,
+        "frozen_view_copy_seconds": 37.72549555293517,
+        "group_other_seconds": 14.418180773500353,
+        "history_update_seconds": 0.003751591924810782,
+        "information_copy_seconds": 6.100125613011187,
+        "information_factory_seconds": 7.421518313552951,
+        "loop_other_seconds": 0.10398927706410177,
+        "loop_seconds": 412.992969874962,
+        "refill_observer_seconds": 0.07451110641704872,
+        "runtime_advance_seconds": 110.11339402667363,
+        "runtime_fair_view_seconds": 17.827707558462862,
+        "runtime_other_seconds": 8.491371044248808,
+        "setup_seconds": 26.44276312799775,
+        "step_atomic_capture_client_seconds": 0.004926401190459728,
+        "step_capture_envelope_seconds": 0.03918747167335823,
+        "step_native_bind_seconds": 73.24975982753676,
+        "step_native_bind_unattributed_seconds": 0.04047729528974742,
+        "step_native_step_client_seconds": 51.338887497462565,
+        "step_observation_seconds": 0.03125921988976188,
+        "step_prepare_seconds": 0.6873194253712427,
+        "step_reconcile_seconds": 9.751465844747145,
+        "step_rich_telemetry_bind_seconds": 21.826281161920633,
+        "step_transition_seconds": 83.68854509765515,
+        "tensor_write_seconds": 10.288773873879109,
+        "tensorize_seconds": 38.23791850957787,
+        "terminal_fair_view_seconds": 0.4188612098514568
+      }
+    }
+  },
+  "frozen_encoder_diagnostic": {
+    "feature_shape": [
+      222,
+      1024
+    ],
+    "frozen_policy_function": "unchanged",
+    "max_logit_error": 4.6566128730773926e-09,
+    "note": "diagnostic probe while another encoder task is active; not an isolated speed benchmark",
+    "rows": 222,
+    "seconds": 1.027016601525247,
+    "status": "passed"
+  },
+  "frozen_parameters": 8385355,
+  "initial_checkpoint_sha256": "7892bcd9f05b36727aa431b9f1a4536d9329b5cc3d687f4ad59838c140d63e8f",
+  "model_parameters": 8648269,
+  "original_initial_checkpoint_sha256": "2916db10ae30ba9155df87998d9ac0d18ea124b5c5a1f3167647e453a9e7ebc6",
+  "policy_invariance": {
+    "checkpoint_sha256": "10bad402eef1a3a6b27b5cc28cacf4d1f49d6e59ea536abd620ee4533f79536f",
+    "conditional_prefixes": 25,
+    "extra_native_observations": 0,
+    "fixed_states": [
+      {
+        "fair_sha256": "c46a0ec851dbbaa98249b78e5fc9622304c15573632008d7cd4f69dad2f2eac9",
+        "owner": 0,
+        "tick": 90
+      },
+      {
+        "fair_sha256": "9fc91f57d0759c8558e74f682b0cb5d147ee97b7cc7daeb49a1faa60665cedb5",
+        "owner": 0,
+        "tick": 1654
+      },
+      {
+        "fair_sha256": "de0b1e28082ed57485c85a8ccee2b97448c4add44f85194af3c55ee54a6460bf",
+        "owner": 1,
+        "tick": 3102
+      },
+      {
+        "fair_sha256": "3d2d2ea2bd2e86ab17117e751ec2b54366771218fa69e776a7809dddecd5b3b8",
+        "owner": 1,
+        "tick": 4558
+      }
+    ],
+    "frozen_policy_function_sha256": "24a9324bb630fd91c4730fdc2f6c57cb58b9e02d02c6ffcd7f1f96f3c6cbe215",
+    "max_policy_log_probability_difference": 0.0,
+    "parameter_and_buffer_sha_equal": true,
+    "run_id": "sspi-value-curve-v4-20261110-r1",
+    "schema": "sspi-value-curve-policy-invariance.v1",
+    "status": "passed",
+    "training_games": 64
+  },
+  "protocol": {
+    "actor_device": "cpu",
+    "batch_size": 128,
+    "check_every_games": 64,
+    "gradient_clip": 1.0,
+    "holdout_games": 32,
+    "learning_rate": 0.0001,
+    "max_training_games": 1024,
+    "microbatch_size": 4,
+    "optimizer": "AdamW",
+    "search_probability": 0.0,
+    "seed": 20261103,
+    "state_gradient_exposures": 1,
+    "training_device": "remote-cuda",
+    "validation_games": 32,
+    "value_sample_probability": 0.5,
+    "weight_decay": 0.0001
+  },
+  "publication_note": "Aggregate evidence only. Absolute paths and per-episode digest lists are omitted. Original episodes, model/optimizer checkpoints, probe binaries and raw failure logs are private and not bundled.",
+  "run_id": "sspi-value-curve-v4-20261110-r1",
+  "schema": "sspi-value-curve-public-results.v1",
+  "snapshot_utc": "2026-11-10T11:46:52.452682+00:00",
+  "source_git_base": "e788e0bd82108ff982a193a87147d56e1e377494",
+  "source_records": [
+    {
+      "bundled": false,
+      "file": "checks/check-0064.json",
+      "sha256": "d324e5f956d73b6c8b59523381fbdeb05b48aa2d73acd971af02ed1dbdfe1d0b"
+    },
+    {
+      "bundled": false,
+      "file": "collection-summary-first-96.json",
+      "sha256": "b816a762d8bb082ba9aae0d0587ea9d3c8e853bf673689728d8ee1bba9e5e902"
+    },
+    {
+      "bundled": false,
+      "file": "policy-invariance-check-0064.json",
+      "sha256": "1ad81d922d2d6bf87735d9a9151e6c5cbd379f11efedadf9234b714d0f8f2e9a"
+    },
+    {
+      "bundled": false,
+      "file": "batched-encoder-probe.json",
+      "sha256": "f0386fc51e8c81079d62fe720555ecc0ca694bcc961b162eddd1752eb672f68f"
+    },
+    {
+      "bundled": false,
+      "file": "recovery.json",
+      "sha256": "9395fd5e182be667e7c22e2c26155accce2c0b3856464512d2fbf88185e770ec"
+    },
+    {
+      "bundled": false,
+      "file": "first-check-result-write-failure.json",
+      "sha256": "c1fc0dab4e8bbfeddb4abaaec12f2d8c7e5763bce0b45e18bd77403440428af1"
+    },
+    {
+      "bundled": false,
+      "file": "main-engine-checks-final.log",
+      "sha256": "d33b48977861631658c4ea2b8a0955da873db4bbbb71c6f57c0b1cc118a32f5a"
+    },
+    {
+      "bundled": false,
+      "file": "public-checks-final.log",
+      "sha256": "6856cba4343ddee1988ece41909584c9d504f433c11385d687845208bb66fa64"
+    }
+  ],
+  "status": "running",
+  "trainable_value_head_parameters": 262914
+}
