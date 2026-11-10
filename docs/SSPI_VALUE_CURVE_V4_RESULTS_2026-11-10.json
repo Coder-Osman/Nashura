@@ -156,17 +156,200 @@
         "excluded_draw_games": 0,
         "selected_rows": 8101
       }
+    },
+    {
+      "check_index": 2,
+      "checkpoint": {
+        "file_sha256": "eaae133e22f974a9ae25914f058247d4621d09fb768f3fe5a63be96cc1edf7b4",
+        "model_sha": "e79fa07bf40d091c5121f1d5aa9cae1af4b49548261184686d56da21f77d3310",
+        "optimizer_sha256": "4f06130087e4f81ea052a310e3e3863f7cd0877ce9b0302aae2025ac49c87ca9",
+        "optimizer_steps": 258,
+        "path": "curve-0128.pt",
+        "run_state_sha256": "df47d1ac496455a0f6ac7cd40f0aa4888df37b607e37eab2179358504cbbf666"
+      },
+      "collected_games": 128,
+      "current_batch": {
+        "batch_size": 128,
+        "end": 128,
+        "exposure_sha256": "7e393207a00680fc742bbe571b094cd45de700ba0253b3abfc9e5a497b31e357",
+        "games": 64,
+        "max_gradient_norm": 1.454882264137268,
+        "microbatch_size": 4,
+        "optimizer_steps": 128,
+        "optimizer_steps_total": 258,
+        "policy_function_sha": "24a9324bb630fd91c4730fdc2f6c57cb58b9e02d02c6ffcd7f1f96f3c6cbe215",
+        "rows": 16379,
+        "seed": 1467245626,
+        "start": 65,
+        "status": "updated",
+        "training_games": {
+          "collected_games": 64,
+          "decisive_games": 64,
+          "excluded_draw_games": 0,
+          "selected_rows": 16379
+        }
+      },
+      "decisive_training_games": 128,
+      "device": "cuda:0",
+      "evaluation": {
+        "check_index": 2,
+        "current": {
+          "aggregation": "sample-means-with-equal-game-CE-and-Brier-reported-separately",
+          "brier": 0.5087995379043178,
+          "ece10": 0.04572621617342508,
+          "equal_game_mean": {
+            "brier": 0.5128286461381661,
+            "wl_ce": 0.7073813180894261
+          },
+          "games": 32,
+          "rows": 8101,
+          "wl_ce": 0.7031963921249612
+        },
+        "current_minus_constant_ce": {
+          "ci95": [
+            -0.024432803324488956,
+            0.05259660750980982
+          ],
+          "games": 32,
+          "lower": -0.045157440008793404,
+          "mean": 0.014237615536630763,
+          "method": "paired-complete-game-bootstrap-equal-game-mean",
+          "one_sided_alpha": 0.0015625,
+          "replicates": 20000,
+          "seed": 1115317950,
+          "upper": 0.07247811942862087
+        },
+        "current_minus_initial_ce": {
+          "ci95": [
+            -0.023445641375032803,
+            0.05310010949788025
+          ],
+          "games": 32,
+          "lower": -0.042590159284840765,
+          "mean": 0.014232942177612245,
+          "method": "paired-complete-game-bootstrap-equal-game-mean",
+          "one_sided_alpha": 0.0015625,
+          "replicates": 20000,
+          "seed": 1216045497,
+          "upper": 0.07154715482421499
+        },
+        "initial": {
+          "aggregation": "sample-means-with-equal-game-CE-and-Brier-reported-separately",
+          "brier": 0.5000004039011063,
+          "ece10": 0.010035978395428802,
+          "equal_game_mean": {
+            "brier": 0.5000011958242188,
+            "wl_ce": 0.6931483759118139
+          },
+          "games": 32,
+          "rows": 8101,
+          "wl_ce": 0.693147583916778
+        },
+        "reasons": [],
+        "repeated_test_correction": {
+          "baselines": 2,
+          "checks": 16,
+          "familywise_alpha": 0.05,
+          "one_sided_test_alpha": 0.0015625
+        },
+        "status": "evaluated",
+        "training_frequency_constant": {
+          "aggregation": "sample-means-with-equal-game-CE-and-Brier-reported-separately",
+          "brier": 0.49999771340444066,
+          "ece10": 0.0009337577048407208,
+          "equal_game_mean": {
+            "brier": 0.49999652199386996,
+            "wl_ce": 0.693143702552796
+          },
+          "games": 32,
+          "rows": 8101,
+          "wl_ce": 0.6931448939637683
+        },
+        "validation_signal": false
+      },
+      "excluded_draw_games": 0,
+      "initial_checkpoint_sha256": "7892bcd9f05b36727aa431b9f1a4536d9329b5cc3d687f4ad59838c140d63e8f",
+      "run_id": "sspi-value-curve-v4-20261110-r1",
+      "sampled_training_rows": 32934,
+      "schema": "sspi-value-learning-curve-check.v1",
+      "source_sha256": "5378005028ae137d9a5d65ee447896bc09c7244c2fef6430e79be2d75b9c849c",
+      "status": "continue",
+      "training_games": 128,
+      "validation": {
+        "collected_games": 32,
+        "decisive_games": 32,
+        "excluded_draw_games": 0,
+        "selected_rows": 8101
+      }
     }
   ],
-  "conclusion": "No validation learning signal at 64 training games; continue the preregistered curve. No policy-strength claim.",
+  "collection_all_complete": {
+    "training": {
+      "collected_games": 128,
+      "decisive_games": 128,
+      "episode_seconds_mean": 14.850606628204105,
+      "episode_seconds_total": 1900.8776484101254,
+      "excluded_draw_games": 0,
+      "sampled_states": 32934,
+      "search_roots": 0
+    },
+    "validation": {
+      "collected_games": 32,
+      "decisive_games": 32,
+      "episode_seconds_mean": 14.103002308467694,
+      "episode_seconds_total": 451.2960738709662,
+      "excluded_draw_games": 0,
+      "sampled_states": 8101,
+      "search_roots": 0
+    }
+  },
+  "conclusion": "运行中，最终留出尚未确认。累计32,934个训练状态、258步AdamW；验证逐状态WL CE 0.70319639。共享主体、策略头及缓冲区SHA保持不变，结果只评价价值预测，不表示策略胜率提升。",
   "engineering_checks": {
+    "finalizer_main_passed": 511,
+    "finalizer_main_seconds": 173.01,
+    "finalizer_preview_status": "passed",
+    "finalizer_preview_training_games": 128,
+    "finalizer_public_passed": 1104,
+    "finalizer_public_skipped": 42,
     "gitleaks_findings": 0,
     "gitleaks_scanned_megabytes": 44.08,
     "main_engine_passed": 511,
     "main_engine_seconds": 156.55,
     "public_passed": 1104,
     "public_skipped": 42,
-    "public_snapshot_files_verified": 2880
+    "public_snapshot_files_verified": 2881
+  },
+  "environment": {
+    "actor": {
+      "device": "cpu",
+      "machine": "arm64",
+      "mps_training_used": false,
+      "python_version": "3.13.5",
+      "release": "24.6.0",
+      "system": "Darwin",
+      "torch_version": "2.9.0"
+    },
+    "recorded_utc": "2026-11-10T11:58:53.891782+00:00",
+    "schema": "sspi-value-curve-host-environment.v1",
+    "source_commit": "b4e654c1cee85a1ce2874e0825872eeeddf327b7",
+    "training": {
+      "cuda_version": "12.1",
+      "device_count": 8,
+      "device_name": "Tesla V100-PCIE-32GB",
+      "free_bytes": 33740554240,
+      "frozen_policy_function": "passed",
+      "host_alias": "authorized-cuda-primary",
+      "machine": "x86_64",
+      "python_version": "3.12.3",
+      "selected_physical_device": 7,
+      "status": "ready",
+      "system": "Linux",
+      "torch_version": "2.5.1+cu121",
+      "total_bytes": 34072559616,
+      "training_device": "cuda:7",
+      "two_step_update": "passed",
+      "value_head_parameters": 262914
+    }
   },
   "execution_source_sha256": "5378005028ae137d9a5d65ee447896bc09c7244c2fef6430e79be2d75b9c849c",
   "final_holdout": null,
@@ -350,6 +533,8 @@
       }
     }
   },
+  "first_holdout_confirmed_training_games": null,
+  "first_validation_signal_training_games": null,
   "frozen_encoder_diagnostic": {
     "feature_shape": [
       222,
@@ -419,9 +604,18 @@
     "weight_decay": 0.0001
   },
   "publication_note": "Aggregate evidence only. Absolute paths and per-episode digest lists are omitted. Original episodes, model/optimizer checkpoints, probe binaries and raw failure logs are private and not bundled.",
+  "remote_training_timing_0128_seconds": {
+    "evaluation_checkpoint_and_roundtrip": 12.8327159630135,
+    "frozen_training_encoding": 38.5502780620008,
+    "initialization_and_training_input_validation": 501.29592663329095,
+    "nested": false,
+    "total": 836.4784834124148,
+    "validation_input_and_cache_load": 244.7706836471334,
+    "value_head_update": 39.0288791069761
+  },
   "run_id": "sspi-value-curve-v4-20261110-r1",
   "schema": "sspi-value-curve-public-results.v1",
-  "snapshot_utc": "2026-11-10T11:46:52.452682+00:00",
+  "snapshot_utc": "2026-11-10T12:26:56.059060+00:00",
   "source_git_base": "e788e0bd82108ff982a193a87147d56e1e377494",
   "source_records": [
     {
@@ -463,6 +657,26 @@
       "bundled": false,
       "file": "public-checks-final.log",
       "sha256": "6856cba4343ddee1988ece41909584c9d504f433c11385d687845208bb66fa64"
+    },
+    {
+      "bundled": false,
+      "file": "checks/check-0128.json",
+      "sha256": "2aef3f05826251a8f0cb0f62089a28adde5aee000ddeb3b1381dd2d32261ef25"
+    },
+    {
+      "bundled": false,
+      "file": "main-engine-checks-finalizer.log",
+      "sha256": "c4c38e890e97435dc9a96c4cbd57acc24cfd74cfc13b50e37328ad1fb1162270"
+    },
+    {
+      "bundled": false,
+      "file": "public-checks-finalizer.log",
+      "sha256": "4e54227c23cc9f7fce459be775869560a7154d6ca11d9cb703a575bb21dceaf5"
+    },
+    {
+      "bundled": false,
+      "file": "training-progress-through-0128-snapshot.jsonl",
+      "sha256": "2dafe41fcd5e7dd368dff04d5ad6ec4258d514c4bfb76d9193a606edcd285bf3"
     }
   ],
   "status": "running",

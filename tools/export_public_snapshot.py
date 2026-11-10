@@ -104,6 +104,7 @@ def selected_files(workspace):
         "docs/evidence/sspi-transition-profile-20261103/persistent-delta-repeat.json",
         "docs/evidence/sspi-transition-profile-20261103/event-json-delta.json",
         "tools/export_public_snapshot.py",
+        "tools/finalize_value_curve.py",
         "publication/checks-public.xml",
         "publication/checks-affordability.xml",
         "publication/checks-selection-timeout.xml",
